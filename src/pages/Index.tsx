@@ -78,7 +78,7 @@ const offerings = [
       "Ruimte om te herontdekken wat echt belangrijk is",
     ],
     ideal: "Perfect als je behoefte hebt om te vertragen, te resetten en je praktijk te verdiepen.",
-    link: "/intensief",
+    link: "/barcelona-retreat",
     linkText: "Ontdek de Barcelona retreat",
     icon: Sun,
     color: "warm",

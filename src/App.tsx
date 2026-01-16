@@ -14,6 +14,7 @@ import Contact from "./pages/Contact";
 import Workshops from "./pages/Workshops";
 import Intensief from "./pages/Intensief";
 import Coaching from "./pages/Coaching";
+import BarcelonaRetreat from "./pages/BarcelonaRetreat";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -36,6 +37,7 @@ const App = () => (
             <Route path="/workshops" element={<Workshops />} />
             <Route path="/intensief" element={<Intensief />} />
             <Route path="/coaching" element={<Coaching />} />
+            <Route path="/barcelona-retreat" element={<BarcelonaRetreat />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>
