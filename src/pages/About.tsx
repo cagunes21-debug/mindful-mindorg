@@ -126,6 +126,42 @@ const About = () => {
         </div>
       </section>
 
+      {/* How We Work */}
+      <section className="py-20 lg:py-24 bg-white">
+        <div className="container mx-auto px-4">
+          <div className="mx-auto max-w-3xl">
+            <div className="text-center mb-12">
+              <p className="text-sm font-medium text-terracotta-500 tracking-widest uppercase mb-4">Onze Benadering</p>
+              <h2 className="text-3xl font-light text-foreground md:text-4xl leading-tight">
+                Hoe wij <span className="font-serif italic text-terracotta-600">werken</span>
+              </h2>
+            </div>
+            
+            <div className="bg-gradient-to-br from-warm-50 to-sage-50 rounded-3xl p-8 md:p-10 border border-warm-200 mb-8">
+              <p className="text-lg text-foreground leading-relaxed mb-6">
+                In onze trainingen staat authenticiteit centraal. Echte verandering ontstaat wanneer je je veilig voelt — veilig om te lachen, te voelen, te delen of stil te zijn.
+              </p>
+              
+              <div className="grid gap-3 sm:grid-cols-3 my-6">
+                <div className="text-center p-4 rounded-2xl bg-white/80">
+                  <p className="text-foreground font-medium">Niets is verplicht</p>
+                </div>
+                <div className="text-center p-4 rounded-2xl bg-white/80">
+                  <p className="text-foreground font-medium">Alles is welkom</p>
+                </div>
+                <div className="text-center p-4 rounded-2xl bg-white/80">
+                  <p className="text-foreground font-medium">Ruimte voor jou</p>
+                </div>
+              </div>
+              
+              <p className="text-muted-foreground leading-relaxed">
+                Voor ons is zelfcompassie niet alleen een techniek — het is een manier van leven. Het helpt ons om onszelf te ondersteunen zoals we een dierbare vriend zouden steunen.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Vision & Mission */}
       <section className="py-20 lg:py-24 bg-gradient-to-b from-warm-50 to-sage-50">
         <div className="container mx-auto px-4">
