@@ -667,7 +667,7 @@ const Index = () => {
                   Laagdrempelig kennismaken
                 </span>
                 <h2 className="mb-6 text-3xl font-light text-foreground md:text-4xl lg:text-5xl leading-tight">
-                  Gratis <span className="font-serif italic text-terracotta-600">Workshops</span>
+                  Introductie <span className="font-serif italic text-terracotta-600">Workshops</span>
                 </h2>
                 <p className="text-muted-foreground text-lg max-w-2xl mx-auto leading-relaxed">
                   Ontdek in een workshop van 1 uur wat zelfcompassie voor jou kan betekenen. 
@@ -705,7 +705,7 @@ const Index = () => {
                         </div>
                         <div>
                           <p className="text-lg font-medium text-foreground">{workshop.date}</p>
-                          <p className="text-sm text-sage-600 font-medium">Gratis • Online via Zoom</p>
+                          <p className="text-sm text-sage-600 font-medium">€35 • Online via Zoom</p>
                         </div>
                       </div>
                       <Button asChild className="w-full bg-terracotta-600 hover:bg-terracotta-700 text-white rounded-full group-hover:shadow-md transition-all">
