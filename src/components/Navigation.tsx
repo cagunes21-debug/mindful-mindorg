@@ -20,6 +20,7 @@ const Navigation = () => {
     { to: "/msc-training", label: "8-weekse MSC Training" },
     { to: "/workshops", label: "Workshops" },
     { to: "/intensief", label: "Intensieve Programma's" },
+    { to: "/barcelona-retreat", label: "Barcelona Retreat" },
     { to: "/coaching", label: "1-op-1 Coaching" },
   ];
 
