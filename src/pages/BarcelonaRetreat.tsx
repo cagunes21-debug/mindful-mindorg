@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { Heart, ArrowRight, Check, Calendar, Clock, MapPin, Euro, Users, Sun, Sunrise, Moon, Coffee, MessageSquareQuote } from "lucide-react";
+import { Heart, ArrowRight, Check, Calendar, Clock, MapPin, Euro, Users, Sun, Sunrise, Moon, Coffee, MessageSquareQuote, Sparkles, Shield, Compass } from "lucide-react";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import { ScrollReveal, StaggerContainer, StaggerItem } from "@/components/ScrollReveal";
@@ -22,13 +22,41 @@ import {
   CarouselPrevious,
 } from "@/components/ui/carousel";
 
-const retreatHighlights = [
-  "Diepe rust voor lichaam en zenuwstelsel",
-  "Begeleide mindfulness- en zelfcompassieoefeningen",
-  "Tijd voor stilte, reflectie en integratie",
-  "Betekenisvolle verbinding met anderen",
-  "Ruimte om te herontdekken wat echt belangrijk is",
-  "Prachtige locatie in het hart van Catalonië",
+const retreatBenefits = [
+  {
+    icon: Heart,
+    title: "Meer emotionele veerkracht",
+    description: "Leer om te gaan met moeilijke emoties op een gezonde manier",
+  },
+  {
+    icon: Sparkles,
+    title: "Minder zelfkritiek, meer mildheid",
+    description: "Vervang je innerlijke criticus door een milde, ondersteunende stem",
+  },
+  {
+    icon: Shield,
+    title: "Sterkere grenzen en betere zelfzorg",
+    description: "Leer voor jezelf zorgen zonder schuldgevoel",
+  },
+  {
+    icon: Compass,
+    title: "Een diepere verbinding met jezelf",
+    description: "Herontdek wie je werkelijk bent, voorbij alle rollen en verwachtingen",
+  },
+];
+
+const whatYouLearn = [
+  "Bewust omgaan met stress, pijn en zelfkritiek",
+  "Jezelf ondersteunen met compassie in plaats van oordeel",
+  "Innerlijke rust, stabiliteit en veerkracht ontwikkelen",
+  "Verbinding ervaren — met jezelf én met anderen",
+];
+
+const takeHomeResults = [
+  "Meer innerlijke rust en helderheid",
+  "Een zachtere, mildere houding naar jezelf",
+  "Praktische tools om compassie te integreren in je dagelijks leven",
+  "Een diepe ervaring van verbondenheid en aanwezigheid",
 ];
 
 const dailyProgram = [
@@ -74,36 +102,36 @@ const practicalInfo = [
   {
     icon: Calendar,
     title: "Data",
-    details: "15 - 19 mei 2025 (4 nachten)",
+    details: "Juni 2026 (5 dagen)",
   },
   {
     icon: MapPin,
     title: "Locatie",
-    details: "Prachtig retreatcentrum nabij Barcelona, Catalonië",
+    details: "Casa del Mar, Spanje",
   },
   {
     icon: Euro,
     title: "Investering",
-    details: "€1.295 all-inclusive (verblijf, maaltijden, programma)",
+    details: "Inclusief verblijf, maaltijden en programma",
   },
   {
     icon: Users,
     title: "Groepsgrootte",
-    details: "Maximaal 16 deelnemers voor persoonlijke aandacht",
+    details: "Kleine groep voor persoonlijke aandacht",
   },
 ];
 
 const included = [
-  "4 overnachtingen in een sfeervolle kamer",
+  "5 overnachtingen in een sfeervolle kamer",
   "Alle vegetarische maaltijden en snacks",
-  "Volledig begeleid programma",
+  "Volledig begeleid MSC programma",
   "Materialen en werkboek",
   "Toegang tot de tuinen en natuurgebied",
   "Persoonlijke begeleiding waar nodig",
 ];
 
 const notIncluded = [
-  "Reis naar en van Barcelona",
+  "Reis naar en van Spanje",
   "Reisverzekering",
   "Persoonlijke uitgaven",
 ];
@@ -112,24 +140,24 @@ const testimonials = [
   {
     quote: "Deze retreat was precies wat ik nodig had. De combinatie van stilte, natuur en liefdevolle begeleiding heeft me diep geraakt.",
     author: "Marloes",
-    role: "Retreat deelnemer 2024",
+    role: "Retreat deelnemer",
   },
   {
     quote: "Ik kwam uitgeput aan en vertrok met een gevoel van rust en helderheid dat ik in jaren niet had ervaren.",
     author: "Peter",
-    role: "Retreat deelnemer 2024",
+    role: "Retreat deelnemer",
   },
   {
     quote: "De locatie was adembenemend en de trainers creëerden een sfeer van veiligheid en warmte. Een transformerende ervaring.",
     author: "Linda",
-    role: "Retreat deelnemer 2024",
+    role: "Retreat deelnemer",
   },
 ];
 
 const faqItems = [
   {
-    question: "Voor wie is deze retreat geschikt?",
-    answer: "De retreat is geschikt voor iedereen die behoefte heeft aan vertraging, verdieping en verbinding met zichzelf. Zowel beginners als mensen met ervaring in mindfulness of zelfcompassie zijn welkom. We werken met een trauma-sensitieve benadering.",
+    question: "Voor wie is deze retraite geschikt?",
+    answer: "De retraite is geschikt voor iedereen die behoefte heeft aan vertraging, verdieping en verbinding met zichzelf. Zowel beginners als mensen met ervaring in mindfulness of zelfcompassie zijn welkom. We werken met een trauma-sensitieve benadering.",
   },
   {
     question: "Moet ik ervaring hebben met meditatie?",
@@ -149,7 +177,7 @@ const faqItems = [
   },
   {
     question: "Hoe reis ik naar de locatie?",
-    answer: "De locatie is ongeveer 1 uur rijden vanaf Barcelona Airport. We kunnen helpen met het organiseren van gezamenlijk vervoer of een taxi-service. Details ontvang je na aanmelding.",
+    answer: "Details over de locatie en reismogelijkheden ontvang je na aanmelding. We kunnen helpen met het organiseren van gezamenlijk vervoer.",
   },
   {
     question: "Wat als ik moet annuleren?",
@@ -161,8 +189,8 @@ const BarcelonaRetreat = () => {
   return (
     <div className="min-h-screen bg-background">
       <SEO 
-        title="Barcelona Retreat | Mindfulness & Zelfcompassie Retreat"
-        description="Stap uit je dagelijkse routines en in een ruimte van rust, reflectie en vernieuwing. 4-daagse retreat in Barcelona met mindfulness, zelfcompassie en stilte."
+        title="Barcelona Retreat | 5-daagse Intensieve MSC Retraite"
+        description="Kom thuis bij jezelf in Barcelona. Een reis van het hoofd naar het hart. 5-daagse Intensieve Mindful Zelfcompassie retraite in Casa del Mar, Spanje."
       />
       <FAQSchema items={faqItems} />
       <Navigation />
@@ -182,52 +210,154 @@ const BarcelonaRetreat = () => {
               className="inline-flex items-center gap-2 mb-6 rounded-full bg-warm-100 border border-warm-200 px-5 py-2.5 text-sm font-medium text-warm-700"
             >
               <Sun className="h-4 w-4" />
-              15 - 19 mei 2025 • Barcelona
+              Juni 2026 • Casa del Mar, Spanje
             </motion.span>
             
             <motion.h1 
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.7, delay: 0.1 }}
-              className="mb-6 text-4xl font-light tracking-tight text-foreground md:text-5xl lg:text-6xl leading-[1.1]"
+              className="mb-4 text-4xl font-light tracking-tight text-foreground md:text-5xl lg:text-6xl leading-[1.1]"
             >
-              Mindfulness & Zelfcompassie
-              <span className="block font-serif italic text-terracotta-600 mt-2">Retreat in Barcelona</span>
+              Kom thuis bij jezelf
+              <span className="block font-serif italic text-terracotta-600 mt-2">in Barcelona</span>
             </motion.h1>
             
             <motion.p 
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.2 }}
-              className="text-muted-foreground text-lg md:text-xl max-w-2xl mx-auto leading-relaxed mb-8"
+              transition={{ duration: 0.6, delay: 0.15 }}
+              className="text-xl md:text-2xl text-foreground font-light mb-4"
             >
-              Stap uit je dagelijkse routines en in een ruimte van rust, reflectie en vernieuwing. 
-              Een uitnodiging om te vertragen en thuis te komen bij jezelf.
+              Een reis van het hoofd naar het hart.
+            </motion.p>
+            
+            <motion.p 
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.2 }}
+              className="text-muted-foreground text-lg max-w-2xl mx-auto leading-relaxed mb-8"
+            >
+              5-daagse Intensieve Mindful Zelfcompassie (MSC) retraite
             </motion.p>
 
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.3 }}
-              className="flex flex-col gap-4 sm:flex-row sm:justify-center"
             >
               <Button asChild size="lg" className="bg-terracotta-600 hover:bg-terracotta-700 text-white rounded-full px-8">
                 <Link to="/contact">
-                  Meld je aan
+                  Neem deel aan het programma
                   <ArrowRight className="ml-2 h-4 w-4" />
                 </Link>
-              </Button>
-              <Button asChild size="lg" variant="outline" className="border-terracotta-300 text-terracotta-700 hover:bg-terracotta-50 rounded-full px-8">
-                <a href="#programma">
-                  Bekijk het programma
-                </a>
               </Button>
             </motion.div>
           </div>
         </div>
       </section>
 
-      {/* What the retreat offers */}
+      {/* What makes this retreat special */}
+      <section className="py-20 lg:py-24 bg-white">
+        <div className="container mx-auto px-4">
+          <div className="mx-auto max-w-4xl">
+            <ScrollReveal>
+              <div className="text-center mb-12">
+                <span className="inline-block rounded-full bg-sage-100 px-4 py-1.5 text-xs font-semibold text-sage-700 mb-6">
+                  Wat deze retraite bijzonder maakt
+                </span>
+                <h2 className="mb-6 text-3xl font-light text-foreground md:text-4xl leading-tight">
+                  Maak je opnieuw verbinding met <span className="font-serif italic text-terracotta-600">wat er echt toe doet</span>
+                </h2>
+              </div>
+            </ScrollReveal>
+            
+            <ScrollReveal delay={0.1}>
+              <div className="prose prose-lg mx-auto text-center mb-12">
+                <p className="text-muted-foreground text-lg leading-relaxed">
+                  Soms voel je dat het tijd is om te vertragen — om even tot rust te komen en op adem te komen.
+                </p>
+                <p className="text-muted-foreground text-lg leading-relaxed">
+                  Je hebt al zo lang je best gedaan: voor je werk, voor anderen, voor alles wat 'moet'.
+                  En ergens diep vanbinnen ontstaat dat stille besef: <strong className="text-foreground">het mag zachter</strong>.
+                </p>
+                <p className="text-muted-foreground text-lg leading-relaxed">
+                  Je verlangt naar rust, naar ruimte, naar zachtheid voor jezelf.
+                </p>
+              </div>
+            </ScrollReveal>
+
+            <ScrollReveal delay={0.2}>
+              <Card className="border-0 bg-gradient-to-br from-warm-50 to-terracotta-50 rounded-3xl shadow-lg mb-12">
+                <CardContent className="p-8 md:p-10 text-center">
+                  <p className="text-xl text-foreground leading-relaxed mb-4">
+                    Tijdens deze vijfdaagse intensieve retraite leer je vertragen, ademen en jezelf met mildheid tegemoet treden.
+                  </p>
+                  <p className="text-lg text-terracotta-700 font-medium italic">
+                    Een week waarin je niets hoeft te bewijzen.<br />
+                    Een week waarin je thuiskomt bij jezelf.
+                  </p>
+                </CardContent>
+              </Card>
+            </ScrollReveal>
+
+            <StaggerContainer className="grid gap-6 md:grid-cols-2">
+              {retreatBenefits.map((benefit, index) => (
+                <StaggerItem key={index}>
+                  <Card className="border-0 bg-white rounded-2xl shadow-md h-full">
+                    <CardContent className="p-6 flex items-start gap-4">
+                      <div className="h-12 w-12 rounded-xl bg-gradient-to-br from-terracotta-100 to-terracotta-200 flex items-center justify-center flex-shrink-0">
+                        <benefit.icon className="h-6 w-6 text-terracotta-600" />
+                      </div>
+                      <div>
+                        <h3 className="text-lg font-semibold text-foreground mb-1">{benefit.title}</h3>
+                        <p className="text-sm text-muted-foreground">{benefit.description}</p>
+                      </div>
+                    </CardContent>
+                  </Card>
+                </StaggerItem>
+              ))}
+            </StaggerContainer>
+          </div>
+        </div>
+      </section>
+
+      {/* What to expect */}
+      <section className="py-20 lg:py-24 bg-warm-50">
+        <div className="container mx-auto px-4">
+          <div className="mx-auto max-w-4xl">
+            <ScrollReveal>
+              <div className="text-center mb-12">
+                <span className="inline-block rounded-full bg-terracotta-100 px-4 py-1.5 text-xs font-semibold text-terracotta-700 mb-6">
+                  Wat kun je verwachten
+                </span>
+                <h2 className="mb-6 text-3xl font-light text-foreground md:text-4xl leading-tight">
+                  Een uitnodiging om vertraging, rust en <span className="font-serif italic text-terracotta-600">mildheid te ervaren</span>
+                </h2>
+              </div>
+            </ScrollReveal>
+            
+            <ScrollReveal delay={0.1}>
+              <div className="prose prose-lg mx-auto text-center mb-12">
+                <p className="text-muted-foreground text-lg leading-relaxed">
+                  Elke dag biedt een natuurlijke afwisseling van meditatie, reflectie, beweging, stilte en samenzijn, 
+                  met voldoende ruimte voor ontspanning en rust.
+                </p>
+                <p className="text-muted-foreground text-lg leading-relaxed">
+                  Onder begeleiding van ervaren trainers verdiep je je in de kernprincipes van 
+                  <strong className="text-foreground"> Mindful Self-Compassion (MSC)</strong>, ontwikkeld door dr. Kristin Neff en dr. Christopher Germer.
+                </p>
+                <p className="text-muted-foreground text-lg leading-relaxed">
+                  De retraite is intensief, liefdevol en verdiepend. Je leert niet alleen technieken en theorie, 
+                  maar <strong className="text-foreground">ervaart een nieuwe manier van omgaan met jezelf</strong> — met compassie, mildheid en aanwezigheid.
+                </p>
+              </div>
+            </ScrollReveal>
+          </div>
+        </div>
+      </section>
+
+      {/* What you learn */}
       <section className="py-20 lg:py-24 bg-white">
         <div className="container mx-auto px-4">
           <div className="mx-auto max-w-4xl">
@@ -235,39 +365,73 @@ const BarcelonaRetreat = () => {
               <ScrollReveal animation="fade-right">
                 <div>
                   <span className="inline-block rounded-full bg-sage-100 px-4 py-1.5 text-xs font-semibold text-sage-700 mb-6">
-                    Wat de retreat biedt
+                    Wat je leert
                   </span>
                   <h2 className="mb-6 text-3xl font-light text-foreground md:text-4xl leading-tight">
-                    Een plek om te <span className="font-serif italic text-terracotta-600">vertragen en te herontdekken</span>
+                    Vaardigheden voor het <span className="font-serif italic text-terracotta-600">leven</span>
                   </h2>
-                  <p className="text-muted-foreground text-lg leading-relaxed mb-6">
-                    Deze retreat weeft mindfulness, zelfcompassie, lichaamsgerichte oefeningen en stilte 
-                    samen in een voedende en ondersteunende omgeving in het prachtige Catalonië.
-                  </p>
-                  <p className="text-muted-foreground text-lg leading-relaxed">
-                    Perfect als je behoefte hebt om te vertragen, te resetten en je praktijk te verdiepen. 
-                    Of als je simpelweg verlangt naar rust, ruimte en verbinding.
-                  </p>
+                  <div className="space-y-4">
+                    {whatYouLearn.map((item, index) => (
+                      <div key={index} className="flex items-start gap-3">
+                        <Check className="h-5 w-5 text-sage-600 flex-shrink-0 mt-0.5" />
+                        <span className="text-muted-foreground text-lg">{item}</span>
+                      </div>
+                    ))}
+                  </div>
                 </div>
               </ScrollReveal>
               
               <ScrollReveal animation="fade-left" delay={0.2}>
-                <div className="grid grid-cols-1 gap-3">
-                  {retreatHighlights.map((highlight, index) => (
-                    <div key={index} className="flex items-center gap-3 p-4 rounded-xl bg-warm-50 border border-warm-200">
-                      <Check className="h-5 w-5 text-sage-600 flex-shrink-0" />
-                      <span className="text-foreground">{highlight}</span>
-                    </div>
-                  ))}
-                </div>
+                <Card className="border-0 bg-gradient-to-br from-sage-50 to-sage-100 rounded-3xl shadow-lg">
+                  <CardContent className="p-8">
+                    <h3 className="text-xl font-semibold text-foreground mb-4">Waarom deze retraite?</h3>
+                    <p className="text-muted-foreground leading-relaxed mb-4">
+                      Deze retraite is een moment om jezelf opnieuw te leren kennen. 
+                      Om te voelen wat echt belangrijk is. Om rust en zachtheid toe te laten in je dagelijks leven.
+                    </p>
+                    <p className="text-muted-foreground leading-relaxed">
+                      Hier leer je niet alleen technieken of theorie, maar <strong className="text-foreground">ervaar je een nieuwe manier 
+                      van omgaan met jezelf</strong> — met compassie, mildheid en aanwezigheid.
+                    </p>
+                  </CardContent>
+                </Card>
               </ScrollReveal>
             </div>
           </div>
         </div>
       </section>
 
+      {/* What you take home */}
+      <section className="py-20 lg:py-24 bg-warm-50">
+        <div className="container mx-auto px-4">
+          <div className="mx-auto max-w-4xl">
+            <ScrollReveal>
+              <div className="text-center mb-12">
+                <span className="inline-block rounded-full bg-warm-100 px-4 py-1.5 text-xs font-semibold text-warm-700 mb-6">
+                  Wat je meeneemt naar huis
+                </span>
+                <h2 className="mb-6 text-3xl font-light text-foreground md:text-4xl leading-tight">
+                  Na deze vijf dagen keer je <span className="font-serif italic text-terracotta-600">terug met</span>
+                </h2>
+              </div>
+            </ScrollReveal>
+            
+            <ScrollReveal delay={0.1}>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                {takeHomeResults.map((result, index) => (
+                  <div key={index} className="flex items-center gap-3 p-5 rounded-xl bg-white border border-warm-200 shadow-sm">
+                    <Check className="h-5 w-5 text-terracotta-600 flex-shrink-0" />
+                    <span className="text-foreground">{result}</span>
+                  </div>
+                ))}
+              </div>
+            </ScrollReveal>
+          </div>
+        </div>
+      </section>
+
       {/* Daily Program */}
-      <section id="programma" className="py-20 lg:py-24 bg-warm-50 scroll-mt-20">
+      <section id="programma" className="py-20 lg:py-24 bg-white scroll-mt-20">
         <div className="container mx-auto px-4">
           <div className="mx-auto max-w-5xl">
             <ScrollReveal>
@@ -276,7 +440,7 @@ const BarcelonaRetreat = () => {
                   Dagprogramma
                 </span>
                 <h2 className="mb-6 text-3xl font-light text-foreground md:text-4xl leading-tight">
-                  Een typische <span className="font-serif italic text-terracotta-600">retreatdag</span>
+                  Een typische <span className="font-serif italic text-terracotta-600">retraitedag</span>
                 </h2>
                 <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
                   We volgen een zacht ritme dat ruimte laat voor rust, oefening en vrije tijd. 
@@ -288,7 +452,7 @@ const BarcelonaRetreat = () => {
             <StaggerContainer className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
               {dailyProgram.map((item, index) => (
                 <StaggerItem key={index}>
-                  <Card className="border-0 bg-white rounded-2xl shadow-md h-full">
+                  <Card className="border-0 bg-warm-50 rounded-2xl shadow-md h-full">
                     <CardContent className="p-6">
                       <div className="flex items-center gap-3 mb-4">
                         <div className="h-10 w-10 rounded-xl bg-gradient-to-br from-terracotta-100 to-terracotta-200 flex items-center justify-center">
@@ -308,7 +472,7 @@ const BarcelonaRetreat = () => {
       </section>
 
       {/* Practical Information */}
-      <section className="py-20 lg:py-24 bg-white">
+      <section className="py-20 lg:py-24 bg-warm-50">
         <div className="container mx-auto px-4">
           <div className="mx-auto max-w-5xl">
             <ScrollReveal>
@@ -325,7 +489,7 @@ const BarcelonaRetreat = () => {
             <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4 mb-12">
               {practicalInfo.map((info, index) => (
                 <ScrollReveal key={index} delay={index * 0.1}>
-                  <Card className="border-0 bg-warm-50 rounded-2xl shadow-md text-center h-full">
+                  <Card className="border-0 bg-white rounded-2xl shadow-md text-center h-full">
                     <CardContent className="p-6">
                       <div className="h-12 w-12 rounded-xl bg-gradient-to-br from-sage-100 to-sage-200 flex items-center justify-center mx-auto mb-4">
                         <info.icon className="h-6 w-6 text-sage-700" />
@@ -359,7 +523,7 @@ const BarcelonaRetreat = () => {
               </ScrollReveal>
               
               <ScrollReveal animation="fade-left" delay={0.1}>
-                <Card className="border-0 bg-warm-50 rounded-2xl shadow-md h-full">
+                <Card className="border-0 bg-white rounded-2xl shadow-md h-full">
                   <CardContent className="p-8">
                     <h3 className="text-xl font-semibold text-foreground mb-6">
                       Niet inbegrepen
@@ -372,12 +536,6 @@ const BarcelonaRetreat = () => {
                         </li>
                       ))}
                     </ul>
-                    <div className="mt-6 p-4 bg-white rounded-xl">
-                      <p className="text-sm text-muted-foreground">
-                        <strong className="text-foreground">Tip:</strong> Boek je vlucht naar Barcelona El Prat Airport. 
-                        We helpen met het organiseren van vervoer naar de locatie.
-                      </p>
-                    </div>
                   </CardContent>
                 </Card>
               </ScrollReveal>
@@ -387,7 +545,7 @@ const BarcelonaRetreat = () => {
       </section>
 
       {/* Testimonials */}
-      <section className="py-20 lg:py-24 bg-warm-50">
+      <section className="py-20 lg:py-24 bg-white">
         <div className="container mx-auto px-4">
           <div className="mx-auto max-w-4xl">
             <ScrollReveal>
@@ -405,7 +563,7 @@ const BarcelonaRetreat = () => {
               <CarouselContent>
                 {testimonials.map((testimonial, index) => (
                   <CarouselItem key={index}>
-                    <Card className="border-0 bg-white rounded-3xl shadow-lg">
+                    <Card className="border-0 bg-warm-50 rounded-3xl shadow-lg">
                       <CardContent className="p-8 md:p-12">
                         <MessageSquareQuote className="h-10 w-10 text-terracotta-300 mb-6" />
                         <blockquote className="text-xl text-foreground leading-relaxed mb-6">
@@ -428,7 +586,7 @@ const BarcelonaRetreat = () => {
       </section>
 
       {/* FAQ */}
-      <section className="py-20 lg:py-24 bg-white">
+      <section className="py-20 lg:py-24 bg-warm-50">
         <div className="container mx-auto px-4">
           <div className="mx-auto max-w-3xl">
             <ScrollReveal>
@@ -448,7 +606,7 @@ const BarcelonaRetreat = () => {
                   <AccordionItem 
                     key={index} 
                     value={`item-${index}`}
-                    className="border border-warm-200 rounded-xl px-6 bg-warm-50/50"
+                    className="border border-warm-200 rounded-xl px-6 bg-white"
                   >
                     <AccordionTrigger className="text-left font-medium text-foreground hover:no-underline py-5">
                       {faq.question}
@@ -468,25 +626,28 @@ const BarcelonaRetreat = () => {
       <section className="py-20 lg:py-24 bg-gradient-to-br from-terracotta-500 to-terracotta-600">
         <div className="container mx-auto px-4">
           <div className="mx-auto max-w-3xl text-center">
+            <span className="inline-block text-terracotta-200 text-sm font-medium mb-4">
+              Dit is jouw moment.
+            </span>
             <h2 className="mb-6 text-3xl font-light text-white md:text-4xl leading-tight">
-              Klaar om jezelf dit cadeau te geven?
+              Gun jezelf deze reis van het hoofd naar het hart.
             </h2>
             <p className="text-terracotta-100 text-lg mb-4">
-              Er zijn nog enkele plekken beschikbaar. Meld je aan of neem contact op voor meer informatie.
+              Een paar dagen waarin je niets hoeft te bewijzen — alleen maar mag zijn.
             </p>
-            <p className="text-terracotta-200 text-sm mb-8">
-              Let op: Er is een beperkt aantal plekken. Vroeg aanmelden wordt aanbevolen.
+            <p className="text-white text-xl font-medium italic mb-8">
+              Kom thuis bij jezelf. In rust, in zachtheid, in compassie.
             </p>
             <div className="flex flex-col gap-4 sm:flex-row sm:justify-center">
               <Button asChild size="lg" className="bg-white text-terracotta-700 hover:bg-terracotta-50 rounded-full px-8">
                 <Link to="/contact">
-                  Meld je aan
+                  Doe mee aan de retraite
                   <ArrowRight className="ml-2 h-4 w-4" />
                 </Link>
               </Button>
               <Button asChild size="lg" className="bg-white/20 border-2 border-white text-white hover:bg-white/30 rounded-full px-8">
                 <Link to="/contact">
-                  Stel een vraag
+                  Reserveer je plek
                 </Link>
               </Button>
             </div>
