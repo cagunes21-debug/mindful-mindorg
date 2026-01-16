@@ -72,7 +72,7 @@ const Index = () => {
         
         <div className="container relative mx-auto px-4">
           <div className="mx-auto max-w-4xl text-center">
-            {/* Top badge with tagline */}
+            {/* Top badge with training info */}
             <motion.div 
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -80,7 +80,7 @@ const Index = () => {
               className="inline-flex items-center gap-2 mb-10 rounded-full bg-warm-100 border border-warm-200 px-6 py-3.5 text-sm font-medium text-terracotta-700 shadow-sm"
             >
               <Sparkles className="h-4 w-4" />
-              Jouw welzijn begint bij hoe je jezelf behandelt
+              8-weekse training in Mindful Zelfcompassie
             </motion.div>
             
             {/* Main heading */}
@@ -94,14 +94,14 @@ const Index = () => {
               <span className="block font-serif italic text-terracotta-600 mt-3 text-[1.1em]">bij jezelf!</span>
             </motion.h1>
             
-            {/* Subtitle - training name */}
+            {/* Subtitle - tagline */}
             <motion.p 
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.15 }}
               className="text-terracotta-600 text-xl md:text-2xl font-medium mb-8"
             >
-              8-weekse training in Mindful Zelfcompassie
+              Jouw welzijn begint bij hoe je jezelf behandelt
             </motion.p>
             
             {/* Description */}
