@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400;1,500&family=Inter:wght@300;400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Inter:wght@300;400;500;600&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -10,72 +10,84 @@ All colors MUST be HSL.
 
 @layer base {
   :root {
-    /* Core colors */
-    --background: 60 30% 98%;
-    --foreground: 150 10% 15%;
+    /* Core colors - warm beige/cream theme */
+    --background: 35 40% 95%;
+    --foreground: 20 15% 20%;
 
-    --card: 0 0% 100%;
-    --card-foreground: 150 10% 15%;
+    --card: 35 35% 97%;
+    --card-foreground: 20 15% 20%;
 
-    --popover: 0 0% 100%;
-    --popover-foreground: 150 10% 15%;
+    --popover: 35 35% 97%;
+    --popover-foreground: 20 15% 20%;
 
-    /* Sage green - primary brand color */
-    --primary: 150 25% 35%;
-    --primary-foreground: 60 30% 98%;
+    /* Terracotta/coral - primary brand color */
+    --primary: 15 55% 55%;
+    --primary-foreground: 35 40% 98%;
 
-    /* Warm neutral - secondary color */
-    --secondary: 30 20% 95%;
-    --secondary-foreground: 150 10% 15%;
+    /* Warm beige - secondary color */
+    --secondary: 35 30% 90%;
+    --secondary-foreground: 20 15% 20%;
 
-    --muted: 150 10% 92%;
-    --muted-foreground: 150 5% 45%;
+    --muted: 35 20% 88%;
+    --muted-foreground: 20 10% 45%;
 
-    --accent: 150 20% 90%;
-    --accent-foreground: 150 25% 25%;
+    --accent: 35 35% 92%;
+    --accent-foreground: 15 55% 40%;
 
     --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 60 30% 98%;
+    --destructive-foreground: 35 40% 98%;
 
-    --border: 150 15% 88%;
-    --input: 150 15% 88%;
-    --ring: 150 25% 35%;
+    --border: 30 25% 85%;
+    --input: 30 25% 85%;
+    --ring: 15 55% 55%;
 
     --radius: 0.75rem;
 
-    /* Sage palette */
-    --sage-50: 150 25% 97%;
-    --sage-100: 150 25% 92%;
-    --sage-200: 150 20% 82%;
-    --sage-300: 150 18% 70%;
-    --sage-400: 150 18% 55%;
-    --sage-500: 150 20% 42%;
-    --sage-600: 150 25% 35%;
-    --sage-700: 150 28% 28%;
-    --sage-800: 150 30% 20%;
-    --sage-900: 150 32% 12%;
+    /* Terracotta palette */
+    --terracotta-50: 20 50% 97%;
+    --terracotta-100: 18 45% 92%;
+    --terracotta-200: 16 50% 82%;
+    --terracotta-300: 14 55% 70%;
+    --terracotta-400: 12 55% 60%;
+    --terracotta-500: 15 55% 55%;
+    --terracotta-600: 12 50% 48%;
+    --terracotta-700: 10 48% 40%;
+    --terracotta-800: 8 45% 32%;
+    --terracotta-900: 6 40% 22%;
 
-    /* Warm palette */
-    --warm-50: 30 30% 97%;
-    --warm-100: 30 25% 92%;
-    --warm-200: 28 22% 82%;
-    --warm-300: 25 20% 70%;
-    --warm-400: 22 20% 55%;
-    --warm-500: 20 22% 45%;
-    --warm-600: 18 25% 38%;
-    --warm-700: 16 28% 30%;
+    /* Sage/olive palette - for secondary sections */
+    --sage-50: 80 20% 95%;
+    --sage-100: 75 18% 88%;
+    --sage-200: 70 15% 78%;
+    --sage-300: 65 15% 65%;
+    --sage-400: 60 18% 50%;
+    --sage-500: 55 22% 42%;
+    --sage-600: 50 25% 35%;
+    --sage-700: 45 28% 28%;
+    --sage-800: 40 30% 22%;
+    --sage-900: 35 32% 15%;
+
+    /* Warm/cream palette */
+    --warm-50: 35 40% 97%;
+    --warm-100: 35 35% 93%;
+    --warm-200: 33 30% 85%;
+    --warm-300: 30 25% 75%;
+    --warm-400: 28 22% 60%;
+    --warm-500: 25 25% 50%;
+    --warm-600: 22 28% 42%;
+    --warm-700: 20 30% 34%;
 
     /* Shadows */
-    --shadow-soft: 0 4px 20px -4px hsl(150 20% 20% / 0.08);
+    --shadow-soft: 0 4px 20px -4px hsl(20 20% 20% / 0.08);
 
-    --sidebar-background: 150 25% 97%;
-    --sidebar-foreground: 150 10% 26%;
-    --sidebar-primary: 150 25% 35%;
+    --sidebar-background: 35 40% 97%;
+    --sidebar-foreground: 20 15% 26%;
+    --sidebar-primary: 15 55% 55%;
     --sidebar-primary-foreground: 0 0% 98%;
-    --sidebar-accent: 150 20% 95%;
-    --sidebar-accent-foreground: 150 25% 25%;
-    --sidebar-border: 150 15% 91%;
-    --sidebar-ring: 150 25% 50%;
+    --sidebar-accent: 35 35% 92%;
+    --sidebar-accent-foreground: 15 55% 40%;
+    --sidebar-border: 30 25% 88%;
+    --sidebar-ring: 15 55% 60%;
   }
 }
 

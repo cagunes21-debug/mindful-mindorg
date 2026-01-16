@@ -1,34 +1,37 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Heart, Leaf, Brain, Users, Calendar, Clock, MapPin, CheckCircle2 } from "lucide-react";
+import Navigation from "@/components/Navigation";
 
 const MSCTraining = () => {
   return (
     <div className="min-h-screen bg-background">
+      <Navigation />
+      
       {/* Hero Section */}
-      <section className="relative overflow-hidden bg-gradient-to-br from-sage-50 via-background to-warm-50 py-20 lg:py-32">
+      <section className="relative overflow-hidden bg-gradient-to-br from-warm-100 via-background to-terracotta-50 pt-16 py-20 lg:py-32">
         <div className="absolute inset-0 opacity-30">
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,hsl(var(--sage-200))_0%,transparent_50%)]" />
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,hsl(var(--terracotta-200))_0%,transparent_50%)]" />
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_80%,hsl(var(--warm-100))_0%,transparent_50%)]" />
         </div>
         <div className="container relative mx-auto px-4">
           <div className="mx-auto max-w-3xl text-center">
-            <span className="mb-4 inline-block rounded-full bg-sage-100 px-4 py-1.5 text-sm font-medium text-sage-700">
+            <span className="mb-4 inline-block rounded-full bg-terracotta-100 px-4 py-1.5 text-sm font-medium text-terracotta-700">
               Transform Your Relationship with Yourself
             </span>
             <h1 className="mb-6 text-4xl font-light tracking-tight text-foreground md:text-5xl lg:text-6xl">
               Mindful Self-Compassion
-              <span className="block font-serif italic text-sage-600">Training Program</span>
+              <span className="block font-serif italic text-primary">Training Program</span>
             </h1>
             <p className="mb-8 text-lg text-muted-foreground md:text-xl">
               Learn evidence-based practices to cultivate inner kindness, emotional resilience, 
               and a deeper connection with yourself through our 8-week MSC course.
             </p>
             <div className="flex flex-col gap-4 sm:flex-row sm:justify-center">
-              <Button size="lg" className="bg-sage-600 hover:bg-sage-700 text-white">
+              <Button size="lg" className="bg-terracotta-500 hover:bg-terracotta-600 text-white">
                 Enroll Now
               </Button>
-              <Button size="lg" variant="outline" className="border-sage-300 text-sage-700 hover:bg-sage-50">
+              <Button size="lg" variant="outline" className="border-terracotta-300 text-terracotta-700 hover:bg-terracotta-50">
                 Learn More
               </Button>
             </div>
@@ -41,7 +44,7 @@ const MSCTraining = () => {
         <div className="container mx-auto px-4">
           <div className="mx-auto max-w-3xl text-center">
             <h2 className="mb-4 text-3xl font-light text-foreground md:text-4xl">
-              What is <span className="font-serif italic text-sage-600">Mindful Self-Compassion?</span>
+              What is <span className="font-serif italic text-primary">Mindful Self-Compassion?</span>
             </h2>
             <p className="mb-12 text-muted-foreground">
               Developed by Dr. Kristin Neff and Dr. Christopher Germer, MSC is an empirically-supported 
@@ -51,10 +54,10 @@ const MSCTraining = () => {
           </div>
           
           <div className="grid gap-6 md:grid-cols-3">
-            <Card className="border-sage-100 bg-gradient-to-b from-sage-50/50 to-transparent transition-all hover:shadow-soft">
+            <Card className="border-terracotta-100 bg-gradient-to-b from-terracotta-50/50 to-transparent transition-all hover:shadow-soft">
               <CardContent className="p-8 text-center">
-                <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-sage-100">
-                  <Heart className="h-7 w-7 text-sage-600" />
+                <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-terracotta-100">
+                  <Heart className="h-7 w-7 text-terracotta-600" />
                 </div>
                 <h3 className="mb-2 text-xl font-medium text-foreground">Self-Kindness</h3>
                 <p className="text-sm text-muted-foreground">
@@ -63,7 +66,7 @@ const MSCTraining = () => {
               </CardContent>
             </Card>
             
-            <Card className="border-sage-100 bg-gradient-to-b from-warm-50/50 to-transparent transition-all hover:shadow-soft">
+            <Card className="border-warm-100 bg-gradient-to-b from-warm-50/50 to-transparent transition-all hover:shadow-soft">
               <CardContent className="p-8 text-center">
                 <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-warm-100">
                   <Users className="h-7 w-7 text-warm-600" />
@@ -75,10 +78,10 @@ const MSCTraining = () => {
               </CardContent>
             </Card>
             
-            <Card className="border-sage-100 bg-gradient-to-b from-sage-50/50 to-transparent transition-all hover:shadow-soft">
+            <Card className="border-terracotta-100 bg-gradient-to-b from-terracotta-50/50 to-transparent transition-all hover:shadow-soft">
               <CardContent className="p-8 text-center">
-                <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-sage-100">
-                  <Brain className="h-7 w-7 text-sage-600" />
+                <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-terracotta-100">
+                  <Brain className="h-7 w-7 text-terracotta-600" />
                 </div>
                 <h3 className="mb-2 text-xl font-medium text-foreground">Mindfulness</h3>
                 <p className="text-sm text-muted-foreground">
@@ -91,11 +94,11 @@ const MSCTraining = () => {
       </section>
 
       {/* Benefits Section */}
-      <section className="bg-sage-50/50 py-20 lg:py-28">
+      <section className="bg-terracotta-50/50 py-20 lg:py-28">
         <div className="container mx-auto px-4">
           <div className="mx-auto max-w-3xl text-center">
             <h2 className="mb-4 text-3xl font-light text-foreground md:text-4xl">
-              Benefits of <span className="font-serif italic text-sage-600">Self-Compassion</span>
+              Benefits of <span className="font-serif italic text-primary">Self-Compassion</span>
             </h2>
             <p className="mb-12 text-muted-foreground">
               Research has demonstrated numerous benefits of practicing self-compassion
@@ -115,9 +118,9 @@ const MSCTraining = () => {
             ].map((benefit, index) => (
               <div 
                 key={index}
-                className="flex items-center gap-3 rounded-lg bg-white p-4 shadow-sm transition-all hover:shadow-soft"
+                className="flex items-center gap-3 rounded-lg bg-card p-4 shadow-sm transition-all hover:shadow-soft"
               >
-                <CheckCircle2 className="h-5 w-5 flex-shrink-0 text-sage-500" />
+                <CheckCircle2 className="h-5 w-5 flex-shrink-0 text-terracotta-500" />
                 <span className="text-foreground">{benefit}</span>
               </div>
             ))}
@@ -130,7 +133,7 @@ const MSCTraining = () => {
         <div className="container mx-auto px-4">
           <div className="mx-auto max-w-3xl text-center">
             <h2 className="mb-4 text-3xl font-light text-foreground md:text-4xl">
-              Course <span className="font-serif italic text-sage-600">Details</span>
+              Course <span className="font-serif italic text-primary">Details</span>
             </h2>
             <p className="mb-12 text-muted-foreground">
               Our 8-week program provides a supportive environment for learning and practice
@@ -138,35 +141,35 @@ const MSCTraining = () => {
           </div>
           
           <div className="mx-auto grid max-w-4xl gap-8 md:grid-cols-2">
-            <Card className="border-sage-100 overflow-hidden">
-              <div className="bg-sage-600 px-6 py-4">
+            <Card className="border-terracotta-100 overflow-hidden">
+              <div className="bg-terracotta-500 px-6 py-4">
                 <h3 className="text-xl font-medium text-white">Program Structure</h3>
               </div>
               <CardContent className="p-6">
                 <ul className="space-y-4">
                   <li className="flex items-start gap-3">
-                    <Calendar className="mt-0.5 h-5 w-5 flex-shrink-0 text-sage-500" />
+                    <Calendar className="mt-0.5 h-5 w-5 flex-shrink-0 text-terracotta-500" />
                     <div>
                       <span className="font-medium text-foreground">8 Weekly Sessions</span>
                       <p className="text-sm text-muted-foreground">Progressive learning journey</p>
                     </div>
                   </li>
                   <li className="flex items-start gap-3">
-                    <Clock className="mt-0.5 h-5 w-5 flex-shrink-0 text-sage-500" />
+                    <Clock className="mt-0.5 h-5 w-5 flex-shrink-0 text-terracotta-500" />
                     <div>
                       <span className="font-medium text-foreground">2.5 Hours Each</span>
                       <p className="text-sm text-muted-foreground">Deep, immersive sessions</p>
                     </div>
                   </li>
                   <li className="flex items-start gap-3">
-                    <Leaf className="mt-0.5 h-5 w-5 flex-shrink-0 text-sage-500" />
+                    <Leaf className="mt-0.5 h-5 w-5 flex-shrink-0 text-terracotta-500" />
                     <div>
                       <span className="font-medium text-foreground">Half-Day Retreat</span>
                       <p className="text-sm text-muted-foreground">Silent practice experience</p>
                     </div>
                   </li>
                   <li className="flex items-start gap-3">
-                    <MapPin className="mt-0.5 h-5 w-5 flex-shrink-0 text-sage-500" />
+                    <MapPin className="mt-0.5 h-5 w-5 flex-shrink-0 text-terracotta-500" />
                     <div>
                       <span className="font-medium text-foreground">In-Person & Online</span>
                       <p className="text-sm text-muted-foreground">Flexible attendance options</p>
@@ -176,8 +179,8 @@ const MSCTraining = () => {
               </CardContent>
             </Card>
             
-            <Card className="border-warm-100 overflow-hidden">
-              <div className="bg-warm-600 px-6 py-4">
+            <Card className="border-sage-100 overflow-hidden">
+              <div className="bg-sage-600 px-6 py-4">
                 <h3 className="text-xl font-medium text-white">What You'll Learn</h3>
               </div>
               <CardContent className="p-6">
@@ -191,7 +194,7 @@ const MSCTraining = () => {
                     "Self-compassion in relationships"
                   ].map((item, index) => (
                     <li key={index} className="flex items-center gap-3">
-                      <div className="h-1.5 w-1.5 rounded-full bg-warm-400" />
+                      <div className="h-1.5 w-1.5 rounded-full bg-sage-400" />
                       <span className="text-foreground">{item}</span>
                     </li>
                   ))}
@@ -227,10 +230,11 @@ const MSCTraining = () => {
       </section>
 
       {/* Footer */}
-      <footer className="border-t border-sage-100 bg-background py-8">
+      <footer className="border-t border-warm-200 bg-warm-50 py-8">
         <div className="container mx-auto px-4 text-center">
+          <p className="font-serif italic text-xl text-primary mb-2">Mindful Mind</p>
           <p className="text-sm text-muted-foreground">
-            © {new Date().getFullYear()} Mindful Mind. All rights reserved.
+            © {new Date().getFullYear()} Mindful Mind. Alle rechten voorbehouden.
           </p>
         </div>
       </footer>
