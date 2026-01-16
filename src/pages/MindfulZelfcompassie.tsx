@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { Heart, ArrowRight, Check, Leaf, Sparkles, MessageSquareQuote } from "lucide-react";
+import { Heart, Users, ArrowRight, Check, Leaf, Sun, Sparkles, MessageSquareQuote } from "lucide-react";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import { ScrollReveal, StaggerContainer, StaggerItem } from "@/components/ScrollReveal";
@@ -16,39 +16,72 @@ import {
   CarouselPrevious,
 } from "@/components/ui/carousel";
 
-const benefits = [
-  "Meer innerlijke rust en balans",
-  "Minder zelfkritiek en piekeren",
-  "Beter omgaan met moeilijke emoties",
-  "Meer zelfvertrouwen en veerkracht",
-  "Gezondere grenzen stellen",
-  "Betere relaties met anderen",
-];
-
-const whatYouLearn = [
+const offerings = [
   {
-    title: "Mindfulness cultiveren",
-    description: "Leren om met bewustzijn aanwezig te zijn bij wat er is, zonder oordeel.",
+    title: "Mindful Self-Compassion (MSC)",
+    subtitle: "8-weekse training",
+    description: "Leer jezelf te ondersteunen in plaats van jezelf te pushen. Mindful Self-Compassion (MSC) is een wetenschappelijk onderbouwd programma, ontwikkeld door Dr. Kristin Neff en Dr. Christopher Germer.",
+    benefits: [
+      "Vaardiger omgaan met zelfkritiek",
+      "Emotionele veerkracht opbouwen",
+      "Met vriendelijkheid reageren op moeilijkheden",
+      "Een ondersteunende innerlijke relatie creëren",
+    ],
+    ideal: "Ideaal als je zorgzaam, verantwoordelijk bent en vaak streng voor jezelf.",
+    link: "/msc-training",
+    linkText: "Meer over MSC",
+    icon: Leaf,
+    color: "sage",
   },
   {
-    title: "Zelfvriendelijkheid ontwikkelen",
-    description: "Jezelf benaderen met dezelfde warmte en zorg die je een goede vriend zou geven.",
+    title: "Mindfulness-Based Stress Reduction (MBSR)",
+    subtitle: "8-weekse training",
+    description: "Mindfulness-Based Stress Reduction (MBSR), ontwikkeld door Jon Kabat-Zinn, is een van de meest onderzochte mindfulnessprogramma's wereldwijd.",
+    benefits: [
+      "Stress en overweldiging verminderen",
+      "Focus en mentale helderheid vergroten",
+      "Reageren in plaats van reageren",
+      "Een duurzame mindfulnesspraktijk ontwikkelen",
+    ],
+    ideal: "Bijzonder geschikt als stress, spanning of mentale overbelasting centraal staan in je leven.",
+    link: "/intensief",
+    linkText: "Meer over MBSR",
+    icon: Leaf,
+    color: "sage",
   },
   {
-    title: "Gemeenschappelijke menselijkheid erkennen",
-    description: "Beseffen dat lijden en imperfectie deel uitmaken van het menselijk bestaan.",
+    title: "Workshops",
+    subtitle: "Korte, toegankelijke sessies",
+    description: "Onze workshops bieden een zachte introductie of verdieping van mindfulness- en zelfcompassiethema's in een korter format — variërend van enkele uren tot een hele dag.",
+    benefits: [
+      "Werken met stress en overweldiging",
+      "Zelfcompassie in het dagelijks leven",
+      "Omgaan met zelfkritiek",
+      "Mindfulness op het werk",
+      "Emotionele veerkracht en balans",
+    ],
+    ideal: "Wil je mindfulness of zelfcompassie verkennen zonder langdurige commitment.",
+    link: "/workshops",
+    linkText: "Bekijk workshops",
+    icon: Sparkles,
+    color: "terracotta",
   },
   {
-    title: "Omgaan met moeilijke emoties",
-    description: "Leren hoe je met zorg en compassie kunt reageren op pijnlijke gevoelens.",
-  },
-  {
-    title: "De innerlijke criticus transformeren",
-    description: "Van zelfkritiek naar zelfondersteuning in uitdagende momenten.",
-  },
-  {
-    title: "Duurzame zelfzorg praktijken",
-    description: "Praktische oefeningen die je in je dagelijks leven kunt integreren.",
+    title: "Retreat in Barcelona",
+    subtitle: "Mindfulness & Zelfcompassie Retreat",
+    description: "Stap uit je dagelijkse routines en in een ruimte van rust, reflectie en vernieuwing. Deze retreat combineert mindfulness, zelfcompassie, lichaamsgerichte oefeningen en stilte.",
+    benefits: [
+      "Diepe rust voor lichaam en zenuwstelsel",
+      "Begeleide mindfulness- en zelfcompassieoefeningen",
+      "Tijd voor stilte, reflectie en integratie",
+      "Betekenisvolle verbinding met anderen",
+      "Ruimte om te herontdekken wat echt belangrijk is",
+    ],
+    ideal: "Perfect als je behoefte hebt om te vertragen, te resetten en je praktijk te verdiepen.",
+    link: "/barcelona-retreat",
+    linkText: "Ontdek de Barcelona retreat",
+    icon: Sun,
+    color: "warm",
   },
 ];
 
@@ -68,71 +101,63 @@ const testimonials = [
     author: "Sophie",
     role: "Deelnemer MSC Training",
   },
+  {
+    quote: "De 1-op-1 sessies waren precies wat ik nodig had. In mijn eigen tempo, met volledige aandacht voor mijn persoonlijke thema's.",
+    author: "Renate",
+    role: "Coaching cliënt",
+  },
 ];
 
-const isThisForYou = [
-  "Je bent vaak streng of kritisch naar jezelf",
-  "Je vindt het moeilijk om grenzen aan te geven",
-  "Je voelt je snel verantwoordelijk voor anderen",
-  "Je hebt moeite met rusten of ontspannen",
-  "Je ervaart stress, angst of neerslachtigheid",
-  "Je wilt leren om beter voor jezelf te zorgen",
+const participantExperiences = [
+  "Meer rust en balans",
+  "Toegenomen emotionele veerkracht",
+  "Minder stress en zelfkritiek",
+  "Gezondere grenzen en zelfzorg",
+  "Diepere verbinding met jezelf en anderen",
 ];
 
 const faqItems = [
-  { 
-    question: "Wat is Mindful Zelfcompassie?", 
-    answer: "Mindful Zelfcompassie (MSC) is een wetenschappelijk onderbouwd programma dat je leert om jezelf met vriendelijkheid en begrip te benaderen, vooral in moeilijke momenten. Het combineert mindfulness met zelfcompassie-oefeningen." 
-  },
-  { 
-    question: "Wat is het verschil met mindfulness?", 
-    answer: "Mindfulness leert je om bewust aanwezig te zijn bij wat er is. Zelfcompassie voegt daar een warme, vriendelijke houding aan toe — specifiek naar jezelf. MSC combineert beide op een krachtige manier." 
-  },
-  { 
-    question: "Is zelfcompassie niet egoïstisch?", 
-    answer: "Nee, integendeel. Onderzoek toont aan dat mensen met meer zelfcompassie juist meer compassie hebben voor anderen. Je kunt niet geven vanuit een lege bron." 
-  },
-  { 
-    question: "Heb ik ervaring nodig?", 
-    answer: "Nee, je hebt geen ervaring met meditatie of mindfulness nodig om te beginnen met zelfcompassie." 
-  },
+  { question: "Wat is MSC?", answer: "Mindful Self-Compassion is een wetenschappelijk onderbouwde 8-weekse training die je leert om jezelf met vriendelijkheid te ondersteunen." },
+  { question: "Wat is MBSR?", answer: "Mindfulness-Based Stress Reduction is een van de meest onderzochte mindfulnessprogramma's voor het verminderen van stress en overweldiging." },
+  { question: "Voor wie zijn de trainingen?", answer: "Onze trainingen zijn geschikt voor iedereen die merkt dat ze vaak streng zijn voor zichzelf, moeilijk grenzen aangeven, of behoefte hebben aan meer rust en zelfzorg." },
+  { question: "Heb ik ervaring nodig?", answer: "Nee, je hebt geen ervaring met meditatie nodig om deel te nemen aan onze trainingen." },
 ];
 
 const MindfulZelfcompassie = () => {
   return (
     <div className="min-h-screen bg-background">
       <SEO 
-        title="Mindful Zelfcompassie | Wat is het en waarom werkt het?"
-        description="Ontdek wat Mindful Zelfcompassie is en hoe het je kan helpen om vriendelijker voor jezelf te zijn. Wetenschappelijk onderbouwd, begeleid met zorg."
+        title="Mindful Zelfcompassie | Mindfulness, Zelfcompassie & Bewust Leven"
+        description="Je welzijn begint bij hoe je jezelf behandelt. Mindfulness, zelfcompassie en bewust leven — gebaseerd op wetenschap, begeleid met zorg."
       />
       <FAQSchema items={faqItems} />
       <Navigation />
       
       {/* Hero Section */}
-      <section className="relative overflow-hidden pt-24 pb-20 lg:pt-32 lg:pb-28">
-        <div className="absolute inset-0 bg-gradient-to-b from-sage-100/80 via-background to-background" />
-        <div className="absolute top-20 left-1/4 w-72 h-72 bg-sage-200/40 rounded-full blur-3xl" />
-        <div className="absolute bottom-10 right-1/4 w-96 h-96 bg-terracotta-200/30 rounded-full blur-3xl" />
+      <section className="relative overflow-hidden pt-24 pb-28 lg:pt-32 lg:pb-36">
+        <div className="absolute inset-0 bg-gradient-to-b from-warm-100/80 via-background to-background" />
+        <div className="absolute top-20 left-1/4 w-72 h-72 bg-terracotta-200/30 rounded-full blur-3xl" />
+        <div className="absolute bottom-10 right-1/4 w-96 h-96 bg-sage-200/30 rounded-full blur-3xl" />
         
         <div className="container relative mx-auto px-4">
           <div className="mx-auto max-w-4xl text-center">
-            <motion.span 
+            <motion.p 
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6 }}
-              className="inline-block rounded-full bg-sage-100 px-4 py-1.5 text-xs font-semibold text-sage-700 mb-6"
+              className="text-muted-foreground text-lg md:text-xl mb-4"
             >
-              Mindful Zelfcompassie
-            </motion.span>
+              Je welzijn begint bij hoe je jezelf behandelt
+            </motion.p>
             
             <motion.h1 
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.7, delay: 0.1 }}
-              className="mb-6 text-4xl font-light tracking-tight text-foreground md:text-5xl lg:text-6xl leading-[1.1]"
+              className="mb-8 text-4xl font-light tracking-tight text-foreground md:text-5xl lg:text-6xl leading-[1.1]"
             >
-              Je welzijn begint bij hoe je
-              <span className="block font-serif italic text-sage-700 mt-2">jezelf behandelt</span>
+              Kom thuis bij
+              <span className="block font-serif italic text-terracotta-600 mt-2">jezelf</span>
             </motion.h1>
             
             <motion.p 
@@ -141,25 +166,18 @@ const MindfulZelfcompassie = () => {
               transition={{ duration: 0.6, delay: 0.2 }}
               className="text-muted-foreground text-lg md:text-xl max-w-2xl mx-auto leading-relaxed mb-10"
             >
-              Ontdek de kracht van zelfcompassie — een wetenschappelijk onderbouwde benadering 
-              om een vriendelijkere relatie met jezelf te ontwikkelen.
+              Mindfulness, zelfcompassie en bewust leven — gebaseerd op wetenschap, begeleid met zorg.
             </motion.p>
 
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.3 }}
-              className="flex flex-col sm:flex-row gap-4 justify-center"
             >
-              <Button asChild size="lg" className="bg-sage-600 hover:bg-sage-700 text-white rounded-full px-8">
-                <Link to="/msc-training">
-                  Bekijk de 8-weekse training
+              <Button asChild size="lg" className="bg-terracotta-600 hover:bg-terracotta-700 text-white rounded-full px-8">
+                <Link to="#aanbod">
+                  Ontdek ons aanbod
                   <ArrowRight className="ml-2 h-4 w-4" />
-                </Link>
-              </Button>
-              <Button asChild size="lg" variant="outline" className="rounded-full px-8">
-                <Link to="/contact">
-                  Stel een vraag
                 </Link>
               </Button>
             </motion.div>
@@ -167,29 +185,24 @@ const MindfulZelfcompassie = () => {
         </div>
       </section>
 
-      {/* Wat is Mindful Zelfcompassie */}
+      {/* Een plek om te vertragen */}
       <section className="py-20 lg:py-24 bg-white">
         <div className="container mx-auto px-4">
-          <div className="mx-auto max-w-3xl">
+          <div className="mx-auto max-w-3xl text-center">
             <ScrollReveal>
-              <h2 className="text-center mb-8 text-3xl font-light text-foreground md:text-4xl leading-tight">
-                Wat is <span className="font-serif italic text-sage-700">Mindful Zelfcompassie?</span>
+              <h2 className="mb-8 text-3xl font-light text-foreground md:text-4xl leading-tight">
+                Een plek om te vertragen en te <span className="font-serif italic text-terracotta-600">herontdekken</span>
               </h2>
               <div className="text-muted-foreground text-lg leading-relaxed space-y-6">
                 <p>
-                  Mindful Zelfcompassie (MSC) is een wetenschappelijk onderbouwd programma, 
-                  ontwikkeld door Dr. Kristin Neff en Dr. Christopher Germer. Het leert je 
-                  om jezelf te ondersteunen in plaats van jezelf te bekritiseren — vooral 
-                  wanneer het leven moeilijk is.
+                  In een wereld die vraagt om sneller te bewegen, meer te doen en sterker te zijn, 
+                  bieden wij een andere benadering.
                 </p>
                 <p className="text-xl font-light text-foreground">
-                  Het gaat niet om jezelf beter voelen. Het gaat om beter voelen naar jezelf.
+                  Een uitnodiging om te pauzeren. Om te luisteren. Om jezelf te benaderen met bewustzijn, vriendelijkheid en vertrouwen.
                 </p>
                 <p>
-                  Zelfcompassie bestaat uit drie kerncomponenten: <strong>mindfulness</strong> (bewust 
-                  zijn van je ervaring), <strong>zelfvriendelijkheid</strong> (jezelf met warmte 
-                  benaderen) en <strong>gemeenschappelijke menselijkheid</strong> (erkennen dat 
-                  iedereen worstelt).
+                  Onze programma's ondersteunen je om het leven te ontmoeten zoals het is — met meer rust, helderheid en compassie.
                 </p>
               </div>
             </ScrollReveal>
@@ -197,102 +210,155 @@ const MindfulZelfcompassie = () => {
         </div>
       </section>
 
-      {/* Waarom Zelfcompassie */}
-      <section className="py-20 lg:py-24 bg-sage-50">
+      {/* Ons Aanbod */}
+      <section id="aanbod" className="py-20 lg:py-24 bg-warm-50 scroll-mt-20">
+        <div className="container mx-auto px-4">
+          <div className="mx-auto max-w-5xl">
+            <ScrollReveal>
+              <div className="text-center mb-14">
+                <span className="inline-block rounded-full bg-terracotta-100 px-4 py-1.5 text-xs font-semibold text-terracotta-700 mb-6">
+                  Ons Aanbod
+                </span>
+                <h2 className="mb-6 text-3xl font-light text-foreground md:text-4xl leading-tight">
+                  Vind wat bij <span className="font-serif italic text-terracotta-600">jou past</span>
+                </h2>
+              </div>
+            </ScrollReveal>
+            
+            <StaggerContainer className="grid gap-8">
+              {offerings.map((offering, index) => (
+                <StaggerItem key={index}>
+                  <Card className="border-0 rounded-3xl shadow-lg overflow-hidden bg-white">
+                    <CardContent className="p-8 md:p-10">
+                      <div className="flex items-start gap-4 mb-6">
+                        <div className={`h-12 w-12 rounded-2xl flex items-center justify-center flex-shrink-0 ${
+                          offering.color === "terracotta" 
+                            ? "bg-gradient-to-br from-terracotta-100 to-terracotta-200" 
+                            : offering.color === "sage"
+                            ? "bg-gradient-to-br from-sage-100 to-sage-200"
+                            : "bg-gradient-to-br from-warm-100 to-warm-200"
+                        }`}>
+                          <offering.icon className={`h-6 w-6 ${
+                            offering.color === "terracotta" 
+                              ? "text-terracotta-600" 
+                              : offering.color === "sage"
+                              ? "text-sage-700"
+                              : "text-warm-600"
+                          }`} />
+                        </div>
+                        <div>
+                          <h3 className="text-2xl font-semibold text-foreground">{offering.title}</h3>
+                          <p className="text-sm text-muted-foreground">{offering.subtitle}</p>
+                        </div>
+                      </div>
+                      
+                      <p className="text-muted-foreground mb-6">{offering.description}</p>
+                      
+                      <div className="mb-6">
+                        <p className="text-sm font-medium text-foreground mb-3">Je leert:</p>
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
+                          {offering.benefits.map((benefit, idx) => (
+                            <div key={idx} className="flex items-center gap-2">
+                              <Check className="h-4 w-4 text-sage-600 flex-shrink-0" />
+                              <span className="text-sm text-muted-foreground">{benefit}</span>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                      
+                      <p className="text-sm text-terracotta-600 mb-6 italic">{offering.ideal}</p>
+                      
+                      <Button asChild className="rounded-full bg-terracotta-600 hover:bg-terracotta-700 text-white">
+                        <Link to={offering.link}>
+                          {offering.linkText}
+                          <ArrowRight className="ml-2 h-4 w-4" />
+                        </Link>
+                      </Button>
+                    </CardContent>
+                  </Card>
+                </StaggerItem>
+              ))}
+            </StaggerContainer>
+          </div>
+        </div>
+      </section>
+
+      {/* Welk aanbod past bij jou */}
+      <section className="py-20 lg:py-24 bg-white">
         <div className="container mx-auto px-4">
           <div className="mx-auto max-w-4xl">
             <ScrollReveal>
               <div className="text-center mb-12">
                 <h2 className="mb-6 text-3xl font-light text-foreground md:text-4xl leading-tight">
-                  Waarom <span className="font-serif italic text-sage-700">zelfcompassie?</span>
+                  Welk aanbod past bij <span className="font-serif italic text-terracotta-600">jou?</span>
                 </h2>
-                <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
-                  Onderzoek toont aan dat zelfcompassie een van de krachtigste voorspellers 
-                  is van mentaal welzijn en emotionele veerkracht.
+              </div>
+            </ScrollReveal>
+            
+            <ScrollReveal delay={0.1}>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
+                <div className="flex items-start gap-3 p-5 rounded-xl bg-sage-50 border border-sage-200">
+                  <Leaf className="h-5 w-5 text-sage-600 flex-shrink-0 mt-0.5" />
+                  <div>
+                    <p className="font-medium text-foreground">MSC</p>
+                    <p className="text-sm text-muted-foreground">als je een vriendelijkere relatie met jezelf wilt ontwikkelen</p>
+                  </div>
+                </div>
+                <div className="flex items-start gap-3 p-5 rounded-xl bg-sage-50 border border-sage-200">
+                  <Leaf className="h-5 w-5 text-sage-600 flex-shrink-0 mt-0.5" />
+                  <div>
+                    <p className="font-medium text-foreground">MBSR</p>
+                    <p className="text-sm text-muted-foreground">als je praktische tools wilt om met stress om te gaan</p>
+                  </div>
+                </div>
+                <div className="flex items-start gap-3 p-5 rounded-xl bg-terracotta-50 border border-terracotta-200">
+                  <Sparkles className="h-5 w-5 text-terracotta-600 flex-shrink-0 mt-0.5" />
+                  <div>
+                    <p className="font-medium text-foreground">Workshops</p>
+                    <p className="text-sm text-muted-foreground">als je gerichte verdieping wilt in een korter format</p>
+                  </div>
+                </div>
+                <div className="flex items-start gap-3 p-5 rounded-xl bg-warm-50 border border-warm-200">
+                  <Sun className="h-5 w-5 text-warm-600 flex-shrink-0 mt-0.5" />
+                  <div>
+                    <p className="font-medium text-foreground">Retreat</p>
+                    <p className="text-sm text-muted-foreground">als je verlangt naar diepte, rust en ruimte</p>
+                  </div>
+                </div>
+              </div>
+              <p className="text-center text-muted-foreground">
+                Al ons aanbod wordt begeleid met zorg, professionaliteit en een trauma-sensitieve benadering.
+              </p>
+            </ScrollReveal>
+          </div>
+        </div>
+      </section>
+
+      {/* Wat deelnemers ervaren */}
+      <section className="py-20 lg:py-24 bg-warm-50">
+        <div className="container mx-auto px-4">
+          <div className="mx-auto max-w-4xl">
+            <ScrollReveal>
+              <div className="text-center mb-12">
+                <span className="inline-block rounded-full bg-sage-100 px-4 py-1.5 text-xs font-semibold text-sage-700 mb-6">
+                  Wat deelnemers vaak ervaren
+                </span>
+                <p className="text-muted-foreground text-lg">
+                  Onderzoek en ervaringen laten zien dat deze praktijken kunnen ondersteunen bij:
                 </p>
               </div>
             </ScrollReveal>
             
             <ScrollReveal delay={0.1}>
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                {benefits.map((benefit, index) => (
-                  <div key={index} className="flex items-center gap-3 p-5 rounded-xl bg-white border border-sage-200 shadow-sm">
+                {participantExperiences.map((experience, index) => (
+                  <div key={index} className="flex items-center gap-3 p-4 rounded-xl bg-white border border-warm-200 shadow-sm">
                     <Check className="h-5 w-5 text-sage-600 flex-shrink-0" />
-                    <span className="text-foreground">{benefit}</span>
+                    <span className="text-foreground">{experience}</span>
                   </div>
                 ))}
               </div>
             </ScrollReveal>
-          </div>
-        </div>
-      </section>
-
-      {/* Is dit voor jou */}
-      <section className="py-20 lg:py-24 bg-white">
-        <div className="container mx-auto px-4">
-          <div className="mx-auto max-w-4xl">
-            <div className="grid lg:grid-cols-2 gap-12 items-center">
-              <ScrollReveal>
-                <div>
-                  <span className="inline-block rounded-full bg-terracotta-100 px-4 py-1.5 text-xs font-semibold text-terracotta-700 mb-6">
-                    Herken je dit?
-                  </span>
-                  <h2 className="mb-6 text-3xl font-light text-foreground md:text-4xl leading-tight">
-                    Is zelfcompassie iets voor <span className="font-serif italic text-terracotta-600">jou?</span>
-                  </h2>
-                  <p className="text-muted-foreground text-lg mb-8">
-                    Zelfcompassie kan bijzonder waardevol zijn als je merkt dat je vaak streng 
-                    bent voor jezelf, of als je de neiging hebt om voor anderen te zorgen 
-                    maar jezelf te vergeten.
-                  </p>
-                </div>
-              </ScrollReveal>
-              
-              <ScrollReveal delay={0.1}>
-                <div className="space-y-3">
-                  {isThisForYou.map((item, index) => (
-                    <div key={index} className="flex items-start gap-3 p-4 rounded-xl bg-warm-50 border border-warm-200">
-                      <Check className="h-5 w-5 text-terracotta-600 flex-shrink-0 mt-0.5" />
-                      <span className="text-foreground">{item}</span>
-                    </div>
-                  ))}
-                </div>
-              </ScrollReveal>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Wat je leert */}
-      <section className="py-20 lg:py-24 bg-sage-50">
-        <div className="container mx-auto px-4">
-          <div className="mx-auto max-w-5xl">
-            <ScrollReveal>
-              <div className="text-center mb-14">
-                <span className="inline-block rounded-full bg-sage-100 px-4 py-1.5 text-xs font-semibold text-sage-700 mb-6">
-                  De kern van MSC
-                </span>
-                <h2 className="mb-6 text-3xl font-light text-foreground md:text-4xl leading-tight">
-                  Wat je <span className="font-serif italic text-sage-700">leert</span>
-                </h2>
-              </div>
-            </ScrollReveal>
-            
-            <StaggerContainer className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {whatYouLearn.map((item, index) => (
-                <StaggerItem key={index}>
-                  <Card className="h-full border-0 rounded-2xl shadow-md overflow-hidden bg-white">
-                    <CardContent className="p-6">
-                      <div className="h-10 w-10 rounded-xl bg-gradient-to-br from-sage-100 to-sage-200 flex items-center justify-center mb-4">
-                        <Leaf className="h-5 w-5 text-sage-600" />
-                      </div>
-                      <h3 className="text-lg font-semibold text-foreground mb-2">{item.title}</h3>
-                      <p className="text-muted-foreground text-sm">{item.description}</p>
-                    </CardContent>
-                  </Card>
-                </StaggerItem>
-              ))}
-            </StaggerContainer>
           </div>
         </div>
       </section>
@@ -312,98 +378,147 @@ const MindfulZelfcompassie = () => {
               </div>
             </ScrollReveal>
             
-            <ScrollReveal delay={0.1}>
-              <Carousel
-                opts={{
-                  align: "center",
-                  loop: true,
-                }}
-                className="w-full"
-              >
-                <CarouselContent>
-                  {testimonials.map((testimonial, index) => (
-                    <CarouselItem key={index} className="md:basis-1/1 lg:basis-1/1 pl-4">
-                      <Card className="border-0 rounded-3xl shadow-lg overflow-hidden bg-gradient-to-br from-sage-50 to-warm-50">
-                        <CardContent className="p-8 md:p-10 text-center">
-                          <MessageSquareQuote className="h-10 w-10 text-terracotta-400 mx-auto mb-6" />
-                          <blockquote className="text-xl md:text-2xl font-light text-foreground leading-relaxed mb-6">
-                            "{testimonial.quote}"
-                          </blockquote>
-                          <div className="flex flex-col items-center">
-                            <span className="font-semibold text-foreground">{testimonial.author}</span>
-                            <span className="text-sm text-muted-foreground">{testimonial.role}</span>
-                          </div>
-                        </CardContent>
-                      </Card>
-                    </CarouselItem>
-                  ))}
-                </CarouselContent>
-                <div className="flex justify-center gap-2 mt-6">
-                  <CarouselPrevious className="relative inset-0 translate-y-0 bg-white border-sage-200 hover:bg-sage-50" />
-                  <CarouselNext className="relative inset-0 translate-y-0 bg-white border-sage-200 hover:bg-sage-50" />
-                </div>
-              </Carousel>
-            </ScrollReveal>
+            <Carousel opts={{ loop: true }} className="max-w-3xl mx-auto">
+              <CarouselContent>
+                {testimonials.map((testimonial, index) => (
+                  <CarouselItem key={index}>
+                    <Card className="border-0 bg-warm-50 rounded-3xl shadow-lg">
+                      <CardContent className="p-8 md:p-12">
+                        <MessageSquareQuote className="h-10 w-10 text-terracotta-300 mb-6" />
+                        <blockquote className="text-xl text-foreground leading-relaxed mb-6">
+                          "{testimonial.quote}"
+                        </blockquote>
+                        <div>
+                          <p className="font-medium text-foreground">{testimonial.author}</p>
+                          <p className="text-sm text-muted-foreground">{testimonial.role}</p>
+                        </div>
+                      </CardContent>
+                    </Card>
+                  </CarouselItem>
+                ))}
+              </CarouselContent>
+              <CarouselPrevious className="hidden md:flex" />
+              <CarouselNext className="hidden md:flex" />
+            </Carousel>
           </div>
         </div>
       </section>
 
-      {/* FAQ */}
-      <section className="py-20 lg:py-24 bg-sage-50">
+      {/* Onze Aanpak */}
+      <section className="py-20 lg:py-24 bg-warm-50">
         <div className="container mx-auto px-4">
-          <div className="mx-auto max-w-3xl">
+          <div className="mx-auto max-w-4xl">
             <ScrollReveal>
               <div className="text-center mb-12">
-                <h2 className="mb-6 text-3xl font-light text-foreground md:text-4xl leading-tight">
-                  Veelgestelde <span className="font-serif italic text-sage-700">vragen</span>
+                <span className="inline-block rounded-full bg-warm-100 px-4 py-1.5 text-xs font-semibold text-warm-700 mb-6">
+                  Onze Aanpak
+                </span>
+                <h2 className="mb-8 text-3xl font-light text-foreground md:text-4xl leading-tight">
+                  We werken vanuit <span className="font-serif italic text-terracotta-600">zachtheid, helderheid en veiligheid</span>
                 </h2>
               </div>
             </ScrollReveal>
             
             <ScrollReveal delay={0.1}>
-              <div className="space-y-4">
-                {faqItems.map((item, index) => (
-                  <Card key={index} className="border-0 rounded-2xl shadow-sm overflow-hidden bg-white">
-                    <CardContent className="p-6">
-                      <h3 className="text-lg font-semibold text-foreground mb-2">{item.question}</h3>
-                      <p className="text-muted-foreground">{item.answer}</p>
-                    </CardContent>
-                  </Card>
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-10">
+                {[
+                  "Evidence-based programma's",
+                  "Ervaren begeleiding",
+                  "Trauma-sensitieve aanpak",
+                  "Respect voor jouw tempo",
+                ].map((item, index) => (
+                  <div key={index} className="flex items-center gap-2 p-4 rounded-xl bg-white border border-warm-200 shadow-sm">
+                    <Check className="h-4 w-4 text-sage-600 flex-shrink-0" />
+                    <span className="text-sm text-foreground">{item}</span>
+                  </div>
                 ))}
+              </div>
+              <div className="text-center">
+                <p className="text-lg text-muted-foreground italic">
+                  Je hoeft niet te veranderen wie je bent. Je leert anders om te gaan met wat je ervaart.
+                </p>
               </div>
             </ScrollReveal>
           </div>
         </div>
       </section>
 
+      {/* Over de trainers */}
+      <section className="py-20 lg:py-24 bg-white">
+        <div className="container mx-auto px-4">
+          <div className="mx-auto max-w-4xl">
+            <div className="grid gap-10 lg:grid-cols-2 items-center">
+              <ScrollReveal animation="fade-right">
+                <div className="relative">
+                  <div className="absolute inset-0 bg-gradient-to-br from-sage-100 to-terracotta-100 rounded-3xl transform -rotate-3" />
+                  <Card className="relative border-0 bg-white rounded-3xl shadow-lg overflow-hidden">
+                    <CardContent className="p-8 text-center">
+                      <div className="h-20 w-20 rounded-full bg-gradient-to-br from-terracotta-100 to-terracotta-200 flex items-center justify-center mb-6 mx-auto">
+                        <Users className="h-10 w-10 text-terracotta-600" />
+                      </div>
+                      <h3 className="text-xl font-semibold text-foreground mb-3">Ervaren trainers</h3>
+                      <p className="text-muted-foreground">
+                        Gecertificeerde MSC en MBSR trainers met achtergrond in psychologie, 
+                        somatische therapie en mindfulness.
+                      </p>
+                    </CardContent>
+                  </Card>
+                </div>
+              </ScrollReveal>
+              
+              <ScrollReveal animation="fade-left" delay={0.2}>
+                <div>
+                  <span className="inline-block rounded-full bg-warm-100 px-4 py-1.5 text-xs font-semibold text-warm-700 mb-6">
+                    Over Mindful Mind
+                  </span>
+                  <h2 className="mb-6 text-3xl font-light text-foreground md:text-4xl leading-tight">
+                    Warmte, expertise en <span className="font-serif italic text-terracotta-600">veiligheid</span>
+                  </h2>
+                  <p className="text-muted-foreground text-lg leading-relaxed mb-6">
+                    Bij Mindful Mind werken we vanuit de overtuiging dat iedereen de capaciteit heeft 
+                    om vriendelijker naar zichzelf te leren kijken.
+                  </p>
+                  <p className="text-muted-foreground text-lg leading-relaxed mb-8">
+                    Onze trainers combineren wetenschappelijke expertise met een warme, 
+                    trauma-sensitieve benadering. We creëren een veilige ruimte waarin je kunt ontdekken 
+                    wat zelfcompassie en mindfulness voor jou betekent.
+                  </p>
+                  <Button asChild variant="outline" className="border-terracotta-300 text-terracotta-700 hover:bg-terracotta-50 rounded-full px-6">
+                    <Link to="/trainers">
+                      Ontmoet onze trainers
+                      <ArrowRight className="ml-2 h-4 w-4" />
+                    </Link>
+                  </Button>
+                </div>
+              </ScrollReveal>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* CTA */}
-      <section className="py-20 lg:py-24 bg-gradient-to-br from-sage-600 to-sage-700 relative overflow-hidden">
-        <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxwYXRoIGQ9Ik0zNiAxOGMtOS45NDEgMC0xOCA4LjA1OS0xOCAxOHM4LjA1OSAxOCAxOCAxOGMzLjE5IDAgNi4yOS0uODQ4IDkuMDI3LTIuNDI0QzQyLjE1NSA0OS4wNjcgMzguNDI0IDQ4IDM2IDQ4Yy02LjYyNyAwLTEyLTUuMzczLTEyLTEycy41MzctMTIgMTItMTJjNi42MjcgMCAxMiA1LjM3MyAxMiAxMiAwIDIuNDI0LTEuMDY3IDYuMTU1LTMuNTc2IDkuMDI3QzQ3LjE1MiA0Mi4yOSA0OCAzOS4xOSA0OCAzNmMwLTkuOTQxLTguMDU5LTE4LTE4LTE4eiIgZmlsbD0iI2ZmZiIgZmlsbC1vcGFjaXR5PSIuMDUiLz48L2c+PC9zdmc+')] opacity-30" />
-        
-        <div className="container relative mx-auto px-4">
+      <section className="py-20 lg:py-24 bg-gradient-to-br from-terracotta-500 to-terracotta-600">
+        <div className="container mx-auto px-4">
           <div className="mx-auto max-w-3xl text-center">
-            <ScrollReveal>
-              <h2 className="mb-6 text-3xl font-light text-white md:text-4xl leading-tight">
-                Klaar om een vriendelijkere relatie met jezelf te ontwikkelen?
-              </h2>
-              <p className="text-sage-100 text-lg mb-10 max-w-2xl mx-auto">
-                De 8-weekse Mindful Self-Compassion training is de meest uitgebreide manier 
-                om zelfcompassie te leren en in je leven te integreren.
-              </p>
-              <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <Button asChild size="lg" className="bg-white text-sage-700 hover:bg-sage-50 rounded-full px-8">
-                  <Link to="/msc-training">
-                    Bekijk de MSC training
-                    <ArrowRight className="ml-2 h-4 w-4" />
-                  </Link>
-                </Button>
-                <Button asChild size="lg" variant="outline" className="border-white text-white hover:bg-white/10 rounded-full px-8">
-                  <Link to="/workshops">
-                    Of start met een workshop
-                  </Link>
-                </Button>
-              </div>
-            </ScrollReveal>
+            <h2 className="mb-6 text-3xl font-light text-white md:text-4xl leading-tight">
+              Klaar om te beginnen?
+            </h2>
+            <p className="text-terracotta-100 text-lg mb-8">
+              Of je nu een workshop, training of retreat volgt — je bent welkom precies zoals je bent.
+            </p>
+            <div className="flex flex-col gap-4 sm:flex-row sm:justify-center">
+              <Button asChild size="lg" className="bg-white text-terracotta-700 hover:bg-terracotta-50 rounded-full px-8">
+                <Link to="/agenda">
+                  Bekijk actueel aanbod & data
+                  <ArrowRight className="ml-2 h-4 w-4" />
+                </Link>
+              </Button>
+              <Button asChild size="lg" className="bg-white/20 border-2 border-white text-white hover:bg-white/30 rounded-full px-8">
+                <Link to="/contact">
+                  Neem contact op
+                </Link>
+              </Button>
+            </div>
           </div>
         </div>
       </section>
