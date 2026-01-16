@@ -1,7 +1,8 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { Heart, Brain, Users, Calendar, Clock, CheckCircle2, Sparkles, Mail, Phone, MessageCircle } from "lucide-react";
+import { Heart, Brain, Users, Calendar, Clock, CheckCircle2, Sparkles } from "lucide-react";
 import Navigation from "@/components/Navigation";
+import Footer from "@/components/Footer";
 
 const trainingDates = [
   {
@@ -324,41 +325,7 @@ const MSCTraining = () => {
         </div>
       </section>
 
-      {/* Footer */}
-      <footer className="border-t border-warm-200 bg-warm-50 py-12">
-        <div className="container mx-auto px-4">
-          <div className="max-w-4xl mx-auto">
-            <div className="grid gap-8 md:grid-cols-2 mb-8">
-              <div>
-                <p className="font-serif italic text-2xl text-primary mb-4">Mindful Mind</p>
-                <p className="text-muted-foreground text-sm">
-                  Begeleiding in Mindful Zelfcompassie voor meer rust, zelfacceptatie en veerkracht.
-                </p>
-              </div>
-              <div className="space-y-3">
-                <h4 className="font-medium text-foreground">Contact</h4>
-                <a href="mailto:mindful-mind@outlook.com" className="flex items-center gap-2 text-sm text-muted-foreground hover:text-terracotta-600">
-                  <Mail className="h-4 w-4" />
-                  mindful-mind@outlook.com
-                </a>
-                <a href="tel:+31625633379" className="flex items-center gap-2 text-sm text-muted-foreground hover:text-terracotta-600">
-                  <Phone className="h-4 w-4" />
-                  +31 6 25633379
-                </a>
-                <a href="https://wa.me/31625633379" className="flex items-center gap-2 text-sm text-muted-foreground hover:text-terracotta-600">
-                  <MessageCircle className="h-4 w-4" />
-                  WhatsApp
-                </a>
-              </div>
-            </div>
-            <div className="border-t border-warm-200 pt-8 text-center">
-              <p className="text-sm text-muted-foreground">
-                © {new Date().getFullYear()} Mindful Mind. Alle rechten voorbehouden.
-              </p>
-            </div>
-          </div>
-        </div>
-      </footer>
+      <Footer />
     </div>
   );
 };
