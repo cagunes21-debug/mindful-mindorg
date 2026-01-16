@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { Heart, Brain, Sparkles, ArrowRight, Check, Mail, Phone, MessageCircle, Clock, Users, Globe, Calendar, Quote, Star, Leaf, HelpCircle, Award, TrendingUp, BookOpen, FlaskConical } from "lucide-react";
+import { Heart, Brain, Sparkles, ArrowRight, Check, Mail, Phone, MessageCircle, Clock, Users, Globe, Calendar, Quote, Star, Leaf, HelpCircle, Award, TrendingUp, BookOpen, FlaskConical, Play } from "lucide-react";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import {
   Carousel,
@@ -327,6 +327,96 @@ const Index = () => {
                     <ArrowRight className="ml-2 h-5 w-5" />
                   </a>
                 </Button>
+              </div>
+            </ScrollReveal>
+          </div>
+        </div>
+      </section>
+
+      {/* Video Introductie Section */}
+      <section className="py-20 lg:py-28 bg-gradient-to-b from-warm-50 to-white relative overflow-hidden">
+        <div className="absolute top-0 left-1/4 w-64 h-64 bg-terracotta-100/30 rounded-full blur-3xl" />
+        <div className="absolute bottom-0 right-1/4 w-80 h-80 bg-sage-100/30 rounded-full blur-3xl" />
+        
+        <div className="container relative mx-auto px-4">
+          <div className="mx-auto max-w-5xl">
+            <ScrollReveal>
+              <div className="text-center mb-12">
+                <span className="inline-flex items-center gap-2 rounded-full bg-terracotta-100 border border-terracotta-200 px-5 py-2 text-xs font-semibold tracking-wider text-terracotta-700 mb-6 uppercase">
+                  <Play className="h-3.5 w-3.5" />
+                  Kennismaken
+                </span>
+                <h2 className="mb-6 text-3xl font-light text-foreground md:text-4xl lg:text-5xl leading-tight">
+                  Ontdek wat zelfcompassie <span className="font-serif italic text-terracotta-600">voor jou kan betekenen</span>
+                </h2>
+                <p className="text-muted-foreground text-lg max-w-2xl mx-auto leading-relaxed">
+                  In deze korte video leg ik uit wat Mindful Zelfcompassie is en hoe de training je kan helpen om milder met jezelf om te gaan.
+                </p>
+              </div>
+            </ScrollReveal>
+            
+            <ScrollReveal delay={0.1}>
+              <div className="relative max-w-4xl mx-auto">
+                {/* Video Container */}
+                <div className="relative aspect-video rounded-3xl overflow-hidden shadow-2xl border border-warm-200 bg-gradient-to-br from-terracotta-100 to-sage-100">
+                  {/* Placeholder - vervang dit met je eigen video embed */}
+                  <div className="absolute inset-0 flex flex-col items-center justify-center bg-gradient-to-br from-terracotta-50 to-sage-50">
+                    <div className="relative group cursor-pointer">
+                      {/* Play button */}
+                      <div className="h-24 w-24 rounded-full bg-white shadow-xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                        <div className="h-20 w-20 rounded-full bg-gradient-to-br from-terracotta-500 to-terracotta-600 flex items-center justify-center">
+                          <Play className="h-10 w-10 text-white fill-white ml-1" />
+                        </div>
+                      </div>
+                      {/* Pulse animation */}
+                      <div className="absolute inset-0 rounded-full bg-terracotta-400/30 animate-ping" />
+                    </div>
+                    <p className="mt-8 text-muted-foreground font-medium">Klik om de video af te spelen</p>
+                    <p className="mt-2 text-sm text-muted-foreground">Duur: 3 minuten</p>
+                  </div>
+                  
+                  {/* Uncomment en vervang VIDEO_ID met je YouTube video ID:
+                  <iframe
+                    className="absolute inset-0 w-full h-full"
+                    src="https://www.youtube.com/embed/VIDEO_ID"
+                    title="Introductie Mindful Zelfcompassie"
+                    frameBorder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowFullScreen
+                  />
+                  */}
+                </div>
+                
+                {/* Decorative elements */}
+                <div className="absolute -bottom-4 -left-4 w-24 h-24 bg-sage-100 rounded-2xl -z-10" />
+                <div className="absolute -top-4 -right-4 w-16 h-16 bg-terracotta-100 rounded-xl -z-10" />
+              </div>
+            </ScrollReveal>
+            
+            {/* Video highlights */}
+            <ScrollReveal delay={0.2}>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-12 max-w-3xl mx-auto">
+                <div className="text-center p-4">
+                  <div className="h-12 w-12 rounded-xl bg-terracotta-100 flex items-center justify-center mx-auto mb-3">
+                    <Heart className="h-6 w-6 text-terracotta-600" />
+                  </div>
+                  <p className="font-medium text-foreground mb-1">Persoonlijke introductie</p>
+                  <p className="text-sm text-muted-foreground">Leer mij kennen als trainer</p>
+                </div>
+                <div className="text-center p-4">
+                  <div className="h-12 w-12 rounded-xl bg-sage-100 flex items-center justify-center mx-auto mb-3">
+                    <Brain className="h-6 w-6 text-sage-600" />
+                  </div>
+                  <p className="font-medium text-foreground mb-1">Wat is zelfcompassie?</p>
+                  <p className="text-sm text-muted-foreground">Korte uitleg van de basis</p>
+                </div>
+                <div className="text-center p-4">
+                  <div className="h-12 w-12 rounded-xl bg-terracotta-100 flex items-center justify-center mx-auto mb-3">
+                    <Sparkles className="h-6 w-6 text-terracotta-600" />
+                  </div>
+                  <p className="font-medium text-foreground mb-1">Wat kun je verwachten?</p>
+                  <p className="text-sm text-muted-foreground">Preview van de training</p>
+                </div>
               </div>
             </ScrollReveal>
           </div>
