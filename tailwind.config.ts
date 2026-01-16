@@ -83,6 +83,18 @@ export default {
           600: "hsl(var(--warm-600))",
           700: "hsl(var(--warm-700))",
         },
+        terracotta: {
+          50: "hsl(var(--terracotta-50))",
+          100: "hsl(var(--terracotta-100))",
+          200: "hsl(var(--terracotta-200))",
+          300: "hsl(var(--terracotta-300))",
+          400: "hsl(var(--terracotta-400))",
+          500: "hsl(var(--terracotta-500))",
+          600: "hsl(var(--terracotta-600))",
+          700: "hsl(var(--terracotta-700))",
+          800: "hsl(var(--terracotta-800))",
+          900: "hsl(var(--terracotta-900))",
+        },
       },
       borderRadius: {
         lg: "var(--radius)",
