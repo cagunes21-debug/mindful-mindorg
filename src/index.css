@@ -10,84 +10,85 @@ All colors MUST be HSL.
 
 @layer base {
   :root {
-    /* Core colors - warm beige/cream theme */
-    --background: 35 40% 95%;
-    --foreground: 20 15% 20%;
+    /* Core colors - warm cream/off-white theme */
+    --background: 40 30% 96%;
+    --foreground: 25 20% 18%;
 
-    --card: 35 35% 97%;
-    --card-foreground: 20 15% 20%;
+    --card: 40 25% 98%;
+    --card-foreground: 25 20% 18%;
 
-    --popover: 35 35% 97%;
-    --popover-foreground: 20 15% 20%;
+    --popover: 40 25% 98%;
+    --popover-foreground: 25 20% 18%;
 
-    /* Terracotta/coral - primary brand color */
-    --primary: 15 55% 55%;
-    --primary-foreground: 35 40% 98%;
+    /* Terracotta - muted, earthy primary */
+    --primary: 18 45% 48%;
+    --primary-foreground: 40 30% 98%;
 
     /* Warm beige - secondary color */
-    --secondary: 35 30% 90%;
-    --secondary-foreground: 20 15% 20%;
+    --secondary: 38 25% 92%;
+    --secondary-foreground: 25 20% 22%;
 
-    --muted: 35 20% 88%;
-    --muted-foreground: 20 10% 45%;
+    --muted: 38 18% 88%;
+    --muted-foreground: 25 12% 42%;
 
-    --accent: 35 35% 92%;
-    --accent-foreground: 15 55% 40%;
+    --accent: 38 28% 94%;
+    --accent-foreground: 18 45% 38%;
 
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 35 40% 98%;
+    --destructive: 0 65% 55%;
+    --destructive-foreground: 40 30% 98%;
 
-    --border: 30 25% 85%;
-    --input: 30 25% 85%;
-    --ring: 15 55% 55%;
+    --border: 35 20% 88%;
+    --input: 35 20% 88%;
+    --ring: 18 45% 48%;
 
-    --radius: 0.75rem;
+    --radius: 0.5rem;
 
-    /* Terracotta palette - brighter */
-    --terracotta-50: 20 70% 97%;
-    --terracotta-100: 18 65% 92%;
-    --terracotta-200: 16 70% 82%;
-    --terracotta-300: 14 75% 68%;
-    --terracotta-400: 12 80% 58%;
-    --terracotta-500: 15 85% 52%;
-    --terracotta-600: 12 80% 45%;
-    --terracotta-700: 10 70% 38%;
-    --terracotta-800: 8 60% 30%;
-    --terracotta-900: 6 50% 22%;
+    /* Terracotta palette - earthy, muted tones */
+    --terracotta-50: 25 35% 97%;
+    --terracotta-100: 22 32% 92%;
+    --terracotta-200: 20 35% 84%;
+    --terracotta-300: 18 38% 72%;
+    --terracotta-400: 16 42% 58%;
+    --terracotta-500: 18 45% 48%;
+    --terracotta-600: 16 48% 42%;
+    --terracotta-700: 14 45% 35%;
+    --terracotta-800: 12 40% 28%;
+    --terracotta-900: 10 35% 20%;
 
-    /* Sage/pastel green palette - for secondary sections */
-    --sage-50: 145 30% 97%;
-    --sage-100: 145 28% 92%;
-    --sage-200: 145 25% 85%;
-    --sage-300: 145 22% 75%;
-    --sage-400: 145 20% 65%;
-    --sage-500: 145 18% 55%;
-    --sage-600: 145 22% 75%;
-    --sage-700: 145 20% 65%;
-    --sage-800: 145 18% 55%;
-    --sage-900: 145 15% 45%;
+    /* Sage/pastel green palette - soft, calming */
+    --sage-50: 150 25% 97%;
+    --sage-100: 150 22% 93%;
+    --sage-200: 148 20% 86%;
+    --sage-300: 146 18% 76%;
+    --sage-400: 144 16% 64%;
+    --sage-500: 142 14% 52%;
+    --sage-600: 140 16% 44%;
+    --sage-700: 138 18% 36%;
+    --sage-800: 136 20% 28%;
+    --sage-900: 134 22% 20%;
 
     /* Warm/cream palette */
-    --warm-50: 35 40% 97%;
-    --warm-100: 35 35% 93%;
-    --warm-200: 33 30% 85%;
-    --warm-300: 30 25% 75%;
-    --warm-400: 28 22% 60%;
-    --warm-500: 25 25% 50%;
-    --warm-600: 22 28% 42%;
-    --warm-700: 20 30% 34%;
+    --warm-50: 40 30% 98%;
+    --warm-100: 38 28% 94%;
+    --warm-200: 36 24% 88%;
+    --warm-300: 34 20% 78%;
+    --warm-400: 32 18% 62%;
+    --warm-500: 30 20% 48%;
+    --warm-600: 28 22% 38%;
+    --warm-700: 26 24% 28%;
 
     /* Shadows */
-    --shadow-soft: 0 4px 20px -4px hsl(20 20% 20% / 0.08);
+    --shadow-soft: 0 4px 24px -6px hsl(25 20% 20% / 0.06);
+    --shadow-medium: 0 8px 32px -8px hsl(25 20% 20% / 0.1);
 
-    --sidebar-background: 35 40% 97%;
-    --sidebar-foreground: 20 15% 26%;
-    --sidebar-primary: 15 55% 55%;
+    --sidebar-background: 40 28% 97%;
+    --sidebar-foreground: 25 20% 22%;
+    --sidebar-primary: 18 45% 48%;
     --sidebar-primary-foreground: 0 0% 98%;
-    --sidebar-accent: 35 35% 92%;
-    --sidebar-accent-foreground: 15 55% 40%;
-    --sidebar-border: 30 25% 88%;
-    --sidebar-ring: 15 55% 60%;
+    --sidebar-accent: 38 28% 94%;
+    --sidebar-accent-foreground: 18 45% 38%;
+    --sidebar-border: 35 20% 90%;
+    --sidebar-ring: 18 45% 52%;
   }
 }
 
