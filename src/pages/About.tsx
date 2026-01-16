@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { Heart, ArrowRight, Mail, Phone, MessageCircle, Check, Sparkles, Target, Eye, Users } from "lucide-react";
+import { Heart, ArrowRight, Mail, Phone, MessageCircle, Check, Sparkles, Target, Eye } from "lucide-react";
 import Navigation from "@/components/Navigation";
 
 const About = () => {
@@ -9,7 +9,7 @@ const About = () => {
       <Navigation />
       
       {/* Hero Section */}
-      <section className="relative overflow-hidden pt-24 pb-20 lg:pt-32 lg:pb-28">
+      <section className="relative overflow-hidden pt-24 pb-16 lg:pt-32 lg:pb-20">
         <div className="absolute inset-0 bg-gradient-to-b from-terracotta-100/40 via-background to-background" />
         <div className="absolute top-20 left-1/3 w-80 h-80 bg-sage-200/30 rounded-full blur-3xl" />
         <div className="absolute bottom-10 right-1/3 w-72 h-72 bg-terracotta-200/20 rounded-full blur-3xl" />
@@ -18,66 +18,62 @@ const About = () => {
           <div className="mx-auto max-w-3xl text-center">
             <span className="inline-flex items-center gap-2 mb-8 rounded-full bg-terracotta-100 border border-terracotta-200 px-5 py-2.5 text-sm font-medium text-terracotta-700">
               <Heart className="h-4 w-4" />
-              Over Ons
+              Over Mindful Mind
             </span>
             
             <h1 className="mb-8 text-4xl font-light tracking-tight text-foreground md:text-5xl lg:text-6xl leading-[1.1]">
               Ruimte om te
               <span className="block font-serif italic text-terracotta-600 mt-2">vertragen en te voelen</span>
             </h1>
-            
-            <p className="text-muted-foreground text-lg max-w-2xl mx-auto leading-relaxed">
-              In een wereld die altijd in beweging is, creëren wij ruimte voor innerlijke rust, zelfcompassie en bewuste aanwezigheid.
+          </div>
+        </div>
+      </section>
+
+      {/* The Problem We Address */}
+      <section className="py-16 lg:py-20 bg-white">
+        <div className="container mx-auto px-4">
+          <div className="mx-auto max-w-2xl text-center">
+            <p className="text-muted-foreground text-lg leading-relaxed mb-6">
+              In een wereld die altijd in beweging is, raak je makkelijk jezelf kwijt. Je loopt door, presteert, zorgt voor anderen — maar wanneer sta je echt stil?
+            </p>
+            <p className="text-foreground text-xl font-medium leading-relaxed">
+              Bij Mindful Mind creëren we die ruimte. Voor innerlijke rust, zelfcompassie en bewuste aanwezigheid.
             </p>
           </div>
         </div>
       </section>
 
-      {/* Core Message */}
-      <section className="py-20 lg:py-24 bg-white">
+      {/* Our Promise */}
+      <section className="py-16 lg:py-20 bg-gradient-to-b from-warm-50 to-white">
         <div className="container mx-auto px-4">
           <div className="mx-auto max-w-3xl">
-            <div className="grid gap-8 md:grid-cols-2 items-center">
-              <div>
-                <h2 className="text-2xl font-light text-foreground md:text-3xl mb-6 leading-tight">
-                  Je hoeft niet perfect te zijn. <span className="font-serif italic text-terracotta-600">Je mag er gewoon zijn.</span>
-                </h2>
-                <p className="text-muted-foreground text-lg leading-relaxed">
-                  Bij Mindful Mind bieden we een veilige plek waar alle aspecten van jezelf welkom zijn. Geen prestaties, geen verwachtingen — alleen ruimte om te herstellen en te groeien.
-                </p>
-              </div>
-              
-              <div className="bg-gradient-to-br from-terracotta-50 to-sage-50 rounded-3xl p-8 border border-warm-200">
-                <p className="text-foreground leading-relaxed font-medium">
-                  "Wij ondersteunen je in jouw reis naar meer veerkracht, zelfzorg en een stabiele bron van vriendelijkheid in jezelf."
-                </p>
-              </div>
+            <div className="bg-white rounded-3xl p-8 md:p-12 shadow-sm border border-warm-200 text-center">
+              <h2 className="text-2xl font-light text-foreground md:text-3xl mb-6 leading-tight">
+                Je hoeft niet perfect te zijn.
+                <span className="block font-serif italic text-terracotta-600 mt-1">Je mag er gewoon zijn.</span>
+              </h2>
+              <p className="text-muted-foreground text-lg leading-relaxed">
+                Wij bieden een veilige plek waar alle aspecten van jezelf welkom zijn. Geen prestaties, geen verwachtingen — alleen ruimte om te herstellen en te groeien.
+              </p>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Why Mindful Mind */}
-      <section className="py-20 lg:py-24 bg-warm-50">
+      {/* What Makes Us Different */}
+      <section className="py-20 lg:py-24 bg-white">
         <div className="container mx-auto px-4">
           <div className="mx-auto max-w-4xl">
             <div className="text-center mb-14">
               <p className="text-sm font-medium text-terracotta-500 tracking-widest uppercase mb-4">Onze Aanpak</p>
-              <h2 className="text-3xl font-light text-foreground md:text-4xl leading-tight">
-                Meer dan <span className="font-serif italic text-terracotta-600">technieken</span>
+              <h2 className="text-3xl font-light text-foreground md:text-4xl leading-tight mb-6">
+                Meer dan <span className="font-serif italic text-terracotta-600">technieken leren</span>
               </h2>
-            </div>
-            
-            <div className="max-w-2xl mx-auto text-center mb-12">
-              <p className="text-muted-foreground text-lg leading-relaxed mb-6">
-                Wij geloven in echte transformatie — niet alleen stressreductie, maar een fundamentele verschuiving in hoe je naar jezelf kijkt.
-              </p>
-              <p className="text-foreground font-medium text-lg">
-                Meer aanwezig. Meer in vrede. Meer verbonden met wie je werkelijk bent.
+              <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
+                Wij geloven in echte transformatie — een fundamentele verschuiving in hoe je naar jezelf kijkt en met jezelf omgaat.
               </p>
             </div>
             
-            {/* Key Points */}
             <div className="grid gap-4 sm:grid-cols-2">
               {[
                 { title: "Blijvende verandering", desc: "Gericht op duurzame groei, niet op snelle fixes" },
@@ -85,7 +81,7 @@ const About = () => {
                 { title: "Trauma-sensitief", desc: "Met zorg en aandacht voor ieders tempo" },
                 { title: "Theorie + praktijk", desc: "Direct toepasbaar in je dagelijks leven" },
               ].map((item, index) => (
-                <div key={index} className="bg-white rounded-2xl px-6 py-5 border border-warm-200 shadow-sm">
+                <div key={index} className="bg-warm-50 rounded-2xl px-6 py-5 border border-warm-200">
                   <div className="flex items-start gap-4">
                     <div className="flex-shrink-0 h-8 w-8 rounded-full bg-terracotta-100 flex items-center justify-center mt-0.5">
                       <Check className="h-4 w-4 text-terracotta-600" />
@@ -102,60 +98,37 @@ const About = () => {
         </div>
       </section>
 
-      {/* For Who */}
-      <section className="py-20 lg:py-24 bg-white">
-        <div className="container mx-auto px-4">
-          <div className="mx-auto max-w-3xl text-center">
-            <p className="text-sm font-medium text-terracotta-500 tracking-widest uppercase mb-4">Voor Jou</p>
-            <h2 className="mb-10 text-3xl font-light text-foreground md:text-4xl leading-tight">
-              Voor wie wil <span className="font-serif italic text-terracotta-600">vertragen</span>
-            </h2>
-            
-            <div className="bg-gradient-to-br from-sage-50 to-warm-50 rounded-3xl p-8 md:p-10 border border-sage-200">
-              <div className="h-16 w-16 rounded-2xl bg-gradient-to-br from-sage-100 to-sage-200 flex items-center justify-center mb-6 mx-auto">
-                <Users className="h-8 w-8 text-sage-700" />
-              </div>
-              <p className="text-xl text-foreground font-medium mb-6">
-                Je merkt dat je jezelf voorbijloopt. Je wilt stil kunnen staan — en echt voelen.
-              </p>
-              <p className="text-muted-foreground text-lg leading-relaxed">
-                Onze trainingen zijn er voor iedereen die ruimte zoekt om te verdiepen, zachter met zichzelf om te gaan, en met meer rust door het leven te bewegen.
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
-
       {/* How We Work */}
-      <section className="py-20 lg:py-24 bg-white">
+      <section className="py-20 lg:py-24 bg-warm-50">
         <div className="container mx-auto px-4">
           <div className="mx-auto max-w-3xl">
             <div className="text-center mb-12">
-              <p className="text-sm font-medium text-terracotta-500 tracking-widest uppercase mb-4">Onze Benadering</p>
+              <p className="text-sm font-medium text-terracotta-500 tracking-widest uppercase mb-4">In Onze Trainingen</p>
               <h2 className="text-3xl font-light text-foreground md:text-4xl leading-tight">
                 Hoe wij <span className="font-serif italic text-terracotta-600">werken</span>
               </h2>
             </div>
             
-            <div className="bg-gradient-to-br from-warm-50 to-sage-50 rounded-3xl p-8 md:p-10 border border-warm-200 mb-8">
-              <p className="text-lg text-foreground leading-relaxed mb-6">
-                In onze trainingen staat authenticiteit centraal. Echte verandering ontstaat wanneer je je veilig voelt — veilig om te lachen, te voelen, te delen of stil te zijn.
+            <div className="bg-white rounded-3xl p-8 md:p-10 shadow-sm border border-warm-200">
+              <p className="text-lg text-foreground leading-relaxed mb-8 text-center">
+                Authenticiteit staat centraal. Echte verandering ontstaat wanneer je je veilig voelt — veilig om te lachen, te voelen, te delen of gewoon stil te zijn.
               </p>
               
-              <div className="grid gap-3 sm:grid-cols-3 my-6">
-                <div className="text-center p-4 rounded-2xl bg-white/80">
+              <div className="grid gap-3 sm:grid-cols-3 mb-8">
+                <div className="text-center p-5 rounded-2xl bg-warm-50 border border-warm-100">
                   <p className="text-foreground font-medium">Niets is verplicht</p>
                 </div>
-                <div className="text-center p-4 rounded-2xl bg-white/80">
+                <div className="text-center p-5 rounded-2xl bg-sage-50 border border-sage-100">
                   <p className="text-foreground font-medium">Alles is welkom</p>
                 </div>
-                <div className="text-center p-4 rounded-2xl bg-white/80">
+                <div className="text-center p-5 rounded-2xl bg-terracotta-50 border border-terracotta-100">
                   <p className="text-foreground font-medium">Ruimte voor jou</p>
                 </div>
               </div>
               
-              <p className="text-muted-foreground leading-relaxed">
-                Voor ons is zelfcompassie niet alleen een techniek — het is een manier van leven. Het helpt ons om onszelf te ondersteunen zoals we een dierbare vriend zouden steunen.
+              <p className="text-muted-foreground leading-relaxed text-center">
+                Voor ons is zelfcompassie niet alleen een techniek — het is een manier van leven. 
+                Het helpt ons om onszelf te ondersteunen zoals we een dierbare vriend zouden steunen.
               </p>
             </div>
           </div>
@@ -163,7 +136,7 @@ const About = () => {
       </section>
 
       {/* Vision & Mission */}
-      <section className="py-20 lg:py-24 bg-gradient-to-b from-warm-50 to-sage-50">
+      <section className="py-20 lg:py-24 bg-white">
         <div className="container mx-auto px-4">
           <div className="mx-auto max-w-4xl">
             <div className="text-center mb-14">
@@ -174,9 +147,8 @@ const About = () => {
             </div>
             
             <div className="grid gap-8 md:grid-cols-2">
-              {/* Vision */}
-              <div className="bg-white rounded-3xl p-8 shadow-sm border border-warm-200">
-                <div className="h-14 w-14 rounded-2xl bg-gradient-to-br from-terracotta-100 to-terracotta-200 flex items-center justify-center mb-6">
+              <div className="bg-gradient-to-br from-terracotta-50 to-warm-50 rounded-3xl p-8 border border-terracotta-100">
+                <div className="h-14 w-14 rounded-2xl bg-white flex items-center justify-center mb-6 shadow-sm">
                   <Eye className="h-7 w-7 text-terracotta-600" />
                 </div>
                 <h3 className="text-xl font-semibold text-foreground mb-4">Onze Visie</h3>
@@ -184,13 +156,12 @@ const About = () => {
                   Een wereld waarin we met compassie naar onszelf én naar anderen kijken.
                 </p>
                 <p className="text-foreground leading-relaxed font-medium">
-                  Wanneer we goed voor onszelf zorgen, groeit onze verbinding met de mensen om ons heen.
+                  Wanneer we goed voor onszelf zorgen, groeit onze verbinding met anderen.
                 </p>
               </div>
               
-              {/* Mission */}
-              <div className="bg-white rounded-3xl p-8 shadow-sm border border-warm-200">
-                <div className="h-14 w-14 rounded-2xl bg-gradient-to-br from-sage-100 to-sage-200 flex items-center justify-center mb-6">
+              <div className="bg-gradient-to-br from-sage-50 to-warm-50 rounded-3xl p-8 border border-sage-200">
+                <div className="h-14 w-14 rounded-2xl bg-white flex items-center justify-center mb-6 shadow-sm">
                   <Target className="h-7 w-7 text-sage-700" />
                 </div>
                 <h3 className="text-xl font-semibold text-foreground mb-4">Onze Missie</h3>
@@ -202,6 +173,23 @@ const About = () => {
                 </p>
               </div>
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Meet the Trainers Bridge */}
+      <section className="py-16 lg:py-20 bg-warm-50">
+        <div className="container mx-auto px-4">
+          <div className="mx-auto max-w-2xl text-center">
+            <p className="text-muted-foreground text-lg leading-relaxed mb-6">
+              Achter Mindful Mind staat een team van ervaren trainers die werken vanuit warmte, expertise en een diepe persoonlijke beoefening.
+            </p>
+            <Button asChild variant="outline" className="border-terracotta-300 text-terracotta-600 hover:bg-terracotta-50 rounded-full px-8">
+              <Link to="/trainers">
+                Ontmoet de trainers
+                <ArrowRight className="ml-2 h-4 w-4" />
+              </Link>
+            </Button>
           </div>
         </div>
       </section>
@@ -219,7 +207,7 @@ const About = () => {
             </span>
             
             <h2 className="mb-6 text-3xl font-light text-white md:text-4xl lg:text-5xl leading-tight">
-              Klaar om thuis te komen <br />bij jezelf?
+              Klaar om thuis te komen bij jezelf?
             </h2>
             
             <p className="mb-12 text-white/90 text-lg max-w-lg mx-auto leading-relaxed">
