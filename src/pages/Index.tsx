@@ -60,60 +60,61 @@ const Index = () => {
       <Navigation />
       
       {/* Hero Section */}
-      <section className="relative overflow-hidden pt-24 pb-28 lg:pt-32 lg:pb-36">
-        <div className="absolute inset-0 bg-gradient-to-b from-warm-100/80 via-background to-background" />
-        <div className="absolute top-20 left-1/4 w-72 h-72 bg-terracotta-200/30 rounded-full blur-3xl" />
-        <div className="absolute bottom-10 right-1/4 w-96 h-96 bg-sage-200/30 rounded-full blur-3xl" />
-        
+      <section className="relative overflow-hidden pt-24 pb-32 lg:pt-32 lg:pb-40 bg-warm-50">
         <div className="container relative mx-auto px-4">
           <div className="mx-auto max-w-4xl text-center">
-            <motion.p 
+            {/* Top badge with tagline */}
+            <motion.div 
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6 }}
-              className="text-muted-foreground text-lg md:text-xl mb-4"
+              className="inline-flex items-center gap-2 mb-10 rounded-full bg-warm-100 border border-warm-200 px-5 py-3 text-sm font-medium text-terracotta-700"
             >
+              <Sparkles className="h-4 w-4" />
               Jouw welzijn begint bij hoe je jezelf behandelt
-            </motion.p>
+            </motion.div>
             
+            {/* Main heading */}
             <motion.h1 
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.7, delay: 0.1 }}
-              className="mb-8 text-4xl font-light tracking-tight text-foreground md:text-5xl lg:text-6xl leading-[1.1]"
+              className="mb-6 text-5xl font-light tracking-tight text-foreground md:text-6xl lg:text-7xl leading-[1.1]"
             >
               Kom thuis
               <span className="block font-serif italic text-terracotta-600 mt-2">bij jezelf!</span>
             </motion.h1>
             
-            <motion.div 
+            {/* Subtitle - training name */}
+            <motion.p 
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.15 }}
-              className="inline-flex items-center gap-2 mb-6 rounded-full bg-terracotta-100 border border-terracotta-200 px-5 py-2.5 text-sm font-medium text-terracotta-700"
+              className="text-terracotta-600 text-xl md:text-2xl font-medium mb-6"
             >
-              <Sparkles className="h-4 w-4" />
               8-weekse training in Mindful Zelfcompassie
-            </motion.div>
+            </motion.p>
             
+            {/* Description */}
             <motion.p 
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.2 }}
-              className="text-muted-foreground text-lg md:text-xl max-w-2xl mx-auto leading-relaxed mb-10"
+              className="text-muted-foreground text-lg md:text-xl max-w-xl mx-auto leading-relaxed mb-10"
             >
               Leer jezelf steunen in plaats van pushen.
             </motion.p>
 
+            {/* CTA Button */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.3 }}
             >
-              <Button asChild size="lg" className="bg-terracotta-600 hover:bg-terracotta-700 text-white rounded-full px-8">
+              <Button asChild size="lg" className="bg-terracotta-600 hover:bg-terracotta-700 text-white rounded-full px-8 py-6 text-base">
                 <a href="#programma">
                   Neem deel aan het programma
-                  <ArrowRight className="ml-2 h-4 w-4" />
+                  <ArrowRight className="ml-2 h-5 w-5" />
                 </a>
               </Button>
             </motion.div>
