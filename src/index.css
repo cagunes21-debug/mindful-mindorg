@@ -55,17 +55,17 @@ All colors MUST be HSL.
     --terracotta-800: 8 45% 32%;
     --terracotta-900: 6 40% 22%;
 
-    /* Sage/olive palette - for secondary sections */
-    --sage-50: 80 20% 95%;
-    --sage-100: 75 18% 88%;
-    --sage-200: 70 15% 78%;
-    --sage-300: 65 15% 65%;
-    --sage-400: 60 18% 50%;
-    --sage-500: 55 22% 42%;
-    --sage-600: 50 25% 35%;
-    --sage-700: 45 28% 28%;
-    --sage-800: 40 30% 22%;
-    --sage-900: 35 32% 15%;
+    /* Sage/pastel green palette - for secondary sections */
+    --sage-50: 145 30% 97%;
+    --sage-100: 145 28% 92%;
+    --sage-200: 145 25% 85%;
+    --sage-300: 145 22% 75%;
+    --sage-400: 145 20% 65%;
+    --sage-500: 145 18% 55%;
+    --sage-600: 145 22% 75%;
+    --sage-700: 145 20% 65%;
+    --sage-800: 145 18% 55%;
+    --sage-900: 145 15% 45%;
 
     /* Warm/cream palette */
     --warm-50: 35 40% 97%;
