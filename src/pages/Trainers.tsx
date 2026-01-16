@@ -6,6 +6,7 @@ import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import { ScrollReveal, StaggerContainer, StaggerItem } from "@/components/ScrollReveal";
 import { motion } from "framer-motion";
+import SEO from "@/components/SEO";
 
 const trainers = [
   {
@@ -59,6 +60,10 @@ const trainers = [
 const Trainers = () => {
   return (
     <div className="min-h-screen bg-background">
+      <SEO 
+        title="Onze Trainers"
+        description="Maak kennis met onze ervaren en gecertificeerde MSC trainers. Psychologen en therapeuten die je met warmte begeleiden naar meer zelfcompassie."
+      />
       <Navigation />
       
       {/* Hero Section */}

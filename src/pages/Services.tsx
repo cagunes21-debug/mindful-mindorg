@@ -6,10 +6,15 @@ import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import { ScrollReveal, StaggerContainer, StaggerItem } from "@/components/ScrollReveal";
 import { motion } from "framer-motion";
+import SEO from "@/components/SEO";
 
 const Services = () => {
   return (
     <div className="min-h-screen bg-background">
+      <SEO 
+        title="Ons Aanbod"
+        description="Ontdek onze MSC trainingen, workshops en 1-op-1 coaching. Van 8-weekse trainingen tot intensieve programma's - vind het programma dat bij jou past."
+      />
       <Navigation />
       
       {/* Hero Section */}
