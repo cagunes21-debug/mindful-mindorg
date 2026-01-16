@@ -43,7 +43,7 @@ const retreatBenefits = [
   },
   {
     icon: Music,
-    title: "Vrije dans als expressie",
+    title: "Vrije beweging als expressie",
     description: "Zacht, speels en uitnodigend — soms klein, soms vrij",
   },
 ];
@@ -129,7 +129,7 @@ const testimonials = [
 
 const faqItems = [
   {
-    question: "Moet ik kunnen dansen?",
+    question: "Heb ik ervaring nodig met beweging?",
     answer: "Nee, absoluut niet. De beweging in deze retraite is zacht, speels en uitnodigend. Soms klein, soms vrij, soms bijna stil. Je volgt geen passen — je volgt jezelf. Bijna iedereen zegt achteraf: 'Ik voelde me veilig' en 'Ik hoefde niks goed te doen'.",
   },
   {
@@ -163,7 +163,7 @@ const BewegingMildheidRetreat = () => {
     <div className="min-h-screen bg-background">
       <SEO 
         title="In Beweging met Mildheid | 5-daagse Retraite"
-        description="Een 5-daagse retraite in Mindful Zelfcompassie, beweging & dans. Kom weer in beweging — van binnenuit. Stop met vechten en ontdek zachtheid."
+        description="Een 5-daagse retraite in Mindful Zelfcompassie en vrije beweging. Kom weer in beweging — van binnenuit. Stop met vechten en ontdek zachtheid."
       />
       <FAQSchema items={faqItems} />
       <Navigation />
@@ -743,7 +743,7 @@ const BewegingMildheidRetreat = () => {
               In Beweging met Mildheid
             </span>
             <h2 className="mb-6 text-3xl font-light text-white md:text-4xl leading-tight">
-              Mindful Zelfcompassie • Beweging • Dans
+              Mindful Zelfcompassie • Vrije Beweging
             </h2>
             <p className="text-terracotta-100 text-lg mb-8">
               Vijf dagen thuiskomen in je lichaam. Vijf dagen in beweging — van binnenuit.
