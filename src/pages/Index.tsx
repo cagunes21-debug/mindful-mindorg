@@ -652,6 +652,87 @@ const Index = () => {
         </div>
       </section>
 
+      {/* Workshops Section */}
+      <section className="py-20 lg:py-24 bg-sage-50 relative overflow-hidden">
+        <div className="absolute top-10 left-1/4 w-48 h-48 bg-terracotta-100/30 rounded-full blur-3xl" />
+        <div className="absolute bottom-10 right-1/4 w-64 h-64 bg-sage-200/30 rounded-full blur-3xl" />
+        
+        <div className="container relative mx-auto px-4">
+          <div className="mx-auto max-w-4xl">
+            <ScrollReveal>
+              <div className="text-center mb-12">
+                <span className="inline-flex items-center gap-2 rounded-full bg-sage-100 border border-sage-200 px-5 py-2 text-xs font-semibold tracking-wider text-sage-700 mb-6 uppercase">
+                  <Sparkles className="h-3.5 w-3.5" />
+                  Laagdrempelig kennismaken
+                </span>
+                <h2 className="mb-6 text-3xl font-light text-foreground md:text-4xl lg:text-5xl leading-tight">
+                  Gratis <span className="font-serif italic text-terracotta-600">Workshops</span>
+                </h2>
+                <p className="text-muted-foreground text-lg max-w-2xl mx-auto leading-relaxed">
+                  Ontdek in een workshop van 1 uur wat zelfcompassie voor jou kan betekenen. 
+                  Ervaar hoe het voelt om jezelf met meer vriendelijkheid te benaderen.
+                </p>
+              </div>
+            </ScrollReveal>
+            
+            <StaggerContainer className="grid gap-4 md:grid-cols-2 mb-10">
+              {[
+                { lang: "Nederlands", date: "14 januari 2026", time: "19:00 – 20:00" },
+                { lang: "Nederlands", date: "11 februari 2026", time: "19:00 – 20:00" },
+                { lang: "English", date: "13 januari 2026", time: "19:00 – 20:00" },
+                { lang: "English", date: "10 februari 2026", time: "19:00 – 20:00" },
+              ].map((workshop, index) => (
+                <StaggerItem key={index}>
+                  <Card className="border-warm-200 bg-white hover:shadow-lg transition-all duration-300 rounded-2xl overflow-hidden group">
+                    <CardContent className="p-6">
+                      <div className="flex items-center justify-between mb-4">
+                        <span className={`px-3 py-1.5 rounded-full text-xs font-semibold ${
+                          workshop.lang === "Nederlands" 
+                            ? "bg-terracotta-100 text-terracotta-700" 
+                            : "bg-sage-100 text-sage-700"
+                        }`}>
+                          {workshop.lang}
+                        </span>
+                        <div className="flex items-center gap-1.5 text-sm text-muted-foreground">
+                          <Clock className="h-4 w-4" />
+                          {workshop.time}
+                        </div>
+                      </div>
+                      <div className="flex items-center gap-3 mb-4">
+                        <div className="h-10 w-10 rounded-xl bg-terracotta-100 flex items-center justify-center flex-shrink-0">
+                          <Calendar className="h-5 w-5 text-terracotta-600" />
+                        </div>
+                        <div>
+                          <p className="text-lg font-medium text-foreground">{workshop.date}</p>
+                          <p className="text-sm text-sage-600 font-medium">Gratis • Online via Zoom</p>
+                        </div>
+                      </div>
+                      <Button asChild className="w-full bg-terracotta-600 hover:bg-terracotta-700 text-white rounded-full group-hover:shadow-md transition-all">
+                        <a href="mailto:mindful-mind@outlook.com?subject=Aanmelding workshop">
+                          Meld je aan
+                          <ArrowRight className="ml-2 h-4 w-4" />
+                        </a>
+                      </Button>
+                    </CardContent>
+                  </Card>
+                </StaggerItem>
+              ))}
+            </StaggerContainer>
+            
+            <ScrollReveal delay={0.2}>
+              <div className="text-center">
+                <Button asChild variant="outline" className="border-sage-300 text-sage-700 hover:bg-sage-100 rounded-full px-8">
+                  <Link to="/workshops">
+                    Bekijk alle workshops
+                    <ArrowRight className="ml-2 h-4 w-4" />
+                  </Link>
+                </Button>
+              </div>
+            </ScrollReveal>
+          </div>
+        </div>
+      </section>
+
       {/* 1-op-1 Begeleiding */}
       <section className="py-20 lg:py-24 bg-white">
         <div className="container mx-auto px-4">
