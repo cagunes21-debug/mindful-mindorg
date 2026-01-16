@@ -267,16 +267,22 @@ const BewegingMildheidRetreat = () => {
             <ScrollReveal delay={0.1}>
               <div className="prose prose-lg mx-auto text-center mb-12">
                 <p className="text-muted-foreground text-lg leading-relaxed">
-                  Je hoofd staat zelden stil. Je bent vaak streng voor jezelf.
+                  Je hoofd staat zelden stil.
                 </p>
                 <p className="text-muted-foreground text-lg leading-relaxed">
-                  En ergens onderweg is bewegen iets geworden wat "moet" — of iets wat je juist bent gaan vermijden.
+                  Je bent vaak streng voor jezelf.
                 </p>
                 <p className="text-muted-foreground text-lg leading-relaxed">
-                  Je weet rationeel dat je liever voor jezelf zou willen zijn. Je hebt al veel gelezen, geprobeerd, geleerd.
+                  Je draagt veel — en gaat door.
+                </p>
+                <p className="text-muted-foreground text-lg leading-relaxed">
+                  Je wéét rationeel dat je liever voor jezelf zou willen zijn. Je hebt al veel gelezen, geprobeerd, geleerd.
                 </p>
                 <p className="text-foreground text-xl leading-relaxed font-medium">
-                  En toch… in je lijf blijft spanning zitten. Alsof er iets vast staat. Alsof jij vast staat.
+                  En toch… in je lijf blijft spanning zitten.
+                </p>
+                <p className="text-foreground text-xl leading-relaxed font-medium">
+                  Alsof er iets vast staat. Alsof jij vast staat.
                 </p>
               </div>
             </ScrollReveal>
