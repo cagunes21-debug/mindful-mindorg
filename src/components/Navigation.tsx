@@ -12,13 +12,15 @@ import {
 
 const Navigation = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const [servicesOpen, setServicesOpen] = useState(false);
   const [aboutOpen, setAboutOpen] = useState(false);
   const location = useLocation();
 
-  const mainNavLinks = [
-    { to: "/", label: "Home" },
-    { to: "/ons-aanbod", label: "Ons Aanbod" },
-    { to: "/agenda", label: "Agenda" },
+  const serviceLinks = [
+    { to: "/msc-training", label: "8-weekse MSC Training" },
+    { to: "/workshops", label: "Workshops" },
+    { to: "/intensief", label: "Intensieve Programma's" },
+    { to: "/coaching", label: "1-op-1 Coaching" },
   ];
 
   const aboutLinks = [
@@ -26,6 +28,7 @@ const Navigation = () => {
     { to: "/trainers", label: "Trainers" },
   ];
 
+  const isServicesActive = serviceLinks.some(link => location.pathname === link.to) || location.pathname === "/ons-aanbod";
   const isAboutActive = aboutLinks.some(link => location.pathname === link.to);
 
   return (
@@ -38,16 +41,50 @@ const Navigation = () => {
 
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center gap-8">
-            {mainNavLinks.map((link) => (
-              <NavLink
-                key={link.to}
-                to={link.to}
-                className="text-sm font-medium text-muted-foreground transition-colors hover:text-primary"
-                activeClassName="text-primary"
-              >
-                {link.label}
-              </NavLink>
-            ))}
+            <NavLink
+              to="/"
+              className="text-sm font-medium text-muted-foreground transition-colors hover:text-primary"
+              activeClassName="text-primary"
+            >
+              Home
+            </NavLink>
+
+            {/* Services Dropdown */}
+            <DropdownMenu>
+              <DropdownMenuTrigger className={`flex items-center gap-1 text-sm font-medium transition-colors hover:text-primary ${isServicesActive ? 'text-primary' : 'text-muted-foreground'}`}>
+                Ons Aanbod
+                <ChevronDown className="h-4 w-4" />
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="center" className="bg-background border-border w-56">
+                <DropdownMenuItem asChild>
+                  <Link 
+                    to="/ons-aanbod" 
+                    className={`w-full cursor-pointer font-medium ${location.pathname === '/ons-aanbod' ? 'text-primary' : ''}`}
+                  >
+                    Overzicht
+                  </Link>
+                </DropdownMenuItem>
+                <div className="h-px bg-border my-1" />
+                {serviceLinks.map((link) => (
+                  <DropdownMenuItem key={link.to} asChild>
+                    <Link 
+                      to={link.to} 
+                      className={`w-full cursor-pointer ${location.pathname === link.to ? 'text-primary font-medium' : ''}`}
+                    >
+                      {link.label}
+                    </Link>
+                  </DropdownMenuItem>
+                ))}
+              </DropdownMenuContent>
+            </DropdownMenu>
+
+            <NavLink
+              to="/agenda"
+              className="text-sm font-medium text-muted-foreground transition-colors hover:text-primary"
+              activeClassName="text-primary"
+            >
+              Agenda
+            </NavLink>
 
             {/* About Dropdown */}
             <DropdownMenu>
@@ -92,17 +129,57 @@ const Navigation = () => {
         {isOpen && (
           <div className="md:hidden py-4 border-t border-border">
             <div className="flex flex-col gap-4">
-              {mainNavLinks.map((link) => (
-                <NavLink
-                  key={link.to}
-                  to={link.to}
-                  className="text-sm font-medium text-muted-foreground transition-colors hover:text-primary"
-                  activeClassName="text-primary"
-                  onClick={() => setIsOpen(false)}
+              <NavLink
+                to="/"
+                className="text-sm font-medium text-muted-foreground transition-colors hover:text-primary"
+                activeClassName="text-primary"
+                onClick={() => setIsOpen(false)}
+              >
+                Home
+              </NavLink>
+
+              {/* Mobile Services Section */}
+              <div className="flex flex-col gap-2">
+                <button
+                  onClick={() => setServicesOpen(!servicesOpen)}
+                  className={`flex items-center justify-between text-sm font-medium transition-colors hover:text-primary ${isServicesActive ? 'text-primary' : 'text-muted-foreground'}`}
                 >
-                  {link.label}
-                </NavLink>
-              ))}
+                  Ons Aanbod
+                  <ChevronDown className={`h-4 w-4 transition-transform ${servicesOpen ? 'rotate-180' : ''}`} />
+                </button>
+                {servicesOpen && (
+                  <div className="flex flex-col gap-2 pl-4 border-l-2 border-terracotta-200">
+                    <NavLink
+                      to="/ons-aanbod"
+                      className="text-sm font-medium text-muted-foreground transition-colors hover:text-primary"
+                      activeClassName="text-primary"
+                      onClick={() => setIsOpen(false)}
+                    >
+                      Overzicht
+                    </NavLink>
+                    {serviceLinks.map((link) => (
+                      <NavLink
+                        key={link.to}
+                        to={link.to}
+                        className="text-sm text-muted-foreground transition-colors hover:text-primary"
+                        activeClassName="text-primary font-medium"
+                        onClick={() => setIsOpen(false)}
+                      >
+                        {link.label}
+                      </NavLink>
+                    ))}
+                  </div>
+                )}
+              </div>
+
+              <NavLink
+                to="/agenda"
+                className="text-sm font-medium text-muted-foreground transition-colors hover:text-primary"
+                activeClassName="text-primary"
+                onClick={() => setIsOpen(false)}
+              >
+                Agenda
+              </NavLink>
 
               {/* Mobile About Section */}
               <div className="flex flex-col gap-2">
