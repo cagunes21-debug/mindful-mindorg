@@ -8,6 +8,7 @@ const Navigation = () => {
 
   const navLinks = [
     { to: "/", label: "Home" },
+    { to: "/ons-aanbod", label: "Ons Aanbod" },
     { to: "/msc-training", label: "MSC Training" },
   ];
 
