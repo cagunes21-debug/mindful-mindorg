@@ -7,6 +7,7 @@ import Footer from "@/components/Footer";
 import { ScrollReveal, StaggerContainer, StaggerItem } from "@/components/ScrollReveal";
 import { motion } from "framer-motion";
 import SEO from "@/components/SEO";
+import { OrganizationSchema, FAQSchema, WebsiteSchema, CourseSchema } from "@/components/StructuredData";
 import {
   Accordion,
   AccordionContent,
@@ -101,6 +102,13 @@ const Index = () => {
   return (
     <div className="min-h-screen bg-background">
       <SEO />
+      <OrganizationSchema />
+      <WebsiteSchema />
+      <FAQSchema items={faqItems} />
+      <CourseSchema 
+        name="Mindful Self-Compassion (MSC) Training"
+        description="Een 8-weekse training waarin je leert om jezelf met meer vriendelijkheid en begrip te benaderen. Ontdek de kracht van zelfcompassie voor meer rust en veerkracht."
+      />
       <Navigation />
       
       {/* Hero Section */}
