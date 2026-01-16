@@ -1,4 +1,5 @@
 import { NavLink } from "@/components/NavLink";
+import { Link } from "react-router-dom";
 import { Menu, X } from "lucide-react";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
@@ -34,8 +35,8 @@ const Navigation = () => {
                 {link.label}
               </NavLink>
             ))}
-            <Button className="bg-terracotta-500 hover:bg-terracotta-600 text-white">
-              Contact Us
+            <Button asChild className="bg-terracotta-600 hover:bg-terracotta-700 text-white rounded-full">
+              <Link to="/contact">Contact</Link>
             </Button>
           </div>
 
@@ -68,8 +69,8 @@ const Navigation = () => {
                   {link.label}
                 </NavLink>
               ))}
-              <Button className="bg-terracotta-500 hover:bg-terracotta-600 text-white w-fit">
-                Contact Us
+              <Button asChild className="bg-terracotta-600 hover:bg-terracotta-700 text-white w-fit rounded-full">
+                <Link to="/contact" onClick={() => setIsOpen(false)}>Contact</Link>
               </Button>
             </div>
           </div>
