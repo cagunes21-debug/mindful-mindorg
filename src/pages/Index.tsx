@@ -570,23 +570,30 @@ const Index = () => {
         </div>
       </section>
 
-      {/* Wat brengt MSC je */}
-      <section className="py-24 lg:py-32 bg-white">
-        <div className="container mx-auto px-4">
-          <div className="mx-auto max-w-4xl">
+      {/* Kernpunten - Wat brengt MSC je */}
+      <section className="py-24 lg:py-32 bg-gradient-to-b from-white via-warm-50/30 to-white relative overflow-hidden">
+        {/* Decorative elements */}
+        <div className="absolute top-20 left-10 w-32 h-32 bg-terracotta-100/40 rounded-full blur-3xl" />
+        <div className="absolute bottom-20 right-10 w-48 h-48 bg-sage-100/40 rounded-full blur-3xl" />
+        
+        <div className="container relative mx-auto px-4">
+          <div className="mx-auto max-w-5xl">
             <ScrollReveal>
-              <div className="text-center mb-14">
-                <span className="inline-block rounded-full bg-terracotta-100 px-5 py-2 text-xs font-semibold tracking-wider text-terracotta-700 mb-8 uppercase">
-                  De Voordelen
+              <div className="text-center mb-16">
+                <span className="inline-flex items-center gap-2 rounded-full bg-terracotta-100 border border-terracotta-200 px-5 py-2 text-xs font-semibold tracking-wider text-terracotta-700 mb-8 uppercase">
+                  <Sparkles className="h-3.5 w-3.5" />
+                  Kernpunten
                 </span>
                 <h2 className="mb-6 text-3xl font-light text-foreground md:text-4xl lg:text-5xl leading-tight">
                   Wat brengt MSC <span className="font-serif italic text-terracotta-600">je?</span>
                 </h2>
-                <div className="flex flex-wrap justify-center gap-2 mb-6">
-                  <span className="inline-block rounded-full bg-sage-100 px-3 py-1 text-xs font-medium text-sage-700">
+                <div className="flex flex-wrap justify-center gap-3 mb-6">
+                  <span className="inline-flex items-center gap-1.5 rounded-full bg-sage-100 border border-sage-200 px-4 py-1.5 text-xs font-medium text-sage-700">
+                    <FlaskConical className="h-3 w-3" />
                     Wetenschappelijk bewezen
                   </span>
-                  <span className="inline-block rounded-full bg-terracotta-100 px-3 py-1 text-xs font-medium text-terracotta-700">
+                  <span className="inline-flex items-center gap-1.5 rounded-full bg-terracotta-100 border border-terracotta-200 px-4 py-1.5 text-xs font-medium text-terracotta-700">
+                    <TrendingUp className="h-3 w-3" />
                     Duurzame resultaten
                   </span>
                 </div>
@@ -596,29 +603,105 @@ const Index = () => {
               </div>
             </ScrollReveal>
             
-            <ScrollReveal delay={0.1}>
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-                {[
-                  { text: "Meer rust in hoofd en lichaam", icon: "🧘", category: "Rust", stat: "↓ 36% stress" },
-                  { text: "Meer emotionele veerkracht", icon: "💪", category: "Kracht", stat: "↑ 42% coping" },
-                  { text: "Betere omgang met stress en tegenslagen", icon: "🌊", category: "Stress", stat: "↓ 43% angst" },
-                  { text: "Minder zelfkritiek en meer mildheid", icon: "💝", category: "Mildheid", stat: "↑ 67% zelfcompassie" },
-                  { text: "Gezondere grenzen en betere zelfzorg", icon: "🛡️", category: "Grenzen", stat: "↑ 38% zelfzorg" },
-                  { text: "Een diepere verbinding met jezelf en anderen", icon: "🤝", category: "Verbinding", stat: "↑ 29% verbondenheid" },
-                ].map((item, index) => (
-                  <div key={index} className="flex flex-col p-5 rounded-2xl bg-gradient-to-br from-warm-50 to-sage-50 border border-warm-200 shadow-sm hover:shadow-md transition-all duration-300 hover:-translate-y-1">
-                    <div className="flex items-center justify-between mb-3">
-                      <span className="inline-block rounded-full bg-white px-2.5 py-1 text-[10px] font-semibold text-terracotta-600 border border-terracotta-200">
-                        {item.category}
-                      </span>
-                      <span className="text-2xl">{item.icon}</span>
+            <StaggerContainer className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {[
+                { 
+                  text: "Meer rust in hoofd en lichaam", 
+                  description: "Leer je zenuwstelsel te kalmeren met bewezen technieken",
+                  icon: Brain, 
+                  category: "Rust", 
+                  stat: "↓ 36%",
+                  statLabel: "stress",
+                  color: "terracotta"
+                },
+                { 
+                  text: "Meer emotionele veerkracht", 
+                  description: "Bouw innerlijke kracht om met tegenslagen om te gaan",
+                  icon: Heart, 
+                  category: "Kracht", 
+                  stat: "↑ 42%",
+                  statLabel: "coping",
+                  color: "sage"
+                },
+                { 
+                  text: "Betere omgang met stress", 
+                  description: "Ontwikkel een gezonde relatie met spanning en druk",
+                  icon: Leaf, 
+                  category: "Stress", 
+                  stat: "↓ 43%",
+                  statLabel: "angst",
+                  color: "terracotta"
+                },
+                { 
+                  text: "Minder zelfkritiek", 
+                  description: "Vervang je innerlijke criticus door een ondersteunende stem",
+                  icon: Sparkles, 
+                  category: "Mildheid", 
+                  stat: "↑ 67%",
+                  statLabel: "zelfcompassie",
+                  color: "sage"
+                },
+                { 
+                  text: "Gezondere grenzen", 
+                  description: "Leer voor jezelf te zorgen zonder schuldgevoel",
+                  icon: Award, 
+                  category: "Grenzen", 
+                  stat: "↑ 38%",
+                  statLabel: "zelfzorg",
+                  color: "terracotta"
+                },
+                { 
+                  text: "Diepere verbinding", 
+                  description: "Versterk je relatie met jezelf én met anderen",
+                  icon: Users, 
+                  category: "Verbinding", 
+                  stat: "↑ 29%",
+                  statLabel: "verbondenheid",
+                  color: "sage"
+                },
+              ].map((item, index) => {
+                const IconComponent = item.icon;
+                return (
+                  <StaggerItem key={index}>
+                    <div className={`group relative h-full flex flex-col p-6 rounded-3xl bg-white border border-warm-200 shadow-sm hover:shadow-xl transition-all duration-500 hover:-translate-y-2 overflow-hidden`}>
+                      {/* Background gradient on hover */}
+                      <div className={`absolute inset-0 bg-gradient-to-br ${item.color === 'terracotta' ? 'from-terracotta-50/0 group-hover:from-terracotta-50' : 'from-sage-50/0 group-hover:from-sage-50'} to-transparent transition-all duration-500`} />
+                      
+                      <div className="relative z-10">
+                        {/* Header with icon and category */}
+                        <div className="flex items-start justify-between mb-4">
+                          <div className={`h-14 w-14 rounded-2xl ${item.color === 'terracotta' ? 'bg-gradient-to-br from-terracotta-100 to-terracotta-200' : 'bg-gradient-to-br from-sage-100 to-sage-200'} flex items-center justify-center shadow-sm group-hover:scale-110 transition-transform duration-300`}>
+                            <IconComponent className={`h-7 w-7 ${item.color === 'terracotta' ? 'text-terracotta-600' : 'text-sage-600'}`} />
+                          </div>
+                          <span className={`inline-block rounded-full ${item.color === 'terracotta' ? 'bg-terracotta-100 text-terracotta-700 border-terracotta-200' : 'bg-sage-100 text-sage-700 border-sage-200'} px-3 py-1 text-[10px] font-semibold border`}>
+                            {item.category}
+                          </span>
+                        </div>
+                        
+                        {/* Content */}
+                        <h3 className="text-lg font-semibold text-foreground mb-2 group-hover:text-terracotta-700 transition-colors">
+                          {item.text}
+                        </h3>
+                        <p className="text-sm text-muted-foreground leading-relaxed mb-4 flex-grow">
+                          {item.description}
+                        </p>
+                        
+                        {/* Stat badge */}
+                        <div className={`inline-flex items-center gap-2 rounded-full ${item.color === 'terracotta' ? 'bg-terracotta-50 border-terracotta-200' : 'bg-sage-50 border-sage-200'} border px-4 py-2`}>
+                          <span className={`text-lg font-bold ${item.color === 'terracotta' ? 'text-terracotta-600' : 'text-sage-600'}`}>
+                            {item.stat}
+                          </span>
+                          <span className="text-xs text-muted-foreground">{item.statLabel}*</span>
+                        </div>
+                      </div>
                     </div>
-                    <span className="text-foreground text-base lg:text-lg mb-2">{item.text}</span>
-                    <span className="text-xs text-sage-600 font-medium mt-auto">{item.stat}*</span>
-                  </div>
-                ))}
-              </div>
-              <p className="text-xs text-muted-foreground text-center mt-6">
+                  </StaggerItem>
+                );
+              })}
+            </StaggerContainer>
+            
+            <ScrollReveal delay={0.3}>
+              <p className="text-xs text-muted-foreground text-center mt-8">
                 * Gemiddelde resultaten uit meta-analyses van MSC-onderzoek (Neff & Germer, 2013-2023)
               </p>
             </ScrollReveal>
