@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { Heart, ArrowRight, Calendar, Clock, Globe, Users, Sparkles, Check, MessageSquareQuote } from "lucide-react";
+import { Heart, ArrowRight, Calendar, Clock, Globe, Users, Sparkles, Check, MessageSquareQuote, Euro } from "lucide-react";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import { ScrollReveal, StaggerContainer, StaggerItem } from "@/components/ScrollReveal";
@@ -31,7 +31,7 @@ const workshopDates = [
 
 const testimonials = [
   {
-    quote: "De workshop was precies wat ik nodig had om te ontdekken of zelfcompassie iets voor mij is. Heel fijn dat het laagdrempelig en gratis is.",
+    quote: "De workshop was precies wat ik nodig had om te ontdekken of zelfcompassie iets voor mij is. Heel toegankelijk en waardevol.",
     author: "Linda",
     role: "Workshop deelnemer",
   },
@@ -49,8 +49,8 @@ const testimonials = [
 
 const faqItems = [
   {
-    question: "Zijn de workshops echt gratis?",
-    answer: "Ja, onze kennismakingsworkshops zijn volledig gratis. We willen iedereen de kans geven om te ervaren wat zelfcompassie voor hen kan betekenen, zonder financiële drempel.",
+    question: "Wat kost een workshop?",
+    answer: "Een workshop kost €35 per persoon. Dit is inclusief een korte introductie tot zelfcompassie, een begeleide oefening en ruimte voor vragen.",
   },
   {
     question: "Moet ik me voorbereiden?",
@@ -58,7 +58,7 @@ const faqItems = [
   },
   {
     question: "Hoe lang duurt een workshop?",
-    answer: "Onze kennismakingsworkshops duren ongeveer 1 uur. In deze tijd krijg je een introductie tot zelfcompassie, doe je een korte oefening mee en is er ruimte voor vragen.",
+    answer: "Onze workshops duren ongeveer 1 uur. In deze tijd krijg je een introductie tot zelfcompassie, doe je een korte oefening mee en is er ruimte voor vragen.",
   },
   {
     question: "Is de workshop geschikt voor beginners?",
@@ -68,21 +68,25 @@ const faqItems = [
     question: "Kan ik anoniem deelnemen?",
     answer: "Je kunt deelnemen met je camera uit als je dat prettig vindt. Er is geen verplichting om te delen of actief deel te nemen aan de interactie.",
   },
+  {
+    question: "Wordt de workshop vergoed?",
+    answer: "De workshop valt niet onder reguliere zorgvergoeding. Sommige werkgevers vergoeden wel ontwikkelingsactiviteiten. Check dit eventueel bij je werkgever.",
+  },
 ];
 
 const Workshops = () => {
   return (
     <div className="min-h-screen bg-background">
       <SEO 
-        title="Gratis Workshops"
-        description="Maak gratis kennis met zelfcompassie in onze online workshops. Ontdek in 1 uur wat Mindful Self-Compassion voor jou kan betekenen. Nederlands en Engels."
+        title="Zelfcompassie Workshops"
+        description="Maak kennis met zelfcompassie in onze online workshops voor €35. Ontdek in 1 uur wat Mindful Self-Compassion voor jou kan betekenen. Nederlands en Engels."
       />
       <FAQSchema items={faqItems} />
       <CourseSchema 
-        name="Gratis Zelfcompassie Workshop"
+        name="Zelfcompassie Kennismakingsworkshop"
         description="Een laagdrempelige kennismakingsworkshop waarin je ontdekt wat zelfcompassie voor jou kan betekenen."
         duration="1 hour"
-        price="0"
+        price="35"
       />
       <Navigation />
       
@@ -101,7 +105,7 @@ const Workshops = () => {
               className="inline-flex items-center gap-2 mb-8 rounded-full bg-sage-100 border border-sage-200 px-5 py-2.5 text-sm font-medium text-sage-800"
             >
               <Sparkles className="h-4 w-4" />
-              Gratis & Vrijblijvend
+              Laagdrempelig kennismaken
             </motion.span>
             
             <motion.h1 
@@ -120,7 +124,7 @@ const Workshops = () => {
               transition={{ duration: 0.6, delay: 0.2 }}
               className="text-muted-foreground text-lg max-w-2xl mx-auto leading-relaxed mb-8"
             >
-              Ontdek in een gratis workshop van 1 uur wat zelfcompassie voor jou kan betekenen. 
+              Ontdek in een workshop van 1 uur wat zelfcompassie voor jou kan betekenen. 
               Ervaar hoe het voelt om jezelf met meer vriendelijkheid te benaderen.
             </motion.p>
 
@@ -128,6 +132,7 @@ const Workshops = () => {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.3 }}
+              className="flex flex-col gap-4 sm:flex-row sm:justify-center items-center"
             >
               <Button asChild size="lg" className="bg-terracotta-600 hover:bg-terracotta-700 text-white rounded-full px-8">
                 <a href="#data">
@@ -135,6 +140,7 @@ const Workshops = () => {
                   <ArrowRight className="ml-2 h-4 w-4" />
                 </a>
               </Button>
+              <span className="text-2xl font-light text-terracotta-600">€35 per workshop</span>
             </motion.div>
           </div>
         </div>
@@ -198,7 +204,7 @@ const Workshops = () => {
                     Voor wie is deze <span className="font-serif italic text-terracotta-600">workshop?</span>
                   </h2>
                   <p className="text-muted-foreground text-lg leading-relaxed mb-8">
-                    Deze gratis workshop is perfect voor jou als je:
+                    Deze workshop is perfect voor jou als je:
                   </p>
                   
                   <ul className="space-y-4">
@@ -224,8 +230,8 @@ const Workshops = () => {
                   <Card className="relative border-0 bg-white rounded-3xl shadow-lg overflow-hidden">
                     <CardContent className="p-8">
                       <div className="text-center">
-                        <p className="text-5xl font-light text-terracotta-600 mb-2">Gratis</p>
-                        <p className="text-muted-foreground mb-6">Geen kosten, geen verplichtingen</p>
+                        <p className="text-5xl font-light text-terracotta-600 mb-2">€35</p>
+                        <p className="text-muted-foreground mb-6">per workshop</p>
                         <div className="space-y-3 text-left">
                           <div className="flex items-center gap-3">
                             <Clock className="h-5 w-5 text-sage-600" />
@@ -280,7 +286,8 @@ const Workshops = () => {
                         </span>
                         <span className="text-sm text-muted-foreground">{workshop.time}</span>
                       </div>
-                      <p className="text-xl font-medium text-foreground mb-4">{workshop.date}</p>
+                      <p className="text-xl font-medium text-foreground mb-2">{workshop.date}</p>
+                      <p className="text-lg font-light text-terracotta-600 mb-4">€35</p>
                       <Button asChild className="w-full bg-terracotta-600 hover:bg-terracotta-700 text-white">
                         <a href="mailto:mindful-mind@outlook.com?subject=Aanmelding workshop">
                           Meld je aan
@@ -373,10 +380,10 @@ const Workshops = () => {
           <div className="mx-auto max-w-3xl text-center">
             <h2 className="mb-6 text-3xl font-light text-white md:text-4xl leading-tight">
               Klaar om kennis te maken?
-              <span className="block font-serif italic mt-2">Het is gratis en vrijblijvend</span>
+              <span className="block font-serif italic mt-2">Meld je aan voor €35</span>
             </h2>
             <p className="text-sage-100 text-lg mb-8">
-              Meld je aan voor een gratis workshop en ontdek wat zelfcompassie voor jou kan betekenen.
+              Ontdek in één uur wat zelfcompassie voor jou kan betekenen.
             </p>
             <div className="flex flex-col gap-4 sm:flex-row sm:justify-center">
               <Button asChild size="lg" className="bg-white text-sage-700 hover:bg-sage-50 rounded-full px-8">
