@@ -8,6 +8,9 @@ import { ScrollReveal, StaggerContainer, StaggerItem } from "@/components/Scroll
 import { motion } from "framer-motion";
 import SEO from "@/components/SEO";
 import { FAQSchema } from "@/components/StructuredData";
+import retreatHero from "@/assets/retreat-hero.jpg";
+import retreatLocation from "@/assets/retreat-location.jpg";
+import retreatMeditation from "@/assets/retreat-meditation.jpg";
 import {
   Accordion,
   AccordionContent,
@@ -166,9 +169,14 @@ const BarcelonaRetreat = () => {
       
       {/* Hero Section */}
       <section className="relative overflow-hidden pt-24 pb-20 lg:pt-32 lg:pb-28">
-        <div className="absolute inset-0 bg-gradient-to-b from-warm-100/80 via-background to-background" />
-        <div className="absolute top-20 left-1/4 w-72 h-72 bg-terracotta-200/30 rounded-full blur-3xl" />
-        <div className="absolute bottom-10 right-1/4 w-96 h-96 bg-sage-200/30 rounded-full blur-3xl" />
+        <div className="absolute inset-0">
+          <img 
+            src={retreatHero} 
+            alt="Mediterrane kustlijn bij zonsondergang" 
+            className="w-full h-full object-cover"
+          />
+          <div className="absolute inset-0 bg-gradient-to-b from-background/70 via-background/50 to-background" />
+        </div>
         
         <div className="container relative mx-auto px-4">
           <div className="mx-auto max-w-4xl text-center">
@@ -222,6 +230,23 @@ const BarcelonaRetreat = () => {
                 </Link>
               </Button>
             </motion.div>
+          </div>
+        </div>
+      </section>
+
+      {/* Location Image */}
+      <section className="py-0">
+        <div className="container mx-auto px-4">
+          <div className="mx-auto max-w-5xl">
+            <ScrollReveal>
+              <div className="rounded-3xl overflow-hidden shadow-2xl -mt-16 relative z-10">
+                <img 
+                  src={retreatLocation} 
+                  alt="Casa del Mar retreat locatie in Spanje" 
+                  className="w-full h-64 md:h-96 object-cover"
+                />
+              </div>
+            </ScrollReveal>
           </div>
         </div>
       </section>
@@ -329,9 +354,19 @@ const BarcelonaRetreat = () => {
       {/* What you learn */}
       <section className="py-20 lg:py-24 bg-white">
         <div className="container mx-auto px-4">
-          <div className="mx-auto max-w-4xl">
+          <div className="mx-auto max-w-5xl">
             <div className="grid gap-10 lg:grid-cols-2 items-center">
               <ScrollReveal animation="fade-right">
+                <div className="rounded-3xl overflow-hidden shadow-xl">
+                  <img 
+                    src={retreatMeditation} 
+                    alt="Meditatie in de natuur" 
+                    className="w-full h-80 md:h-96 object-cover"
+                  />
+                </div>
+              </ScrollReveal>
+              
+              <ScrollReveal animation="fade-left" delay={0.2}>
                 <div>
                   <span className="inline-block rounded-full bg-sage-100 px-4 py-1.5 text-xs font-semibold text-sage-700 mb-6">
                     Wat je leert
