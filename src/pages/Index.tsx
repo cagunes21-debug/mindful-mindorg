@@ -1,7 +1,8 @@
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { Heart, Brain, Sparkles, ArrowRight, Check, Mail, Phone, MessageCircle, Clock, Users, Globe, Calendar, Quote, Star, Leaf } from "lucide-react";
+import { Heart, Brain, Sparkles, ArrowRight, Check, Mail, Phone, MessageCircle, Clock, Users, Globe, Calendar, Quote, Star, Leaf, HelpCircle } from "lucide-react";
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import Navigation from "@/components/Navigation";
 import { ScrollReveal, StaggerContainer, StaggerItem } from "@/components/ScrollReveal";
 import { motion } from "framer-motion";
@@ -768,6 +769,92 @@ const Index = () => {
                   </Button>
                 </CardContent>
               </Card>
+            </ScrollReveal>
+          </div>
+        </div>
+      </section>
+
+      {/* FAQ Section */}
+      <section className="py-20 lg:py-24 bg-warm-50">
+        <div className="container mx-auto px-4">
+          <div className="mx-auto max-w-3xl">
+            <ScrollReveal>
+              <div className="text-center mb-14">
+                <span className="inline-flex items-center gap-2 rounded-full bg-sage-100 border border-sage-200 px-5 py-2 text-xs font-semibold tracking-wider text-sage-700 mb-6 uppercase">
+                  <HelpCircle className="h-3.5 w-3.5" />
+                  Veelgestelde vragen
+                </span>
+                <h2 className="mb-6 text-3xl font-light text-foreground md:text-4xl leading-tight">
+                  Veelgestelde <span className="font-serif italic text-terracotta-600">vragen</span>
+                </h2>
+                <p className="text-muted-foreground text-lg max-w-xl mx-auto">
+                  Heb je vragen over de training? Hier vind je antwoorden op de meest gestelde vragen.
+                </p>
+              </div>
+            </ScrollReveal>
+            
+            <ScrollReveal delay={0.1}>
+              <Accordion type="single" collapsible className="space-y-4">
+                <AccordionItem 
+                  value="item-0"
+                  className="border border-warm-200 rounded-xl px-6 bg-white shadow-sm"
+                >
+                  <AccordionTrigger className="text-left font-medium text-foreground hover:no-underline py-5">
+                    Heb ik ervaring nodig met meditatie?
+                  </AccordionTrigger>
+                  <AccordionContent className="text-muted-foreground pb-5 leading-relaxed">
+                    Nee, geen ervaring nodig. De training is geschikt voor iedereen, of je nu nog nooit hebt gemediteerd of al jaren oefent. We beginnen bij de basis en bouwen stap voor stap op.
+                  </AccordionContent>
+                </AccordionItem>
+
+                <AccordionItem 
+                  value="item-1"
+                  className="border border-warm-200 rounded-xl px-6 bg-white shadow-sm"
+                >
+                  <AccordionTrigger className="text-left font-medium text-foreground hover:no-underline py-5">
+                    Wat als ik een sessie mis?
+                  </AccordionTrigger>
+                  <AccordionContent className="text-muted-foreground pb-5 leading-relaxed">
+                    Alle sessies worden opgenomen en zijn beschikbaar in de online leeromgeving. Je kunt de inhoud op je eigen tempo terugkijken. Daarnaast krijg je toegang tot extra materialen en oefeningen.
+                  </AccordionContent>
+                </AccordionItem>
+
+                <AccordionItem 
+                  value="item-2"
+                  className="border border-warm-200 rounded-xl px-6 bg-white shadow-sm"
+                >
+                  <AccordionTrigger className="text-left font-medium text-foreground hover:no-underline py-5">
+                    Is de training ook geschikt bij trauma?
+                  </AccordionTrigger>
+                  <AccordionContent className="text-muted-foreground pb-5 leading-relaxed">
+                    De training heeft een trauma-sensitieve benadering. Bij ernstige trauma's adviseren we eerst individuele begeleiding te volgen voordat je aan de groepstraining begint. Neem gerust contact op om te bespreken wat het beste bij jou past.
+                  </AccordionContent>
+                </AccordionItem>
+
+                <AccordionItem 
+                  value="item-3"
+                  className="border border-warm-200 rounded-xl px-6 bg-white shadow-sm"
+                >
+                  <AccordionTrigger className="text-left font-medium text-foreground hover:no-underline py-5">
+                    Hoeveel tijd kost het per week?
+                  </AccordionTrigger>
+                  <AccordionContent className="text-muted-foreground pb-5 leading-relaxed">
+                    Naast de wekelijkse sessies van 2 uur, is het aan te raden om dagelijks 20-30 minuten te oefenen. Dit is flexibel en kan worden aangepast aan jouw ritme. De oefeningen zijn ook in kortere versies beschikbaar.
+                  </AccordionContent>
+                </AccordionItem>
+
+                <AccordionItem 
+                  value="item-4"
+                  className="border border-warm-200 rounded-xl px-6 bg-white shadow-sm"
+                >
+                  <AccordionTrigger className="text-left font-medium text-foreground hover:no-underline py-5">
+                    Kan ik in termijnen betalen?
+                  </AccordionTrigger>
+                  <AccordionContent className="text-muted-foreground pb-5 leading-relaxed">
+                    Ja, betalen in termijnen is mogelijk. Neem contact op om de mogelijkheden te bespreken. We kijken graag samen naar een oplossing die bij jouw situatie past.
+                  </AccordionContent>
+                </AccordionItem>
+              </Accordion>
             </ScrollReveal>
           </div>
         </div>
