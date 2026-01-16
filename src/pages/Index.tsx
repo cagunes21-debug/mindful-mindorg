@@ -171,20 +171,29 @@ const Index = () => {
               
               {/* Better readability with card-like text blocks */}
               <div className="space-y-8">
-                <div className="bg-warm-50 rounded-2xl p-6 lg:p-8 border-l-4 border-terracotta-300">
-                  <p className="text-muted-foreground text-lg lg:text-xl leading-relaxed">
+                <div className="bg-warm-50 rounded-2xl p-6 lg:p-8 border-l-4 border-terracotta-300 relative">
+                  <span className="absolute -top-3 left-6 inline-block rounded-full bg-terracotta-500 px-3 py-1 text-xs font-semibold text-white">
+                    Mythe
+                  </span>
+                  <p className="text-muted-foreground text-lg lg:text-xl leading-relaxed mt-2">
                     Veel mensen denken dat zelfkritiek helpt om scherp, gemotiveerd of succesvol te blijven.
                   </p>
                 </div>
                 
-                <div className="bg-sage-50 rounded-2xl p-6 lg:p-8 border-l-4 border-sage-300">
-                  <p className="text-muted-foreground text-lg lg:text-xl leading-relaxed">
+                <div className="bg-sage-50 rounded-2xl p-6 lg:p-8 border-l-4 border-sage-300 relative">
+                  <span className="absolute -top-3 left-6 inline-block rounded-full bg-sage-600 px-3 py-1 text-xs font-semibold text-white">
+                    Wetenschap
+                  </span>
+                  <p className="text-muted-foreground text-lg lg:text-xl leading-relaxed mt-2">
                     Onderzoek laat echter zien dat zelfkritiek juist stress vergroot, je veerkracht ondermijnt en je op de lange termijn uitput.
                   </p>
                 </div>
                 
-                <div className="bg-gradient-to-r from-terracotta-50 to-warm-50 rounded-2xl p-6 lg:p-8 border border-terracotta-200">
-                  <p className="text-xl lg:text-2xl font-light text-foreground leading-relaxed">
+                <div className="bg-gradient-to-r from-terracotta-50 to-warm-50 rounded-2xl p-6 lg:p-8 border border-terracotta-200 relative">
+                  <span className="absolute -top-3 left-6 inline-block rounded-full bg-terracotta-600 px-3 py-1 text-xs font-semibold text-white">
+                    Het Alternatief
+                  </span>
+                  <p className="text-xl lg:text-2xl font-light text-foreground leading-relaxed mt-2">
                     Mindful Zelfcompassie biedt een bewezen alternatief: niet door minder betrokken te zijn, maar door met meer steun en begrip met jezelf om te gaan — <span className="font-medium text-terracotta-600">juist wanneer het moeilijk is.</span>
                   </p>
                 </div>
@@ -232,7 +241,12 @@ const Index = () => {
             
             <StaggerContainer className="grid gap-8 md:grid-cols-2 mb-12">
               <StaggerItem>
-                <Card className="border-0 bg-white rounded-3xl h-full hover:shadow-xl transition-all duration-300 shadow-md">
+                <Card className="border-0 bg-white rounded-3xl h-full hover:shadow-xl transition-all duration-300 shadow-md relative overflow-hidden">
+                  <div className="absolute top-4 right-4">
+                    <span className="inline-block rounded-full bg-terracotta-100 px-3 py-1 text-xs font-semibold text-terracotta-700">
+                      Pijler 1
+                    </span>
+                  </div>
                   <CardContent className="p-10 text-center">
                     <div className="mx-auto mb-8 flex h-20 w-20 items-center justify-center rounded-full bg-gradient-to-br from-terracotta-100 to-terracotta-200 shadow-inner">
                       <Brain className="h-10 w-10 text-terracotta-600" />
@@ -246,7 +260,12 @@ const Index = () => {
               </StaggerItem>
               
               <StaggerItem>
-                <Card className="border-0 bg-white rounded-3xl h-full hover:shadow-xl transition-all duration-300 shadow-md">
+                <Card className="border-0 bg-white rounded-3xl h-full hover:shadow-xl transition-all duration-300 shadow-md relative overflow-hidden">
+                  <div className="absolute top-4 right-4">
+                    <span className="inline-block rounded-full bg-sage-100 px-3 py-1 text-xs font-semibold text-sage-700">
+                      Pijler 2
+                    </span>
+                  </div>
                   <CardContent className="p-10 text-center">
                     <div className="mx-auto mb-8 flex h-20 w-20 items-center justify-center rounded-full bg-gradient-to-br from-sage-100 to-sage-200 shadow-inner">
                       <Heart className="h-10 w-10 text-sage-700" />
@@ -317,14 +336,17 @@ const Index = () => {
             <ScrollReveal delay={0.2}>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-5 max-w-3xl mx-auto mb-12">
                 {[
-                  { text: "Vaak streng bent voor jezelf", icon: "🪞" },
-                  { text: "De lat hoog legt en jezelf snel veroordeelt", icon: "📏" },
-                  { text: "Wilt leren omgaan met moeilijke gevoelens", icon: "💭" },
-                  { text: "Meer zachtheid en balans in je leven wilt ervaren", icon: "🌿" },
+                  { text: "Vaak streng bent voor jezelf", icon: "🪞", label: "Herkenbaar?" },
+                  { text: "De lat hoog legt en jezelf snel veroordeelt", icon: "📏", label: "Perfectionist?" },
+                  { text: "Wilt leren omgaan met moeilijke gevoelens", icon: "💭", label: "Emoties?" },
+                  { text: "Meer zachtheid en balans in je leven wilt ervaren", icon: "🌿", label: "Balans?" },
                 ].map((item, index) => (
-                  <div key={index} className="flex items-center gap-4 p-5 rounded-2xl bg-gradient-to-r from-warm-50 to-white border border-warm-200 shadow-sm hover:shadow-md transition-shadow">
-                    <span className="text-2xl">{item.icon}</span>
-                    <span className="text-foreground text-lg">{item.text}</span>
+                  <div key={index} className="flex items-center gap-4 p-5 rounded-2xl bg-gradient-to-r from-warm-50 to-white border border-warm-200 shadow-sm hover:shadow-md transition-shadow relative">
+                    <span className="absolute -top-2 left-4 inline-block rounded-full bg-terracotta-500 px-2.5 py-0.5 text-[10px] font-semibold text-white">
+                      {item.label}
+                    </span>
+                    <span className="text-2xl mt-1">{item.icon}</span>
+                    <span className="text-foreground text-lg mt-1">{item.text}</span>
                   </div>
                 ))}
               </div>
@@ -357,15 +379,26 @@ const Index = () => {
               </h2>
               
               <div className="bg-white rounded-3xl p-8 lg:p-10 shadow-md mb-8">
+                <div className="flex flex-wrap justify-center gap-3 mb-6">
+                  <span className="inline-block rounded-full bg-terracotta-100 px-4 py-1.5 text-xs font-semibold text-terracotta-700">
+                    Theorie
+                  </span>
+                  <span className="inline-block rounded-full bg-sage-100 px-4 py-1.5 text-xs font-semibold text-sage-700">
+                    Praktijk
+                  </span>
+                  <span className="inline-block rounded-full bg-warm-200 px-4 py-1.5 text-xs font-semibold text-warm-700">
+                    Integratie
+                  </span>
+                </div>
                 <p className="text-2xl lg:text-3xl font-light text-foreground mb-6 leading-relaxed">
                   Een 8-weekse training die voelt als <span className="font-serif italic text-terracotta-600">thuiskomen</span>
                 </p>
                 <div className="h-px w-20 bg-terracotta-300 mx-auto mb-6" />
                 <p className="text-muted-foreground text-lg leading-relaxed mb-6">
-                  Elke sessie combineert theorie, praktijk en integratie — begeleid door ervaren trainers die werken vanuit een trauma-sensitieve benadering.
+                  Elke sessie combineert theorie, praktijk en integratie — begeleid door ervaren trainers die werken vanuit een <span className="inline-block rounded bg-sage-100 px-2 py-0.5 text-sage-700 font-medium">trauma-sensitieve benadering</span>.
                 </p>
                 <p className="text-muted-foreground text-lg leading-relaxed">
-                  Deze training biedt je meer dan alleen kennis; je leert een nieuwe manier om met jezelf en het leven om te gaan — zachter, bewuster en milder — zodat je minder verstrikt raakt in stress, zelfkritiek en dagelijkse druk, en meer ruimte en rust in je leven ervaart.
+                  Deze training biedt je meer dan alleen kennis; je leert een nieuwe manier om met jezelf en het leven om te gaan — <span className="font-medium text-foreground">zachter, bewuster en milder</span> — zodat je minder verstrikt raakt in stress, zelfkritiek en dagelijkse druk, en meer ruimte en rust in je leven ervaart.
                 </p>
               </div>
             </ScrollReveal>
@@ -385,6 +418,14 @@ const Index = () => {
                 <h2 className="mb-6 text-3xl font-light text-foreground md:text-4xl lg:text-5xl leading-tight">
                   Wat brengt MSC <span className="font-serif italic text-terracotta-600">je?</span>
                 </h2>
+                <div className="flex flex-wrap justify-center gap-2 mb-6">
+                  <span className="inline-block rounded-full bg-sage-100 px-3 py-1 text-xs font-medium text-sage-700">
+                    Wetenschappelijk bewezen
+                  </span>
+                  <span className="inline-block rounded-full bg-terracotta-100 px-3 py-1 text-xs font-medium text-terracotta-700">
+                    Duurzame resultaten
+                  </span>
+                </div>
                 <p className="text-muted-foreground text-lg lg:text-xl max-w-2xl mx-auto leading-relaxed">
                   Onderzoek laat zien dat MSC leidt tot duurzame, positieve veranderingen — wereldwijd bevestigd bij duizenden deelnemers.
                 </p>
@@ -394,15 +435,20 @@ const Index = () => {
             <ScrollReveal delay={0.1}>
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
                 {[
-                  { text: "Meer rust in hoofd en lichaam", icon: "🧘" },
-                  { text: "Meer emotionele veerkracht", icon: "💪" },
-                  { text: "Betere omgang met stress en tegenslagen", icon: "🌊" },
-                  { text: "Minder zelfkritiek en meer mildheid", icon: "💝" },
-                  { text: "Gezondere grenzen en betere zelfzorg", icon: "🛡️" },
-                  { text: "Een diepere verbinding met jezelf en anderen", icon: "🤝" },
+                  { text: "Meer rust in hoofd en lichaam", icon: "🧘", category: "Rust" },
+                  { text: "Meer emotionele veerkracht", icon: "💪", category: "Kracht" },
+                  { text: "Betere omgang met stress en tegenslagen", icon: "🌊", category: "Stress" },
+                  { text: "Minder zelfkritiek en meer mildheid", icon: "💝", category: "Mildheid" },
+                  { text: "Gezondere grenzen en betere zelfzorg", icon: "🛡️", category: "Grenzen" },
+                  { text: "Een diepere verbinding met jezelf en anderen", icon: "🤝", category: "Verbinding" },
                 ].map((item, index) => (
-                  <div key={index} className="flex items-center gap-4 p-5 rounded-2xl bg-gradient-to-br from-warm-50 to-sage-50 border border-warm-200 shadow-sm hover:shadow-md transition-all duration-300 hover:-translate-y-1">
-                    <span className="text-2xl flex-shrink-0">{item.icon}</span>
+                  <div key={index} className="flex flex-col p-5 rounded-2xl bg-gradient-to-br from-warm-50 to-sage-50 border border-warm-200 shadow-sm hover:shadow-md transition-all duration-300 hover:-translate-y-1">
+                    <div className="flex items-center justify-between mb-3">
+                      <span className="inline-block rounded-full bg-white px-2.5 py-1 text-[10px] font-semibold text-terracotta-600 border border-terracotta-200">
+                        {item.category}
+                      </span>
+                      <span className="text-2xl">{item.icon}</span>
+                    </div>
                     <span className="text-foreground text-base lg:text-lg">{item.text}</span>
                   </div>
                 ))}
