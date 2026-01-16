@@ -6,7 +6,6 @@ const serviceLinks = [
   { to: "/workshops", label: "Workshops" },
   { to: "/intensief", label: "Intensieve Programma's" },
   { to: "/barcelona-retreat", label: "Barcelona Retreat" },
-  { to: "/beweging-mildheid", label: "In Beweging met Mildheid" },
   { to: "/coaching", label: "1-op-1 Coaching" },
 ];
 

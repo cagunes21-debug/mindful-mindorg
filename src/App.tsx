@@ -14,7 +14,6 @@ import Contact from "./pages/Contact";
 import Workshops from "./pages/Workshops";
 import Intensief from "./pages/Intensief";
 import Coaching from "./pages/Coaching";
-import BarcelonaRetreat from "./pages/BarcelonaRetreat";
 import BewegingMildheidRetreat from "./pages/BewegingMildheidRetreat";
 import NotFound from "./pages/NotFound";
 
@@ -38,8 +37,7 @@ const App = () => (
             <Route path="/workshops" element={<Workshops />} />
             <Route path="/intensief" element={<Intensief />} />
             <Route path="/coaching" element={<Coaching />} />
-            <Route path="/barcelona-retreat" element={<BarcelonaRetreat />} />
-            <Route path="/beweging-mildheid" element={<BewegingMildheidRetreat />} />
+            <Route path="/barcelona-retreat" element={<BewegingMildheidRetreat />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>
