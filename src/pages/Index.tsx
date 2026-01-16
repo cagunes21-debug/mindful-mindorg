@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { Heart, Brain, Sparkles, ArrowRight, Check, Mail, Phone, MessageCircle, Clock, Users, Globe, Calendar, Quote, Star, Leaf, HelpCircle } from "lucide-react";
+import { Heart, Brain, Sparkles, ArrowRight, Check, Mail, Phone, MessageCircle, Clock, Users, Globe, Calendar, Quote, Star, Leaf, HelpCircle, Award, TrendingUp } from "lucide-react";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import Navigation from "@/components/Navigation";
 import { ScrollReveal, StaggerContainer, StaggerItem } from "@/components/ScrollReveal";
@@ -10,6 +10,9 @@ import SEO from "@/components/SEO";
 import { FAQSchema, CourseSchema, OrganizationSchema } from "@/components/StructuredData";
 import AccessibilityToolbar from "@/components/AccessibilityToolbar";
 import ScrollToTop from "@/components/ScrollToTop";
+import ScrollProgressBar from "@/components/ScrollProgressBar";
+import WhatsAppButton from "@/components/WhatsAppButton";
+import CookieConsent from "@/components/CookieConsent";
 
 const trainingDates = [
   {
@@ -49,7 +52,10 @@ const trainingDates = [
 const Index = () => {
   return (
     <div className="min-h-screen bg-background">
+      <ScrollProgressBar />
       <ScrollToTop />
+      <WhatsAppButton />
+      <CookieConsent />
       <SEO 
         title="Mindful Mind | 8-weekse Training in Mindful Zelfcompassie"
         description="Leer jezelf steunen in plaats van pushen. 8-weekse training in Mindful Zelfcompassie ontwikkeld door dr. Kristin Neff en dr. Christopher Germer."
@@ -151,6 +157,44 @@ const Index = () => {
                 Kleine groepen
               </div>
             </motion.div>
+          </div>
+        </div>
+      </section>
+
+      {/* Social Proof Section */}
+      <section className="py-12 bg-white border-b border-warm-100">
+        <div className="container mx-auto px-4">
+          <div className="max-w-4xl mx-auto">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+              <div>
+                <div className="flex items-center justify-center gap-2 mb-2">
+                  <Users className="h-5 w-5 text-terracotta-500" />
+                  <span className="text-3xl lg:text-4xl font-light text-foreground">200+</span>
+                </div>
+                <p className="text-sm text-muted-foreground">Deelnemers begeleid</p>
+              </div>
+              <div>
+                <div className="flex items-center justify-center gap-2 mb-2">
+                  <Star className="h-5 w-5 text-terracotta-500 fill-terracotta-500" />
+                  <span className="text-3xl lg:text-4xl font-light text-foreground">4.9</span>
+                </div>
+                <p className="text-sm text-muted-foreground">Gemiddelde beoordeling</p>
+              </div>
+              <div>
+                <div className="flex items-center justify-center gap-2 mb-2">
+                  <Award className="h-5 w-5 text-terracotta-500" />
+                  <span className="text-3xl lg:text-4xl font-light text-foreground">CMSC</span>
+                </div>
+                <p className="text-sm text-muted-foreground">Gecertificeerd trainer</p>
+              </div>
+              <div>
+                <div className="flex items-center justify-center gap-2 mb-2">
+                  <TrendingUp className="h-5 w-5 text-terracotta-500" />
+                  <span className="text-3xl lg:text-4xl font-light text-foreground">96%</span>
+                </div>
+                <p className="text-sm text-muted-foreground">Zou aanraden</p>
+              </div>
+            </div>
           </div>
         </div>
       </section>
@@ -746,6 +790,76 @@ const Index = () => {
                 </Button>
               </div>
             </ScrollReveal>
+          </div>
+        </div>
+      </section>
+
+      {/* Over de Trainer Section */}
+      <section className="py-20 lg:py-24 bg-sage-50 relative overflow-hidden">
+        <div className="absolute top-0 right-0 w-96 h-96 bg-terracotta-100/20 rounded-full blur-3xl translate-x-1/2 -translate-y-1/2" />
+        <div className="absolute bottom-0 left-0 w-72 h-72 bg-sage-200/30 rounded-full blur-3xl -translate-x-1/2 translate-y-1/2" />
+        
+        <div className="container relative mx-auto px-4">
+          <div className="mx-auto max-w-5xl">
+            <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+              <ScrollReveal>
+                <div className="relative">
+                  <div className="aspect-[4/5] rounded-3xl overflow-hidden bg-gradient-to-br from-terracotta-200 to-sage-200 shadow-2xl">
+                    <div className="absolute inset-0 flex items-center justify-center">
+                      <div className="text-center p-8">
+                        <div className="h-32 w-32 rounded-full bg-white/80 backdrop-blur-sm flex items-center justify-center mx-auto mb-6 shadow-lg">
+                          <Heart className="h-16 w-16 text-terracotta-500" />
+                        </div>
+                        <p className="text-terracotta-700 font-medium">Foto trainer</p>
+                      </div>
+                    </div>
+                  </div>
+                  {/* Decorative element */}
+                  <div className="absolute -bottom-4 -right-4 w-24 h-24 bg-terracotta-100 rounded-2xl -z-10" />
+                </div>
+              </ScrollReveal>
+              
+              <ScrollReveal delay={0.2}>
+                <div>
+                  <span className="inline-flex items-center gap-2 rounded-full bg-terracotta-100 border border-terracotta-200 px-5 py-2 text-xs font-semibold tracking-wider text-terracotta-700 mb-6 uppercase">
+                    <Heart className="h-3.5 w-3.5" />
+                    Over de trainer
+                  </span>
+                  <h2 className="mb-6 text-3xl font-light text-foreground md:text-4xl leading-tight">
+                    Jouw begeleider in <span className="font-serif italic text-terracotta-600">zelfcompassie</span>
+                  </h2>
+                  <div className="space-y-4 text-muted-foreground text-lg leading-relaxed mb-8">
+                    <p>
+                      Als gecertificeerd MSC-trainer begeleid ik je met warmte en expertise op jouw pad naar meer zelfcompassie. 
+                      Mijn eigen reis met zelfkritiek en perfectionisme heeft me geleerd hoe transformerend het is om jezelf met vriendelijkheid te benaderen.
+                    </p>
+                    <p>
+                      Met een achtergrond in psychologie en jarenlange ervaring in mindfulness, creëer ik een veilige ruimte waarin je kunt ontdekken wat het betekent om echt thuis te komen bij jezelf.
+                    </p>
+                  </div>
+                  <div className="flex flex-wrap gap-3 mb-8">
+                    <span className="inline-flex items-center gap-2 rounded-full bg-white border border-warm-200 px-4 py-2 text-sm text-muted-foreground shadow-sm">
+                      <Award className="h-4 w-4 text-terracotta-500" />
+                      CMSC Gecertificeerd
+                    </span>
+                    <span className="inline-flex items-center gap-2 rounded-full bg-white border border-warm-200 px-4 py-2 text-sm text-muted-foreground shadow-sm">
+                      <Users className="h-4 w-4 text-terracotta-500" />
+                      200+ deelnemers
+                    </span>
+                    <span className="inline-flex items-center gap-2 rounded-full bg-white border border-warm-200 px-4 py-2 text-sm text-muted-foreground shadow-sm">
+                      <Globe className="h-4 w-4 text-terracotta-500" />
+                      NL & EN
+                    </span>
+                  </div>
+                  <Button asChild className="bg-terracotta-600 hover:bg-terracotta-700 text-white rounded-full px-8">
+                    <Link to="/about">
+                      Lees meer over mij
+                      <ArrowRight className="ml-2 h-4 w-4" />
+                    </Link>
+                  </Button>
+                </div>
+              </ScrollReveal>
+            </div>
           </div>
         </div>
       </section>
