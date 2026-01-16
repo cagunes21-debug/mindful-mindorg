@@ -4,6 +4,8 @@ import { Card, CardContent } from "@/components/ui/card";
 import { ArrowRight, Check, Sparkles, Users } from "lucide-react";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
+import { ScrollReveal, StaggerContainer, StaggerItem } from "@/components/ScrollReveal";
+import { motion } from "framer-motion";
 
 const trainers = [
   {
@@ -67,19 +69,34 @@ const Trainers = () => {
         
         <div className="container relative mx-auto px-4">
           <div className="mx-auto max-w-3xl text-center">
-            <span className="inline-flex items-center gap-2 mb-8 rounded-full bg-sage-100 border border-sage-200 px-5 py-2.5 text-sm font-medium text-sage-800">
+            <motion.span 
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6 }}
+              className="inline-flex items-center gap-2 mb-8 rounded-full bg-sage-100 border border-sage-200 px-5 py-2.5 text-sm font-medium text-sage-800"
+            >
               <Users className="h-4 w-4" />
               Ons Team
-            </span>
+            </motion.span>
             
-            <h1 className="mb-8 text-4xl font-light tracking-tight text-foreground md:text-5xl lg:text-6xl leading-[1.1]">
+            <motion.h1 
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.7, delay: 0.1 }}
+              className="mb-8 text-4xl font-light tracking-tight text-foreground md:text-5xl lg:text-6xl leading-[1.1]"
+            >
               Over de
               <span className="block font-serif italic text-terracotta-600 mt-2">Trainers</span>
-            </h1>
+            </motion.h1>
             
-            <p className="text-muted-foreground text-lg max-w-2xl mx-auto leading-relaxed">
+            <motion.p 
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.2 }}
+              className="text-muted-foreground text-lg max-w-2xl mx-auto leading-relaxed"
+            >
               Toegewijde en ervaren trainers die werken vanuit warmte, expertise en een diepe persoonlijke beoefening.
-            </p>
+            </motion.p>
           </div>
         </div>
       </section>
@@ -88,66 +105,68 @@ const Trainers = () => {
       <section className="py-12 lg:py-16 bg-white">
         <div className="container mx-auto px-4">
           <div className="mx-auto max-w-5xl">
-            <div className="grid gap-8 md:grid-cols-2">
+            <StaggerContainer className="grid gap-8 md:grid-cols-2">
               {trainers.map((trainer) => (
-                <Card key={trainer.name} className="border-warm-200 bg-gradient-to-br from-warm-50 to-white rounded-3xl overflow-hidden shadow-sm hover:shadow-md transition-shadow">
-                  <CardContent className="p-8">
-                    {/* Header */}
-                    <div className="flex items-start gap-5 mb-6">
-                      <div className={`flex-shrink-0 h-20 w-20 rounded-2xl bg-gradient-to-br ${
-                        trainer.color === 'terracotta' 
-                          ? 'from-terracotta-200 to-terracotta-300' 
-                          : 'from-sage-200 to-sage-300'
-                      } flex items-center justify-center`}>
-                        <span className="text-3xl font-serif italic text-white">
-                          {trainer.name.charAt(0)}
-                        </span>
-                      </div>
-                      <div className="flex-1 min-w-0">
-                        <h2 className="text-xl font-semibold text-foreground mb-1">
-                          {trainer.name}
-                        </h2>
-                        <p className={`text-sm font-medium mb-1 ${
-                          trainer.color === 'terracotta' ? 'text-terracotta-600' : 'text-sage-700'
-                        }`}>
-                          {trainer.role}
-                        </p>
-                        <p className="text-xs text-muted-foreground italic">
-                          {trainer.tagline}
-                        </p>
-                      </div>
-                    </div>
-                    
-                    {/* Bio */}
-                    <p className="text-foreground leading-relaxed mb-3 text-sm">
-                      {trainer.bio}
-                    </p>
-                    <p className="text-muted-foreground leading-relaxed text-sm mb-5">
-                      {trainer.journey}
-                    </p>
-                    
-                    {/* Specializations */}
-                    {trainer.specializations.length > 0 && (
-                      <div className="pt-5 border-t border-warm-200">
-                        <p className="text-xs font-medium text-muted-foreground uppercase tracking-wider mb-3">Specialisaties</p>
-                        <div className="flex flex-wrap gap-2">
-                          {trainer.specializations.map((spec) => (
-                            <span key={spec} className={`inline-flex items-center gap-1.5 text-xs px-3 py-1.5 rounded-full ${
-                              trainer.color === 'terracotta' 
-                                ? 'bg-terracotta-50 text-terracotta-700' 
-                                : 'bg-sage-50 text-sage-700'
-                            }`}>
-                              <Check className="h-3 w-3" />
-                              {spec}
-                            </span>
-                          ))}
+                <StaggerItem key={trainer.name}>
+                  <Card className="border-warm-200 bg-gradient-to-br from-warm-50 to-white rounded-3xl overflow-hidden shadow-sm hover:shadow-md transition-shadow h-full">
+                    <CardContent className="p-8">
+                      {/* Header */}
+                      <div className="flex items-start gap-5 mb-6">
+                        <div className={`flex-shrink-0 h-20 w-20 rounded-2xl bg-gradient-to-br ${
+                          trainer.color === 'terracotta' 
+                            ? 'from-terracotta-200 to-terracotta-300' 
+                            : 'from-sage-200 to-sage-300'
+                        } flex items-center justify-center`}>
+                          <span className="text-3xl font-serif italic text-white">
+                            {trainer.name.charAt(0)}
+                          </span>
+                        </div>
+                        <div className="flex-1 min-w-0">
+                          <h2 className="text-xl font-semibold text-foreground mb-1">
+                            {trainer.name}
+                          </h2>
+                          <p className={`text-sm font-medium mb-1 ${
+                            trainer.color === 'terracotta' ? 'text-terracotta-600' : 'text-sage-700'
+                          }`}>
+                            {trainer.role}
+                          </p>
+                          <p className="text-xs text-muted-foreground italic">
+                            {trainer.tagline}
+                          </p>
                         </div>
                       </div>
-                    )}
-                  </CardContent>
-                </Card>
+                      
+                      {/* Bio */}
+                      <p className="text-foreground leading-relaxed mb-3 text-sm">
+                        {trainer.bio}
+                      </p>
+                      <p className="text-muted-foreground leading-relaxed text-sm mb-5">
+                        {trainer.journey}
+                      </p>
+                      
+                      {/* Specializations */}
+                      {trainer.specializations.length > 0 && (
+                        <div className="pt-5 border-t border-warm-200">
+                          <p className="text-xs font-medium text-muted-foreground uppercase tracking-wider mb-3">Specialisaties</p>
+                          <div className="flex flex-wrap gap-2">
+                            {trainer.specializations.map((spec) => (
+                              <span key={spec} className={`inline-flex items-center gap-1.5 text-xs px-3 py-1.5 rounded-full ${
+                                trainer.color === 'terracotta' 
+                                  ? 'bg-terracotta-50 text-terracotta-700' 
+                                  : 'bg-sage-50 text-sage-700'
+                              }`}>
+                                <Check className="h-3 w-3" />
+                                {spec}
+                              </span>
+                            ))}
+                          </div>
+                        </div>
+                      )}
+                    </CardContent>
+                  </Card>
+                </StaggerItem>
               ))}
-            </div>
+            </StaggerContainer>
           </div>
         </div>
       </section>
@@ -159,25 +178,29 @@ const Trainers = () => {
         
         <div className="container relative mx-auto px-4">
           <div className="mx-auto max-w-2xl text-center">
-            <span className="inline-flex items-center gap-2 mb-8 rounded-full bg-white/20 px-5 py-2.5 text-sm font-medium text-white">
-              <Sparkles className="h-4 w-4" />
-              Word begeleid door ons team
-            </span>
+            <ScrollReveal>
+              <span className="inline-flex items-center gap-2 mb-8 rounded-full bg-white/20 px-5 py-2.5 text-sm font-medium text-white">
+                <Sparkles className="h-4 w-4" />
+                Word begeleid door ons team
+              </span>
+              
+              <h2 className="mb-6 text-3xl font-light text-white md:text-4xl leading-tight">
+                Klaar om te beginnen?
+              </h2>
+              
+              <p className="mb-10 text-white/90 text-lg max-w-lg mx-auto leading-relaxed">
+                Ontdek onze trainingen en vind de begeleiding die bij jou past.
+              </p>
+            </ScrollReveal>
             
-            <h2 className="mb-6 text-3xl font-light text-white md:text-4xl leading-tight">
-              Klaar om te beginnen?
-            </h2>
-            
-            <p className="mb-10 text-white/90 text-lg max-w-lg mx-auto leading-relaxed">
-              Ontdek onze trainingen en vind de begeleiding die bij jou past.
-            </p>
-            
-            <Button asChild size="lg" className="bg-white text-terracotta-700 hover:bg-terracotta-50 px-10 py-7 text-base rounded-full shadow-lg">
-              <Link to="/msc-training">
-                Bekijk de trainingen
-                <ArrowRight className="ml-2 h-5 w-5" />
-              </Link>
-            </Button>
+            <ScrollReveal delay={0.2}>
+              <Button asChild size="lg" className="bg-white text-terracotta-700 hover:bg-terracotta-50 px-10 py-7 text-base rounded-full shadow-lg">
+                <Link to="/msc-training">
+                  Bekijk de trainingen
+                  <ArrowRight className="ml-2 h-5 w-5" />
+                </Link>
+              </Button>
+            </ScrollReveal>
           </div>
         </div>
       </section>

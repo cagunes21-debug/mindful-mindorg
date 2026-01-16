@@ -4,6 +4,8 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Calendar, Clock, Globe, MapPin, ArrowRight, Sparkles, Sun } from "lucide-react";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
+import { ScrollReveal, StaggerContainer, StaggerItem } from "@/components/ScrollReveal";
+import { motion } from "framer-motion";
 
 const workshopDates = {
   nl: { lang: "Nederlands", time: "19:00 – 20:00", dates: ["14 januari", "11 februari"] },
@@ -89,19 +91,34 @@ const Agenda = () => {
         
         <div className="container relative mx-auto px-4">
           <div className="mx-auto max-w-3xl text-center">
-            <span className="inline-flex items-center gap-2 mb-8 rounded-full bg-terracotta-100 border border-terracotta-200 px-5 py-2.5 text-sm font-medium text-terracotta-700">
+            <motion.span 
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6 }}
+              className="inline-flex items-center gap-2 mb-8 rounded-full bg-terracotta-100 border border-terracotta-200 px-5 py-2.5 text-sm font-medium text-terracotta-700"
+            >
               <Calendar className="h-4 w-4" />
               Trainingsagenda
-            </span>
+            </motion.span>
             
-            <h1 className="mb-8 text-4xl font-light tracking-tight text-foreground md:text-5xl lg:text-6xl leading-[1.1]">
+            <motion.h1 
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.7, delay: 0.1 }}
+              className="mb-8 text-4xl font-light tracking-tight text-foreground md:text-5xl lg:text-6xl leading-[1.1]"
+            >
               Training
               <span className="block font-serif italic text-terracotta-600 mt-2">Agenda</span>
-            </h1>
+            </motion.h1>
             
-            <p className="text-muted-foreground text-lg max-w-2xl mx-auto leading-relaxed">
+            <motion.p 
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.2 }}
+              className="text-muted-foreground text-lg max-w-2xl mx-auto leading-relaxed"
+            >
               Kies de vorm die past bij jouw behoefte, beschikbare tijd en mate van verdieping. Je kunt instappen met een workshop, een 8-weekse training volgen of kiezen voor een intensiever traject.
-            </p>
+            </motion.p>
           </div>
         </div>
       </section>

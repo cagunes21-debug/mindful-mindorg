@@ -3,6 +3,8 @@ import { Button } from "@/components/ui/button";
 import { Heart, ArrowRight, Check, Sparkles, Target, Eye } from "lucide-react";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
+import { ScrollReveal, StaggerContainer, StaggerItem } from "@/components/ScrollReveal";
+import { motion } from "framer-motion";
 
 const About = () => {
   return (
@@ -17,15 +19,25 @@ const About = () => {
         
         <div className="container relative mx-auto px-4">
           <div className="mx-auto max-w-3xl text-center">
-            <span className="inline-flex items-center gap-2 mb-8 rounded-full bg-terracotta-100 border border-terracotta-200 px-5 py-2.5 text-sm font-medium text-terracotta-700">
+            <motion.span 
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6 }}
+              className="inline-flex items-center gap-2 mb-8 rounded-full bg-terracotta-100 border border-terracotta-200 px-5 py-2.5 text-sm font-medium text-terracotta-700"
+            >
               <Heart className="h-4 w-4" />
               Over Mindful Mind
-            </span>
+            </motion.span>
             
-            <h1 className="mb-8 text-4xl font-light tracking-tight text-foreground md:text-5xl lg:text-6xl leading-[1.1]">
+            <motion.h1 
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.7, delay: 0.1 }}
+              className="mb-8 text-4xl font-light tracking-tight text-foreground md:text-5xl lg:text-6xl leading-[1.1]"
+            >
               Ruimte om te
               <span className="block font-serif italic text-terracotta-600 mt-2">vertragen en te voelen</span>
-            </h1>
+            </motion.h1>
           </div>
         </div>
       </section>
@@ -34,12 +46,16 @@ const About = () => {
       <section className="py-16 lg:py-20 bg-white">
         <div className="container mx-auto px-4">
           <div className="mx-auto max-w-2xl text-center">
-            <p className="text-muted-foreground text-lg leading-relaxed mb-6">
-              In een wereld die altijd in beweging is, raak je makkelijk jezelf kwijt. Je loopt door, presteert, zorgt voor anderen — maar wanneer sta je echt stil?
-            </p>
-            <p className="text-foreground text-xl font-medium leading-relaxed">
-              Bij Mindful Mind creëren we die ruimte. Voor innerlijke rust, zelfcompassie en bewuste aanwezigheid.
-            </p>
+            <ScrollReveal>
+              <p className="text-muted-foreground text-lg leading-relaxed mb-6">
+                In een wereld die altijd in beweging is, raak je makkelijk jezelf kwijt. Je loopt door, presteert, zorgt voor anderen — maar wanneer sta je echt stil?
+              </p>
+            </ScrollReveal>
+            <ScrollReveal delay={0.1}>
+              <p className="text-foreground text-xl font-medium leading-relaxed">
+                Bij Mindful Mind creëren we die ruimte. Voor innerlijke rust, zelfcompassie en bewuste aanwezigheid.
+              </p>
+            </ScrollReveal>
           </div>
         </div>
       </section>
@@ -48,15 +64,17 @@ const About = () => {
       <section className="py-16 lg:py-20 bg-gradient-to-b from-warm-50 to-white">
         <div className="container mx-auto px-4">
           <div className="mx-auto max-w-3xl">
-            <div className="bg-white rounded-3xl p-8 md:p-12 shadow-sm border border-warm-200 text-center">
-              <h2 className="text-2xl font-light text-foreground md:text-3xl mb-6 leading-tight">
-                Je hoeft niet perfect te zijn.
-                <span className="block font-serif italic text-terracotta-600 mt-1">Je mag er gewoon zijn.</span>
-              </h2>
-              <p className="text-muted-foreground text-lg leading-relaxed">
-                Wij bieden een veilige plek waar alle aspecten van jezelf welkom zijn. Geen prestaties, geen verwachtingen — alleen ruimte om te herstellen en te groeien.
-              </p>
-            </div>
+            <ScrollReveal animation="scale">
+              <div className="bg-white rounded-3xl p-8 md:p-12 shadow-sm border border-warm-200 text-center">
+                <h2 className="text-2xl font-light text-foreground md:text-3xl mb-6 leading-tight">
+                  Je hoeft niet perfect te zijn.
+                  <span className="block font-serif italic text-terracotta-600 mt-1">Je mag er gewoon zijn.</span>
+                </h2>
+                <p className="text-muted-foreground text-lg leading-relaxed">
+                  Wij bieden een veilige plek waar alle aspecten van jezelf welkom zijn. Geen prestaties, geen verwachtingen — alleen ruimte om te herstellen en te groeien.
+                </p>
+              </div>
+            </ScrollReveal>
           </div>
         </div>
       </section>
@@ -65,36 +83,40 @@ const About = () => {
       <section className="py-20 lg:py-24 bg-white">
         <div className="container mx-auto px-4">
           <div className="mx-auto max-w-4xl">
-            <div className="text-center mb-14">
-              <p className="text-sm font-medium text-terracotta-500 tracking-widest uppercase mb-4">Onze Aanpak</p>
-              <h2 className="text-3xl font-light text-foreground md:text-4xl leading-tight mb-6">
-                Meer dan <span className="font-serif italic text-terracotta-600">technieken leren</span>
-              </h2>
-              <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
-                Wij geloven in echte transformatie — een fundamentele verschuiving in hoe je naar jezelf kijkt en met jezelf omgaat.
-              </p>
-            </div>
+            <ScrollReveal>
+              <div className="text-center mb-14">
+                <p className="text-sm font-medium text-terracotta-500 tracking-widest uppercase mb-4">Onze Aanpak</p>
+                <h2 className="text-3xl font-light text-foreground md:text-4xl leading-tight mb-6">
+                  Meer dan <span className="font-serif italic text-terracotta-600">technieken leren</span>
+                </h2>
+                <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
+                  Wij geloven in echte transformatie — een fundamentele verschuiving in hoe je naar jezelf kijkt en met jezelf omgaat.
+                </p>
+              </div>
+            </ScrollReveal>
             
-            <div className="grid gap-4 sm:grid-cols-2">
+            <StaggerContainer className="grid gap-4 sm:grid-cols-2">
               {[
                 { title: "Blijvende verandering", desc: "Gericht op duurzame groei, niet op snelle fixes" },
                 { title: "Wetenschappelijk onderbouwd", desc: "Gebaseerd op bewezen methodes en onderzoek" },
                 { title: "Trauma-sensitief", desc: "Met zorg en aandacht voor ieders tempo" },
                 { title: "Theorie + praktijk", desc: "Direct toepasbaar in je dagelijks leven" },
               ].map((item, index) => (
-                <div key={index} className="bg-warm-50 rounded-2xl px-6 py-5 border border-warm-200">
-                  <div className="flex items-start gap-4">
-                    <div className="flex-shrink-0 h-8 w-8 rounded-full bg-terracotta-100 flex items-center justify-center mt-0.5">
-                      <Check className="h-4 w-4 text-terracotta-600" />
-                    </div>
-                    <div>
-                      <p className="font-semibold text-foreground mb-1">{item.title}</p>
-                      <p className="text-sm text-muted-foreground">{item.desc}</p>
+                <StaggerItem key={index}>
+                  <div className="bg-warm-50 rounded-2xl px-6 py-5 border border-warm-200 h-full">
+                    <div className="flex items-start gap-4">
+                      <div className="flex-shrink-0 h-8 w-8 rounded-full bg-terracotta-100 flex items-center justify-center mt-0.5">
+                        <Check className="h-4 w-4 text-terracotta-600" />
+                      </div>
+                      <div>
+                        <p className="font-semibold text-foreground mb-1">{item.title}</p>
+                        <p className="text-sm text-muted-foreground">{item.desc}</p>
+                      </div>
                     </div>
                   </div>
-                </div>
+                </StaggerItem>
               ))}
-            </div>
+            </StaggerContainer>
           </div>
         </div>
       </section>
@@ -103,35 +125,45 @@ const About = () => {
       <section className="py-20 lg:py-24 bg-warm-50">
         <div className="container mx-auto px-4">
           <div className="mx-auto max-w-3xl">
-            <div className="text-center mb-12">
-              <p className="text-sm font-medium text-terracotta-500 tracking-widest uppercase mb-4">In Onze Trainingen</p>
-              <h2 className="text-3xl font-light text-foreground md:text-4xl leading-tight">
-                Hoe wij <span className="font-serif italic text-terracotta-600">werken</span>
-              </h2>
-            </div>
-            
-            <div className="bg-white rounded-3xl p-8 md:p-10 shadow-sm border border-warm-200">
-              <p className="text-lg text-foreground leading-relaxed mb-8 text-center">
-                Authenticiteit staat centraal. Echte verandering ontstaat wanneer je je veilig voelt — veilig om te lachen, te voelen, te delen of gewoon stil te zijn.
-              </p>
-              
-              <div className="grid gap-3 sm:grid-cols-3 mb-8">
-                <div className="text-center p-5 rounded-2xl bg-warm-50 border border-warm-100">
-                  <p className="text-foreground font-medium">Niets is verplicht</p>
-                </div>
-                <div className="text-center p-5 rounded-2xl bg-sage-50 border border-sage-100">
-                  <p className="text-foreground font-medium">Alles is welkom</p>
-                </div>
-                <div className="text-center p-5 rounded-2xl bg-terracotta-50 border border-terracotta-100">
-                  <p className="text-foreground font-medium">Ruimte voor jou</p>
-                </div>
+            <ScrollReveal>
+              <div className="text-center mb-12">
+                <p className="text-sm font-medium text-terracotta-500 tracking-widest uppercase mb-4">In Onze Trainingen</p>
+                <h2 className="text-3xl font-light text-foreground md:text-4xl leading-tight">
+                  Hoe wij <span className="font-serif italic text-terracotta-600">werken</span>
+                </h2>
               </div>
-              
-              <p className="text-muted-foreground leading-relaxed text-center">
-                Voor ons is zelfcompassie niet alleen een techniek — het is een manier van leven. 
-                Het helpt ons om onszelf te ondersteunen zoals we een dierbare vriend zouden steunen.
-              </p>
-            </div>
+            </ScrollReveal>
+            
+            <ScrollReveal delay={0.1} animation="scale">
+              <div className="bg-white rounded-3xl p-8 md:p-10 shadow-sm border border-warm-200">
+                <p className="text-lg text-foreground leading-relaxed mb-8 text-center">
+                  Authenticiteit staat centraal. Echte verandering ontstaat wanneer je je veilig voelt — veilig om te lachen, te voelen, te delen of gewoon stil te zijn.
+                </p>
+                
+                <StaggerContainer className="grid gap-3 sm:grid-cols-3 mb-8">
+                  <StaggerItem>
+                    <div className="text-center p-5 rounded-2xl bg-warm-50 border border-warm-100">
+                      <p className="text-foreground font-medium">Niets is verplicht</p>
+                    </div>
+                  </StaggerItem>
+                  <StaggerItem>
+                    <div className="text-center p-5 rounded-2xl bg-sage-50 border border-sage-100">
+                      <p className="text-foreground font-medium">Alles is welkom</p>
+                    </div>
+                  </StaggerItem>
+                  <StaggerItem>
+                    <div className="text-center p-5 rounded-2xl bg-terracotta-50 border border-terracotta-100">
+                      <p className="text-foreground font-medium">Ruimte voor jou</p>
+                    </div>
+                  </StaggerItem>
+                </StaggerContainer>
+                
+                <p className="text-muted-foreground leading-relaxed text-center">
+                  Voor ons is zelfcompassie niet alleen een techniek — het is een manier van leven. 
+                  Het helpt ons om onszelf te ondersteunen zoals we een dierbare vriend zouden steunen.
+                </p>
+              </div>
+            </ScrollReveal>
           </div>
         </div>
       </section>
@@ -140,40 +172,46 @@ const About = () => {
       <section className="py-20 lg:py-24 bg-white">
         <div className="container mx-auto px-4">
           <div className="mx-auto max-w-4xl">
-            <div className="text-center mb-14">
-              <p className="text-sm font-medium text-terracotta-500 tracking-widest uppercase mb-4">Wat Ons Drijft</p>
-              <h2 className="text-3xl font-light text-foreground md:text-4xl leading-tight">
-                Visie <span className="font-serif italic text-terracotta-600">& Missie</span>
-              </h2>
-            </div>
+            <ScrollReveal>
+              <div className="text-center mb-14">
+                <p className="text-sm font-medium text-terracotta-500 tracking-widest uppercase mb-4">Wat Ons Drijft</p>
+                <h2 className="text-3xl font-light text-foreground md:text-4xl leading-tight">
+                  Visie <span className="font-serif italic text-terracotta-600">& Missie</span>
+                </h2>
+              </div>
+            </ScrollReveal>
             
-            <div className="grid gap-8 md:grid-cols-2">
-              <div className="bg-gradient-to-br from-terracotta-50 to-warm-50 rounded-3xl p-8 border border-terracotta-100">
-                <div className="h-14 w-14 rounded-2xl bg-white flex items-center justify-center mb-6 shadow-sm">
-                  <Eye className="h-7 w-7 text-terracotta-600" />
+            <StaggerContainer className="grid gap-8 md:grid-cols-2">
+              <StaggerItem>
+                <div className="bg-gradient-to-br from-terracotta-50 to-warm-50 rounded-3xl p-8 border border-terracotta-100 h-full">
+                  <div className="h-14 w-14 rounded-2xl bg-white flex items-center justify-center mb-6 shadow-sm">
+                    <Eye className="h-7 w-7 text-terracotta-600" />
+                  </div>
+                  <h3 className="text-xl font-semibold text-foreground mb-4">Onze Visie</h3>
+                  <p className="text-muted-foreground leading-relaxed mb-4">
+                    Een wereld waarin we met compassie naar onszelf én naar anderen kijken.
+                  </p>
+                  <p className="text-foreground leading-relaxed font-medium">
+                    Wanneer we goed voor onszelf zorgen, groeit onze verbinding met anderen.
+                  </p>
                 </div>
-                <h3 className="text-xl font-semibold text-foreground mb-4">Onze Visie</h3>
-                <p className="text-muted-foreground leading-relaxed mb-4">
-                  Een wereld waarin we met compassie naar onszelf én naar anderen kijken.
-                </p>
-                <p className="text-foreground leading-relaxed font-medium">
-                  Wanneer we goed voor onszelf zorgen, groeit onze verbinding met anderen.
-                </p>
-              </div>
+              </StaggerItem>
               
-              <div className="bg-gradient-to-br from-sage-50 to-warm-50 rounded-3xl p-8 border border-sage-200">
-                <div className="h-14 w-14 rounded-2xl bg-white flex items-center justify-center mb-6 shadow-sm">
-                  <Target className="h-7 w-7 text-sage-700" />
+              <StaggerItem>
+                <div className="bg-gradient-to-br from-sage-50 to-warm-50 rounded-3xl p-8 border border-sage-200 h-full">
+                  <div className="h-14 w-14 rounded-2xl bg-white flex items-center justify-center mb-6 shadow-sm">
+                    <Target className="h-7 w-7 text-sage-700" />
+                  </div>
+                  <h3 className="text-xl font-semibold text-foreground mb-4">Onze Missie</h3>
+                  <p className="text-muted-foreground leading-relaxed mb-4">
+                    Een veilige plek bieden waar je opnieuw verbinding maakt met jezelf.
+                  </p>
+                  <p className="text-foreground leading-relaxed font-medium">
+                    Iedereen verdient de kans om te vertragen, te reflecteren en te groeien.
+                  </p>
                 </div>
-                <h3 className="text-xl font-semibold text-foreground mb-4">Onze Missie</h3>
-                <p className="text-muted-foreground leading-relaxed mb-4">
-                  Een veilige plek bieden waar je opnieuw verbinding maakt met jezelf.
-                </p>
-                <p className="text-foreground leading-relaxed font-medium">
-                  Iedereen verdient de kans om te vertragen, te reflecteren en te groeien.
-                </p>
-              </div>
-            </div>
+              </StaggerItem>
+            </StaggerContainer>
           </div>
         </div>
       </section>
@@ -182,15 +220,17 @@ const About = () => {
       <section className="py-16 lg:py-20 bg-warm-50">
         <div className="container mx-auto px-4">
           <div className="mx-auto max-w-2xl text-center">
-            <p className="text-muted-foreground text-lg leading-relaxed mb-6">
-              Achter Mindful Mind staat een team van ervaren trainers die werken vanuit warmte, expertise en een diepe persoonlijke beoefening.
-            </p>
-            <Button asChild variant="outline" className="border-terracotta-300 text-terracotta-600 hover:bg-terracotta-50 rounded-full px-8">
-              <Link to="/trainers">
-                Ontmoet de trainers
-                <ArrowRight className="ml-2 h-4 w-4" />
-              </Link>
-            </Button>
+            <ScrollReveal>
+              <p className="text-muted-foreground text-lg leading-relaxed mb-6">
+                Achter Mindful Mind staat een team van ervaren trainers die werken vanuit warmte, expertise en een diepe persoonlijke beoefening.
+              </p>
+              <Button asChild variant="outline" className="border-terracotta-300 text-terracotta-600 hover:bg-terracotta-50 rounded-full px-8">
+                <Link to="/trainers">
+                  Ontmoet de trainers
+                  <ArrowRight className="ml-2 h-4 w-4" />
+                </Link>
+              </Button>
+            </ScrollReveal>
           </div>
         </div>
       </section>
@@ -202,25 +242,29 @@ const About = () => {
         
         <div className="container relative mx-auto px-4">
           <div className="mx-auto max-w-2xl text-center">
-            <span className="inline-flex items-center gap-2 mb-8 rounded-full bg-white/20 px-5 py-2.5 text-sm font-medium text-white">
-              <Sparkles className="h-4 w-4" />
-              Dit is jouw moment
-            </span>
+            <ScrollReveal>
+              <span className="inline-flex items-center gap-2 mb-8 rounded-full bg-white/20 px-5 py-2.5 text-sm font-medium text-white">
+                <Sparkles className="h-4 w-4" />
+                Dit is jouw moment
+              </span>
+              
+              <h2 className="mb-6 text-3xl font-light text-white md:text-4xl lg:text-5xl leading-tight">
+                Klaar om thuis te komen bij jezelf?
+              </h2>
+              
+              <p className="mb-12 text-white/90 text-lg max-w-lg mx-auto leading-relaxed">
+                Gun jezelf de tijd en aandacht die je verdient. Begin vandaag je reis naar meer rust en zelfliefde.
+              </p>
+            </ScrollReveal>
             
-            <h2 className="mb-6 text-3xl font-light text-white md:text-4xl lg:text-5xl leading-tight">
-              Klaar om thuis te komen bij jezelf?
-            </h2>
-            
-            <p className="mb-12 text-white/90 text-lg max-w-lg mx-auto leading-relaxed">
-              Gun jezelf de tijd en aandacht die je verdient. Begin vandaag je reis naar meer rust en zelfliefde.
-            </p>
-            
-            <Button asChild size="lg" className="bg-white text-terracotta-700 hover:bg-terracotta-50 px-10 py-7 text-base rounded-full shadow-lg">
-              <Link to="/msc-training">
-                Bekijk de trainingen
-                <ArrowRight className="ml-2 h-5 w-5" />
-              </Link>
-            </Button>
+            <ScrollReveal delay={0.2}>
+              <Button asChild size="lg" className="bg-white text-terracotta-700 hover:bg-terracotta-50 px-10 py-7 text-base rounded-full shadow-lg">
+                <Link to="/msc-training">
+                  Bekijk de trainingen
+                  <ArrowRight className="ml-2 h-5 w-5" />
+                </Link>
+              </Button>
+            </ScrollReveal>
           </div>
         </div>
       </section>
