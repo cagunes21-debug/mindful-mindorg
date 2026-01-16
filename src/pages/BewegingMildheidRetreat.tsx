@@ -352,7 +352,7 @@ const BewegingMildheidRetreat = () => {
                   </p>
                   <p className="text-lg text-terracotta-700 font-medium italic">
                     Met Mindful Zelfcompassie (MSC) als veilige bedding<br />
-                    en beweging & vrije dans als taal van het lichaam.
+                    en vrije beweging als taal van het lichaam.
                   </p>
                 </CardContent>
               </Card>
