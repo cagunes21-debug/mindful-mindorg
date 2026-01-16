@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { Heart, ArrowRight, Check, Calendar, Clock, MapPin, Euro, Users, Sun, Sunrise, Moon, Coffee, MessageSquareQuote, Sparkles, Shield, Compass } from "lucide-react";
+import { Heart, ArrowRight, Check, Calendar, MapPin, Euro, Users, Sun, MessageSquareQuote, Sparkles, Shield, Compass } from "lucide-react";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import { ScrollReveal, StaggerContainer, StaggerItem } from "@/components/ScrollReveal";
@@ -59,43 +59,12 @@ const takeHomeResults = [
   "Een diepe ervaring van verbondenheid en aanwezigheid",
 ];
 
-const dailyProgram = [
-  {
-    icon: Sunrise,
-    time: "07:30 - 08:30",
-    title: "Ochtendbeoefening",
-    description: "Zachte beweging, ademwerk en meditatie om de dag te beginnen",
-  },
-  {
-    icon: Coffee,
-    time: "08:30 - 09:30",
-    title: "Ontbijt",
-    description: "Gezond, vegetarisch ontbijt in stilte of zachte conversatie",
-  },
-  {
-    icon: Sun,
-    time: "10:00 - 12:30",
-    title: "Ochtendsessie",
-    description: "Mindfulness- en zelfcompassieoefeningen, reflectie en delen",
-  },
-  {
-    icon: Coffee,
-    time: "12:30 - 14:30",
-    title: "Lunch & Vrije tijd",
-    description: "Voedzame maaltijd gevolgd door rusttijd in de natuur",
-  },
-  {
-    icon: Heart,
-    time: "14:30 - 17:00",
-    title: "Middagsessie",
-    description: "Verdiepende oefeningen, wandelmeditatie of creatieve expressie",
-  },
-  {
-    icon: Moon,
-    time: "19:00 - 21:00",
-    title: "Avondprogramma",
-    description: "Diner gevolgd door zachte avondbeoefening of vrije tijd",
-  },
+const dailyRhythm = [
+  "Ochtendbeoefening met meditatie en zachte beweging",
+  "Begeleide sessies met mindfulness- en zelfcompassieoefeningen",
+  "Voldoende ruimte voor rust, stilte en vrije tijd",
+  "Vegetarische maaltijden in een ontspannen sfeer",
+  "Avondprogramma of vrije tijd in de natuur",
 ];
 
 const practicalInfo = [
@@ -431,42 +400,34 @@ const BarcelonaRetreat = () => {
       </section>
 
       {/* Daily Program */}
-      <section id="programma" className="py-20 lg:py-24 bg-white scroll-mt-20">
+      <section id="programma" className="py-16 lg:py-20 bg-white scroll-mt-20">
         <div className="container mx-auto px-4">
-          <div className="mx-auto max-w-5xl">
+          <div className="mx-auto max-w-3xl">
             <ScrollReveal>
-              <div className="text-center mb-14">
+              <div className="text-center mb-10">
                 <span className="inline-block rounded-full bg-terracotta-100 px-4 py-1.5 text-xs font-semibold text-terracotta-700 mb-6">
-                  Dagprogramma
+                  Dagritme
                 </span>
-                <h2 className="mb-6 text-3xl font-light text-foreground md:text-4xl leading-tight">
-                  Een typische <span className="font-serif italic text-terracotta-600">retraitedag</span>
+                <h2 className="mb-4 text-3xl font-light text-foreground md:text-4xl leading-tight">
+                  Een zacht <span className="font-serif italic text-terracotta-600">ritme</span>
                 </h2>
-                <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
-                  We volgen een zacht ritme dat ruimte laat voor rust, oefening en vrije tijd. 
+                <p className="text-muted-foreground text-lg max-w-2xl mx-auto mb-8">
+                  Elke dag biedt een natuurlijke afwisseling van oefening, rust en samenzijn. 
                   Alle onderdelen zijn uitnodigingen, geen verplichtingen.
                 </p>
               </div>
             </ScrollReveal>
             
-            <StaggerContainer className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-              {dailyProgram.map((item, index) => (
-                <StaggerItem key={index}>
-                  <Card className="border-0 bg-warm-50 rounded-2xl shadow-md h-full">
-                    <CardContent className="p-6">
-                      <div className="flex items-center gap-3 mb-4">
-                        <div className="h-10 w-10 rounded-xl bg-gradient-to-br from-terracotta-100 to-terracotta-200 flex items-center justify-center">
-                          <item.icon className="h-5 w-5 text-terracotta-600" />
-                        </div>
-                        <span className="text-sm font-medium text-terracotta-600">{item.time}</span>
-                      </div>
-                      <h3 className="text-lg font-semibold text-foreground mb-2">{item.title}</h3>
-                      <p className="text-sm text-muted-foreground">{item.description}</p>
-                    </CardContent>
-                  </Card>
-                </StaggerItem>
-              ))}
-            </StaggerContainer>
+            <ScrollReveal delay={0.1}>
+              <div className="grid grid-cols-1 gap-3">
+                {dailyRhythm.map((item, index) => (
+                  <div key={index} className="flex items-center gap-3 p-4 rounded-xl bg-warm-50 border border-warm-200">
+                    <Check className="h-5 w-5 text-sage-600 flex-shrink-0" />
+                    <span className="text-foreground">{item}</span>
+                  </div>
+                ))}
+              </div>
+            </ScrollReveal>
           </div>
         </div>
       </section>
