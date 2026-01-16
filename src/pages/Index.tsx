@@ -9,6 +9,7 @@ import { motion } from "framer-motion";
 import SEO from "@/components/SEO";
 import { FAQSchema, CourseSchema, OrganizationSchema } from "@/components/StructuredData";
 import AccessibilityToolbar from "@/components/AccessibilityToolbar";
+import ScrollToTop from "@/components/ScrollToTop";
 
 const trainingDates = [
   {
@@ -48,6 +49,7 @@ const trainingDates = [
 const Index = () => {
   return (
     <div className="min-h-screen bg-background">
+      <ScrollToTop />
       <SEO 
         title="Mindful Mind | 8-weekse Training in Mindful Zelfcompassie"
         description="Leer jezelf steunen in plaats van pushen. 8-weekse training in Mindful Zelfcompassie ontwikkeld door dr. Kristin Neff en dr. Christopher Germer."
