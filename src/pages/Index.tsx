@@ -860,6 +860,91 @@ const Index = () => {
         </div>
       </section>
 
+      {/* Testimonials Section */}
+      <section className="py-20 lg:py-24 bg-white relative overflow-hidden">
+        <div className="absolute top-0 left-0 w-72 h-72 bg-terracotta-50/50 rounded-full blur-3xl -translate-x-1/2 -translate-y-1/2" />
+        <div className="absolute bottom-0 right-0 w-96 h-96 bg-sage-50/50 rounded-full blur-3xl translate-x-1/2 translate-y-1/2" />
+        
+        <div className="container relative mx-auto px-4">
+          <div className="mx-auto max-w-5xl">
+            <ScrollReveal>
+              <div className="text-center mb-14">
+                <span className="inline-flex items-center gap-2 rounded-full bg-terracotta-100 border border-terracotta-200 px-5 py-2 text-xs font-semibold tracking-wider text-terracotta-700 mb-6 uppercase">
+                  <Heart className="h-3.5 w-3.5" />
+                  Ervaringen
+                </span>
+                <h2 className="mb-6 text-3xl font-light text-foreground md:text-4xl lg:text-5xl leading-tight">
+                  Wat deelnemers <span className="font-serif italic text-terracotta-600">zeggen</span>
+                </h2>
+                <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
+                  Ontdek hoe de MSC-training het leven van anderen heeft veranderd.
+                </p>
+              </div>
+            </ScrollReveal>
+            
+            <StaggerContainer className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+              {[
+                {
+                  quote: "Deze training heeft mijn relatie met mezelf volledig veranderd. Ik ben nu veel milder voor mezelf en dat straalt uit naar alles om me heen.",
+                  name: "Marieke",
+                  role: "Deelnemer voorjaar 2025",
+                },
+                {
+                  quote: "Eindelijk begrijp ik dat zelfcompassie geen zwakte is, maar juist kracht geeft. De oefeningen gebruik ik nog dagelijks.",
+                  name: "Thomas",
+                  role: "Deelnemer najaar 2024",
+                },
+                {
+                  quote: "De veilige sfeer in de groep maakte het mogelijk om echt open te zijn. Een transformerende ervaring die ik iedereen gun.",
+                  name: "Sandra",
+                  role: "Deelnemer zomer 2025",
+                },
+                {
+                  quote: "Als perfectionist was zelfkritiek mijn tweede natuur. Nu heb ik tools om mezelf met meer vriendelijkheid te benaderen.",
+                  name: "Erik",
+                  role: "Deelnemer voorjaar 2024",
+                },
+                {
+                  quote: "De combinatie van theorie en praktijk werkt heel goed. Je begrijpt niet alleen wat zelfcompassie is, maar voelt het ook echt.",
+                  name: "Lotte",
+                  role: "Deelnemer winter 2024",
+                },
+                {
+                  quote: "Ik had niet verwacht dat 8 weken zo'n impact konden hebben. Dit is een cadeau aan mezelf dat blijft geven.",
+                  name: "Jasper",
+                  role: "Deelnemer najaar 2025",
+                },
+              ].map((testimonial, index) => (
+                <StaggerItem key={index}>
+                  <Card className="h-full border-warm-200 bg-gradient-to-br from-warm-50 to-white rounded-2xl overflow-hidden hover:shadow-lg transition-all duration-300 group">
+                    <CardContent className="p-6 flex flex-col h-full">
+                      <div className="flex gap-1 mb-4">
+                        {[...Array(5)].map((_, i) => (
+                          <Star key={i} className="h-4 w-4 fill-terracotta-400 text-terracotta-400" />
+                        ))}
+                      </div>
+                      <Quote className="h-8 w-8 text-terracotta-200 mb-3 group-hover:text-terracotta-300 transition-colors" />
+                      <p className="text-muted-foreground leading-relaxed flex-grow mb-6 italic">
+                        "{testimonial.quote}"
+                      </p>
+                      <div className="flex items-center gap-3 pt-4 border-t border-warm-200">
+                        <div className="h-10 w-10 rounded-full bg-gradient-to-br from-terracotta-200 to-terracotta-300 flex items-center justify-center text-white font-semibold text-sm">
+                          {testimonial.name.charAt(0)}
+                        </div>
+                        <div>
+                          <p className="font-medium text-foreground">{testimonial.name}</p>
+                          <p className="text-sm text-muted-foreground">{testimonial.role}</p>
+                        </div>
+                      </div>
+                    </CardContent>
+                  </Card>
+                </StaggerItem>
+              ))}
+            </StaggerContainer>
+          </div>
+        </div>
+      </section>
+
       {/* Footer */}
       <footer className="border-t border-warm-200 bg-warm-100 py-16">
         <div className="container mx-auto px-4">
