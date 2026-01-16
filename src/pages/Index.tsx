@@ -1,11 +1,58 @@
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { Heart, Users, ArrowRight, Check, Leaf, Calendar, Clock, Globe, Video, Sparkles } from "lucide-react";
+import { Heart, Users, ArrowRight, Check, Leaf, Calendar, Clock, Globe, Video, Sparkles, Quote, MessageSquareQuote } from "lucide-react";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import { ScrollReveal, StaggerContainer, StaggerItem } from "@/components/ScrollReveal";
 import { motion } from "framer-motion";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
+
+const testimonials = [
+  {
+    quote: "Deze training heeft me geleerd om zachter voor mezelf te zijn. Ik merk dat ik nu veel sneller herken wanneer ik te streng voor mezelf ben.",
+    author: "Anna",
+    role: "Deelnemer MSC Training",
+  },
+  {
+    quote: "Eindelijk begrijp ik wat zelfcompassie echt betekent. Het is geen zwakte, maar juist kracht. De trainers creëren een hele veilige sfeer.",
+    author: "Mark",
+    role: "Deelnemer MSC Training",
+  },
+  {
+    quote: "Na jaren van perfectionisme heb ik geleerd om mezelf te accepteren zoals ik ben. Deze training was een keerpunt in mijn leven.",
+    author: "Sophie",
+    role: "Deelnemer MSC Training",
+  },
+];
+
+const faqItems = [
+  {
+    question: "Voor wie is deze training bedoeld?",
+    answer: "Deze training is voor iedereen die merkt dat ze vaak streng zijn voor zichzelf, moeilijk hun grenzen aangeven of moeite hebben met zelfzorg en ontspanning. Herken je jezelf in gedachten als \"Ik moet nog even doorgaan\", \"Anderen gaan voor\" of \"Ik ben niet goed genoeg\"? Dan is deze training waardevol voor jou.",
+  },
+  {
+    question: "Heb ik ervaring met meditatie nodig?",
+    answer: "Nee, je hebt geen ervaring met meditatie nodig om deel te nemen. De training is geschikt voor zowel beginners als mensen met ervaring. We bouwen stap voor stap op.",
+  },
+  {
+    question: "Wat als ik een keer een sessie mis?",
+    answer: "Het is fijn als je alle sessies kunt volgen, omdat de training stapsgewijs is opgebouwd. Maar het is geen probleem als je een keer een sessie mist. We zorgen ervoor dat je de materialen ontvangt.",
+  },
+  {
+    question: "Wat is het verschil tussen Mindfulness en MSC?",
+    answer: "Mindfulness gaat over bewust aanwezig zijn in het moment. MSC bouwt hierop voort door daar zelfcompassie aan toe te voegen: jezelf met vriendelijkheid en begrip benaderen, juist in moeilijke momenten.",
+  },
+  {
+    question: "Is de training ook geschikt bij stress of burn-out?",
+    answer: "Ja, de training is zeer geschikt als je last hebt van stress of je herstelt van een burn-out. We werken trauma-sensitief en respecteren ieders tempo. Bij ernstige klachten raden we aan om eerst met een behandelaar te overleggen.",
+  },
+];
 
 const trainingDates = [
   {
@@ -494,6 +541,92 @@ const Index = () => {
                   </Button>
                 </CardContent>
               </Card>
+            </ScrollReveal>
+          </div>
+        </div>
+      </section>
+
+      {/* Testimonials */}
+      <section className="py-24 lg:py-28 bg-gradient-to-b from-sage-50 to-warm-50">
+        <div className="container mx-auto px-4">
+          <div className="mx-auto max-w-5xl">
+            <ScrollReveal>
+              <p className="text-sm font-medium text-terracotta-500 tracking-widest uppercase mb-4 text-center">Ervaringen</p>
+              <h2 className="mb-4 text-3xl font-light text-foreground md:text-4xl lg:text-5xl text-center leading-tight">
+                Wat deelnemers <span className="font-serif italic text-terracotta-600">zeggen</span>
+              </h2>
+              <p className="text-center text-muted-foreground text-lg mb-12 max-w-xl mx-auto">
+                Ontdek hoe anderen de training hebben ervaren en wat het hen heeft gebracht.
+              </p>
+            </ScrollReveal>
+            
+            <StaggerContainer className="grid gap-8 md:grid-cols-3">
+              {testimonials.map((testimonial, index) => (
+                <StaggerItem key={index}>
+                  <Card className="border-warm-200 bg-white rounded-3xl shadow-sm hover:shadow-md transition-shadow h-full">
+                    <CardContent className="p-8 flex flex-col h-full">
+                      <div className="mb-6">
+                        <Quote className="h-10 w-10 text-terracotta-200" />
+                      </div>
+                      <p className="text-foreground leading-relaxed mb-6 flex-grow italic">
+                        "{testimonial.quote}"
+                      </p>
+                      <div className="pt-4 border-t border-warm-200">
+                        <p className="font-semibold text-foreground">{testimonial.author}</p>
+                        <p className="text-sm text-muted-foreground">{testimonial.role}</p>
+                      </div>
+                    </CardContent>
+                  </Card>
+                </StaggerItem>
+              ))}
+            </StaggerContainer>
+          </div>
+        </div>
+      </section>
+
+      {/* FAQ */}
+      <section className="py-24 lg:py-28 bg-white">
+        <div className="container mx-auto px-4">
+          <div className="mx-auto max-w-3xl">
+            <ScrollReveal>
+              <p className="text-sm font-medium text-terracotta-500 tracking-widest uppercase mb-4 text-center">Veelgestelde vragen</p>
+              <h2 className="mb-4 text-3xl font-light text-foreground md:text-4xl lg:text-5xl text-center leading-tight">
+                Heb je nog <span className="font-serif italic text-terracotta-600">vragen?</span>
+              </h2>
+              <p className="text-center text-muted-foreground text-lg mb-12 max-w-xl mx-auto">
+                Hier vind je antwoorden op de meest gestelde vragen over de training.
+              </p>
+            </ScrollReveal>
+            
+            <ScrollReveal delay={0.1}>
+              <Accordion type="single" collapsible className="space-y-4">
+                {faqItems.map((item, index) => (
+                  <AccordionItem 
+                    key={index} 
+                    value={`item-${index}`}
+                    className="bg-warm-50 border border-warm-200 rounded-2xl px-6 data-[state=open]:bg-gradient-to-r data-[state=open]:from-terracotta-50 data-[state=open]:to-warm-50"
+                  >
+                    <AccordionTrigger className="text-left font-medium text-foreground hover:text-terracotta-600 hover:no-underline py-5">
+                      {item.question}
+                    </AccordionTrigger>
+                    <AccordionContent className="text-muted-foreground pb-5 leading-relaxed">
+                      {item.answer}
+                    </AccordionContent>
+                  </AccordionItem>
+                ))}
+              </Accordion>
+            </ScrollReveal>
+            
+            <ScrollReveal delay={0.2}>
+              <div className="mt-12 text-center">
+                <p className="text-muted-foreground mb-4">Staat je vraag er niet tussen?</p>
+                <Button asChild className="bg-terracotta-600 hover:bg-terracotta-700 text-white rounded-full px-8">
+                  <Link to="/contact">
+                    <MessageSquareQuote className="mr-2 h-4 w-4" />
+                    Neem contact op
+                  </Link>
+                </Button>
+              </div>
             </ScrollReveal>
           </div>
         </div>
