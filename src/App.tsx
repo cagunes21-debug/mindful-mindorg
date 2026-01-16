@@ -8,6 +8,7 @@ import MSCTraining from "./pages/MSCTraining";
 import Services from "./pages/Services";
 import About from "./pages/About";
 import Trainers from "./pages/Trainers";
+import Agenda from "./pages/Agenda";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -24,6 +25,7 @@ const App = () => (
           <Route path="/ons-aanbod" element={<Services />} />
           <Route path="/over-ons" element={<About />} />
           <Route path="/trainers" element={<Trainers />} />
+          <Route path="/agenda" element={<Agenda />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
