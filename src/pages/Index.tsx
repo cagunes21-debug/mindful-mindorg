@@ -12,6 +12,13 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "@/components/ui/carousel";
 
 const testimonials = [
   {
@@ -560,26 +567,40 @@ const Index = () => {
               </p>
             </ScrollReveal>
             
-            <StaggerContainer className="grid gap-8 md:grid-cols-3">
-              {testimonials.map((testimonial, index) => (
-                <StaggerItem key={index}>
-                  <Card className="border-warm-200 bg-white rounded-3xl shadow-sm hover:shadow-md transition-shadow h-full">
-                    <CardContent className="p-8 flex flex-col h-full">
-                      <div className="mb-6">
-                        <Quote className="h-10 w-10 text-terracotta-200" />
-                      </div>
-                      <p className="text-foreground leading-relaxed mb-6 flex-grow italic">
-                        "{testimonial.quote}"
-                      </p>
-                      <div className="pt-4 border-t border-warm-200">
-                        <p className="font-semibold text-foreground">{testimonial.author}</p>
-                        <p className="text-sm text-muted-foreground">{testimonial.role}</p>
-                      </div>
-                    </CardContent>
-                  </Card>
-                </StaggerItem>
-              ))}
-            </StaggerContainer>
+            <ScrollReveal delay={0.1}>
+              <Carousel
+                opts={{
+                  align: "start",
+                  loop: true,
+                }}
+                className="w-full"
+              >
+                <CarouselContent className="-ml-4">
+                  {testimonials.map((testimonial, index) => (
+                    <CarouselItem key={index} className="pl-4 md:basis-1/2 lg:basis-1/3">
+                      <Card className="border-warm-200 bg-white rounded-3xl shadow-sm hover:shadow-md transition-shadow h-full">
+                        <CardContent className="p-8 flex flex-col h-full">
+                          <div className="mb-6">
+                            <Quote className="h-10 w-10 text-terracotta-200" />
+                          </div>
+                          <p className="text-foreground leading-relaxed mb-6 flex-grow italic">
+                            "{testimonial.quote}"
+                          </p>
+                          <div className="pt-4 border-t border-warm-200">
+                            <p className="font-semibold text-foreground">{testimonial.author}</p>
+                            <p className="text-sm text-muted-foreground">{testimonial.role}</p>
+                          </div>
+                        </CardContent>
+                      </Card>
+                    </CarouselItem>
+                  ))}
+                </CarouselContent>
+                <div className="flex justify-center gap-4 mt-8">
+                  <CarouselPrevious className="static translate-y-0 border-terracotta-200 hover:bg-terracotta-50 hover:border-terracotta-300" />
+                  <CarouselNext className="static translate-y-0 border-terracotta-200 hover:bg-terracotta-50 hover:border-terracotta-300" />
+                </div>
+              </Carousel>
+            </ScrollReveal>
           </div>
         </div>
       </section>
