@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { Heart, Brain, Sparkles, ArrowRight, Check, Mail, Phone, MessageCircle, Clock, Users, Globe, Calendar } from "lucide-react";
+import { Heart, Brain, Sparkles, ArrowRight, Check, Mail, Phone, MessageCircle, Clock, Users, Globe, Calendar, Quote, Star, Leaf } from "lucide-react";
 import Navigation from "@/components/Navigation";
 import { ScrollReveal, StaggerContainer, StaggerItem } from "@/components/ScrollReveal";
 import { motion } from "framer-motion";
@@ -169,34 +169,60 @@ const Index = () => {
                 </h2>
               </div>
               
-              {/* Better readability with card-like text blocks */}
-              <div className="space-y-8">
-                <div className="bg-warm-50 rounded-2xl p-6 lg:p-8 border-l-4 border-terracotta-300 relative">
-                  <span className="absolute -top-3 left-6 inline-block rounded-full bg-terracotta-500 px-3 py-1 text-xs font-semibold text-white">
-                    Mythe
-                  </span>
-                  <p className="text-muted-foreground text-lg lg:text-xl leading-relaxed mt-2">
-                    Veel mensen denken dat zelfkritiek helpt om scherp, gemotiveerd of succesvol te blijven.
-                  </p>
+              {/* Better readability with numbered steps */}
+              <div className="space-y-6">
+                <div className="flex gap-5 items-start bg-warm-50 rounded-2xl p-6 lg:p-8 border-l-4 border-terracotta-300">
+                  <div className="flex-shrink-0 w-10 h-10 rounded-full bg-terracotta-500 text-white flex items-center justify-center font-semibold text-lg shadow-md">
+                    1
+                  </div>
+                  <div className="flex-1">
+                    <span className="inline-block rounded-full bg-terracotta-100 px-3 py-1 text-xs font-semibold text-terracotta-700 mb-3">
+                      Mythe
+                    </span>
+                    <p className="text-muted-foreground text-lg lg:text-xl leading-relaxed">
+                      Veel mensen denken dat zelfkritiek helpt om scherp, gemotiveerd of succesvol te blijven.
+                    </p>
+                  </div>
                 </div>
                 
-                <div className="bg-sage-50 rounded-2xl p-6 lg:p-8 border-l-4 border-sage-300 relative">
-                  <span className="absolute -top-3 left-6 inline-block rounded-full bg-sage-600 px-3 py-1 text-xs font-semibold text-white">
-                    Wetenschap
-                  </span>
-                  <p className="text-muted-foreground text-lg lg:text-xl leading-relaxed mt-2">
-                    Onderzoek laat echter zien dat zelfkritiek juist stress vergroot, je veerkracht ondermijnt en je op de lange termijn uitput.
-                  </p>
+                <div className="flex gap-5 items-start bg-sage-50 rounded-2xl p-6 lg:p-8 border-l-4 border-sage-300">
+                  <div className="flex-shrink-0 w-10 h-10 rounded-full bg-sage-600 text-white flex items-center justify-center font-semibold text-lg shadow-md">
+                    2
+                  </div>
+                  <div className="flex-1">
+                    <span className="inline-block rounded-full bg-sage-100 px-3 py-1 text-xs font-semibold text-sage-700 mb-3">
+                      Wetenschap
+                    </span>
+                    <p className="text-muted-foreground text-lg lg:text-xl leading-relaxed">
+                      Onderzoek laat echter zien dat zelfkritiek juist <mark className="bg-sage-200 text-sage-800 px-1 rounded">stress vergroot</mark>, je <mark className="bg-sage-200 text-sage-800 px-1 rounded">veerkracht ondermijnt</mark> en je op de lange termijn <mark className="bg-sage-200 text-sage-800 px-1 rounded">uitput</mark>.
+                    </p>
+                  </div>
                 </div>
                 
-                <div className="bg-gradient-to-r from-terracotta-50 to-warm-50 rounded-2xl p-6 lg:p-8 border border-terracotta-200 relative">
-                  <span className="absolute -top-3 left-6 inline-block rounded-full bg-terracotta-600 px-3 py-1 text-xs font-semibold text-white">
-                    Het Alternatief
-                  </span>
-                  <p className="text-xl lg:text-2xl font-light text-foreground leading-relaxed mt-2">
-                    Mindful Zelfcompassie biedt een bewezen alternatief: niet door minder betrokken te zijn, maar door met meer steun en begrip met jezelf om te gaan — <span className="font-medium text-terracotta-600">juist wanneer het moeilijk is.</span>
-                  </p>
+                <div className="flex gap-5 items-start bg-gradient-to-r from-terracotta-50 to-warm-50 rounded-2xl p-6 lg:p-8 border border-terracotta-200 shadow-sm">
+                  <div className="flex-shrink-0 w-10 h-10 rounded-full bg-terracotta-600 text-white flex items-center justify-center font-semibold text-lg shadow-md">
+                    3
+                  </div>
+                  <div className="flex-1">
+                    <span className="inline-block rounded-full bg-terracotta-500 px-3 py-1 text-xs font-semibold text-white mb-3">
+                      Het Alternatief
+                    </span>
+                    <p className="text-xl lg:text-2xl font-light text-foreground leading-relaxed">
+                      Mindful Zelfcompassie biedt een bewezen alternatief: niet door minder betrokken te zijn, maar door met <span className="underline decoration-terracotta-300 decoration-2 underline-offset-4">meer steun en begrip</span> met jezelf om te gaan — <span className="font-medium text-terracotta-600">juist wanneer het moeilijk is.</span>
+                    </p>
+                  </div>
                 </div>
+              </div>
+              
+              {/* Inspirational quote */}
+              <div className="mt-12 relative">
+                <Quote className="absolute -top-3 -left-2 h-8 w-8 text-terracotta-200" />
+                <blockquote className="bg-white border border-warm-200 rounded-2xl p-6 lg:p-8 pl-10 italic text-lg lg:text-xl text-muted-foreground leading-relaxed shadow-sm">
+                  "Als je jezelf niet op de eerste plaats zet, zul je altijd op de laatste plaats komen."
+                  <footer className="mt-4 not-italic text-base font-medium text-terracotta-600">
+                    — Dr. Kristin Neff
+                  </footer>
+                </blockquote>
               </div>
               
               <div className="text-center mt-12">
@@ -379,27 +405,70 @@ const Index = () => {
               </h2>
               
               <div className="bg-white rounded-3xl p-8 lg:p-10 shadow-md mb-8">
-                <div className="flex flex-wrap justify-center gap-3 mb-6">
-                  <span className="inline-block rounded-full bg-terracotta-100 px-4 py-1.5 text-xs font-semibold text-terracotta-700">
-                    Theorie
-                  </span>
-                  <span className="inline-block rounded-full bg-sage-100 px-4 py-1.5 text-xs font-semibold text-sage-700">
-                    Praktijk
-                  </span>
-                  <span className="inline-block rounded-full bg-warm-200 px-4 py-1.5 text-xs font-semibold text-warm-700">
-                    Integratie
-                  </span>
+                {/* Visual timeline/process */}
+                <div className="flex items-center justify-center gap-2 mb-8">
+                  <div className="flex items-center gap-2">
+                    <div className="w-10 h-10 rounded-full bg-terracotta-100 flex items-center justify-center">
+                      <span className="text-terracotta-700 font-semibold">1</span>
+                    </div>
+                    <span className="text-sm font-medium text-terracotta-700">Theorie</span>
+                  </div>
+                  <div className="w-8 h-px bg-warm-300" />
+                  <div className="flex items-center gap-2">
+                    <div className="w-10 h-10 rounded-full bg-sage-100 flex items-center justify-center">
+                      <span className="text-sage-700 font-semibold">2</span>
+                    </div>
+                    <span className="text-sm font-medium text-sage-700">Praktijk</span>
+                  </div>
+                  <div className="w-8 h-px bg-warm-300" />
+                  <div className="flex items-center gap-2">
+                    <div className="w-10 h-10 rounded-full bg-warm-200 flex items-center justify-center">
+                      <span className="text-warm-700 font-semibold">3</span>
+                    </div>
+                    <span className="text-sm font-medium text-warm-700">Integratie</span>
+                  </div>
                 </div>
+                
+                {/* Drop cap lead paragraph */}
                 <p className="text-2xl lg:text-3xl font-light text-foreground mb-6 leading-relaxed">
                   Een 8-weekse training die voelt als <span className="font-serif italic text-terracotta-600">thuiskomen</span>
                 </p>
-                <div className="h-px w-20 bg-terracotta-300 mx-auto mb-6" />
-                <p className="text-muted-foreground text-lg leading-relaxed mb-6">
-                  Elke sessie combineert theorie, praktijk en integratie — begeleid door ervaren trainers die werken vanuit een <span className="inline-block rounded bg-sage-100 px-2 py-0.5 text-sage-700 font-medium">trauma-sensitieve benadering</span>.
-                </p>
-                <p className="text-muted-foreground text-lg leading-relaxed">
-                  Deze training biedt je meer dan alleen kennis; je leert een nieuwe manier om met jezelf en het leven om te gaan — <span className="font-medium text-foreground">zachter, bewuster en milder</span> — zodat je minder verstrikt raakt in stress, zelfkritiek en dagelijkse druk, en meer ruimte en rust in je leven ervaart.
-                </p>
+                
+                {/* Decorative divider with icon */}
+                <div className="flex items-center justify-center gap-4 mb-6">
+                  <div className="h-px w-16 bg-gradient-to-r from-transparent to-terracotta-300" />
+                  <Leaf className="h-5 w-5 text-terracotta-400" />
+                  <div className="h-px w-16 bg-gradient-to-l from-transparent to-terracotta-300" />
+                </div>
+                
+                <div className="text-left space-y-4">
+                  <p className="text-muted-foreground text-lg leading-relaxed">
+                    <span className="float-left text-5xl font-serif text-terracotta-500 mr-3 mt-1 leading-none">E</span>
+                    lke sessie combineert theorie, praktijk en integratie — begeleid door ervaren trainers die werken vanuit een <span className="inline-flex items-center gap-1.5 rounded-full bg-sage-100 px-3 py-1 text-sage-700 font-medium text-sm"><Star className="h-3 w-3" />trauma-sensitieve benadering</span>.
+                  </p>
+                  <p className="text-muted-foreground text-lg leading-relaxed clear-both pt-2">
+                    Deze training biedt je meer dan alleen kennis; je leert een nieuwe manier om met jezelf en het leven om te gaan — <span className="font-medium text-foreground underline decoration-terracotta-300 decoration-2 underline-offset-4">zachter, bewuster en milder</span> — zodat je minder verstrikt raakt in stress, zelfkritiek en dagelijkse druk, en meer ruimte en rust in je leven ervaart.
+                  </p>
+                </div>
+              </div>
+              
+              {/* Key takeaways box */}
+              <div className="bg-gradient-to-br from-terracotta-50 to-sage-50 rounded-2xl p-6 border border-warm-200">
+                <p className="text-sm font-semibold text-terracotta-700 uppercase tracking-wider mb-3">Kernpunten</p>
+                <div className="flex flex-wrap justify-center gap-3">
+                  <span className="inline-flex items-center gap-2 bg-white rounded-full px-4 py-2 text-sm text-foreground shadow-sm">
+                    <Check className="h-4 w-4 text-sage-600" />
+                    8 weken begeleiding
+                  </span>
+                  <span className="inline-flex items-center gap-2 bg-white rounded-full px-4 py-2 text-sm text-foreground shadow-sm">
+                    <Check className="h-4 w-4 text-sage-600" />
+                    Kleine groepen
+                  </span>
+                  <span className="inline-flex items-center gap-2 bg-white rounded-full px-4 py-2 text-sm text-foreground shadow-sm">
+                    <Check className="h-4 w-4 text-sage-600" />
+                    Ervaren trainers
+                  </span>
+                </div>
               </div>
             </ScrollReveal>
           </div>
@@ -459,26 +528,46 @@ const Index = () => {
       </section>
 
       {/* CTA Section */}
-      <section className="py-20 lg:py-24 bg-gradient-to-br from-terracotta-600 to-terracotta-700">
-        <div className="container mx-auto px-4">
+      <section className="py-20 lg:py-28 bg-gradient-to-br from-terracotta-600 via-terracotta-600 to-terracotta-700 relative overflow-hidden">
+        {/* Decorative circles */}
+        <div className="absolute top-10 left-10 w-32 h-32 bg-white/5 rounded-full blur-2xl" />
+        <div className="absolute bottom-10 right-10 w-48 h-48 bg-white/5 rounded-full blur-2xl" />
+        
+        <div className="container relative mx-auto px-4">
           <div className="mx-auto max-w-3xl text-center">
-            <h2 className="mb-4 text-3xl font-light text-white md:text-4xl leading-tight">
+            {/* Decorative top element */}
+            <div className="flex justify-center mb-8">
+              <div className="w-16 h-1 bg-white/30 rounded-full" />
+            </div>
+            
+            <h2 className="mb-6 text-3xl font-light text-white md:text-4xl lg:text-5xl leading-tight">
               Klaar om thuis te komen
               <span className="block font-serif italic mt-2">bij jezelf?</span>
             </h2>
-            <p className="text-terracotta-100 text-lg mb-4">
-              In je hoofd. In je hart. In je lichaam.
-            </p>
-            <p className="text-terracotta-100 text-lg mb-4">
-              Op een plek waar je niets hoeft te bewijzen — alleen maar mag zijn.
-            </p>
-            <p className="text-white text-lg mb-8">
-              Als je voelt dat het tijd is om zachter, milder en bewuster in het leven te staan, dan is dit jouw moment.
-            </p>
-            <Button asChild size="lg" className="bg-white text-terracotta-700 hover:bg-terracotta-50 rounded-full px-8">
+            
+            {/* Poetic lines with visual emphasis */}
+            <div className="space-y-3 mb-8">
+              <p className="text-terracotta-100 text-lg lg:text-xl flex items-center justify-center gap-3">
+                <span className="w-2 h-2 rounded-full bg-terracotta-300" />
+                In je hoofd. In je hart. In je lichaam.
+              </p>
+              <p className="text-terracotta-100 text-lg lg:text-xl flex items-center justify-center gap-3">
+                <span className="w-2 h-2 rounded-full bg-terracotta-300" />
+                Op een plek waar je niets hoeft te bewijzen — alleen maar mag zijn.
+              </p>
+            </div>
+            
+            {/* Highlight box */}
+            <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-6 mb-8 border border-white/20">
+              <p className="text-white text-lg lg:text-xl font-medium">
+                Als je voelt dat het tijd is om <span className="underline decoration-white/50 underline-offset-4">zachter</span>, <span className="underline decoration-white/50 underline-offset-4">milder</span> en <span className="underline decoration-white/50 underline-offset-4">bewuster</span> in het leven te staan, dan is dit jouw moment.
+              </p>
+            </div>
+            
+            <Button asChild size="lg" className="bg-white text-terracotta-700 hover:bg-terracotta-50 rounded-full px-10 py-7 text-lg shadow-xl hover:shadow-2xl transition-all hover:scale-105">
               <a href="#programma">
                 Start de training
-                <ArrowRight className="ml-2 h-4 w-4" />
+                <ArrowRight className="ml-2 h-5 w-5" />
               </a>
             </Button>
           </div>
