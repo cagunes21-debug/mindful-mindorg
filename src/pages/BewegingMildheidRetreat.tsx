@@ -188,7 +188,7 @@ const BewegingMildheidRetreat = () => {
               className="inline-flex items-center gap-2 mb-6 rounded-full bg-warm-100 border border-warm-200 px-5 py-2.5 text-sm font-medium text-warm-700"
             >
               <Sun className="h-4 w-4" />
-              5 dagen • Mindful Zelfcompassie • Beweging • Dans
+              5 dagen • Mindful Zelfcompassie • Beweging
             </motion.span>
             
             <motion.h1 
@@ -197,8 +197,8 @@ const BewegingMildheidRetreat = () => {
               transition={{ duration: 0.7, delay: 0.1 }}
               className="mb-4 text-4xl font-light tracking-tight text-foreground md:text-5xl lg:text-6xl leading-[1.1]"
             >
-              In Beweging met
-              <span className="block font-serif italic text-terracotta-600 mt-2">Mildheid</span>
+              Kom thuis bij jezelf
+              <span className="block font-serif italic text-terracotta-600 mt-2">in Barcelona</span>
             </motion.h1>
             
             <motion.p 
@@ -207,7 +207,7 @@ const BewegingMildheidRetreat = () => {
               transition={{ duration: 0.6, delay: 0.15 }}
               className="text-xl md:text-2xl text-foreground font-light mb-4"
             >
-              Een 5-daagse retraite in Mindful Zelfcompassie, beweging & dans
+              Een reis van het hoofd naar het hart.
             </motion.p>
             
             <motion.p 
@@ -216,7 +216,7 @@ const BewegingMildheidRetreat = () => {
               transition={{ duration: 0.6, delay: 0.2 }}
               className="text-muted-foreground text-lg max-w-2xl mx-auto leading-relaxed mb-8"
             >
-              Kom weer in beweging — van binnenuit.
+              5-daagse retraite in Mindful Zelfcompassie & beweging
             </motion.p>
 
             <motion.div
