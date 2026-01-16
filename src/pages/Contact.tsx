@@ -4,10 +4,15 @@ import Footer from "@/components/Footer";
 import { ContactForm } from "@/components/ContactForm";
 import { ScrollReveal, StaggerContainer, StaggerItem } from "@/components/ScrollReveal";
 import { motion } from "framer-motion";
+import SEO from "@/components/SEO";
 
 const Contact = () => {
   return (
     <div className="min-h-screen bg-background">
+      <SEO 
+        title="Contact"
+        description="Neem contact met ons op voor vragen over onze zelfcompassie trainingen. We helpen je graag bij het vinden van de juiste training."
+      />
       <Navigation />
       
       {/* Hero Section */}

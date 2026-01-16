@@ -6,6 +6,7 @@ import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import { ScrollReveal, StaggerContainer, StaggerItem } from "@/components/ScrollReveal";
 import { motion } from "framer-motion";
+import SEO from "@/components/SEO";
 
 const workshopDates = {
   nl: { lang: "Nederlands", time: "19:00 – 20:00", dates: ["14 januari", "11 februari"] },
@@ -81,6 +82,10 @@ const intensivePrograms = [
 const Agenda = () => {
   return (
     <div className="min-h-screen bg-background">
+      <SEO 
+        title="Agenda"
+        description="Bekijk onze trainingsdata en meld je aan voor een MSC training. Nederlandse en Engelse trainingen beschikbaar, online en op locatie."
+      />
       <Navigation />
       
       {/* Hero Section */}

@@ -6,6 +6,7 @@ import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import { ScrollReveal, StaggerContainer, StaggerItem } from "@/components/ScrollReveal";
 import { motion } from "framer-motion";
+import SEO from "@/components/SEO";
 import {
   Accordion,
   AccordionContent,
@@ -99,6 +100,7 @@ const trainingDates = [
 const Index = () => {
   return (
     <div className="min-h-screen bg-background">
+      <SEO />
       <Navigation />
       
       {/* Hero Section */}
