@@ -664,15 +664,29 @@ const Index = () => {
               <div className="text-center mb-12">
                 <span className="inline-flex items-center gap-2 rounded-full bg-sage-100 border border-sage-200 px-5 py-2 text-xs font-semibold tracking-wider text-sage-700 mb-6 uppercase">
                   <Sparkles className="h-3.5 w-3.5" />
-                  Laagdrempelig kennismaken
+                  Kennismaken, verdiepen of opfrissen
                 </span>
                 <h2 className="mb-6 text-3xl font-light text-foreground md:text-4xl lg:text-5xl leading-tight">
                   Introductie <span className="font-serif italic text-terracotta-600">Workshops</span>
                 </h2>
-                <p className="text-muted-foreground text-lg max-w-2xl mx-auto leading-relaxed">
-                  Ontdek in een workshop van 1 uur wat zelfcompassie voor jou kan betekenen. 
-                  Ervaar hoe het voelt om jezelf met meer vriendelijkheid te benaderen.
+                <p className="text-muted-foreground text-lg max-w-2xl mx-auto leading-relaxed mb-6">
+                  Een laagdrempelige workshop waarin je op een zachte manier kennismaakt met zelfcompassie. 
+                  Je staat stil bij hoe je met jezelf omgaat in stressvolle of lastige momenten, en ontdekt hoe mildheid en aandacht helpend kunnen zijn.
                 </p>
+                <div className="flex flex-wrap justify-center gap-3">
+                  <span className="inline-flex items-center gap-2 rounded-full bg-white border border-warm-200 px-4 py-2 text-sm text-muted-foreground">
+                    <Check className="h-4 w-4 text-sage-600" />
+                    Kort en praktisch
+                  </span>
+                  <span className="inline-flex items-center gap-2 rounded-full bg-white border border-warm-200 px-4 py-2 text-sm text-muted-foreground">
+                    <Check className="h-4 w-4 text-sage-600" />
+                    Geen voorbereiding of verplichting
+                  </span>
+                  <span className="inline-flex items-center gap-2 rounded-full bg-white border border-warm-200 px-4 py-2 text-sm text-muted-foreground">
+                    <Globe className="h-4 w-4 text-sage-600" />
+                    Online | Nederlands of Engels
+                  </span>
+                </div>
               </div>
             </ScrollReveal>
             
