@@ -36,27 +36,11 @@ const trainingDates = [
     price: "€550",
   },
   {
-    language: "Nederlands",
-    day: "Zaterdag (middag)",
-    startDate: "21 maart 2026",
-    time: "15:00 – 17:00",
-    dates: "Vervolgdata: 28 mrt, 4, 11, 18, 25 apr, 9, 16 mei",
-    price: "€550",
-  },
-  {
     language: "English",
     day: "Sunday (afternoon)",
     startDate: "18 January 2026",
     time: "16:00 – 18:00",
     dates: "Vervolgdata: 25 Jan, 1, 8, 15, 22 Feb, 1, 8 Mar",
-    price: "€550",
-  },
-  {
-    language: "English",
-    day: "Wednesday (evening)",
-    startDate: "22 April 2026",
-    time: "19:00 – 21:00",
-    dates: "Vervolgdata: 29 Apr, 6, 13, 20, 27 May, 3, 10 Jun",
     price: "€550",
   },
 ];
