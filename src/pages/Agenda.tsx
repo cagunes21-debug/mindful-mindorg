@@ -1,16 +1,31 @@
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Calendar, Clock, Globe, MapPin, ArrowRight, Sparkles, Sun } from "lucide-react";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import { ScrollReveal, StaggerContainer, StaggerItem } from "@/components/ScrollReveal";
 import { motion } from "framer-motion";
 import SEO from "@/components/SEO";
+import { RegistrationForm } from "@/components/RegistrationForm";
+
+interface SelectedTraining {
+  name: string;
+  date: string;
+  time?: string;
+  price?: string;
+}
 
 const workshopDates = {
-  nl: { lang: "Nederlands", time: "19:00 – 20:00", dates: ["14 januari", "11 februari"] },
-  en: { lang: "Engels", time: "19:00 – 20:00", dates: ["13 januari", "10 februari"] },
+  nl: { lang: "Nederlands", time: "19:00 – 20:00", dates: ["11 februari"], price: "€35" },
+  en: { lang: "Engels", time: "19:00 – 20:00", dates: ["10 februari"], price: "€35" },
 };
 
 const mscTrainingsNL = [
@@ -80,8 +95,35 @@ const intensivePrograms = [
 ];
 
 const Agenda = () => {
+  const [selectedTraining, setSelectedTraining] = useState<SelectedTraining | null>(null);
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
+
+  const openRegistration = (training: SelectedTraining) => {
+    setSelectedTraining(training);
+    setIsDialogOpen(true);
+  };
+
   return (
     <div className="min-h-screen bg-background">
+      {/* Registration Dialog */}
+      <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
+        <DialogContent className="sm:max-w-md">
+          <DialogHeader>
+            <DialogTitle className="text-xl font-light">Aanmelden</DialogTitle>
+          </DialogHeader>
+          {selectedTraining && (
+            <RegistrationForm
+              trainingName={selectedTraining.name}
+              trainingDate={selectedTraining.date}
+              trainingTime={selectedTraining.time}
+              price={selectedTraining.price}
+              onSuccess={() => {
+                setTimeout(() => setIsDialogOpen(false), 2000);
+              }}
+            />
+          )}
+        </DialogContent>
+      </Dialog>
       <SEO 
         title="Agenda"
         description="Bekijk onze trainingsdata en meld je aan voor een MSC training. Nederlandse en Engelse trainingen beschikbaar, online en op locatie."
@@ -166,19 +208,27 @@ const Agenda = () => {
                     </div>
                     
                     <p className="text-sm font-medium text-foreground mb-3">Data:</p>
-                    <ul className="space-y-2 mb-6">
+                    <ul className="space-y-2 mb-4">
                       {workshop.dates.map((date) => (
                         <li key={date} className="flex items-center gap-2 text-foreground">
                           <span className="h-1.5 w-1.5 rounded-full bg-terracotta-400" />
-                          {date}
+                          {date} 2026
                         </li>
                       ))}
                     </ul>
                     
-                    <Button asChild className="w-full bg-terracotta-600 hover:bg-terracotta-700 text-white rounded-full">
-                      <a href="mailto:mindful-mind@outlook.com">
-                        Ik doe mee
-                      </a>
+                    <p className="text-lg font-semibold text-terracotta-600 mb-4">{workshop.price}</p>
+                    
+                    <Button 
+                      onClick={() => openRegistration({
+                        name: `Workshop Zelfcompassie (${workshop.lang})`,
+                        date: `${workshop.dates[0]} 2026`,
+                        time: workshop.time,
+                        price: workshop.price,
+                      })}
+                      className="w-full bg-terracotta-600 hover:bg-terracotta-700 text-white rounded-full"
+                    >
+                      Meld je aan
                     </Button>
                   </CardContent>
                 </Card>
@@ -240,8 +290,17 @@ const Agenda = () => {
                       
                       <div className="flex items-center justify-between pt-4 border-t border-warm-200">
                         <p className="text-lg font-semibold text-terracotta-600">{training.price}</p>
-                        <Button asChild size="sm" className="bg-terracotta-600 hover:bg-terracotta-700 text-white rounded-full">
-                          <a href="mailto:mindful-mind@outlook.com">Reserveer</a>
+                        <Button 
+                          size="sm" 
+                          onClick={() => openRegistration({
+                            name: `8-weekse MSC Training (Nederlands)`,
+                            date: training.startDate,
+                            time: training.time,
+                            price: training.price,
+                          })}
+                          className="bg-terracotta-600 hover:bg-terracotta-700 text-white rounded-full"
+                        >
+                          Reserveer
                         </Button>
                       </div>
                     </CardContent>
@@ -282,8 +341,17 @@ const Agenda = () => {
                       
                       <div className="flex items-center justify-between pt-4 border-t border-warm-200">
                         <p className="text-lg font-semibold text-sage-700">{training.price}</p>
-                        <Button asChild size="sm" className="bg-sage-600 hover:bg-sage-700 text-white rounded-full">
-                          <a href="mailto:mindful-mind@outlook.com">Reserve</a>
+                        <Button 
+                          size="sm" 
+                          onClick={() => openRegistration({
+                            name: `8-week MSC Training (English)`,
+                            date: training.startDate,
+                            time: training.time,
+                            price: training.price,
+                          })}
+                          className="bg-sage-600 hover:bg-sage-700 text-white rounded-full"
+                        >
+                          Reserve
                         </Button>
                       </div>
                     </CardContent>
@@ -398,14 +466,20 @@ const Agenda = () => {
                       }`}>
                         {program.price}
                       </p>
-                      <Button asChild className={`rounded-full ${
-                        program.color === 'sage' 
-                          ? 'bg-sage-600 hover:bg-sage-700' 
-                          : 'bg-terracotta-600 hover:bg-terracotta-700'
-                      } text-white`}>
-                        <a href="mailto:mindful-mind@outlook.com">
-                          Reserveer je plek
-                        </a>
+                      <Button 
+                        onClick={() => openRegistration({
+                          name: program.title,
+                          date: program.startDate,
+                          time: program.time,
+                          price: program.price,
+                        })}
+                        className={`rounded-full ${
+                          program.color === 'sage' 
+                            ? 'bg-sage-600 hover:bg-sage-700' 
+                            : 'bg-terracotta-600 hover:bg-terracotta-700'
+                        } text-white`}
+                      >
+                        Reserveer je plek
                       </Button>
                     </div>
                   </CardContent>
