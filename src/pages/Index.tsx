@@ -677,101 +677,6 @@ const Index = () => {
         </div>
       </section>
 
-      {/* Workshops Section */}
-      <section className="py-20 lg:py-24 bg-sage-50 relative overflow-hidden">
-        <div className="absolute top-10 left-1/4 w-48 h-48 bg-terracotta-100/30 rounded-full blur-3xl" />
-        <div className="absolute bottom-10 right-1/4 w-64 h-64 bg-sage-200/30 rounded-full blur-3xl" />
-        
-        <div className="container relative mx-auto px-4">
-          <div className="mx-auto max-w-4xl">
-            <ScrollReveal>
-              <div className="text-center mb-12">
-                <span className="inline-flex items-center gap-2 rounded-full bg-sage-100 border border-sage-200 px-5 py-2 text-xs font-semibold tracking-wider text-sage-700 mb-6 uppercase">
-                  <Sparkles className="h-3.5 w-3.5" />
-                  Kennismaken, verdiepen of opfrissen
-                </span>
-                <h2 className="mb-6 text-3xl font-light text-foreground md:text-4xl lg:text-5xl leading-tight">
-                  <span className="font-serif italic text-terracotta-600">Workshops</span>
-                </h2>
-                <p className="text-muted-foreground text-lg max-w-2xl mx-auto leading-relaxed mb-6">
-                  Een laagdrempelige workshop waarin je op een zachte manier kennismaakt met zelfcompassie. Elke keer staat een ander thema centraal, zodat je steeds nieuwe inzichten en oefeningen ontdekt. Je leert hoe je mildheid en aandacht kunt inzetten in stressvolle of lastige momenten en ervaart hoe dit je kan helpen om vriendelijker en bewuster met jezelf om te gaan.
-                </p>
-                <div className="flex flex-wrap justify-center gap-3">
-                  <span className="inline-flex items-center gap-2 rounded-full bg-white border border-warm-200 px-4 py-2 text-sm text-muted-foreground">
-                    <Check className="h-4 w-4 text-sage-600" />
-                    Kort en praktisch
-                  </span>
-                  <span className="inline-flex items-center gap-2 rounded-full bg-white border border-warm-200 px-4 py-2 text-sm text-muted-foreground">
-                    <Check className="h-4 w-4 text-sage-600" />
-                    Geen voorbereiding of verplichting
-                  </span>
-                  <span className="inline-flex items-center gap-2 rounded-full bg-white border border-warm-200 px-4 py-2 text-sm text-muted-foreground">
-                    <Globe className="h-4 w-4 text-sage-600" />
-                    Online | Nederlands of Engels
-                  </span>
-                </div>
-              </div>
-            </ScrollReveal>
-            
-            <StaggerContainer className="grid gap-4 md:grid-cols-2 mb-10">
-              {[
-                { lang: "Nederlands", date: "14 januari 2026", time: "19:00 – 20:00" },
-                { lang: "Nederlands", date: "11 februari 2026", time: "19:00 – 20:00" },
-                { lang: "English", date: "13 januari 2026", time: "19:00 – 20:00" },
-                { lang: "English", date: "10 februari 2026", time: "19:00 – 20:00" },
-              ].map((workshop, index) => (
-                <StaggerItem key={index}>
-                  <Card className="border-warm-200 bg-white hover:shadow-lg transition-all duration-300 rounded-2xl overflow-hidden group">
-                    <CardContent className="p-6">
-                      <div className="flex items-center justify-between mb-4">
-                        <span className={`px-3 py-1.5 rounded-full text-xs font-semibold ${
-                          workshop.lang === "Nederlands" 
-                            ? "bg-terracotta-100 text-terracotta-700" 
-                            : "bg-sage-100 text-sage-700"
-                        }`}>
-                          {workshop.lang}
-                        </span>
-                        <div className="flex items-center gap-1.5 text-sm text-muted-foreground">
-                          <Clock className="h-4 w-4" />
-                          {workshop.time}
-                        </div>
-                      </div>
-                      <div className="flex items-center gap-3 mb-4">
-                        <div className="h-10 w-10 rounded-xl bg-terracotta-100 flex items-center justify-center flex-shrink-0">
-                          <Calendar className="h-5 w-5 text-terracotta-600" />
-                        </div>
-                        <div>
-                          <p className="text-lg font-medium text-foreground">{workshop.date}</p>
-                          <p className="text-sm text-sage-600 font-medium">€35 • Online via Zoom</p>
-                        </div>
-                      </div>
-                      <Button asChild className="w-full bg-terracotta-600 hover:bg-terracotta-700 text-white rounded-full group-hover:shadow-md transition-all">
-                        <a href="mailto:mindful-mind@outlook.com?subject=Aanmelding workshop">
-                          Meld je aan
-                          <ArrowRight className="ml-2 h-4 w-4" />
-                        </a>
-                      </Button>
-                    </CardContent>
-                  </Card>
-                </StaggerItem>
-              ))}
-            </StaggerContainer>
-            
-            <ScrollReveal delay={0.2}>
-              <div className="text-center">
-                <Button asChild variant="outline" className="border-sage-300 text-sage-700 hover:bg-sage-100 rounded-full px-8">
-                  <Link to="/workshops">
-                    Bekijk alle workshops
-                    <ArrowRight className="ml-2 h-4 w-4" />
-                  </Link>
-                </Button>
-              </div>
-            </ScrollReveal>
-          </div>
-        </div>
-      </section>
-
-
       {/* 1-op-1 Begeleiding */}
       <section className="py-20 lg:py-24 bg-white">
         <div className="container mx-auto px-4">
@@ -822,66 +727,132 @@ const Index = () => {
                   PRAKTISCH
                 </span>
                 <h2 className="mb-8 text-3xl font-light text-foreground md:text-4xl leading-tight">
-                  Programma-structuur & <span className="font-serif italic text-terracotta-600">Data</span>
+                  Programma & <span className="font-serif italic text-terracotta-600">Data</span>
                 </h2>
               </div>
             </ScrollReveal>
-            
-            {/* Format Info */}
+
+            {/* 8-Weekse Training */}
             <ScrollReveal delay={0.1}>
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-12">
-                <div className="text-center p-4 rounded-xl bg-white border border-warm-200">
-                  <p className="text-sm text-muted-foreground mb-1">Format</p>
-                  <p className="font-medium text-foreground">100% live online</p>
+              <div className="mb-16">
+                <div className="flex items-center gap-3 mb-6">
+                  <div className="h-10 w-10 rounded-xl bg-terracotta-100 flex items-center justify-center">
+                    <Calendar className="h-5 w-5 text-terracotta-600" />
+                  </div>
+                  <h3 className="text-2xl font-medium text-foreground">8-weekse MSC Training</h3>
                 </div>
-                <div className="text-center p-4 rounded-xl bg-white border border-warm-200">
-                  <p className="text-sm text-muted-foreground mb-1">Duur</p>
-                  <p className="font-medium text-foreground">8 weken + retreat</p>
+                
+                {/* Format Info */}
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+                  <div className="text-center p-4 rounded-xl bg-white border border-warm-200">
+                    <p className="text-sm text-muted-foreground mb-1">Format</p>
+                    <p className="font-medium text-foreground">100% live online</p>
+                  </div>
+                  <div className="text-center p-4 rounded-xl bg-white border border-warm-200">
+                    <p className="text-sm text-muted-foreground mb-1">Duur</p>
+                    <p className="font-medium text-foreground">8 weken + retreat</p>
+                  </div>
+                  <div className="text-center p-4 rounded-xl bg-white border border-warm-200">
+                    <p className="text-sm text-muted-foreground mb-1">Per sessie</p>
+                    <p className="font-medium text-foreground">2 uur</p>
+                  </div>
+                  <div className="text-center p-4 rounded-xl bg-white border border-warm-200">
+                    <p className="text-sm text-muted-foreground mb-1">Taal</p>
+                    <p className="font-medium text-foreground">NL / EN</p>
+                  </div>
                 </div>
-                <div className="text-center p-4 rounded-xl bg-white border border-warm-200">
-                  <p className="text-sm text-muted-foreground mb-1">Per sessie</p>
-                  <p className="font-medium text-foreground">2 uur</p>
+                
+                {/* Training Dates Grid */}
+                <StaggerContainer className="grid gap-6 md:grid-cols-2">
+                  {trainingDates.map((training, index) => (
+                    <StaggerItem key={index}>
+                      <Card className="border-warm-200 overflow-hidden hover:shadow-lg transition-shadow h-full">
+                        <div className={`px-6 py-3 ${training.language === "Nederlands" ? "bg-terracotta-500" : "bg-sage-600"}`}>
+                          <div className="flex items-center justify-between">
+                            <span className="text-white font-medium">{training.language}</span>
+                          </div>
+                        </div>
+                        <CardContent className="p-6">
+                          <p className="text-sm text-muted-foreground mb-2">{training.day}</p>
+                          <p className="font-semibold text-foreground text-lg mb-1">Start: {training.startDate}</p>
+                          <p className="text-foreground mb-3">Tijd: {training.time}</p>
+                          <p className="text-sm text-muted-foreground mb-4">{training.dates}</p>
+                          <div className="pt-3 border-t border-warm-200 flex items-center justify-between">
+                            <p className="text-2xl font-light text-terracotta-600">{training.price}</p>
+                            <Button className="bg-terracotta-600 hover:bg-terracotta-700 text-white rounded-full" asChild>
+                              <a href="http://mindful-mind.org/aanmeldformulier-2/" target="_blank" rel="noopener noreferrer">
+                                Reserveer
+                              </a>
+                            </Button>
+                          </div>
+                        </CardContent>
+                      </Card>
+                    </StaggerItem>
+                  ))}
+                </StaggerContainer>
+              </div>
+            </ScrollReveal>
+
+            {/* Divider */}
+            <div className="flex items-center gap-4 my-12">
+              <div className="h-px flex-1 bg-warm-300" />
+              <Leaf className="h-5 w-5 text-sage-400" />
+              <div className="h-px flex-1 bg-warm-300" />
+            </div>
+
+            {/* Workshops */}
+            <ScrollReveal delay={0.2}>
+              <div>
+                <div className="flex items-center gap-3 mb-6">
+                  <div className="h-10 w-10 rounded-xl bg-sage-100 flex items-center justify-center">
+                    <Sparkles className="h-5 w-5 text-sage-600" />
+                  </div>
+                  <h3 className="text-2xl font-medium text-foreground">Workshops</h3>
+                  <span className="rounded-full bg-sage-100 px-3 py-1 text-xs font-medium text-sage-700">1 uur • €35</span>
                 </div>
-                <div className="text-center p-4 rounded-xl bg-white border border-warm-200">
-                  <p className="text-sm text-muted-foreground mb-1">Taal</p>
-                  <p className="font-medium text-foreground">NL / EN</p>
-                </div>
+                
+                <p className="text-muted-foreground mb-6 max-w-2xl">
+                  Laagdrempelige kennismaking met zelfcompassie. Geen voorbereiding nodig.
+                </p>
+                
+                <StaggerContainer className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+                  {[
+                    { lang: "Nederlands", date: "14 januari 2026", time: "19:00 – 20:00" },
+                    { lang: "Nederlands", date: "11 februari 2026", time: "19:00 – 20:00" },
+                    { lang: "English", date: "13 januari 2026", time: "19:00 – 20:00" },
+                    { lang: "English", date: "10 februari 2026", time: "19:00 – 20:00" },
+                  ].map((workshop, index) => (
+                    <StaggerItem key={index}>
+                      <Card className="border-warm-200 bg-white hover:shadow-lg transition-all duration-300 rounded-2xl overflow-hidden group h-full">
+                        <CardContent className="p-5">
+                          <div className="flex items-center justify-between mb-3">
+                            <span className={`px-2.5 py-1 rounded-full text-xs font-semibold ${
+                              workshop.lang === "Nederlands" 
+                                ? "bg-terracotta-100 text-terracotta-700" 
+                                : "bg-sage-100 text-sage-700"
+                            }`}>
+                              {workshop.lang}
+                            </span>
+                          </div>
+                          <p className="text-base font-medium text-foreground mb-1">{workshop.date}</p>
+                          <p className="text-sm text-muted-foreground mb-4">{workshop.time}</p>
+                          <Button asChild size="sm" className="w-full bg-terracotta-600 hover:bg-terracotta-700 text-white rounded-full">
+                            <a href="mailto:mindful-mind@outlook.com?subject=Aanmelding workshop">
+                              Meld je aan
+                            </a>
+                          </Button>
+                        </CardContent>
+                      </Card>
+                    </StaggerItem>
+                  ))}
+                </StaggerContainer>
               </div>
             </ScrollReveal>
             
-            {/* Training Dates Grid */}
-            <StaggerContainer className="grid gap-6 md:grid-cols-2">
-              {trainingDates.map((training, index) => (
-                <StaggerItem key={index}>
-                  <Card className="border-warm-200 overflow-hidden hover:shadow-lg transition-shadow h-full">
-                    <div className={`px-6 py-3 ${training.language === "Nederlands" ? "bg-terracotta-500" : "bg-sage-600"}`}>
-                      <div className="flex items-center justify-between">
-                        <span className="text-white font-medium">{training.language}</span>
-                      </div>
-                    </div>
-                    <CardContent className="p-6">
-                      <p className="text-sm text-muted-foreground mb-2">{training.day}</p>
-                      <p className="font-semibold text-foreground text-lg mb-1">Start: {training.startDate}</p>
-                      <p className="text-foreground mb-3">Tijd: {training.time}</p>
-                      <p className="text-sm text-muted-foreground mb-4">{training.dates}</p>
-                      <div className="pt-3 border-t border-warm-200 flex items-center justify-between">
-                        <p className="text-2xl font-light text-terracotta-600">{training.price}</p>
-                        <Button className="bg-terracotta-600 hover:bg-terracotta-700 text-white rounded-full" asChild>
-                          <a href="http://mindful-mind.org/aanmeldformulier-2/" target="_blank" rel="noopener noreferrer">
-                            Reserveer
-                          </a>
-                        </Button>
-                      </div>
-                    </CardContent>
-                  </Card>
-                </StaggerItem>
-              ))}
-            </StaggerContainer>
-            
-            <div className="text-center mt-8">
+            <div className="text-center mt-12">
               <Button asChild variant="outline" className="border-terracotta-300 text-terracotta-700 hover:bg-terracotta-50 rounded-full px-8">
                 <Link to="/agenda">
-                  Bekijk meer details
+                  Bekijk volledige agenda
                   <ArrowRight className="ml-2 h-4 w-4" />
                 </Link>
               </Button>
