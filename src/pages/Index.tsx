@@ -677,46 +677,6 @@ const Index = () => {
         </div>
       </section>
 
-      {/* 1-op-1 Begeleiding */}
-      <section className="py-20 lg:py-24 bg-white">
-        <div className="container mx-auto px-4">
-          <div className="mx-auto max-w-4xl">
-            <ScrollReveal>
-              <div className="text-center mb-8">
-                <span className="inline-block rounded-full bg-terracotta-100 px-4 py-1.5 text-xs font-semibold text-terracotta-700 mb-6">
-                  PERSOONLIJK
-                </span>
-                <h2 className="mb-6 text-3xl font-light text-foreground md:text-4xl leading-tight">
-                  Liever <span className="font-serif italic text-terracotta-600">1-op-1 begeleiding?</span>
-                </h2>
-                <p className="text-muted-foreground text-lg max-w-2xl mx-auto mb-10">
-                  Naast de groepstraining bied ik ook individuele begeleiding aan. Dit is ideaal als je liever in je eigen tempo werkt, of als je persoonlijke thema's wilt verkennen in een veilige, één-op-één setting.
-                </p>
-              </div>
-            </ScrollReveal>
-            
-            <ScrollReveal delay={0.1}>
-              <Card className="border-warm-200 rounded-3xl overflow-hidden max-w-md mx-auto">
-                <CardContent className="p-8 text-center">
-                  <div className="h-16 w-16 rounded-2xl bg-gradient-to-br from-terracotta-100 to-terracotta-200 flex items-center justify-center mb-6 mx-auto">
-                    <Heart className="h-8 w-8 text-terracotta-600" />
-                  </div>
-                  <h3 className="text-xl font-semibold text-foreground mb-2">Individuele begeleiding</h3>
-                  <p className="text-muted-foreground mb-1">Persoonlijke aandacht, jouw tempo.</p>
-                  <p className="text-muted-foreground mb-6">Online of in Amersfoort.</p>
-                  <Button asChild className="bg-terracotta-600 hover:bg-terracotta-700 text-white rounded-full px-8">
-                    <Link to="/contact">
-                      Neem contact op
-                      <ArrowRight className="ml-2 h-4 w-4" />
-                    </Link>
-                  </Button>
-                </CardContent>
-              </Card>
-            </ScrollReveal>
-          </div>
-        </div>
-      </section>
-
       {/* Programma-structuur & Data */}
       <section id="programma" className="py-20 lg:py-24 bg-warm-50 scroll-mt-20">
         <div className="container mx-auto px-4">
@@ -844,6 +804,47 @@ const Index = () => {
                     </StaggerItem>
                   ))}
                 </StaggerContainer>
+              </div>
+            </ScrollReveal>
+            
+            {/* Divider */}
+            <div className="flex items-center gap-4 my-12">
+              <div className="h-px flex-1 bg-warm-300" />
+              <Leaf className="h-5 w-5 text-sage-400" />
+              <div className="h-px flex-1 bg-warm-300" />
+            </div>
+
+            {/* 1-op-1 Begeleiding */}
+            <ScrollReveal delay={0.3}>
+              <div className="text-center">
+                <div className="flex items-center justify-center gap-3 mb-6">
+                  <div className="h-10 w-10 rounded-xl bg-terracotta-100 flex items-center justify-center">
+                    <Heart className="h-5 w-5 text-terracotta-600" />
+                  </div>
+                  <h3 className="text-2xl font-medium text-foreground">1-op-1 Begeleiding</h3>
+                  <span className="rounded-full bg-terracotta-100 px-3 py-1 text-xs font-medium text-terracotta-700">PERSOONLIJK</span>
+                </div>
+                
+                <p className="text-muted-foreground mb-8 max-w-2xl mx-auto">
+                  Naast de groepstraining bied ik ook individuele begeleiding aan. Ideaal als je liever in je eigen tempo werkt, of persoonlijke thema's wilt verkennen in een veilige, één-op-één setting.
+                </p>
+                
+                <Card className="border-warm-200 rounded-3xl overflow-hidden max-w-md mx-auto">
+                  <CardContent className="p-8 text-center">
+                    <div className="h-16 w-16 rounded-2xl bg-gradient-to-br from-terracotta-100 to-terracotta-200 flex items-center justify-center mb-6 mx-auto">
+                      <Heart className="h-8 w-8 text-terracotta-600" />
+                    </div>
+                    <h4 className="text-xl font-semibold text-foreground mb-2">Individuele begeleiding</h4>
+                    <p className="text-muted-foreground mb-1">Persoonlijke aandacht, jouw tempo.</p>
+                    <p className="text-muted-foreground mb-6">Online of in Amersfoort.</p>
+                    <Button asChild className="bg-terracotta-600 hover:bg-terracotta-700 text-white rounded-full px-8">
+                      <Link to="/contact">
+                        Neem contact op
+                        <ArrowRight className="ml-2 h-4 w-4" />
+                      </Link>
+                    </Button>
+                  </CardContent>
+                </Card>
               </div>
             </ScrollReveal>
             
