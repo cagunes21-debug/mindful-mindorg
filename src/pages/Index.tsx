@@ -290,27 +290,53 @@ const Index = () => {
         </div>
       </section>
 
-      {/* Wetenschappelijke Onderbouwing Section */}
+      {/* Wetenschappelijke Onderbouwing & Resultaten Section */}
       <section className="py-16 lg:py-20 bg-sage-50 border-y border-sage-100">
         <div className="container mx-auto px-4">
-          <div className="max-w-4xl mx-auto">
+          <div className="max-w-5xl mx-auto">
             <ScrollReveal>
-              <div className="flex flex-col md:flex-row items-center gap-8 md:gap-12">
-                <div className="flex-shrink-0">
-                  <div className="h-20 w-20 rounded-2xl bg-white shadow-md flex items-center justify-center border border-sage-200">
-                    <FlaskConical className="h-10 w-10 text-sage-600" />
+              <div className="text-center mb-10">
+                <div className="inline-flex items-center gap-3 mb-4">
+                  <div className="h-14 w-14 rounded-2xl bg-white shadow-md flex items-center justify-center border border-sage-200">
+                    <FlaskConical className="h-7 w-7 text-sage-600" />
                   </div>
                 </div>
-                <div className="text-center md:text-left">
-                  <div className="flex items-center justify-center md:justify-start gap-3 mb-3">
-                    <h2 className="text-2xl font-light text-foreground">Wetenschappelijk onderbouwd</h2>
-                    <span className="inline-block rounded-full bg-sage-200 px-3 py-1 text-xs font-semibold text-sage-700">PEER-REVIEWED</span>
-                  </div>
-                  <p className="text-muted-foreground text-lg leading-relaxed">
-                    Ontwikkeld door <strong className="text-foreground">dr. Kristin Neff</strong> (University of Texas) en <strong className="text-foreground">dr. Christopher Germer</strong> (Harvard Medical School), wereldwijd ondersteund door duizenden studies.
-                  </p>
+                <div className="flex items-center justify-center gap-3 mb-4">
+                  <h2 className="text-2xl md:text-3xl font-light text-foreground">Wetenschappelijk onderbouwd</h2>
+                  <span className="inline-block rounded-full bg-sage-200 px-3 py-1 text-xs font-semibold text-sage-700">PEER-REVIEWED</span>
+                </div>
+                <p className="text-muted-foreground text-lg leading-relaxed max-w-2xl mx-auto">
+                  Ontwikkeld door <strong className="text-foreground">dr. Kristin Neff</strong> (University of Texas) en <strong className="text-foreground">dr. Christopher Germer</strong> (Harvard Medical School).
+                </p>
+              </div>
+              
+              {/* Results grid */}
+              <div className="grid grid-cols-2 md:grid-cols-5 gap-4 mb-8">
+                <div className="bg-white rounded-xl p-4 text-center shadow-sm border border-sage-100">
+                  <p className="text-2xl md:text-3xl font-light text-sage-700 mb-1">43%</p>
+                  <p className="text-xs text-muted-foreground">minder angst</p>
+                </div>
+                <div className="bg-white rounded-xl p-4 text-center shadow-sm border border-sage-100">
+                  <p className="text-2xl md:text-3xl font-light text-sage-700 mb-1">32%</p>
+                  <p className="text-xs text-muted-foreground">minder depressie</p>
+                </div>
+                <div className="bg-white rounded-xl p-4 text-center shadow-sm border border-sage-100">
+                  <p className="text-2xl md:text-3xl font-light text-sage-700 mb-1">46%</p>
+                  <p className="text-xs text-muted-foreground">meer welzijn</p>
+                </div>
+                <div className="bg-white rounded-xl p-4 text-center shadow-sm border border-sage-100">
+                  <p className="text-2xl md:text-3xl font-light text-terracotta-600 mb-1">67%</p>
+                  <p className="text-xs text-muted-foreground">meer zelfcompassie</p>
+                </div>
+                <div className="bg-white rounded-xl p-4 text-center shadow-sm border border-sage-100 col-span-2 md:col-span-1">
+                  <p className="text-2xl md:text-3xl font-light text-terracotta-600 mb-1">38%</p>
+                  <p className="text-xs text-muted-foreground">betere zelfzorg</p>
                 </div>
               </div>
+              
+              <p className="text-xs text-muted-foreground text-center">
+                Gebaseerd op meta-analyses van Neff & Germer (2013–2023). Individuele resultaten kunnen verschillen.
+              </p>
             </ScrollReveal>
           </div>
         </div>
@@ -599,36 +625,6 @@ const Index = () => {
                 
                 <p className="text-muted-foreground text-lg leading-relaxed text-center italic">
                   Elke sessie voelt als thuiskomen — begeleid door ervaren trainers met een <span className="inline-flex items-center gap-1.5 rounded-full bg-sage-100 px-3 py-1 text-sage-700 font-medium text-sm not-italic"><Star className="h-3 w-3" />trauma-sensitieve aanpak</span>.
-                </p>
-              </div>
-              
-              {/* Results box */}
-              <div className="bg-gradient-to-br from-terracotta-50 to-sage-50 rounded-2xl p-6 border border-warm-200">
-                <p className="text-sm font-semibold text-terracotta-700 uppercase tracking-wider mb-3 text-center">Resultaten (gemiddeld)</p>
-                <div className="flex flex-wrap justify-center gap-3">
-                  <span className="inline-flex items-center gap-2 bg-white rounded-full px-4 py-2 text-sm text-foreground shadow-sm">
-                    <TrendingUp className="h-4 w-4 text-sage-600" />
-                    43% minder angst
-                  </span>
-                  <span className="inline-flex items-center gap-2 bg-white rounded-full px-4 py-2 text-sm text-foreground shadow-sm">
-                    <TrendingUp className="h-4 w-4 text-sage-600" />
-                    32% minder depressie
-                  </span>
-                  <span className="inline-flex items-center gap-2 bg-white rounded-full px-4 py-2 text-sm text-foreground shadow-sm">
-                    <TrendingUp className="h-4 w-4 text-sage-600" />
-                    46% meer welzijn
-                  </span>
-                  <span className="inline-flex items-center gap-2 bg-white rounded-full px-4 py-2 text-sm text-foreground shadow-sm">
-                    <Heart className="h-4 w-4 text-terracotta-600" />
-                    67% meer zelfcompassie
-                  </span>
-                  <span className="inline-flex items-center gap-2 bg-white rounded-full px-4 py-2 text-sm text-foreground shadow-sm">
-                    <Heart className="h-4 w-4 text-terracotta-600" />
-                    38% betere zelfzorg
-                  </span>
-                </div>
-                <p className="text-xs text-muted-foreground text-center mt-4">
-                  Gebaseerd op meta-analyses van Neff & Germer (2013–2023). Individuele resultaten kunnen verschillen.
                 </p>
               </div>
             </ScrollReveal>
