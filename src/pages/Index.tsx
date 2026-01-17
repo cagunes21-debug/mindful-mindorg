@@ -210,7 +210,7 @@ const Index = () => {
               <div>
                 <div className="flex items-center justify-center gap-2 mb-2">
                   <Award className="h-5 w-5 text-terracotta-500" />
-                  <span className="text-3xl lg:text-4xl font-light text-foreground">CMSC</span>
+                  <span className="text-3xl lg:text-4xl font-light text-foreground">MSC</span>
                 </div>
                 <p className="text-sm text-muted-foreground">gecertificeerde trainer</p>
               </div>
@@ -934,8 +934,7 @@ const Index = () => {
                   Introductie <span className="font-serif italic text-terracotta-600">Workshops</span>
                 </h2>
                 <p className="text-muted-foreground text-lg max-w-2xl mx-auto leading-relaxed mb-6">
-                  Een laagdrempelige workshop waarin je op een zachte manier kennismaakt met zelfcompassie. 
-                  Je staat stil bij hoe je met jezelf omgaat in stressvolle of lastige momenten, en ontdekt hoe mildheid en aandacht helpend kunnen zijn.
+                  Een laagdrempelige workshop waarin je op een zachte manier kennismaakt met zelfcompassie. Elke keer staat een ander thema centraal, zodat je steeds nieuwe inzichten en oefeningen ontdekt. Je leert hoe je mildheid en aandacht kunt inzetten in stressvolle of lastige momenten en ervaart hoe dit je kan helpen om vriendelijker en bewuster met jezelf om te gaan.
                 </p>
                 <div className="flex flex-wrap justify-center gap-3">
                   <span className="inline-flex items-center gap-2 rounded-full bg-white border border-warm-200 px-4 py-2 text-sm text-muted-foreground">
@@ -1058,7 +1057,7 @@ const Index = () => {
                   <div className="flex flex-wrap gap-3 mb-8">
                     <span className="inline-flex items-center gap-2 rounded-full bg-white border border-warm-200 px-4 py-2 text-sm text-muted-foreground shadow-sm">
                       <Award className="h-4 w-4 text-terracotta-500" />
-                      CMSC Gecertificeerd
+                      MSC Gecertificeerd
                     </span>
                     <span className="inline-flex items-center gap-2 rounded-full bg-white border border-warm-200 px-4 py-2 text-sm text-muted-foreground shadow-sm">
                       <Users className="h-4 w-4 text-terracotta-500" />
