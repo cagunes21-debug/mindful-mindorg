@@ -444,9 +444,14 @@ const Index = () => {
                       <Brain className="h-10 w-10 text-terracotta-600" />
                     </div>
                     <h3 className="mb-4 text-2xl font-semibold text-foreground">Mindfulness</h3>
-                    <p className="text-muted-foreground text-lg leading-relaxed">
+                    <p className="text-muted-foreground text-lg leading-relaxed mb-6">
                       Bewust aanwezig zijn bij wat je ervaart.
                     </p>
+                    <div className="flex flex-wrap justify-center gap-2">
+                      <span className="rounded-full bg-terracotta-50 border border-terracotta-200 px-3 py-1 text-xs text-terracotta-700">Aandacht richten</span>
+                      <span className="rounded-full bg-terracotta-50 border border-terracotta-200 px-3 py-1 text-xs text-terracotta-700">Aanwezig zijn</span>
+                      <span className="rounded-full bg-terracotta-50 border border-terracotta-200 px-3 py-1 text-xs text-terracotta-700">Niet-oordelen</span>
+                    </div>
                   </CardContent>
                 </Card>
               </StaggerItem>
@@ -463,9 +468,14 @@ const Index = () => {
                       <Heart className="h-10 w-10 text-sage-700" />
                     </div>
                     <h3 className="mb-4 text-2xl font-semibold text-foreground">Zelfcompassie</h3>
-                    <p className="text-muted-foreground text-lg leading-relaxed">
+                    <p className="text-muted-foreground text-lg leading-relaxed mb-6">
                       Met vriendelijkheid, begrip en zorg op jezelf reageren.
                     </p>
+                    <div className="flex flex-wrap justify-center gap-2">
+                      <span className="rounded-full bg-sage-50 border border-sage-200 px-3 py-1 text-xs text-sage-700">Zelfvriendelijkheid</span>
+                      <span className="rounded-full bg-sage-50 border border-sage-200 px-3 py-1 text-xs text-sage-700">Verbondenheid</span>
+                      <span className="rounded-full bg-sage-50 border border-sage-200 px-3 py-1 text-xs text-sage-700">Innerlijke rust</span>
+                    </div>
                   </CardContent>
                 </Card>
               </StaggerItem>
