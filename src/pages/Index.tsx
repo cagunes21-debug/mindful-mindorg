@@ -690,6 +690,42 @@ const Index = () => {
                   Programma & <span className="font-serif italic text-terracotta-600">Data</span>
                 </h2>
               </div>
+              
+              {/* Service Cards */}
+              <div className="grid md:grid-cols-3 gap-6 mb-16">
+                <Card className="border-warm-200 bg-white hover:shadow-lg transition-all duration-300 rounded-2xl overflow-hidden group text-center">
+                  <CardContent className="p-6">
+                    <div className="h-14 w-14 rounded-2xl bg-gradient-to-br from-terracotta-100 to-terracotta-200 flex items-center justify-center mb-4 mx-auto group-hover:scale-110 transition-transform">
+                      <Calendar className="h-7 w-7 text-terracotta-600" />
+                    </div>
+                    <h3 className="text-lg font-semibold text-foreground mb-2">8-weekse Training</h3>
+                    <p className="text-sm text-muted-foreground mb-4">Het complete MSC-programma in 8 weken + stilte-retreat.</p>
+                    <p className="text-xl font-light text-terracotta-600">€550</p>
+                  </CardContent>
+                </Card>
+                
+                <Card className="border-warm-200 bg-white hover:shadow-lg transition-all duration-300 rounded-2xl overflow-hidden group text-center">
+                  <CardContent className="p-6">
+                    <div className="h-14 w-14 rounded-2xl bg-gradient-to-br from-sage-100 to-sage-200 flex items-center justify-center mb-4 mx-auto group-hover:scale-110 transition-transform">
+                      <Sparkles className="h-7 w-7 text-sage-600" />
+                    </div>
+                    <h3 className="text-lg font-semibold text-foreground mb-2">Workshops</h3>
+                    <p className="text-sm text-muted-foreground mb-4">Laagdrempelige kennismaking met zelfcompassie.</p>
+                    <p className="text-xl font-light text-terracotta-600">€35</p>
+                  </CardContent>
+                </Card>
+                
+                <Card className="border-warm-200 bg-white hover:shadow-lg transition-all duration-300 rounded-2xl overflow-hidden group text-center">
+                  <CardContent className="p-6">
+                    <div className="h-14 w-14 rounded-2xl bg-gradient-to-br from-warm-100 to-warm-200 flex items-center justify-center mb-4 mx-auto group-hover:scale-110 transition-transform">
+                      <Heart className="h-7 w-7 text-terracotta-600" />
+                    </div>
+                    <h3 className="text-lg font-semibold text-foreground mb-2">1-op-1 Begeleiding</h3>
+                    <p className="text-sm text-muted-foreground mb-4">Persoonlijke aandacht in je eigen tempo.</p>
+                    <p className="text-xl font-light text-terracotta-600">Op aanvraag</p>
+                  </CardContent>
+                </Card>
+              </div>
             </ScrollReveal>
 
             {/* 8-Weekse Training */}
