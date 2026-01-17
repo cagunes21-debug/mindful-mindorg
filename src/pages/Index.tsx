@@ -193,12 +193,6 @@ const Index = () => {
                 <p className="text-sm text-muted-foreground">gecertificeerde trainer</p>
               </div>
             </div>
-            <div className="flex items-center justify-center gap-2 mt-8 text-center">
-              <FlaskConical className="h-4 w-4 text-sage-600" />
-              <p className="text-sm text-muted-foreground">
-                Wetenschappelijk bewezen: gemiddeld 43% minder angst, 32% minder depressie en 46% meer welzijn.
-              </p>
-            </div>
           </div>
         </div>
       </section>
