@@ -184,8 +184,8 @@ const Index = () => {
       {/* Social Proof Section */}
       <section className="py-12 bg-white border-b border-warm-100">
         <div className="container mx-auto px-4">
-          <div className="max-w-5xl mx-auto">
-            <div className="grid grid-cols-2 md:grid-cols-5 gap-6 text-center">
+          <div className="max-w-4xl mx-auto">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
               <div>
                 <div className="flex items-center justify-center gap-2 mb-2">
                   <Clock className="h-5 w-5 text-terracotta-500" />
@@ -214,17 +214,13 @@ const Index = () => {
                 </div>
                 <p className="text-sm text-muted-foreground">gecertificeerde trainer</p>
               </div>
-              <div>
-                <div className="flex items-center justify-center gap-2 mb-2">
-                  <FlaskConical className="h-5 w-5 text-terracotta-500" />
-                  <span className="text-lg lg:text-xl font-light text-foreground">Bewezen</span>
-                </div>
-                <p className="text-sm text-muted-foreground">wetenschappelijk</p>
-              </div>
             </div>
-            <p className="text-sm text-muted-foreground text-center mt-6 max-w-2xl mx-auto">
-              Wetenschappelijk onderbouwd en bewezen effectief: deelnemers ervaren gemiddeld 43% minder angst, 32% minder depressie en 46% meer welzijn.
-            </p>
+            <div className="flex items-center justify-center gap-2 mt-8 text-center">
+              <FlaskConical className="h-4 w-4 text-sage-600" />
+              <p className="text-sm text-muted-foreground">
+                Wetenschappelijk bewezen: gemiddeld 43% minder angst, 32% minder depressie en 46% meer welzijn.
+              </p>
+            </div>
           </div>
         </div>
       </section>
