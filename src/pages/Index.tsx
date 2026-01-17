@@ -623,8 +623,8 @@ const Index = () => {
                   <div className="h-px w-16 bg-gradient-to-l from-transparent to-terracotta-300" />
                 </div>
                 
-                <p className="text-muted-foreground text-lg leading-relaxed text-center italic">
-                  Elke sessie voelt als thuiskomen — begeleid door ervaren trainers met een <span className="inline-flex items-center gap-1.5 rounded-full bg-sage-100 px-3 py-1 text-sage-700 font-medium text-sm not-italic"><Star className="h-3 w-3" />trauma-sensitieve aanpak</span>.
+                <p className="text-muted-foreground text-lg leading-relaxed text-center">
+                  Elke sessie voelt als thuiskomen: een veilige en vertrouwde ruimte waarin je kunt ontdekken, oefenen en verbinden. Onze ervaren trainers werken met een <span className="inline-flex items-center gap-1.5 rounded-full bg-sage-100 px-3 py-1 text-sage-700 font-medium text-sm"><Star className="h-3 w-3" />trauma-sensitieve aanpak</span>, zodat jij je op je gemak voelt terwijl je nieuwe inzichten en vaardigheden ontwikkelt.
                 </p>
               </div>
             </ScrollReveal>
