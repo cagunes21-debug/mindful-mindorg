@@ -898,7 +898,7 @@ const Index = () => {
                   Kennismaken, verdiepen of opfrissen
                 </span>
                 <h2 className="mb-6 text-3xl font-light text-foreground md:text-4xl lg:text-5xl leading-tight">
-                  Introductie <span className="font-serif italic text-terracotta-600">Workshops</span>
+                  <span className="font-serif italic text-terracotta-600">Workshops</span>
                 </h2>
                 <p className="text-muted-foreground text-lg max-w-2xl mx-auto leading-relaxed mb-6">
                   Een laagdrempelige workshop waarin je op een zachte manier kennismaakt met zelfcompassie. Elke keer staat een ander thema centraal, zodat je steeds nieuwe inzichten en oefeningen ontdekt. Je leert hoe je mildheid en aandacht kunt inzetten in stressvolle of lastige momenten en ervaart hoe dit je kan helpen om vriendelijker en bewuster met jezelf om te gaan.
