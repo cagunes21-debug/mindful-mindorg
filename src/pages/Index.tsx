@@ -377,28 +377,19 @@ const Index = () => {
             
             {/* Video highlights */}
             <ScrollReveal delay={0.2}>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-12 max-w-3xl mx-auto">
-                <div className="text-center p-4">
-                  <div className="h-12 w-12 rounded-xl bg-terracotta-100 flex items-center justify-center mx-auto mb-3">
-                    <Heart className="h-6 w-6 text-terracotta-600" />
-                  </div>
-                  <p className="font-medium text-foreground mb-1">Persoonlijke introductie</p>
-                  <p className="text-sm text-muted-foreground">Leer mij kennen als trainer</p>
-                </div>
-                <div className="text-center p-4">
-                  <div className="h-12 w-12 rounded-xl bg-sage-100 flex items-center justify-center mx-auto mb-3">
-                    <Brain className="h-6 w-6 text-sage-600" />
-                  </div>
-                  <p className="font-medium text-foreground mb-1">Wat is zelfcompassie?</p>
-                  <p className="text-sm text-muted-foreground">Korte uitleg van de basis</p>
-                </div>
-                <div className="text-center p-4">
-                  <div className="h-12 w-12 rounded-xl bg-terracotta-100 flex items-center justify-center mx-auto mb-3">
-                    <Sparkles className="h-6 w-6 text-terracotta-600" />
-                  </div>
-                  <p className="font-medium text-foreground mb-1">Wat kun je verwachten?</p>
-                  <p className="text-sm text-muted-foreground">Preview van de training</p>
-                </div>
+              <div className="flex flex-wrap justify-center gap-4 mt-10 max-w-2xl mx-auto">
+                <span className="inline-flex items-center gap-2 rounded-full bg-white border border-warm-200 px-4 py-2 text-sm text-muted-foreground">
+                  <Heart className="h-4 w-4 text-terracotta-500" />
+                  Over de trainer
+                </span>
+                <span className="inline-flex items-center gap-2 rounded-full bg-white border border-warm-200 px-4 py-2 text-sm text-muted-foreground">
+                  <Brain className="h-4 w-4 text-sage-600" />
+                  Wat is zelfcompassie?
+                </span>
+                <span className="inline-flex items-center gap-2 rounded-full bg-white border border-warm-200 px-4 py-2 text-sm text-muted-foreground">
+                  <Sparkles className="h-4 w-4 text-terracotta-500" />
+                  Wat kun je verwachten?
+                </span>
               </div>
             </ScrollReveal>
           </div>
