@@ -265,23 +265,6 @@ const Index = () => {
                 </div>
               </div>
               
-              {/* Research highlight box */}
-              <div className="mt-12 bg-sage-50 border border-sage-200 rounded-2xl p-6 lg:p-8">
-                <div className="flex items-start gap-4">
-                  <div className="h-12 w-12 rounded-xl bg-sage-100 flex items-center justify-center flex-shrink-0">
-                    <FlaskConical className="h-6 w-6 text-sage-600" />
-                  </div>
-                  <div>
-                    <h3 className="font-medium text-foreground mb-2 flex items-center gap-2">
-                      Wetenschappelijk onderbouwd
-                      <span className="inline-block rounded-full bg-sage-200 px-2 py-0.5 text-[10px] font-semibold text-sage-700">PEER-REVIEWED</span>
-                    </h3>
-                    <p className="text-muted-foreground leading-relaxed mb-3">
-                      Ontwikkeld door <strong>dr. Kristin Neff</strong> (University of Texas) en <strong>dr. Christopher Germer</strong> (Harvard Medical School), wereldwijd ondersteund door duizenden studies.
-                    </p>
-                  </div>
-                </div>
-              </div>
               
               {/* Inspirational quote */}
               <div className="mt-8 relative">
@@ -307,7 +290,32 @@ const Index = () => {
         </div>
       </section>
 
-      {/* Video Introductie Section */}
+      {/* Wetenschappelijke Onderbouwing Section */}
+      <section className="py-16 lg:py-20 bg-sage-50 border-y border-sage-100">
+        <div className="container mx-auto px-4">
+          <div className="max-w-4xl mx-auto">
+            <ScrollReveal>
+              <div className="flex flex-col md:flex-row items-center gap-8 md:gap-12">
+                <div className="flex-shrink-0">
+                  <div className="h-20 w-20 rounded-2xl bg-white shadow-md flex items-center justify-center border border-sage-200">
+                    <FlaskConical className="h-10 w-10 text-sage-600" />
+                  </div>
+                </div>
+                <div className="text-center md:text-left">
+                  <div className="flex items-center justify-center md:justify-start gap-3 mb-3">
+                    <h2 className="text-2xl font-light text-foreground">Wetenschappelijk onderbouwd</h2>
+                    <span className="inline-block rounded-full bg-sage-200 px-3 py-1 text-xs font-semibold text-sage-700">PEER-REVIEWED</span>
+                  </div>
+                  <p className="text-muted-foreground text-lg leading-relaxed">
+                    Ontwikkeld door <strong className="text-foreground">dr. Kristin Neff</strong> (University of Texas) en <strong className="text-foreground">dr. Christopher Germer</strong> (Harvard Medical School), wereldwijd ondersteund door duizenden studies.
+                  </p>
+                </div>
+              </div>
+            </ScrollReveal>
+          </div>
+        </div>
+      </section>
+
       <section className="py-20 lg:py-28 bg-gradient-to-b from-warm-50 to-white relative overflow-hidden">
         <div className="absolute top-0 left-1/4 w-64 h-64 bg-terracotta-100/30 rounded-full blur-3xl" />
         <div className="absolute bottom-0 right-1/4 w-80 h-80 bg-sage-100/30 rounded-full blur-3xl" />
