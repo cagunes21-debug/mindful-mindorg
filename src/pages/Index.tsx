@@ -669,48 +669,12 @@ const Index = () => {
             
             <StaggerContainer className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
               {[
-                { 
-                  text: "Meer rust", 
-                  icon: Brain, 
-                  stat: "↓ 36%",
-                  statLabel: "stress",
-                  color: "terracotta"
-                },
-                { 
-                  text: "Meer veerkracht", 
-                  icon: Heart, 
-                  stat: "↑ 42%",
-                  statLabel: "coping",
-                  color: "sage"
-                },
-                { 
-                  text: "Minder stress", 
-                  icon: Leaf, 
-                  stat: "↓ 43%",
-                  statLabel: "angst",
-                  color: "terracotta"
-                },
-                { 
-                  text: "Minder zelfkritiek", 
-                  icon: Sparkles, 
-                  stat: "↑ 67%",
-                  statLabel: "zelfcompassie",
-                  color: "sage"
-                },
-                { 
-                  text: "Betere grenzen", 
-                  icon: Award, 
-                  stat: "↑ 38%",
-                  statLabel: "zelfzorg",
-                  color: "terracotta"
-                },
-                { 
-                  text: "Meer verbinding", 
-                  icon: Users, 
-                  stat: "↑ 29%",
-                  statLabel: "verbondenheid",
-                  color: "sage"
-                },
+                { text: "Meer rust", icon: Brain, color: "terracotta" },
+                { text: "Meer veerkracht", icon: Heart, color: "sage" },
+                { text: "Minder stress", icon: Leaf, color: "terracotta" },
+                { text: "Minder zelfkritiek", icon: Sparkles, color: "sage" },
+                { text: "Betere grenzen", icon: Award, color: "terracotta" },
+                { text: "Meer verbinding", icon: Users, color: "sage" },
               ].map((item, index) => {
                 const IconComponent = item.icon;
                 return (
@@ -719,24 +683,14 @@ const Index = () => {
                       <div className={`h-10 w-10 mx-auto rounded-xl ${item.color === 'terracotta' ? 'bg-terracotta-100' : 'bg-sage-100'} flex items-center justify-center mb-3`}>
                         <IconComponent className={`h-5 w-5 ${item.color === 'terracotta' ? 'text-terracotta-600' : 'text-sage-600'}`} />
                       </div>
-                      <h3 className="text-sm font-medium text-foreground mb-2">
+                      <h3 className="text-sm font-medium text-foreground">
                         {item.text}
                       </h3>
-                      <div className={`text-lg font-bold ${item.color === 'terracotta' ? 'text-terracotta-600' : 'text-sage-600'}`}>
-                        {item.stat}
-                      </div>
-                      <p className="text-[10px] text-muted-foreground">{item.statLabel}</p>
                     </div>
                   </StaggerItem>
                 );
               })}
             </StaggerContainer>
-            
-            <ScrollReveal delay={0.3}>
-              <p className="text-xs text-muted-foreground text-center mt-8">
-                * Gemiddelde resultaten uit meta-analyses van MSC-onderzoek (Neff & Germer, 2013-2023)
-              </p>
-            </ScrollReveal>
           </div>
         </div>
       </section>
