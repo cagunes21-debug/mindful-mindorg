@@ -572,18 +572,6 @@ const Index = () => {
                   </div>
                 </div>
                 
-                <div className="text-left space-y-4">
-                  <p className="text-muted-foreground text-lg leading-relaxed">
-                    <strong className="text-foreground">Theorie:</strong> wetenschappelijke inzichten over zelfcompassie
-                  </p>
-                  <p className="text-muted-foreground text-lg leading-relaxed">
-                    <strong className="text-foreground">Praktijk:</strong> oefeningen voor dagelijks gebruik
-                  </p>
-                  <p className="text-muted-foreground text-lg leading-relaxed">
-                    <strong className="text-foreground">Integratie:</strong> manieren om compassie in je leven te verankeren
-                  </p>
-                </div>
-                
                 {/* Decorative divider with icon */}
                 <div className="flex items-center justify-center gap-4 my-6">
                   <div className="h-px w-16 bg-gradient-to-r from-transparent to-terracotta-300" />
