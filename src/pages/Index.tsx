@@ -667,58 +667,46 @@ const Index = () => {
               </div>
             </ScrollReveal>
             
-            <StaggerContainer className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <StaggerContainer className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
               {[
                 { 
-                  text: "Meer rust in hoofd en lichaam", 
-                  description: "Leer je zenuwstelsel te kalmeren met bewezen technieken",
+                  text: "Meer rust", 
                   icon: Brain, 
-                  category: "Rust", 
                   stat: "↓ 36%",
                   statLabel: "stress",
                   color: "terracotta"
                 },
                 { 
-                  text: "Meer emotionele veerkracht", 
-                  description: "Bouw innerlijke kracht om met tegenslagen om te gaan",
+                  text: "Meer veerkracht", 
                   icon: Heart, 
-                  category: "Kracht", 
                   stat: "↑ 42%",
                   statLabel: "coping",
                   color: "sage"
                 },
                 { 
-                  text: "Betere omgang met stress", 
-                  description: "Ontwikkel een gezonde relatie met spanning en druk",
+                  text: "Minder stress", 
                   icon: Leaf, 
-                  category: "Stress", 
                   stat: "↓ 43%",
                   statLabel: "angst",
                   color: "terracotta"
                 },
                 { 
                   text: "Minder zelfkritiek", 
-                  description: "Vervang je innerlijke criticus door een ondersteunende stem",
                   icon: Sparkles, 
-                  category: "Mildheid", 
                   stat: "↑ 67%",
                   statLabel: "zelfcompassie",
                   color: "sage"
                 },
                 { 
-                  text: "Gezondere grenzen", 
-                  description: "Leer voor jezelf te zorgen zonder schuldgevoel",
+                  text: "Betere grenzen", 
                   icon: Award, 
-                  category: "Grenzen", 
                   stat: "↑ 38%",
                   statLabel: "zelfzorg",
                   color: "terracotta"
                 },
                 { 
-                  text: "Diepere verbinding", 
-                  description: "Versterk je relatie met jezelf én met anderen",
+                  text: "Meer verbinding", 
                   icon: Users, 
-                  category: "Verbinding", 
                   stat: "↑ 29%",
                   statLabel: "verbondenheid",
                   color: "sage"
@@ -727,37 +715,17 @@ const Index = () => {
                 const IconComponent = item.icon;
                 return (
                   <StaggerItem key={index}>
-                    <div className={`group relative h-full flex flex-col p-6 rounded-3xl bg-white border border-warm-200 shadow-sm hover:shadow-xl transition-all duration-500 hover:-translate-y-2 overflow-hidden`}>
-                      {/* Background gradient on hover */}
-                      <div className={`absolute inset-0 bg-gradient-to-br ${item.color === 'terracotta' ? 'from-terracotta-50/0 group-hover:from-terracotta-50' : 'from-sage-50/0 group-hover:from-sage-50'} to-transparent transition-all duration-500`} />
-                      
-                      <div className="relative z-10">
-                        {/* Header with icon and category */}
-                        <div className="flex items-start justify-between mb-4">
-                          <div className={`h-14 w-14 rounded-2xl ${item.color === 'terracotta' ? 'bg-gradient-to-br from-terracotta-100 to-terracotta-200' : 'bg-gradient-to-br from-sage-100 to-sage-200'} flex items-center justify-center shadow-sm group-hover:scale-110 transition-transform duration-300`}>
-                            <IconComponent className={`h-7 w-7 ${item.color === 'terracotta' ? 'text-terracotta-600' : 'text-sage-600'}`} />
-                          </div>
-                          <span className={`inline-block rounded-full ${item.color === 'terracotta' ? 'bg-terracotta-100 text-terracotta-700 border-terracotta-200' : 'bg-sage-100 text-sage-700 border-sage-200'} px-3 py-1 text-[10px] font-semibold border`}>
-                            {item.category}
-                          </span>
-                        </div>
-                        
-                        {/* Content */}
-                        <h3 className="text-lg font-semibold text-foreground mb-2 group-hover:text-terracotta-700 transition-colors">
-                          {item.text}
-                        </h3>
-                        <p className="text-sm text-muted-foreground leading-relaxed mb-4 flex-grow">
-                          {item.description}
-                        </p>
-                        
-                        {/* Stat badge */}
-                        <div className={`inline-flex items-center gap-2 rounded-full ${item.color === 'terracotta' ? 'bg-terracotta-50 border-terracotta-200' : 'bg-sage-50 border-sage-200'} border px-4 py-2`}>
-                          <span className={`text-lg font-bold ${item.color === 'terracotta' ? 'text-terracotta-600' : 'text-sage-600'}`}>
-                            {item.stat}
-                          </span>
-                          <span className="text-xs text-muted-foreground">{item.statLabel}*</span>
-                        </div>
+                    <div className={`group text-center p-4 rounded-2xl bg-white border border-warm-200 shadow-sm hover:shadow-md transition-all duration-300`}>
+                      <div className={`h-10 w-10 mx-auto rounded-xl ${item.color === 'terracotta' ? 'bg-terracotta-100' : 'bg-sage-100'} flex items-center justify-center mb-3`}>
+                        <IconComponent className={`h-5 w-5 ${item.color === 'terracotta' ? 'text-terracotta-600' : 'text-sage-600'}`} />
                       </div>
+                      <h3 className="text-sm font-medium text-foreground mb-2">
+                        {item.text}
+                      </h3>
+                      <div className={`text-lg font-bold ${item.color === 'terracotta' ? 'text-terracotta-600' : 'text-sage-600'}`}>
+                        {item.stat}
+                      </div>
+                      <p className="text-[10px] text-muted-foreground">{item.statLabel}</p>
                     </div>
                   </StaggerItem>
                 );
