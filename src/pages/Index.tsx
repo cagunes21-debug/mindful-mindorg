@@ -538,34 +538,6 @@ const Index = () => {
                   Ontwikkeld door <strong className="text-foreground">dr. Kristin Neff</strong> (University of Texas) en <strong className="text-foreground">dr. Christopher Germer</strong> (Harvard Medical School).
                 </p>
               </div>
-              
-              {/* Results grid */}
-              <div className="grid grid-cols-2 md:grid-cols-5 gap-4 mb-8">
-                <div className="bg-white rounded-xl p-4 text-center shadow-sm border border-sage-100">
-                  <p className="text-2xl md:text-3xl font-light text-sage-700 mb-1">43%</p>
-                  <p className="text-xs text-muted-foreground">minder angst</p>
-                </div>
-                <div className="bg-white rounded-xl p-4 text-center shadow-sm border border-sage-100">
-                  <p className="text-2xl md:text-3xl font-light text-sage-700 mb-1">32%</p>
-                  <p className="text-xs text-muted-foreground">minder depressie</p>
-                </div>
-                <div className="bg-white rounded-xl p-4 text-center shadow-sm border border-sage-100">
-                  <p className="text-2xl md:text-3xl font-light text-sage-700 mb-1">46%</p>
-                  <p className="text-xs text-muted-foreground">meer welzijn</p>
-                </div>
-                <div className="bg-white rounded-xl p-4 text-center shadow-sm border border-sage-100">
-                  <p className="text-2xl md:text-3xl font-light text-terracotta-600 mb-1">67%</p>
-                  <p className="text-xs text-muted-foreground">meer zelfcompassie</p>
-                </div>
-                <div className="bg-white rounded-xl p-4 text-center shadow-sm border border-sage-100 col-span-2 md:col-span-1">
-                  <p className="text-2xl md:text-3xl font-light text-terracotta-600 mb-1">38%</p>
-                  <p className="text-xs text-muted-foreground">betere zelfzorg</p>
-                </div>
-              </div>
-              
-              <p className="text-xs text-muted-foreground text-center">
-                Gebaseerd op meta-analyses van Neff & Germer (2013–2023). Individuele resultaten kunnen verschillen.
-              </p>
             </ScrollReveal>
           </div>
         </div>
@@ -669,12 +641,12 @@ const Index = () => {
             
             <StaggerContainer className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
               {[
-                { text: "Meer rust", icon: Brain, color: "terracotta" },
-                { text: "Meer veerkracht", icon: Heart, color: "sage" },
-                { text: "Minder stress", icon: Leaf, color: "terracotta" },
-                { text: "Minder zelfkritiek", icon: Sparkles, color: "sage" },
-                { text: "Betere grenzen", icon: Award, color: "terracotta" },
-                { text: "Meer verbinding", icon: Users, color: "sage" },
+                { text: "Meer rust", icon: Brain, stat: "↓ 36%", statLabel: "stress", color: "terracotta" },
+                { text: "Meer veerkracht", icon: Heart, stat: "↑ 42%", statLabel: "coping", color: "sage" },
+                { text: "Minder stress", icon: Leaf, stat: "↓ 43%", statLabel: "angst", color: "terracotta" },
+                { text: "Minder zelfkritiek", icon: Sparkles, stat: "↑ 67%", statLabel: "zelfcompassie", color: "sage" },
+                { text: "Betere grenzen", icon: Award, stat: "↑ 38%", statLabel: "zelfzorg", color: "terracotta" },
+                { text: "Meer verbinding", icon: Users, stat: "↑ 29%", statLabel: "verbondenheid", color: "sage" },
               ].map((item, index) => {
                 const IconComponent = item.icon;
                 return (
@@ -683,14 +655,24 @@ const Index = () => {
                       <div className={`h-10 w-10 mx-auto rounded-xl ${item.color === 'terracotta' ? 'bg-terracotta-100' : 'bg-sage-100'} flex items-center justify-center mb-3`}>
                         <IconComponent className={`h-5 w-5 ${item.color === 'terracotta' ? 'text-terracotta-600' : 'text-sage-600'}`} />
                       </div>
-                      <h3 className="text-sm font-medium text-foreground">
+                      <h3 className="text-sm font-medium text-foreground mb-1">
                         {item.text}
                       </h3>
+                      <div className={`text-lg font-bold ${item.color === 'terracotta' ? 'text-terracotta-600' : 'text-sage-600'}`}>
+                        {item.stat}
+                      </div>
+                      <p className="text-[10px] text-muted-foreground">{item.statLabel}</p>
                     </div>
                   </StaggerItem>
                 );
               })}
             </StaggerContainer>
+            
+            <ScrollReveal delay={0.3}>
+              <p className="text-xs text-muted-foreground text-center mt-8">
+                * Gemiddelde resultaten uit meta-analyses van MSC-onderzoek (Neff & Germer, 2013-2023)
+              </p>
+            </ScrollReveal>
           </div>
         </div>
       </section>
