@@ -242,48 +242,33 @@ const Index = () => {
                 </h2>
               </div>
               
-              {/* Better readability with numbered steps */}
+              {/* Three pillars without numbers */}
               <div className="space-y-6">
-                <div className="flex gap-5 items-start bg-warm-50 rounded-2xl p-6 lg:p-8 border-l-4 border-terracotta-300">
-                  <div className="flex-shrink-0 w-10 h-10 rounded-full bg-terracotta-500 text-white flex items-center justify-center font-semibold text-lg shadow-md">
-                    1
-                  </div>
-                  <div className="flex-1">
-                    <span className="inline-block rounded-full bg-terracotta-100 px-3 py-1 text-xs font-semibold text-terracotta-700 mb-3">
-                      Mythe
-                    </span>
-                    <p className="text-muted-foreground text-lg lg:text-xl leading-relaxed">
-                      Veel mensen denken dat streng zijn voor jezelf helpt om gemotiveerd of succesvol te blijven.
-                    </p>
-                  </div>
+                <div className="bg-warm-50 rounded-2xl p-6 lg:p-8 border-l-4 border-terracotta-300">
+                  <span className="inline-block rounded-full bg-terracotta-100 px-3 py-1 text-xs font-semibold text-terracotta-700 mb-3">
+                    Mythe
+                  </span>
+                  <p className="text-muted-foreground text-lg lg:text-xl leading-relaxed">
+                    Veel mensen denken dat streng zijn voor jezelf helpt om gemotiveerd of succesvol te blijven.
+                  </p>
                 </div>
                 
-                <div className="flex gap-5 items-start bg-sage-50 rounded-2xl p-6 lg:p-8 border-l-4 border-sage-300">
-                  <div className="flex-shrink-0 w-10 h-10 rounded-full bg-sage-600 text-white flex items-center justify-center font-semibold text-lg shadow-md">
-                    2
-                  </div>
-                  <div className="flex-1">
-                    <span className="inline-block rounded-full bg-sage-100 px-3 py-1 text-xs font-semibold text-sage-700 mb-3">
-                      Wetenschap
-                    </span>
-                    <p className="text-muted-foreground text-lg lg:text-xl leading-relaxed">
-                      Onderzoek laat zien dat zelfkritiek juist <mark className="bg-sage-200 text-sage-800 px-1 rounded">stress vergroot</mark>, <mark className="bg-sage-200 text-sage-800 px-1 rounded">veerkracht ondermijnt</mark> en op termijn <mark className="bg-sage-200 text-sage-800 px-1 rounded">uitput</mark>.
-                    </p>
-                  </div>
+                <div className="bg-sage-50 rounded-2xl p-6 lg:p-8 border-l-4 border-sage-300">
+                  <span className="inline-block rounded-full bg-sage-100 px-3 py-1 text-xs font-semibold text-sage-700 mb-3">
+                    Wetenschap
+                  </span>
+                  <p className="text-muted-foreground text-lg lg:text-xl leading-relaxed">
+                    Onderzoek laat zien dat zelfkritiek juist <mark className="bg-sage-200 text-sage-800 px-1 rounded">stress vergroot</mark>, <mark className="bg-sage-200 text-sage-800 px-1 rounded">veerkracht ondermijnt</mark> en op termijn <mark className="bg-sage-200 text-sage-800 px-1 rounded">uitput</mark>.
+                  </p>
                 </div>
                 
-                <div className="flex gap-5 items-start bg-gradient-to-r from-terracotta-50 to-warm-50 rounded-2xl p-6 lg:p-8 border border-terracotta-200 shadow-sm">
-                  <div className="flex-shrink-0 w-10 h-10 rounded-full bg-terracotta-600 text-white flex items-center justify-center font-semibold text-lg shadow-md">
-                    3
-                  </div>
-                  <div className="flex-1">
-                    <span className="inline-block rounded-full bg-terracotta-500 px-3 py-1 text-xs font-semibold text-white mb-3">
-                      Het Alternatief
-                    </span>
-                    <p className="text-xl lg:text-2xl font-light text-foreground leading-relaxed">
-                      Mindful Zelfcompassie leert je met <span className="underline decoration-terracotta-300 decoration-2 underline-offset-4">vriendelijkheid en begrip</span> op jezelf te reageren — <span className="font-medium text-terracotta-600">juist wanneer het moeilijk is.</span>
-                    </p>
-                  </div>
+                <div className="bg-gradient-to-r from-terracotta-50 to-warm-50 rounded-2xl p-6 lg:p-8 border border-terracotta-200 shadow-sm">
+                  <span className="inline-block rounded-full bg-terracotta-500 px-3 py-1 text-xs font-semibold text-white mb-3">
+                    Het Alternatief
+                  </span>
+                  <p className="text-xl lg:text-2xl font-light text-foreground leading-relaxed">
+                    Mindful Zelfcompassie leert je met <span className="underline decoration-terracotta-300 decoration-2 underline-offset-4">vriendelijkheid en begrip</span> op jezelf te reageren — <span className="font-medium text-terracotta-600">juist wanneer het moeilijk is.</span>
+                  </p>
                 </div>
               </div>
               
