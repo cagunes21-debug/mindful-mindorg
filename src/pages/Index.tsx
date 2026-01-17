@@ -21,6 +21,9 @@ import ScrollToTop from "@/components/ScrollToTop";
 import ScrollProgressBar from "@/components/ScrollProgressBar";
 import WhatsAppButton from "@/components/WhatsAppButton";
 import CookieConsent from "@/components/CookieConsent";
+import heroMindfulness from "@/assets/hero-mindfulness.jpg";
+import meditationPractice from "@/assets/meditation-practice.jpg";
+import natureCalm from "@/assets/nature-calm.jpg";
 
 const trainingDates = [
   {
@@ -82,10 +85,19 @@ const Index = () => {
       
       {/* Hero Section */}
       <section className="relative overflow-hidden pt-24 pb-32 lg:pt-32 lg:pb-44 bg-warm-50">
+        {/* Background image with overlay */}
+        <div className="absolute inset-0">
+          <img 
+            src={heroMindfulness} 
+            alt="Mindfulness meditatie in de natuur" 
+            className="w-full h-full object-cover"
+          />
+          <div className="absolute inset-0 bg-gradient-to-b from-warm-50/90 via-warm-50/80 to-warm-50/95" />
+        </div>
+        
         {/* Decorative elements */}
         <div className="absolute top-20 left-10 w-64 h-64 bg-terracotta-200/20 rounded-full blur-3xl" />
         <div className="absolute bottom-20 right-10 w-80 h-80 bg-sage-200/20 rounded-full blur-3xl" />
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-gradient-radial from-warm-100/50 to-transparent rounded-full" />
         
         <div className="container relative mx-auto px-4">
           <div className="mx-auto max-w-4xl text-center">
@@ -345,22 +357,30 @@ const Index = () => {
             
             <ScrollReveal delay={0.1}>
               <div className="relative max-w-4xl mx-auto">
-                {/* Video Container */}
-                <div className="relative aspect-video rounded-3xl overflow-hidden shadow-2xl border border-warm-200 bg-gradient-to-br from-terracotta-100 to-sage-100">
-                  {/* Placeholder - vervang dit met je eigen video embed */}
-                  <div className="absolute inset-0 flex flex-col items-center justify-center bg-gradient-to-br from-terracotta-50 to-sage-50">
+                {/* Video Container with image background */}
+                <div className="relative aspect-video rounded-3xl overflow-hidden shadow-2xl border border-warm-200">
+                  {/* Background image */}
+                  <img 
+                    src={meditationPractice} 
+                    alt="Meditatie praktijk" 
+                    className="absolute inset-0 w-full h-full object-cover"
+                  />
+                  <div className="absolute inset-0 bg-black/30" />
+                  
+                  {/* Play button overlay */}
+                  <div className="absolute inset-0 flex flex-col items-center justify-center">
                     <div className="relative group cursor-pointer">
                       {/* Play button */}
-                      <div className="h-24 w-24 rounded-full bg-white shadow-xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                      <div className="h-24 w-24 rounded-full bg-white/90 shadow-xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300 backdrop-blur-sm">
                         <div className="h-20 w-20 rounded-full bg-gradient-to-br from-terracotta-500 to-terracotta-600 flex items-center justify-center">
                           <Play className="h-10 w-10 text-white fill-white ml-1" />
                         </div>
                       </div>
                       {/* Pulse animation */}
-                      <div className="absolute inset-0 rounded-full bg-terracotta-400/30 animate-ping" />
+                      <div className="absolute inset-0 rounded-full bg-white/30 animate-ping" />
                     </div>
-                    <p className="mt-8 text-muted-foreground font-medium">Klik om de video af te spelen</p>
-                    <p className="mt-2 text-sm text-muted-foreground">Duur: 3 minuten</p>
+                    <p className="mt-8 text-white font-medium drop-shadow-lg">Klik om de video af te spelen</p>
+                    <p className="mt-2 text-sm text-white/80 drop-shadow-lg">Duur: 3 minuten</p>
                   </div>
                   
                   {/* Uncomment en vervang VIDEO_ID met je YouTube video ID:
@@ -542,8 +562,15 @@ const Index = () => {
 
       {/* Wat je kunt verwachten */}
       <section className="py-24 lg:py-32 bg-sage-50 relative overflow-hidden">
-        {/* Decorative element */}
-        <div className="absolute top-0 right-0 w-1/3 h-full bg-gradient-to-l from-sage-100/50 to-transparent" />
+        {/* Background image with overlay */}
+        <div className="absolute inset-0 opacity-20">
+          <img 
+            src={natureCalm} 
+            alt="Rustige natuur" 
+            className="w-full h-full object-cover"
+          />
+        </div>
+        <div className="absolute inset-0 bg-gradient-to-b from-sage-50/95 via-sage-50/90 to-sage-50/95" />
         
         <div className="container relative mx-auto px-4">
           <div className="mx-auto max-w-3xl text-center">
