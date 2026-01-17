@@ -21,6 +21,7 @@ import ScrollToTop from "@/components/ScrollToTop";
 import ScrollProgressBar from "@/components/ScrollProgressBar";
 import WhatsAppButton from "@/components/WhatsAppButton";
 import CookieConsent from "@/components/CookieConsent";
+import { ContactForm } from "@/components/ContactForm";
 import heroMindfulness from "@/assets/hero-mindfulness.jpg";
 import meditationPractice from "@/assets/meditation-practice.jpg";
 import natureCalm from "@/assets/nature-calm.jpg";
@@ -1280,7 +1281,55 @@ const Index = () => {
         </div>
       </section>
 
-      {/* Footer */}
+      {/* Contact Form Section */}
+      <section className="py-20 lg:py-24 bg-white">
+        <div className="container mx-auto px-4">
+          <div className="mx-auto max-w-4xl">
+            <div className="grid gap-12 lg:grid-cols-5">
+              {/* Contact Info */}
+              <div className="lg:col-span-2">
+                <ScrollReveal>
+                  <span className="inline-flex items-center gap-2 rounded-full bg-terracotta-100 border border-terracotta-200 px-5 py-2 text-xs font-semibold tracking-wider text-terracotta-700 mb-6 uppercase">
+                    <Mail className="h-3.5 w-3.5" />
+                    Contact
+                  </span>
+                  <h2 className="text-3xl font-light text-foreground mb-4 md:text-4xl leading-tight">
+                    Heb je een <span className="font-serif italic text-terracotta-600">vraag?</span>
+                  </h2>
+                  <p className="text-muted-foreground mb-8 leading-relaxed">
+                    Neem gerust contact met ons op. We reageren meestal binnen 24 uur.
+                  </p>
+                  
+                  <div className="space-y-4">
+                    <a href="mailto:mindful-mind@outlook.com" className="flex items-center gap-3 text-muted-foreground hover:text-terracotta-600 transition-colors">
+                      <Mail className="h-5 w-5 text-terracotta-500" />
+                      mindful-mind@outlook.com
+                    </a>
+                    <a href="tel:+31625633379" className="flex items-center gap-3 text-muted-foreground hover:text-terracotta-600 transition-colors">
+                      <Phone className="h-5 w-5 text-terracotta-500" />
+                      +31 6 25633379
+                    </a>
+                    <a href="https://wa.me/31625633379" target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 text-muted-foreground hover:text-terracotta-600 transition-colors">
+                      <MessageCircle className="h-5 w-5 text-terracotta-500" />
+                      WhatsApp
+                    </a>
+                  </div>
+                </ScrollReveal>
+              </div>
+              
+              {/* Form */}
+              <div className="lg:col-span-3">
+                <ScrollReveal delay={0.1}>
+                  <div className="bg-warm-50 rounded-3xl p-8 border border-warm-200">
+                    <ContactForm />
+                  </div>
+                </ScrollReveal>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       <footer className="border-t border-warm-200 bg-warm-100 py-16">
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto">
