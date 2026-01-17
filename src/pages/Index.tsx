@@ -585,6 +585,22 @@ const Index = () => {
                   Elke sessie voelt als thuiskomen: een veilige en vertrouwde ruimte waarin je kunt ontdekken, oefenen en verbinden. Onze ervaren trainers werken met een <span className="inline-flex items-center gap-1.5 rounded-full bg-sage-100 px-3 py-1 text-sage-700 font-medium text-sm"><Star className="h-3 w-3" />trauma-sensitieve aanpak</span>, zodat jij je op je gemak voelt terwijl je nieuwe inzichten en vaardigheden ontwikkelt.
                 </p>
               </div>
+              
+              {/* Wetenschappelijke onderbouwing */}
+              <div className="bg-white rounded-2xl p-6 shadow-sm border border-sage-200 mt-8">
+                <div className="flex flex-col sm:flex-row items-center justify-center gap-4 text-center">
+                  <div className="flex items-center gap-3">
+                    <div className="h-10 w-10 rounded-xl bg-sage-100 flex items-center justify-center">
+                      <FlaskConical className="h-5 w-5 text-sage-600" />
+                    </div>
+                    <span className="text-lg font-medium text-foreground">Wetenschappelijk onderbouwd</span>
+                  </div>
+                  <span className="rounded-full bg-sage-200 px-3 py-1 text-xs font-semibold text-sage-700">PEER-REVIEWED</span>
+                </div>
+                <p className="text-muted-foreground text-center mt-4">
+                  Ontwikkeld door <strong className="text-foreground">dr. Kristin Neff</strong> (University of Texas) en <strong className="text-foreground">dr. Christopher Germer</strong> (Harvard Medical School).
+                </p>
+              </div>
             </ScrollReveal>
           </div>
         </div>
