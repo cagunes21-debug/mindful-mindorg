@@ -37,10 +37,10 @@ const trainingDates = [
   },
   {
     language: "English",
-    day: "Sunday (afternoon)",
-    startDate: "18 January 2026",
-    time: "16:00 – 18:00",
-    dates: "Vervolgdata: 25 Jan, 1, 8, 15, 22 Feb, 1, 8 Mar",
+    day: "Wednesday (evening)",
+    startDate: "22 April 2026",
+    time: "19:00 – 21:00",
+    dates: "Follow-up: 29 Apr, 6, 13, 20, 27 May, 3, 10 Jun",
     price: "€550",
   },
 ];
@@ -801,9 +801,7 @@ const Index = () => {
                 
                 <StaggerContainer className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
                   {[
-                    { lang: "Nederlands", date: "14 januari 2026", time: "19:00 – 20:00" },
                     { lang: "Nederlands", date: "11 februari 2026", time: "19:00 – 20:00" },
-                    { lang: "English", date: "13 januari 2026", time: "19:00 – 20:00" },
                     { lang: "English", date: "10 februari 2026", time: "19:00 – 20:00" },
                   ].map((workshop, index) => (
                     <StaggerItem key={index}>
