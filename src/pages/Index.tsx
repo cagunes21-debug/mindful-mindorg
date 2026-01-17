@@ -291,57 +291,6 @@ const Index = () => {
         </div>
       </section>
 
-      {/* Wetenschappelijke Onderbouwing & Resultaten Section */}
-      <section className="py-16 lg:py-20 bg-sage-50 border-y border-sage-100">
-        <div className="container mx-auto px-4">
-          <div className="max-w-5xl mx-auto">
-            <ScrollReveal>
-              <div className="text-center mb-10">
-                <div className="inline-flex items-center gap-3 mb-4">
-                  <div className="h-14 w-14 rounded-2xl bg-white shadow-md flex items-center justify-center border border-sage-200">
-                    <FlaskConical className="h-7 w-7 text-sage-600" />
-                  </div>
-                </div>
-                <div className="flex items-center justify-center gap-3 mb-4">
-                  <h2 className="text-2xl md:text-3xl font-light text-foreground">Wetenschappelijk onderbouwd</h2>
-                  <span className="inline-block rounded-full bg-sage-200 px-3 py-1 text-xs font-semibold text-sage-700">PEER-REVIEWED</span>
-                </div>
-                <p className="text-muted-foreground text-lg leading-relaxed max-w-2xl mx-auto">
-                  Ontwikkeld door <strong className="text-foreground">dr. Kristin Neff</strong> (University of Texas) en <strong className="text-foreground">dr. Christopher Germer</strong> (Harvard Medical School).
-                </p>
-              </div>
-              
-              {/* Results grid */}
-              <div className="grid grid-cols-2 md:grid-cols-5 gap-4 mb-8">
-                <div className="bg-white rounded-xl p-4 text-center shadow-sm border border-sage-100">
-                  <p className="text-2xl md:text-3xl font-light text-sage-700 mb-1">43%</p>
-                  <p className="text-xs text-muted-foreground">minder angst</p>
-                </div>
-                <div className="bg-white rounded-xl p-4 text-center shadow-sm border border-sage-100">
-                  <p className="text-2xl md:text-3xl font-light text-sage-700 mb-1">32%</p>
-                  <p className="text-xs text-muted-foreground">minder depressie</p>
-                </div>
-                <div className="bg-white rounded-xl p-4 text-center shadow-sm border border-sage-100">
-                  <p className="text-2xl md:text-3xl font-light text-sage-700 mb-1">46%</p>
-                  <p className="text-xs text-muted-foreground">meer welzijn</p>
-                </div>
-                <div className="bg-white rounded-xl p-4 text-center shadow-sm border border-sage-100">
-                  <p className="text-2xl md:text-3xl font-light text-terracotta-600 mb-1">67%</p>
-                  <p className="text-xs text-muted-foreground">meer zelfcompassie</p>
-                </div>
-                <div className="bg-white rounded-xl p-4 text-center shadow-sm border border-sage-100 col-span-2 md:col-span-1">
-                  <p className="text-2xl md:text-3xl font-light text-terracotta-600 mb-1">38%</p>
-                  <p className="text-xs text-muted-foreground">betere zelfzorg</p>
-                </div>
-              </div>
-              
-              <p className="text-xs text-muted-foreground text-center">
-                Gebaseerd op meta-analyses van Neff & Germer (2013–2023). Individuele resultaten kunnen verschillen.
-              </p>
-            </ScrollReveal>
-          </div>
-        </div>
-      </section>
 
       <section className="py-20 lg:py-28 bg-gradient-to-b from-warm-50 to-white relative overflow-hidden">
         <div className="absolute top-0 left-1/4 w-64 h-64 bg-terracotta-100/30 rounded-full blur-3xl" />
@@ -565,6 +514,58 @@ const Index = () => {
                   </a>
                 </Button>
               </div>
+            </ScrollReveal>
+          </div>
+        </div>
+      </section>
+
+      {/* Wetenschappelijke Onderbouwing & Resultaten Section */}
+      <section className="py-16 lg:py-20 bg-sage-50 border-y border-sage-100">
+        <div className="container mx-auto px-4">
+          <div className="max-w-5xl mx-auto">
+            <ScrollReveal>
+              <div className="text-center mb-10">
+                <div className="inline-flex items-center gap-3 mb-4">
+                  <div className="h-14 w-14 rounded-2xl bg-white shadow-md flex items-center justify-center border border-sage-200">
+                    <FlaskConical className="h-7 w-7 text-sage-600" />
+                  </div>
+                </div>
+                <div className="flex items-center justify-center gap-3 mb-4">
+                  <h2 className="text-2xl md:text-3xl font-light text-foreground">Wetenschappelijk onderbouwd</h2>
+                  <span className="inline-block rounded-full bg-sage-200 px-3 py-1 text-xs font-semibold text-sage-700">PEER-REVIEWED</span>
+                </div>
+                <p className="text-muted-foreground text-lg leading-relaxed max-w-2xl mx-auto">
+                  Ontwikkeld door <strong className="text-foreground">dr. Kristin Neff</strong> (University of Texas) en <strong className="text-foreground">dr. Christopher Germer</strong> (Harvard Medical School).
+                </p>
+              </div>
+              
+              {/* Results grid */}
+              <div className="grid grid-cols-2 md:grid-cols-5 gap-4 mb-8">
+                <div className="bg-white rounded-xl p-4 text-center shadow-sm border border-sage-100">
+                  <p className="text-2xl md:text-3xl font-light text-sage-700 mb-1">43%</p>
+                  <p className="text-xs text-muted-foreground">minder angst</p>
+                </div>
+                <div className="bg-white rounded-xl p-4 text-center shadow-sm border border-sage-100">
+                  <p className="text-2xl md:text-3xl font-light text-sage-700 mb-1">32%</p>
+                  <p className="text-xs text-muted-foreground">minder depressie</p>
+                </div>
+                <div className="bg-white rounded-xl p-4 text-center shadow-sm border border-sage-100">
+                  <p className="text-2xl md:text-3xl font-light text-sage-700 mb-1">46%</p>
+                  <p className="text-xs text-muted-foreground">meer welzijn</p>
+                </div>
+                <div className="bg-white rounded-xl p-4 text-center shadow-sm border border-sage-100">
+                  <p className="text-2xl md:text-3xl font-light text-terracotta-600 mb-1">67%</p>
+                  <p className="text-xs text-muted-foreground">meer zelfcompassie</p>
+                </div>
+                <div className="bg-white rounded-xl p-4 text-center shadow-sm border border-sage-100 col-span-2 md:col-span-1">
+                  <p className="text-2xl md:text-3xl font-light text-terracotta-600 mb-1">38%</p>
+                  <p className="text-xs text-muted-foreground">betere zelfzorg</p>
+                </div>
+              </div>
+              
+              <p className="text-xs text-muted-foreground text-center">
+                Gebaseerd op meta-analyses van Neff & Germer (2013–2023). Individuele resultaten kunnen verschillen.
+              </p>
             </ScrollReveal>
           </div>
         </div>
