@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { Heart, Brain, Sparkles, ArrowRight, Check, Mail, Phone, MessageCircle, Clock, Users, Globe, Calendar, Quote, Star, Leaf, HelpCircle, Award, TrendingUp, BookOpen, FlaskConical, Play } from "lucide-react";
+import { Heart, Brain, Sparkles, ArrowRight, Check, Mail, Phone, MessageCircle, Clock, Users, Globe, Calendar, Quote, Star, Leaf, HelpCircle, Award, TrendingUp, FlaskConical, Play } from "lucide-react";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import {
   Carousel,
@@ -97,7 +97,7 @@ const Index = () => {
               className="inline-flex items-center gap-2 mb-10 rounded-full bg-warm-100 border border-warm-200 px-6 py-3.5 text-sm font-medium text-terracotta-700 shadow-sm"
             >
               <Sparkles className="h-4 w-4" />
-              Jouw welzijn begint bij hoe je jezelf behandelt
+              Jouw welzijn begint bij hoe je met jezelf omgaat
             </motion.div>
             
             {/* Main heading */}
@@ -176,42 +176,42 @@ const Index = () => {
             <div className="grid grid-cols-2 md:grid-cols-5 gap-6 text-center">
               <div>
                 <div className="flex items-center justify-center gap-2 mb-2">
+                  <Clock className="h-5 w-5 text-terracotta-500" />
+                  <span className="text-3xl lg:text-4xl font-light text-foreground">8</span>
+                </div>
+                <p className="text-sm text-muted-foreground">weken, 100% online</p>
+              </div>
+              <div>
+                <div className="flex items-center justify-center gap-2 mb-2">
                   <Users className="h-5 w-5 text-terracotta-500" />
                   <span className="text-3xl lg:text-4xl font-light text-foreground">200+</span>
                 </div>
-                <p className="text-sm text-muted-foreground">Deelnemers begeleid</p>
+                <p className="text-sm text-muted-foreground">deelnemers begeleid</p>
               </div>
               <div>
                 <div className="flex items-center justify-center gap-2 mb-2">
                   <Star className="h-5 w-5 text-terracotta-500 fill-terracotta-500" />
-                  <span className="text-3xl lg:text-4xl font-light text-foreground">4.9</span>
+                  <span className="text-3xl lg:text-4xl font-light text-foreground">4.9/5</span>
                 </div>
-                <p className="text-sm text-muted-foreground">Gemiddelde beoordeling</p>
+                <p className="text-sm text-muted-foreground">gemiddelde beoordeling</p>
               </div>
               <div>
                 <div className="flex items-center justify-center gap-2 mb-2">
                   <Award className="h-5 w-5 text-terracotta-500" />
                   <span className="text-3xl lg:text-4xl font-light text-foreground">CMSC</span>
                 </div>
-                <p className="text-sm text-muted-foreground">Gecertificeerd trainer</p>
+                <p className="text-sm text-muted-foreground">gecertificeerde trainer</p>
               </div>
               <div>
                 <div className="flex items-center justify-center gap-2 mb-2">
-                  <BookOpen className="h-5 w-5 text-terracotta-500" />
-                  <span className="text-3xl lg:text-4xl font-light text-foreground">4000+</span>
+                  <FlaskConical className="h-5 w-5 text-terracotta-500" />
+                  <span className="text-lg lg:text-xl font-light text-foreground">Bewezen</span>
                 </div>
-                <p className="text-sm text-muted-foreground">Studies gepubliceerd</p>
-              </div>
-              <div>
-                <div className="flex items-center justify-center gap-2 mb-2">
-                  <TrendingUp className="h-5 w-5 text-terracotta-500" />
-                  <span className="text-3xl lg:text-4xl font-light text-foreground">43%</span>
-                </div>
-                <p className="text-sm text-muted-foreground">Minder angst & depressie*</p>
+                <p className="text-sm text-muted-foreground">wetenschappelijk</p>
               </div>
             </div>
-            <p className="text-xs text-muted-foreground text-center mt-6">
-              * Gebaseerd op meta-analyse van Neff & Germer (2023) - gemiddelde verbetering na MSC-training
+            <p className="text-sm text-muted-foreground text-center mt-6 max-w-2xl mx-auto">
+              Wetenschappelijk onderbouwd en bewezen effectief: deelnemers ervaren gemiddeld 43% minder angst, 32% minder depressie en 46% meer welzijn.
             </p>
           </div>
         </div>
@@ -245,7 +245,7 @@ const Index = () => {
                       Mythe
                     </span>
                     <p className="text-muted-foreground text-lg lg:text-xl leading-relaxed">
-                      Veel mensen denken dat zelfkritiek helpt om scherp, gemotiveerd of succesvol te blijven.
+                      Veel mensen denken dat streng zijn voor jezelf helpt om gemotiveerd of succesvol te blijven.
                     </p>
                   </div>
                 </div>
@@ -259,7 +259,7 @@ const Index = () => {
                       Wetenschap
                     </span>
                     <p className="text-muted-foreground text-lg lg:text-xl leading-relaxed">
-                      Onderzoek laat echter zien dat zelfkritiek juist <mark className="bg-sage-200 text-sage-800 px-1 rounded">stress vergroot</mark>, je <mark className="bg-sage-200 text-sage-800 px-1 rounded">veerkracht ondermijnt</mark> en je op de lange termijn <mark className="bg-sage-200 text-sage-800 px-1 rounded">uitput</mark>.
+                      Onderzoek laat zien dat zelfkritiek juist <mark className="bg-sage-200 text-sage-800 px-1 rounded">stress vergroot</mark>, <mark className="bg-sage-200 text-sage-800 px-1 rounded">veerkracht ondermijnt</mark> en op termijn <mark className="bg-sage-200 text-sage-800 px-1 rounded">uitput</mark>.
                     </p>
                   </div>
                 </div>
@@ -273,7 +273,7 @@ const Index = () => {
                       Het Alternatief
                     </span>
                     <p className="text-xl lg:text-2xl font-light text-foreground leading-relaxed">
-                      Mindful Zelfcompassie biedt een bewezen alternatief: niet door minder betrokken te zijn, maar door met <span className="underline decoration-terracotta-300 decoration-2 underline-offset-4">meer steun en begrip</span> met jezelf om te gaan — <span className="font-medium text-terracotta-600">juist wanneer het moeilijk is.</span>
+                      Mindful Zelfcompassie leert je met <span className="underline decoration-terracotta-300 decoration-2 underline-offset-4">vriendelijkheid en begrip</span> op jezelf te reageren — <span className="font-medium text-terracotta-600">juist wanneer het moeilijk is.</span>
                     </p>
                   </div>
                 </div>
@@ -291,20 +291,8 @@ const Index = () => {
                       <span className="inline-block rounded-full bg-sage-200 px-2 py-0.5 text-[10px] font-semibold text-sage-700">PEER-REVIEWED</span>
                     </h3>
                     <p className="text-muted-foreground leading-relaxed mb-3">
-                      Het MSC-programma is ontwikkeld door <strong>dr. Kristin Neff</strong> (University of Texas) en <strong>dr. Christopher Germer</strong> (Harvard Medical School). 
-                      Meer dan 4.000 wetenschappelijke studies bevestigen de effectiviteit van zelfcompassie.
+                      Ontwikkeld door <strong>dr. Kristin Neff</strong> (University of Texas) en <strong>dr. Christopher Germer</strong> (Harvard Medical School), wereldwijd ondersteund door duizenden studies.
                     </p>
-                    <div className="flex flex-wrap gap-2">
-                      <span className="inline-flex items-center gap-1 text-xs text-sage-700 bg-white px-3 py-1.5 rounded-full border border-sage-200">
-                        <Check className="h-3 w-3" /> 43% minder angst
-                      </span>
-                      <span className="inline-flex items-center gap-1 text-xs text-sage-700 bg-white px-3 py-1.5 rounded-full border border-sage-200">
-                        <Check className="h-3 w-3" /> 32% minder depressie
-                      </span>
-                      <span className="inline-flex items-center gap-1 text-xs text-sage-700 bg-white px-3 py-1.5 rounded-full border border-sage-200">
-                        <Check className="h-3 w-3" /> 46% meer welzijn
-                      </span>
-                    </div>
                   </div>
                 </div>
               </div>
@@ -445,7 +433,7 @@ const Index = () => {
             <ScrollReveal delay={0.1}>
               <div className="flex items-center justify-center gap-2 mb-10">
                 <div className="h-px w-12 bg-terracotta-300" />
-                <p className="text-foreground text-lg font-medium">In deze training leer je</p>
+                <p className="text-foreground text-lg font-medium">Wat leer je in 8 weken?</p>
                 <div className="h-px w-12 bg-terracotta-300" />
               </div>
             </ScrollReveal>
@@ -464,7 +452,7 @@ const Index = () => {
                     </div>
                     <h3 className="mb-4 text-2xl font-semibold text-foreground">Mindfulness</h3>
                     <p className="text-muted-foreground text-lg leading-relaxed">
-                      Bewust aanwezig te zijn bij wat je ervaart
+                      Bewust aanwezig zijn bij wat je ervaart.
                     </p>
                   </CardContent>
                 </Card>
@@ -483,7 +471,7 @@ const Index = () => {
                     </div>
                     <h3 className="mb-4 text-2xl font-semibold text-foreground">Zelfcompassie</h3>
                     <p className="text-muted-foreground text-lg leading-relaxed">
-                      Met vriendelijkheid, begrip en zorg op jezelf te reageren
+                      Met vriendelijkheid, begrip en zorg op jezelf reageren.
                     </p>
                   </CardContent>
                 </Card>
@@ -493,7 +481,7 @@ const Index = () => {
             <ScrollReveal delay={0.2}>
               <div className="bg-white rounded-2xl p-8 shadow-sm border border-warm-100 max-w-2xl mx-auto mb-10">
                 <p className="text-center text-muted-foreground text-lg lg:text-xl leading-relaxed">
-                  Je ontwikkelt praktische vaardigheden om met stress, moeilijke emoties en zelfkritiek om te gaan, met dezelfde steun en vriendelijkheid die een goede vriend(in) je zou geven.
+                  Je ontwikkelt praktische vaardigheden om beter om te gaan met stress, zelfkritiek en moeilijke gevoelens — met dezelfde steun die je een goede vriend(in) zou geven.
                 </p>
               </div>
               <div className="text-center">
@@ -519,45 +507,23 @@ const Index = () => {
                   Voor Jou
                 </span>
                 <h2 className="mb-8 text-3xl font-light text-foreground md:text-4xl lg:text-5xl leading-tight">
-                  Is deze training iets
-                  <span className="block font-serif italic text-terracotta-600 mt-2">voor jou?</span>
+                  Voor wie is deze training?
+                  <span className="block font-serif italic text-terracotta-600 mt-2">Herken je jezelf hierin?</span>
                 </h2>
-              </div>
-            </ScrollReveal>
-            
-            <ScrollReveal delay={0.1}>
-              <div className="text-center max-w-2xl mx-auto mb-12">
-                <p className="text-muted-foreground text-lg lg:text-xl leading-relaxed mb-4">
-                  In de drukte van het leven raak je makkelijk jezelf kwijt.
-                </p>
-                <p className="text-muted-foreground text-lg lg:text-xl leading-relaxed">
-                  Je bent er voor anderen, je zet door, je legt de lat hoog — maar jezelf zet je vaak op de laatste plek.
-                </p>
-              </div>
-            </ScrollReveal>
-            
-            <ScrollReveal delay={0.15}>
-              <div className="flex items-center justify-center gap-2 mb-10">
-                <div className="h-px w-12 bg-terracotta-300" />
-                <p className="text-foreground text-lg font-medium">Deze training is er voor jou als je</p>
-                <div className="h-px w-12 bg-terracotta-300" />
               </div>
             </ScrollReveal>
             
             <ScrollReveal delay={0.2}>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-5 max-w-3xl mx-auto mb-12">
                 {[
-                  { text: "Vaak streng bent voor jezelf", icon: "🪞", label: "Herkenbaar?" },
-                  { text: "De lat hoog legt en jezelf snel veroordeelt", icon: "📏", label: "Perfectionist?" },
-                  { text: "Wilt leren omgaan met moeilijke gevoelens", icon: "💭", label: "Emoties?" },
-                  { text: "Meer zachtheid en balans in je leven wilt ervaren", icon: "🌿", label: "Balans?" },
+                  { text: "Je bent vaak streng voor jezelf", icon: "🌿" },
+                  { text: "Je legt de lat hoog en bent perfectionistisch", icon: "📏" },
+                  { text: "Je wilt beter omgaan met moeilijke emoties", icon: "💭" },
+                  { text: "Je wilt meer zachtheid en balans in je leven", icon: "🪞" },
                 ].map((item, index) => (
-                  <div key={index} className="flex items-center gap-4 p-5 rounded-2xl bg-gradient-to-r from-warm-50 to-white border border-warm-200 shadow-sm hover:shadow-md transition-shadow relative">
-                    <span className="absolute -top-2 left-4 inline-block rounded-full bg-terracotta-500 px-2.5 py-0.5 text-[10px] font-semibold text-white">
-                      {item.label}
-                    </span>
-                    <span className="text-2xl mt-1">{item.icon}</span>
-                    <span className="text-foreground text-lg mt-1">{item.text}</span>
+                  <div key={index} className="flex items-center gap-4 p-5 rounded-2xl bg-gradient-to-r from-warm-50 to-white border border-warm-200 shadow-sm hover:shadow-md transition-shadow">
+                    <span className="text-2xl">{item.icon}</span>
+                    <span className="text-foreground text-lg">{item.text}</span>
                   </div>
                 ))}
               </div>
@@ -614,46 +580,58 @@ const Index = () => {
                   </div>
                 </div>
                 
-                {/* Drop cap lead paragraph */}
-                <p className="text-2xl lg:text-3xl font-light text-foreground mb-6 leading-relaxed">
-                  Een 8-weekse training die voelt als <span className="font-serif italic text-terracotta-600">thuiskomen</span>
-                </p>
+                <div className="text-left space-y-4">
+                  <p className="text-muted-foreground text-lg leading-relaxed">
+                    <strong className="text-foreground">Theorie:</strong> wetenschappelijke inzichten over zelfcompassie
+                  </p>
+                  <p className="text-muted-foreground text-lg leading-relaxed">
+                    <strong className="text-foreground">Praktijk:</strong> oefeningen voor dagelijks gebruik
+                  </p>
+                  <p className="text-muted-foreground text-lg leading-relaxed">
+                    <strong className="text-foreground">Integratie:</strong> manieren om compassie in je leven te verankeren
+                  </p>
+                </div>
                 
                 {/* Decorative divider with icon */}
-                <div className="flex items-center justify-center gap-4 mb-6">
+                <div className="flex items-center justify-center gap-4 my-6">
                   <div className="h-px w-16 bg-gradient-to-r from-transparent to-terracotta-300" />
                   <Leaf className="h-5 w-5 text-terracotta-400" />
                   <div className="h-px w-16 bg-gradient-to-l from-transparent to-terracotta-300" />
                 </div>
                 
-                <div className="text-left space-y-4">
-                  <p className="text-muted-foreground text-lg leading-relaxed">
-                    <span className="float-left text-5xl font-serif text-terracotta-500 mr-3 mt-1 leading-none">E</span>
-                    lke sessie combineert theorie, praktijk en integratie — begeleid door ervaren trainers die werken vanuit een <span className="inline-flex items-center gap-1.5 rounded-full bg-sage-100 px-3 py-1 text-sage-700 font-medium text-sm"><Star className="h-3 w-3" />trauma-sensitieve benadering</span>.
-                  </p>
-                  <p className="text-muted-foreground text-lg leading-relaxed clear-both pt-2">
-                    Deze training biedt je meer dan alleen kennis; je leert een nieuwe manier om met jezelf en het leven om te gaan — <span className="font-medium text-foreground underline decoration-terracotta-300 decoration-2 underline-offset-4">zachter, bewuster en milder</span> — zodat je minder verstrikt raakt in stress, zelfkritiek en dagelijkse druk, en meer ruimte en rust in je leven ervaart.
-                  </p>
-                </div>
+                <p className="text-muted-foreground text-lg leading-relaxed text-center italic">
+                  Elke sessie voelt als thuiskomen — begeleid door ervaren trainers met een <span className="inline-flex items-center gap-1.5 rounded-full bg-sage-100 px-3 py-1 text-sage-700 font-medium text-sm not-italic"><Star className="h-3 w-3" />trauma-sensitieve aanpak</span>.
+                </p>
               </div>
               
-              {/* Key takeaways box */}
+              {/* Results box */}
               <div className="bg-gradient-to-br from-terracotta-50 to-sage-50 rounded-2xl p-6 border border-warm-200">
-                <p className="text-sm font-semibold text-terracotta-700 uppercase tracking-wider mb-3">Kernpunten</p>
+                <p className="text-sm font-semibold text-terracotta-700 uppercase tracking-wider mb-3 text-center">Resultaten (gemiddeld)</p>
                 <div className="flex flex-wrap justify-center gap-3">
                   <span className="inline-flex items-center gap-2 bg-white rounded-full px-4 py-2 text-sm text-foreground shadow-sm">
-                    <Check className="h-4 w-4 text-sage-600" />
-                    8 weken begeleiding
+                    <TrendingUp className="h-4 w-4 text-sage-600" />
+                    43% minder angst
                   </span>
                   <span className="inline-flex items-center gap-2 bg-white rounded-full px-4 py-2 text-sm text-foreground shadow-sm">
-                    <Check className="h-4 w-4 text-sage-600" />
-                    Kleine groepen
+                    <TrendingUp className="h-4 w-4 text-sage-600" />
+                    32% minder depressie
                   </span>
                   <span className="inline-flex items-center gap-2 bg-white rounded-full px-4 py-2 text-sm text-foreground shadow-sm">
-                    <Check className="h-4 w-4 text-sage-600" />
-                    Ervaren trainers
+                    <TrendingUp className="h-4 w-4 text-sage-600" />
+                    46% meer welzijn
+                  </span>
+                  <span className="inline-flex items-center gap-2 bg-white rounded-full px-4 py-2 text-sm text-foreground shadow-sm">
+                    <Heart className="h-4 w-4 text-terracotta-600" />
+                    67% meer zelfcompassie
+                  </span>
+                  <span className="inline-flex items-center gap-2 bg-white rounded-full px-4 py-2 text-sm text-foreground shadow-sm">
+                    <Heart className="h-4 w-4 text-terracotta-600" />
+                    38% betere zelfzorg
                   </span>
                 </div>
+                <p className="text-xs text-muted-foreground text-center mt-4">
+                  Gebaseerd op meta-analyses van Neff & Germer (2013–2023). Individuele resultaten kunnen verschillen.
+                </p>
               </div>
             </ScrollReveal>
           </div>
@@ -819,26 +797,14 @@ const Index = () => {
             
             {/* Poetic lines with visual emphasis */}
             <div className="space-y-3 mb-8">
-              <p className="text-terracotta-100 text-lg lg:text-xl flex items-center justify-center gap-3">
-                <span className="w-2 h-2 rounded-full bg-terracotta-300" />
-                In je hoofd. In je hart. In je lichaam.
-              </p>
-              <p className="text-terracotta-100 text-lg lg:text-xl flex items-center justify-center gap-3">
-                <span className="w-2 h-2 rounded-full bg-terracotta-300" />
-                Op een plek waar je niets hoeft te bewijzen — alleen maar mag zijn.
-              </p>
-            </div>
-            
-            {/* Highlight box */}
-            <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-6 mb-8 border border-white/20">
-              <p className="text-white text-lg lg:text-xl font-medium">
-                Als je voelt dat het tijd is om <span className="underline decoration-white/50 underline-offset-4">zachter</span>, <span className="underline decoration-white/50 underline-offset-4">milder</span> en <span className="underline decoration-white/50 underline-offset-4">bewuster</span> in het leven te staan, dan is dit jouw moment.
+              <p className="text-terracotta-100 text-lg lg:text-xl">
+                Op een plek waar je niets hoeft te bewijzen — en eindelijk mag zijn wie je bent.
               </p>
             </div>
             
             <Button asChild size="lg" className="bg-white text-terracotta-700 hover:bg-terracotta-50 rounded-full px-10 py-7 text-lg shadow-xl hover:shadow-2xl transition-all hover:scale-105">
               <a href="#programma">
-                Start de training
+                Reserveer je plek en start vandaag
                 <ArrowRight className="ml-2 h-5 w-5" />
               </a>
             </Button>
