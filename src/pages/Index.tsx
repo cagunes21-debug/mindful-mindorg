@@ -185,14 +185,7 @@ const Index = () => {
       <section className="py-12 bg-white border-b border-warm-100">
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto">
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
-              <div>
-                <div className="flex items-center justify-center gap-2 mb-2">
-                  <Clock className="h-5 w-5 text-terracotta-500" />
-                  <span className="text-3xl lg:text-4xl font-light text-foreground">8</span>
-                </div>
-                <p className="text-sm text-muted-foreground">weken, 100% online</p>
-              </div>
+            <div className="grid grid-cols-3 gap-8 text-center">
               <div>
                 <div className="flex items-center justify-center gap-2 mb-2">
                   <Users className="h-5 w-5 text-terracotta-500" />
