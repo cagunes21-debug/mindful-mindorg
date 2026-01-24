@@ -385,50 +385,32 @@ const Index = () => {
               </div>
             </ScrollReveal>
             
-            <StaggerContainer className="grid gap-8 md:grid-cols-2 mb-12">
+            <StaggerContainer className="grid gap-4 md:grid-cols-2 mb-10 max-w-2xl mx-auto">
               <StaggerItem>
-                <Card className="border-0 bg-white rounded-3xl h-full hover:shadow-xl transition-all duration-300 shadow-md relative overflow-hidden">
-                  <div className="absolute top-4 right-4">
-                    <span className="inline-block rounded-full bg-terracotta-100 px-3 py-1 text-xs font-semibold text-terracotta-700">
-                      Pijler 1
-                    </span>
-                  </div>
-                  <CardContent className="p-10 text-center">
-                    <div className="mx-auto mb-8 flex h-20 w-20 items-center justify-center rounded-full bg-gradient-to-br from-terracotta-100 to-terracotta-200 shadow-inner">
-                      <Brain className="h-10 w-10 text-terracotta-600" />
+                <Card className="border-0 bg-white rounded-2xl hover:shadow-lg transition-all duration-300 shadow-sm">
+                  <CardContent className="p-5 flex items-center gap-4">
+                    <div className="flex-shrink-0 h-12 w-12 rounded-xl bg-gradient-to-br from-terracotta-100 to-terracotta-200 flex items-center justify-center">
+                      <Brain className="h-6 w-6 text-terracotta-600" />
                     </div>
-                    <h3 className="mb-4 text-2xl font-semibold text-foreground">Mindfulness</h3>
-                    <p className="text-muted-foreground text-lg leading-relaxed mb-6">
-                      Bewust aanwezig zijn bij wat je ervaart.
-                    </p>
-                    <div className="flex flex-wrap justify-center gap-2">
-                      <span className="rounded-full bg-terracotta-50 border border-terracotta-200 px-3 py-1 text-xs text-terracotta-700">Aandacht richten</span>
-                      <span className="rounded-full bg-terracotta-50 border border-terracotta-200 px-3 py-1 text-xs text-terracotta-700">Aanwezig zijn</span>
-                      <span className="rounded-full bg-terracotta-50 border border-terracotta-200 px-3 py-1 text-xs text-terracotta-700">Niet-oordelen</span>
+                    <div>
+                      <span className="text-xs font-semibold text-terracotta-600 uppercase tracking-wide">Pijler 1</span>
+                      <h3 className="text-lg font-semibold text-foreground">Mindfulness</h3>
+                      <p className="text-muted-foreground text-sm">Bewust aanwezig zijn bij wat je ervaart.</p>
                     </div>
                   </CardContent>
                 </Card>
               </StaggerItem>
               
               <StaggerItem>
-                <Card className="border-0 bg-white rounded-3xl h-full hover:shadow-xl transition-all duration-300 shadow-md relative overflow-hidden">
-                  <div className="absolute top-4 right-4">
-                    <span className="inline-block rounded-full bg-sage-100 px-3 py-1 text-xs font-semibold text-sage-700">
-                      Pijler 2
-                    </span>
-                  </div>
-                  <CardContent className="p-10 text-center">
-                    <div className="mx-auto mb-8 flex h-20 w-20 items-center justify-center rounded-full bg-gradient-to-br from-sage-100 to-sage-200 shadow-inner">
-                      <Heart className="h-10 w-10 text-sage-700" />
+                <Card className="border-0 bg-white rounded-2xl hover:shadow-lg transition-all duration-300 shadow-sm">
+                  <CardContent className="p-5 flex items-center gap-4">
+                    <div className="flex-shrink-0 h-12 w-12 rounded-xl bg-gradient-to-br from-sage-100 to-sage-200 flex items-center justify-center">
+                      <Heart className="h-6 w-6 text-sage-700" />
                     </div>
-                    <h3 className="mb-4 text-2xl font-semibold text-foreground">Zelfcompassie</h3>
-                    <p className="text-muted-foreground text-lg leading-relaxed mb-6">
-                      Met vriendelijkheid, begrip en zorg op jezelf reageren.
-                    </p>
-                    <div className="flex flex-wrap justify-center gap-2">
-                      <span className="rounded-full bg-sage-50 border border-sage-200 px-3 py-1 text-xs text-sage-700">Zelfvriendelijkheid</span>
-                      <span className="rounded-full bg-sage-50 border border-sage-200 px-3 py-1 text-xs text-sage-700">Verbondenheid</span>
-                      <span className="rounded-full bg-sage-50 border border-sage-200 px-3 py-1 text-xs text-sage-700">Innerlijke rust</span>
+                    <div>
+                      <span className="text-xs font-semibold text-sage-600 uppercase tracking-wide">Pijler 2</span>
+                      <h3 className="text-lg font-semibold text-foreground">Zelfcompassie</h3>
+                      <p className="text-muted-foreground text-sm">Met vriendelijkheid en begrip op jezelf reageren.</p>
                     </div>
                   </CardContent>
                 </Card>
@@ -471,16 +453,16 @@ const Index = () => {
             </ScrollReveal>
             
             <ScrollReveal delay={0.2}>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-5 max-w-3xl mx-auto mb-12">
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-3 max-w-3xl mx-auto mb-10">
                 {[
-                  { text: "Je bent vaak streng voor jezelf", icon: "🌿" },
-                  { text: "Je legt de lat hoog en bent perfectionistisch", icon: "📏" },
-                  { text: "Je wilt beter omgaan met moeilijke emoties", icon: "💭" },
-                  { text: "Je wilt meer zachtheid en balans in je leven", icon: "🪞" },
+                  { text: "Streng voor jezelf", icon: "🌿" },
+                  { text: "Perfectionistisch", icon: "📏" },
+                  { text: "Moeilijke emoties", icon: "💭" },
+                  { text: "Zoekt meer balans", icon: "🪞" },
                 ].map((item, index) => (
-                  <div key={index} className="flex items-center gap-4 p-5 rounded-2xl bg-gradient-to-r from-warm-50 to-white border border-warm-200 shadow-sm hover:shadow-md transition-shadow">
-                    <span className="text-2xl">{item.icon}</span>
-                    <span className="text-foreground text-lg">{item.text}</span>
+                  <div key={index} className="flex flex-col items-center gap-2 p-4 rounded-xl bg-warm-50 border border-warm-200 text-center">
+                    <span className="text-xl">{item.icon}</span>
+                    <span className="text-foreground text-sm font-medium">{item.text}</span>
                   </div>
                 ))}
               </div>
@@ -497,29 +479,6 @@ const Index = () => {
         </div>
       </section>
 
-      {/* Wetenschappelijke Onderbouwing & Resultaten Section */}
-      <section className="py-16 lg:py-20 bg-sage-50 border-y border-sage-100">
-        <div className="container mx-auto px-4">
-          <div className="max-w-5xl mx-auto">
-            <ScrollReveal>
-              <div className="text-center mb-10">
-                <div className="inline-flex items-center gap-3 mb-4">
-                  <div className="h-14 w-14 rounded-2xl bg-white shadow-md flex items-center justify-center border border-sage-200">
-                    <FlaskConical className="h-7 w-7 text-sage-600" />
-                  </div>
-                </div>
-                <div className="flex items-center justify-center gap-3 mb-4">
-                  <h2 className="text-2xl md:text-3xl font-light text-foreground">Wetenschappelijk onderbouwd</h2>
-                  <span className="inline-block rounded-full bg-sage-200 px-3 py-1 text-xs font-semibold text-sage-700">PEER-REVIEWED</span>
-                </div>
-                <p className="text-muted-foreground text-lg leading-relaxed max-w-2xl mx-auto">
-                  Ontwikkeld door <strong className="text-foreground">dr. Kristin Neff</strong> (University of Texas) en <strong className="text-foreground">dr. Christopher Germer</strong> (Harvard Medical School).
-                </p>
-              </div>
-            </ScrollReveal>
-          </div>
-        </div>
-      </section>
 
       {/* Wat je kunt verwachten */}
       <section className="py-24 lg:py-32 bg-sage-50 relative overflow-hidden">
@@ -577,22 +536,6 @@ const Index = () => {
                 
                 <p className="text-muted-foreground text-lg leading-relaxed text-center">
                   Elke sessie voelt als thuiskomen: een veilige en vertrouwde ruimte waarin je kunt ontdekken, oefenen en verbinden. Onze ervaren trainers werken met een <span className="inline-flex items-center gap-1.5 rounded-full bg-sage-100 px-3 py-1 text-sage-700 font-medium text-sm"><Star className="h-3 w-3" />trauma-sensitieve aanpak</span>, zodat jij je op je gemak voelt terwijl je nieuwe inzichten en vaardigheden ontwikkelt.
-                </p>
-              </div>
-              
-              {/* Wetenschappelijke onderbouwing */}
-              <div className="bg-white rounded-2xl p-6 shadow-sm border border-sage-200 mt-8">
-                <div className="flex flex-col sm:flex-row items-center justify-center gap-4 text-center">
-                  <div className="flex items-center gap-3">
-                    <div className="h-10 w-10 rounded-xl bg-sage-100 flex items-center justify-center">
-                      <FlaskConical className="h-5 w-5 text-sage-600" />
-                    </div>
-                    <span className="text-lg font-medium text-foreground">Wetenschappelijk onderbouwd</span>
-                  </div>
-                  <span className="rounded-full bg-sage-200 px-3 py-1 text-xs font-semibold text-sage-700">PEER-REVIEWED</span>
-                </div>
-                <p className="text-muted-foreground text-center mt-4">
-                  Ontwikkeld door <strong className="text-foreground">dr. Kristin Neff</strong> (University of Texas) en <strong className="text-foreground">dr. Christopher Germer</strong> (Harvard Medical School).
                 </p>
               </div>
             </ScrollReveal>
