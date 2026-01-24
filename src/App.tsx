@@ -15,7 +15,7 @@ import Workshops from "./pages/Workshops";
 import Intensief from "./pages/Intensief";
 import Coaching from "./pages/Coaching";
 import BewegingMildheidRetreat from "./pages/BewegingMildheidRetreat";
-import MindfulZelfcompassie from "./pages/MindfulZelfcompassie";
+
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -39,7 +39,7 @@ const App = () => (
             <Route path="/intensief" element={<Intensief />} />
             <Route path="/coaching" element={<Coaching />} />
             <Route path="/barcelona-retreat" element={<BewegingMildheidRetreat />} />
-            <Route path="/mindful-zelfcompassie" element={<MindfulZelfcompassie />} />
+            
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>
