@@ -2,7 +2,6 @@ import { Link } from "react-router-dom";
 import { Mail, Phone, MessageCircle } from "lucide-react";
 
 const serviceLinks = [
-  { to: "/msc-training", label: "8-weekse MSC Training" },
   { to: "/workshops", label: "Workshops" },
   { to: "/intensief", label: "Intensieve Programma's" },
   { to: "/barcelona-retreat", label: "Barcelona Retreat" },
