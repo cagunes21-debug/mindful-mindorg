@@ -17,7 +17,6 @@ const Navigation = () => {
   const location = useLocation();
 
   const serviceLinks = [
-    { to: "/msc-training", label: "8-weekse MSC Training" },
     { to: "/workshops", label: "Workshops" },
     { to: "/intensief", label: "Intensieve Programma's" },
     { to: "/barcelona-retreat", label: "Barcelona Retreat" },
