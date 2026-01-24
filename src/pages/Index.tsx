@@ -86,17 +86,6 @@ const Index = () => {
         
         <div className="container relative mx-auto px-4">
           <div className="mx-auto max-w-4xl text-center">
-            {/* Top badge with tagline */}
-            <motion.div 
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6 }}
-              className="inline-flex items-center gap-2 mb-10 rounded-full bg-warm-100 border border-warm-200 px-6 py-3.5 text-sm font-medium text-terracotta-700 shadow-sm"
-            >
-              <Sparkles className="h-4 w-4" />
-              Jouw welzijn begint bij hoe je met jezelf omgaat
-            </motion.div>
-            
             {/* Main heading */}
             <motion.h1 
               initial={{ opacity: 0, y: 30 }}
@@ -113,16 +102,27 @@ const Index = () => {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.15 }}
-              className="text-terracotta-600 text-xl md:text-2xl font-medium mb-8"
+              className="text-terracotta-600 text-xl md:text-2xl font-medium mb-4"
             >
               8-weekse training in Mindful Zelfcompassie
             </motion.p>
+            
+            {/* Tagline badge */}
+            <motion.div 
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.18 }}
+              className="inline-flex items-center gap-2 mb-8 rounded-full bg-warm-100 border border-warm-200 px-6 py-3.5 text-sm font-medium text-terracotta-700 shadow-sm"
+            >
+              <Sparkles className="h-4 w-4" />
+              Jouw welzijn begint bij hoe je met jezelf omgaat
+            </motion.div>
             
             {/* Description */}
             <motion.p 
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.2 }}
+              transition={{ duration: 0.6, delay: 0.22 }}
               className="text-muted-foreground text-lg md:text-xl max-w-xl mx-auto leading-relaxed mb-12"
             >
               Leer jezelf steunen in plaats van pushen.
