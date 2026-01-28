@@ -4,6 +4,7 @@ import { Mail, Phone, MessageCircle } from "lucide-react";
 const serviceLinks = [
   { to: "/barcelona-retreat", label: "Barcelona Retreat" },
   { to: "/coaching", label: "1-op-1 Coaching" },
+  { to: "/bedrijven", label: "Voor Bedrijven" },
 ];
 
 const quickLinks = [
