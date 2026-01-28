@@ -128,17 +128,24 @@ const Index = () => {
               Leer jezelf te steunen, vooral in moeilijke tijden.
             </motion.p>
 
-            {/* CTA Button */}
+            {/* CTA Buttons */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.3 }}
+              className="flex flex-col sm:flex-row items-center justify-center gap-4"
             >
               <Button asChild size="lg" className="bg-terracotta-600 hover:bg-terracotta-700 text-white rounded-full px-10 py-7 text-lg shadow-lg hover:shadow-xl transition-all">
                 <a href="#programma">
                   Neem deel aan het programma
                   <ArrowRight className="ml-3 h-5 w-5" />
                 </a>
+              </Button>
+              <Button asChild variant="outline" size="lg" className="border-terracotta-300 text-terracotta-700 hover:bg-terracotta-50 rounded-full px-8 py-7 text-lg">
+                <Link to="/bedrijven">
+                  Voor Bedrijven
+                  <ArrowRight className="ml-2 h-5 w-5" />
+                </Link>
               </Button>
             </motion.div>
 
