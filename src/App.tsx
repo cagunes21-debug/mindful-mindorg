@@ -13,6 +13,7 @@ import Agenda from "./pages/Agenda";
 import Contact from "./pages/Contact";
 import Coaching from "./pages/Coaching";
 import BewegingMildheidRetreat from "./pages/BewegingMildheidRetreat";
+import Bedrijven from "./pages/Bedrijven";
 
 import NotFound from "./pages/NotFound";
 
@@ -35,6 +36,7 @@ const App = () => (
             <Route path="/contact" element={<Contact />} />
             <Route path="/coaching" element={<Coaching />} />
             <Route path="/barcelona-retreat" element={<BewegingMildheidRetreat />} />
+            <Route path="/bedrijven" element={<Bedrijven />} />
             
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
