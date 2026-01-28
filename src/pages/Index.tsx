@@ -54,7 +54,7 @@ const Index = () => {
       <CookieConsent />
       <SEO 
         title="Mindful Mind | 8-weekse Training in Mindful Zelfcompassie"
-        description="Leer jezelf steunen in plaats van pushen. 8-weekse training in Mindful Zelfcompassie ontwikkeld door dr. Kristin Neff en dr. Christopher Germer."
+        description="Leer jezelf te steunen, vooral in moeilijke tijden. 8-weekse training in Mindful Zelfcompassie ontwikkeld door dr. Kristin Neff en dr. Christopher Germer."
       />
       <OrganizationSchema />
       <CourseSchema 
@@ -125,7 +125,7 @@ const Index = () => {
               transition={{ duration: 0.6, delay: 0.22 }}
               className="text-muted-foreground text-lg md:text-xl max-w-xl mx-auto leading-relaxed mb-12"
             >
-              Leer jezelf steunen in plaats van pushen.
+              Leer jezelf te steunen, vooral in moeilijke tijden.
             </motion.p>
 
             {/* CTA Button */}
