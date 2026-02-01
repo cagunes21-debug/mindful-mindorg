@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { Heart, Brain, Sparkles, ArrowRight, Check, Mail, Phone, MessageCircle, Clock, Users, Globe, Calendar, Quote, Star, TrendingDown, TrendingUp, Shield, Zap, Mountain, Building2 } from "lucide-react";
+import { Heart, Brain, Sparkles, ArrowRight, Check, Mail, Phone, MessageCircle, Clock, Users, Globe, Calendar, Quote, TrendingDown, TrendingUp, Shield, Zap, Mountain, Building2, MapPin } from "lucide-react";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import { ScrollReveal, StaggerContainer, StaggerItem } from "@/components/ScrollReveal";
@@ -20,13 +20,13 @@ const programs = [
     subtitle: "online",
     icon: Globe,
     features: [
-      "100% live online, kleine groepen",
+      "100% live, kleine groepen",
       "8 weken + optionele stilte-retreat",
-      "Per sessie 2 uur, in Nederlands of Engels",
-      "Startdata: 16 feb 2026 (NL), 22 april 2026 (EN)",
+      "2 uur per sessie, Nederlands of Engels",
+      "Start: 16 feb 2026 (NL), 22 april 2026 (EN)",
     ],
     price: "€550",
-    description: "Leer praktische technieken om stress, zelfkritiek en moeilijke emoties te verzachten. Oefen in een veilige omgeving, begeleid door een gecertificeerde MSC-trainer.",
+    description: "Leer technieken om stress, zelfkritiek en moeilijke emoties te verzachten. Begeleid door een gecertificeerde MSC-trainer.",
     cta: "Reserveer je plek",
     link: "/mindful-zelfcompassie",
     highlight: true,
@@ -36,13 +36,13 @@ const programs = [
     subtitle: "Barcelona",
     icon: Mountain,
     features: [
-      "Een diepe reis van je hoofd naar je hart",
       "Inclusief overnachtingen & maaltijden",
       "Volledige MSC, mindfulness & bewegingsprogramma",
       "Kleine groep voor persoonlijke aandacht",
+      "Vertragen, uit je hoofd zakken en mildheid ervaren",
     ],
     price: "2026",
-    description: "Vertragen en uit je hoofd zakken. Leren luisteren naar je lichaam. Mildheid en levenslust ervaren.",
+    description: "Een diepe reis van je hoofd naar je hart.",
     cta: "Meld je aan voor de retreat",
     link: "/barcelona-retreat",
   },
@@ -52,36 +52,36 @@ const programs = [
     icon: Clock,
     features: [
       "1 uur, online of fysiek",
-      "Praktische oefeningen",
-      "Direct meer rust en mildheid ervaren",
+      "Praktische oefeningen om direct rust en mildheid te ervaren",
+      "Laagdrempelig kennismaken met zelfcompassie en mindfulness",
     ],
     price: "€35",
-    description: "Een laagdrempelige manier om kennis te maken met zelfcompassie en mindfulness.",
+    description: "",
     cta: "Bekijk workshops",
     link: "/agenda",
   },
   {
-    title: "1-op-1 Begeleiding",
+    title: "1-op-1 begeleiding",
     subtitle: "persoonlijke ondersteuning",
     icon: Heart,
     features: [
       "Individuele sessies online of op locatie",
-      "Werken in jouw tempo",
-      "Aan persoonlijke thema's",
+      "Werken in jouw tempo aan persoonlijke thema's",
+      "Perfect voor verdieping of specifieke uitdagingen",
     ],
     price: "Op aanvraag",
-    description: "Perfect als je verdieping wilt of specifieke uitdagingen hebt.",
+    description: "",
     cta: "Plan een 1-op-1 sessie",
     link: "/coaching",
   },
 ];
 
 const stats = [
-  { label: "Minder stress", value: "36%", icon: TrendingDown, direction: "down" },
-  { label: "Meer veerkracht", value: "42%", icon: TrendingUp, direction: "up" },
-  { label: "Minder zelfkritiek", value: "67%", icon: Shield, direction: "up" },
-  { label: "Betere grenzen", value: "38%", icon: Zap, direction: "up" },
-  { label: "Meer verbinding", value: "29%", icon: Heart, direction: "up" },
+  { label: "stress", value: "36%", direction: "down" },
+  { label: "veerkracht", value: "42%", direction: "up" },
+  { label: "minder zelfkritiek", value: "67%", direction: "up" },
+  { label: "betere grenzen", value: "38%", direction: "up" },
+  { label: "meer verbinding", value: "29%", direction: "up" },
 ];
 
 const testimonials = [
@@ -101,9 +101,44 @@ const testimonials = [
 
 const targetAudience = [
   "Perfectionistisch of streng voor jezelf",
-  "Moeilijke emoties of stress in het lichaam",
-  "Zoekt balans, mildheid en meer levenslust",
+  "Moeilijke emoties of stress in je lichaam",
+  "Zoekt balans, mildheid en levenslust",
   "Nieuwsgierig naar een andere manier van leren",
+];
+
+const methodPillars = [
+  {
+    title: "Mind",
+    subtitle: "Je gedachten en emoties",
+    icon: Brain,
+    color: "terracotta",
+    items: [
+      "Leer vriendelijker en begripvoller naar jezelf te zijn",
+      "Ontwikkel praktische vaardigheden om moeilijke emoties en zelfkritiek te verzachten",
+    ],
+  },
+  {
+    title: "Body",
+    subtitle: "Je lichaam en energie",
+    icon: Sparkles,
+    color: "sage",
+    items: [
+      "Voel spanning en energie in je lichaam",
+      "Leer luisteren naar je lichaam en jezelf ruimte te geven",
+      "Vrije, zachte en speelse beweging tijdens retreats",
+    ],
+  },
+  {
+    title: "Heart",
+    subtitle: "Je gevoelens en innerlijke rust",
+    icon: Heart,
+    color: "warm",
+    items: [
+      "Kom weer in contact met je emoties",
+      "Ervaar mildheid, compassie en levenslust",
+      "Leer met warmte naar jezelf en anderen te kijken",
+    ],
+  },
 ];
 
 const Index = () => {
@@ -114,8 +149,8 @@ const Index = () => {
       <WhatsAppButton />
       <CookieConsent />
       <SEO 
-        title="Mindful Mind | Mindful Zelfcompassie, Mindfulness & Meditatie"
-        description="Kom thuis bij jezelf. Word milder voor jezelf, ervaar rust en veerkracht met Mindful Zelfcompassie, mindfulness en meditatie."
+        title="Mindful Mind | Kom thuis bij jezelf"
+        description="Breng je mind, body & heart weer in balans. Onze programma's helpen je spanning los te laten, innerlijke rust te vinden en weer in contact te komen met jezelf."
       />
       <OrganizationSchema />
       <Navigation />
@@ -136,6 +171,17 @@ const Index = () => {
         
         <div className="container relative mx-auto px-4">
           <div className="mx-auto max-w-4xl text-center">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5 }}
+              className="mb-6"
+            >
+              <span className="inline-block rounded-full bg-terracotta-100/80 px-5 py-2 text-sm font-medium tracking-wide text-terracotta-700">
+                Mind · Body · Heart
+              </span>
+            </motion.div>
+            
             <motion.h1 
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
@@ -150,9 +196,18 @@ const Index = () => {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.15 }}
-              className="text-muted-foreground text-lg md:text-xl max-w-2xl mx-auto leading-relaxed mb-12"
+              className="text-muted-foreground text-lg md:text-xl max-w-2xl mx-auto leading-relaxed mb-6"
             >
-              Word milder voor jezelf, ervaar rust en veerkracht met Mindful Zelfcompassie, mindfulness en meditatie
+              Breng je mind, body & heart weer in balans
+            </motion.p>
+
+            <motion.p 
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.2 }}
+              className="text-muted-foreground text-base md:text-lg max-w-2xl mx-auto leading-relaxed mb-12"
+            >
+              Onze programma's helpen je spanning los te laten, innerlijke rust te vinden en weer in contact te komen met jezelf – je gedachten, je lichaam en je gevoelens.
             </motion.p>
 
             <motion.div
@@ -191,35 +246,59 @@ const Index = () => {
               
               <div className="space-y-6 text-lg text-muted-foreground leading-relaxed">
                 <p>
-                  Je hoofd staat nooit stil. Je probeert alles perfect te doen, bent vaak streng voor jezelf en blijft doorgaan, ook als het moeilijk wordt. Je wéét rationeel dat je zachter voor jezelf zou willen zijn… maar in je lichaam blijft spanning zitten.
+                  Je hoofd staat nooit stil. Je probeert alles perfect te doen, bent kritisch op jezelf en blijft doorgaan, zelfs als het zwaar wordt. Je <em>wéét</em> dat je zachter voor jezelf zou willen zijn… maar in je lichaam blijft spanning achter.
                 </p>
                 <p>
-                  Je hebt al veel geprobeerd: boeken gelezen, methodes gevolgd, advies gekregen… en toch blijft dat gevoel van stress, innerlijke kritiek of uitgeput zijn bestaan.
+                  Misschien heb je al veel geprobeerd: boeken gelezen, methodes gevolgd, advies opgevolgd… en toch blijft dat gevoel van stress, innerlijke kritiek of uitputting bestaan.
                 </p>
                 <div className="bg-terracotta-50 border-l-4 border-terracotta-400 rounded-r-xl p-6 my-8">
                   <p className="text-foreground font-medium">
-                    Het probleem is niet dat je niet genoeg doet. Het probleem is dat je al te lang te hard bent voor jezelf, en dat je lichaam en geest daardoor vastlopen.
+                    Het probleem is niet dat je te weinig doet. Het probleem is dat je al te lang te hard bent voor jezelf. Daardoor lopen lichaam en geest vast.
                   </p>
                 </div>
-                <p className="text-xl text-foreground font-light">
-                  Mindful Zelfcompassie, meditatie en mindfulness helpen je stress te verminderen, zelfkritiek los te laten en weer in contact te komen met je lichaam, je gevoelens en je innerlijke rust.
-                </p>
               </div>
-              
-              <div className="text-center mt-12">
-                <Button asChild className="bg-terracotta-600 hover:bg-terracotta-700 text-white rounded-full px-8 py-6 text-base shadow-md">
-                  <a href="#programmas">
-                    Reserveer je plek vandaag
-                    <ArrowRight className="ml-2 h-5 w-5" />
-                  </a>
-                </Button>
+            </ScrollReveal>
+
+            <ScrollReveal delay={0.1}>
+              <div className="bg-warm-50 border border-warm-200 rounded-2xl p-8 mt-10">
+                <h3 className="text-xl font-semibold text-foreground mb-6 text-center">
+                  Onze mind, body & heart-aanpak helpt je:
+                </h3>
+                <ul className="space-y-4">
+                  <li className="flex items-start gap-3">
+                    <div className="h-6 w-6 rounded-full bg-terracotta-100 flex items-center justify-center shrink-0 mt-0.5">
+                      <Check className="h-4 w-4 text-terracotta-600" />
+                    </div>
+                    <span className="text-foreground">Stress te verminderen</span>
+                  </li>
+                  <li className="flex items-start gap-3">
+                    <div className="h-6 w-6 rounded-full bg-terracotta-100 flex items-center justify-center shrink-0 mt-0.5">
+                      <Check className="h-4 w-4 text-terracotta-600" />
+                    </div>
+                    <span className="text-foreground">Zelfkritiek los te laten</span>
+                  </li>
+                  <li className="flex items-start gap-3">
+                    <div className="h-6 w-6 rounded-full bg-terracotta-100 flex items-center justify-center shrink-0 mt-0.5">
+                      <Check className="h-4 w-4 text-terracotta-600" />
+                    </div>
+                    <span className="text-foreground">Je lichaam, je gevoelens en je innerlijke rust weer te voelen</span>
+                  </li>
+                </ul>
+                <div className="text-center mt-8">
+                  <Button asChild className="bg-terracotta-600 hover:bg-terracotta-700 text-white rounded-full px-8 py-6 text-base shadow-md">
+                    <a href="#programmas">
+                      Reserveer je plek vandaag
+                      <ArrowRight className="ml-2 h-5 w-5" />
+                    </a>
+                  </Button>
+                </div>
               </div>
             </ScrollReveal>
           </div>
         </div>
       </section>
 
-      {/* Method Section */}
+      {/* Method Section - Mind, Body, Heart */}
       <section className="py-24 lg:py-32 bg-warm-50">
         <div className="container mx-auto px-4">
           <div className="mx-auto max-w-5xl">
@@ -229,86 +308,50 @@ const Index = () => {
                   Onze Methode
                 </span>
                 <h2 className="mb-6 text-3xl font-light text-foreground md:text-4xl lg:text-5xl leading-tight">
-                  Mildheid, mindfulness <span className="font-serif italic text-terracotta-600">en meditatie</span>
+                  Mind, body <span className="font-serif italic text-terracotta-600">& heart</span>
                 </h2>
                 <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
-                  Onze programma's werken op mind, body & heart en combineren bewezen methodes om jezelf weer te voelen
+                  Onze programma's combineren Mindful Zelfcompassie (MSC), mindfulness en meditatie, met lichaamsbewustzijn en beweging. Samen werken ze op alle drie de lagen.
                 </p>
               </div>
             </ScrollReveal>
             
             <StaggerContainer className="grid gap-8 md:grid-cols-3">
-              <StaggerItem>
-                <Card className="h-full bg-white border-warm-200 shadow-sm hover:shadow-md transition-shadow">
-                  <CardContent className="p-8 text-center">
-                    <div className="h-16 w-16 mx-auto rounded-2xl bg-terracotta-100 flex items-center justify-center mb-6">
-                      <Heart className="h-8 w-8 text-terracotta-600" />
-                    </div>
-                    <h3 className="text-xl font-semibold text-foreground mb-4">Mindful Zelfcompassie (MSC)</h3>
-                    <ul className="space-y-3 text-muted-foreground text-sm text-left">
-                      <li className="flex items-start gap-2">
-                        <Check className="h-4 w-4 text-terracotta-500 mt-0.5 shrink-0" />
-                        Leer vriendelijker en begripvoller naar jezelf te zijn
-                      </li>
-                      <li className="flex items-start gap-2">
-                        <Check className="h-4 w-4 text-terracotta-500 mt-0.5 shrink-0" />
-                        Ontwikkel praktische vaardigheden voor moeilijke emoties en zelfkritiek
-                      </li>
-                    </ul>
-                  </CardContent>
-                </Card>
-              </StaggerItem>
-              
-              <StaggerItem>
-                <Card className="h-full bg-white border-warm-200 shadow-sm hover:shadow-md transition-shadow">
-                  <CardContent className="p-8 text-center">
-                    <div className="h-16 w-16 mx-auto rounded-2xl bg-sage-100 flex items-center justify-center mb-6">
-                      <Brain className="h-8 w-8 text-sage-600" />
-                    </div>
-                    <h3 className="text-xl font-semibold text-foreground mb-4">Meditatie & Mindfulness</h3>
-                    <ul className="space-y-3 text-muted-foreground text-sm text-left">
-                      <li className="flex items-start gap-2">
-                        <Check className="h-4 w-4 text-sage-500 mt-0.5 shrink-0" />
-                        Oefeningen om je aandacht te trainen en je geest te kalmeren
-                      </li>
-                      <li className="flex items-start gap-2">
-                        <Check className="h-4 w-4 text-sage-500 mt-0.5 shrink-0" />
-                        Bewust aanwezig zijn in het moment, ook bij stressvolle situaties
-                      </li>
-                    </ul>
-                  </CardContent>
-                </Card>
-              </StaggerItem>
-              
-              <StaggerItem>
-                <Card className="h-full bg-white border-warm-200 shadow-sm hover:shadow-md transition-shadow">
-                  <CardContent className="p-8 text-center">
-                    <div className="h-16 w-16 mx-auto rounded-2xl bg-warm-200 flex items-center justify-center mb-6">
-                      <Sparkles className="h-8 w-8 text-warm-700" />
-                    </div>
-                    <h3 className="text-xl font-semibold text-foreground mb-4">Lichaamsbewustzijn & Beweging</h3>
-                    <ul className="space-y-3 text-muted-foreground text-sm text-left">
-                      <li className="flex items-start gap-2">
-                        <Check className="h-4 w-4 text-warm-600 mt-0.5 shrink-0" />
-                        Voel spanning en energie in je lichaam
-                      </li>
-                      <li className="flex items-start gap-2">
-                        <Check className="h-4 w-4 text-warm-600 mt-0.5 shrink-0" />
-                        Leer luisteren naar je lichaam en jezelf weer ruimte te geven
-                      </li>
-                      <li className="flex items-start gap-2">
-                        <Check className="h-4 w-4 text-warm-600 mt-0.5 shrink-0" />
-                        Vrije, zachte en speelse beweging tijdens retreats
-                      </li>
-                    </ul>
-                  </CardContent>
-                </Card>
-              </StaggerItem>
+              {methodPillars.map((pillar, index) => (
+                <StaggerItem key={index}>
+                  <Card className="h-full bg-white border-warm-200 shadow-sm hover:shadow-md transition-shadow">
+                    <CardContent className="p-8">
+                      <div className={`h-16 w-16 rounded-2xl flex items-center justify-center mb-6 ${
+                        pillar.color === 'terracotta' ? 'bg-terracotta-100' : 
+                        pillar.color === 'sage' ? 'bg-sage-100' : 'bg-warm-200'
+                      }`}>
+                        <pillar.icon className={`h-8 w-8 ${
+                          pillar.color === 'terracotta' ? 'text-terracotta-600' : 
+                          pillar.color === 'sage' ? 'text-sage-600' : 'text-warm-700'
+                        }`} />
+                      </div>
+                      <h3 className="text-2xl font-semibold text-foreground mb-2">{pillar.title}</h3>
+                      <p className="text-terracotta-600 text-sm font-medium mb-6">{pillar.subtitle}</p>
+                      <ul className="space-y-3 text-muted-foreground text-sm">
+                        {pillar.items.map((item, i) => (
+                          <li key={i} className="flex items-start gap-2">
+                            <Check className={`h-4 w-4 mt-0.5 shrink-0 ${
+                              pillar.color === 'terracotta' ? 'text-terracotta-500' : 
+                              pillar.color === 'sage' ? 'text-sage-500' : 'text-warm-600'
+                            }`} />
+                            {item}
+                          </li>
+                        ))}
+                      </ul>
+                    </CardContent>
+                  </Card>
+                </StaggerItem>
+              ))}
             </StaggerContainer>
             
             <ScrollReveal delay={0.2}>
               <p className="text-center text-muted-foreground text-lg mt-12 max-w-2xl mx-auto">
-                Samen helpen deze methodes je om meer rust, mildheid en veerkracht te ervaren, zowel in je hoofd als in je lichaam.
+                Samen zorgen deze methodes voor meer rust, mildheid en veerkracht.
               </p>
               <div className="text-center mt-8">
                 <Button asChild className="bg-terracotta-600 hover:bg-terracotta-700 text-white rounded-full px-8 py-6">
@@ -362,7 +405,9 @@ const Index = () => {
                         ))}
                       </ul>
                       
-                      <p className="text-muted-foreground text-sm mb-6">{program.description}</p>
+                      {program.description && (
+                        <p className="text-muted-foreground text-sm mb-6">{program.description}</p>
+                      )}
                       
                       <div className="flex items-center justify-between">
                         <span className="text-2xl font-light text-terracotta-600">{program.price}</span>
@@ -389,7 +434,7 @@ const Index = () => {
             <ScrollReveal>
               <div className="text-center mb-12">
                 <h2 className="text-2xl md:text-3xl font-light text-white mb-4">
-                  Wat brengt Mindful Zelfcompassie, mindfulness en meditatie je?
+                  Wat brengt dit je?
                 </h2>
               </div>
             </ScrollReveal>
@@ -512,18 +557,11 @@ const Index = () => {
                   mindful-mind@outlook.com
                 </a>
                 <a 
-                  href="tel:+31625633379" 
-                  className="flex items-center gap-2 bg-white rounded-full px-6 py-3 text-muted-foreground hover:text-terracotta-600 transition-colors shadow-sm border border-warm-200"
-                >
-                  <Phone className="h-4 w-4" />
-                  +31 6 25633379
-                </a>
-                <a 
                   href="https://wa.me/31625633379" 
                   className="flex items-center gap-2 bg-white rounded-full px-6 py-3 text-muted-foreground hover:text-terracotta-600 transition-colors shadow-sm border border-warm-200"
                 >
                   <MessageCircle className="h-4 w-4" />
-                  WhatsApp
+                  +31 6 25633379 (WhatsApp)
                 </a>
               </div>
               
@@ -546,7 +584,7 @@ const Index = () => {
               Kom thuis bij jezelf
             </h2>
             <p className="text-white/80 text-lg mb-10 max-w-2xl mx-auto">
-              Reserveer je plek voor training, retreat, workshop of 1-op-1 begeleiding vandaag.
+              Reserveer je plek vandaag.
             </p>
             <div className="flex flex-wrap justify-center gap-4">
               <Button asChild size="lg" className="bg-white text-terracotta-700 hover:bg-warm-100 rounded-full px-8">
