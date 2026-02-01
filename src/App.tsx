@@ -5,7 +5,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { HelmetProvider } from "react-helmet-async";
 import Index from "./pages/Index";
-
+import MindfulZelfcompassie from "./pages/MindfulZelfcompassie";
 import Services from "./pages/Services";
 import About from "./pages/About";
 import Trainers from "./pages/Trainers";
@@ -28,6 +28,7 @@ const App = () => (
         <BrowserRouter>
           <Routes>
             <Route path="/" element={<Index />} />
+            <Route path="/mindful-zelfcompassie" element={<MindfulZelfcompassie />} />
             
             <Route path="/ons-aanbod" element={<Services />} />
             <Route path="/over-ons" element={<About />} />

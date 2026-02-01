@@ -17,6 +17,7 @@ const Navigation = () => {
   const location = useLocation();
 
   const serviceLinks = [
+    { to: "/mindful-zelfcompassie", label: "8-weekse MSC Training" },
     { to: "/barcelona-retreat", label: "Barcelona Retreat" },
     { to: "/coaching", label: "1-op-1 Coaching" },
     { to: "/bedrijven", label: "Voor Bedrijven" },
