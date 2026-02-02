@@ -53,13 +53,25 @@ const trainingDates = [
   },
 ];
 
+const workshopDates = [
+  { lang: "Nederlands", date: "11 februari 2026", time: "19:00 – 20:00", price: "€35" },
+  { lang: "English", date: "10 februari 2026", time: "19:00 – 20:00", price: "€35" },
+];
+
 const MindfulZelfcompassie = () => {
   const [isRegistrationOpen, setIsRegistrationOpen] = useState(false);
   const [selectedTraining, setSelectedTraining] = useState<typeof trainingDates[0] | null>(null);
+  const [isWorkshopRegistrationOpen, setIsWorkshopRegistrationOpen] = useState(false);
+  const [selectedWorkshop, setSelectedWorkshop] = useState<typeof workshopDates[0] | null>(null);
 
   const openRegistration = (training: typeof trainingDates[0]) => {
     setSelectedTraining(training);
     setIsRegistrationOpen(true);
+  };
+
+  const openWorkshopRegistration = (workshop: typeof workshopDates[0]) => {
+    setSelectedWorkshop(workshop);
+    setIsWorkshopRegistrationOpen(true);
   };
 
   return (
@@ -773,10 +785,7 @@ const MindfulZelfcompassie = () => {
                 </p>
                 
                 <StaggerContainer className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
-                  {[
-                    { lang: "Nederlands", date: "11 februari 2026", time: "19:00 – 20:00" },
-                    { lang: "English", date: "10 februari 2026", time: "19:00 – 20:00" },
-                  ].map((workshop, index) => (
+                  {workshopDates.map((workshop, index) => (
                     <StaggerItem key={index}>
                       <Card className="border-warm-200 bg-white hover:shadow-lg transition-all duration-300 rounded-2xl overflow-hidden group h-full">
                         <CardContent className="p-5">
@@ -791,10 +800,12 @@ const MindfulZelfcompassie = () => {
                           </div>
                           <p className="text-base font-medium text-foreground mb-1">{workshop.date}</p>
                           <p className="text-sm text-muted-foreground mb-4">{workshop.time}</p>
-                          <Button asChild size="sm" className="w-full bg-terracotta-600 hover:bg-terracotta-700 text-white rounded-full">
-                            <a href="mailto:mindful-mind@outlook.com?subject=Aanmelding workshop">
-                              Meld je aan
-                            </a>
+                          <Button 
+                            size="sm" 
+                            className="w-full bg-terracotta-600 hover:bg-terracotta-700 text-white rounded-full"
+                            onClick={() => openWorkshopRegistration(workshop)}
+                          >
+                            Meld je aan
                           </Button>
                         </CardContent>
                       </Card>
@@ -1154,6 +1165,28 @@ const MindfulZelfcompassie = () => {
               price={selectedTraining.price}
               onSuccess={() => {
                 setTimeout(() => setIsRegistrationOpen(false), 2000);
+              }}
+            />
+          )}
+        </DialogContent>
+      </Dialog>
+
+      {/* Workshop Registration Modal */}
+      <Dialog open={isWorkshopRegistrationOpen} onOpenChange={setIsWorkshopRegistrationOpen}>
+        <DialogContent className="sm:max-w-md max-h-[90vh] overflow-y-auto">
+          <DialogHeader>
+            <DialogTitle className="text-xl font-light">
+              Aanmelden voor de workshop
+            </DialogTitle>
+          </DialogHeader>
+          {selectedWorkshop && (
+            <RegistrationForm
+              trainingName={`Workshop Zelfcompassie (${selectedWorkshop.lang})`}
+              trainingDate={selectedWorkshop.date}
+              trainingTime={selectedWorkshop.time}
+              price={selectedWorkshop.price}
+              onSuccess={() => {
+                setTimeout(() => setIsWorkshopRegistrationOpen(false), 2000);
               }}
             />
           )}
