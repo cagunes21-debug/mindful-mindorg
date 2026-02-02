@@ -29,9 +29,12 @@ import {
   DialogDescription,
 } from "@/components/ui/dialog";
 import { useToast } from "@/hooks/use-toast";
-import { Loader2, Users, Calendar, Mail, Phone, MessageSquare, RefreshCw, CreditCard, Send, ExternalLink, Search, Download, Euro } from "lucide-react";
+import { Loader2, Users, Calendar, Mail, Phone, MessageSquare, RefreshCw, CreditCard, Send, ExternalLink, Search, Download, Euro, Tag, StickyNote, User } from "lucide-react";
 import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
 import { format } from "date-fns";
+import CustomerProfile from "@/components/admin/CustomerProfile";
+import TagsInput from "@/components/admin/TagsInput";
 import { nl } from "date-fns/locale";
 
 interface Registration {
@@ -44,6 +47,8 @@ interface Registration {
   training_time: string | null;
   price: string | null;
   remarks: string | null;
+  admin_notes: string | null;
+  tags: string[] | null;
   status: string;
   payment_status: string | null;
   payment_link: string | null;
@@ -92,6 +97,9 @@ export default function AdminDashboard() {
   const [filterStatus, setFilterStatus] = useState<string>("all");
   const [filterPaymentStatus, setFilterPaymentStatus] = useState<string>("all");
   const [searchQuery, setSearchQuery] = useState<string>("");
+  const [customerProfileEmail, setCustomerProfileEmail] = useState<string | null>(null);
+  const [editingNotes, setEditingNotes] = useState<string>("");
+  const [editingTags, setEditingTags] = useState<string[]>([]);
 
   useEffect(() => {
     const checkAuth = async () => {
@@ -164,6 +172,40 @@ export default function AdminDashboard() {
       toast({
         title: "Fout bij bijwerken",
         description: "Kon status niet bijwerken. Probeer het opnieuw.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsUpdating(false);
+    }
+  };
+
+  const updateNotesAndTags = async (id: string, notes: string, tags: string[]) => {
+    setIsUpdating(true);
+    try {
+      const { error } = await supabase
+        .from("registrations")
+        .update({ admin_notes: notes, tags })
+        .eq("id", id);
+
+      if (error) throw error;
+
+      setRegistrations(prev =>
+        prev.map(reg => (reg.id === id ? { ...reg, admin_notes: notes, tags } : reg))
+      );
+
+      if (selectedRegistration?.id === id) {
+        setSelectedRegistration(prev => prev ? { ...prev, admin_notes: notes, tags } : null);
+      }
+
+      toast({
+        title: "Opgeslagen",
+        description: "Notities en tags zijn bijgewerkt",
+      });
+    } catch (error: any) {
+      console.error("Error updating notes/tags:", error);
+      toast({
+        title: "Fout bij opslaan",
+        description: "Kon wijzigingen niet opslaan.",
         variant: "destructive",
       });
     } finally {
@@ -509,6 +551,8 @@ export default function AdminDashboard() {
                               size="sm"
                               onClick={() => {
                                 setSelectedRegistration(registration);
+                                setEditingNotes(registration.admin_notes || "");
+                                setEditingTags(registration.tags || []);
                                 setIsDetailOpen(true);
                               }}
                             >
@@ -527,7 +571,16 @@ export default function AdminDashboard() {
       </main>
 
       {/* Detail Modal */}
-      <Dialog open={isDetailOpen} onOpenChange={setIsDetailOpen}>
+      <Dialog 
+        open={isDetailOpen} 
+        onOpenChange={(open) => {
+          setIsDetailOpen(open);
+          if (open && selectedRegistration) {
+            setEditingNotes(selectedRegistration.admin_notes || "");
+            setEditingTags(selectedRegistration.tags || []);
+          }
+        }}
+      >
         <DialogContent className="sm:max-w-lg">
           <DialogHeader>
             <DialogTitle>Aanmelding details</DialogTitle>
@@ -539,9 +592,20 @@ export default function AdminDashboard() {
             <div className="space-y-6">
               {/* Contact Info */}
               <div className="space-y-3">
-                <h4 className="font-medium text-sm text-muted-foreground uppercase tracking-wide">
-                  Contactgegevens
-                </h4>
+                <div className="flex items-center justify-between">
+                  <h4 className="font-medium text-sm text-muted-foreground uppercase tracking-wide">
+                    Contactgegevens
+                  </h4>
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    onClick={() => setCustomerProfileEmail(selectedRegistration.email)}
+                    className="text-terracotta-600 hover:text-terracotta-700"
+                  >
+                    <User className="h-4 w-4 mr-1" />
+                    Klantprofiel
+                  </Button>
+                </div>
                 <div className="space-y-2">
                   <div className="flex items-center gap-3">
                     <Users className="h-4 w-4 text-muted-foreground" />
@@ -601,6 +665,41 @@ export default function AdminDashboard() {
                   </p>
                 </div>
               )}
+
+              {/* Admin Notes & Tags */}
+              <div className="space-y-3">
+                <h4 className="font-medium text-sm text-muted-foreground uppercase tracking-wide flex items-center gap-2">
+                  <StickyNote className="h-4 w-4" />
+                  Admin Notities
+                </h4>
+                <Textarea
+                  placeholder="Notities voor interne administratie..."
+                  value={editingNotes}
+                  onChange={(e) => setEditingNotes(e.target.value)}
+                  className="min-h-[80px]"
+                />
+              </div>
+
+              <div className="space-y-3">
+                <h4 className="font-medium text-sm text-muted-foreground uppercase tracking-wide flex items-center gap-2">
+                  <Tag className="h-4 w-4" />
+                  Tags
+                </h4>
+                <TagsInput
+                  tags={editingTags}
+                  onTagsChange={setEditingTags}
+                />
+                <Button
+                  onClick={() => updateNotesAndTags(selectedRegistration.id, editingNotes, editingTags)}
+                  disabled={isUpdating}
+                  variant="outline"
+                  size="sm"
+                  className="w-full"
+                >
+                  {isUpdating ? <Loader2 className="h-4 w-4 animate-spin mr-2" /> : null}
+                  Notities & tags opslaan
+                </Button>
+              </div>
 
               {/* Payment Section */}
               <div className="space-y-3">
@@ -687,6 +786,14 @@ export default function AdminDashboard() {
           )}
         </DialogContent>
       </Dialog>
+
+      {/* Customer Profile Modal */}
+      {customerProfileEmail && (
+        <CustomerProfile
+          email={customerProfileEmail}
+          onClose={() => setCustomerProfileEmail(null)}
+        />
+      )}
 
       <Footer />
     </div>
