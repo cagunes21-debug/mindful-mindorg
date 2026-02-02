@@ -244,10 +244,14 @@ export type Database = {
           email: string
           id: string
           name: string
+          paid_at: string | null
+          payment_link: string | null
+          payment_status: string | null
           phone: string | null
           price: string | null
           remarks: string | null
           status: string
+          stripe_session_id: string | null
           training_date: string | null
           training_name: string
           training_time: string | null
@@ -258,10 +262,14 @@ export type Database = {
           email: string
           id?: string
           name: string
+          paid_at?: string | null
+          payment_link?: string | null
+          payment_status?: string | null
           phone?: string | null
           price?: string | null
           remarks?: string | null
           status?: string
+          stripe_session_id?: string | null
           training_date?: string | null
           training_name: string
           training_time?: string | null
@@ -272,10 +280,14 @@ export type Database = {
           email?: string
           id?: string
           name?: string
+          paid_at?: string | null
+          payment_link?: string | null
+          payment_status?: string | null
           phone?: string | null
           price?: string | null
           remarks?: string | null
           status?: string
+          stripe_session_id?: string | null
           training_date?: string | null
           training_name?: string
           training_time?: string | null

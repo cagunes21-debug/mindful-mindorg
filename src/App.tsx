@@ -17,6 +17,8 @@ import Bedrijven from "./pages/Bedrijven";
 import Auth from "./pages/Auth";
 import AdminDashboard from "./pages/AdminDashboard";
 import ParticipantDashboard from "./pages/ParticipantDashboard";
+import BetalingSucces from "./pages/BetalingSucces";
+import BetalingGeannuleerd from "./pages/BetalingGeannuleerd";
 
 import NotFound from "./pages/NotFound";
 
@@ -44,6 +46,8 @@ const App = () => (
             <Route path="/login" element={<Auth />} />
             <Route path="/admin" element={<AdminDashboard />} />
             <Route path="/mijn-training" element={<ParticipantDashboard />} />
+            <Route path="/betaling-succes" element={<BetalingSucces />} />
+            <Route path="/betaling-geannuleerd" element={<BetalingGeannuleerd />} />
             
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
