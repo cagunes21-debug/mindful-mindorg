@@ -1,6 +1,6 @@
 import { NavLink } from "@/components/NavLink";
 import { Link, useLocation } from "react-router-dom";
-import { Menu, X, ChevronDown, User, LogIn, LayoutDashboard } from "lucide-react";
+import { Menu, X, ChevronDown, User, LogIn, LayoutDashboard, BookOpen } from "lucide-react";
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { supabase } from "@/integrations/supabase/client";
@@ -128,12 +128,20 @@ const Navigation = () => {
             </Button>
 
             {user && (
-              <Button asChild variant="ghost" className="rounded-full text-muted-foreground hover:text-primary">
-                <Link to="/admin" className="flex items-center gap-2">
-                  <LayoutDashboard className="h-4 w-4" />
-                  Admin
-                </Link>
-              </Button>
+              <>
+                <Button asChild variant="ghost" className="rounded-full text-muted-foreground hover:text-primary">
+                  <Link to="/mijn-training" className="flex items-center gap-2">
+                    <BookOpen className="h-4 w-4" />
+                    Mijn Training
+                  </Link>
+                </Button>
+                <Button asChild variant="ghost" className="rounded-full text-muted-foreground hover:text-primary">
+                  <Link to="/admin" className="flex items-center gap-2">
+                    <LayoutDashboard className="h-4 w-4" />
+                    Admin
+                  </Link>
+                </Button>
+              </>
             )}
 
             <Button asChild variant="outline" className="rounded-full border-primary text-primary hover:bg-primary hover:text-primary-foreground">
@@ -254,12 +262,20 @@ const Navigation = () => {
               </Button>
 
               {user && (
-                <Button asChild variant="ghost" className="w-fit rounded-full text-muted-foreground hover:text-primary">
-                  <Link to="/admin" onClick={() => setIsOpen(false)} className="flex items-center gap-2">
-                    <LayoutDashboard className="h-4 w-4" />
-                    Admin Dashboard
-                  </Link>
-                </Button>
+                <>
+                  <Button asChild variant="ghost" className="w-fit rounded-full text-muted-foreground hover:text-primary">
+                    <Link to="/mijn-training" onClick={() => setIsOpen(false)} className="flex items-center gap-2">
+                      <BookOpen className="h-4 w-4" />
+                      Mijn Training
+                    </Link>
+                  </Button>
+                  <Button asChild variant="ghost" className="w-fit rounded-full text-muted-foreground hover:text-primary">
+                    <Link to="/admin" onClick={() => setIsOpen(false)} className="flex items-center gap-2">
+                      <LayoutDashboard className="h-4 w-4" />
+                      Admin Dashboard
+                    </Link>
+                  </Button>
+                </>
               )}
 
               <Button asChild variant="outline" className="w-fit rounded-full border-primary text-primary hover:bg-primary hover:text-primary-foreground">

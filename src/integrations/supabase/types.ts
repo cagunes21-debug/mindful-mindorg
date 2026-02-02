@@ -14,6 +14,230 @@ export type Database = {
   }
   public: {
     Tables: {
+      assignments: {
+        Row: {
+          created_at: string
+          description: string | null
+          id: string
+          instructions: string | null
+          sort_order: number | null
+          title: string
+          week_id: string
+        }
+        Insert: {
+          created_at?: string
+          description?: string | null
+          id?: string
+          instructions?: string | null
+          sort_order?: number | null
+          title: string
+          week_id: string
+        }
+        Update: {
+          created_at?: string
+          description?: string | null
+          id?: string
+          instructions?: string | null
+          sort_order?: number | null
+          title?: string
+          week_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "assignments_week_id_fkey"
+            columns: ["week_id"]
+            isOneToOne: false
+            referencedRelation: "course_weeks"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      course_weeks: {
+        Row: {
+          content: Json | null
+          created_at: string
+          description: string | null
+          id: string
+          theme: string | null
+          title: string
+          updated_at: string
+          week_number: number
+        }
+        Insert: {
+          content?: Json | null
+          created_at?: string
+          description?: string | null
+          id?: string
+          theme?: string | null
+          title: string
+          updated_at?: string
+          week_number: number
+        }
+        Update: {
+          content?: Json | null
+          created_at?: string
+          description?: string | null
+          id?: string
+          theme?: string | null
+          title?: string
+          updated_at?: string
+          week_number?: number
+        }
+        Relationships: []
+      }
+      enrollments: {
+        Row: {
+          created_at: string
+          current_week: number | null
+          group_info: string | null
+          id: string
+          location: string | null
+          registration_id: string | null
+          start_date: string
+          status: Database["public"]["Enums"]["enrollment_status"] | null
+          trainer_name: string | null
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          current_week?: number | null
+          group_info?: string | null
+          id?: string
+          location?: string | null
+          registration_id?: string | null
+          start_date: string
+          status?: Database["public"]["Enums"]["enrollment_status"] | null
+          trainer_name?: string | null
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          current_week?: number | null
+          group_info?: string | null
+          id?: string
+          location?: string | null
+          registration_id?: string | null
+          start_date?: string
+          status?: Database["public"]["Enums"]["enrollment_status"] | null
+          trainer_name?: string | null
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "enrollments_registration_id_fkey"
+            columns: ["registration_id"]
+            isOneToOne: false
+            referencedRelation: "registrations"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      meditations: {
+        Row: {
+          audio_url: string
+          created_at: string
+          description: string | null
+          duration_minutes: number | null
+          id: string
+          sort_order: number | null
+          title: string
+          week_id: string
+        }
+        Insert: {
+          audio_url: string
+          created_at?: string
+          description?: string | null
+          duration_minutes?: number | null
+          id?: string
+          sort_order?: number | null
+          title: string
+          week_id: string
+        }
+        Update: {
+          audio_url?: string
+          created_at?: string
+          description?: string | null
+          duration_minutes?: number | null
+          id?: string
+          sort_order?: number | null
+          title?: string
+          week_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "meditations_week_id_fkey"
+            columns: ["week_id"]
+            isOneToOne: false
+            referencedRelation: "course_weeks"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      participant_progress: {
+        Row: {
+          assignment_id: string | null
+          completed_at: string | null
+          enrollment_id: string
+          id: string
+          meditation_id: string | null
+          notes: string | null
+          user_id: string
+          week_id: string
+        }
+        Insert: {
+          assignment_id?: string | null
+          completed_at?: string | null
+          enrollment_id: string
+          id?: string
+          meditation_id?: string | null
+          notes?: string | null
+          user_id: string
+          week_id: string
+        }
+        Update: {
+          assignment_id?: string | null
+          completed_at?: string | null
+          enrollment_id?: string
+          id?: string
+          meditation_id?: string | null
+          notes?: string | null
+          user_id?: string
+          week_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "participant_progress_assignment_id_fkey"
+            columns: ["assignment_id"]
+            isOneToOne: false
+            referencedRelation: "assignments"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "participant_progress_enrollment_id_fkey"
+            columns: ["enrollment_id"]
+            isOneToOne: false
+            referencedRelation: "enrollments"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "participant_progress_meditation_id_fkey"
+            columns: ["meditation_id"]
+            isOneToOne: false
+            referencedRelation: "meditations"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "participant_progress_week_id_fkey"
+            columns: ["week_id"]
+            isOneToOne: false
+            referencedRelation: "course_weeks"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       registrations: {
         Row: {
           created_at: string
@@ -59,15 +283,40 @@ export type Database = {
         }
         Relationships: []
       }
+      user_roles: {
+        Row: {
+          id: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Insert: {
+          id?: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Update: {
+          id?: string
+          role?: Database["public"]["Enums"]["app_role"]
+          user_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      has_role: {
+        Args: {
+          _role: Database["public"]["Enums"]["app_role"]
+          _user_id: string
+        }
+        Returns: boolean
+      }
     }
     Enums: {
-      [_ in never]: never
+      app_role: "admin" | "moderator" | "user"
+      enrollment_status: "active" | "completed" | "paused" | "cancelled"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -194,6 +443,9 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      app_role: ["admin", "moderator", "user"],
+      enrollment_status: ["active", "completed", "paused", "cancelled"],
+    },
   },
 } as const
