@@ -17,21 +17,35 @@ const Navigation = () => {
   const [servicesOpen, setServicesOpen] = useState(false);
   const [aboutOpen, setAboutOpen] = useState(false);
   const [user, setUser] = useState<SupabaseUser | null>(null);
+  const [isAdmin, setIsAdmin] = useState(false);
   const location = useLocation();
 
   useEffect(() => {
     const { data: { subscription } } = supabase.auth.onAuthStateChange(
       (event, session) => {
         setUser(session?.user ?? null);
+        if (session?.user) {
+          checkAdminRole(session.user.id);
+        } else {
+          setIsAdmin(false);
+        }
       }
     );
 
     supabase.auth.getSession().then(({ data: { session } }) => {
       setUser(session?.user ?? null);
+      if (session?.user) {
+        checkAdminRole(session.user.id);
+      }
     });
 
     return () => subscription.unsubscribe();
   }, []);
+
+  const checkAdminRole = async (userId: string) => {
+    const { data } = await supabase.rpc('has_role', { _user_id: userId, _role: 'admin' });
+    setIsAdmin(data === true);
+  };
 
   const serviceLinks = [
     { to: "/mindful-zelfcompassie", label: "8-weekse MSC Training" },
@@ -135,12 +149,14 @@ const Navigation = () => {
                     Mijn Training
                   </Link>
                 </Button>
-                <Button asChild variant="ghost" className="rounded-full text-muted-foreground hover:text-primary">
-                  <Link to="/admin" className="flex items-center gap-2">
-                    <LayoutDashboard className="h-4 w-4" />
-                    Admin
-                  </Link>
-                </Button>
+                {isAdmin && (
+                  <Button asChild variant="ghost" className="rounded-full text-muted-foreground hover:text-primary">
+                    <Link to="/admin" className="flex items-center gap-2">
+                      <LayoutDashboard className="h-4 w-4" />
+                      Admin
+                    </Link>
+                  </Button>
+                )}
               </>
             )}
 
@@ -269,12 +285,14 @@ const Navigation = () => {
                       Mijn Training
                     </Link>
                   </Button>
-                  <Button asChild variant="ghost" className="w-fit rounded-full text-muted-foreground hover:text-primary">
-                    <Link to="/admin" onClick={() => setIsOpen(false)} className="flex items-center gap-2">
-                      <LayoutDashboard className="h-4 w-4" />
-                      Admin Dashboard
-                    </Link>
-                  </Button>
+                  {isAdmin && (
+                    <Button asChild variant="ghost" className="w-fit rounded-full text-muted-foreground hover:text-primary">
+                      <Link to="/admin" onClick={() => setIsOpen(false)} className="flex items-center gap-2">
+                        <LayoutDashboard className="h-4 w-4" />
+                        Admin Dashboard
+                      </Link>
+                    </Button>
+                  )}
                 </>
               )}
 
