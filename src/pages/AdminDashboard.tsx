@@ -29,7 +29,7 @@ import {
   DialogDescription,
 } from "@/components/ui/dialog";
 import { useToast } from "@/hooks/use-toast";
-import { Loader2, Users, Calendar, Mail, Phone, MessageSquare, RefreshCw } from "lucide-react";
+import { Loader2, Users, Calendar, Mail, Phone, MessageSquare, RefreshCw, CreditCard, Send, ExternalLink } from "lucide-react";
 import { format } from "date-fns";
 import { nl } from "date-fns/locale";
 
@@ -44,6 +44,10 @@ interface Registration {
   price: string | null;
   remarks: string | null;
   status: string;
+  payment_status: string | null;
+  payment_link: string | null;
+  stripe_session_id: string | null;
+  paid_at: string | null;
   created_at: string;
   updated_at: string;
 }
@@ -53,6 +57,18 @@ const statusColors: Record<string, string> = {
   confirmed: "bg-green-100 text-green-800 border-green-200",
   cancelled: "bg-red-100 text-red-800 border-red-200",
   completed: "bg-blue-100 text-blue-800 border-blue-200",
+};
+
+const paymentStatusColors: Record<string, string> = {
+  pending: "bg-gray-100 text-gray-600 border-gray-200",
+  awaiting_payment: "bg-amber-100 text-amber-700 border-amber-200",
+  paid: "bg-emerald-100 text-emerald-700 border-emerald-200",
+};
+
+const paymentStatusLabels: Record<string, string> = {
+  pending: "Nog niet verstuurd",
+  awaiting_payment: "Betaallink verstuurd",
+  paid: "Betaald",
 };
 
 const statusLabels: Record<string, string> = {
@@ -71,6 +87,7 @@ export default function AdminDashboard() {
   const [selectedRegistration, setSelectedRegistration] = useState<Registration | null>(null);
   const [isDetailOpen, setIsDetailOpen] = useState(false);
   const [isUpdating, setIsUpdating] = useState(false);
+  const [isSendingPayment, setIsSendingPayment] = useState(false);
   const [filterStatus, setFilterStatus] = useState<string>("all");
 
   useEffect(() => {
@@ -148,6 +165,59 @@ export default function AdminDashboard() {
       });
     } finally {
       setIsUpdating(false);
+    }
+  };
+
+  const sendPaymentLink = async (registration: Registration) => {
+    setIsSendingPayment(true);
+    try {
+      const { data, error } = await supabase.functions.invoke('create-payment-link', {
+        body: { 
+          registrationId: registration.id,
+          origin: window.location.origin,
+        },
+      });
+
+      if (error) throw error;
+
+      // Update local state
+      setRegistrations(prev =>
+        prev.map(reg => 
+          reg.id === registration.id 
+            ? { 
+                ...reg, 
+                status: "confirmed", 
+                payment_status: "awaiting_payment",
+                payment_link: data.paymentUrl,
+              } 
+            : reg
+        )
+      );
+
+      if (selectedRegistration?.id === registration.id) {
+        setSelectedRegistration(prev => 
+          prev ? { 
+            ...prev, 
+            status: "confirmed", 
+            payment_status: "awaiting_payment",
+            payment_link: data.paymentUrl,
+          } : null
+        );
+      }
+
+      toast({
+        title: "Betaallink verstuurd!",
+        description: `Een e-mail met de betaallink is verstuurd naar ${registration.email}`,
+      });
+    } catch (error: any) {
+      console.error("Error sending payment link:", error);
+      toast({
+        title: "Fout bij versturen",
+        description: error.message || "Kon betaallink niet versturen. Probeer het opnieuw.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsSendingPayment(false);
     }
   };
 
@@ -292,6 +362,7 @@ export default function AdminDashboard() {
                         <TableHead>Training</TableHead>
                         <TableHead>Datum</TableHead>
                         <TableHead>Status</TableHead>
+                        <TableHead>Betaling</TableHead>
                         <TableHead>Aangemeld op</TableHead>
                         <TableHead className="text-right">Acties</TableHead>
                       </TableRow>
@@ -312,6 +383,11 @@ export default function AdminDashboard() {
                           <TableCell>
                             <Badge className={statusColors[registration.status] || statusColors.pending}>
                               {statusLabels[registration.status] || registration.status}
+                            </Badge>
+                          </TableCell>
+                          <TableCell>
+                            <Badge className={paymentStatusColors[registration.payment_status || 'pending'] || paymentStatusColors.pending}>
+                              {paymentStatusLabels[registration.payment_status || 'pending'] || registration.payment_status}
                             </Badge>
                           </TableCell>
                           <TableCell>
@@ -415,6 +491,60 @@ export default function AdminDashboard() {
                   </p>
                 </div>
               )}
+
+              {/* Payment Section */}
+              <div className="space-y-3">
+                <h4 className="font-medium text-sm text-muted-foreground uppercase tracking-wide flex items-center gap-2">
+                  <CreditCard className="h-4 w-4" />
+                  Betaling
+                </h4>
+                <div className="bg-white rounded-lg p-4 border space-y-3">
+                  <div className="flex items-center justify-between">
+                    <span className="text-sm text-muted-foreground">Status:</span>
+                    <Badge className={paymentStatusColors[selectedRegistration.payment_status || 'pending']}>
+                      {paymentStatusLabels[selectedRegistration.payment_status || 'pending']}
+                    </Badge>
+                  </div>
+                  
+                  {selectedRegistration.paid_at && (
+                    <div className="flex items-center justify-between">
+                      <span className="text-sm text-muted-foreground">Betaald op:</span>
+                      <span className="text-sm font-medium">
+                        {format(new Date(selectedRegistration.paid_at), "d MMM yyyy 'om' HH:mm", { locale: nl })}
+                      </span>
+                    </div>
+                  )}
+
+                  {selectedRegistration.payment_link && selectedRegistration.payment_status !== 'paid' && (
+                    <div className="pt-2">
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        className="w-full gap-2"
+                        onClick={() => window.open(selectedRegistration.payment_link!, '_blank')}
+                      >
+                        <ExternalLink className="h-4 w-4" />
+                        Bekijk betaallink
+                      </Button>
+                    </div>
+                  )}
+
+                  {selectedRegistration.payment_status !== 'paid' && (
+                    <Button
+                      onClick={() => sendPaymentLink(selectedRegistration)}
+                      disabled={isSendingPayment}
+                      className="w-full gap-2 bg-terracotta-600 hover:bg-terracotta-700"
+                    >
+                      {isSendingPayment ? (
+                        <Loader2 className="h-4 w-4 animate-spin" />
+                      ) : (
+                        <Send className="h-4 w-4" />
+                      )}
+                      {selectedRegistration.payment_link ? 'Betaallink opnieuw versturen' : 'Bevestigen & Betaallink versturen'}
+                    </Button>
+                  )}
+                </div>
+              </div>
 
               {/* Status */}
               <div className="space-y-3">
