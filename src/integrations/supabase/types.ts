@@ -240,6 +240,7 @@ export type Database = {
       }
       registrations: {
         Row: {
+          admin_notes: string | null
           created_at: string
           email: string
           id: string
@@ -252,12 +253,14 @@ export type Database = {
           remarks: string | null
           status: string
           stripe_session_id: string | null
+          tags: string[] | null
           training_date: string | null
           training_name: string
           training_time: string | null
           updated_at: string
         }
         Insert: {
+          admin_notes?: string | null
           created_at?: string
           email: string
           id?: string
@@ -270,12 +273,14 @@ export type Database = {
           remarks?: string | null
           status?: string
           stripe_session_id?: string | null
+          tags?: string[] | null
           training_date?: string | null
           training_name: string
           training_time?: string | null
           updated_at?: string
         }
         Update: {
+          admin_notes?: string | null
           created_at?: string
           email?: string
           id?: string
@@ -288,6 +293,7 @@ export type Database = {
           remarks?: string | null
           status?: string
           stripe_session_id?: string | null
+          tags?: string[] | null
           training_date?: string | null
           training_name?: string
           training_time?: string | null
@@ -315,7 +321,20 @@ export type Database = {
       }
     }
     Views: {
-      [_ in never]: never
+      customers: {
+        Row: {
+          email: string | null
+          first_registration: string | null
+          last_registration: string | null
+          name: string | null
+          paid_registrations: number | null
+          phone: string | null
+          total_registrations: number | null
+          total_spent: number | null
+          trainings: string[] | null
+        }
+        Relationships: []
+      }
     }
     Functions: {
       has_role: {
