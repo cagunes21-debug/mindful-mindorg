@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -10,6 +11,12 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
 import Autoplay from "embla-carousel-autoplay";
 import Navigation from "@/components/Navigation";
 import { ScrollReveal, StaggerContainer, StaggerItem } from "@/components/ScrollReveal";
@@ -22,6 +29,7 @@ import ScrollProgressBar from "@/components/ScrollProgressBar";
 import WhatsAppButton from "@/components/WhatsAppButton";
 import CookieConsent from "@/components/CookieConsent";
 import { ContactForm } from "@/components/ContactForm";
+import { RegistrationForm } from "@/components/RegistrationForm";
 import heroMindfulness from "@/assets/hero-mindfulness.jpg";
 import meditationPractice from "@/assets/meditation-practice.jpg";
 import natureCalm from "@/assets/nature-calm.jpg";
@@ -46,6 +54,14 @@ const trainingDates = [
 ];
 
 const MindfulZelfcompassie = () => {
+  const [isRegistrationOpen, setIsRegistrationOpen] = useState(false);
+  const [selectedTraining, setSelectedTraining] = useState<typeof trainingDates[0] | null>(null);
+
+  const openRegistration = (training: typeof trainingDates[0]) => {
+    setSelectedTraining(training);
+    setIsRegistrationOpen(true);
+  };
+
   return (
     <div className="min-h-screen bg-background">
       <ScrollProgressBar />
@@ -719,10 +735,11 @@ const MindfulZelfcompassie = () => {
                           <p className="text-sm text-muted-foreground mb-4">{training.dates}</p>
                           <div className="pt-3 border-t border-warm-200 flex items-center justify-between">
                             <p className="text-2xl font-light text-terracotta-600">{training.price}</p>
-                            <Button className="bg-terracotta-600 hover:bg-terracotta-700 text-white rounded-full" asChild>
-                              <a href="http://mindful-mind.org/aanmeldformulier-2/" target="_blank" rel="noopener noreferrer">
-                                Reserveer
-                              </a>
+                            <Button 
+                              className="bg-terracotta-600 hover:bg-terracotta-700 text-white rounded-full"
+                              onClick={() => openRegistration(training)}
+                            >
+                              Reserveer
                             </Button>
                           </div>
                         </CardContent>
@@ -1120,6 +1137,28 @@ const MindfulZelfcompassie = () => {
           </div>
         </div>
       </footer>
+
+      {/* Registration Modal */}
+      <Dialog open={isRegistrationOpen} onOpenChange={setIsRegistrationOpen}>
+        <DialogContent className="sm:max-w-md max-h-[90vh] overflow-y-auto">
+          <DialogHeader>
+            <DialogTitle className="text-xl font-light">
+              Aanmelden voor de training
+            </DialogTitle>
+          </DialogHeader>
+          {selectedTraining && (
+            <RegistrationForm
+              trainingName={`8-weekse MSC Training (${selectedTraining.language})`}
+              trainingDate={selectedTraining.startDate}
+              trainingTime={selectedTraining.time}
+              price={selectedTraining.price}
+              onSuccess={() => {
+                setTimeout(() => setIsRegistrationOpen(false), 2000);
+              }}
+            />
+          )}
+        </DialogContent>
+      </Dialog>
     </div>
   );
 };
