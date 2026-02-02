@@ -1,8 +1,10 @@
 import { NavLink } from "@/components/NavLink";
 import { Link, useLocation } from "react-router-dom";
-import { Menu, X, ChevronDown } from "lucide-react";
-import { useState } from "react";
+import { Menu, X, ChevronDown, User, LogIn } from "lucide-react";
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
+import { supabase } from "@/integrations/supabase/client";
+import type { User as SupabaseUser } from "@supabase/supabase-js";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -14,7 +16,22 @@ const Navigation = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [servicesOpen, setServicesOpen] = useState(false);
   const [aboutOpen, setAboutOpen] = useState(false);
+  const [user, setUser] = useState<SupabaseUser | null>(null);
   const location = useLocation();
+
+  useEffect(() => {
+    const { data: { subscription } } = supabase.auth.onAuthStateChange(
+      (event, session) => {
+        setUser(session?.user ?? null);
+      }
+    );
+
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      setUser(session?.user ?? null);
+    });
+
+    return () => subscription.unsubscribe();
+  }, []);
 
   const serviceLinks = [
     { to: "/mindful-zelfcompassie", label: "8-weekse MSC Training" },
@@ -108,6 +125,22 @@ const Navigation = () => {
 
             <Button asChild className="bg-terracotta-600 hover:bg-terracotta-700 text-white rounded-full">
               <Link to="/contact">Contact</Link>
+            </Button>
+
+            <Button asChild variant="outline" className="rounded-full border-primary text-primary hover:bg-primary hover:text-primary-foreground">
+              <Link to="/login" className="flex items-center gap-2">
+                {user ? (
+                  <>
+                    <User className="h-4 w-4" />
+                    Account
+                  </>
+                ) : (
+                  <>
+                    <LogIn className="h-4 w-4" />
+                    Inloggen
+                  </>
+                )}
+              </Link>
             </Button>
           </div>
 
@@ -209,6 +242,22 @@ const Navigation = () => {
 
               <Button asChild className="bg-terracotta-600 hover:bg-terracotta-700 text-white w-fit rounded-full">
                 <Link to="/contact" onClick={() => setIsOpen(false)}>Contact</Link>
+              </Button>
+
+              <Button asChild variant="outline" className="w-fit rounded-full border-primary text-primary hover:bg-primary hover:text-primary-foreground">
+                <Link to="/login" onClick={() => setIsOpen(false)} className="flex items-center gap-2">
+                  {user ? (
+                    <>
+                      <User className="h-4 w-4" />
+                      Account
+                    </>
+                  ) : (
+                    <>
+                      <LogIn className="h-4 w-4" />
+                      Inloggen
+                    </>
+                  )}
+                </Link>
               </Button>
             </div>
           </div>
