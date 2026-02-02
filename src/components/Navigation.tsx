@@ -1,10 +1,11 @@
 import { NavLink } from "@/components/NavLink";
-import { Link, useLocation } from "react-router-dom";
-import { Menu, X, ChevronDown, User, LogIn, LayoutDashboard, BookOpen } from "lucide-react";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Menu, X, ChevronDown, User, LogIn, LogOut, LayoutDashboard, BookOpen } from "lucide-react";
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { supabase } from "@/integrations/supabase/client";
 import type { User as SupabaseUser } from "@supabase/supabase-js";
+import { toast } from "sonner";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -19,6 +20,17 @@ const Navigation = () => {
   const [user, setUser] = useState<SupabaseUser | null>(null);
   const [isAdmin, setIsAdmin] = useState(false);
   const location = useLocation();
+  const navigate = useNavigate();
+
+  const handleLogout = async () => {
+    const { error } = await supabase.auth.signOut();
+    if (error) {
+      toast.error("Uitloggen mislukt");
+    } else {
+      toast.success("Je bent uitgelogd");
+      navigate("/login");
+    }
+  };
 
   useEffect(() => {
     const { data: { subscription } } = supabase.auth.onAuthStateChange(
@@ -160,21 +172,23 @@ const Navigation = () => {
               </>
             )}
 
-            <Button asChild variant="outline" className="rounded-full border-primary text-primary hover:bg-primary hover:text-primary-foreground">
-              <Link to="/login" className="flex items-center gap-2">
-                {user ? (
-                  <>
-                    <User className="h-4 w-4" />
-                    Account
-                  </>
-                ) : (
-                  <>
-                    <LogIn className="h-4 w-4" />
-                    Inloggen
-                  </>
-                )}
-              </Link>
-            </Button>
+            {user ? (
+              <Button 
+                variant="outline" 
+                className="rounded-full border-primary text-primary hover:bg-primary hover:text-primary-foreground"
+                onClick={handleLogout}
+              >
+                <LogOut className="h-4 w-4 mr-2" />
+                Uitloggen
+              </Button>
+            ) : (
+              <Button asChild variant="outline" className="rounded-full border-primary text-primary hover:bg-primary hover:text-primary-foreground">
+                <Link to="/login" className="flex items-center gap-2">
+                  <LogIn className="h-4 w-4" />
+                  Inloggen
+                </Link>
+              </Button>
+            )}
           </div>
 
           {/* Mobile Menu Button */}
@@ -296,21 +310,26 @@ const Navigation = () => {
                 </>
               )}
 
-              <Button asChild variant="outline" className="w-fit rounded-full border-primary text-primary hover:bg-primary hover:text-primary-foreground">
-                <Link to="/login" onClick={() => setIsOpen(false)} className="flex items-center gap-2">
-                  {user ? (
-                    <>
-                      <User className="h-4 w-4" />
-                      Account
-                    </>
-                  ) : (
-                    <>
-                      <LogIn className="h-4 w-4" />
-                      Inloggen
-                    </>
-                  )}
-                </Link>
-              </Button>
+              {user ? (
+                <Button 
+                  variant="outline" 
+                  className="w-fit rounded-full border-primary text-primary hover:bg-primary hover:text-primary-foreground"
+                  onClick={() => {
+                    setIsOpen(false);
+                    handleLogout();
+                  }}
+                >
+                  <LogOut className="h-4 w-4 mr-2" />
+                  Uitloggen
+                </Button>
+              ) : (
+                <Button asChild variant="outline" className="w-fit rounded-full border-primary text-primary hover:bg-primary hover:text-primary-foreground">
+                  <Link to="/login" onClick={() => setIsOpen(false)} className="flex items-center gap-2">
+                    <LogIn className="h-4 w-4" />
+                    Inloggen
+                  </Link>
+                </Button>
+              )}
             </div>
           </div>
         )}
