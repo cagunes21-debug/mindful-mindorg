@@ -14,7 +14,51 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      registrations: {
+        Row: {
+          created_at: string
+          email: string
+          id: string
+          name: string
+          phone: string | null
+          price: string | null
+          remarks: string | null
+          status: string
+          training_date: string | null
+          training_name: string
+          training_time: string | null
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          email: string
+          id?: string
+          name: string
+          phone?: string | null
+          price?: string | null
+          remarks?: string | null
+          status?: string
+          training_date?: string | null
+          training_name: string
+          training_time?: string | null
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          email?: string
+          id?: string
+          name?: string
+          phone?: string | null
+          price?: string | null
+          remarks?: string | null
+          status?: string
+          training_date?: string | null
+          training_name?: string
+          training_time?: string | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never

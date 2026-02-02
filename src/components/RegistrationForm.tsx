@@ -91,7 +91,12 @@ ${result.data.remarks ? `\nOpmerkingen:\n${result.data.remarks}` : ''}
           email: result.data.email,
           phone: result.data.phone,
           training: trainingName,
+          trainingDate: trainingDate,
+          trainingTime: trainingTime,
+          price: price,
+          remarks: result.data.remarks,
           message: message,
+          isRegistration: true,
         },
       });
 
