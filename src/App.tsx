@@ -14,6 +14,7 @@ import Contact from "./pages/Contact";
 import Coaching from "./pages/Coaching";
 import BewegingMildheidRetreat from "./pages/BewegingMildheidRetreat";
 import Bedrijven from "./pages/Bedrijven";
+import Auth from "./pages/Auth";
 
 import NotFound from "./pages/NotFound";
 
@@ -38,6 +39,7 @@ const App = () => (
             <Route path="/coaching" element={<Coaching />} />
             <Route path="/barcelona-retreat" element={<BewegingMildheidRetreat />} />
             <Route path="/bedrijven" element={<Bedrijven />} />
+            <Route path="/login" element={<Auth />} />
             
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
