@@ -29,7 +29,8 @@ import {
   DialogDescription,
 } from "@/components/ui/dialog";
 import { useToast } from "@/hooks/use-toast";
-import { Loader2, Users, Calendar, Mail, Phone, MessageSquare, RefreshCw, CreditCard, Send, ExternalLink } from "lucide-react";
+import { Loader2, Users, Calendar, Mail, Phone, MessageSquare, RefreshCw, CreditCard, Send, ExternalLink, Search, Download, Euro } from "lucide-react";
+import { Input } from "@/components/ui/input";
 import { format } from "date-fns";
 import { nl } from "date-fns/locale";
 
@@ -89,6 +90,8 @@ export default function AdminDashboard() {
   const [isUpdating, setIsUpdating] = useState(false);
   const [isSendingPayment, setIsSendingPayment] = useState(false);
   const [filterStatus, setFilterStatus] = useState<string>("all");
+  const [filterPaymentStatus, setFilterPaymentStatus] = useState<string>("all");
+  const [searchQuery, setSearchQuery] = useState<string>("");
 
   useEffect(() => {
     const checkAuth = async () => {
@@ -221,15 +224,64 @@ export default function AdminDashboard() {
     }
   };
 
-  const filteredRegistrations = filterStatus === "all"
-    ? registrations
-    : registrations.filter(reg => reg.status === filterStatus);
+  const filteredRegistrations = registrations
+    .filter(reg => filterStatus === "all" || reg.status === filterStatus)
+    .filter(reg => filterPaymentStatus === "all" || (reg.payment_status || "pending") === filterPaymentStatus)
+    .filter(reg => {
+      if (!searchQuery.trim()) return true;
+      const query = searchQuery.toLowerCase();
+      return (
+        reg.name.toLowerCase().includes(query) ||
+        reg.email.toLowerCase().includes(query) ||
+        reg.training_name.toLowerCase().includes(query)
+      );
+    });
+
+  // Parse price from string like "€495" to number
+  const parsePrice = (priceStr: string | null): number => {
+    if (!priceStr) return 0;
+    const match = priceStr.replace(/[^\d,.-]/g, '').replace(',', '.');
+    return parseFloat(match) || 0;
+  };
 
   const stats = {
     total: registrations.length,
     pending: registrations.filter(r => r.status === "pending").length,
     confirmed: registrations.filter(r => r.status === "confirmed").length,
     cancelled: registrations.filter(r => r.status === "cancelled").length,
+    paid: registrations.filter(r => r.payment_status === "paid").length,
+    totalRevenue: registrations
+      .filter(r => r.payment_status === "paid")
+      .reduce((sum, r) => sum + parsePrice(r.price), 0),
+  };
+
+  const exportToCSV = () => {
+    const headers = ["Naam", "Email", "Telefoon", "Training", "Datum", "Tijd", "Prijs", "Status", "Betalingsstatus", "Betaald op", "Aangemeld op", "Opmerkingen"];
+    const rows = filteredRegistrations.map(reg => [
+      reg.name,
+      reg.email,
+      reg.phone || "",
+      reg.training_name,
+      reg.training_date || "",
+      reg.training_time || "",
+      reg.price || "",
+      statusLabels[reg.status] || reg.status,
+      paymentStatusLabels[reg.payment_status || "pending"] || reg.payment_status,
+      reg.paid_at ? format(new Date(reg.paid_at), "d-M-yyyy HH:mm") : "",
+      format(new Date(reg.created_at), "d-M-yyyy HH:mm"),
+      reg.remarks || "",
+    ]);
+    
+    const csvContent = [
+      headers.join(";"),
+      ...rows.map(row => row.map(cell => `"${String(cell).replace(/"/g, '""')}"`).join(";"))
+    ].join("\n");
+    
+    const blob = new Blob(["\uFEFF" + csvContent], { type: "text/csv;charset=utf-8;" });
+    const link = document.createElement("a");
+    link.href = URL.createObjectURL(blob);
+    link.download = `aanmeldingen_${format(new Date(), "yyyy-MM-dd")}.csv`;
+    link.click();
   };
 
   if (!isAuthenticated) {
@@ -264,7 +316,7 @@ export default function AdminDashboard() {
           </div>
 
           {/* Stats Cards */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 mb-8">
             <Card>
               <CardContent className="pt-6">
                 <div className="flex items-center gap-3">
@@ -317,23 +369,81 @@ export default function AdminDashboard() {
                 </div>
               </CardContent>
             </Card>
+            <Card>
+              <CardContent className="pt-6">
+                <div className="flex items-center gap-3">
+                  <div className="p-2 bg-emerald-100 rounded-lg">
+                    <CreditCard className="h-5 w-5 text-emerald-700" />
+                  </div>
+                  <div>
+                    <p className="text-2xl font-semibold">{stats.paid}</p>
+                    <p className="text-sm text-muted-foreground">Betaald</p>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+            <Card>
+              <CardContent className="pt-6">
+                <div className="flex items-center gap-3">
+                  <div className="p-2 bg-terracotta-100 rounded-lg">
+                    <Euro className="h-5 w-5 text-terracotta-700" />
+                  </div>
+                  <div>
+                    <p className="text-2xl font-semibold">€{stats.totalRevenue.toLocaleString('nl-NL')}</p>
+                    <p className="text-sm text-muted-foreground">Omzet</p>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
           </div>
 
-          {/* Filter */}
-          <div className="flex items-center gap-4 mb-6">
-            <span className="text-sm text-muted-foreground">Filter:</span>
-            <Select value={filterStatus} onValueChange={setFilterStatus}>
-              <SelectTrigger className="w-[180px]">
-                <SelectValue placeholder="Alle statussen" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="all">Alle statussen</SelectItem>
-                <SelectItem value="pending">In afwachting</SelectItem>
-                <SelectItem value="confirmed">Bevestigd</SelectItem>
-                <SelectItem value="cancelled">Geannuleerd</SelectItem>
-                <SelectItem value="completed">Afgerond</SelectItem>
-              </SelectContent>
-            </Select>
+          {/* Search and Filters */}
+          <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4 mb-6">
+            <div className="relative flex-1 max-w-sm">
+              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+              <Input
+                placeholder="Zoek op naam, e-mail of training..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className="pl-10"
+              />
+            </div>
+            <div className="flex items-center gap-2 flex-wrap">
+              <span className="text-sm text-muted-foreground">Status:</span>
+              <Select value={filterStatus} onValueChange={setFilterStatus}>
+                <SelectTrigger className="w-[150px]">
+                  <SelectValue placeholder="Alle" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="all">Alle</SelectItem>
+                  <SelectItem value="pending">In afwachting</SelectItem>
+                  <SelectItem value="confirmed">Bevestigd</SelectItem>
+                  <SelectItem value="cancelled">Geannuleerd</SelectItem>
+                  <SelectItem value="completed">Afgerond</SelectItem>
+                </SelectContent>
+              </Select>
+              <span className="text-sm text-muted-foreground">Betaling:</span>
+              <Select value={filterPaymentStatus} onValueChange={setFilterPaymentStatus}>
+                <SelectTrigger className="w-[170px]">
+                  <SelectValue placeholder="Alle" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="all">Alle</SelectItem>
+                  <SelectItem value="pending">Nog niet verstuurd</SelectItem>
+                  <SelectItem value="awaiting_payment">Wacht op betaling</SelectItem>
+                  <SelectItem value="paid">Betaald</SelectItem>
+                </SelectContent>
+              </Select>
+              <Button
+                onClick={exportToCSV}
+                variant="outline"
+                size="sm"
+                className="gap-2"
+              >
+                <Download className="h-4 w-4" />
+                Exporteer CSV
+              </Button>
+            </div>
           </div>
 
           {/* Table */}
