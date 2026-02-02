@@ -346,15 +346,25 @@ export default function AdminDashboard() {
               <h1 className="text-3xl font-light text-foreground">Admin Dashboard</h1>
               <p className="text-muted-foreground mt-1">Beheer alle aanmeldingen</p>
             </div>
-            <Button
-              onClick={fetchRegistrations}
-              variant="outline"
-              className="gap-2"
-              disabled={isLoading}
-            >
-              <RefreshCw className={`h-4 w-4 ${isLoading ? "animate-spin" : ""}`} />
-              Vernieuwen
-            </Button>
+            <div className="flex items-center gap-2">
+              <Button
+                onClick={() => navigate("/admin/klanten")}
+                variant="outline"
+                className="gap-2"
+              >
+                <User className="h-4 w-4" />
+                Klanten
+              </Button>
+              <Button
+                onClick={fetchRegistrations}
+                variant="outline"
+                className="gap-2"
+                disabled={isLoading}
+              >
+                <RefreshCw className={`h-4 w-4 ${isLoading ? "animate-spin" : ""}`} />
+                Vernieuwen
+              </Button>
+            </div>
           </div>
 
           {/* Stats Cards */}
