@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { Heart, Brain, Sparkles, ArrowRight, Check, Mail, Phone, MessageCircle, Clock, Users, Globe, Calendar, Quote, TrendingDown, TrendingUp, Shield, Zap, Mountain, Building2, MapPin } from "lucide-react";
+import { Heart, Brain, Sparkles, ArrowRight, Check, Mail, Phone, MessageCircle, Clock, Users, Globe, Calendar, Quote, TrendingDown, TrendingUp, Shield, Zap, Mountain, Building2, MapPin, GraduationCap, Award } from "lucide-react";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import { ScrollReveal, StaggerContainer, StaggerItem } from "@/components/ScrollReveal";
@@ -179,6 +179,18 @@ const Index = () => {
             >
               <span className="inline-block rounded-full bg-terracotta-100/80 px-5 py-2 text-sm font-medium tracking-wide text-terracotta-700">
                 Mind · Body · Heart
+              </span>
+            </motion.div>
+            
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.05 }}
+              className="mb-4"
+            >
+              <span className="inline-flex items-center gap-2 rounded-full bg-sage-100/80 px-4 py-1.5 text-xs font-medium tracking-wide text-sage-700">
+                <GraduationCap className="h-3.5 w-3.5" />
+                Wetenschappelijk onderbouwd door Dr. Kristin Neff & Dr. Christopher Germer
               </span>
             </motion.div>
             
@@ -433,9 +445,16 @@ const Index = () => {
           <div className="mx-auto max-w-5xl">
             <ScrollReveal>
               <div className="text-center mb-12">
+                <div className="inline-flex items-center gap-2 rounded-full bg-white/10 px-4 py-2 text-sm text-white/90 mb-6">
+                  <Award className="h-4 w-4" />
+                  Wetenschappelijk bewezen resultaten
+                </div>
                 <h2 className="text-2xl md:text-3xl font-light text-white mb-4">
                   Wat brengt dit je?
                 </h2>
+                <p className="text-white/70 text-base max-w-2xl mx-auto">
+                  Mindful Zelfcompassie is ontwikkeld door Dr. Kristin Neff (pionier in zelfcompassie-onderzoek) en Dr. Christopher Germer (klinisch psycholoog), en onderbouwd door meer dan 3.500 wetenschappelijke studies.
+                </p>
               </div>
             </ScrollReveal>
             
@@ -455,7 +474,7 @@ const Index = () => {
             
             <ScrollReveal delay={0.3}>
               <p className="text-center text-white/60 text-sm mt-8">
-                Gemiddelde resultaten uit MSC-onderzoek (Neff & Germer, 2013–2023)
+                Gemiddelde resultaten uit peer-reviewed MSC-onderzoek (Neff & Germer, 2013–2023)
               </p>
             </ScrollReveal>
           </div>
