@@ -1,6 +1,6 @@
 import { NavLink } from "@/components/NavLink";
 import { Link, useLocation } from "react-router-dom";
-import { Menu, X, ChevronDown, User, LogIn } from "lucide-react";
+import { Menu, X, ChevronDown, User, LogIn, LayoutDashboard } from "lucide-react";
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { supabase } from "@/integrations/supabase/client";
@@ -127,6 +127,15 @@ const Navigation = () => {
               <Link to="/contact">Contact</Link>
             </Button>
 
+            {user && (
+              <Button asChild variant="ghost" className="rounded-full text-muted-foreground hover:text-primary">
+                <Link to="/admin" className="flex items-center gap-2">
+                  <LayoutDashboard className="h-4 w-4" />
+                  Admin
+                </Link>
+              </Button>
+            )}
+
             <Button asChild variant="outline" className="rounded-full border-primary text-primary hover:bg-primary hover:text-primary-foreground">
               <Link to="/login" className="flex items-center gap-2">
                 {user ? (
@@ -243,6 +252,15 @@ const Navigation = () => {
               <Button asChild className="bg-terracotta-600 hover:bg-terracotta-700 text-white w-fit rounded-full">
                 <Link to="/contact" onClick={() => setIsOpen(false)}>Contact</Link>
               </Button>
+
+              {user && (
+                <Button asChild variant="ghost" className="w-fit rounded-full text-muted-foreground hover:text-primary">
+                  <Link to="/admin" onClick={() => setIsOpen(false)} className="flex items-center gap-2">
+                    <LayoutDashboard className="h-4 w-4" />
+                    Admin Dashboard
+                  </Link>
+                </Button>
+              )}
 
               <Button asChild variant="outline" className="w-fit rounded-full border-primary text-primary hover:bg-primary hover:text-primary-foreground">
                 <Link to="/login" onClick={() => setIsOpen(false)} className="flex items-center gap-2">
