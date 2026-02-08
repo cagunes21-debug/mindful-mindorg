@@ -235,9 +235,24 @@ const Index = () => {
               <p className="text-muted-foreground text-lg leading-relaxed mb-6">
                 Our gentle, science-based programs reconnect you with your mind, body, and heart.
               </p>
-              <p className="text-terracotta-600 font-medium mb-4">
+              <p className="text-terracotta-600 font-medium mb-8">
                 Human. Grounded. Evidence-based.
               </p>
+              
+              <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+                <Button asChild size="lg" className="bg-terracotta-600 hover:bg-terracotta-700 text-white rounded-full px-8 py-6 text-base shadow-lg hover:shadow-xl transition-all">
+                  <a href="#programmas">
+                    For Individuals
+                    <ArrowRight className="ml-2 h-5 w-5" />
+                  </a>
+                </Button>
+                <Button asChild variant="outline" size="lg" className="border-terracotta-300 text-terracotta-700 hover:bg-terracotta-50 rounded-full px-8 py-6 text-base">
+                  <Link to="/bedrijven">
+                    <Building2 className="mr-2 h-5 w-5" />
+                    For Organizations
+                  </Link>
+                </Button>
+              </div>
             </ScrollReveal>
           </div>
         </div>
