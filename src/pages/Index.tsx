@@ -243,42 +243,54 @@ const Index = () => {
       {/* Intro Section */}
       <section className="py-20 lg:py-28 bg-white">
         <div className="container mx-auto px-4">
-          <div className="mx-auto max-w-3xl text-center">
+          <div className="mx-auto max-w-4xl text-center">
             <ScrollReveal>
               <h2 className="mb-6 text-2xl font-light text-foreground md:text-3xl lg:text-4xl leading-tight">
                 Slow down. Feel. <span className="font-serif italic text-terracotta-600">Relax.</span>
               </h2>
-              <p className="text-muted-foreground text-lg leading-relaxed mb-8">
-                Our programs help you release tension and reconnect with your mind, your body and your heart — for more peace, kindness and zest for life.
+              <p className="text-muted-foreground text-lg leading-relaxed mb-6">
+                Learn to soften stress and self-criticism through science-based programs that reconnect you with your mind, body and heart.
               </p>
-              <p className="text-foreground text-xl font-medium mb-10">
-                Come home to yourself
-              </p>
-              <p className="text-terracotta-600 font-medium mb-10">
+              <p className="text-terracotta-600 font-medium mb-12">
                 Gentle. Science-based. Human.
               </p>
               
-              <div className="flex flex-wrap justify-center gap-3">
-                <Button asChild variant="outline" className="border-terracotta-300 text-terracotta-700 hover:bg-terracotta-50 rounded-full">
-                  <Link to="/mindful-zelfcompassie">
-                    👉 Reserve MSC Training
-                  </Link>
-                </Button>
-                <Button asChild variant="outline" className="border-terracotta-300 text-terracotta-700 hover:bg-terracotta-50 rounded-full">
-                  <Link to="/agenda">
-                    👉 View Workshops
-                  </Link>
-                </Button>
-                <Button asChild variant="outline" className="border-terracotta-300 text-terracotta-700 hover:bg-terracotta-50 rounded-full">
-                  <Link to="/barcelona-retreat">
-                    👉 Sign up for Retreat
-                  </Link>
-                </Button>
-                <Button asChild variant="outline" className="border-terracotta-300 text-terracotta-700 hover:bg-terracotta-50 rounded-full">
-                  <Link to="/coaching">
-                    👉 1-on-1 Coaching
-                  </Link>
-                </Button>
+              <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                <Link to="/mindful-zelfcompassie" className="group bg-warm-50 hover:bg-terracotta-50 border border-warm-200 hover:border-terracotta-300 rounded-2xl p-5 text-left transition-all">
+                  <div className="flex items-center gap-2 mb-2">
+                    <span className="text-xl">🌱</span>
+                    <span className="text-xs font-semibold text-terracotta-600 uppercase tracking-wide">8 Weeks</span>
+                  </div>
+                  <h3 className="font-semibold text-foreground mb-1 group-hover:text-terracotta-700 transition-colors">MSC Training</h3>
+                  <p className="text-sm text-muted-foreground">Transform self-criticism into self-compassion with our flagship program</p>
+                </Link>
+                
+                <Link to="/agenda" className="group bg-warm-50 hover:bg-terracotta-50 border border-warm-200 hover:border-terracotta-300 rounded-2xl p-5 text-left transition-all">
+                  <div className="flex items-center gap-2 mb-2">
+                    <span className="text-xl">✨</span>
+                    <span className="text-xs font-semibold text-terracotta-600 uppercase tracking-wide">1 Hour</span>
+                  </div>
+                  <h3 className="font-semibold text-foreground mb-1 group-hover:text-terracotta-700 transition-colors">Workshops</h3>
+                  <p className="text-sm text-muted-foreground">Try it first — a gentle introduction to mindfulness & self-compassion</p>
+                </Link>
+                
+                <Link to="/barcelona-retreat" className="group bg-warm-50 hover:bg-terracotta-50 border border-warm-200 hover:border-terracotta-300 rounded-2xl p-5 text-left transition-all">
+                  <div className="flex items-center gap-2 mb-2">
+                    <span className="text-xl">🌿</span>
+                    <span className="text-xs font-semibold text-terracotta-600 uppercase tracking-wide">5 Days</span>
+                  </div>
+                  <h3 className="font-semibold text-foreground mb-1 group-hover:text-terracotta-700 transition-colors">Barcelona Retreat</h3>
+                  <p className="text-sm text-muted-foreground">Deep relaxation in nature — movement, mindfulness & self-compassion</p>
+                </Link>
+                
+                <Link to="/coaching" className="group bg-warm-50 hover:bg-terracotta-50 border border-warm-200 hover:border-terracotta-300 rounded-2xl p-5 text-left transition-all">
+                  <div className="flex items-center gap-2 mb-2">
+                    <span className="text-xl">🤍</span>
+                    <span className="text-xs font-semibold text-terracotta-600 uppercase tracking-wide">Personal</span>
+                  </div>
+                  <h3 className="font-semibold text-foreground mb-1 group-hover:text-terracotta-700 transition-colors">1-on-1 Coaching</h3>
+                  <p className="text-sm text-muted-foreground">Individual guidance for your personal journey at your own pace</p>
+                </Link>
               </div>
             </ScrollReveal>
           </div>
