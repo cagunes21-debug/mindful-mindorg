@@ -50,23 +50,7 @@ const programs = [
     link: "/agenda",
   },
   {
-    title: "5-Day MSC & Movement Retreat",
-    subtitle: "Barcelona | 2026",
-    icon: Mountain,
-    emoji: "🌿",
-    features: [
-      "Including accommodation & meals",
-      "Full mindfulness, MSC & movement program",
-      "Small group, personal attention",
-    ],
-    price: "2026",
-    description: "Experience deep relaxation and connection in an intensive retreat.",
-    cta: "Sign up for the retreat",
-    secondaryCta: "View schedule & dates",
-    link: "/barcelona-retreat",
-  },
-  {
-    title: "1-on-1 Coaching",
+    title: "Coaching",
     subtitle: "Personal deepening | Online or on location",
     icon: Heart,
     emoji: "🤍",
@@ -77,7 +61,7 @@ const programs = [
     ],
     price: "On request",
     description: "Work at your own pace on personal themes.",
-    cta: "Schedule a 1-on-1 session",
+    cta: "Schedule a coaching session",
     secondaryCta: "View available dates",
     link: "/coaching",
   },
@@ -255,7 +239,7 @@ const Index = () => {
                 Gentle. Science-based. Human.
               </p>
               
-              <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
+              <div className="grid sm:grid-cols-3 gap-4">
                 <Link to="/mindful-zelfcompassie" className="group bg-warm-50 hover:bg-terracotta-50 border border-warm-200 hover:border-terracotta-300 rounded-2xl p-5 text-left transition-all">
                   <div className="flex items-center gap-2 mb-2">
                     <span className="text-xl">🌱</span>
@@ -274,21 +258,12 @@ const Index = () => {
                   <p className="text-sm text-muted-foreground">Try it first — a gentle introduction to mindfulness & self-compassion</p>
                 </Link>
                 
-                <Link to="/barcelona-retreat" className="group bg-warm-50 hover:bg-terracotta-50 border border-warm-200 hover:border-terracotta-300 rounded-2xl p-5 text-left transition-all">
-                  <div className="flex items-center gap-2 mb-2">
-                    <span className="text-xl">🌿</span>
-                    <span className="text-xs font-semibold text-terracotta-600 uppercase tracking-wide">5 Days</span>
-                  </div>
-                  <h3 className="font-semibold text-foreground mb-1 group-hover:text-terracotta-700 transition-colors">Barcelona Retreat</h3>
-                  <p className="text-sm text-muted-foreground">Deep relaxation in nature — movement, mindfulness & self-compassion</p>
-                </Link>
-                
                 <Link to="/coaching" className="group bg-warm-50 hover:bg-terracotta-50 border border-warm-200 hover:border-terracotta-300 rounded-2xl p-5 text-left transition-all">
                   <div className="flex items-center gap-2 mb-2">
                     <span className="text-xl">🤍</span>
                     <span className="text-xs font-semibold text-terracotta-600 uppercase tracking-wide">Personal</span>
                   </div>
-                  <h3 className="font-semibold text-foreground mb-1 group-hover:text-terracotta-700 transition-colors">1-on-1 Coaching</h3>
+                  <h3 className="font-semibold text-foreground mb-1 group-hover:text-terracotta-700 transition-colors">Coaching</h3>
                   <p className="text-sm text-muted-foreground">Individual guidance for your personal journey at your own pace</p>
                 </Link>
               </div>

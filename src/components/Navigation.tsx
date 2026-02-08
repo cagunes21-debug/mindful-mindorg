@@ -61,8 +61,7 @@ const Navigation = () => {
 
   const serviceLinks = [
     { to: "/mindful-zelfcompassie", label: "8-weekse MSC Training" },
-    { to: "/barcelona-retreat", label: "Barcelona Retreat" },
-    { to: "/coaching", label: "1-op-1 Coaching" },
+    { to: "/coaching", label: "Coaching" },
     { to: "/bedrijven", label: "Voor Bedrijven" },
   ];
 
@@ -120,6 +119,14 @@ const Navigation = () => {
                 ))}
               </DropdownMenuContent>
             </DropdownMenu>
+
+            <NavLink
+              to="/barcelona-retreat"
+              className="text-sm font-medium text-muted-foreground transition-colors hover:text-primary"
+              activeClassName="text-primary"
+            >
+              Barcelona Retreat
+            </NavLink>
 
             <NavLink
               to="/agenda"
@@ -251,6 +258,15 @@ const Navigation = () => {
                   </div>
                 )}
               </div>
+
+              <NavLink
+                to="/barcelona-retreat"
+                className="text-sm font-medium text-muted-foreground transition-colors hover:text-primary"
+                activeClassName="text-primary"
+                onClick={() => setIsOpen(false)}
+              >
+                Barcelona Retreat
+              </NavLink>
 
               <NavLink
                 to="/agenda"
