@@ -189,7 +189,7 @@ const Index = () => {
               transition={{ duration: 0.6, delay: 0.15 }}
               className="text-muted-foreground text-lg md:text-xl max-w-2xl mx-auto leading-relaxed mb-4"
             >
-              Science-based mindfulness, meditation and self-compassion trainings
+              Science-based mindfulness, meditation, and self-compassion — through trainings, workshops, and coaching.
             </motion.p>
 
             <motion.p 
@@ -198,7 +198,7 @@ const Index = () => {
               transition={{ duration: 0.6, delay: 0.2 }}
               className="text-foreground text-base md:text-lg max-w-2xl mx-auto leading-relaxed mb-12 font-medium"
             >
-              Reduce stress, soften self-criticism and find inner peace in 8 weeks.
+              Soften stress and self-criticism, and meet yourself with more peace.
             </motion.p>
 
             <motion.div
@@ -209,7 +209,7 @@ const Index = () => {
             >
               <Button asChild size="lg" className="bg-terracotta-600 hover:bg-terracotta-700 text-white rounded-full px-10 py-7 text-lg shadow-lg hover:shadow-xl transition-all">
                 <a href="#programmas">
-                  Reserve your spot today
+                  Reserve Your Spot Today
                   <ArrowRight className="ml-3 h-5 w-5" />
                 </a>
               </Button>
@@ -233,47 +233,95 @@ const Index = () => {
                 Slow down. Feel. <span className="font-serif italic text-terracotta-600">Relax.</span>
               </h2>
               <p className="text-muted-foreground text-lg leading-relaxed mb-6">
-                Learn to soften stress and self-criticism through science-based programs that reconnect you with your mind, body and heart.
+                Our gentle, science-based programs reconnect you with your mind, body, and heart.
               </p>
-              <p className="text-terracotta-600 font-medium mb-12">
-                Gentle. Science-based. Human.
+              <p className="text-terracotta-600 font-medium mb-4">
+                Human. Grounded. Evidence-based.
               </p>
-              
-              <div className="grid sm:grid-cols-3 gap-4">
-                <Link to="/mindful-zelfcompassie" className="group bg-warm-50 hover:bg-terracotta-50 border border-warm-200 hover:border-terracotta-300 rounded-2xl p-5 text-left transition-all">
-                  <div className="flex items-center gap-2 mb-2">
-                    <span className="text-xl">🌱</span>
-                    <span className="text-xs font-semibold text-terracotta-600 uppercase tracking-wide">8 Weeks</span>
-                  </div>
-                  <h3 className="font-semibold text-foreground mb-1 group-hover:text-terracotta-700 transition-colors">MSC Training</h3>
-                  <p className="text-sm text-muted-foreground">Transform self-criticism into self-compassion with our flagship program</p>
-                </Link>
-                
-                <Link to="/agenda" className="group bg-warm-50 hover:bg-terracotta-50 border border-warm-200 hover:border-terracotta-300 rounded-2xl p-5 text-left transition-all">
-                  <div className="flex items-center gap-2 mb-2">
-                    <span className="text-xl">✨</span>
-                    <span className="text-xs font-semibold text-terracotta-600 uppercase tracking-wide">1 Hour</span>
-                  </div>
-                  <h3 className="font-semibold text-foreground mb-1 group-hover:text-terracotta-700 transition-colors">Workshops</h3>
-                  <p className="text-sm text-muted-foreground">Try it first — a gentle introduction to mindfulness & self-compassion</p>
-                </Link>
-                
-                <Link to="/coaching" className="group bg-warm-50 hover:bg-terracotta-50 border border-warm-200 hover:border-terracotta-300 rounded-2xl p-5 text-left transition-all">
-                  <div className="flex items-center gap-2 mb-2">
-                    <span className="text-xl">🤍</span>
-                    <span className="text-xs font-semibold text-terracotta-600 uppercase tracking-wide">Personal</span>
-                  </div>
-                  <h3 className="font-semibold text-foreground mb-1 group-hover:text-terracotta-700 transition-colors">Coaching</h3>
-                  <p className="text-sm text-muted-foreground">Individual guidance for your personal journey at your own pace</p>
-                </Link>
-              </div>
             </ScrollReveal>
           </div>
         </div>
       </section>
 
+      {/* Our Offerings Section */}
+      <section className="py-16 lg:py-24 bg-warm-50">
+        <div className="container mx-auto px-4">
+          <div className="mx-auto max-w-4xl">
+            <ScrollReveal>
+              <div className="text-center mb-12">
+                <span className="inline-block rounded-full bg-terracotta-100 px-5 py-2 text-xs font-semibold tracking-wider text-terracotta-700 mb-6 uppercase">
+                  Our Offerings
+                </span>
+              </div>
+            </ScrollReveal>
+            
+            <div className="space-y-6">
+              <ScrollReveal delay={0.1}>
+                <Link to="/mindful-zelfcompassie" className="group block bg-white hover:bg-terracotta-50 border border-warm-200 hover:border-terracotta-300 rounded-2xl p-6 transition-all shadow-sm hover:shadow-md">
+                  <div className="flex items-start gap-4">
+                    <span className="text-3xl">🌱</span>
+                    <div className="flex-1">
+                      <h3 className="font-semibold text-xl text-foreground mb-2 group-hover:text-terracotta-700 transition-colors">
+                        Mindful Self-Compassion (MSC) Training
+                      </h3>
+                      <p className="text-muted-foreground mb-2">
+                        Transform self-criticism into self-compassion and cultivate inner support.
+                      </p>
+                      <p className="text-sm text-terracotta-600 font-medium">
+                        Our flagship program guides you gently along the journey.
+                      </p>
+                    </div>
+                    <ArrowRight className="h-5 w-5 text-terracotta-400 group-hover:text-terracotta-600 transition-colors mt-1" />
+                  </div>
+                </Link>
+              </ScrollReveal>
+              
+              <ScrollReveal delay={0.2}>
+                <Link to="/agenda" className="group block bg-white hover:bg-terracotta-50 border border-warm-200 hover:border-terracotta-300 rounded-2xl p-6 transition-all shadow-sm hover:shadow-md">
+                  <div className="flex items-start gap-4">
+                    <span className="text-3xl">✨</span>
+                    <div className="flex-1">
+                      <h3 className="font-semibold text-xl text-foreground mb-2 group-hover:text-terracotta-700 transition-colors">
+                        Workshops
+                      </h3>
+                      <p className="text-muted-foreground mb-2">
+                        A gentle way to explore and deepen mindfulness and self-compassion.
+                      </p>
+                      <p className="text-sm text-terracotta-600 font-medium">
+                        Perfect for getting started or extending your practice before committing to a full program.
+                      </p>
+                    </div>
+                    <ArrowRight className="h-5 w-5 text-terracotta-400 group-hover:text-terracotta-600 transition-colors mt-1" />
+                  </div>
+                </Link>
+              </ScrollReveal>
+              
+              <ScrollReveal delay={0.3}>
+                <Link to="/coaching" className="group block bg-white hover:bg-terracotta-50 border border-warm-200 hover:border-terracotta-300 rounded-2xl p-6 transition-all shadow-sm hover:shadow-md">
+                  <div className="flex items-start gap-4">
+                    <span className="text-3xl">🤍</span>
+                    <div className="flex-1">
+                      <h3 className="font-semibold text-xl text-foreground mb-2 group-hover:text-terracotta-700 transition-colors">
+                        Coaching
+                      </h3>
+                      <p className="text-muted-foreground mb-2">
+                        Guidance tailored to your pace and personal journey.
+                      </p>
+                      <p className="text-sm text-terracotta-600 font-medium">
+                        Receive one-to-one support as you explore your path.
+                      </p>
+                    </div>
+                    <ArrowRight className="h-5 w-5 text-terracotta-400 group-hover:text-terracotta-600 transition-colors mt-1" />
+                  </div>
+                </Link>
+              </ScrollReveal>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Problem Section */}
-      <section className="py-24 lg:py-32 bg-warm-50">
+      <section className="py-24 lg:py-32 bg-white">
         <div className="container mx-auto px-4">
           <div className="mx-auto max-w-3xl">
             <ScrollReveal>
@@ -288,21 +336,34 @@ const Index = () => {
                   Do you often feel tense or hard on yourself?
                 </h3>
                 <p>
-                  Your mind never stops. You want to do things right, you're critical of yourself and you keep going — even when your body signals you to stop.
+                  Your mind never stops. You want to do things right, you're self-critical, and you keep going — even when your body signals you to slow down.
                 </p>
                 <p>
-                  You long for more gentleness, but deep inside the tension remains.
+                  You long for gentleness, yet the tension remains.
                 </p>
-                <p>
-                  Perhaps you've tried many things: read books, followed trainings, applied advice. And yet stress, inner unrest or exhaustion keep returning.
-                </p>
-                <div className="bg-terracotta-50 border-l-4 border-terracotta-400 rounded-r-xl p-6 my-8">
-                  <p className="text-foreground font-medium mb-2">
-                    The problem is not that you're doing too little.
+              </div>
+            </ScrollReveal>
+            
+            <ScrollReveal delay={0.1}>
+              <div className="mt-16">
+                <h3 className="text-2xl font-light text-foreground mb-6">
+                  You're not <span className="font-serif italic text-terracotta-600">alone</span>
+                </h3>
+                <div className="space-y-6 text-lg text-muted-foreground leading-relaxed">
+                  <p>
+                    Maybe you've tried many things already: books, courses, advice, techniques.
                   </p>
-                  <p className="text-foreground font-medium">
-                    The problem is that you've been too hard on yourself for too long. That's why mind, body and heart get out of balance.
+                  <p>
+                    And still, stress, inner unrest, or exhaustion return.
                   </p>
+                  <div className="bg-terracotta-50 border-l-4 border-terracotta-400 rounded-r-xl p-6 my-8">
+                    <p className="text-foreground font-medium mb-2">
+                      The problem isn't that you're doing too little.
+                    </p>
+                    <p className="text-foreground font-medium">
+                      The problem is that you've been too hard on yourself for too long — and over time, mind, body, and heart lose balance.
+                    </p>
+                  </div>
                 </div>
               </div>
             </ScrollReveal>
@@ -311,7 +372,7 @@ const Index = () => {
       </section>
 
       {/* Method Section - Mind, Body, Heart */}
-      <section className="py-24 lg:py-32 bg-white">
+      <section className="py-24 lg:py-32 bg-warm-50">
         <div className="container mx-auto px-4">
           <div className="mx-auto max-w-5xl">
             <ScrollReveal>
@@ -328,18 +389,18 @@ const Index = () => {
             <ScrollReveal delay={0.1}>
               <div className="text-center mb-16">
                 <p className="text-muted-foreground text-lg max-w-2xl mx-auto mb-4">
-                  Real change happens when you include everything: your thoughts, your body and your emotional world.
+                  Real change happens when you include all of you: your thoughts, your body, and your emotional world.
                 </p>
                 <p className="text-muted-foreground text-base max-w-2xl mx-auto">
                   Our programs combine:
                 </p>
                 <ul className="text-muted-foreground text-base max-w-lg mx-auto mt-4 space-y-1">
                   <li>• Mindful Self-Compassion (MSC)</li>
-                  <li>• Mindfulness & meditation</li>
+                  <li>• Mindfulness and meditation</li>
                   <li>• Body awareness and gentle movement</li>
                 </ul>
                 <p className="text-foreground text-lg mt-6 font-medium">
-                  Together they invite you to slow down, soften and come home to yourself again.
+                  Together, they invite you to slow down, soften, and come home to yourself with more peace.
                 </p>
               </div>
             </ScrollReveal>
@@ -347,7 +408,7 @@ const Index = () => {
             <StaggerContainer className="grid gap-8 md:grid-cols-3">
               {methodPillars.map((pillar, index) => (
                 <StaggerItem key={index}>
-                  <Card className="h-full bg-warm-50 border-warm-200 shadow-sm hover:shadow-md transition-shadow">
+                  <Card className="h-full bg-white border-warm-200 shadow-sm hover:shadow-md transition-shadow">
                     <CardContent className="p-8">
                       <div className={`h-16 w-16 rounded-2xl flex items-center justify-center mb-6 ${
                         pillar.color === 'terracotta' ? 'bg-terracotta-100' : 
@@ -376,6 +437,25 @@ const Index = () => {
                 </StaggerItem>
               ))}
             </StaggerContainer>
+
+            <ScrollReveal delay={0.3}>
+              <div className="text-center mt-12">
+                <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+                  <Button asChild size="lg" className="bg-terracotta-600 hover:bg-terracotta-700 text-white rounded-full px-10 py-6 text-lg shadow-lg hover:shadow-xl transition-all">
+                    <a href="#programmas">
+                      Reserve Your Spot Today
+                      <ArrowRight className="ml-3 h-5 w-5" />
+                    </a>
+                  </Button>
+                  <Button asChild variant="outline" size="lg" className="border-terracotta-300 text-terracotta-700 hover:bg-terracotta-50 rounded-full px-8 py-6 text-lg">
+                    <Link to="/bedrijven">
+                      <Building2 className="mr-2 h-5 w-5" />
+                      For Organizations
+                    </Link>
+                  </Button>
+                </div>
+              </div>
+            </ScrollReveal>
           </div>
         </div>
       </section>
