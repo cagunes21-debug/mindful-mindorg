@@ -58,11 +58,18 @@ const workshopDates = [
   { lang: "English", date: "10 februari 2026", time: "19:00 – 20:00", price: "€35" },
 ];
 
+const weeklySessions = [
+  { lang: "Nederlands", day: "Donderdag", time: "12:15 – 12:45", description: "Korte geleide meditatie om midden op de dag even stil te staan.", price: "Gratis" },
+  { lang: "English", day: "Tuesday", time: "12:15 – 12:45", description: "A short guided meditation to pause and reconnect during your day.", price: "Free" },
+];
+
 const MindfulZelfcompassie = () => {
   const [isRegistrationOpen, setIsRegistrationOpen] = useState(false);
   const [selectedTraining, setSelectedTraining] = useState<typeof trainingDates[0] | null>(null);
   const [isWorkshopRegistrationOpen, setIsWorkshopRegistrationOpen] = useState(false);
   const [selectedWorkshop, setSelectedWorkshop] = useState<typeof workshopDates[0] | null>(null);
+  const [isWeeklyRegistrationOpen, setIsWeeklyRegistrationOpen] = useState(false);
+  const [selectedWeekly, setSelectedWeekly] = useState<typeof weeklySessions[0] | null>(null);
 
   const openRegistration = (training: typeof trainingDates[0]) => {
     setSelectedTraining(training);
@@ -72,6 +79,11 @@ const MindfulZelfcompassie = () => {
   const openWorkshopRegistration = (workshop: typeof workshopDates[0]) => {
     setSelectedWorkshop(workshop);
     setIsWorkshopRegistrationOpen(true);
+  };
+
+  const openWeeklyRegistration = (session: typeof weeklySessions[0]) => {
+    setSelectedWeekly(session);
+    setIsWeeklyRegistrationOpen(true);
   };
 
   return (
@@ -822,6 +834,61 @@ const MindfulZelfcompassie = () => {
               <div className="h-px flex-1 bg-warm-300" />
             </div>
 
+            {/* Wekelijkse Sessies */}
+            <ScrollReveal delay={0.25}>
+              <div>
+                <div className="flex items-center gap-3 mb-6">
+                  <div className="h-10 w-10 rounded-xl bg-terracotta-100 flex items-center justify-center">
+                    <Clock className="h-5 w-5 text-terracotta-600" />
+                  </div>
+                  <h3 className="text-2xl font-medium text-foreground">Wekelijkse Sessies</h3>
+                  <span className="rounded-full bg-terracotta-100 px-3 py-1 text-xs font-medium text-terracotta-700">30 min • Gratis</span>
+                </div>
+                
+                <p className="text-muted-foreground mb-6 max-w-2xl">
+                  Sluit wekelijks aan voor een korte, geleide meditatiesessie. Geen ervaring nodig — gewoon even pauzeren en opladen.
+                </p>
+                
+                <StaggerContainer className="grid gap-4 md:grid-cols-2">
+                  {weeklySessions.map((session, index) => (
+                    <StaggerItem key={index}>
+                      <Card className="border-warm-200 bg-white hover:shadow-lg transition-all duration-300 rounded-2xl overflow-hidden group h-full">
+                        <CardContent className="p-5">
+                          <div className="flex items-center justify-between mb-3">
+                            <span className={`px-2.5 py-1 rounded-full text-xs font-semibold ${
+                              session.lang === "Nederlands" 
+                                ? "bg-terracotta-100 text-terracotta-700" 
+                                : "bg-sage-100 text-sage-700"
+                            }`}>
+                              {session.lang}
+                            </span>
+                            <span className="text-xs text-muted-foreground font-medium">{session.price}</span>
+                          </div>
+                          <p className="text-base font-medium text-foreground mb-1">Elke {session.day}</p>
+                          <p className="text-sm text-muted-foreground mb-2">{session.time}</p>
+                          <p className="text-sm text-muted-foreground mb-4">{session.description}</p>
+                          <Button 
+                            size="sm" 
+                            className="w-full bg-terracotta-600 hover:bg-terracotta-700 text-white rounded-full"
+                            onClick={() => openWeeklyRegistration(session)}
+                          >
+                            Meld je aan
+                          </Button>
+                        </CardContent>
+                      </Card>
+                    </StaggerItem>
+                  ))}
+                </StaggerContainer>
+              </div>
+            </ScrollReveal>
+
+            {/* Divider */}
+            <div className="flex items-center gap-4 my-12">
+              <div className="h-px flex-1 bg-warm-300" />
+              <Leaf className="h-5 w-5 text-sage-400" />
+              <div className="h-px flex-1 bg-warm-300" />
+            </div>
+
             {/* 1-op-1 Begeleiding */}
             <ScrollReveal delay={0.3}>
               <div className="text-center">
@@ -1187,6 +1254,28 @@ const MindfulZelfcompassie = () => {
               price={selectedWorkshop.price}
               onSuccess={() => {
                 setTimeout(() => setIsWorkshopRegistrationOpen(false), 2000);
+              }}
+            />
+          )}
+        </DialogContent>
+      </Dialog>
+
+      {/* Weekly Session Registration Modal */}
+      <Dialog open={isWeeklyRegistrationOpen} onOpenChange={setIsWeeklyRegistrationOpen}>
+        <DialogContent className="sm:max-w-md max-h-[90vh] overflow-y-auto">
+          <DialogHeader>
+            <DialogTitle className="text-xl font-light">
+              Aanmelden voor wekelijkse sessie
+            </DialogTitle>
+          </DialogHeader>
+          {selectedWeekly && (
+            <RegistrationForm
+              trainingName={`Wekelijkse Sessie (${selectedWeekly.lang})`}
+              trainingDate={`Elke ${selectedWeekly.day}`}
+              trainingTime={selectedWeekly.time}
+              price={selectedWeekly.price}
+              onSuccess={() => {
+                setTimeout(() => setIsWeeklyRegistrationOpen(false), 2000);
               }}
             />
           )}
