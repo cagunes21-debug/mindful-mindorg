@@ -682,8 +682,9 @@ const MindfulZelfcompassie = () => {
                     <div className="h-14 w-14 rounded-2xl bg-gradient-to-br from-terracotta-100 to-terracotta-200 flex items-center justify-center mb-4 mx-auto group-hover:scale-110 transition-transform">
                       <Calendar className="h-7 w-7 text-terracotta-600" />
                     </div>
-                    <h3 className="text-lg font-semibold text-foreground mb-2">8-weekse Training</h3>
-                    <p className="text-sm text-muted-foreground mb-4">Het complete MSC-programma in 8 weken + stilte-retreat.</p>
+                    <h3 className="text-lg font-semibold text-foreground mb-1">8-weekse MSC Training</h3>
+                    <p className="text-xs text-muted-foreground mb-3">8 sessies van 2 uur · online · incl. stilte-retreat</p>
+                    <p className="text-sm text-muted-foreground mb-4">Diepgaand programma om zelfcompassie stap voor stap te ontwikkelen en te integreren in je dagelijks leven.</p>
                     <p className="text-xl font-light text-terracotta-600">€550</p>
                   </CardContent>
                 </Card>
@@ -693,8 +694,9 @@ const MindfulZelfcompassie = () => {
                     <div className="h-14 w-14 rounded-2xl bg-gradient-to-br from-sage-100 to-sage-200 flex items-center justify-center mb-4 mx-auto group-hover:scale-110 transition-transform">
                       <Sparkles className="h-7 w-7 text-sage-600" />
                     </div>
-                    <h3 className="text-lg font-semibold text-foreground mb-2">Workshops</h3>
-                    <p className="text-sm text-muted-foreground mb-4">Laagdrempelige kennismaking met zelfcompassie.</p>
+                    <h3 className="text-lg font-semibold text-foreground mb-1">Workshop Zelfcompassie</h3>
+                    <p className="text-xs text-muted-foreground mb-3">1 sessie van 1 uur · online · geen voorkennis nodig</p>
+                    <p className="text-sm text-muted-foreground mb-4">Maak kennis met de basis van zelfcompassie in een laagdrempelige, interactieve sessie.</p>
                     <p className="text-xl font-light text-terracotta-600">€35</p>
                   </CardContent>
                 </Card>
@@ -704,8 +706,9 @@ const MindfulZelfcompassie = () => {
                     <div className="h-14 w-14 rounded-2xl bg-gradient-to-br from-warm-100 to-warm-200 flex items-center justify-center mb-4 mx-auto group-hover:scale-110 transition-transform">
                       <Heart className="h-7 w-7 text-terracotta-600" />
                     </div>
-                    <h3 className="text-lg font-semibold text-foreground mb-2">1-op-1 Begeleiding</h3>
-                    <p className="text-sm text-muted-foreground mb-4">Persoonlijke aandacht in je eigen tempo.</p>
+                    <h3 className="text-lg font-semibold text-foreground mb-1">1-op-1 Coaching</h3>
+                    <p className="text-xs text-muted-foreground mb-3">Individueel · op maat · online of op locatie</p>
+                    <p className="text-sm text-muted-foreground mb-4">Persoonlijke begeleiding afgestemd op jouw situatie, in je eigen tempo en ritme.</p>
                     <p className="text-xl font-light text-terracotta-600">Op aanvraag</p>
                   </CardContent>
                 </Card>
