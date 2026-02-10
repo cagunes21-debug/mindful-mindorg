@@ -54,8 +54,8 @@ const trainingDates = [
 ];
 
 const workshopDates = [
-  { lang: "Nederlands", date: "11 februari 2026", time: "19:00 – 20:00", price: "€35" },
-  { lang: "English", date: "10 februari 2026", time: "19:00 – 20:00", price: "€35" },
+  { lang: "Nederlands", date: "11 februari 2026", time: "19:00 – 20:00", price: "€45" },
+  { lang: "English", date: "10 februari 2026", time: "19:00 – 20:00", price: "€45" },
 ];
 
 const weeklySessions = [
@@ -697,7 +697,7 @@ const MindfulZelfcompassie = () => {
                     <h3 className="text-lg font-semibold text-foreground mb-1">Workshop Zelfcompassie</h3>
                     <p className="text-xs text-muted-foreground mb-3">1 sessie van 1 uur · online · geen voorkennis nodig</p>
                     <p className="text-sm text-muted-foreground mb-4">Maak kennis met de basis van zelfcompassie in een laagdrempelige, interactieve sessie.</p>
-                    <p className="text-xl font-light text-terracotta-600">€35</p>
+                    <p className="text-xl font-light text-terracotta-600">€45</p>
                   </CardContent>
                 </Card>
                 
@@ -792,7 +792,7 @@ const MindfulZelfcompassie = () => {
                     <Sparkles className="h-5 w-5 text-sage-600" />
                   </div>
                   <h3 className="text-2xl font-medium text-foreground">Workshops</h3>
-                  <span className="rounded-full bg-sage-100 px-3 py-1 text-xs font-medium text-sage-700">1 uur • €35</span>
+                  <span className="rounded-full bg-sage-100 px-3 py-1 text-xs font-medium text-sage-700">1 uur • €45</span>
                 </div>
                 
                 <p className="text-muted-foreground mb-6 max-w-2xl">
