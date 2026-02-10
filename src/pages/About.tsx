@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { Heart, ArrowRight, Check, Sparkles, Target, Eye } from "lucide-react";
+import { Heart, ArrowRight, Check, Sparkles, Target, Eye, Leaf } from "lucide-react";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import { ScrollReveal, StaggerContainer, StaggerItem } from "@/components/ScrollReveal";
@@ -221,8 +221,82 @@ const About = () => {
         </div>
       </section>
 
+      {/* Over Çağla */}
+      <section className="py-20 lg:py-24 bg-warm-50">
+        <div className="container mx-auto px-4">
+          <div className="mx-auto max-w-3xl">
+            <ScrollReveal>
+              <div className="text-center mb-12">
+                <p className="text-sm font-medium text-terracotta-500 tracking-widest uppercase mb-4">De Mens Achter Mindful Mind</p>
+                <h2 className="text-3xl font-light text-foreground md:text-4xl leading-tight">
+                  Over <span className="font-serif italic text-terracotta-600">Çağla Güneş</span>
+                </h2>
+              </div>
+            </ScrollReveal>
+
+            <ScrollReveal delay={0.1}>
+              <div className="space-y-6 text-muted-foreground text-lg leading-relaxed">
+                <p>
+                  Çağla wordt al lang geleid door een diepe oriëntatie op innerlijke verbinding en bewustzijn. Meditatie werd al op jonge leeftijd een natuurlijk onderdeel van haar leven — vanaf haar achtste — en verdiepte zich door haar studies, jarenlange beoefening en langere Vipassana-retraites.
+                </p>
+
+                <p>
+                  Haar pad heeft zich ontvouwd door geleefde ervaring. Jaren van reizen en wonen in het buitenland — in Nederland, Duitsland, Spanje en Mexico — boden niet alleen culturele verkenning, maar ook een voortdurend onderzoek naar identiteit, verbondenheid en wat het betekent om je thuis te voelen. In plaats van weg te bewegen van zichzelf, brachten deze reizen haar dichter bij haar essentie.
+                </p>
+
+                <p>
+                  Een sterke verbinding met haar wortels, Cappadocië, en haar voorouders vormt een belangrijk fundament in haar leven en werk. Dit voorouderlijk bewustzijn brengt een gevoel van continuïteit, diepte en respect voor de lagen die de menselijke ervaring vormen — persoonlijk, collectief en transgenerationeel.
+                </p>
+              </div>
+            </ScrollReveal>
+
+            {/* Two pathways */}
+            <ScrollReveal delay={0.2}>
+              <div className="mt-12 mb-8">
+                <p className="text-center text-foreground text-lg font-medium mb-8">
+                  In de loop van de tijd zijn twee heldere paden ontstaan in haar werk:
+                </p>
+
+                <StaggerContainer className="grid gap-6 md:grid-cols-2">
+                  <StaggerItem>
+                    <div className="bg-white rounded-3xl p-8 border border-terracotta-100 h-full">
+                      <div className="h-12 w-12 rounded-2xl bg-terracotta-100 flex items-center justify-center mb-5">
+                        <Sparkles className="h-6 w-6 text-terracotta-600" />
+                      </div>
+                      <h3 className="text-xl font-semibold text-foreground mb-3">Mindful Mind</h3>
+                      <p className="text-muted-foreground leading-relaxed">
+                        De plek waar Çağla mindfulness-gebaseerde trainingen en educatie aanbiedt. De focus ligt op het cultiveren van bewustzijn, zelfcompassie en belichaamde aanwezigheid via gestructureerde programma's en groepsleren.
+                      </p>
+                    </div>
+                  </StaggerItem>
+                  <StaggerItem>
+                    <div className="bg-white rounded-3xl p-8 border border-sage-200 h-full">
+                      <div className="h-12 w-12 rounded-2xl bg-sage-100 flex items-center justify-center mb-5">
+                        <Leaf className="h-6 w-6 text-sage-600" />
+                      </div>
+                      <h3 className="text-xl font-semibold text-foreground mb-3">In Harmonia</h3>
+                      <p className="text-muted-foreground leading-relaxed">
+                        Gewijd aan therapeutisch werk. Deze ruimte biedt een meer individuele, relationele en procesgerichte benadering, waarbij mensen worden ondersteund bij het ontmoeten van diepere emotionele lagen, patronen en levensovergangen.
+                      </p>
+                    </div>
+                  </StaggerItem>
+                </StaggerContainer>
+              </div>
+            </ScrollReveal>
+
+            <ScrollReveal delay={0.3}>
+              <div className="bg-gradient-to-r from-terracotta-50 to-warm-50 rounded-2xl p-6 lg:p-8 border border-terracotta-200 text-center">
+                <p className="text-foreground text-lg leading-relaxed font-medium">
+                  Beide paden komen voort uit dezelfde bron: een toewijding aan aanwezigheid, eerlijkheid en zachte diepte. Samen weerspiegelen ze twee uitdrukkingen van één intentie — <span className="text-terracotta-600">anderen ondersteunen bij het opnieuw verbinden met zichzelf</span>, op een manier die gegrond, respectvol en oprecht voelt.
+                </p>
+              </div>
+            </ScrollReveal>
+          </div>
+        </div>
+      </section>
+
       {/* Meet the Trainers Bridge */}
-      <section className="py-16 lg:py-20 bg-warm-50">
+      <section className="py-16 lg:py-20 bg-white">
         <div className="container mx-auto px-4">
           <div className="mx-auto max-w-2xl text-center">
             <ScrollReveal>
