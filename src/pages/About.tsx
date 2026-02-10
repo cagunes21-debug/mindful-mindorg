@@ -227,7 +227,7 @@ const About = () => {
           <div className="mx-auto max-w-3xl">
             <ScrollReveal>
               <div className="text-center mb-12">
-                <p className="text-sm font-medium text-terracotta-500 tracking-widest uppercase mb-4">De Mens Achter Mindful Mind</p>
+                <p className="text-sm font-medium text-terracotta-500 tracking-widest uppercase mb-4">De Persoon Achter Mindful Mind</p>
                 <h2 className="text-3xl font-light text-foreground md:text-4xl leading-tight">
                   Over <span className="font-serif italic text-terracotta-600">Çağla Güneş</span>
                 </h2>
