@@ -709,7 +709,7 @@ const MindfulZelfcompassie = () => {
                     <h3 className="text-lg font-semibold text-foreground mb-1">1-op-1 Coaching</h3>
                     <p className="text-xs text-muted-foreground mb-3">Individueel · op maat · online of op locatie</p>
                     <p className="text-sm text-muted-foreground mb-4">Persoonlijke begeleiding afgestemd op jouw situatie, in je eigen tempo en ritme.</p>
-                    <p className="text-xl font-light text-terracotta-600">Op aanvraag</p>
+                    <p className="text-xl font-light text-terracotta-600">€75 per sessie</p>
                   </CardContent>
                 </Card>
               </div>
