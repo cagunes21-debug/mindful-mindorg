@@ -59,8 +59,8 @@ const workshopDates = [
 ];
 
 const weeklySessions = [
-  { lang: "Nederlands", day: "Donderdag", time: "12:15 – 12:45", description: "Korte geleide meditatie om midden op de dag even stil te staan.", price: "Gratis" },
-  { lang: "English", day: "Tuesday", time: "12:15 – 12:45", description: "A short guided meditation to pause and reconnect during your day.", price: "Free" },
+  { lang: "Nederlands", day: "Donderdag", time: "12:15 – 12:45", description: "Korte geleide meditatie om midden op de dag even stil te staan.", price: "€30" },
+  { lang: "English", day: "Tuesday", time: "12:15 – 12:45", description: "A short guided meditation to pause and reconnect during your day.", price: "€30" },
 ];
 
 const MindfulZelfcompassie = () => {
@@ -845,7 +845,7 @@ const MindfulZelfcompassie = () => {
                     <Clock className="h-5 w-5 text-terracotta-600" />
                   </div>
                   <h3 className="text-2xl font-medium text-foreground">Wekelijkse Sessies</h3>
-                  <span className="rounded-full bg-terracotta-100 px-3 py-1 text-xs font-medium text-terracotta-700">30 min • Gratis</span>
+                  <span className="rounded-full bg-terracotta-100 px-3 py-1 text-xs font-medium text-terracotta-700">30 min • €30</span>
                 </div>
                 
                 <p className="text-muted-foreground mb-6 max-w-2xl">
