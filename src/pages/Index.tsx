@@ -588,24 +588,20 @@ const Index = () => {
                     </CardContent>
                   </Card>
                 </ScrollReveal>
-              </div>
-
-              {/* Individuele begeleiding - full width */}
-              <ScrollReveal delay={0.25} className="md:col-span-2">
-                <Card className="bg-white border-warm-200 shadow-sm hover:shadow-lg transition-all">
-                  <CardContent className="p-6">
-                    <div className="flex flex-col md:flex-row md:items-center gap-4">
-                      <div className="flex items-start gap-3 flex-1">
+                <ScrollReveal delay={0.25}>
+                  <Card className="bg-white border-warm-200 shadow-sm hover:shadow-lg transition-all">
+                    <CardContent className="p-6">
+                      <div className="flex items-start gap-3 mb-3">
                         <span className="text-2xl">🤍</span>
                         <div>
                           <h3 className="text-lg font-semibold text-foreground">Individuele begeleiding</h3>
                           <p className="text-terracotta-600 text-xs font-medium">Individueel · op maat · online of op locatie</p>
-                          <p className="text-muted-foreground text-sm mt-2">
-                            Persoonlijke begeleiding, afgestemd op jouw situatie, tempo en behoeften.
-                          </p>
                         </div>
                       </div>
-                      <div className="flex items-center gap-4 md:shrink-0">
+                      <p className="text-muted-foreground text-sm mb-3">
+                        Persoonlijke begeleiding, afgestemd op jouw situatie, tempo en behoeften.
+                      </p>
+                      <div className="flex items-center justify-between">
                         <span className="text-lg font-light text-terracotta-600">€ 75 <span className="text-sm text-muted-foreground">per sessie</span></span>
                         <Button asChild size="sm" className="bg-terracotta-600 hover:bg-terracotta-700 text-white rounded-full">
                           <Link to="/coaching">
@@ -614,10 +610,10 @@ const Index = () => {
                           </Link>
                         </Button>
                       </div>
-                    </div>
-                  </CardContent>
-                </Card>
-              </ScrollReveal>
+                    </CardContent>
+                  </Card>
+                </ScrollReveal>
+              </div>
             </div>
 
             {/* For Organizations Card */}
