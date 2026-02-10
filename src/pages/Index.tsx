@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { Heart, Brain, Sparkles, ArrowRight, Check, Mail, Phone, MessageCircle, Clock, Users, Globe, Calendar, Quote, TrendingDown, TrendingUp, Shield, Zap, Mountain, Building2, MapPin, GraduationCap, Award } from "lucide-react";
+import { Heart, Brain, Sparkles, ArrowRight, Check, Mail, Phone, MessageCircle, Clock, Users, Globe, Calendar, Quote, TrendingDown, TrendingUp, Shield, Zap, Mountain, Building2, MapPin, GraduationCap, Award, Send } from "lucide-react";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import { ScrollReveal, StaggerContainer, StaggerItem } from "@/components/ScrollReveal";
@@ -14,58 +14,7 @@ import WhatsAppButton from "@/components/WhatsAppButton";
 import CookieConsent from "@/components/CookieConsent";
 import heroMindfulness from "@/assets/hero-mindfulness.jpg";
 
-const programs = [
-  {
-    title: "8-Week Mindful Self-Compassion Training",
-    subtitle: "Online | Live in small groups",
-    icon: Globe,
-    emoji: "🌱",
-    features: [
-      "8 weeks + optional silent retreat",
-      "2 hours per session",
-      "Dutch or English",
-      "Start dates: February 16, 2026 (NL), April 22, 2026 (EN)",
-    ],
-    price: "€550",
-    description: "Learn to soften stress and self-criticism in 8 weeks.",
-    cta: "Reserve your spot",
-    secondaryCta: "View all dates",
-    link: "/",
-    highlight: true,
-  },
-  {
-    title: "Workshops",
-    subtitle: "Easy introduction | Online or in-person",
-    icon: Clock,
-    emoji: "✨",
-    features: [
-      "1 hour",
-      "Practical exercises for immediate calm and kindness",
-      "Low-threshold introduction to mindfulness & self-compassion",
-    ],
-    price: "€35",
-    description: "Try it first in a short, practical session.",
-    cta: "View workshops",
-    secondaryCta: "View dates & times",
-    link: "/agenda",
-  },
-  {
-    title: "Coaching",
-    subtitle: "Personal deepening | Online or on location",
-    icon: Heart,
-    emoji: "🤍",
-    features: [
-      "Individual sessions",
-      "Focused on deepening or specific challenges",
-      "On request",
-    ],
-    price: "On request",
-    description: "Work at your own pace on personal themes.",
-    cta: "Schedule a coaching session",
-    secondaryCta: "View available dates",
-    link: "/coaching",
-  },
-];
+// Programs data removed - now inline in the section below
 
 const stats = [
   { label: "stress", value: "36%", direction: "down" },
@@ -548,58 +497,128 @@ const Index = () => {
               </div>
             </ScrollReveal>
             
-            <StaggerContainer className="grid gap-8 md:grid-cols-2">
-              {programs.map((program, index) => (
-                <StaggerItem key={index}>
-                  <Card className={`h-full border-warm-200 shadow-sm hover:shadow-lg transition-all ${program.highlight ? 'ring-2 ring-terracotta-300 bg-gradient-to-br from-white to-terracotta-50' : 'bg-white'}`}>
-                    <CardContent className="p-8">
-                      <div className="flex items-start gap-4 mb-6">
-                        <div className={`h-14 w-14 rounded-2xl flex items-center justify-center shrink-0 ${program.highlight ? 'bg-terracotta-500' : 'bg-terracotta-100'}`}>
-                          <span className="text-2xl">{program.emoji}</span>
-                        </div>
+            <div className="grid gap-8 md:grid-cols-2">
+              {/* Main product: 8-weekse MSC Training */}
+              <ScrollReveal delay={0.1}>
+                <Card className="h-full ring-2 ring-terracotta-300 bg-gradient-to-br from-white to-terracotta-50 border-warm-200 shadow-sm hover:shadow-lg transition-all">
+                  <CardContent className="p-8 flex flex-col h-full">
+                    <div className="flex items-start gap-4 mb-6">
+                      <div className="h-14 w-14 rounded-2xl bg-terracotta-500 flex items-center justify-center shrink-0">
+                        <span className="text-2xl">🌱</span>
+                      </div>
+                      <div>
+                        <h3 className="text-xl font-semibold text-foreground">8-weekse Mindful Zelfcompassie-training</h3>
+                        <p className="text-terracotta-600 text-sm font-medium">8 sessies van 2 uur · online · inclusief stilte-retreat</p>
+                      </div>
+                    </div>
+                    <p className="text-foreground font-medium text-sm mb-4">
+                      Een verdiepend programma waarin je stap voor stap zelfcompassie ontwikkelt en leert integreren in je dagelijks leven.
+                    </p>
+                    <div className="flex items-center mb-6">
+                      <span className="text-2xl font-light text-terracotta-600">€ 550</span>
+                    </div>
+                    <div className="mt-auto flex flex-col gap-2">
+                      <Button asChild className="bg-terracotta-600 hover:bg-terracotta-700 text-white rounded-full">
+                        <Link to="/">
+                          <Send className="mr-2 h-4 w-4" />
+                          Schrijf je in
+                        </Link>
+                      </Button>
+                      <Button asChild variant="ghost" className="text-terracotta-600 hover:text-terracotta-700 hover:bg-terracotta-50">
+                        <Link to="/">
+                          Meer informatie
+                          <ArrowRight className="ml-2 h-4 w-4" />
+                        </Link>
+                      </Button>
+                    </div>
+                  </CardContent>
+                </Card>
+              </ScrollReveal>
+
+              {/* Right column: Workshops + Weekly Sessions stacked */}
+              <div className="flex flex-col gap-6">
+                <ScrollReveal delay={0.15}>
+                  <Card className="bg-white border-warm-200 shadow-sm hover:shadow-lg transition-all">
+                    <CardContent className="p-6">
+                      <div className="flex items-start gap-3 mb-3">
+                        <span className="text-2xl">🧘</span>
                         <div>
-                          <h3 className="text-xl font-semibold text-foreground">{program.title}</h3>
-                          <p className="text-terracotta-600 text-sm font-medium">{program.subtitle}</p>
+                          <h3 className="text-lg font-semibold text-foreground">Wekelijkse sessies mindfulness & zelfcompassie</h3>
+                          <p className="text-terracotta-600 text-xs font-medium">1 uur per sessie · online</p>
                         </div>
                       </div>
-
-                      {program.description && (
-                        <p className="text-foreground font-medium text-sm mb-4">{program.description}</p>
-                      )}
-                      
-                      <ul className="space-y-2 mb-6">
-                        {program.features.map((feature, i) => (
-                          <li key={i} className="flex items-start gap-2 text-sm text-muted-foreground">
-                            <Check className="h-4 w-4 text-terracotta-500 mt-0.5 shrink-0" />
-                            {feature}
-                          </li>
-                        ))}
-                      </ul>
-                      
-                      <div className="flex items-center justify-between mb-4">
-                        <span className="text-2xl font-light text-terracotta-600">{program.price}</span>
-                      </div>
-
-                      <div className="flex flex-col gap-2">
-                        <Button asChild className={program.highlight ? 'bg-terracotta-600 hover:bg-terracotta-700 text-white rounded-full' : 'bg-terracotta-100 hover:bg-terracotta-200 text-terracotta-700 rounded-full'}>
-                          <Link to={program.link}>
-                            👉 {program.cta}
-                            <ArrowRight className="ml-2 h-4 w-4" />
+                      <p className="text-muted-foreground text-sm mb-3">
+                        Korte, regelmatige sessies om mindfulness en zelfcompassie dagelijks te oefenen en te verankeren.
+                      </p>
+                      <div className="flex items-center justify-between">
+                        <span className="text-lg font-light text-terracotta-600">€ 15 <span className="text-sm text-muted-foreground">per sessie</span></span>
+                        <Button asChild size="sm" className="bg-terracotta-600 hover:bg-terracotta-700 text-white rounded-full">
+                          <Link to="/agenda">
+                            <Send className="mr-1.5 h-3.5 w-3.5" />
+                            Aanmelden
                           </Link>
                         </Button>
-                        {program.secondaryCta && (
-                          <Button asChild variant="ghost" className="text-terracotta-600 hover:text-terracotta-700 hover:bg-terracotta-50">
-                            <Link to={program.link}>
-                              👉 {program.secondaryCta}
-                            </Link>
-                          </Button>
-                        )}
                       </div>
                     </CardContent>
                   </Card>
-                </StaggerItem>
-              ))}
-            </StaggerContainer>
+                </ScrollReveal>
+
+                <ScrollReveal delay={0.2}>
+                  <Card className="bg-white border-warm-200 shadow-sm hover:shadow-lg transition-all">
+                    <CardContent className="p-6">
+                      <div className="flex items-start gap-3 mb-3">
+                        <span className="text-2xl">✨</span>
+                        <div>
+                          <h3 className="text-lg font-semibold text-foreground">Workshop Zelfcompassie</h3>
+                          <p className="text-terracotta-600 text-xs font-medium">1 online sessie van 1 uur · geen voorkennis nodig</p>
+                        </div>
+                      </div>
+                      <p className="text-muted-foreground text-sm mb-3">
+                        Maak op een laagdrempelige en interactieve manier kennis met de basis van zelfcompassie.
+                      </p>
+                      <div className="flex items-center justify-between">
+                        <span className="text-lg font-light text-terracotta-600">€ 35</span>
+                        <Button asChild size="sm" className="bg-terracotta-600 hover:bg-terracotta-700 text-white rounded-full">
+                          <Link to="/agenda">
+                            <Send className="mr-1.5 h-3.5 w-3.5" />
+                            Aanmelden
+                          </Link>
+                        </Button>
+                      </div>
+                    </CardContent>
+                  </Card>
+                </ScrollReveal>
+              </div>
+
+              {/* Individuele begeleiding - full width */}
+              <ScrollReveal delay={0.25} className="md:col-span-2">
+                <Card className="bg-white border-warm-200 shadow-sm hover:shadow-lg transition-all">
+                  <CardContent className="p-6">
+                    <div className="flex flex-col md:flex-row md:items-center gap-4">
+                      <div className="flex items-start gap-3 flex-1">
+                        <span className="text-2xl">🤍</span>
+                        <div>
+                          <h3 className="text-lg font-semibold text-foreground">Individuele begeleiding</h3>
+                          <p className="text-terracotta-600 text-xs font-medium">Individueel · op maat · online of op locatie</p>
+                          <p className="text-muted-foreground text-sm mt-2">
+                            Persoonlijke begeleiding, afgestemd op jouw situatie, tempo en behoeften.
+                          </p>
+                        </div>
+                      </div>
+                      <div className="flex items-center gap-4 md:shrink-0">
+                        <span className="text-lg font-light text-terracotta-600">€ 75 <span className="text-sm text-muted-foreground">per sessie</span></span>
+                        <Button asChild size="sm" className="bg-terracotta-600 hover:bg-terracotta-700 text-white rounded-full">
+                          <Link to="/coaching">
+                            <Send className="mr-1.5 h-3.5 w-3.5" />
+                            Aanmelden
+                          </Link>
+                        </Button>
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+              </ScrollReveal>
+            </div>
 
             {/* For Organizations Card */}
             <ScrollReveal delay={0.3}>
