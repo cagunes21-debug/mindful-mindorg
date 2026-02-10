@@ -18,65 +18,65 @@ import heroMindfulness from "@/assets/hero-mindfulness.jpg";
 
 const stats = [
   { label: "stress", value: "36%", direction: "down" },
-  { label: "self-criticism", value: "67%", direction: "down" },
-  { label: "resilience", value: "42%", direction: "up" },
-  { label: "healthy boundaries", value: "38%", direction: "up" },
-  { label: "connection", value: "29%", direction: "up" },
+  { label: "zelfkritiek", value: "67%", direction: "down" },
+  { label: "veerkracht", value: "42%", direction: "up" },
+  { label: "gezonde grenzen", value: "38%", direction: "up" },
+  { label: "verbinding", value: "29%", direction: "up" },
 ];
 
 const testimonials = [
   {
-    quote: "I've become kinder to myself — and that changes everything.",
+    quote: "Ik ben veel vriendelijker voor mezelf geworden — en dat verandert alles.",
     author: "Marieke",
   },
   {
-    quote: "My body suddenly remembered how to breathe again.",
-    author: "Retreat participant",
+    quote: "Mijn lichaam herinnerde zich opeens weer hoe het moest ademen.",
+    author: "Retreat-deelnemer",
   },
   {
-    quote: "It felt safe. As if my body was finally allowed to lead.",
-    author: "Retreat participant",
+    quote: "Het voelde veilig. Alsof mijn lichaam eindelijk mocht leiden.",
+    author: "Retreat-deelnemer",
   },
 ];
 
 const targetAudience = [
-  "You are perfectionistic or hard on yourself",
-  "You experience stress or emotions physically",
-  "You long for more peace, kindness and zest for life",
-  "You are open to an experiential way of learning",
+  "Je bent perfectionistisch of streng voor jezelf",
+  "Je ervaart stress of emoties lichamelijk",
+  "Je verlangt naar meer rust, vriendelijkheid en levensvreugde",
+  "Je staat open voor een ervaringsgerichte manier van leren",
 ];
 
 const methodPillars = [
   {
     title: "Mind",
-    subtitle: "Your thoughts & emotions",
+    subtitle: "Je gedachten & emoties",
     icon: Brain,
     color: "terracotta",
     items: [
-      "Learn to be kinder and gentler with yourself",
-      "Develop skills to soften self-criticism and difficult emotions",
+      "Leer vriendelijker en zachter met jezelf om te gaan",
+      "Ontwikkel vaardigheden om zelfkritiek en moeilijke emoties te verzachten",
     ],
   },
   {
     title: "Body",
-    subtitle: "Your body & energy",
+    subtitle: "Je lichaam & energie",
     icon: Sparkles,
     color: "sage",
     items: [
-      "Become aware of tension and relaxation",
-      "Learn to listen to your body's signals",
-      "Experience gentle, free and playful movement",
+      "Word je bewust van spanning en ontspanning",
+      "Leer luisteren naar de signalen van je lichaam",
+      "Ervaar zachte, vrije en speelse beweging",
     ],
   },
   {
     title: "Heart",
-    subtitle: "Your emotional world",
+    subtitle: "Je gevoelswereld",
     icon: Heart,
     color: "warm",
     items: [
-      "Reconnect with your emotions",
-      "Experience compassion, warmth and zest for life",
-      "Develop a deeper connection with yourself and others",
+      "Herverbind met je emoties",
+      "Ervaar compassie, warmte en levensvreugde",
+      "Ontwikkel een diepere verbinding met jezelf en anderen",
     ],
   },
 ];
@@ -89,8 +89,8 @@ const Index = () => {
       <WhatsAppButton />
       <CookieConsent />
       <SEO 
-        title="Mindful Mind | Come Home to Yourself"
-        description="Science-based mindfulness, meditation and self-compassion trainings. Reduce stress, soften self-criticism and find inner peace in 8 weeks."
+        title="Mindful Mind | Kom Thuis Bij Jezelf"
+        description="Wetenschappelijk onderbouwde mindfulness, meditatie en zelfcompassie-trainingen. Verminder stress, verzacht zelfkritiek en vind innerlijke rust in 8 weken."
       />
       <OrganizationSchema />
       <Navigation />
@@ -118,7 +118,7 @@ const Index = () => {
               className="mb-6"
             >
               <span className="inline-block rounded-full bg-terracotta-100/80 px-5 py-2 text-sm font-medium tracking-wide text-terracotta-700">
-                Mind · Body · Heart
+                Mind · Lichaam · Hart
               </span>
             </motion.div>
             
@@ -128,8 +128,8 @@ const Index = () => {
               transition={{ duration: 0.7, delay: 0.1 }}
               className="mb-8 text-5xl font-light tracking-tight text-foreground md:text-6xl lg:text-7xl leading-[1.15]"
             >
-              Come home
-              <span className="block font-serif italic text-terracotta-600 mt-3 text-[1.1em]">to yourself</span>
+              Kom thuis
+              <span className="block font-serif italic text-terracotta-600 mt-3 text-[1.1em]">bij jezelf</span>
             </motion.h1>
             
             <motion.p 
@@ -138,7 +138,7 @@ const Index = () => {
               transition={{ duration: 0.6, delay: 0.15 }}
               className="text-muted-foreground text-lg md:text-xl max-w-2xl mx-auto leading-relaxed mb-4"
             >
-              Science-based mindfulness, meditation, and self-compassion — through trainings, workshops, and coaching.
+              Wetenschappelijk onderbouwde mindfulness, meditatie en zelfcompassie — via trainingen, workshops en coaching.
             </motion.p>
 
             <motion.p 
@@ -147,7 +147,7 @@ const Index = () => {
               transition={{ duration: 0.6, delay: 0.2 }}
               className="text-foreground text-base md:text-lg max-w-2xl mx-auto leading-relaxed mb-12 font-medium"
             >
-              Soften stress and self-criticism, and meet yourself with more peace.
+              Verzacht stress en zelfkritiek, en ontmoet jezelf met meer rust.
             </motion.p>
 
             <motion.div
@@ -158,14 +158,14 @@ const Index = () => {
             >
               <Button asChild size="lg" className="bg-terracotta-600 hover:bg-terracotta-700 text-white rounded-full px-10 py-7 text-lg shadow-lg hover:shadow-xl transition-all">
                 <a href="#programmas">
-                  Reserve Your Spot Today
+                  Reserveer je plek
                   <ArrowRight className="ml-3 h-5 w-5" />
                 </a>
               </Button>
               <Button asChild variant="outline" size="lg" className="border-terracotta-300 text-terracotta-700 hover:bg-terracotta-50 rounded-full px-8 py-7 text-lg">
                 <Link to="/bedrijven">
                   <Building2 className="mr-2 h-5 w-5" />
-                  For Organizations
+                  Voor Organisaties
                 </Link>
               </Button>
             </motion.div>
@@ -179,26 +179,26 @@ const Index = () => {
           <div className="mx-auto max-w-4xl text-center">
             <ScrollReveal>
               <h2 className="mb-6 text-2xl font-light text-foreground md:text-3xl lg:text-4xl leading-tight">
-                Slow down. Feel. <span className="font-serif italic text-terracotta-600">Relax.</span>
+                Vertragen. Voelen. <span className="font-serif italic text-terracotta-600">Ontspannen.</span>
               </h2>
               <p className="text-muted-foreground text-lg leading-relaxed mb-6">
-                Our gentle, science-based programs reconnect you with your mind, body, and heart.
+                Onze zachte, wetenschappelijk onderbouwde programma's verbinden je opnieuw met je gedachten, lichaam en hart.
               </p>
               <p className="text-terracotta-600 font-medium mb-8">
-                Human. Grounded. Evidence-based.
+                Menselijk. Gegrond. Wetenschappelijk onderbouwd.
               </p>
               
               <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
                 <Button asChild size="lg" className="bg-terracotta-600 hover:bg-terracotta-700 text-white rounded-full px-8 py-6 text-base shadow-lg hover:shadow-xl transition-all">
                   <a href="#programmas">
-                    For Individuals
+                    Voor Particulieren
                     <ArrowRight className="ml-2 h-5 w-5" />
                   </a>
                 </Button>
                 <Button asChild variant="outline" size="lg" className="border-terracotta-300 text-terracotta-700 hover:bg-terracotta-50 rounded-full px-8 py-6 text-base">
                   <Link to="/bedrijven">
                     <Building2 className="mr-2 h-5 w-5" />
-                    For Organizations
+                    Voor Organisaties
                   </Link>
                 </Button>
               </div>
@@ -214,7 +214,7 @@ const Index = () => {
             <ScrollReveal>
               <div className="text-center mb-12">
                 <span className="inline-block rounded-full bg-terracotta-100 px-5 py-2 text-xs font-semibold tracking-wider text-terracotta-700 mb-6 uppercase">
-                  Our Offerings
+                  Ons Aanbod
                 </span>
               </div>
             </ScrollReveal>
@@ -226,13 +226,13 @@ const Index = () => {
                     <span className="text-3xl">🌱</span>
                     <div className="flex-1">
                       <h3 className="font-semibold text-xl text-foreground mb-2 group-hover:text-terracotta-700 transition-colors">
-                        Mindful Self-Compassion (MSC) Training
+                        Mindful Zelfcompassie (MSC) Training
                       </h3>
                       <p className="text-muted-foreground mb-2">
-                        Transform self-criticism into self-compassion and cultivate inner support.
+                        Transformeer zelfkritiek in zelfcompassie en cultiveer innerlijke steun.
                       </p>
                       <p className="text-sm text-terracotta-600 font-medium">
-                        Our flagship program guides you gently along the journey.
+                        Ons vlaggenschipprogramma begeleidt je zacht op de reis.
                       </p>
                     </div>
                     <ArrowRight className="h-5 w-5 text-terracotta-400 group-hover:text-terracotta-600 transition-colors mt-1" />
@@ -249,10 +249,10 @@ const Index = () => {
                         Workshops
                       </h3>
                       <p className="text-muted-foreground mb-2">
-                        A gentle way to explore and deepen mindfulness and self-compassion.
+                        Een zachte manier om mindfulness en zelfcompassie te verkennen en verdiepen.
                       </p>
                       <p className="text-sm text-terracotta-600 font-medium">
-                        Perfect for getting started or extending your practice before committing to a full program.
+                        Ideaal om te beginnen of je beoefening uit te breiden.
                       </p>
                     </div>
                     <ArrowRight className="h-5 w-5 text-terracotta-400 group-hover:text-terracotta-600 transition-colors mt-1" />
@@ -269,10 +269,10 @@ const Index = () => {
                         Coaching
                       </h3>
                       <p className="text-muted-foreground mb-2">
-                        Guidance tailored to your pace and personal journey.
+                        Begeleiding op jouw tempo en afgestemd op je persoonlijke reis.
                       </p>
                       <p className="text-sm text-terracotta-600 font-medium">
-                        Receive one-to-one support as you explore your path.
+                        Ontvang één-op-één ondersteuning bij het verkennen van je pad.
                       </p>
                     </div>
                     <ArrowRight className="h-5 w-5 text-terracotta-400 group-hover:text-terracotta-600 transition-colors mt-1" />
@@ -290,47 +290,47 @@ const Index = () => {
           <div className="mx-auto max-w-3xl">
             <ScrollReveal>
               <div className="text-center mb-12">
-                <h2 className="mb-8 text-3xl font-light text-foreground md:text-4xl lg:text-5xl leading-tight">
-                  Does this sound <span className="font-serif italic text-terracotta-600">familiar?</span>
-                </h2>
-              </div>
-              
-              <div className="space-y-6 text-lg text-muted-foreground leading-relaxed">
-                <h3 className="text-xl font-semibold text-foreground">
-                  Do you often feel tense or hard on yourself?
-                </h3>
-                <p>
-                  Your mind never stops. You want to do things right, you're self-critical, and you keep going — even when your body signals you to slow down.
-                </p>
-                <p>
-                  You long for gentleness, yet the tension remains.
-                </p>
-              </div>
-            </ScrollReveal>
-            
-            <ScrollReveal delay={0.1}>
-              <div className="mt-16">
-                <h3 className="text-2xl font-light text-foreground mb-6">
-                  You're not <span className="font-serif italic text-terracotta-600">alone</span>
-                </h3>
-                <div className="space-y-6 text-lg text-muted-foreground leading-relaxed">
-                  <p>
-                    Maybe you've tried many things already: books, courses, advice, techniques.
-                  </p>
-                  <p>
-                    And still, stress, inner unrest, or exhaustion return.
-                  </p>
-                  <div className="bg-terracotta-50 border-l-4 border-terracotta-400 rounded-r-xl p-6 my-8">
-                    <p className="text-foreground font-medium mb-2">
-                      The problem isn't that you're doing too little.
-                    </p>
-                    <p className="text-foreground font-medium">
-                      The problem is that you've been too hard on yourself for too long — and over time, mind, body, and heart lose balance.
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </ScrollReveal>
+                 <h2 className="mb-8 text-3xl font-light text-foreground md:text-4xl lg:text-5xl leading-tight">
+                   Herken je dit <span className="font-serif italic text-terracotta-600">gevoel?</span>
+                 </h2>
+               </div>
+               
+               <div className="space-y-6 text-lg text-muted-foreground leading-relaxed">
+                 <h3 className="text-xl font-semibold text-foreground">
+                   Voel je je vaak gespannen of streng voor jezelf?
+                 </h3>
+                 <p>
+                   Je hoofd staat nooit stil. Je wilt het goed doen, je bent kritisch op jezelf en je gaat maar door — ook als je lichaam signalen geeft om te vertragen.
+                 </p>
+                 <p>
+                   Je verlangt naar zachtheid, maar de spanning blijft.
+                 </p>
+               </div>
+             </ScrollReveal>
+             
+             <ScrollReveal delay={0.1}>
+               <div className="mt-16">
+                 <h3 className="text-2xl font-light text-foreground mb-6">
+                   Je staat er niet <span className="font-serif italic text-terracotta-600">alleen</span> voor
+                 </h3>
+                 <div className="space-y-6 text-lg text-muted-foreground leading-relaxed">
+                   <p>
+                     Misschien heb je al veel geprobeerd: boeken, cursussen, adviezen, technieken.
+                   </p>
+                   <p>
+                     En toch komen stress, innerlijke onrust of uitputting steeds terug.
+                   </p>
+                   <div className="bg-terracotta-50 border-l-4 border-terracotta-400 rounded-r-xl p-6 my-8">
+                     <p className="text-foreground font-medium mb-2">
+                       Het probleem is niet dat je te weinig doet.
+                     </p>
+                     <p className="text-foreground font-medium">
+                       Het probleem is dat je te lang te streng voor jezelf bent geweest — en dat uiteindelijk je gedachten, lichaam en hart uit balans raken.
+                     </p>
+                   </div>
+                 </div>
+               </div>
+             </ScrollReveal>
           </div>
         </div>
       </section>
@@ -342,10 +342,10 @@ const Index = () => {
             <ScrollReveal>
               <div className="text-center mb-8">
                 <span className="inline-block rounded-full bg-sage-100 px-5 py-2 text-xs font-semibold tracking-wider text-sage-700 mb-6 uppercase">
-                  Our Approach
+                  Onze Aanpak
                 </span>
                 <h2 className="mb-6 text-3xl font-light text-foreground md:text-4xl lg:text-5xl leading-tight">
-                  Mind · Body · <span className="font-serif italic text-terracotta-600">Heart</span>
+                  Mind · Lichaam · <span className="font-serif italic text-terracotta-600">Hart</span>
                 </h2>
               </div>
             </ScrollReveal>
@@ -353,18 +353,18 @@ const Index = () => {
             <ScrollReveal delay={0.1}>
               <div className="text-center mb-16">
                 <p className="text-muted-foreground text-lg max-w-2xl mx-auto mb-4">
-                  Real change happens when you include all of you: your thoughts, your body, and your emotional world.
+                  Echte verandering ontstaat wanneer je alles van jezelf meeneemt: je gedachten, je lichaam en je gevoelswereld.
                 </p>
                 <p className="text-muted-foreground text-base max-w-2xl mx-auto">
-                  Our programs combine:
+                  Onze programma's combineren:
                 </p>
                 <ul className="text-muted-foreground text-base max-w-lg mx-auto mt-4 space-y-1">
-                  <li>• Mindful Self-Compassion (MSC)</li>
-                  <li>• Mindfulness and meditation</li>
-                  <li>• Body awareness and gentle movement</li>
+                  <li>• Mindful Zelfcompassie (MSC)</li>
+                  <li>• Mindfulness en meditatie</li>
+                  <li>• Lichaamsbewustzijn en zachte beweging</li>
                 </ul>
                 <p className="text-foreground text-lg mt-6 font-medium">
-                  Together, they invite you to slow down, soften, and come home to yourself with more peace.
+                  Samen nodigen ze je uit om te vertragen, te verzachten en met meer rust thuis te komen bij jezelf.
                 </p>
               </div>
             </ScrollReveal>
@@ -407,14 +407,14 @@ const Index = () => {
                 <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
                   <Button asChild size="lg" className="bg-terracotta-600 hover:bg-terracotta-700 text-white rounded-full px-10 py-6 text-lg shadow-lg hover:shadow-xl transition-all">
                     <a href="#programmas">
-                      Reserve Your Spot Today
+                      Reserveer je plek
                       <ArrowRight className="ml-3 h-5 w-5" />
                     </a>
                   </Button>
                   <Button asChild variant="outline" size="lg" className="border-terracotta-300 text-terracotta-700 hover:bg-terracotta-50 rounded-full px-8 py-6 text-lg">
                     <Link to="/bedrijven">
                       <Building2 className="mr-2 h-5 w-5" />
-                      For Organizations
+                      Voor Organisaties
                     </Link>
                   </Button>
                 </div>
@@ -431,13 +431,13 @@ const Index = () => {
             <ScrollReveal>
               <div className="text-center mb-12">
                 <span className="inline-block rounded-full bg-white/10 px-5 py-2 text-xs font-semibold tracking-wider text-white/90 mb-6 uppercase">
-                  Science-Based
+                  Wetenschappelijk Onderbouwd
                 </span>
                 <p className="text-white/80 text-base max-w-3xl mx-auto mb-6">
-                  Mindful Self-Compassion was developed by Dr. Kristin Neff and Dr. Christopher Germer and is supported by more than 3,500 scientific studies.
+                  Mindful Zelfcompassie is ontwikkeld door Dr. Kristin Neff en Dr. Christopher Germer en wordt ondersteund door meer dan 3.500 wetenschappelijke studies.
                 </p>
                 <p className="text-white font-medium mb-8">
-                  Average results from MSC research show:
+                  Gemiddelde resultaten uit MSC-onderzoek:
                 </p>
               </div>
             </ScrollReveal>
@@ -629,28 +629,28 @@ const Index = () => {
                       <span className="text-2xl">🏢</span>
                     </div>
                     <div className="flex-1">
-                      <h3 className="text-xl font-semibold text-foreground mb-2">For Organizations</h3>
-                      <p className="text-sage-700 text-sm font-medium mb-4">Teams, departments & leaders</p>
+                      <h3 className="text-xl font-semibold text-foreground mb-2">Voor Organisaties</h3>
+                      <p className="text-sage-700 text-sm font-medium mb-4">Teams, afdelingen & leidinggevenden</p>
                       <p className="text-muted-foreground mb-4">
-                        Invest in wellbeing, resilience and connection within your team.
+                        Investeer in welzijn, veerkracht en verbinding binnen je team.
                       </p>
                       <ul className="space-y-2 mb-6">
                         <li className="flex items-start gap-2 text-sm text-muted-foreground">
                           <Check className="h-4 w-4 text-sage-500 mt-0.5 shrink-0" />
-                          Science-based trainings
+                          Wetenschappelijk onderbouwde trainingen
                         </li>
                         <li className="flex items-start gap-2 text-sm text-muted-foreground">
                           <Check className="h-4 w-4 text-sage-500 mt-0.5 shrink-0" />
-                          Mindful Self-Compassion & mindfulness for professional contexts
+                          Mindful Zelfcompassie & mindfulness voor professionele contexten
                         </li>
                         <li className="flex items-start gap-2 text-sm text-muted-foreground">
                           <Check className="h-4 w-4 text-sage-500 mt-0.5 shrink-0" />
-                          Online or on-site
+                          Online of op locatie
                         </li>
                       </ul>
                       <Button asChild className="bg-sage-600 hover:bg-sage-700 text-white rounded-full">
                         <Link to="/bedrijven">
-                          👉 Read more about working with organizations
+                          👉 Lees meer over samenwerking met organisaties
                           <ArrowRight className="ml-2 h-4 w-4" />
                         </Link>
                       </Button>
@@ -669,12 +669,12 @@ const Index = () => {
           <div className="mx-auto max-w-3xl">
             <ScrollReveal>
               <div className="text-center mb-12">
-                <h2 className="mb-6 text-3xl font-light text-foreground md:text-4xl leading-tight">
-                  Who is this <span className="font-serif italic text-terracotta-600">for?</span>
-                </h2>
-                <p className="text-muted-foreground text-lg mb-8">
-                  These programs are right for you if:
-                </p>
+                 <h2 className="mb-6 text-3xl font-light text-foreground md:text-4xl leading-tight">
+                   Voor wie is dit <span className="font-serif italic text-terracotta-600">geschikt?</span>
+                 </h2>
+                 <p className="text-muted-foreground text-lg mb-8">
+                   Deze programma's zijn voor jou als:
+                 </p>
               </div>
               
               <div className="grid gap-4 sm:grid-cols-2">
@@ -697,7 +697,7 @@ const Index = () => {
             <ScrollReveal>
               <div className="text-center mb-16">
                 <span className="inline-block rounded-full bg-sage-100 px-5 py-2 text-xs font-semibold tracking-wider text-sage-700 mb-6 uppercase">
-                  Experiences
+                  Ervaringen
                 </span>
               </div>
             </ScrollReveal>
@@ -722,15 +722,15 @@ const Index = () => {
             
             <ScrollReveal delay={0.2}>
               <div className="text-center mt-8">
-                <p className="text-muted-foreground mb-6">
-                  More than 250 participants have completed our MSC training and experience less stress and more inner peace.
-                </p>
-                <Button asChild variant="outline" className="border-terracotta-300 text-terracotta-700 hover:bg-terracotta-50 rounded-full">
-                  <Link to="/trainers">
-                    👉 Read more experiences
-                    <ArrowRight className="ml-2 h-4 w-4" />
-                  </Link>
-                </Button>
+                 <p className="text-muted-foreground mb-6">
+                   Meer dan 250 deelnemers hebben onze MSC-training gevolgd en ervaren minder stress en meer innerlijke rust.
+                 </p>
+                 <Button asChild variant="outline" className="border-terracotta-300 text-terracotta-700 hover:bg-terracotta-50 rounded-full">
+                   <Link to="/trainers">
+                     👉 Lees meer ervaringen
+                     <ArrowRight className="ml-2 h-4 w-4" />
+                   </Link>
+                 </Button>
               </div>
             </ScrollReveal>
           </div>
@@ -743,10 +743,10 @@ const Index = () => {
           <div className="mx-auto max-w-3xl text-center">
             <ScrollReveal>
               <span className="inline-block rounded-full bg-terracotta-100 px-5 py-2 text-xs font-semibold tracking-wider text-terracotta-700 mb-6 uppercase">
-                Practical & Contact
+                Praktisch & Contact
               </span>
               <p className="text-muted-foreground text-lg mb-8">
-                Workshops · Trainings · Retreats · 1-on-1 Coaching
+                Workshops · Trainingen · Retreats · 1-op-1 Coaching
               </p>
               
               <div className="flex flex-wrap justify-center gap-4 mb-8">
@@ -767,12 +767,12 @@ const Index = () => {
               </div>
 
               <p className="text-muted-foreground text-sm mb-8">
-                Office hours: Mon–Fri, 9:00 AM–5:00 PM
+                Bereikbaar: ma–vr, 9:00–17:00
               </p>
               
               <Button asChild variant="outline" className="border-terracotta-300 text-terracotta-700 hover:bg-terracotta-50 rounded-full">
                 <Link to="/agenda">
-                  👉 View full schedule
+                  👉 Bekijk de volledige agenda
                   <Calendar className="ml-2 h-4 w-4" />
                 </Link>
               </Button>
