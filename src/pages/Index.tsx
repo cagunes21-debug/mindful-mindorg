@@ -551,7 +551,7 @@ const Index = () => {
                         Korte, regelmatige sessies om mindfulness en zelfcompassie dagelijks te oefenen en te verankeren.
                       </p>
                       <div className="flex items-center justify-between">
-                        <span className="text-lg font-light text-terracotta-600">€ 15 <span className="text-sm text-muted-foreground">per sessie</span></span>
+                        <span className="text-lg font-light text-terracotta-600">€ 30 <span className="text-sm text-muted-foreground">per sessie</span></span>
                         <Button asChild size="sm" className="bg-terracotta-600 hover:bg-terracotta-700 text-white rounded-full">
                           <Link to="/agenda">
                             <Send className="mr-1.5 h-3.5 w-3.5" />
