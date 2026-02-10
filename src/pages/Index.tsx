@@ -466,13 +466,13 @@ const Index = () => {
             <ScrollReveal>
               <div className="text-center mb-8">
                 <span className="inline-block rounded-full bg-terracotta-100 px-5 py-2 text-xs font-semibold tracking-wider text-terracotta-700 mb-6 uppercase">
-                  Our Offerings
+                  Ons Aanbod
                 </span>
                 <h2 className="mb-4 text-3xl font-light text-foreground md:text-4xl lg:text-5xl leading-tight">
-                  Programs & <span className="font-serif italic text-terracotta-600">Coaching</span>
+                  Programma's & <span className="font-serif italic text-terracotta-600">Begeleiding</span>
                 </h2>
                 <p className="text-terracotta-600 font-medium mb-4">
-                  For individuals and organizations
+                  Voor particulieren en organisaties
                 </p>
               </div>
             </ScrollReveal>
@@ -480,18 +480,18 @@ const Index = () => {
             <ScrollReveal delay={0.1}>
               <div className="text-center mb-12 max-w-2xl mx-auto">
                 <p className="text-muted-foreground text-base mb-4">
-                  Our programs help you release tension, find inner peace and reconnect with your mind, body and heart — both personally and within teams and departments.
+                  Onze programma's helpen je spanning los te laten, innerlijke rust te vinden en opnieuw verbinding te maken met je gedachten, lichaam en hart.
                 </p>
                 <p className="text-muted-foreground text-base mb-4">
-                  We offer:
+                  Wij bieden:
                 </p>
                 <ul className="text-muted-foreground text-base space-y-1 mb-6">
-                  <li><strong>Individual programs:</strong> 8-week Mindful Self-Compassion Training, workshops, retreats and 1-on-1 coaching</li>
-                  <li><strong>Organizations:</strong> trainings and workshops for teams, departments and leaders, online or on-site</li>
+                  <li><strong>Particulieren:</strong> 8-weekse Mindful Zelfcompassie-training, workshops, retreat en 1-op-1 begeleiding</li>
+                  <li><strong>Organisaties:</strong> trainingen en workshops voor teams, afdelingen en leidinggevenden</li>
                 </ul>
                 <Button asChild variant="link" className="text-terracotta-600 hover:text-terracotta-700">
                   <Link to="/bedrijven">
-                    👉 Read more about working with organizations
+                    👉 Lees meer over samenwerking met organisaties
                   </Link>
                 </Button>
               </div>
