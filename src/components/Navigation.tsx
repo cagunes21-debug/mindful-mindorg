@@ -94,7 +94,7 @@ const Navigation = () => {
             {/* Services Dropdown */}
             <DropdownMenu>
               <DropdownMenuTrigger className={`flex items-center gap-1 text-sm font-medium transition-colors hover:text-primary ${isServicesActive ? 'text-primary' : 'text-muted-foreground'}`}>
-                Ons Aanbod
+                Aanbod
                 <ChevronDown className="h-4 w-4" />
               </DropdownMenuTrigger>
               <DropdownMenuContent align="center" className="bg-background border-border w-56">
@@ -125,7 +125,7 @@ const Navigation = () => {
               className="text-sm font-medium text-muted-foreground transition-colors hover:text-primary"
               activeClassName="text-primary"
             >
-              Barcelona Retreat
+              Retreat
             </NavLink>
 
             <NavLink
@@ -139,7 +139,7 @@ const Navigation = () => {
             {/* About Dropdown */}
             <DropdownMenu>
               <DropdownMenuTrigger className={`flex items-center gap-1 text-sm font-medium transition-colors hover:text-primary ${isAboutActive ? 'text-primary' : 'text-muted-foreground'}`}>
-                Over Ons
+                Over
                 <ChevronDown className="h-4 w-4" />
               </DropdownMenuTrigger>
               <DropdownMenuContent align="center" className="bg-background border-border">
@@ -231,7 +231,7 @@ const Navigation = () => {
                   onClick={() => setServicesOpen(!servicesOpen)}
                   className={`flex items-center justify-between text-sm font-medium transition-colors hover:text-primary ${isServicesActive ? 'text-primary' : 'text-muted-foreground'}`}
                 >
-                  Ons Aanbod
+                  Aanbod
                   <ChevronDown className={`h-4 w-4 transition-transform ${servicesOpen ? 'rotate-180' : ''}`} />
                 </button>
                 {servicesOpen && (
@@ -265,7 +265,7 @@ const Navigation = () => {
                 activeClassName="text-primary"
                 onClick={() => setIsOpen(false)}
               >
-                Barcelona Retreat
+                Retreat
               </NavLink>
 
               <NavLink
@@ -283,7 +283,7 @@ const Navigation = () => {
                   onClick={() => setAboutOpen(!aboutOpen)}
                   className={`flex items-center justify-between text-sm font-medium transition-colors hover:text-primary ${isAboutActive ? 'text-primary' : 'text-muted-foreground'}`}
                 >
-                  Over Ons
+                   Over
                   <ChevronDown className={`h-4 w-4 transition-transform ${aboutOpen ? 'rotate-180' : ''}`} />
                 </button>
                 {aboutOpen && (
