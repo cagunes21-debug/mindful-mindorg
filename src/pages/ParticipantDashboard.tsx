@@ -308,7 +308,7 @@ const ParticipantDashboard = () => {
                 Je hebt momenteel geen actieve inschrijving voor de 8-weekse MSC training.
               </p>
               <Button asChild>
-                <a href="/mindful-zelfcompassie">Bekijk de training</a>
+                <a href="/">Bekijk de training</a>
               </Button>
             </CardContent>
           </Card>

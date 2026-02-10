@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import { Mail, Phone, MessageCircle } from "lucide-react";
 
 const serviceLinks = [
-  { to: "/mindful-zelfcompassie", label: "8-weekse MSC Training" },
+  { to: "/", label: "8-weekse MSC Training" },
   { to: "/barcelona-retreat", label: "Barcelona Retreat" },
   { to: "/coaching", label: "1-op-1 Coaching" },
   { to: "/bedrijven", label: "Voor Bedrijven" },

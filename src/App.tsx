@@ -33,8 +33,8 @@ const App = () => (
         <Sonner />
         <BrowserRouter>
           <Routes>
-            <Route path="/" element={<Index />} />
-            <Route path="/mindful-zelfcompassie" element={<MindfulZelfcompassie />} />
+            <Route path="/" element={<MindfulZelfcompassie />} />
+            <Route path="/programmas" element={<Index />} />
             
             <Route path="/ons-aanbod" element={<Services />} />
             <Route path="/over-ons" element={<About />} />

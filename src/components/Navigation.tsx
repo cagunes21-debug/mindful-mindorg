@@ -60,7 +60,7 @@ const Navigation = () => {
   };
 
   const serviceLinks = [
-    { to: "/mindful-zelfcompassie", label: "8-weekse MSC Training" },
+    { to: "/", label: "8-weekse MSC Training" },
     { to: "/coaching", label: "Coaching" },
     { to: "/bedrijven", label: "Voor Bedrijven" },
   ];
