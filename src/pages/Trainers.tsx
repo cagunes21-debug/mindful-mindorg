@@ -27,8 +27,8 @@ const trainers = [
     name: "Çağla Güneş",
     role: "Somatic Therapist • Lichaamsgerichte Psychotherapeut",
     tagline: "Mindfulness & Zelfcompassie Trainer",
-    bio: "Çağla begeleidt mensen in het herontdekken van hun innerlijke kracht en menselijkheid. Haar missie is het creëren van een veilige bedding waarin alle ervaringen welkom zijn.",
-    journey: "Haar reis met mindfulness begon op achtjarige leeftijd. Door jarenlange studie ontdekte zij hoe mindfulness, zelfcompassie en lichaamsgerichte benaderingen samen een diepe bron van kracht vormen.",
+    bio: "Çağla begeleidt mensen in het herontdekken van hun innerlijke kracht en menselijkheid. Haar missie is het creëren van een veilige bedding waarin alle ervaringen welkom zijn. Haar reis met mindfulness begon op achtjarige leeftijd. Door jarenlange studie ontdekte zij hoe mindfulness, zelfcompassie en lichaamsgerichte benaderingen samen een diepe bron van kracht vormen.",
+    journey: "Jaren van reizen en wonen in het buitenland — in Nederland, Duitsland, Spanje en Mexico — brachten haar dichter bij haar essentie. Een sterke verbinding met haar wortels in Cappadocië vormt een belangrijk fundament in haar leven en werk. Vanuit deze bron ontstonden twee paden: Mindful Mind voor mindfulness-gebaseerde trainingen en educatie, en In Harmonia voor therapeutisch werk — beide geworteld in aanwezigheid, eerlijkheid en zachte diepte.",
     specializations: [
       "Mindfulness (MBSR/MBCT)",
       "Psychosomatische therapie",
