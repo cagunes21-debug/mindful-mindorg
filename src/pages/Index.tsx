@@ -30,7 +30,7 @@ const programs = [
     description: "Learn to soften stress and self-criticism in 8 weeks.",
     cta: "Reserve your spot",
     secondaryCta: "View all dates",
-    link: "/mindful-zelfcompassie",
+    link: "/",
     highlight: true,
   },
   {
@@ -272,7 +272,7 @@ const Index = () => {
             
             <div className="space-y-6">
               <ScrollReveal delay={0.1}>
-                <Link to="/mindful-zelfcompassie" className="group block bg-white hover:bg-terracotta-50 border border-warm-200 hover:border-terracotta-300 rounded-2xl p-6 transition-all shadow-sm hover:shadow-md">
+                <Link to="/" className="group block bg-white hover:bg-terracotta-50 border border-warm-200 hover:border-terracotta-300 rounded-2xl p-6 transition-all shadow-sm hover:shadow-md">
                   <div className="flex items-start gap-4">
                     <span className="text-3xl">🌱</span>
                     <div className="flex-1">
