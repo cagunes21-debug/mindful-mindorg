@@ -2,6 +2,13 @@ import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { ArrowRight, Check, Sparkles, Users } from "lucide-react";
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "@/components/ui/carousel";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import { ScrollReveal, StaggerContainer, StaggerItem } from "@/components/ScrollReveal";
@@ -106,72 +113,78 @@ const Trainers = () => {
         </div>
       </section>
 
-      {/* Trainers Grid */}
+      {/* Trainers Carousel */}
       <section className="py-12 lg:py-16 bg-white">
         <div className="container mx-auto px-4">
-          <div className="mx-auto max-w-5xl">
-            <StaggerContainer className="grid gap-8 md:grid-cols-2">
-              {trainers.map((trainer) => (
-                <StaggerItem key={trainer.name}>
-                  <Card className="border-warm-200 bg-gradient-to-br from-warm-50 to-white rounded-3xl overflow-hidden shadow-sm hover:shadow-md transition-shadow h-full">
-                    <CardContent className="p-8">
-                      {/* Header */}
-                      <div className="flex items-start gap-5 mb-6">
-                        <div className={`flex-shrink-0 h-20 w-20 rounded-2xl bg-gradient-to-br ${
-                          trainer.color === 'terracotta' 
-                            ? 'from-terracotta-200 to-terracotta-300' 
-                            : 'from-sage-200 to-sage-300'
-                        } flex items-center justify-center`}>
-                          <span className="text-3xl font-serif italic text-white">
-                            {trainer.name.charAt(0)}
-                          </span>
-                        </div>
-                        <div className="flex-1 min-w-0">
-                          <h2 className="text-xl font-semibold text-foreground mb-1">
-                            {trainer.name}
-                          </h2>
-                          <p className={`text-sm font-medium mb-1 ${
-                            trainer.color === 'terracotta' ? 'text-terracotta-600' : 'text-sage-700'
-                          }`}>
-                            {trainer.role}
-                          </p>
-                          <p className="text-xs text-muted-foreground italic">
-                            {trainer.tagline}
-                          </p>
-                        </div>
-                      </div>
-                      
-                      {/* Bio */}
-                      <p className="text-foreground leading-relaxed mb-3 text-sm">
-                        {trainer.bio}
-                      </p>
-                      <p className="text-muted-foreground leading-relaxed text-sm mb-5">
-                        {trainer.journey}
-                      </p>
-                      
-                      {/* Specializations */}
-                      {trainer.specializations.length > 0 && (
-                        <div className="pt-5 border-t border-warm-200">
-                          <p className="text-xs font-medium text-muted-foreground uppercase tracking-wider mb-3">Specialisaties</p>
-                          <div className="flex flex-wrap gap-2">
-                            {trainer.specializations.map((spec) => (
-                              <span key={spec} className={`inline-flex items-center gap-1.5 text-xs px-3 py-1.5 rounded-full ${
-                                trainer.color === 'terracotta' 
-                                  ? 'bg-terracotta-50 text-terracotta-700' 
-                                  : 'bg-sage-50 text-sage-700'
-                              }`}>
-                                <Check className="h-3 w-3" />
-                                {spec}
-                              </span>
-                            ))}
+          <div className="mx-auto max-w-4xl">
+            <Carousel opts={{ align: "start", loop: true }} className="w-full">
+              <CarouselContent className="-ml-4">
+                {trainers.map((trainer) => (
+                  <CarouselItem key={trainer.name} className="pl-4 md:basis-1/2">
+                    <Card className="border-warm-200 bg-gradient-to-br from-warm-50 to-white rounded-3xl overflow-hidden shadow-sm h-full">
+                      <CardContent className="p-8">
+                        {/* Header */}
+                        <div className="flex items-start gap-5 mb-6">
+                          <div className={`flex-shrink-0 h-20 w-20 rounded-2xl bg-gradient-to-br ${
+                            trainer.color === 'terracotta' 
+                              ? 'from-terracotta-200 to-terracotta-300' 
+                              : 'from-sage-200 to-sage-300'
+                          } flex items-center justify-center`}>
+                            <span className="text-3xl font-serif italic text-white">
+                              {trainer.name.charAt(0)}
+                            </span>
+                          </div>
+                          <div className="flex-1 min-w-0">
+                            <h2 className="text-xl font-semibold text-foreground mb-1">
+                              {trainer.name}
+                            </h2>
+                            <p className={`text-sm font-medium mb-1 ${
+                              trainer.color === 'terracotta' ? 'text-terracotta-600' : 'text-sage-700'
+                            }`}>
+                              {trainer.role}
+                            </p>
+                            <p className="text-xs text-muted-foreground italic">
+                              {trainer.tagline}
+                            </p>
                           </div>
                         </div>
-                      )}
-                    </CardContent>
-                  </Card>
-                </StaggerItem>
-              ))}
-            </StaggerContainer>
+                        
+                        {/* Bio */}
+                        <p className="text-foreground leading-relaxed mb-3 text-sm">
+                          {trainer.bio}
+                        </p>
+                        <p className="text-muted-foreground leading-relaxed text-sm mb-5">
+                          {trainer.journey}
+                        </p>
+                        
+                        {/* Specializations */}
+                        {trainer.specializations.length > 0 && (
+                          <div className="pt-5 border-t border-warm-200">
+                            <p className="text-xs font-medium text-muted-foreground uppercase tracking-wider mb-3">Specialisaties</p>
+                            <div className="flex flex-wrap gap-2">
+                              {trainer.specializations.map((spec) => (
+                                <span key={spec} className={`inline-flex items-center gap-1.5 text-xs px-3 py-1.5 rounded-full ${
+                                  trainer.color === 'terracotta' 
+                                    ? 'bg-terracotta-50 text-terracotta-700' 
+                                    : 'bg-sage-50 text-sage-700'
+                                }`}>
+                                  <Check className="h-3 w-3" />
+                                  {spec}
+                                </span>
+                              ))}
+                            </div>
+                          </div>
+                        )}
+                      </CardContent>
+                    </Card>
+                  </CarouselItem>
+                ))}
+              </CarouselContent>
+              <div className="flex justify-center gap-4 mt-8">
+                <CarouselPrevious className="relative inset-auto translate-y-0 border-warm-300 text-foreground hover:bg-warm-100" />
+                <CarouselNext className="relative inset-auto translate-y-0 border-warm-300 text-foreground hover:bg-warm-100" />
+              </div>
+            </Carousel>
           </div>
         </div>
       </section>
