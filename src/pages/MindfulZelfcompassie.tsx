@@ -706,7 +706,7 @@ const MindfulZelfcompassie = () => {
                     <div className="h-14 w-14 rounded-2xl bg-gradient-to-br from-warm-100 to-warm-200 flex items-center justify-center mb-4 mx-auto group-hover:scale-110 transition-transform">
                       <Heart className="h-7 w-7 text-terracotta-600" />
                     </div>
-                    <h3 className="text-lg font-semibold text-foreground mb-1">1-op-1 Coaching</h3>
+                    <h3 className="text-lg font-semibold text-foreground mb-1">Individuele Begeleiding</h3>
                     <p className="text-xs text-muted-foreground mb-3">Individueel · op maat · online of op locatie</p>
                     <p className="text-sm text-muted-foreground mb-4">Persoonlijke begeleiding afgestemd op jouw situatie, in je eigen tempo en ritme.</p>
                     <p className="text-xl font-light text-terracotta-600">€75 per sessie</p>
@@ -892,14 +892,14 @@ const MindfulZelfcompassie = () => {
               <div className="h-px flex-1 bg-warm-300" />
             </div>
 
-            {/* 1-op-1 Begeleiding */}
+            {/* Individuele Begeleiding */}
             <ScrollReveal delay={0.3}>
               <div className="text-center">
                 <div className="flex items-center justify-center gap-3 mb-6">
                   <div className="h-10 w-10 rounded-xl bg-terracotta-100 flex items-center justify-center">
                     <Heart className="h-5 w-5 text-terracotta-600" />
                   </div>
-                  <h3 className="text-2xl font-medium text-foreground">1-op-1 Begeleiding</h3>
+                  <h3 className="text-2xl font-medium text-foreground">Individuele Begeleiding</h3>
                   <span className="rounded-full bg-terracotta-100 px-3 py-1 text-xs font-medium text-terracotta-700">PERSOONLIJK</span>
                 </div>
                 
