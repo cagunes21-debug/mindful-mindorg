@@ -26,7 +26,7 @@ const trainings = [
   "4-daags MBSR Traject",
   "4-daags MSC Traject",
   "Barcelona Retreat",
-  "1-op-1 Begeleiding",
+  "Individuele Begeleiding",
   "Algemene vraag",
 ];
 

@@ -13,7 +13,7 @@ const Services = () => {
     <div className="min-h-screen bg-background">
       <SEO 
         title="Ons Aanbod"
-        description="Ontdek onze MSC trainingen, workshops en 1-op-1 coaching. Van 8-weekse trainingen tot intensieve programma's - vind het programma dat bij jou past."
+        description="Ontdek onze MSC trainingen, workshops en individuele begeleiding. Van 8-weekse trainingen tot intensieve programma's - vind het programma dat bij jou past."
       />
       <Navigation />
       

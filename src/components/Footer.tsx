@@ -4,7 +4,7 @@ import { Mail, Phone, MessageCircle } from "lucide-react";
 const serviceLinks = [
   { to: "/", label: "8-weekse MSC Training" },
   { to: "/barcelona-retreat", label: "Barcelona Retreat" },
-  { to: "/coaching", label: "1-op-1 Coaching" },
+  { to: "/coaching", label: "Individuele Begeleiding" },
   { to: "/bedrijven", label: "Voor Bedrijven" },
 ];
 

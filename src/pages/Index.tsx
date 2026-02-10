@@ -486,7 +486,7 @@ const Index = () => {
                   Wij bieden:
                 </p>
                 <ul className="text-muted-foreground text-base space-y-1 mb-6">
-                  <li><strong>Particulieren:</strong> 8-weekse Mindful Zelfcompassie-training, workshops, retreat en 1-op-1 begeleiding</li>
+                  <li><strong>Particulieren:</strong> 8-weekse Mindful Zelfcompassie-training, workshops, retreat en individuele begeleiding</li>
                   <li><strong>Organisaties:</strong> trainingen en workshops voor teams, afdelingen en leidinggevenden</li>
                 </ul>
                 <Button asChild variant="link" className="text-terracotta-600 hover:text-terracotta-700">
@@ -746,7 +746,7 @@ const Index = () => {
                 Praktisch & Contact
               </span>
               <p className="text-muted-foreground text-lg mb-8">
-                Workshops · Trainingen · Retreats · 1-op-1 Coaching
+                Workshops · Trainingen · Retreats · Individuele Begeleiding
               </p>
               
               <div className="flex flex-wrap justify-center gap-4 mb-8">

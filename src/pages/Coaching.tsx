@@ -51,7 +51,7 @@ const packages = [
 
 const testimonials = [
   {
-    quote: "De 1-op-1 sessies waren precies wat ik nodig had. In mijn eigen tempo, met volledige aandacht voor mijn persoonlijke thema's.",
+    quote: "De individuele sessies waren precies wat ik nodig had. In mijn eigen tempo, met volledige aandacht voor mijn persoonlijke thema's.",
     author: "Renate",
     role: "Coaching cliënt",
   },
@@ -69,12 +69,12 @@ const testimonials = [
 
 const faqItems = [
   {
-    question: "Voor wie is 1-op-1 coaching geschikt?",
-    answer: "1-op-1 coaching is geschikt voor iedereen die behoefte heeft aan persoonlijke begeleiding en aandacht. Het is ideaal als je liever niet in een groep werkt, specifieke thema's wilt aanpakken, of je eigen tempo wilt bepalen.",
+    question: "Voor wie is individuele begeleiding geschikt?",
+    answer: "Individuele begeleiding is geschikt voor iedereen die behoefte heeft aan persoonlijke begeleiding en aandacht. Het is ideaal als je liever niet in een groep werkt, specifieke thema's wilt aanpakken, of je eigen tempo wilt bepalen.",
   },
   {
     question: "Wat is het verschil met de groepstraining?",
-    answer: "In de groepstraining volg je een vast curriculum samen met anderen. Bij 1-op-1 coaching stemmen we de inhoud volledig af op jouw persoonlijke situatie, thema's en tempo. Je krijgt onverdeelde aandacht en maatwerk.",
+    answer: "In de groepstraining volg je een vast curriculum samen met anderen. Bij individuele begeleiding stemmen we de inhoud volledig af op jouw persoonlijke situatie, thema's en tempo. Je krijgt onverdeelde aandacht en maatwerk.",
   },
   {
     question: "Hoe werkt online coaching?",
@@ -98,7 +98,7 @@ const Coaching = () => {
   return (
     <div className="min-h-screen bg-background">
       <SEO 
-        title="1-op-1 Coaching"
+        title="Individuele Begeleiding"
         description="Persoonlijke begeleiding in zelfcompassie en mindfulness. Online of op locatie in Amersfoort. Maatwerk dat aansluit bij jouw leven en tempo."
       />
       <FAQSchema items={faqItems} />
@@ -128,8 +128,8 @@ const Coaching = () => {
               transition={{ duration: 0.7, delay: 0.1 }}
               className="mb-8 text-4xl font-light tracking-tight text-foreground md:text-5xl lg:text-6xl leading-[1.1]"
             >
-              1-op-1
-              <span className="block font-serif italic text-terracotta-600 mt-2">Coaching</span>
+              Individuele
+              <span className="block font-serif italic text-terracotta-600 mt-2">Begeleiding</span>
             </motion.h1>
             
             <motion.p 
