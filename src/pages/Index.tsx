@@ -577,7 +577,7 @@ const Index = () => {
                         Maak op een laagdrempelige en interactieve manier kennis met de basis van zelfcompassie.
                       </p>
                       <div className="flex items-center justify-between">
-                        <span className="text-lg font-light text-terracotta-600">€ 35</span>
+                        <span className="text-lg font-light text-terracotta-600">€ 45</span>
                         <Button asChild size="sm" className="bg-terracotta-600 hover:bg-terracotta-700 text-white rounded-full">
                           <Link to="/agenda">
                             <Send className="mr-1.5 h-3.5 w-3.5" />
