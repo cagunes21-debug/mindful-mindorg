@@ -126,6 +126,17 @@ const MindfulZelfcompassie = () => {
         
         <div className="container relative mx-auto px-4">
           <div className="mx-auto max-w-4xl text-center">
+            {/* Tagline badge */}
+            <motion.div 
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.05 }}
+              className="inline-flex items-center gap-2 mb-8 rounded-full bg-warm-100 border border-warm-200 px-6 py-3.5 text-sm font-medium text-terracotta-700 shadow-sm"
+            >
+              <Sparkles className="h-4 w-4" />
+              Jouw welzijn begint bij hoe je met jezelf omgaat
+            </motion.div>
+
             {/* Main heading */}
             <motion.h1 
               initial={{ opacity: 0, y: 30 }}
@@ -146,17 +157,6 @@ const MindfulZelfcompassie = () => {
             >
               8-weekse training in Mindful Zelfcompassie
             </motion.p>
-            
-            {/* Tagline badge */}
-            <motion.div 
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.18 }}
-              className="inline-flex items-center gap-2 mb-8 rounded-full bg-warm-100 border border-warm-200 px-6 py-3.5 text-sm font-medium text-terracotta-700 shadow-sm"
-            >
-              <Sparkles className="h-4 w-4" />
-              Jouw welzijn begint bij hoe je met jezelf omgaat
-            </motion.div>
             
             {/* Description */}
             <motion.p 
