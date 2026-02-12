@@ -40,6 +40,7 @@ interface Enrollment {
   trainer_name: string | null;
   location: string | null;
   group_info: string | null;
+  course_type: string;
 }
 
 interface CourseWeek {
@@ -131,8 +132,9 @@ const ParticipantDashboard = () => {
       setEnrollment(enrollmentData as Enrollment);
 
       // Load all data in parallel
+      const courseType = enrollmentData.course_type || 'msc_8week';
       const [weeksResult, meditationsResult, assignmentsResult, progressResult] = await Promise.all([
-        supabase.from("course_weeks").select("*").order("week_number"),
+        supabase.from("course_weeks").select("*").eq("course_type", courseType).order("week_number"),
         supabase.from("meditations").select("*").order("sort_order"),
         supabase.from("assignments").select("*").order("sort_order"),
         supabase.from("participant_progress")
@@ -155,13 +157,29 @@ const ParticipantDashboard = () => {
     }
   };
 
+  const getMaxWeeks = (): number => {
+    if (!enrollment) return 8;
+    return enrollment.course_type === 'individueel_6' ? 6 : 8;
+  };
+
   const calculateUnlockedWeek = (): number => {
     if (!enrollment) return 1;
     const startDate = new Date(enrollment.start_date);
     const today = new Date();
     const diffTime = today.getTime() - startDate.getTime();
     const diffWeeks = Math.floor(diffTime / (1000 * 60 * 60 * 24 * 7));
-    return Math.min(Math.max(diffWeeks + 1, 1), 8);
+    return Math.min(Math.max(diffWeeks + 1, 1), getMaxWeeks());
+  };
+
+  const getCourseName = (): string => {
+    if (!enrollment) return '8-weekse Mindful Zelfcompassie Training';
+    return enrollment.course_type === 'individueel_6' 
+      ? 'Individueel Traject – 6 sessies' 
+      : '8-weekse Mindful Zelfcompassie Training';
+  };
+
+  const getWeekLabel = (): string => {
+    return enrollment?.course_type === 'individueel_6' ? 'Sessie' : 'Week';
   };
 
   const isWeekUnlocked = (weekNumber: number): boolean => {
@@ -305,7 +323,7 @@ const ParticipantDashboard = () => {
               <Info className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
               <h2 className="text-xl font-medium mb-2">Geen actieve inschrijving</h2>
               <p className="text-muted-foreground mb-6">
-                Je hebt momenteel geen actieve inschrijving voor de 8-weekse MSC training.
+                Je hebt momenteel geen actieve inschrijving.
               </p>
               <Button asChild>
                 <a href="/">Bekijk de training</a>
@@ -337,7 +355,7 @@ const ParticipantDashboard = () => {
               Welkom bij je training
             </h1>
             <p className="text-muted-foreground">
-              8-weekse Mindful Zelfcompassie Training
+              {getCourseName()}
             </p>
           </div>
 
@@ -347,7 +365,7 @@ const ParticipantDashboard = () => {
               <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
                 <div className="flex-1">
                   <div className="flex items-center gap-2 mb-2">
-                    <span className="text-sm font-medium">Week {unlockedWeek} van 8</span>
+                    <span className="text-sm font-medium">{getWeekLabel()} {unlockedWeek} van {getMaxWeeks()}</span>
                     <Badge variant="secondary">{getTotalProgress()}% voltooid</Badge>
                   </div>
                   <Progress value={getTotalProgress()} className="h-2" />
@@ -407,7 +425,7 @@ const ParticipantDashboard = () => {
                 <Card className="mt-6 border-warm-200">
                   <CardHeader>
                     <CardTitle className="text-xl font-light">
-                      Week {currentWeekData.week_number}: {currentWeekData.title}
+                      {getWeekLabel()} {currentWeekData.week_number}: {currentWeekData.title}
                     </CardTitle>
                     {currentWeekData.theme && (
                       <CardDescription>{currentWeekData.theme}</CardDescription>
