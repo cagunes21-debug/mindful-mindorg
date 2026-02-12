@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { Heart, ArrowRight, Calendar, Globe, BookOpen, Compass } from "lucide-react";
+import { Heart, ArrowRight, Calendar, Globe, BookOpen, Compass, Users, Sparkles, Check } from "lucide-react";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import { ScrollReveal } from "@/components/ScrollReveal";
@@ -13,7 +13,7 @@ const Services = () => {
     <div className="min-h-screen bg-background">
       <SEO 
         title="Ons Aanbod"
-        description="Ontdek onze 8-weekse Mindful Self-Compassion training en individuele begeleiding. Vind het programma dat bij jou past."
+        description="Ontdek ons aanbod: 8-weekse groepstraject, individueel traject en losse sessies. Vind de vorm die bij jou past."
       />
       <Navigation />
       
@@ -41,8 +41,7 @@ const Services = () => {
               transition={{ duration: 0.7, delay: 0.1 }}
               className="mb-8 text-4xl font-light tracking-tight text-foreground md:text-5xl lg:text-6xl leading-[1.1]"
             >
-              Ruimte voor innerlijke rust,
-              <span className="block font-serif italic text-terracotta-600 mt-2">zelfcompassie en bewuste aanwezigheid</span>
+              Diensten
             </motion.h1>
             
             <motion.p 
@@ -51,28 +50,13 @@ const Services = () => {
               transition={{ duration: 0.6, delay: 0.2 }}
               className="text-muted-foreground text-lg max-w-2xl mx-auto leading-relaxed"
             >
-              Bij Mindful Mind staan zelfcompassie, bewuste aanwezigheid en innerlijke rust centraal. Kies het programma dat past bij jouw leven en energie.
+              Iedereen bewandelt zijn of haar eigen pad. Soms wil je groeien in een groep, soms juist met persoonlijke begeleiding. Hieronder vind je de mogelijkheden.
             </motion.p>
           </div>
         </div>
       </section>
 
-      {/* Intro */}
-      <section className="py-12 bg-white">
-        <div className="container mx-auto px-4">
-          <div className="mx-auto max-w-2xl text-center">
-            <ScrollReveal animation="scale">
-              <div className="bg-gradient-to-r from-warm-50 to-sage-50 rounded-3xl p-8 border border-warm-200">
-                <p className="text-foreground text-lg leading-relaxed">
-                  Ons aanbod beweegt mee met jou. Alle trainingen worden begeleid vanuit een <strong>trauma-sensitieve en zorgvuldige benadering</strong>, met aandacht voor veiligheid en eigen tempo.
-                </p>
-              </div>
-            </ScrollReveal>
-          </div>
-        </div>
-      </section>
-
-      {/* 8-Week Training */}
+      {/* 1. Groepstraject */}
       <section className="py-20 lg:py-24 bg-white">
         <div className="container mx-auto px-4">
           <div className="mx-auto max-w-4xl">
@@ -80,33 +64,32 @@ const Services = () => {
               <ScrollReveal animation="fade-right">
                 <div>
                   <span className="inline-block rounded-full bg-terracotta-100 px-4 py-1.5 text-xs font-semibold text-terracotta-700 mb-6">
-                    Kernprogramma
+                    Groepstraject
                   </span>
                   <h2 className="mb-6 text-3xl font-light text-foreground md:text-4xl leading-tight">
-                    8-weekse Zelfcompassie <span className="font-serif italic text-terracotta-600">Training</span>
+                    🌿 Mindful zelfcompassie <span className="font-serif italic text-terracotta-600">(8 weken)</span>
                   </h2>
                   <p className="text-terracotta-600 font-medium mb-6">
-                    Voor wie meer rust en stabiliteit wil ervaren in het dagelijks leven
+                    Wil je leren vriendelijker met jezelf om te gaan, beter omgaan met stress en meer innerlijke rust ervaren?
                   </p>
                   <p className="text-muted-foreground text-lg leading-relaxed mb-8">
-                    Een wetenschappelijk onderbouwde training waarin je leert omgaan met stress, emoties en zelfkritiek met meer vriendelijkheid en veerkracht. Je ontwikkelt praktische vaardigheden om jezelf te ondersteunen en zelfcompassie stap voor stap te integreren in je dagelijks leven.
+                    In dit 8-weekse groepstraject werk je samen met anderen aan zelfcompassie en emotionele veerkracht.
                   </p>
                   
-                  <div className="flex flex-wrap gap-3 mb-8">
-                    <span className="inline-flex items-center gap-2 rounded-full bg-warm-100 px-4 py-2 text-sm text-foreground">
-                      <Calendar className="h-4 w-4 text-terracotta-500" /> 8 weken
-                    </span>
-                    <span className="inline-flex items-center gap-2 rounded-full bg-warm-100 px-4 py-2 text-sm text-foreground">
-                      <Globe className="h-4 w-4 text-terracotta-500" /> Online
-                    </span>
-                    <span className="inline-flex items-center gap-2 rounded-full bg-warm-100 px-4 py-2 text-sm text-foreground">
-                      <BookOpen className="h-4 w-4 text-terracotta-500" /> NL of EN
-                    </span>
-                  </div>
-                  
-                  <p className="text-sm text-muted-foreground mb-6">
-                    Inclusief begeleide oefeningen en reflectie
-                  </p>
+                  <h4 className="font-medium text-foreground mb-4">Wat je krijgt:</h4>
+                  <ul className="space-y-3 mb-8">
+                    {[
+                      "8 begeleide groepssessies",
+                      "Meditaties en praktische oefeningen",
+                      "Reflectie en uitwisseling in een veilige setting",
+                      "Tools om thuis verder te oefenen",
+                    ].map((item, i) => (
+                      <li key={i} className="flex items-center gap-3 text-foreground">
+                        <Check className="h-4 w-4 text-terracotta-500 flex-shrink-0" />
+                        {item}
+                      </li>
+                    ))}
+                  </ul>
                   
                   <Button asChild className="bg-terracotta-600 hover:bg-terracotta-700 text-white rounded-full px-8">
                     <Link to="/msc-training">
@@ -123,11 +106,12 @@ const Services = () => {
                   <Card className="relative border-0 bg-white rounded-3xl shadow-lg overflow-hidden">
                     <CardContent className="p-8 flex flex-col items-center text-center">
                       <div className="h-20 w-20 rounded-2xl bg-gradient-to-br from-terracotta-100 to-terracotta-200 flex items-center justify-center mb-6">
-                        <Calendar className="h-10 w-10 text-terracotta-600" />
+                        <Users className="h-10 w-10 text-terracotta-600" />
                       </div>
-                      <h3 className="text-xl font-semibold text-foreground mb-3">MSC Training</h3>
-                      <p className="text-muted-foreground mb-4">Mindful Self-Compassion</p>
+                      <h3 className="text-xl font-semibold text-foreground mb-3">Groepstraject</h3>
+                      <p className="text-muted-foreground mb-4">8 weken · samen groeien</p>
                       <p className="text-3xl font-light text-terracotta-600">€550</p>
+                      <p className="text-sm text-muted-foreground mt-2">voor het volledige traject</p>
                     </CardContent>
                   </Card>
                 </div>
@@ -137,7 +121,7 @@ const Services = () => {
         </div>
       </section>
 
-      {/* Individuele Begeleiding */}
+      {/* 2. Individueel Traject */}
       <section className="py-20 lg:py-24 bg-warm-50">
         <div className="container mx-auto px-4">
           <div className="mx-auto max-w-4xl">
@@ -150,9 +134,9 @@ const Services = () => {
                       <div className="h-20 w-20 rounded-2xl bg-gradient-to-br from-warm-100 to-warm-200 flex items-center justify-center mb-6">
                         <Heart className="h-10 w-10 text-terracotta-600" />
                       </div>
-                      <h3 className="text-xl font-semibold text-foreground mb-3">Individuele Begeleiding</h3>
-                      <p className="text-muted-foreground mb-4">6 sessies · op maat</p>
-                      <p className="text-3xl font-light text-terracotta-600">€550</p>
+                      <h3 className="text-xl font-semibold text-foreground mb-3">Individueel Traject</h3>
+                      <p className="text-muted-foreground mb-4">6 sessies · incl. intake & reflectie</p>
+                      <p className="text-3xl font-light text-terracotta-600">€699</p>
                     </CardContent>
                   </Card>
                 </div>
@@ -164,28 +148,29 @@ const Services = () => {
                     Persoonlijk
                   </span>
                   <h2 className="mb-6 text-3xl font-light text-foreground md:text-4xl leading-tight">
-                    Individuele <span className="font-serif italic text-terracotta-600">Begeleiding</span>
+                    🌿 Individueel Traject <span className="font-serif italic text-terracotta-600">– 6-sessiepakket</span>
                   </h2>
                   <p className="text-terracotta-600 font-medium mb-6">
-                    Persoonlijke begeleiding afgestemd op jouw situatie
+                    Wil je persoonlijk, op maat begeleid worden en écht de diepte ingaan op jouw thema's?
                   </p>
-                  <p className="text-muted-foreground text-lg leading-relaxed mb-8">
-                    In 6 sessies werk je op je eigen tempo aan wat voor jou belangrijk is. De begeleiding is volledig afgestemd op jouw situatie, behoeften en ritme — met aandacht voor mindfulness en zelfcompassie.
+                  <p className="text-muted-foreground text-lg leading-relaxed mb-6">
+                    Dit pakket is ideaal voor wie een duurzame stap wil zetten.
                   </p>
                   
+                  <h4 className="font-medium text-foreground mb-4">Het pakket omvat:</h4>
                   <ul className="space-y-3 mb-8">
-                    <li className="flex items-center gap-3 text-foreground">
-                      <span className="h-2 w-2 rounded-full bg-sage-400" />
-                      6 sessies van 1 uur
-                    </li>
-                    <li className="flex items-center gap-3 text-foreground">
-                      <span className="h-2 w-2 rounded-full bg-sage-400" />
-                      Online of op locatie
-                    </li>
-                    <li className="flex items-center gap-3 text-foreground">
-                      <span className="h-2 w-2 rounded-full bg-sage-400" />
-                      Volledig op maat
-                    </li>
+                    {[
+                      "Intakegesprek (60 minuten)",
+                      "6 individuele sessies (60 minuten per sessie)",
+                      "Extra reflectiesessie van 30 minuten (afronding en integratie)",
+                      "Persoonlijke oefeningen en handvatten",
+                      "Mogelijkheid tot korte reflectie per mail tussen sessies",
+                    ].map((item, i) => (
+                      <li key={i} className="flex items-center gap-3 text-foreground">
+                        <Check className="h-4 w-4 text-sage-500 flex-shrink-0" />
+                        {item}
+                      </li>
+                    ))}
                   </ul>
                   
                   <Button asChild className="bg-terracotta-600 hover:bg-terracotta-700 text-white rounded-full px-8">
@@ -201,28 +186,119 @@ const Services = () => {
         </div>
       </section>
 
-      {/* CTA Section */}
+      {/* 3. Individuele Sessie (los) */}
+      <section className="py-20 lg:py-24 bg-white">
+        <div className="container mx-auto px-4">
+          <div className="mx-auto max-w-4xl">
+            <ScrollReveal>
+              <div className="text-center mb-12">
+                <span className="inline-block rounded-full bg-terracotta-100 px-4 py-1.5 text-xs font-semibold text-terracotta-700 mb-6">
+                  Losse sessies
+                </span>
+                <h2 className="mb-6 text-3xl font-light text-foreground md:text-4xl leading-tight">
+                  🌿 Individuele Sessie <span className="font-serif italic text-terracotta-600">(los)</span>
+                </h2>
+                <p className="text-muted-foreground text-lg max-w-2xl mx-auto leading-relaxed">
+                  Wil je eerst kennismaken of een losse sessie boeken rond een specifiek thema?
+                </p>
+              </div>
+            </ScrollReveal>
+            
+            <div className="grid md:grid-cols-2 gap-8 max-w-3xl mx-auto">
+              <ScrollReveal animation="fade-right">
+                <Card className="border-warm-200 bg-warm-50 rounded-2xl overflow-hidden h-full">
+                  <CardContent className="p-8">
+                    <div className="h-12 w-12 rounded-xl bg-gradient-to-br from-terracotta-100 to-terracotta-200 flex items-center justify-center mb-5">
+                      <Sparkles className="h-6 w-6 text-terracotta-600" />
+                    </div>
+                    <h3 className="text-xl font-semibold text-foreground mb-2">Kennismakingssessie</h3>
+                    <p className="text-xs text-muted-foreground mb-4 font-medium">Eenmalig</p>
+                    <p className="text-muted-foreground leading-relaxed mb-6">
+                      Een eerste verdiepende sessie waarin we helder krijgen waar je staat en wat je nodig hebt. Je ervaart direct hoe het is om samen te werken en krijgt concrete inzichten.
+                    </p>
+                    <div className="pt-4 border-t border-warm-200">
+                      <p className="text-sm text-muted-foreground">60 minuten</p>
+                      <p className="text-2xl font-light text-terracotta-600 mt-1">€95</p>
+                    </div>
+                  </CardContent>
+                </Card>
+              </ScrollReveal>
+              
+              <ScrollReveal animation="fade-left" delay={0.2}>
+                <Card className="border-warm-200 bg-warm-50 rounded-2xl overflow-hidden h-full">
+                  <CardContent className="p-8">
+                    <div className="h-12 w-12 rounded-xl bg-gradient-to-br from-sage-100 to-sage-200 flex items-center justify-center mb-5">
+                      <Heart className="h-6 w-6 text-sage-600" />
+                    </div>
+                    <h3 className="text-xl font-semibold text-foreground mb-2">Reguliere individuele sessie</h3>
+                    <p className="text-xs text-muted-foreground mb-4 font-medium">Per sessie</p>
+                    <p className="text-muted-foreground leading-relaxed mb-6">
+                      Persoonlijke begeleiding, volledig afgestemd op jouw vraag of proces. We werken verdiepend en concreet aan wat op dat moment aandacht vraagt.
+                    </p>
+                    <div className="pt-4 border-t border-warm-200">
+                      <p className="text-sm text-muted-foreground">60 minuten</p>
+                      <p className="text-2xl font-light text-terracotta-600 mt-1">€125</p>
+                    </div>
+                  </CardContent>
+                </Card>
+              </ScrollReveal>
+            </div>
+            
+            <ScrollReveal delay={0.3}>
+              <div className="text-center mt-10">
+                <Button asChild className="bg-terracotta-600 hover:bg-terracotta-700 text-white rounded-full px-8">
+                  <Link to="/contact">
+                    Boek een sessie
+                    <ArrowRight className="ml-2 h-4 w-4" />
+                  </Link>
+                </Button>
+              </div>
+            </ScrollReveal>
+          </div>
+        </div>
+      </section>
+
+      {/* Welke vorm past bij jou? */}
       <section className="py-24 lg:py-28 bg-gradient-to-b from-warm-50 to-sage-100">
         <div className="container mx-auto px-4">
           <div className="mx-auto max-w-2xl text-center">
             <ScrollReveal>
-              <h2 className="mb-6 text-3xl font-light text-foreground md:text-4xl lg:text-5xl leading-tight">
-                Klaar om thuis te komen <br />bij jezelf?
+              <h2 className="mb-10 text-3xl font-light text-foreground md:text-4xl lg:text-5xl leading-tight">
+                Welke vorm past <span className="font-serif italic text-terracotta-600">bij jou?</span>
               </h2>
-              <p className="mb-4 text-xl text-terracotta-600 font-medium">
-                In je hoofd. In je hart. In je lichaam.
-              </p>
-              <p className="mb-6 text-muted-foreground text-lg">
-                Op een plek waar je niets hoeft te bewijzen — alleen maar mag <em>zijn</em>.
-              </p>
-              <p className="mb-12 text-muted-foreground text-lg max-w-lg mx-auto">
-                Als je voelt dat het tijd is om zachter, milder en bewuster in het leven te staan, dan is dit jouw moment.
+              
+              <div className="space-y-4 text-left max-w-lg mx-auto mb-12">
+                <div className="flex items-start gap-3 p-4 rounded-xl bg-white/80 border border-warm-200">
+                  <span className="text-lg mt-0.5">→</span>
+                  <p className="text-foreground">
+                    <strong>Zoek je verbinding en herkenning in een groep?</strong><br />
+                    <span className="text-muted-foreground">Kies het 8-weekse groepstraject</span>
+                  </p>
+                </div>
+                <div className="flex items-start gap-3 p-4 rounded-xl bg-white/80 border border-warm-200">
+                  <span className="text-lg mt-0.5">→</span>
+                  <p className="text-foreground">
+                    <strong>Wil je persoonlijke verdieping en maatwerk?</strong><br />
+                    <span className="text-muted-foreground">Kies het 6-sessie individuele traject</span>
+                  </p>
+                </div>
+                <div className="flex items-start gap-3 p-4 rounded-xl bg-white/80 border border-warm-200">
+                  <span className="text-lg mt-0.5">→</span>
+                  <p className="text-foreground">
+                    <strong>Twijfel je nog of wil je eerst ervaren hoe het is?</strong><br />
+                    <span className="text-muted-foreground">Boek een kennismakingssessie</span>
+                  </p>
+                </div>
+              </div>
+              
+              <p className="text-muted-foreground text-lg mb-8">
+                Je bent van harte welkom om te starten waar het voor jou goed voelt 🌿
               </p>
             </ScrollReveal>
             <ScrollReveal delay={0.2}>
               <Button asChild size="lg" className="bg-terracotta-600 hover:bg-terracotta-700 text-white px-10 py-7 text-base rounded-full shadow-lg">
-                <Link to="/msc-training">
-                  Bekijk de trainingen
+                <Link to="/contact">
+                  Neem contact op
                   <ArrowRight className="ml-2 h-5 w-5" />
                 </Link>
               </Button>

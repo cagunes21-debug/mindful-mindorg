@@ -675,16 +675,23 @@ const MindfulZelfcompassie = () => {
                 </h2>
               </div>
               
+              {/* Intro text */}
+              <div className="text-center mb-10">
+                <p className="text-muted-foreground text-lg max-w-2xl mx-auto leading-relaxed">
+                  Iedereen bewandelt zijn of haar eigen pad. Soms wil je groeien in een groep, soms juist met persoonlijke begeleiding. Hieronder vind je de mogelijkheden.
+                </p>
+              </div>
+
               {/* Service Cards */}
-              <div className="grid md:grid-cols-2 gap-6 mb-16">
+              <div className="grid md:grid-cols-3 gap-6 mb-16">
                 <Card className="border-warm-200 bg-white hover:shadow-lg transition-all duration-300 rounded-2xl overflow-hidden group text-center">
                   <CardContent className="p-6">
                     <div className="h-14 w-14 rounded-2xl bg-gradient-to-br from-terracotta-100 to-terracotta-200 flex items-center justify-center mb-4 mx-auto group-hover:scale-110 transition-transform">
-                      <Calendar className="h-7 w-7 text-terracotta-600" />
+                      <Users className="h-7 w-7 text-terracotta-600" />
                     </div>
-                    <h3 className="text-lg font-semibold text-foreground mb-1">8-weekse MSC Training</h3>
-                    <p className="text-xs text-muted-foreground mb-3">8 sessies van 2 uur · online · incl. stilte-retreat</p>
-                    <p className="text-sm text-muted-foreground mb-4">Diepgaand programma om zelfcompassie stap voor stap te ontwikkelen en te integreren in je dagelijks leven.</p>
+                    <h3 className="text-lg font-semibold text-foreground mb-1">🌿 Groepstraject</h3>
+                    <p className="text-xs text-muted-foreground mb-3">Mindful zelfcompassie · 8 weken</p>
+                    <p className="text-sm text-muted-foreground mb-4">Leer vriendelijker met jezelf omgaan, beter omgaan met stress en ervaar meer innerlijke rust.</p>
                     <p className="text-xl font-light text-terracotta-600">€550</p>
                   </CardContent>
                 </Card>
@@ -694,10 +701,22 @@ const MindfulZelfcompassie = () => {
                     <div className="h-14 w-14 rounded-2xl bg-gradient-to-br from-warm-100 to-warm-200 flex items-center justify-center mb-4 mx-auto group-hover:scale-110 transition-transform">
                       <Heart className="h-7 w-7 text-terracotta-600" />
                     </div>
-                    <h3 className="text-lg font-semibold text-foreground mb-1">Individuele Begeleiding</h3>
-                    <p className="text-xs text-muted-foreground mb-3">6 sessies · op maat · online of op locatie</p>
-                    <p className="text-sm text-muted-foreground mb-4">Persoonlijke begeleiding afgestemd op jouw situatie, in je eigen tempo en ritme.</p>
-                    <p className="text-xl font-light text-terracotta-600">€550</p>
+                    <h3 className="text-lg font-semibold text-foreground mb-1">🌿 Individueel Traject</h3>
+                    <p className="text-xs text-muted-foreground mb-3">6-sessiepakket · incl. intake & reflectie</p>
+                    <p className="text-sm text-muted-foreground mb-4">Persoonlijk, op maat begeleid worden en écht de diepte ingaan op jouw thema's.</p>
+                    <p className="text-xl font-light text-terracotta-600">€699</p>
+                  </CardContent>
+                </Card>
+
+                <Card className="border-warm-200 bg-white hover:shadow-lg transition-all duration-300 rounded-2xl overflow-hidden group text-center">
+                  <CardContent className="p-6">
+                    <div className="h-14 w-14 rounded-2xl bg-gradient-to-br from-sage-100 to-sage-200 flex items-center justify-center mb-4 mx-auto group-hover:scale-110 transition-transform">
+                      <Sparkles className="h-7 w-7 text-sage-600" />
+                    </div>
+                    <h3 className="text-lg font-semibold text-foreground mb-1">🌿 Individuele Sessie</h3>
+                    <p className="text-xs text-muted-foreground mb-3">Los · kennismaking of verdieping</p>
+                    <p className="text-sm text-muted-foreground mb-4">Eerst kennismaken of een losse sessie boeken rond een specifiek thema.</p>
+                    <p className="text-xl font-light text-terracotta-600">vanaf €95</p>
                   </CardContent>
                 </Card>
               </div>
