@@ -55,6 +55,7 @@ export type Database = {
       course_weeks: {
         Row: {
           content: Json | null
+          course_type: string
           created_at: string
           description: string | null
           id: string
@@ -65,6 +66,7 @@ export type Database = {
         }
         Insert: {
           content?: Json | null
+          course_type?: string
           created_at?: string
           description?: string | null
           id?: string
@@ -75,6 +77,7 @@ export type Database = {
         }
         Update: {
           content?: Json | null
+          course_type?: string
           created_at?: string
           description?: string | null
           id?: string
@@ -87,6 +90,7 @@ export type Database = {
       }
       enrollments: {
         Row: {
+          course_type: string
           created_at: string
           current_week: number | null
           group_info: string | null
@@ -100,6 +104,7 @@ export type Database = {
           user_id: string
         }
         Insert: {
+          course_type?: string
           created_at?: string
           current_week?: number | null
           group_info?: string | null
@@ -113,6 +118,7 @@ export type Database = {
           user_id: string
         }
         Update: {
+          course_type?: string
           created_at?: string
           current_week?: number | null
           group_info?: string | null
