@@ -181,12 +181,6 @@ const MindfulZelfcompassie = () => {
                   <ArrowRight className="ml-3 h-5 w-5" />
                 </a>
               </Button>
-              <Button asChild variant="outline" size="lg" className="border-terracotta-300 text-terracotta-700 hover:bg-terracotta-50 rounded-full px-8 py-7 text-lg">
-                <Link to="/bedrijven">
-                  Voor Bedrijven
-                  <ArrowRight className="ml-2 h-5 w-5" />
-                </Link>
-              </Button>
             </motion.div>
 
             {/* Quick info badges */}
