@@ -676,7 +676,7 @@ const MindfulZelfcompassie = () => {
               </div>
               
               {/* Service Cards */}
-              <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
+              <div className="grid md:grid-cols-2 gap-6 mb-16">
                 <Card className="border-warm-200 bg-white hover:shadow-lg transition-all duration-300 rounded-2xl overflow-hidden group text-center">
                   <CardContent className="p-6">
                     <div className="h-14 w-14 rounded-2xl bg-gradient-to-br from-terracotta-100 to-terracotta-200 flex items-center justify-center mb-4 mx-auto group-hover:scale-110 transition-transform">
@@ -688,30 +688,6 @@ const MindfulZelfcompassie = () => {
                     <p className="text-xl font-light text-terracotta-600">€550</p>
                   </CardContent>
                 </Card>
-
-                <Card className="border-warm-200 bg-white hover:shadow-lg transition-all duration-300 rounded-2xl overflow-hidden group text-center">
-                  <CardContent className="p-6">
-                    <div className="h-14 w-14 rounded-2xl bg-gradient-to-br from-sage-100 to-sage-200 flex items-center justify-center mb-4 mx-auto group-hover:scale-110 transition-transform">
-                      <Clock className="h-7 w-7 text-sage-600" />
-                    </div>
-                    <h3 className="text-lg font-semibold text-foreground mb-1">Wekelijkse sessies</h3>
-                    <p className="text-xs text-muted-foreground mb-3">1 uur per sessie · online</p>
-                    <p className="text-sm text-muted-foreground mb-4">Korte, regelmatige sessies om mindfulness en zelfcompassie dagelijks te oefenen en te verankeren.</p>
-                    <p className="text-xl font-light text-terracotta-600">€30 <span className="text-sm text-muted-foreground">per sessie</span></p>
-                  </CardContent>
-                </Card>
-                
-                <Card className="border-warm-200 bg-white hover:shadow-lg transition-all duration-300 rounded-2xl overflow-hidden group text-center">
-                  <CardContent className="p-6">
-                    <div className="h-14 w-14 rounded-2xl bg-gradient-to-br from-sage-100 to-sage-200 flex items-center justify-center mb-4 mx-auto group-hover:scale-110 transition-transform">
-                      <Sparkles className="h-7 w-7 text-sage-600" />
-                    </div>
-                    <h3 className="text-lg font-semibold text-foreground mb-1">Workshop Zelfcompassie</h3>
-                    <p className="text-xs text-muted-foreground mb-3">1 sessie van 1 uur · online · geen voorkennis nodig</p>
-                    <p className="text-sm text-muted-foreground mb-4">Maak kennis met de basis van zelfcompassie in een laagdrempelige, interactieve sessie.</p>
-                    <p className="text-xl font-light text-terracotta-600">€45</p>
-                  </CardContent>
-                </Card>
                 
                 <Card className="border-warm-200 bg-white hover:shadow-lg transition-all duration-300 rounded-2xl overflow-hidden group text-center">
                   <CardContent className="p-6">
@@ -719,9 +695,9 @@ const MindfulZelfcompassie = () => {
                       <Heart className="h-7 w-7 text-terracotta-600" />
                     </div>
                     <h3 className="text-lg font-semibold text-foreground mb-1">Individuele Begeleiding</h3>
-                    <p className="text-xs text-muted-foreground mb-3">Individueel · op maat · online of op locatie</p>
+                    <p className="text-xs text-muted-foreground mb-3">6 sessies · op maat · online of op locatie</p>
                     <p className="text-sm text-muted-foreground mb-4">Persoonlijke begeleiding afgestemd op jouw situatie, in je eigen tempo en ritme.</p>
-                    <p className="text-xl font-light text-terracotta-600">€75 <span className="text-sm text-muted-foreground">per sessie</span></p>
+                    <p className="text-xl font-light text-terracotta-600">€550</p>
                   </CardContent>
                 </Card>
               </div>
