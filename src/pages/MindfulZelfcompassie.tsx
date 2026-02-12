@@ -183,6 +183,19 @@ const MindfulZelfcompassie = () => {
               </Button>
             </motion.div>
 
+            {/* Individual sessions mention */}
+            <motion.p
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.6, delay: 0.4 }}
+              className="mt-6 text-sm text-muted-foreground"
+            >
+              Liever individuele begeleiding?{" "}
+              <Link to="/ons-aanbod" className="text-terracotta-600 hover:text-terracotta-700 underline underline-offset-2">
+                Bekijk onze individuele trajecten
+              </Link>
+            </motion.p>
+
             {/* Quick info badges */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
