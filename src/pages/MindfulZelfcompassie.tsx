@@ -711,7 +711,7 @@ const MindfulZelfcompassie = () => {
                     <h3 className="text-lg font-semibold text-foreground mb-1">🌿 Individueel Traject</h3>
                     <p className="text-xs text-muted-foreground mb-3">6-sessiepakket · incl. intake & reflectie</p>
                     <p className="text-sm text-muted-foreground mb-4">Persoonlijk, op maat begeleid worden en écht de diepte ingaan op jouw thema's.</p>
-                    <p className="text-xl font-light text-terracotta-600">€699</p>
+                    <p className="text-xl font-light text-terracotta-600">€650</p>
                   </CardContent>
                 </Card>
 
@@ -791,6 +791,138 @@ const MindfulZelfcompassie = () => {
               </div>
             </ScrollReveal>
 
+            {/* Divider */}
+            <div className="flex items-center gap-4 my-12">
+              <div className="h-px flex-1 bg-warm-300" />
+              <Leaf className="h-5 w-5 text-sage-400" />
+              <div className="h-px flex-1 bg-warm-300" />
+            </div>
+
+            {/* Individueel Traject */}
+            <ScrollReveal delay={0.2}>
+              <div className="mb-16">
+                <div className="flex items-center gap-3 mb-6">
+                  <div className="h-10 w-10 rounded-xl bg-warm-100 flex items-center justify-center">
+                    <Heart className="h-5 w-5 text-terracotta-600" />
+                  </div>
+                  <h3 className="text-2xl font-medium text-foreground">Individueel Traject – 6-sessiepakket</h3>
+                </div>
+                
+                <p className="text-terracotta-600 font-medium mb-4">
+                  Wil je persoonlijk, op maat begeleid worden en écht de diepte ingaan op jouw thema's?
+                </p>
+                <p className="text-muted-foreground mb-6 max-w-2xl">
+                  Dit pakket is ideaal voor wie een duurzame stap wil zetten. Inclusief intake en reflectiesessie.
+                </p>
+
+                <div className="grid md:grid-cols-2 gap-6 mb-8">
+                  <Card className="border-warm-200 bg-white rounded-2xl">
+                    <CardContent className="p-6">
+                      <h4 className="font-medium text-foreground mb-4">Het pakket omvat:</h4>
+                      <ul className="space-y-3">
+                        {[
+                          "Intakegesprek (60 minuten)",
+                          "6 individuele sessies (60 min per sessie)",
+                          "Extra reflectiesessie van 30 minuten",
+                          "Persoonlijke oefeningen en handvatten",
+                          "Korte reflectie per mail tussen sessies",
+                        ].map((item, i) => (
+                          <li key={i} className="flex items-center gap-3 text-foreground text-sm">
+                            <Check className="h-4 w-4 text-sage-500 flex-shrink-0" />
+                            {item}
+                          </li>
+                        ))}
+                      </ul>
+                    </CardContent>
+                  </Card>
+                  
+                  <Card className="border-warm-200 bg-white rounded-2xl">
+                    <CardContent className="p-6 flex flex-col items-center justify-center text-center h-full">
+                      <div className="h-16 w-16 rounded-2xl bg-gradient-to-br from-warm-100 to-warm-200 flex items-center justify-center mb-4">
+                        <Heart className="h-8 w-8 text-terracotta-600" />
+                      </div>
+                      <p className="text-3xl font-light text-terracotta-600 mb-2">€650</p>
+                      <p className="text-sm text-muted-foreground mb-6">voor het volledige traject</p>
+                      <Button asChild className="bg-terracotta-600 hover:bg-terracotta-700 text-white rounded-full px-8">
+                        <Link to="/contact">
+                          Neem contact op
+                          <ArrowRight className="ml-2 h-4 w-4" />
+                        </Link>
+                      </Button>
+                    </CardContent>
+                  </Card>
+                </div>
+              </div>
+            </ScrollReveal>
+
+            {/* Divider */}
+            <div className="flex items-center gap-4 my-12">
+              <div className="h-px flex-1 bg-warm-300" />
+              <Leaf className="h-5 w-5 text-sage-400" />
+              <div className="h-px flex-1 bg-warm-300" />
+            </div>
+
+            {/* Individuele Sessie (los) */}
+            <ScrollReveal delay={0.25}>
+              <div className="mb-16">
+                <div className="flex items-center gap-3 mb-6">
+                  <div className="h-10 w-10 rounded-xl bg-sage-100 flex items-center justify-center">
+                    <Sparkles className="h-5 w-5 text-sage-600" />
+                  </div>
+                  <h3 className="text-2xl font-medium text-foreground">Individuele Sessie (los)</h3>
+                </div>
+                
+                <p className="text-muted-foreground mb-6 max-w-2xl">
+                  Wil je eerst kennismaken of een losse sessie boeken rond een specifiek thema?
+                </p>
+
+                <div className="grid md:grid-cols-2 gap-6">
+                  <Card className="border-warm-200 bg-white hover:shadow-lg transition-all duration-300 rounded-2xl">
+                    <CardContent className="p-6">
+                      <div className="h-12 w-12 rounded-xl bg-gradient-to-br from-terracotta-100 to-terracotta-200 flex items-center justify-center mb-4">
+                        <Sparkles className="h-6 w-6 text-terracotta-600" />
+                      </div>
+                      <h4 className="text-lg font-semibold text-foreground mb-1">Kennismakingssessie</h4>
+                      <p className="text-xs text-muted-foreground mb-3 font-medium">Eenmalig</p>
+                      <p className="text-sm text-muted-foreground mb-4 leading-relaxed">
+                        Een eerste verdiepende sessie waarin we helder krijgen waar je staat en wat je nodig hebt. Je ervaart direct hoe het is om samen te werken.
+                      </p>
+                      <div className="pt-4 border-t border-warm-200 flex items-center justify-between">
+                        <div>
+                          <p className="text-xs text-muted-foreground">60 minuten</p>
+                          <p className="text-2xl font-light text-terracotta-600">€95</p>
+                        </div>
+                        <Button asChild size="sm" className="bg-terracotta-600 hover:bg-terracotta-700 text-white rounded-full">
+                          <Link to="/contact">Boek sessie</Link>
+                        </Button>
+                      </div>
+                    </CardContent>
+                  </Card>
+
+                  <Card className="border-warm-200 bg-white hover:shadow-lg transition-all duration-300 rounded-2xl">
+                    <CardContent className="p-6">
+                      <div className="h-12 w-12 rounded-xl bg-gradient-to-br from-sage-100 to-sage-200 flex items-center justify-center mb-4">
+                        <Heart className="h-6 w-6 text-sage-600" />
+                      </div>
+                      <h4 className="text-lg font-semibold text-foreground mb-1">Reguliere individuele sessie</h4>
+                      <p className="text-xs text-muted-foreground mb-3 font-medium">Per sessie</p>
+                      <p className="text-sm text-muted-foreground mb-4 leading-relaxed">
+                        Persoonlijke begeleiding, volledig afgestemd op jouw vraag of proces. We werken verdiepend en concreet aan wat aandacht vraagt.
+                      </p>
+                      <div className="pt-4 border-t border-warm-200 flex items-center justify-between">
+                        <div>
+                          <p className="text-xs text-muted-foreground">60 minuten</p>
+                          <p className="text-2xl font-light text-terracotta-600">€125</p>
+                        </div>
+                        <Button asChild size="sm" className="bg-terracotta-600 hover:bg-terracotta-700 text-white rounded-full">
+                          <Link to="/contact">Boek sessie</Link>
+                        </Button>
+                      </div>
+                    </CardContent>
+                  </Card>
+                </div>
+              </div>
+            </ScrollReveal>
 
             <div className="text-center mt-12">
               <Button asChild variant="outline" className="border-terracotta-300 text-terracotta-700 hover:bg-terracotta-50 rounded-full px-8">
