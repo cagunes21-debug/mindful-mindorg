@@ -136,7 +136,7 @@ const Services = () => {
                       </div>
                       <h3 className="text-xl font-semibold text-foreground mb-3">Individueel Traject</h3>
                       <p className="text-muted-foreground mb-4">6 sessies · incl. intake & reflectie</p>
-                      <p className="text-3xl font-light text-terracotta-600">€699</p>
+                      <p className="text-3xl font-light text-terracotta-600">€650</p>
                     </CardContent>
                   </Card>
                 </div>
