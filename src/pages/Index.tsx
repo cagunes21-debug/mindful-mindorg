@@ -101,7 +101,10 @@ const Index = () => {
           <img 
             src={heroMindfulness} 
             alt="Mindfulness meditation in nature" 
+            width={1920}
+            height={1080}
             className="w-full h-full object-cover"
+            fetchPriority="high"
           />
           <div className="absolute inset-0 bg-gradient-to-b from-warm-50/90 via-warm-50/80 to-warm-50/95" />
         </div>

@@ -1,38 +1,46 @@
+import { lazy, Suspense } from "react";
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { HelmetProvider } from "react-helmet-async";
-import Index from "./pages/Index";
 import MindfulZelfcompassie from "./pages/MindfulZelfcompassie";
-import Services from "./pages/Services";
-import About from "./pages/About";
-import Trainers from "./pages/Trainers";
-import Agenda from "./pages/Agenda";
-import Contact from "./pages/Contact";
-import Coaching from "./pages/Coaching";
-import BewegingMildheidRetreat from "./pages/BewegingMildheidRetreat";
-import Bedrijven from "./pages/Bedrijven";
-import Auth from "./pages/Auth";
-import AdminDashboard from "./pages/AdminDashboard";
-import AdminBlog from "./pages/AdminBlog";
-import CustomerOverview from "./pages/CustomerOverview";
-import ParticipantDashboard from "./pages/ParticipantDashboard";
-import BetalingSucces from "./pages/BetalingSucces";
-import BetalingGeannuleerd from "./pages/BetalingGeannuleerd";
-import Privacy from "./pages/Privacy";
-import FAQ from "./pages/FAQ";
-import Ervaringen from "./pages/Ervaringen";
-import StadLanding from "./pages/StadLanding";
-import Blog from "./pages/Blog";
-import BlogPost from "./pages/BlogPost";
 import ExitIntentPopup from "./components/ExitIntentPopup";
 import StickyCTA from "./components/StickyCTA";
 
-import NotFound from "./pages/NotFound";
+// Lazy-loaded routes for better Core Web Vitals
+const Index = lazy(() => import("./pages/Index"));
+const Services = lazy(() => import("./pages/Services"));
+const About = lazy(() => import("./pages/About"));
+const Trainers = lazy(() => import("./pages/Trainers"));
+const Agenda = lazy(() => import("./pages/Agenda"));
+const Contact = lazy(() => import("./pages/Contact"));
+const Coaching = lazy(() => import("./pages/Coaching"));
+const BewegingMildheidRetreat = lazy(() => import("./pages/BewegingMildheidRetreat"));
+const Bedrijven = lazy(() => import("./pages/Bedrijven"));
+const Auth = lazy(() => import("./pages/Auth"));
+const AdminDashboard = lazy(() => import("./pages/AdminDashboard"));
+const AdminBlog = lazy(() => import("./pages/AdminBlog"));
+const CustomerOverview = lazy(() => import("./pages/CustomerOverview"));
+const ParticipantDashboard = lazy(() => import("./pages/ParticipantDashboard"));
+const BetalingSucces = lazy(() => import("./pages/BetalingSucces"));
+const BetalingGeannuleerd = lazy(() => import("./pages/BetalingGeannuleerd"));
+const Privacy = lazy(() => import("./pages/Privacy"));
+const FAQ = lazy(() => import("./pages/FAQ"));
+const Ervaringen = lazy(() => import("./pages/Ervaringen"));
+const StadLanding = lazy(() => import("./pages/StadLanding"));
+const Blog = lazy(() => import("./pages/Blog"));
+const BlogPost = lazy(() => import("./pages/BlogPost"));
+const NotFound = lazy(() => import("./pages/NotFound"));
 
 const queryClient = new QueryClient();
+
+const PageLoader = () => (
+  <div className="min-h-screen bg-background flex items-center justify-center">
+    <div className="w-8 h-8 border-2 border-terracotta-300 border-t-terracotta-600 rounded-full animate-spin" />
+  </div>
+);
 
 const App = () => (
   <HelmetProvider>
@@ -43,35 +51,37 @@ const App = () => (
         <BrowserRouter>
           <ExitIntentPopup />
           <StickyCTA />
-          <Routes>
-            <Route path="/" element={<MindfulZelfcompassie />} />
-            <Route path="/programmas" element={<Index />} />
-            
-            <Route path="/ons-aanbod" element={<Services />} />
-            <Route path="/over-ons" element={<About />} />
-            <Route path="/trainers" element={<Trainers />} />
-            <Route path="/agenda" element={<Agenda />} />
-            <Route path="/contact" element={<Contact />} />
-            <Route path="/coaching" element={<Coaching />} />
-            <Route path="/barcelona-retreat" element={<BewegingMildheidRetreat />} />
-            <Route path="/bedrijven" element={<Bedrijven />} />
-            <Route path="/login" element={<Auth />} />
-            <Route path="/admin" element={<AdminDashboard />} />
-            <Route path="/admin/klanten" element={<CustomerOverview />} />
-            <Route path="/admin/blog" element={<AdminBlog />} />
-            <Route path="/mijn-training" element={<ParticipantDashboard />} />
-            <Route path="/betaling-succes" element={<BetalingSucces />} />
-            <Route path="/betaling-geannuleerd" element={<BetalingGeannuleerd />} />
-            <Route path="/privacy" element={<Privacy />} />
-            <Route path="/faq" element={<FAQ />} />
-            <Route path="/ervaringen" element={<Ervaringen />} />
-            <Route path="/zelfcompassie-training/:stad" element={<StadLanding />} />
-            <Route path="/blog" element={<Blog />} />
-            <Route path="/blog/:slug" element={<BlogPost />} />
-            
-            {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-            <Route path="*" element={<NotFound />} />
-          </Routes>
+          <Suspense fallback={<PageLoader />}>
+            <Routes>
+              <Route path="/" element={<MindfulZelfcompassie />} />
+              <Route path="/programmas" element={<Index />} />
+              
+              <Route path="/ons-aanbod" element={<Services />} />
+              <Route path="/over-ons" element={<About />} />
+              <Route path="/trainers" element={<Trainers />} />
+              <Route path="/agenda" element={<Agenda />} />
+              <Route path="/contact" element={<Contact />} />
+              <Route path="/coaching" element={<Coaching />} />
+              <Route path="/barcelona-retreat" element={<BewegingMildheidRetreat />} />
+              <Route path="/bedrijven" element={<Bedrijven />} />
+              <Route path="/login" element={<Auth />} />
+              <Route path="/admin" element={<AdminDashboard />} />
+              <Route path="/admin/klanten" element={<CustomerOverview />} />
+              <Route path="/admin/blog" element={<AdminBlog />} />
+              <Route path="/mijn-training" element={<ParticipantDashboard />} />
+              <Route path="/betaling-succes" element={<BetalingSucces />} />
+              <Route path="/betaling-geannuleerd" element={<BetalingGeannuleerd />} />
+              <Route path="/privacy" element={<Privacy />} />
+              <Route path="/faq" element={<FAQ />} />
+              <Route path="/ervaringen" element={<Ervaringen />} />
+              <Route path="/zelfcompassie-training/:stad" element={<StadLanding />} />
+              <Route path="/blog" element={<Blog />} />
+              <Route path="/blog/:slug" element={<BlogPost />} />
+              
+              {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+              <Route path="*" element={<NotFound />} />
+            </Routes>
+          </Suspense>
         </BrowserRouter>
       </TooltipProvider>
     </QueryClientProvider>
