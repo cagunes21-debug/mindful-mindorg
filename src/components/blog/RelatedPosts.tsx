@@ -24,7 +24,7 @@ const RelatedPosts = ({ currentPostId, category }: RelatedPostsProps) => {
   const { data: relatedPosts } = useQuery({
     queryKey: ["related-posts", category, currentPostId],
     queryFn: async () => {
-      const { data, error } = await supabase
+      const { data: sameCat, error: err1 } = await supabase
         .from("blog_posts")
         .select("id, title, slug, excerpt, featured_image, category, published_at")
         .eq("published", true)
@@ -33,17 +33,38 @@ const RelatedPosts = ({ currentPostId, category }: RelatedPostsProps) => {
         .order("published_at", { ascending: false })
         .limit(3);
 
-      if (error) throw error;
-      return data;
+      if (err1) throw err1;
+      if (sameCat && sameCat.length >= 3) return sameCat;
+
+      const existing = sameCat || [];
+      const excludeIds = [currentPostId, ...existing.map((p) => p.id)];
+      const remaining = 3 - existing.length;
+
+      const { data: otherCat, error: err2 } = await supabase
+        .from("blog_posts")
+        .select("id, title, slug, excerpt, featured_image, category, published_at")
+        .eq("published", true)
+        .not("id", "in", `(${excludeIds.join(",")})`)
+        .order("published_at", { ascending: false })
+        .limit(remaining);
+
+      if (err2) throw err2;
+      return [...existing, ...(otherCat || [])];
     },
   });
 
   if (!relatedPosts || relatedPosts.length === 0) return null;
 
+  const hasMultipleCategories = new Set(relatedPosts.map((p) => p.category)).size > 1;
+
   return (
     <section className="mt-16 pt-12 border-t border-warm-200">
       <h2 className="text-2xl font-light text-foreground mb-8 text-center">
-        Meer over <span className="font-serif italic text-terracotta-600">{categoryLabels[category] || category}</span>
+        {hasMultipleCategories ? (
+          <>Meer <span className="font-serif italic text-terracotta-600">artikelen</span></>
+        ) : (
+          <>Meer over <span className="font-serif italic text-terracotta-600">{categoryLabels[category] || category}</span></>
+        )}
       </h2>
       <StaggerContainer className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
         {relatedPosts.map((post) => (
