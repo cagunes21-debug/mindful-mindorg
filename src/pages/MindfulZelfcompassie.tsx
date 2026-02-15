@@ -116,7 +116,10 @@ const MindfulZelfcompassie = () => {
           <img 
             src={heroMindfulness} 
             alt="Mindfulness meditatie in de natuur" 
+            width={1920}
+            height={1080}
             className="w-full h-full object-cover"
+            fetchPriority="high"
           />
           <div className="absolute inset-0 bg-gradient-to-b from-warm-50/90 via-warm-50/80 to-warm-50/95" />
         </div>
@@ -355,7 +358,10 @@ const MindfulZelfcompassie = () => {
                   <img 
                     src={meditationPractice} 
                     alt="Meditatie praktijk" 
+                    width={1280}
+                    height={720}
                     className="absolute inset-0 w-full h-full object-cover"
+                    loading="lazy"
                   />
                   <div className="absolute inset-0 bg-black/30" />
                   
@@ -543,7 +549,10 @@ const MindfulZelfcompassie = () => {
           <img 
             src={natureCalm} 
             alt="Rustige natuur" 
+            width={1920}
+            height={1080}
             className="w-full h-full object-cover"
+            loading="lazy"
           />
         </div>
         <div className="absolute inset-0 bg-gradient-to-b from-sage-50/95 via-sage-50/90 to-sage-50/95" />
