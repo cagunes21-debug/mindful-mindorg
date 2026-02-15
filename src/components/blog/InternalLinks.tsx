@@ -5,53 +5,122 @@ interface InternalLink {
   to: string;
   label: string;
   description: string;
+  keywords: string[];
 }
 
 interface InternalLinksProps {
   category: string;
+  content?: string;
 }
 
-const linksByCategory: Record<string, InternalLink[]> = {
-  mindfulness: [
-    { to: "/", label: "8-weekse MSC Training", description: "Leer mindfulness in de praktijk brengen" },
-    { to: "/faq", label: "Veelgestelde vragen", description: "Antwoorden over mindfulness training" },
-    { to: "/ervaringen", label: "Ervaringen van deelnemers", description: "Lees wat anderen zeggen" },
-  ],
-  zelfcompassie: [
-    { to: "/", label: "Mindful Zelfcompassie Training", description: "Start met de 8-weekse groepstraining" },
-    { to: "/coaching", label: "Individuele begeleiding", description: "Persoonlijke zelfcompassie coaching" },
-    { to: "/ervaringen", label: "Ervaringen", description: "Verhalen van eerdere deelnemers" },
-  ],
-  stressvermindering: [
-    { to: "/", label: "MSC Training", description: "Bewezen effectief tegen stress" },
-    { to: "/coaching", label: "Individueel traject", description: "Persoonlijke aanpak voor stressvermindering" },
-    { to: "/faq", label: "FAQ", description: "Veelgestelde vragen over onze aanpak" },
-  ],
-  meditatie: [
-    { to: "/", label: "Groepstraining", description: "Leer mediteren in een veilige groep" },
-    { to: "/barcelona-retreat", label: "Retreat Barcelona", description: "Verdieping tijdens een retreat" },
-    { to: "/ervaringen", label: "Ervaringen", description: "Wat zeggen onze deelnemers" },
-  ],
-  welzijn: [
-    { to: "/ons-aanbod", label: "Ons aanbod", description: "Bekijk alle mogelijkheden" },
-    { to: "/coaching", label: "Individuele sessies", description: "Op maat begeleiding voor jouw welzijn" },
-    { to: "/faq", label: "Veelgestelde vragen", description: "Meer informatie over onze aanpak" },
-  ],
-};
-
-const defaultLinks: InternalLink[] = [
-  { to: "/", label: "MSC Training", description: "Start met de zelfcompassie training" },
-  { to: "/coaching", label: "Individuele begeleiding", description: "Persoonlijke coaching sessies" },
-  { to: "/ervaringen", label: "Ervaringen", description: "Lees wat anderen zeggen" },
+const allServiceLinks: InternalLink[] = [
+  {
+    to: "/",
+    label: "8-weekse MSC Training",
+    description: "Start met de Mindful Self-Compassion groepstraining",
+    keywords: ["msc", "mindful self-compassion", "groepstraining", "8 weken", "8-weekse", "zelfcompassie training", "cursus"],
+  },
+  {
+    to: "/coaching",
+    label: "Individuele Begeleiding",
+    description: "Persoonlijke coaching sessies op jouw tempo",
+    keywords: ["coaching", "individueel", "persoonlijk", "begeleiding", "sessie", "therapeut", "een-op-een"],
+  },
+  {
+    to: "/barcelona-retreat",
+    label: "Barcelona Retreat",
+    description: "Verdieping tijdens een retreat in Barcelona",
+    keywords: ["retreat", "barcelona", "verdieping", "stilte", "retraite", "weekend"],
+  },
+  {
+    to: "/bedrijven",
+    label: "Voor Bedrijven",
+    description: "Mindfulness programma's voor teams en organisaties",
+    keywords: ["bedrijf", "organisatie", "team", "werkgever", "hr", "werkstress", "burn-out", "werk"],
+  },
+  {
+    to: "/agenda",
+    label: "Agenda & Data",
+    description: "Bekijk beschikbare startdata en locaties",
+    keywords: ["agenda", "startdatum", "inschrijven", "aanmelden", "planning", "data", "locatie"],
+  },
+  {
+    to: "/ervaringen",
+    label: "Ervaringen van Deelnemers",
+    description: "Lees wat eerdere deelnemers zeggen",
+    keywords: ["ervaring", "review", "deelnemer", "resultaat", "testimonial", "succesverhaal"],
+  },
+  {
+    to: "/faq",
+    label: "Veelgestelde Vragen",
+    description: "Antwoorden op veelgestelde vragen",
+    keywords: ["vraag", "faq", "informatie", "kosten", "prijs", "geschikt"],
+  },
+  {
+    to: "/over-ons",
+    label: "Over Mindful Mind",
+    description: "Leer onze missie en achtergrond kennen",
+    keywords: ["over ons", "missie", "achtergrond", "wie", "team"],
+  },
+  {
+    to: "/trainers",
+    label: "Onze Trainers",
+    description: "Maak kennis met onze gecertificeerde trainers",
+    keywords: ["trainer", "docent", "gecertificeerd", "opleiding", "begeleider"],
+  },
 ];
 
-const InternalLinks = ({ category }: InternalLinksProps) => {
-  const links = linksByCategory[category] || defaultLinks;
+const linksByCategory: Record<string, string[]> = {
+  mindfulness: ["/", "/faq", "/ervaringen"],
+  zelfcompassie: ["/", "/coaching", "/ervaringen"],
+  stressvermindering: ["/", "/coaching", "/bedrijven"],
+  meditatie: ["/", "/barcelona-retreat", "/ervaringen"],
+  welzijn: ["/coaching", "/bedrijven", "/faq"],
+};
+
+function scoreLink(link: InternalLink, content: string, category: string): number {
+  const lower = content.toLowerCase();
+  let score = 0;
+
+  // Keyword matches in content
+  for (const kw of link.keywords) {
+    const regex = new RegExp(kw, "gi");
+    const matches = lower.match(regex);
+    if (matches) score += matches.length * 2;
+  }
+
+  // Category boost
+  const categoryLinks = linksByCategory[category];
+  if (categoryLinks?.includes(link.to)) score += 5;
+
+  return score;
+}
+
+function getRelevantLinks(category: string, content?: string): InternalLink[] {
+  if (!content) {
+    // Fallback to category-based links
+    const preferred = linksByCategory[category] || ["/", "/coaching", "/ervaringen"];
+    return allServiceLinks
+      .filter((l) => preferred.includes(l.to))
+      .slice(0, 3);
+  }
+
+  // Score and rank all links
+  const scored = allServiceLinks
+    .map((link) => ({ link, score: scoreLink(link, content, category) }))
+    .sort((a, b) => b.score - a.score)
+    .slice(0, 3);
+
+  return scored.map((s) => s.link);
+}
+
+const InternalLinks = ({ category, content }: InternalLinksProps) => {
+  const links = getRelevantLinks(category, content);
 
   return (
     <div className="mt-10 pt-8 border-t border-warm-200">
       <h3 className="text-sm font-semibold text-muted-foreground uppercase tracking-wider mb-4">
-        Meer ontdekken
+        Dit past bij jou
       </h3>
       <div className="grid gap-3 sm:grid-cols-3">
         {links.map((link) => (

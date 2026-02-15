@@ -213,7 +213,7 @@ const BlogPost = () => {
             />
 
             {/* Internal Links */}
-            <InternalLinks category={post.category} />
+            <InternalLinks category={post.category} content={post.content} />
 
             {/* CTA */}
             <div className="mt-16 bg-warm-50 rounded-3xl p-8 md:p-10 border border-warm-200 text-center">
