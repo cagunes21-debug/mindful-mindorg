@@ -6,6 +6,7 @@ import { Star, Quote, ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
+import { Helmet } from "react-helmet-async";
 
 const testimonials = [
   {
@@ -53,6 +54,33 @@ const FAQ = () => {
         title="Ervaringen"
         description="Lees de ervaringen van deelnemers aan onze mindfulness en zelfcompassie trainingen. Ontdek hoe zij hun reis naar meer zelfcompassie hebben ervaren."
       />
+      <Helmet>
+        <script type="application/ld+json">
+          {JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "LocalBusiness",
+            name: "Mindful Mind",
+            url: "https://mindfulmind.nl",
+            aggregateRating: {
+              "@type": "AggregateRating",
+              ratingValue: "5.0",
+              reviewCount: testimonials.length.toString(),
+              bestRating: "5",
+              worstRating: "1",
+            },
+            review: testimonials.map((t) => ({
+              "@type": "Review",
+              author: { "@type": "Person", name: t.name },
+              reviewRating: {
+                "@type": "Rating",
+                ratingValue: t.rating.toString(),
+                bestRating: "5",
+              },
+              reviewBody: t.text,
+            })),
+          })}
+        </script>
+      </Helmet>
       <Navigation />
 
       <section className="relative overflow-hidden pt-24 pb-16 lg:pt-32 lg:pb-20">
