@@ -68,6 +68,8 @@ const Navigation = () => {
   const aboutLinks = [
     { to: "/over-ons", label: "Over Ons" },
     { to: "/trainers", label: "Trainers" },
+    { to: "/ervaringen", label: "Ervaringen" },
+    { to: "/faq", label: "Veelgestelde Vragen" },
   ];
 
   const isServicesActive = serviceLinks.some(link => location.pathname === link.to) || location.pathname === "/ons-aanbod";
