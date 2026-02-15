@@ -16,6 +16,7 @@ import RelatedPosts from "@/components/blog/RelatedPosts";
 import ReadingTime from "@/components/blog/ReadingTime";
 import TableOfContents from "@/components/blog/TableOfContents";
 import SocialShare from "@/components/blog/SocialShare";
+import InternalLinks from "@/components/blog/InternalLinks";
 
 const categoryLabels: Record<string, string> = {
   mindfulness: "Mindfulness",
@@ -78,6 +79,8 @@ const BlogPost = () => {
         description={post.meta_description || post.excerpt || `Lees meer over ${post.title} op de Mindful Mind blog.`}
         canonical={`https://mindfulmind.nl/blog/${post.slug}`}
         keywords={`${post.category}, mindfulness, zelfcompassie, ${post.title}`}
+        ogImage={post.featured_image || undefined}
+        ogType="article"
       />
       <Helmet>
         <script type="application/ld+json">
@@ -178,7 +181,11 @@ const BlogPost = () => {
                 <img
                   src={post.featured_image}
                   alt={post.title}
+                  width={1200}
+                  height={630}
                   className="w-full rounded-3xl object-cover max-h-[500px]"
+                  loading="eager"
+                  fetchPriority="high"
                 />
               </motion.div>
             )}
@@ -204,6 +211,9 @@ const BlogPost = () => {
               "
               dangerouslySetInnerHTML={{ __html: addHeadingIds(post.content) }}
             />
+
+            {/* Internal Links */}
+            <InternalLinks category={post.category} />
 
             {/* CTA */}
             <div className="mt-16 bg-warm-50 rounded-3xl p-8 md:p-10 border border-warm-200 text-center">
