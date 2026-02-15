@@ -8,7 +8,8 @@ import { BreadcrumbSchema } from "@/components/StructuredData";
 import { ScrollReveal, StaggerContainer, StaggerItem } from "@/components/ScrollReveal";
 import { supabase } from "@/integrations/supabase/client";
 import { Badge } from "@/components/ui/badge";
-import { Calendar, ArrowRight, BookOpen } from "lucide-react";
+import { Input } from "@/components/ui/input";
+import { Calendar, ArrowRight, BookOpen, Search } from "lucide-react";
 import { format } from "date-fns";
 import { nl } from "date-fns/locale";
 import { motion } from "framer-motion";
@@ -25,7 +26,7 @@ const categories = [
 
 const Blog = () => {
   const [activeCategory, setActiveCategory] = useState("all");
-
+  const [searchQuery, setSearchQuery] = useState("");
   const { data: posts, isLoading } = useQuery({
     queryKey: ["blog-posts", activeCategory],
     queryFn: async () => {
@@ -43,6 +44,15 @@ const Blog = () => {
       if (error) throw error;
       return data;
     },
+  });
+
+  const filteredPosts = posts?.filter((post) => {
+    if (!searchQuery.trim()) return true;
+    const query = searchQuery.toLowerCase();
+    return (
+      post.title.toLowerCase().includes(query) ||
+      (post.excerpt && post.excerpt.toLowerCase().includes(query))
+    );
   });
 
   return (
@@ -98,9 +108,21 @@ const Blog = () => {
         </div>
       </section>
 
-      {/* Categories */}
+      {/* Search & Categories */}
       <section className="py-4 border-b border-border bg-white sticky top-16 z-40">
         <div className="container mx-auto px-4">
+          <div className="mx-auto max-w-2xl mb-3">
+            <div className="relative">
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+              <Input
+                type="search"
+                placeholder="Zoek artikelen..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className="pl-10 rounded-full border-warm-200 bg-warm-50 focus:bg-white"
+              />
+            </div>
+          </div>
           <div className="flex flex-wrap justify-center gap-2">
             {categories.map((cat) => (
               <button
@@ -129,7 +151,7 @@ const Blog = () => {
                   <div key={i} className="bg-warm-50 rounded-3xl p-6 animate-pulse h-64" />
                 ))}
               </div>
-            ) : posts && posts.length > 0 ? (
+            ) : filteredPosts && filteredPosts.length > 0 ? (
               <StaggerContainer className="grid gap-8 md:grid-cols-2">
                 {posts.map((post) => (
                   <StaggerItem key={post.id}>
@@ -179,13 +201,15 @@ const Blog = () => {
               <ScrollReveal>
                 <div className="text-center py-20">
                   <div className="h-16 w-16 rounded-full bg-warm-50 flex items-center justify-center mx-auto mb-6">
-                    <BookOpen className="h-8 w-8 text-muted-foreground" />
+                    {searchQuery ? <Search className="h-8 w-8 text-muted-foreground" /> : <BookOpen className="h-8 w-8 text-muted-foreground" />}
                   </div>
                   <h2 className="text-2xl font-light text-foreground mb-3">
-                    Binnenkort meer artikelen
+                    {searchQuery ? "Geen resultaten gevonden" : "Binnenkort meer artikelen"}
                   </h2>
                   <p className="text-muted-foreground max-w-md mx-auto">
-                    We werken aan nieuwe artikelen over mindfulness en zelfcompassie. Kom snel terug voor inspirerende content.
+                    {searchQuery
+                      ? `Geen artikelen gevonden voor "${searchQuery}". Probeer een andere zoekterm.`
+                      : "We werken aan nieuwe artikelen over mindfulness en zelfcompassie. Kom snel terug voor inspirerende content."}
                   </p>
                 </div>
               </ScrollReveal>
