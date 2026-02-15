@@ -12,6 +12,7 @@ import { Calendar, ArrowRight, BookOpen } from "lucide-react";
 import { format } from "date-fns";
 import { nl } from "date-fns/locale";
 import { motion } from "framer-motion";
+import NewsletterForm from "@/components/NewsletterForm";
 
 const categories = [
   { value: "all", label: "Alles" },
@@ -189,6 +190,15 @@ const Blog = () => {
                 </div>
               </ScrollReveal>
             )}
+          </div>
+        </div>
+      </section>
+
+      {/* Newsletter CTA */}
+      <section className="pb-16 lg:pb-20">
+        <div className="container mx-auto px-4">
+          <div className="mx-auto max-w-2xl">
+            <NewsletterForm variant="card" />
           </div>
         </div>
       </section>
