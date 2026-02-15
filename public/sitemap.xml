@@ -60,6 +60,12 @@
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>
+  <!-- Blog -->
+  <url>
+    <loc>https://mindfulmind.nl/blog</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
   <!-- City Landing Pages -->
   <url>
     <loc>https://mindfulmind.nl/zelfcompassie-training/amsterdam</loc>
