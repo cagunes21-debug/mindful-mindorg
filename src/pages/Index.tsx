@@ -282,6 +282,46 @@ const Index = () => {
                   </div>
                 </Link>
               </ScrollReveal>
+
+              <ScrollReveal delay={0.4}>
+                <div className="group block bg-white hover:bg-sage-50 border border-warm-200 hover:border-sage-300 rounded-2xl p-6 transition-all shadow-sm hover:shadow-md cursor-default">
+                  <div className="flex items-start gap-4">
+                    <span className="text-3xl">🧘‍♀️</span>
+                    <div className="flex-1">
+                      <h3 className="font-semibold text-xl text-foreground mb-2">
+                        Body, Heart & Mind
+                      </h3>
+                      <p className="text-muted-foreground mb-2">
+                        Herstel de balans tussen lichaam, hart en geest door zachte beweging, meditatie en zelfcompassie.
+                      </p>
+                      <p className="text-sm text-sage-600 font-medium">
+                        Een ervaringsgericht programma dat je terugbrengt naar je kern.
+                      </p>
+                    </div>
+                    <span className="inline-block rounded-full bg-sage-100 px-3 py-1 text-xs font-medium text-sage-700 mt-1">Binnenkort</span>
+                  </div>
+                </div>
+              </ScrollReveal>
+
+              <ScrollReveal delay={0.5}>
+                <div className="group block bg-white hover:bg-terracotta-50 border border-warm-200 hover:border-terracotta-300 rounded-2xl p-6 transition-all shadow-sm hover:shadow-md cursor-default">
+                  <div className="flex items-start gap-4">
+                    <span className="text-3xl">👑</span>
+                    <div className="flex-1">
+                      <h3 className="font-semibold text-xl text-foreground mb-2">
+                        Female Leadership
+                      </h3>
+                      <p className="text-muted-foreground mb-2">
+                        Versterk je leiderschap vanuit authenticiteit, zelfcompassie en innerlijke kracht.
+                      </p>
+                      <p className="text-sm text-terracotta-600 font-medium">
+                        Voor vrouwen die willen leiden met zachtheid én daadkracht.
+                      </p>
+                    </div>
+                    <span className="inline-block rounded-full bg-terracotta-100 px-3 py-1 text-xs font-medium text-terracotta-700 mt-1">Binnenkort</span>
+                  </div>
+                </div>
+              </ScrollReveal>
             </div>
           </div>
         </div>
