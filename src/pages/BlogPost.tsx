@@ -15,6 +15,7 @@ import { Helmet } from "react-helmet-async";
 import RelatedPosts from "@/components/blog/RelatedPosts";
 import ReadingTime from "@/components/blog/ReadingTime";
 import TableOfContents from "@/components/blog/TableOfContents";
+import SocialShare from "@/components/blog/SocialShare";
 
 const categoryLabels: Record<string, string> = {
   mindfulness: "Mindfulness",
@@ -150,12 +151,19 @@ const BlogPost = () => {
                 </p>
               )}
 
-              <div className="flex items-center gap-4 text-sm text-muted-foreground mb-8">
-                <span className="flex items-center gap-2">
-                  <User className="h-4 w-4" />
-                  {post.author_name}
-                </span>
-                <ReadingTime content={post.content} />
+              <div className="flex flex-wrap items-center justify-between gap-4 mb-8">
+                <div className="flex items-center gap-4 text-sm text-muted-foreground">
+                  <span className="flex items-center gap-2">
+                    <User className="h-4 w-4" />
+                    {post.author_name}
+                  </span>
+                  <ReadingTime content={post.content} />
+                </div>
+                <SocialShare
+                  url={`https://mindfulmind.nl/blog/${post.slug}`}
+                  title={post.title}
+                  description={post.excerpt || ""}
+                />
               </div>
             </motion.div>
 
