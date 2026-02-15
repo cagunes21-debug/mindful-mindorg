@@ -2,6 +2,7 @@ import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import { ScrollReveal } from "@/components/ScrollReveal";
 import SEO from "@/components/SEO";
+import { FAQSchema } from "@/components/StructuredData";
 import { HelpCircle, ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -94,6 +95,7 @@ const FAQ = () => {
         title="Veelgestelde Vragen"
         description="Veelgestelde vragen over onze mindfulness en zelfcompassie trainingen, coaching en praktische zaken."
       />
+      <FAQSchema items={faqCategories.flatMap(cat => cat.items)} />
       <Navigation />
 
       <section className="pt-24 pb-16 lg:pt-32 lg:pb-20">

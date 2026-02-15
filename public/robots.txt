@@ -12,3 +12,11 @@ Allow: /
 
 User-agent: *
 Allow: /
+Disallow: /admin
+Disallow: /admin/
+Disallow: /login
+Disallow: /mijn-training
+Disallow: /betaling-succes
+Disallow: /betaling-geannuleerd
+
+Sitemap: https://mindfulmind.nl/sitemap.xml
