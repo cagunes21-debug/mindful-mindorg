@@ -27,6 +27,8 @@ import Ervaringen from "./pages/Ervaringen";
 import StadLanding from "./pages/StadLanding";
 import Blog from "./pages/Blog";
 import BlogPost from "./pages/BlogPost";
+import ExitIntentPopup from "./components/ExitIntentPopup";
+import StickyCTA from "./components/StickyCTA";
 
 import NotFound from "./pages/NotFound";
 
@@ -39,6 +41,8 @@ const App = () => (
         <Toaster />
         <Sonner />
         <BrowserRouter>
+          <ExitIntentPopup />
+          <StickyCTA />
           <Routes>
             <Route path="/" element={<MindfulZelfcompassie />} />
             <Route path="/programmas" element={<Index />} />
