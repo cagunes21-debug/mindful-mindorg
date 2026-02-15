@@ -251,39 +251,6 @@ const MindfulZelfcompassie = () => {
         </div>
       </section>
 
-      {/* Video Introduction Section */}
-      <section className="py-20 lg:py-24 bg-warm-50">
-        <div className="container mx-auto px-4">
-          <div className="mx-auto max-w-3xl">
-            <ScrollReveal>
-              <div className="text-center mb-10">
-                <span className="inline-block rounded-full bg-sage-100 px-4 py-1.5 text-xs font-semibold text-sage-700 mb-6">
-                  BEKIJK DE VIDEO
-                </span>
-                <h2 className="mb-4 text-3xl font-light text-foreground md:text-4xl leading-tight">
-                  Even <span className="font-serif italic text-terracotta-600">kennismaken</span>
-                </h2>
-                <p className="text-muted-foreground text-lg max-w-xl mx-auto leading-relaxed">
-                  In 3 minuten vertel ik je wat mindful zelfcompassie is en wat je kunt verwachten.
-                </p>
-              </div>
-              
-              {/* Video Placeholder */}
-              <div className="relative aspect-video rounded-2xl overflow-hidden bg-gradient-to-br from-warm-100 to-sage-100 border border-warm-200 shadow-lg">
-                <div className="absolute inset-0 flex flex-col items-center justify-center text-center p-8">
-                  <div className="h-20 w-20 rounded-full bg-terracotta-600/90 flex items-center justify-center mb-6 shadow-xl cursor-pointer hover:bg-terracotta-700 transition-colors">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="white" className="h-8 w-8 ml-1">
-                      <path d="M8 5v14l11-7z" />
-                    </svg>
-                  </div>
-                  <p className="text-foreground font-medium text-lg mb-1">Video binnenkort beschikbaar</p>
-                  <p className="text-muted-foreground text-sm">3 minuten · Introductie Mindful Zelfcompassie</p>
-                </div>
-              </div>
-            </ScrollReveal>
-          </div>
-        </div>
-      </section>
 
       {/* Waarom Mindful Zelfcompassie */}
       <section className="py-24 lg:py-32 bg-white relative overflow-hidden">
