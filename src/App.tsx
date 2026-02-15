@@ -20,6 +20,9 @@ import CustomerOverview from "./pages/CustomerOverview";
 import ParticipantDashboard from "./pages/ParticipantDashboard";
 import BetalingSucces from "./pages/BetalingSucces";
 import BetalingGeannuleerd from "./pages/BetalingGeannuleerd";
+import Privacy from "./pages/Privacy";
+import FAQ from "./pages/FAQ";
+import Ervaringen from "./pages/Ervaringen";
 
 import NotFound from "./pages/NotFound";
 
@@ -50,6 +53,9 @@ const App = () => (
             <Route path="/mijn-training" element={<ParticipantDashboard />} />
             <Route path="/betaling-succes" element={<BetalingSucces />} />
             <Route path="/betaling-geannuleerd" element={<BetalingGeannuleerd />} />
+            <Route path="/privacy" element={<Privacy />} />
+            <Route path="/faq" element={<FAQ />} />
+            <Route path="/ervaringen" element={<Ervaringen />} />
             
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />

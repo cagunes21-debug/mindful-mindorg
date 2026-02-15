@@ -13,6 +13,8 @@ const quickLinks = [
   { to: "/agenda", label: "Agenda" },
   { to: "/over-ons", label: "Over Ons" },
   { to: "/trainers", label: "Trainers" },
+  { to: "/ervaringen", label: "Ervaringen" },
+  { to: "/faq", label: "Veelgestelde Vragen" },
   { to: "/contact", label: "Contact" },
 ];
 
@@ -101,10 +103,13 @@ const Footer = () => {
             </div>
           </div>
 
-          <div className="border-t border-warm-200 pt-8 text-center">
+          <div className="border-t border-warm-200 pt-8 flex flex-col sm:flex-row items-center justify-between gap-4">
             <p className="text-sm text-muted-foreground">
               © {new Date().getFullYear()} Mindful Mind. Alle rechten voorbehouden.
             </p>
+            <Link to="/privacy" className="text-sm text-muted-foreground hover:text-terracotta-600 transition-colors">
+              Privacy & Voorwaarden
+            </Link>
           </div>
         </div>
       </div>
