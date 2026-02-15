@@ -29,7 +29,7 @@ import {
   DialogDescription,
 } from "@/components/ui/dialog";
 import { useToast } from "@/hooks/use-toast";
-import { Loader2, Users, Calendar, Mail, Phone, MessageSquare, RefreshCw, CreditCard, Send, ExternalLink, Search, Download, Euro, Tag, StickyNote, User } from "lucide-react";
+import { Loader2, Users, Calendar, Mail, Phone, MessageSquare, RefreshCw, CreditCard, Send, ExternalLink, Search, Download, Euro, Tag, StickyNote, User, BookOpen } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { format } from "date-fns";
@@ -354,6 +354,14 @@ export default function AdminDashboard() {
               >
                 <User className="h-4 w-4" />
                 Klanten
+              </Button>
+              <Button
+                onClick={() => navigate("/admin/blog")}
+                variant="outline"
+                className="gap-2"
+              >
+                <BookOpen className="h-4 w-4" />
+                Blog
               </Button>
               <Button
                 onClick={fetchRegistrations}
