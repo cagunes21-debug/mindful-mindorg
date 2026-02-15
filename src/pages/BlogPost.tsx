@@ -13,6 +13,8 @@ import { nl } from "date-fns/locale";
 import { motion } from "framer-motion";
 import { Helmet } from "react-helmet-async";
 import RelatedPosts from "@/components/blog/RelatedPosts";
+import ReadingTime from "@/components/blog/ReadingTime";
+import TableOfContents from "@/components/blog/TableOfContents";
 
 const categoryLabels: Record<string, string> = {
   mindfulness: "Mindfulness",
@@ -21,6 +23,14 @@ const categoryLabels: Record<string, string> = {
   meditatie: "Meditatie",
   welzijn: "Welzijn",
 };
+
+function addHeadingIds(html: string): string {
+  return html.replace(/<h([2-3])([^>]*)>(.*?)<\/h[2-3]>/gi, (_match, level, attrs, text) => {
+    const plain = text.replace(/<[^>]*>/g, "").trim();
+    const id = plain.toLowerCase().replace(/[^a-z0-9\s-]/g, "").replace(/\s+/g, "-");
+    return `<h${level}${attrs} id="${id}" class="scroll-mt-24">${text}</h${level}>`;
+  });
+}
 
 const BlogPost = () => {
   const { slug } = useParams<{ slug: string }>();
@@ -140,9 +150,12 @@ const BlogPost = () => {
                 </p>
               )}
 
-              <div className="flex items-center gap-2 text-sm text-muted-foreground mb-8">
-                <User className="h-4 w-4" />
-                {post.author_name}
+              <div className="flex items-center gap-4 text-sm text-muted-foreground mb-8">
+                <span className="flex items-center gap-2">
+                  <User className="h-4 w-4" />
+                  {post.author_name}
+                </span>
+                <ReadingTime content={post.content} />
               </div>
             </motion.div>
 
@@ -162,6 +175,9 @@ const BlogPost = () => {
               </motion.div>
             )}
 
+            {/* Table of Contents */}
+            <TableOfContents content={post.content} />
+
             {/* Content */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
@@ -176,8 +192,9 @@ const BlogPost = () => {
                 prose-strong:text-foreground
                 prose-ul:text-muted-foreground prose-ol:text-muted-foreground
                 prose-blockquote:border-terracotta-300 prose-blockquote:text-muted-foreground prose-blockquote:italic
+                scroll-mt-24
               "
-              dangerouslySetInnerHTML={{ __html: post.content }}
+              dangerouslySetInnerHTML={{ __html: addHeadingIds(post.content) }}
             />
 
             {/* CTA */}
