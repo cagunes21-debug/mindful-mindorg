@@ -23,6 +23,7 @@ import BetalingGeannuleerd from "./pages/BetalingGeannuleerd";
 import Privacy from "./pages/Privacy";
 import FAQ from "./pages/FAQ";
 import Ervaringen from "./pages/Ervaringen";
+import StadLanding from "./pages/StadLanding";
 
 import NotFound from "./pages/NotFound";
 
@@ -56,6 +57,7 @@ const App = () => (
             <Route path="/privacy" element={<Privacy />} />
             <Route path="/faq" element={<FAQ />} />
             <Route path="/ervaringen" element={<Ervaringen />} />
+            <Route path="/zelfcompassie-training/:stad" element={<StadLanding />} />
             
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
