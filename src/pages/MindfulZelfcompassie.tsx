@@ -29,6 +29,7 @@ import ScrollProgressBar from "@/components/ScrollProgressBar";
 import WhatsAppButton from "@/components/WhatsAppButton";
 import CookieConsent from "@/components/CookieConsent";
 import { ContactForm } from "@/components/ContactForm";
+import UrgencyBadge from "@/components/UrgencyBadge";
 import { RegistrationForm } from "@/components/RegistrationForm";
 import heroMindfulness from "@/assets/hero-mindfulness.jpg";
 import meditationPractice from "@/assets/meditation-practice.jpg";
@@ -775,6 +776,7 @@ const MindfulZelfcompassie = () => {
                           <p className="font-semibold text-foreground text-lg mb-1">Start: {training.startDate}</p>
                           <p className="text-foreground mb-3">Tijd: {training.time}</p>
                           <p className="text-sm text-muted-foreground mb-4">{training.dates}</p>
+                          <UrgencyBadge className="mb-4" />
                           <div className="pt-3 border-t border-warm-200 flex items-center justify-between">
                             <p className="text-2xl font-light text-terracotta-600">{training.price}</p>
                             <Button 
