@@ -90,7 +90,7 @@ export function RegistrationForm({
       setIsSuccess(true);
       toast({
         title: "Aanmelding verzonden!",
-        description: "Bedankt voor je aanmelding. Je ontvangt een bevestiging per e-mail.",
+        description: "Bedankt voor je aanmelding. We nemen zo snel mogelijk contact met je op.",
       });
 
       if (onSuccess) {
@@ -116,7 +116,7 @@ export function RegistrationForm({
         </div>
         <h3 className="text-xl font-light text-foreground mb-2">Aanmelding ontvangen!</h3>
         <p className="text-muted-foreground mb-4">
-          Je ontvangt een bevestiging per e-mail.
+          We nemen zo snel mogelijk contact met je op.
         </p>
       </div>
     );
@@ -209,7 +209,7 @@ export function RegistrationForm({
       </Button>
       
       <p className="text-xs text-center text-muted-foreground">
-        Na aanmelding ontvang je een bevestiging met meer informatie.
+        Na aanmelding nemen we zo snel mogelijk contact met je op.
       </p>
     </form>
   );
