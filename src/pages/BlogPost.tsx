@@ -12,6 +12,7 @@ import { format } from "date-fns";
 import { nl } from "date-fns/locale";
 import { motion } from "framer-motion";
 import { Helmet } from "react-helmet-async";
+import RelatedPosts from "@/components/blog/RelatedPosts";
 
 const categoryLabels: Record<string, string> = {
   mindfulness: "Mindfulness",
@@ -191,6 +192,9 @@ const BlogPost = () => {
                 <Link to="/">Bekijk de training</Link>
               </Button>
             </div>
+
+            {/* Related Posts */}
+            <RelatedPosts currentPostId={post.id} category={post.category} />
           </div>
         </div>
       </article>
