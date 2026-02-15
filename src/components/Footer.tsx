@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { Mail, Phone, MessageCircle } from "lucide-react";
+import NewsletterForm from "@/components/NewsletterForm";
 
 const serviceLinks = [
   { to: "/", label: "8-weekse MSC Training" },
@@ -68,10 +69,10 @@ const Footer = () => {
               </ul>
             </div>
 
-            {/* Contact */}
+            {/* Contact & Newsletter */}
             <div>
               <h3 className="font-semibold text-foreground mb-4">Contact</h3>
-              <div className="space-y-3">
+              <div className="space-y-3 mb-6">
                 <a 
                   href="mailto:mindful-mind@outlook.com" 
                   className="flex items-center gap-3 text-sm text-muted-foreground hover:text-terracotta-600 transition-colors group"
@@ -100,6 +101,8 @@ const Footer = () => {
                   WhatsApp
                 </a>
               </div>
+              <h4 className="text-sm font-semibold text-foreground mb-2">Nieuwsbrief</h4>
+              <NewsletterForm variant="inline" />
             </div>
           </div>
 
