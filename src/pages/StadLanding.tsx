@@ -252,6 +252,75 @@ const StadLanding = () => {
         </div>
       </section>
 
+      {/* Individuele Begeleiding */}
+      <section className="py-16 lg:py-20 bg-white">
+        <div className="container mx-auto px-4">
+          <div className="mx-auto max-w-4xl">
+            <ScrollReveal>
+              <div className="text-center mb-12">
+                <p className="text-sm font-medium text-terracotta-500 tracking-widest uppercase mb-4">Liever persoonlijke aandacht?</p>
+                <h2 className="text-3xl font-light text-foreground md:text-4xl leading-tight">
+                  Individuele <span className="font-serif italic text-terracotta-600">begeleiding</span>
+                </h2>
+                <p className="text-muted-foreground text-lg max-w-2xl mx-auto mt-4 leading-relaxed">
+                  Naast de groepstraining bieden wij ook individuele trajecten aan voor inwoners van {city.name} en omgeving — volledig online.
+                </p>
+              </div>
+            </ScrollReveal>
+
+            <StaggerContainer className="grid gap-6 md:grid-cols-3">
+              <StaggerItem>
+                <div className="bg-warm-50 rounded-3xl p-6 border border-warm-200 h-full flex flex-col">
+                  <div className="h-12 w-12 rounded-2xl bg-terracotta-100 flex items-center justify-center mb-4">
+                    <Heart className="h-6 w-6 text-terracotta-600" />
+                  </div>
+                  <h3 className="text-lg font-semibold text-foreground mb-2">Individueel Traject</h3>
+                  <p className="text-sm text-muted-foreground leading-relaxed mb-4 flex-grow">
+                    Een volledig begeleidingstraject: intake (60 min), 6 individuele sessies (60 min) en een reflectiesessie (30 min).
+                  </p>
+                  <p className="text-2xl font-semibold text-terracotta-600 mb-4">€650</p>
+                  <Button asChild variant="outline" className="rounded-full border-terracotta-200 text-terracotta-600 hover:bg-terracotta-50 w-full">
+                    <Link to="/coaching">Meer informatie</Link>
+                  </Button>
+                </div>
+              </StaggerItem>
+
+              <StaggerItem>
+                <div className="bg-warm-50 rounded-3xl p-6 border border-warm-200 h-full flex flex-col">
+                  <div className="h-12 w-12 rounded-2xl bg-sage-100 flex items-center justify-center mb-4">
+                    <Users className="h-6 w-6 text-sage-600" />
+                  </div>
+                  <h3 className="text-lg font-semibold text-foreground mb-2">Kennismakingssessie</h3>
+                  <p className="text-sm text-muted-foreground leading-relaxed mb-4 flex-grow">
+                    Een vrijblijvend gesprek om kennis te maken en te kijken welke vorm van begeleiding het beste bij je past.
+                  </p>
+                  <p className="text-2xl font-semibold text-terracotta-600 mb-4">€95</p>
+                  <Button asChild variant="outline" className="rounded-full border-terracotta-200 text-terracotta-600 hover:bg-terracotta-50 w-full">
+                    <Link to="/contact">Afspraak maken</Link>
+                  </Button>
+                </div>
+              </StaggerItem>
+
+              <StaggerItem>
+                <div className="bg-warm-50 rounded-3xl p-6 border border-warm-200 h-full flex flex-col">
+                  <div className="h-12 w-12 rounded-2xl bg-terracotta-100 flex items-center justify-center mb-4">
+                    <Monitor className="h-6 w-6 text-terracotta-600" />
+                  </div>
+                  <h3 className="text-lg font-semibold text-foreground mb-2">Individuele Sessie</h3>
+                  <p className="text-sm text-muted-foreground leading-relaxed mb-4 flex-grow">
+                    Losse sessies voor gerichte ondersteuning bij specifieke thema's rondom zelfcompassie en mindfulness.
+                  </p>
+                  <p className="text-2xl font-semibold text-terracotta-600 mb-4">€125</p>
+                  <Button asChild variant="outline" className="rounded-full border-terracotta-200 text-terracotta-600 hover:bg-terracotta-50 w-full">
+                    <Link to="/contact">Sessie boeken</Link>
+                  </Button>
+                </div>
+              </StaggerItem>
+            </StaggerContainer>
+          </div>
+        </div>
+      </section>
+
       {/* CTA */}
       <section className="py-20 lg:py-24 bg-gradient-to-br from-terracotta-500 to-terracotta-600 relative overflow-hidden">
         <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(circle_at_30%_70%,rgba(255,255,255,0.1)_0%,transparent_50%)]" />
