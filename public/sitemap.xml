@@ -66,6 +66,21 @@
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
+  <url>
+    <loc>https://mindfulmind.nl/blog/wat-is-mindfulness-complete-gids-beginners</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://mindfulmind.nl/blog/zelfcompassie-waarom-vriendelijk-zijn-voor-jezelf</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://mindfulmind.nl/blog/5-effectieve-technieken-stress-verminderen</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
   <!-- City Landing Pages -->
   <url>
     <loc>https://mindfulmind.nl/zelfcompassie-training/amsterdam</loc>
