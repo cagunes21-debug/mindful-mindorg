@@ -69,6 +69,7 @@ const Navigation = () => {
     { to: "/over-ons", label: "Over Ons" },
     { to: "/trainers", label: "Trainers" },
     { to: "/ervaringen", label: "Ervaringen" },
+    { to: "/blog", label: "Blog" },
     { to: "/faq", label: "Veelgestelde Vragen" },
   ];
 
