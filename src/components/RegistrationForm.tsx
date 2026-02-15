@@ -68,37 +68,20 @@ export function RegistrationForm({
     setIsSubmitting(true);
 
     try {
-      // Build the message for the contact email function
-      const message = `
-NIEUWE AANMELDING
-
-Training: ${trainingName}
-Startdatum: ${trainingDate}
-${trainingTime ? `Tijd: ${trainingTime}` : ''}
-${price ? `Prijs: ${price}` : ''}
-
----
-
-Naam: ${result.data.name}
-E-mail: ${result.data.email}
-${result.data.phone ? `Telefoon: ${result.data.phone}` : ''}
-${result.data.remarks ? `\nOpmerkingen:\n${result.data.remarks}` : ''}
-      `.trim();
-
-      const { data, error } = await supabase.functions.invoke("send-contact-email", {
-        body: {
-          name: result.data.name,
-          email: result.data.email,
-          phone: result.data.phone,
-          training: trainingName,
-          trainingDate: trainingDate,
-          trainingTime: trainingTime,
-          price: price,
-          remarks: result.data.remarks,
-          message: message,
-          isRegistration: true,
-        },
-      });
+      // Save registration directly to the database
+      const { error } = await supabase
+        .from("registrations")
+        .insert({
+          name: result.data.name.trim(),
+          email: result.data.email.trim().toLowerCase(),
+          phone: result.data.phone?.trim() || null,
+          training_name: trainingName,
+          training_date: trainingDate || null,
+          training_time: trainingTime || null,
+          price: price || null,
+          remarks: result.data.remarks?.trim() || null,
+          status: "pending",
+        });
 
       if (error) {
         throw new Error(error.message || "Er is een fout opgetreden");
