@@ -1,14 +1,7 @@
-import { useState } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Heart, Brain, Sparkles, ArrowRight, Check, Clock, Users, Globe, Calendar, Crown, Leaf } from "lucide-react";
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-} from "@/components/ui/dialog";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import { ScrollReveal } from "@/components/ScrollReveal";
@@ -19,7 +12,6 @@ import ScrollToTop from "@/components/ScrollToTop";
 import ScrollProgressBar from "@/components/ScrollProgressBar";
 import WhatsAppButton from "@/components/WhatsAppButton";
 import CookieConsent from "@/components/CookieConsent";
-import { RegistrationForm } from "@/components/RegistrationForm";
 import heroMindfulness from "@/assets/hero-mindfulness.jpg";
 
 const programs = [
@@ -51,10 +43,7 @@ const programs = [
       "Je wilt leren omgaan met moeilijke emoties",
       "Je zoekt meer innerlijke rust en veerkracht",
     ],
-    dates: [
-      { label: "Nederlands", start: "16 februari 2026", day: "Maandag avond", time: "19:00 – 21:00" },
-      { label: "English", start: "22 April 2026", day: "Wednesday evening", time: "19:00 – 21:00" },
-    ],
+    dates: [],
     linkTo: "/",
     available: true,
   },
@@ -125,13 +114,7 @@ const programs = [
 ];
 
 const Index = () => {
-  const [isRegistrationOpen, setIsRegistrationOpen] = useState(false);
-  const [selectedDate, setSelectedDate] = useState<{ label: string; start: string; time: string } | null>(null);
 
-  const openRegistration = (date: { label: string; start: string; time: string }) => {
-    setSelectedDate(date);
-    setIsRegistrationOpen(true);
-  };
 
   return (
     <div className="min-h-screen bg-background">
@@ -283,41 +266,25 @@ const Index = () => {
                       </Card>
                     </div>
 
-                    {/* Price + Dates / CTA */}
+                    {/* Price + CTA */}
                     {program.available ? (
-                      <div className="space-y-4">
-                        <div className="flex items-center gap-3 mb-4">
-                          <p className="text-3xl font-light text-terracotta-600">{program.price}</p>
-                        </div>
-
-                        <div className="grid md:grid-cols-2 gap-4">
-                          {program.dates.map((date, i) => (
-                            <Card key={i} className="border-warm-200 overflow-hidden hover:shadow-lg transition-shadow">
-                              <div className={`px-5 py-2.5 ${date.label === "Nederlands" ? "bg-terracotta-500" : "bg-sage-600"}`}>
-                                <span className="text-white font-medium text-sm">{date.label}</span>
-                              </div>
-                              <CardContent className="p-5">
-                                <p className="text-sm text-muted-foreground">{date.day}</p>
-                                <p className="font-semibold text-foreground text-lg mb-1">Start: {date.start}</p>
-                                <p className="text-foreground mb-4">Tijd: {date.time}</p>
-                                <Button
-                                  className="w-full bg-terracotta-600 hover:bg-terracotta-700 text-white rounded-full"
-                                  onClick={() => openRegistration(date)}
-                                >
-                                  Reserveer je plek
-                                </Button>
-                              </CardContent>
-                            </Card>
-                          ))}
-                        </div>
-
-                        {program.linkTo && (
-                          <p className="text-sm text-muted-foreground mt-2">
-                            <Link to={program.linkTo} className="text-terracotta-600 hover:text-terracotta-700 underline underline-offset-2">
-                              Meer details over dit programma →
+                      <div className="flex items-center justify-between flex-wrap gap-4">
+                        <p className="text-3xl font-light text-terracotta-600">{program.price}</p>
+                        <div className="flex flex-wrap gap-3">
+                          <Button asChild className="bg-terracotta-600 hover:bg-terracotta-700 text-white rounded-full px-8">
+                            <Link to="/agenda">
+                              Bekijk data & schrijf je in
+                              <ArrowRight className="ml-2 h-4 w-4" />
                             </Link>
-                          </p>
-                        )}
+                          </Button>
+                          {program.linkTo && (
+                            <Button asChild variant="outline" className="border-terracotta-300 text-terracotta-700 hover:bg-terracotta-50 rounded-full">
+                              <Link to={program.linkTo}>
+                                Meer info
+                              </Link>
+                            </Button>
+                          )}
+                        </div>
                       </div>
                     ) : (
                       <div className={`rounded-2xl p-6 border ${isSage ? "bg-sage-50 border-sage-200" : "bg-terracotta-50 border-terracotta-200"}`}>
@@ -378,25 +345,8 @@ const Index = () => {
         </div>
       </section>
 
-      <Footer />
 
-      {/* Registration Dialog */}
-      <Dialog open={isRegistrationOpen} onOpenChange={setIsRegistrationOpen}>
-        <DialogContent className="sm:max-w-lg max-h-[90vh] overflow-y-auto">
-          <DialogHeader>
-            <DialogTitle className="text-xl font-light">Aanmelden voor de training</DialogTitle>
-          </DialogHeader>
-          {selectedDate && (
-            <RegistrationForm
-              trainingName="8-weekse MSC Training"
-              trainingDate={selectedDate.start}
-              trainingTime={selectedDate.time}
-              price="€550"
-              onSuccess={() => {}}
-            />
-          )}
-        </DialogContent>
-      </Dialog>
+      <Footer />
     </div>
   );
 };
