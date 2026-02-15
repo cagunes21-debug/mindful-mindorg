@@ -16,6 +16,7 @@ import BewegingMildheidRetreat from "./pages/BewegingMildheidRetreat";
 import Bedrijven from "./pages/Bedrijven";
 import Auth from "./pages/Auth";
 import AdminDashboard from "./pages/AdminDashboard";
+import AdminBlog from "./pages/AdminBlog";
 import CustomerOverview from "./pages/CustomerOverview";
 import ParticipantDashboard from "./pages/ParticipantDashboard";
 import BetalingSucces from "./pages/BetalingSucces";
@@ -53,6 +54,7 @@ const App = () => (
             <Route path="/login" element={<Auth />} />
             <Route path="/admin" element={<AdminDashboard />} />
             <Route path="/admin/klanten" element={<CustomerOverview />} />
+            <Route path="/admin/blog" element={<AdminBlog />} />
             <Route path="/mijn-training" element={<ParticipantDashboard />} />
             <Route path="/betaling-succes" element={<BetalingSucces />} />
             <Route path="/betaling-geannuleerd" element={<BetalingGeannuleerd />} />
