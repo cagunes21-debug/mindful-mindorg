@@ -125,8 +125,8 @@ const MindfulZelfcompassie = () => {
         </div>
         
         {/* Decorative elements */}
-        <div className="absolute top-20 left-10 w-64 h-64 bg-terracotta-200/20 rounded-full blur-3xl" />
-        <div className="absolute bottom-20 right-10 w-80 h-80 bg-sage-200/20 rounded-full blur-3xl" />
+        <div className="absolute top-20 left-10 w-64 h-64 bg-rose-200/25 rounded-full blur-3xl" />
+        <div className="absolute bottom-20 right-10 w-80 h-80 bg-lavender-200/20 rounded-full blur-3xl" />
         
         <div className="container relative mx-auto px-4">
           <div className="mx-auto max-w-4xl text-center">
@@ -330,8 +330,8 @@ const MindfulZelfcompassie = () => {
 
 
       <section className="py-20 lg:py-28 bg-gradient-to-b from-warm-50 to-white relative overflow-hidden">
-        <div className="absolute top-0 left-1/4 w-64 h-64 bg-terracotta-100/30 rounded-full blur-3xl" />
-        <div className="absolute bottom-0 right-1/4 w-80 h-80 bg-sage-100/30 rounded-full blur-3xl" />
+        <div className="absolute top-0 left-1/4 w-64 h-64 bg-rose-100/30 rounded-full blur-3xl" />
+        <div className="absolute bottom-0 right-1/4 w-80 h-80 bg-lavender-100/30 rounded-full blur-3xl" />
         
         <div className="container relative mx-auto px-4">
           <div className="mx-auto max-w-5xl">
@@ -394,8 +394,8 @@ const MindfulZelfcompassie = () => {
                 </div>
                 
                 {/* Decorative elements */}
-                <div className="absolute -bottom-4 -left-4 w-24 h-24 bg-sage-100 rounded-2xl -z-10" />
-                <div className="absolute -top-4 -right-4 w-16 h-16 bg-terracotta-100 rounded-xl -z-10" />
+                <div className="absolute -bottom-4 -left-4 w-24 h-24 bg-rose-100 rounded-2xl -z-10" />
+                <div className="absolute -top-4 -right-4 w-16 h-16 bg-lavender-100 rounded-xl -z-10" />
               </div>
             </ScrollReveal>
             
@@ -466,11 +466,11 @@ const MindfulZelfcompassie = () => {
               <StaggerItem>
                 <Card className="border-0 bg-white rounded-2xl hover:shadow-lg transition-all duration-300 shadow-sm">
                   <CardContent className="p-5 flex items-center gap-4">
-                    <div className="flex-shrink-0 h-12 w-12 rounded-xl bg-gradient-to-br from-sage-100 to-sage-200 flex items-center justify-center">
-                      <Heart className="h-6 w-6 text-sage-700" />
+                    <div className="flex-shrink-0 h-12 w-12 rounded-xl bg-gradient-to-br from-rose-100 to-rose-200 flex items-center justify-center">
+                      <Heart className="h-6 w-6 text-rose-600" />
                     </div>
                     <div>
-                      <span className="text-xs font-semibold text-sage-600 uppercase tracking-wide">Pijler 2</span>
+                      <span className="text-xs font-semibold text-rose-600 uppercase tracking-wide">Pijler 2</span>
                       <h3 className="text-lg font-semibold text-foreground">Zelfcompassie</h3>
                       <p className="text-muted-foreground text-sm">Met vriendelijkheid en begrip op jezelf reageren.</p>
                     </div>
@@ -611,8 +611,8 @@ const MindfulZelfcompassie = () => {
       {/* Kernpunten - Wat brengt MSC je */}
       <section className="py-24 lg:py-32 bg-gradient-to-b from-white via-warm-50/30 to-white relative overflow-hidden">
         {/* Decorative elements */}
-        <div className="absolute top-20 left-10 w-32 h-32 bg-terracotta-100/40 rounded-full blur-3xl" />
-        <div className="absolute bottom-20 right-10 w-48 h-48 bg-sage-100/40 rounded-full blur-3xl" />
+        <div className="absolute top-20 left-10 w-32 h-32 bg-coral-100/40 rounded-full blur-3xl" />
+        <div className="absolute bottom-20 right-10 w-48 h-48 bg-lavender-100/40 rounded-full blur-3xl" />
         
         <div className="container relative mx-auto px-4">
           <div className="mx-auto max-w-5xl">

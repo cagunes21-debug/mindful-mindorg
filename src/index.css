@@ -77,6 +77,33 @@ All colors MUST be HSL.
     --warm-600: 28 22% 38%;
     --warm-700: 26 24% 28%;
 
+    /* Dusty rose palette - zacht roze */
+    --rose-50: 350 40% 97%;
+    --rose-100: 348 38% 93%;
+    --rose-200: 346 35% 86%;
+    --rose-300: 344 32% 76%;
+    --rose-400: 342 30% 65%;
+    --rose-500: 340 28% 55%;
+    --rose-600: 338 30% 45%;
+
+    /* Lavendel palette - zacht paars */
+    --lavender-50: 270 30% 97%;
+    --lavender-100: 268 28% 93%;
+    --lavender-200: 266 25% 86%;
+    --lavender-300: 264 22% 76%;
+    --lavender-400: 262 20% 65%;
+    --lavender-500: 260 22% 55%;
+    --lavender-600: 258 24% 45%;
+
+    /* Koraal palette - zacht oranje-roze */
+    --coral-50: 12 45% 97%;
+    --coral-100: 10 42% 93%;
+    --coral-200: 8 40% 86%;
+    --coral-300: 6 38% 76%;
+    --coral-400: 4 36% 65%;
+    --coral-500: 2 34% 58%;
+    --coral-600: 0 32% 48%;
+
     /* Shadows */
     --shadow-soft: 0 4px 24px -6px hsl(25 20% 20% / 0.06);
     --shadow-medium: 0 8px 32px -8px hsl(25 20% 20% / 0.1);
