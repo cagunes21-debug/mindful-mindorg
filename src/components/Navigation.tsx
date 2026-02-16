@@ -111,7 +111,18 @@ const Navigation = () => {
                   </Link>
                 </DropdownMenuItem>
                 <div className="h-px bg-border my-1" />
-                {serviceLinks.map((link) => (
+                {serviceLinks.slice(0, 2).map((link) => (
+                  <DropdownMenuItem key={link.to} asChild>
+                    <Link 
+                      to={link.to} 
+                      className={`w-full cursor-pointer ${location.pathname === link.to ? 'text-primary font-medium' : ''}`}
+                    >
+                      {link.label}
+                    </Link>
+                  </DropdownMenuItem>
+                ))}
+                <div className="h-px bg-border my-1" />
+                {serviceLinks.slice(2).map((link) => (
                   <DropdownMenuItem key={link.to} asChild>
                     <Link 
                       to={link.to} 
@@ -248,7 +259,19 @@ const Navigation = () => {
                     >
                       Overzicht
                     </NavLink>
-                    {serviceLinks.map((link) => (
+                    {serviceLinks.slice(0, 2).map((link) => (
+                      <NavLink
+                        key={link.to}
+                        to={link.to}
+                        className="text-sm text-muted-foreground transition-colors hover:text-primary"
+                        activeClassName="text-primary font-medium"
+                        onClick={() => setIsOpen(false)}
+                      >
+                        {link.label}
+                      </NavLink>
+                    ))}
+                    <div className="h-px bg-border my-1" />
+                    {serviceLinks.slice(2).map((link) => (
                       <NavLink
                         key={link.to}
                         to={link.to}
