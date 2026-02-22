@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
@@ -7,98 +7,94 @@ import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { useToast } from "@/hooks/use-toast";
 import { Heart, Lock, Loader2 } from "lucide-react";
-import { z } from "zod";
 
-const passwordSchema = z.string().min(6, "Wachtwoord moet minimaal 6 tekens bevatten");
+type PageState = "loading" | "form" | "invalid" | "success";
 
 const ResetPassword = () => {
+  const [pageState, setPageState] = useState<PageState>("loading");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  const [loading, setLoading] = useState(false);
-  const [initializing, setInitializing] = useState(true);
-  const [hasSession, setHasSession] = useState(false);
-  const [errors, setErrors] = useState<{ password?: string; confirmPassword?: string }>({});
+  const [saving, setSaving] = useState(false);
+  const [error, setError] = useState("");
   const navigate = useNavigate();
   const { toast } = useToast();
+  const resolved = useRef(false);
 
   useEffect(() => {
-    const hasHashTokens = window.location.hash.includes("access_token");
-
-    // Listen for auth state changes - Supabase auto-processes the hash tokens
+    // The URL contains hash tokens that Supabase auto-processes.
+    // We listen for the PASSWORD_RECOVERY event to know we can show the form.
     const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
-      if (event === "PASSWORD_RECOVERY" || event === "SIGNED_IN" || event === "TOKEN_REFRESHED") {
-        if (session) {
-          setHasSession(true);
-          setInitializing(false);
-        }
+      if (resolved.current) return;
+
+      if (event === "PASSWORD_RECOVERY" && session) {
+        resolved.current = true;
+        setPageState("form");
+      } else if (event === "SIGNED_IN" && session) {
+        // Sometimes SIGNED_IN fires instead of PASSWORD_RECOVERY
+        resolved.current = true;
+        setPageState("form");
+      } else if (event === "TOKEN_REFRESHED" && session) {
+        resolved.current = true;
+        setPageState("form");
       }
     });
 
-    if (hasHashTokens) {
-      // Hash tokens present - wait for onAuthStateChange to process them
-      // Set a timeout as fallback in case the event never fires
-      const timeout = setTimeout(() => {
-        setInitializing(false);
-      }, 5000);
-      return () => {
-        clearTimeout(timeout);
-        subscription.unsubscribe();
-      };
-    } else {
-      // No hash tokens - check existing session
-      supabase.auth.getSession().then(({ data: { session } }) => {
-        if (session) {
-          setHasSession(true);
-        }
-        setInitializing(false);
-      });
-      return () => subscription.unsubscribe();
-    }
+    // Fallback timeout: if no auth event fires within 8 seconds, show invalid
+    const timeout = setTimeout(() => {
+      if (!resolved.current) {
+        resolved.current = true;
+        setPageState("invalid");
+      }
+    }, 8000);
+
+    return () => {
+      subscription.unsubscribe();
+      clearTimeout(timeout);
+    };
   }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    const newErrors: { password?: string; confirmPassword?: string } = {};
+    setError("");
 
-    try {
-      passwordSchema.parse(password);
-    } catch (err) {
-      if (err instanceof z.ZodError) newErrors.password = err.errors[0].message;
+    if (password.length < 6) {
+      setError("Wachtwoord moet minimaal 6 tekens bevatten");
+      return;
     }
-
     if (password !== confirmPassword) {
-      newErrors.confirmPassword = "Wachtwoorden komen niet overeen";
+      setError("Wachtwoorden komen niet overeen");
+      return;
     }
 
-    setErrors(newErrors);
-    if (Object.keys(newErrors).length > 0) return;
+    setSaving(true);
+    const { error: updateError } = await supabase.auth.updateUser({ password });
+    setSaving(false);
 
-    setLoading(true);
-    try {
-      const { error } = await supabase.auth.updateUser({ password });
-      if (error) {
-        toast({ variant: "destructive", title: "Fout", description: "Kon wachtwoord niet wijzigen. Vraag een nieuwe resetlink aan via de inlogpagina." });
-      } else {
-        toast({ title: "Wachtwoord gewijzigd!", description: "Je kunt nu inloggen met je nieuwe wachtwoord." });
-        await supabase.auth.signOut();
-        navigate("/login");
-      }
-    } catch {
-      toast({ variant: "destructive", title: "Fout", description: "Er is iets misgegaan." });
-    } finally {
-      setLoading(false);
+    if (updateError) {
+      toast({
+        variant: "destructive",
+        title: "Fout",
+        description: "Kon wachtwoord niet wijzigen. Vraag een nieuwe resetlink aan.",
+      });
+      return;
     }
+
+    setPageState("success");
+    toast({ title: "Wachtwoord gewijzigd!", description: "Je wordt doorgestuurd naar de inlogpagina." });
+    await supabase.auth.signOut();
+    setTimeout(() => navigate("/login"), 2000);
   };
 
-  if (initializing) {
+  if (pageState === "loading") {
     return (
-      <div className="min-h-screen bg-gradient-to-b from-cream-50 to-sage-50 flex items-center justify-center">
+      <div className="min-h-screen bg-gradient-to-b from-cream-50 to-sage-50 flex flex-col items-center justify-center gap-3">
         <Loader2 className="h-8 w-8 animate-spin text-sage-600" />
+        <p className="text-sm text-charcoal-500">Link verifiëren...</p>
       </div>
     );
   }
 
-  if (!hasSession) {
+  if (pageState === "invalid") {
     return (
       <div className="min-h-screen bg-gradient-to-b from-cream-50 to-sage-50 flex items-center justify-center px-4">
         <Card className="w-full max-w-md border-sage-200/50 shadow-lg">
@@ -113,6 +109,24 @@ const ResetPassword = () => {
               Naar inlogpagina
             </Button>
           </CardContent>
+        </Card>
+      </div>
+    );
+  }
+
+  if (pageState === "success") {
+    return (
+      <div className="min-h-screen bg-gradient-to-b from-cream-50 to-sage-50 flex items-center justify-center px-4">
+        <Card className="w-full max-w-md border-sage-200/50 shadow-lg">
+          <CardHeader className="text-center">
+            <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-green-100">
+              <Heart className="h-6 w-6 text-green-600" />
+            </div>
+            <CardTitle className="text-xl text-charcoal-800">Wachtwoord gewijzigd!</CardTitle>
+            <CardDescription className="text-charcoal-500">
+              Je wordt doorgestuurd naar de inlogpagina...
+            </CardDescription>
+          </CardHeader>
         </Card>
       </div>
     );
@@ -134,20 +148,35 @@ const ResetPassword = () => {
               <Label htmlFor="password" className="text-charcoal-700">Nieuw wachtwoord</Label>
               <div className="relative">
                 <Lock className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-charcoal-400" />
-                <Input id="password" type="password" placeholder="••••••••" value={password} onChange={(e) => setPassword(e.target.value)} className="pl-10 border-sage-200 focus:border-sage-400 focus:ring-sage-400" required />
+                <Input
+                  id="password"
+                  type="password"
+                  placeholder="••••••••"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  className="pl-10 border-sage-200 focus:border-sage-400 focus:ring-sage-400"
+                  required
+                />
               </div>
-              {errors.password && <p className="text-sm text-destructive">{errors.password}</p>}
             </div>
             <div className="space-y-2">
               <Label htmlFor="confirmPassword" className="text-charcoal-700">Bevestig wachtwoord</Label>
               <div className="relative">
                 <Lock className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-charcoal-400" />
-                <Input id="confirmPassword" type="password" placeholder="••••••••" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} className="pl-10 border-sage-200 focus:border-sage-400 focus:ring-sage-400" required />
+                <Input
+                  id="confirmPassword"
+                  type="password"
+                  placeholder="••••••••"
+                  value={confirmPassword}
+                  onChange={(e) => setConfirmPassword(e.target.value)}
+                  className="pl-10 border-sage-200 focus:border-sage-400 focus:ring-sage-400"
+                  required
+                />
               </div>
-              {errors.confirmPassword && <p className="text-sm text-destructive">{errors.confirmPassword}</p>}
             </div>
-            <Button type="submit" className="w-full bg-sage-600 hover:bg-sage-700 text-white" disabled={loading}>
-              {loading ? "Even geduld..." : "Wachtwoord opslaan"}
+            {error && <p className="text-sm text-destructive">{error}</p>}
+            <Button type="submit" className="w-full bg-sage-600 hover:bg-sage-700 text-white" disabled={saving}>
+              {saving ? "Even geduld..." : "Wachtwoord opslaan"}
             </Button>
           </form>
         </CardContent>
