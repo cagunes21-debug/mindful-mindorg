@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
@@ -15,26 +15,9 @@ const ResetPassword = () => {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [loading, setLoading] = useState(false);
-  const [sessionReady, setSessionReady] = useState(false);
   const [errors, setErrors] = useState<{ password?: string; confirmPassword?: string }>({});
   const navigate = useNavigate();
   const { toast } = useToast();
-
-  useEffect(() => {
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
-      console.log("ResetPassword auth event:", event, !!session);
-      if (event === "PASSWORD_RECOVERY" || event === "SIGNED_IN" || event === "TOKEN_REFRESHED") {
-        if (session) setSessionReady(true);
-      }
-    });
-
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      console.log("ResetPassword existing session:", !!session);
-      if (session) setSessionReady(true);
-    });
-
-    return () => subscription.unsubscribe();
-  }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -55,18 +38,9 @@ const ResetPassword = () => {
 
     setLoading(true);
     try {
-      // Ensure we have a session before updating
-      const { data: { session } } = await supabase.auth.getSession();
-      if (!session) {
-        toast({ variant: "destructive", title: "Fout", description: "Je sessie is verlopen. Vraag een nieuwe resetlink aan via de inlogpagina." });
-        setLoading(false);
-        return;
-      }
-
       const { error } = await supabase.auth.updateUser({ password });
       if (error) {
-        console.error("updateUser error:", error);
-        toast({ variant: "destructive", title: "Fout", description: error.message });
+        toast({ variant: "destructive", title: "Fout", description: "Je sessie is verlopen. Vraag een nieuwe resetlink aan via de inlogpagina." });
       } else {
         toast({ title: "Wachtwoord gewijzigd!", description: "Je kunt nu inloggen met je nieuwe wachtwoord." });
         await supabase.auth.signOut();
@@ -87,11 +61,7 @@ const ResetPassword = () => {
             <Heart className="h-6 w-6 text-white" />
           </div>
           <CardTitle className="text-2xl font-light text-charcoal-800">Nieuw wachtwoord</CardTitle>
-          <CardDescription className="text-charcoal-500">
-            {sessionReady 
-              ? "Kies een nieuw wachtwoord voor je account" 
-              : "Even geduld, je sessie wordt geladen..."}
-          </CardDescription>
+          <CardDescription className="text-charcoal-500">Kies een nieuw wachtwoord voor je account</CardDescription>
         </CardHeader>
         <CardContent className="pt-4">
           <form onSubmit={handleSubmit} className="space-y-4">
@@ -111,8 +81,8 @@ const ResetPassword = () => {
               </div>
               {errors.confirmPassword && <p className="text-sm text-destructive">{errors.confirmPassword}</p>}
             </div>
-            <Button type="submit" className="w-full bg-sage-600 hover:bg-sage-700 text-white" disabled={loading || !sessionReady}>
-              {loading ? "Even geduld..." : !sessionReady ? "Sessie laden..." : "Wachtwoord opslaan"}
+            <Button type="submit" className="w-full bg-sage-600 hover:bg-sage-700 text-white" disabled={loading}>
+              {loading ? "Even geduld..." : "Wachtwoord opslaan"}
             </Button>
           </form>
         </CardContent>
