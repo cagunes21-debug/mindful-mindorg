@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
+import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
@@ -34,6 +35,8 @@ export function RegistrationForm({
 }: RegistrationFormProps) {
   const { toast } = useToast();
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [agreedToTerms, setAgreedToTerms] = useState(false);
+  const [termsError, setTermsError] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
   const [formData, setFormData] = useState<RegistrationFormData>({
     name: "",
@@ -53,6 +56,7 @@ export function RegistrationForm({
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setErrors({});
+    setTermsError(false);
 
     const result = registrationSchema.safeParse(formData);
     if (!result.success) {
@@ -62,6 +66,11 @@ export function RegistrationForm({
         fieldErrors[field] = err.message;
       });
       setErrors(fieldErrors);
+      return;
+    }
+
+    if (!agreedToTerms) {
+      setTermsError(true);
       return;
     }
 
@@ -188,6 +197,33 @@ export function RegistrationForm({
           className="min-h-[80px] rounded-xl"
           disabled={isSubmitting}
         />
+      </div>
+
+      {/* Terms and conditions */}
+      <div className="space-y-1">
+        <div className="flex items-start gap-3">
+          <Checkbox
+            id="reg-terms"
+            checked={agreedToTerms}
+            onCheckedChange={(checked) => {
+              setAgreedToTerms(checked === true);
+              if (checked) setTermsError(false);
+            }}
+            disabled={isSubmitting}
+            className="mt-0.5"
+          />
+          <Label htmlFor="reg-terms" className="text-sm font-normal text-muted-foreground leading-snug cursor-pointer">
+            Ik ga akkoord met de{" "}
+            <a href="/algemene-voorwaarden" target="_blank" className="text-terracotta-600 hover:underline">
+              Algemene Voorwaarden
+            </a>{" "}
+            en{" "}
+            <a href="/privacy" target="_blank" className="text-terracotta-600 hover:underline">
+              Privacyverklaring
+            </a>{" "}*
+          </Label>
+        </div>
+        {termsError && <p className="text-sm text-destructive ml-7">Je moet akkoord gaan met de voorwaarden</p>}
       </div>
 
       <Button
