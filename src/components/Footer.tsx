@@ -107,9 +107,10 @@ const Footer = () => {
           </div>
 
           <div className="border-t border-warm-200 pt-8 flex flex-col sm:flex-row items-center justify-between gap-4">
-            <p className="text-sm text-muted-foreground">
-              © {new Date().getFullYear()} Mindful Mind. Alle rechten voorbehouden.
-            </p>
+            <div className="text-sm text-muted-foreground">
+              <p>© {new Date().getFullYear()} Mindful Mind. Alle rechten voorbehouden.</p>
+              <p className="mt-1">KvK: 91593700</p>
+            </div>
             <Link to="/privacy" className="text-sm text-muted-foreground hover:text-terracotta-600 transition-colors">
               Privacy & Voorwaarden
             </Link>
