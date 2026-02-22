@@ -22,37 +22,25 @@ const ResetPassword = () => {
   const { toast } = useToast();
 
   useEffect(() => {
-    const initSession = async () => {
-      // Try to extract tokens from URL hash (Supabase implicit flow)
-      const hash = window.location.hash.substring(1);
-      if (hash) {
-        const params = new URLSearchParams(hash);
-        const accessToken = params.get("access_token");
-        const refreshToken = params.get("refresh_token");
-
-        if (accessToken && refreshToken) {
-          const { error } = await supabase.auth.setSession({
-            access_token: accessToken,
-            refresh_token: refreshToken,
-          });
-          if (!error) {
-            setHasSession(true);
-            // Clean up the URL hash
-            window.history.replaceState(null, "", window.location.pathname);
-          }
+    // Listen for auth state changes - Supabase auto-processes the hash tokens
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
+      if (event === "PASSWORD_RECOVERY" || event === "SIGNED_IN" || event === "TOKEN_REFRESHED") {
+        if (session) {
+          setHasSession(true);
+          setInitializing(false);
         }
       }
+    });
 
-      // Fallback: check if session already exists
-      if (!hasSession) {
-        const { data: { session } } = await supabase.auth.getSession();
-        if (session) setHasSession(true);
+    // Also check if session already exists (fallback)
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      if (session) {
+        setHasSession(true);
       }
-
       setInitializing(false);
-    };
+    });
 
-    initSession();
+    return () => subscription.unsubscribe();
   }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
