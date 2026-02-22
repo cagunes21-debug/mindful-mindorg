@@ -104,6 +104,27 @@ export function RegistrationForm({
         throw new Error(error.message || "Er is een fout opgetreden");
       }
 
+      // Send notification email to admin
+      try {
+        await supabase.functions.invoke("send-contact-email", {
+          body: {
+            name: result.data.name.trim(),
+            email: result.data.email.trim().toLowerCase(),
+            phone: result.data.phone?.trim() || "",
+            training: trainingName,
+            message: result.data.remarks?.trim() || "Geen opmerkingen",
+            trainingDate: trainingDate,
+            trainingTime: trainingTime,
+            price: price,
+            remarks: result.data.remarks?.trim() || "",
+            isRegistration: true,
+          },
+        });
+      } catch (emailError) {
+        console.error("Email notification failed:", emailError);
+        // Don't block registration if email fails
+      }
+
       setIsSuccess(true);
       toast({
         title: "Aanmelding verzonden!",
