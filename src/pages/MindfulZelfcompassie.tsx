@@ -481,28 +481,23 @@ const MindfulZelfcompassie = () => {
             
             <ScrollReveal delay={0.2}>
               <div className="max-w-2xl mx-auto mb-10">
-                <div className="bg-white rounded-2xl p-8 shadow-sm border border-warm-100 mb-8">
-                  <p className="text-center text-muted-foreground text-lg lg:text-xl leading-relaxed">
-                    In deze training ontwikkel je praktische vaardigheden om jezelf te ondersteunen — zoals je dat ook bij een goede vriend(in) zou doen.
-                  </p>
-                </div>
+                <p className="text-center text-muted-foreground text-lg leading-relaxed mb-6">
+                  Ontwikkel praktische vaardigheden om jezelf te ondersteunen — zoals je dat bij een goede vriend(in) zou doen.
+                </p>
 
-                <h3 className="text-center text-xl font-medium text-foreground mb-6">Een greep uit de thema's:</h3>
+                <h3 className="text-center text-base font-medium text-foreground mb-4">Een greep uit de thema's:</h3>
                 
-                <div className="space-y-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   {[
-                    { emoji: "🌿", title: "De basis van mindful zelfcompassie", description: "Ontdek hoe mindfulness en zelfcompassie samen werken om meer emotionele balans te creëren." },
-                    { emoji: "💛", title: "Vriendelijkheid ontwikkelen voor jezelf", description: "Leer jezelf met zachtheid te benaderen in plaats van met zelfkritiek." },
-                    { emoji: "🎭", title: "Omgaan met moeilijke emoties", description: "Ontwikkel handvatten om schaamte, angst en stress met meer ruimte en begrip te ontmoeten." },
-                    { emoji: "🌊", title: "Leven vanuit je waarden", description: "Ontdek wat écht belangrijk voor je is en leer hier compassievol naar te handelen." },
-                    { emoji: "✨", title: "Dankbaarheid en zelfwaardering", description: "Versterk positieve emoties en leer je eigen kwaliteiten bewuster waarderen." },
+                    { emoji: "🌿", title: "Basis van zelfcompassie" },
+                    { emoji: "💛", title: "Vriendelijkheid voor jezelf" },
+                    { emoji: "🎭", title: "Omgaan met moeilijke emoties" },
+                    { emoji: "🌊", title: "Leven vanuit je waarden" },
+                    { emoji: "✨", title: "Dankbaarheid & zelfwaardering" },
                   ].map((theme, i) => (
-                    <div key={i} className="flex items-start gap-4 bg-white rounded-xl p-5 border border-warm-100 shadow-sm hover:shadow-md transition-shadow">
-                      <span className="text-2xl flex-shrink-0 mt-0.5">{theme.emoji}</span>
-                      <div>
-                        <h4 className="font-medium text-foreground mb-1">{theme.title}</h4>
-                        <p className="text-muted-foreground text-sm leading-relaxed">{theme.description}</p>
-                      </div>
+                    <div key={i} className="flex items-center gap-3 bg-white rounded-xl px-4 py-3 border border-warm-100 shadow-sm">
+                      <span className="text-lg flex-shrink-0">{theme.emoji}</span>
+                      <span className="text-foreground text-sm font-medium">{theme.title}</span>
                     </div>
                   ))}
                 </div>
