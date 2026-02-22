@@ -34,6 +34,7 @@ export function ContactForm() {
   const { toast } = useToast();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
+  const [honeypot, setHoneypot] = useState("");
   const [formData, setFormData] = useState<ContactFormData>({
     name: "",
     email: "",
@@ -71,7 +72,7 @@ export function ContactForm() {
 
     try {
       const { data, error } = await supabase.functions.invoke("send-contact-email", {
-        body: result.data,
+        body: { ...result.data, honeypot },
       });
 
       if (error) {
@@ -202,6 +203,20 @@ export function ContactForm() {
           disabled={isSubmitting}
         />
         {errors.message && <p className="text-sm text-destructive">{errors.message}</p>}
+      </div>
+
+      {/* Honeypot field - hidden from users, catches bots */}
+      <div className="absolute opacity-0 top-0 left-0 h-0 w-0 -z-10" aria-hidden="true" tabIndex={-1}>
+        <label htmlFor="website">Website</label>
+        <input
+          type="text"
+          id="website"
+          name="website"
+          value={honeypot}
+          onChange={(e) => setHoneypot(e.target.value)}
+          tabIndex={-1}
+          autoComplete="off"
+        />
       </div>
 
       <Button
