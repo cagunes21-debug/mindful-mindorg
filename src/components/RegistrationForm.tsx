@@ -35,6 +35,7 @@ export function RegistrationForm({
 }: RegistrationFormProps) {
   const { toast } = useToast();
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [honeypot, setHoneypot] = useState("");
   const [agreedToTerms, setAgreedToTerms] = useState(false);
   const [termsError, setTermsError] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
@@ -66,6 +67,13 @@ export function RegistrationForm({
         fieldErrors[field] = err.message;
       });
       setErrors(fieldErrors);
+      return;
+    }
+
+    // Honeypot check
+    if (honeypot) {
+      // Silently pretend success to not alert bots
+      setIsSuccess(true);
       return;
     }
 
@@ -224,6 +232,20 @@ export function RegistrationForm({
           </Label>
         </div>
         {termsError && <p className="text-sm text-destructive ml-7">Je moet akkoord gaan met de voorwaarden</p>}
+      </div>
+
+      {/* Honeypot field - hidden from users, catches bots */}
+      <div className="absolute opacity-0 top-0 left-0 h-0 w-0 -z-10" aria-hidden="true" tabIndex={-1}>
+        <label htmlFor="reg-website">Website</label>
+        <input
+          type="text"
+          id="reg-website"
+          name="website"
+          value={honeypot}
+          onChange={(e) => setHoneypot(e.target.value)}
+          tabIndex={-1}
+          autoComplete="off"
+        />
       </div>
 
       <Button
