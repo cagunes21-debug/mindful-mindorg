@@ -6,7 +6,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { useToast } from "@/hooks/use-toast";
-import { Heart, Lock, Loader2 } from "lucide-react";
+import { Heart, Lock } from "lucide-react";
 import { z } from "zod";
 
 const passwordSchema = z.string().min(6, "Wachtwoord moet minimaal 6 tekens bevatten");
@@ -16,42 +16,24 @@ const ResetPassword = () => {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const [sessionReady, setSessionReady] = useState(false);
-  const [checking, setChecking] = useState(true);
   const [errors, setErrors] = useState<{ password?: string; confirmPassword?: string }>({});
   const navigate = useNavigate();
   const { toast } = useToast();
 
   useEffect(() => {
-    let resolved = false;
-
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((event) => {
-      if (event === "PASSWORD_RECOVERY" || event === "SIGNED_IN") {
-        resolved = true;
-        setSessionReady(true);
-        setChecking(false);
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
+      console.log("ResetPassword auth event:", event, !!session);
+      if (event === "PASSWORD_RECOVERY" || event === "SIGNED_IN" || event === "TOKEN_REFRESHED") {
+        if (session) setSessionReady(true);
       }
     });
 
-    // Check existing session
     supabase.auth.getSession().then(({ data: { session } }) => {
-      if (session && !resolved) {
-        resolved = true;
-        setSessionReady(true);
-        setChecking(false);
-      }
+      console.log("ResetPassword existing session:", !!session);
+      if (session) setSessionReady(true);
     });
 
-    // Give Supabase time to process the hash tokens, then stop checking
-    const timeout = setTimeout(() => {
-      if (!resolved) {
-        setChecking(false);
-      }
-    }, 3000);
-
-    return () => {
-      subscription.unsubscribe();
-      clearTimeout(timeout);
-    };
+    return () => subscription.unsubscribe();
   }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -73,9 +55,18 @@ const ResetPassword = () => {
 
     setLoading(true);
     try {
+      // Ensure we have a session before updating
+      const { data: { session } } = await supabase.auth.getSession();
+      if (!session) {
+        toast({ variant: "destructive", title: "Fout", description: "Je sessie is verlopen. Vraag een nieuwe resetlink aan via de inlogpagina." });
+        setLoading(false);
+        return;
+      }
+
       const { error } = await supabase.auth.updateUser({ password });
       if (error) {
-        toast({ variant: "destructive", title: "Fout", description: "De resetlink is ongeldig of verlopen. Vraag een nieuwe aan." });
+        console.error("updateUser error:", error);
+        toast({ variant: "destructive", title: "Fout", description: error.message });
       } else {
         toast({ title: "Wachtwoord gewijzigd!", description: "Je kunt nu inloggen met je nieuwe wachtwoord." });
         await supabase.auth.signOut();
@@ -88,34 +79,6 @@ const ResetPassword = () => {
     }
   };
 
-  if (checking) {
-    return (
-      <div className="min-h-screen bg-gradient-to-b from-cream-50 to-sage-50 flex items-center justify-center px-4">
-        <Loader2 className="h-8 w-8 animate-spin text-sage-600" />
-      </div>
-    );
-  }
-
-  if (!sessionReady) {
-    return (
-      <div className="min-h-screen bg-gradient-to-b from-cream-50 to-sage-50 flex items-center justify-center px-4">
-        <Card className="w-full max-w-md border-sage-200/50 shadow-lg">
-          <CardHeader className="text-center">
-            <CardTitle className="text-xl text-charcoal-800">Ongeldige link</CardTitle>
-            <CardDescription className="text-charcoal-500">
-              Deze resetlink is ongeldig of verlopen. Vraag een nieuwe aan via de inlogpagina.
-            </CardDescription>
-          </CardHeader>
-          <CardContent>
-            <Button onClick={() => navigate("/login")} className="w-full bg-sage-600 hover:bg-sage-700 text-white">
-              Naar inlogpagina
-            </Button>
-          </CardContent>
-        </Card>
-      </div>
-    );
-  }
-
   return (
     <div className="min-h-screen bg-gradient-to-b from-cream-50 to-sage-50 flex items-center justify-center px-4">
       <Card className="w-full max-w-md border-sage-200/50 shadow-lg">
@@ -124,7 +87,11 @@ const ResetPassword = () => {
             <Heart className="h-6 w-6 text-white" />
           </div>
           <CardTitle className="text-2xl font-light text-charcoal-800">Nieuw wachtwoord</CardTitle>
-          <CardDescription className="text-charcoal-500">Kies een nieuw wachtwoord voor je account</CardDescription>
+          <CardDescription className="text-charcoal-500">
+            {sessionReady 
+              ? "Kies een nieuw wachtwoord voor je account" 
+              : "Even geduld, je sessie wordt geladen..."}
+          </CardDescription>
         </CardHeader>
         <CardContent className="pt-4">
           <form onSubmit={handleSubmit} className="space-y-4">
@@ -144,8 +111,8 @@ const ResetPassword = () => {
               </div>
               {errors.confirmPassword && <p className="text-sm text-destructive">{errors.confirmPassword}</p>}
             </div>
-            <Button type="submit" className="w-full bg-sage-600 hover:bg-sage-700 text-white" disabled={loading}>
-              {loading ? "Even geduld..." : "Wachtwoord opslaan"}
+            <Button type="submit" className="w-full bg-sage-600 hover:bg-sage-700 text-white" disabled={loading || !sessionReady}>
+              {loading ? "Even geduld..." : !sessionReady ? "Sessie laden..." : "Wachtwoord opslaan"}
             </Button>
           </form>
         </CardContent>
