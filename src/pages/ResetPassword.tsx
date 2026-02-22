@@ -6,7 +6,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { useToast } from "@/hooks/use-toast";
-import { Heart, Lock } from "lucide-react";
+import { Heart, Lock, Loader2 } from "lucide-react";
 import { z } from "zod";
 
 const passwordSchema = z.string().min(6, "Wachtwoord moet minimaal 6 tekens bevatten");
@@ -15,9 +15,44 @@ const ResetPassword = () => {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [loading, setLoading] = useState(false);
+  const [sessionReady, setSessionReady] = useState(false);
+  const [checking, setChecking] = useState(true);
   const [errors, setErrors] = useState<{ password?: string; confirmPassword?: string }>({});
   const navigate = useNavigate();
   const { toast } = useToast();
+
+  useEffect(() => {
+    let resolved = false;
+
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((event) => {
+      if (event === "PASSWORD_RECOVERY" || event === "SIGNED_IN") {
+        resolved = true;
+        setSessionReady(true);
+        setChecking(false);
+      }
+    });
+
+    // Check existing session
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      if (session && !resolved) {
+        resolved = true;
+        setSessionReady(true);
+        setChecking(false);
+      }
+    });
+
+    // Give Supabase time to process the hash tokens, then stop checking
+    const timeout = setTimeout(() => {
+      if (!resolved) {
+        setChecking(false);
+      }
+    }, 3000);
+
+    return () => {
+      subscription.unsubscribe();
+      clearTimeout(timeout);
+    };
+  }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -52,6 +87,34 @@ const ResetPassword = () => {
       setLoading(false);
     }
   };
+
+  if (checking) {
+    return (
+      <div className="min-h-screen bg-gradient-to-b from-cream-50 to-sage-50 flex items-center justify-center px-4">
+        <Loader2 className="h-8 w-8 animate-spin text-sage-600" />
+      </div>
+    );
+  }
+
+  if (!sessionReady) {
+    return (
+      <div className="min-h-screen bg-gradient-to-b from-cream-50 to-sage-50 flex items-center justify-center px-4">
+        <Card className="w-full max-w-md border-sage-200/50 shadow-lg">
+          <CardHeader className="text-center">
+            <CardTitle className="text-xl text-charcoal-800">Ongeldige link</CardTitle>
+            <CardDescription className="text-charcoal-500">
+              Deze resetlink is ongeldig of verlopen. Vraag een nieuwe aan via de inlogpagina.
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <Button onClick={() => navigate("/login")} className="w-full bg-sage-600 hover:bg-sage-700 text-white">
+              Naar inlogpagina
+            </Button>
+          </CardContent>
+        </Card>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-cream-50 to-sage-50 flex items-center justify-center px-4">
