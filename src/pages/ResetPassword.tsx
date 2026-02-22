@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
@@ -6,7 +6,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { useToast } from "@/hooks/use-toast";
-import { Heart, Lock } from "lucide-react";
+import { Heart, Lock, Loader2 } from "lucide-react";
 import { z } from "zod";
 
 const passwordSchema = z.string().min(6, "Wachtwoord moet minimaal 6 tekens bevatten");
@@ -15,9 +15,45 @@ const ResetPassword = () => {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [loading, setLoading] = useState(false);
+  const [initializing, setInitializing] = useState(true);
+  const [hasSession, setHasSession] = useState(false);
   const [errors, setErrors] = useState<{ password?: string; confirmPassword?: string }>({});
   const navigate = useNavigate();
   const { toast } = useToast();
+
+  useEffect(() => {
+    const initSession = async () => {
+      // Try to extract tokens from URL hash (Supabase implicit flow)
+      const hash = window.location.hash.substring(1);
+      if (hash) {
+        const params = new URLSearchParams(hash);
+        const accessToken = params.get("access_token");
+        const refreshToken = params.get("refresh_token");
+
+        if (accessToken && refreshToken) {
+          const { error } = await supabase.auth.setSession({
+            access_token: accessToken,
+            refresh_token: refreshToken,
+          });
+          if (!error) {
+            setHasSession(true);
+            // Clean up the URL hash
+            window.history.replaceState(null, "", window.location.pathname);
+          }
+        }
+      }
+
+      // Fallback: check if session already exists
+      if (!hasSession) {
+        const { data: { session } } = await supabase.auth.getSession();
+        if (session) setHasSession(true);
+      }
+
+      setInitializing(false);
+    };
+
+    initSession();
+  }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -40,7 +76,7 @@ const ResetPassword = () => {
     try {
       const { error } = await supabase.auth.updateUser({ password });
       if (error) {
-        toast({ variant: "destructive", title: "Fout", description: "Je sessie is verlopen. Vraag een nieuwe resetlink aan via de inlogpagina." });
+        toast({ variant: "destructive", title: "Fout", description: "Kon wachtwoord niet wijzigen. Vraag een nieuwe resetlink aan via de inlogpagina." });
       } else {
         toast({ title: "Wachtwoord gewijzigd!", description: "Je kunt nu inloggen met je nieuwe wachtwoord." });
         await supabase.auth.signOut();
@@ -52,6 +88,34 @@ const ResetPassword = () => {
       setLoading(false);
     }
   };
+
+  if (initializing) {
+    return (
+      <div className="min-h-screen bg-gradient-to-b from-cream-50 to-sage-50 flex items-center justify-center">
+        <Loader2 className="h-8 w-8 animate-spin text-sage-600" />
+      </div>
+    );
+  }
+
+  if (!hasSession) {
+    return (
+      <div className="min-h-screen bg-gradient-to-b from-cream-50 to-sage-50 flex items-center justify-center px-4">
+        <Card className="w-full max-w-md border-sage-200/50 shadow-lg">
+          <CardHeader className="text-center">
+            <CardTitle className="text-xl text-charcoal-800">Ongeldige link</CardTitle>
+            <CardDescription className="text-charcoal-500">
+              Deze resetlink is ongeldig of verlopen. Vraag een nieuwe aan via de inlogpagina.
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <Button onClick={() => navigate("/login")} className="w-full bg-sage-600 hover:bg-sage-700 text-white">
+              Naar inlogpagina
+            </Button>
+          </CardContent>
+        </Card>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-cream-50 to-sage-50 flex items-center justify-center px-4">
