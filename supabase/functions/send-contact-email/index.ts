@@ -15,73 +15,137 @@ interface ContactFormRequest {
   phone?: string;
   training?: string;
   message: string;
-  // Registration-specific fields
   trainingDate?: string;
   trainingTime?: string;
   price?: string;
   remarks?: string;
   isRegistration?: boolean;
+  honeypot?: string;
+}
+
+// Simple in-memory rate limiter (per function instance)
+const rateLimitMap = new Map<string, { count: number; resetAt: number }>();
+const RATE_LIMIT = 5;
+const RATE_WINDOW_MS = 15 * 60 * 1000; // 15 minutes
+
+function isRateLimited(ip: string): boolean {
+  const now = Date.now();
+  const entry = rateLimitMap.get(ip);
+  if (!entry || now > entry.resetAt) {
+    rateLimitMap.set(ip, { count: 1, resetAt: now + RATE_WINDOW_MS });
+    return false;
+  }
+  entry.count++;
+  return entry.count > RATE_LIMIT;
 }
 
 const handler = async (req: Request): Promise<Response> => {
-  // Handle CORS preflight requests
   if (req.method === "OPTIONS") {
     return new Response("ok", { headers: corsHeaders });
   }
 
   try {
-    const { 
-      name, 
-      email, 
-      phone, 
-      training, 
-      message,
-      trainingDate,
-      trainingTime,
-      price,
-      remarks,
-      isRegistration
-    }: ContactFormRequest = await req.json();
-
-    // Validate required fields
-    if (!name || !email || !message) {
-      console.error("Missing required fields:", { name: !!name, email: !!email, message: !!message });
+    // Rate limiting by IP
+    const clientIp = req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() || 
+                     req.headers.get("cf-connecting-ip") || "unknown";
+    if (isRateLimited(clientIp)) {
+      console.warn("Rate limited IP:", clientIp);
       return new Response(
-        JSON.stringify({ error: "Naam, e-mail en bericht zijn verplicht" }),
+        JSON.stringify({ error: "Te veel verzoeken. Probeer het later opnieuw." }),
+        { status: 429, headers: { "Content-Type": "application/json", ...corsHeaders } }
+      );
+    }
+
+    const body: ContactFormRequest = await req.json();
+    const { name, email, phone, training, message, trainingDate, trainingTime, price, remarks, isRegistration, honeypot } = body;
+
+    // Honeypot check - bots fill hidden fields
+    if (honeypot) {
+      console.warn("Honeypot triggered, likely bot");
+      // Return success to not alert the bot
+      return new Response(
+        JSON.stringify({ success: true }),
+        { status: 200, headers: { "Content-Type": "application/json", ...corsHeaders } }
+      );
+    }
+
+    // Server-side validation
+    if (!name || typeof name !== "string" || name.trim().length === 0 || name.trim().length > 100) {
+      return new Response(
+        JSON.stringify({ error: "Ongeldige naam (max 100 tekens)" }),
         { status: 400, headers: { "Content-Type": "application/json", ...corsHeaders } }
       );
     }
 
-    // Validate email format
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(email)) {
-      console.error("Invalid email format:", email);
+    if (!email || typeof email !== "string" || email.trim().length > 255) {
       return new Response(
         JSON.stringify({ error: "Ongeldig e-mailadres" }),
         { status: 400, headers: { "Content-Type": "application/json", ...corsHeaders } }
       );
     }
 
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email.trim())) {
+      return new Response(
+        JSON.stringify({ error: "Ongeldig e-mailadres" }),
+        { status: 400, headers: { "Content-Type": "application/json", ...corsHeaders } }
+      );
+    }
+
+    if (!message || typeof message !== "string" || message.trim().length === 0 || message.trim().length > 2000) {
+      return new Response(
+        JSON.stringify({ error: "Ongeldig bericht (max 2000 tekens)" }),
+        { status: 400, headers: { "Content-Type": "application/json", ...corsHeaders } }
+      );
+    }
+
+    if (phone && (typeof phone !== "string" || phone.trim().length > 20)) {
+      return new Response(
+        JSON.stringify({ error: "Ongeldig telefoonnummer (max 20 tekens)" }),
+        { status: 400, headers: { "Content-Type": "application/json", ...corsHeaders } }
+      );
+    }
+
+    if (training && (typeof training !== "string" || training.length > 200)) {
+      return new Response(
+        JSON.stringify({ error: "Ongeldige training selectie" }),
+        { status: 400, headers: { "Content-Type": "application/json", ...corsHeaders } }
+      );
+    }
+
+    if (remarks && (typeof remarks !== "string" || remarks.trim().length > 2000)) {
+      return new Response(
+        JSON.stringify({ error: "Ongeldige opmerkingen (max 2000 tekens)" }),
+        { status: 400, headers: { "Content-Type": "application/json", ...corsHeaders } }
+      );
+    }
+
+    // Sanitize inputs
+    const sanitizedName = name.trim();
+    const sanitizedEmail = email.trim().toLowerCase();
+    const sanitizedPhone = phone?.trim() || null;
+    const sanitizedMessage = message.trim();
+    const sanitizedRemarks = remarks?.trim() || null;
+
     // If this is a registration, save to database
     if (isRegistration && training) {
-      console.log("Saving registration to database:", { name, email, training });
+      console.log("Saving registration to database:", { name: sanitizedName, email: sanitizedEmail, training });
       
       const supabaseUrl = Deno.env.get("SUPABASE_URL")!;
       const supabaseServiceKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!;
-      
       const supabase = createClient(supabaseUrl, supabaseServiceKey);
       
       const { data: registrationData, error: registrationError } = await supabase
         .from("registrations")
         .insert({
-          name: name.trim(),
-          email: email.trim().toLowerCase(),
-          phone: phone?.trim() || null,
+          name: sanitizedName,
+          email: sanitizedEmail,
+          phone: sanitizedPhone,
           training_name: training,
           training_date: trainingDate || null,
           training_time: trainingTime || null,
           price: price || null,
-          remarks: remarks?.trim() || null,
+          remarks: sanitizedRemarks,
           status: "pending",
         })
         .select()
@@ -89,41 +153,40 @@ const handler = async (req: Request): Promise<Response> => {
 
       if (registrationError) {
         console.error("Error saving registration:", registrationError);
-        // Continue with email sending even if database save fails
       } else {
         console.log("Registration saved successfully:", registrationData);
       }
     }
 
-    console.log("Sending contact form email:", { name, email, training, isRegistration });
+    console.log("Sending contact form email:", { name: sanitizedName, email: sanitizedEmail, training, isRegistration });
 
-    // Determine email subject and content based on whether it's a registration
     const emailSubject = isRegistration 
-      ? `Nieuwe aanmelding: ${training} - ${name}`
-      : `Nieuw contactformulier: ${name}`;
+      ? `Nieuwe aanmelding: ${training} - ${sanitizedName}`
+      : `Nieuw contactformulier: ${sanitizedName}`;
 
-    // Send notification email to Mindful Mind
+    // Escape HTML in user inputs to prevent XSS in emails
+    const escapeHtml = (str: string) => str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+
     const notificationEmail = await resend.emails.send({
       from: "Mindful Mind <onboarding@resend.dev>",
       to: ["mindful-mind@outlook.com"],
       subject: emailSubject,
       html: `
         <h2>${isRegistration ? 'Nieuwe aanmelding ontvangen' : 'Nieuw bericht via het contactformulier'}</h2>
-        <p><strong>Naam:</strong> ${name}</p>
-        <p><strong>E-mail:</strong> ${email}</p>
-        ${phone ? `<p><strong>Telefoon:</strong> ${phone}</p>` : ''}
-        ${training ? `<p><strong>${isRegistration ? 'Training' : 'Interesse in'}:</strong> ${training}</p>` : ''}
-        ${trainingDate ? `<p><strong>Startdatum:</strong> ${trainingDate}</p>` : ''}
-        ${trainingTime ? `<p><strong>Tijd:</strong> ${trainingTime}</p>` : ''}
-        ${price ? `<p><strong>Prijs:</strong> ${price}</p>` : ''}
+        <p><strong>Naam:</strong> ${escapeHtml(sanitizedName)}</p>
+        <p><strong>E-mail:</strong> ${escapeHtml(sanitizedEmail)}</p>
+        ${sanitizedPhone ? `<p><strong>Telefoon:</strong> ${escapeHtml(sanitizedPhone)}</p>` : ''}
+        ${training ? `<p><strong>${isRegistration ? 'Training' : 'Interesse in'}:</strong> ${escapeHtml(training)}</p>` : ''}
+        ${trainingDate ? `<p><strong>Startdatum:</strong> ${escapeHtml(trainingDate)}</p>` : ''}
+        ${trainingTime ? `<p><strong>Tijd:</strong> ${escapeHtml(trainingTime)}</p>` : ''}
+        ${price ? `<p><strong>Prijs:</strong> ${escapeHtml(price)}</p>` : ''}
         <p><strong>${isRegistration ? 'Opmerkingen' : 'Bericht'}:</strong></p>
-        <p>${message.replace(/\n/g, '<br>')}</p>
+        <p>${escapeHtml(sanitizedMessage).replace(/\n/g, '<br>')}</p>
       `,
     });
 
     console.log("Notification email sent:", notificationEmail);
 
-    // Send confirmation email to the user
     const confirmationSubject = isRegistration
       ? `Bevestiging aanmelding: ${training} - Mindful Mind`
       : "Bedankt voor je bericht - Mindful Mind";
@@ -131,13 +194,13 @@ const handler = async (req: Request): Promise<Response> => {
     const confirmationHtml = isRegistration
       ? `
         <div style="font-family: sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
-          <h1 style="color: #8B5A3C; font-size: 24px;">Bedankt voor je aanmelding, ${name}!</h1>
+          <h1 style="color: #8B5A3C; font-size: 24px;">Bedankt voor je aanmelding, ${escapeHtml(sanitizedName)}!</h1>
           <p style="color: #666; line-height: 1.6;">
-            We hebben je aanmelding voor <strong>${training}</strong> ontvangen.
+            We hebben je aanmelding voor <strong>${escapeHtml(training)}</strong> ontvangen.
           </p>
-          ${trainingDate ? `<p style="color: #666; line-height: 1.6;">Startdatum: <strong>${trainingDate}</strong></p>` : ''}
-          ${trainingTime ? `<p style="color: #666; line-height: 1.6;">Tijd: <strong>${trainingTime}</strong></p>` : ''}
-          ${price ? `<p style="color: #666; line-height: 1.6;">Prijs: <strong>${price}</strong></p>` : ''}
+          ${trainingDate ? `<p style="color: #666; line-height: 1.6;">Startdatum: <strong>${escapeHtml(trainingDate)}</strong></p>` : ''}
+          ${trainingTime ? `<p style="color: #666; line-height: 1.6;">Tijd: <strong>${escapeHtml(trainingTime)}</strong></p>` : ''}
+          ${price ? `<p style="color: #666; line-height: 1.6;">Prijs: <strong>${escapeHtml(price)}</strong></p>` : ''}
           <p style="color: #666; line-height: 1.6;">
             We nemen zo snel mogelijk contact met je op met meer informatie over de training.
           </p>
@@ -153,11 +216,11 @@ const handler = async (req: Request): Promise<Response> => {
       `
       : `
         <div style="font-family: sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
-          <h1 style="color: #8B5A3C; font-size: 24px;">Bedankt voor je bericht, ${name}!</h1>
+          <h1 style="color: #8B5A3C; font-size: 24px;">Bedankt voor je bericht, ${escapeHtml(sanitizedName)}!</h1>
           <p style="color: #666; line-height: 1.6;">
             We hebben je bericht ontvangen en nemen zo snel mogelijk contact met je op.
           </p>
-          ${training ? `<p style="color: #666; line-height: 1.6;">Je interesse in: <strong>${training}</strong></p>` : ''}
+          ${training ? `<p style="color: #666; line-height: 1.6;">Je interesse in: <strong>${escapeHtml(training)}</strong></p>` : ''}
           <p style="color: #666; line-height: 1.6;">
             Met warme groet,<br>
             <strong>Het Mindful Mind team</strong>
@@ -171,7 +234,7 @@ const handler = async (req: Request): Promise<Response> => {
 
     const confirmationEmail = await resend.emails.send({
       from: "Mindful Mind <onboarding@resend.dev>",
-      to: [email],
+      to: [sanitizedEmail],
       subject: confirmationSubject,
       html: confirmationHtml,
     });
