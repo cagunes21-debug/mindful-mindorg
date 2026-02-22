@@ -88,7 +88,6 @@ export default function AdminDashboard() {
   const navigate = useNavigate();
   const { toast } = useToast();
   const [isLoading, setIsLoading] = useState(true);
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [registrations, setRegistrations] = useState<Registration[]>([]);
   const [selectedRegistration, setSelectedRegistration] = useState<Registration | null>(null);
   const [isDetailOpen, setIsDetailOpen] = useState(false);
@@ -102,26 +101,8 @@ export default function AdminDashboard() {
   const [editingTags, setEditingTags] = useState<string[]>([]);
 
   useEffect(() => {
-    const checkAuth = async () => {
-      const { data: { session } } = await supabase.auth.getSession();
-      if (!session) {
-        navigate("/login");
-        return;
-      }
-      setIsAuthenticated(true);
-      fetchRegistrations();
-    };
-
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
-      if (!session) {
-        navigate("/login");
-      }
-    });
-
-    checkAuth();
-
-    return () => subscription.unsubscribe();
-  }, [navigate]);
+    fetchRegistrations();
+  }, []);
 
   const fetchRegistrations = async () => {
     setIsLoading(true);
@@ -326,13 +307,6 @@ export default function AdminDashboard() {
     link.click();
   };
 
-  if (!isAuthenticated) {
-    return (
-      <div className="min-h-screen flex items-center justify-center">
-        <Loader2 className="h-8 w-8 animate-spin text-sage-600" />
-      </div>
-    );
-  }
 
   return (
     <div className="min-h-screen bg-warm-50">
