@@ -6,12 +6,21 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { useToast } from "@/hooks/use-toast";
-import { Heart, Mail, Lock, ArrowLeft } from "lucide-react";
+import { Heart, Mail, Lock, ArrowLeft, Check, Clock, Users, Globe, Calendar } from "lucide-react";
 import { Link } from "react-router-dom";
 import { z } from "zod";
 
 const emailSchema = z.string().email("Voer een geldig e-mailadres in");
 const passwordSchema = z.string().min(6, "Wachtwoord moet minimaal 6 tekens bevatten");
+
+const trainingHighlights = [
+  "8 wekelijkse groepssessies van 2 uur",
+  "Halve dag stilte-retreat",
+  "Toegang tot online leeromgeving",
+  "Geleide meditaties en oefeningen",
+  "Persoonlijk werkboek",
+  "Certificaat van deelname",
+];
 
 const Auth = () => {
   const [isLogin, setIsLogin] = useState(true);
@@ -195,7 +204,7 @@ const Auth = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-cream-50 to-sage-50 flex flex-col">
+    <div className="min-h-screen bg-gradient-to-b from-warm-50 to-sage-50 flex flex-col">
       {/* Header */}
       <div className="p-4 md:p-6">
         <Link 
@@ -207,80 +216,96 @@ const Auth = () => {
         </Link>
       </div>
 
-      {/* Main Content */}
+      {/* Main Content - Two Column Layout */}
       <div className="flex-1 flex items-center justify-center px-4 py-8">
-        <Card className="w-full max-w-md border-sage-200/50 shadow-lg">
-          <CardHeader className="text-center pb-2">
-            <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-gradient-to-br from-sage-400 to-sage-600">
-              <Heart className="h-6 w-6 text-white" />
-            </div>
-            <CardTitle className="text-2xl font-light text-charcoal-800">
-              {isForgotPassword ? "Wachtwoord vergeten" : isLogin ? "Welkom terug" : "Account aanmaken"}
-            </CardTitle>
-            <CardDescription className="text-charcoal-500">
-              {isForgotPassword
-                ? "Voer je e-mailadres in om een resetlink te ontvangen"
-                : isLogin 
-                  ? "Log in om toegang te krijgen tot je trainingen" 
-                  : "Maak een account aan om je aan te melden voor trainingen"
-              }
-            </CardDescription>
-          </CardHeader>
+        <div className="w-full max-w-4xl grid md:grid-cols-2 gap-8 items-center">
           
-          <CardContent className="pt-4">
-            {isForgotPassword ? (
-              <form onSubmit={handleForgotPassword} className="space-y-4">
-                <div className="space-y-2">
-                  <Label htmlFor="email" className="text-charcoal-700">E-mailadres</Label>
-                  <div className="relative">
-                    <Mail className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-charcoal-400" />
-                    <Input
-                      id="email"
-                      type="email"
-                      placeholder="jouw@email.nl"
-                      value={email}
-                      onChange={(e) => setEmail(e.target.value)}
-                      className="pl-10 border-sage-200 focus:border-sage-400 focus:ring-sage-400"
-                      required
-                    />
+          {/* Left: Training Info */}
+          <div className="hidden md:block">
+            <div className="space-y-6">
+              <div>
+                <span className="inline-block rounded-full bg-terracotta-100/80 px-4 py-1.5 text-xs font-medium tracking-wide text-terracotta-700 mb-4">
+                  8-weekse groepstraining
+                </span>
+                <h2 className="text-3xl font-light text-foreground leading-tight">
+                  Mindful
+                  <span className="block font-serif italic text-terracotta-600 mt-1">
+                    Zelfcompassie
+                  </span>
+                </h2>
+                <p className="text-muted-foreground mt-3 leading-relaxed text-sm">
+                  Leer jezelf te steunen, vooral in moeilijke tijden. Dit wetenschappelijk onderbouwde programma helpt je om zelfkritiek te transformeren in zelfcompassie.
+                </p>
+              </div>
+
+              {/* Quick Info */}
+              <div className="grid grid-cols-2 gap-3">
+                <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                  <Clock className="h-4 w-4 text-terracotta-500" />
+                  <span>8 weken + retreat</span>
+                </div>
+                <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                  <Calendar className="h-4 w-4 text-terracotta-500" />
+                  <span>2 uur per sessie</span>
+                </div>
+                <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                  <Globe className="h-4 w-4 text-terracotta-500" />
+                  <span>100% live online</span>
+                </div>
+                <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                  <Users className="h-4 w-4 text-terracotta-500" />
+                  <span>NL / EN</span>
+                </div>
+              </div>
+
+              {/* Highlights */}
+              <div className="space-y-2.5">
+                <p className="text-sm font-medium text-foreground">Wat is inbegrepen:</p>
+                {trainingHighlights.map((item, i) => (
+                  <div key={i} className="flex items-center gap-2.5 text-sm text-muted-foreground">
+                    <Check className="h-3.5 w-3.5 text-terracotta-500 flex-shrink-0" />
+                    <span>{item}</span>
                   </div>
-                  {errors.email && (
-                    <p className="text-sm text-destructive">{errors.email}</p>
-                  )}
-                </div>
+                ))}
+              </div>
 
-                <Button 
-                  type="submit" 
-                  className="w-full bg-sage-600 hover:bg-sage-700 text-white"
-                  disabled={loading}
-                >
-                  {loading ? "Even geduld..." : "Resetlink versturen"}
-                </Button>
+              <p className="text-2xl font-light text-terracotta-600">€550</p>
+            </div>
+          </div>
 
-                <div className="text-center">
-                  <button
-                    type="button"
-                    onClick={() => { setIsForgotPassword(false); setErrors({}); }}
-                    className="text-sm text-sage-600 hover:text-sage-800 underline-offset-4 hover:underline transition-colors"
-                  >
-                    Terug naar inloggen
-                  </button>
-                </div>
-              </form>
-            ) : (
-              <>
-                <form onSubmit={handleSubmit} className="space-y-4">
+          {/* Right: Login Form */}
+          <Card className="w-full border-warm-200/50 shadow-lg">
+            <CardHeader className="text-center pb-2">
+              <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-gradient-to-br from-sage-400 to-sage-600">
+                <Heart className="h-6 w-6 text-white" />
+              </div>
+              <CardTitle className="text-2xl font-light text-foreground">
+                {isForgotPassword ? "Wachtwoord vergeten" : isLogin ? "Welkom terug" : "Account aanmaken"}
+              </CardTitle>
+              <CardDescription className="text-muted-foreground">
+                {isForgotPassword
+                  ? "Voer je e-mailadres in om een resetlink te ontvangen"
+                  : isLogin 
+                    ? "Log in om toegang te krijgen tot je training" 
+                    : "Maak een account aan om je aan te melden"
+                }
+              </CardDescription>
+            </CardHeader>
+            
+            <CardContent className="pt-4">
+              {isForgotPassword ? (
+                <form onSubmit={handleForgotPassword} className="space-y-4">
                   <div className="space-y-2">
-                    <Label htmlFor="email" className="text-charcoal-700">E-mailadres</Label>
+                    <Label htmlFor="email" className="text-foreground">E-mailadres</Label>
                     <div className="relative">
-                      <Mail className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-charcoal-400" />
+                      <Mail className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
                       <Input
                         id="email"
                         type="email"
                         placeholder="jouw@email.nl"
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
-                        className="pl-10 border-sage-200 focus:border-sage-400 focus:ring-sage-400"
+                        className="pl-10 border-warm-200 focus:border-sage-400 focus:ring-sage-400"
                         required
                       />
                     </div>
@@ -289,96 +314,137 @@ const Auth = () => {
                     )}
                   </div>
 
-                  <div className="space-y-2">
-                    <Label htmlFor="password" className="text-charcoal-700">Wachtwoord</Label>
-                    <div className="relative">
-                      <Lock className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-charcoal-400" />
-                      <Input
-                        id="password"
-                        type="password"
-                        placeholder="••••••••"
-                        value={password}
-                        onChange={(e) => setPassword(e.target.value)}
-                        className="pl-10 border-sage-200 focus:border-sage-400 focus:ring-sage-400"
-                        required
-                      />
-                    </div>
-                    {errors.password && (
-                      <p className="text-sm text-destructive">{errors.password}</p>
-                    )}
-                  </div>
-
-                  {!isLogin && (
-                    <div className="space-y-2">
-                      <Label htmlFor="confirmPassword" className="text-charcoal-700">Bevestig wachtwoord</Label>
-                      <div className="relative">
-                        <Lock className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-charcoal-400" />
-                        <Input
-                          id="confirmPassword"
-                          type="password"
-                          placeholder="••••••••"
-                          value={confirmPassword}
-                          onChange={(e) => setConfirmPassword(e.target.value)}
-                          className="pl-10 border-sage-200 focus:border-sage-400 focus:ring-sage-400"
-                          required
-                        />
-                      </div>
-                      {errors.confirmPassword && (
-                        <p className="text-sm text-destructive">{errors.confirmPassword}</p>
-                      )}
-                    </div>
-                  )}
-
-                  {isLogin && (
-                    <div className="text-right">
-                      <button
-                        type="button"
-                        onClick={() => { setIsForgotPassword(true); setErrors({}); }}
-                        className="text-sm text-sage-600 hover:text-sage-800 underline-offset-4 hover:underline transition-colors"
-                      >
-                        Wachtwoord vergeten?
-                      </button>
-                    </div>
-                  )}
-
                   <Button 
                     type="submit" 
                     className="w-full bg-sage-600 hover:bg-sage-700 text-white"
                     disabled={loading}
                   >
-                    {loading 
-                      ? "Even geduld..." 
-                      : isLogin 
-                        ? "Inloggen" 
-                        : "Account aanmaken"
-                    }
+                    {loading ? "Even geduld..." : "Resetlink versturen"}
                   </Button>
-                </form>
 
-                <div className="mt-6 text-center">
-                  <button
-                    type="button"
-                    onClick={() => {
-                      setIsLogin(!isLogin);
-                      setErrors({});
-                    }}
-                    className="text-sm text-sage-600 hover:text-sage-800 underline-offset-4 hover:underline transition-colors"
-                  >
-                    {isLogin 
-                      ? "Nog geen account? Registreer je hier" 
-                      : "Al een account? Log hier in"
-                    }
-                  </button>
-                </div>
-              </>
-            )}
-          </CardContent>
-        </Card>
+                  <div className="text-center">
+                    <button
+                      type="button"
+                      onClick={() => { setIsForgotPassword(false); setErrors({}); }}
+                      className="text-sm text-sage-600 hover:text-sage-800 underline-offset-4 hover:underline transition-colors"
+                    >
+                      Terug naar inloggen
+                    </button>
+                  </div>
+                </form>
+              ) : (
+                <>
+                  <form onSubmit={handleSubmit} className="space-y-4">
+                    <div className="space-y-2">
+                      <Label htmlFor="email" className="text-foreground">E-mailadres</Label>
+                      <div className="relative">
+                        <Mail className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                        <Input
+                          id="email"
+                          type="email"
+                          placeholder="jouw@email.nl"
+                          value={email}
+                          onChange={(e) => setEmail(e.target.value)}
+                          className="pl-10 border-warm-200 focus:border-sage-400 focus:ring-sage-400"
+                          required
+                        />
+                      </div>
+                      {errors.email && (
+                        <p className="text-sm text-destructive">{errors.email}</p>
+                      )}
+                    </div>
+
+                    <div className="space-y-2">
+                      <Label htmlFor="password" className="text-foreground">Wachtwoord</Label>
+                      <div className="relative">
+                        <Lock className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                        <Input
+                          id="password"
+                          type="password"
+                          placeholder="••••••••"
+                          value={password}
+                          onChange={(e) => setPassword(e.target.value)}
+                          className="pl-10 border-warm-200 focus:border-sage-400 focus:ring-sage-400"
+                          required
+                        />
+                      </div>
+                      {errors.password && (
+                        <p className="text-sm text-destructive">{errors.password}</p>
+                      )}
+                    </div>
+
+                    {!isLogin && (
+                      <div className="space-y-2">
+                        <Label htmlFor="confirmPassword" className="text-foreground">Bevestig wachtwoord</Label>
+                        <div className="relative">
+                          <Lock className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                          <Input
+                            id="confirmPassword"
+                            type="password"
+                            placeholder="••••••••"
+                            value={confirmPassword}
+                            onChange={(e) => setConfirmPassword(e.target.value)}
+                            className="pl-10 border-warm-200 focus:border-sage-400 focus:ring-sage-400"
+                            required
+                          />
+                        </div>
+                        {errors.confirmPassword && (
+                          <p className="text-sm text-destructive">{errors.confirmPassword}</p>
+                        )}
+                      </div>
+                    )}
+
+                    {isLogin && (
+                      <div className="text-right">
+                        <button
+                          type="button"
+                          onClick={() => { setIsForgotPassword(true); setErrors({}); }}
+                          className="text-sm text-sage-600 hover:text-sage-800 underline-offset-4 hover:underline transition-colors"
+                        >
+                          Wachtwoord vergeten?
+                        </button>
+                      </div>
+                    )}
+
+                    <Button 
+                      type="submit" 
+                      className="w-full bg-sage-600 hover:bg-sage-700 text-white"
+                      disabled={loading}
+                    >
+                      {loading 
+                        ? "Even geduld..." 
+                        : isLogin 
+                          ? "Inloggen" 
+                          : "Account aanmaken"
+                      }
+                    </Button>
+                  </form>
+
+                  <div className="mt-6 text-center">
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setIsLogin(!isLogin);
+                        setErrors({});
+                      }}
+                      className="text-sm text-sage-600 hover:text-sage-800 underline-offset-4 hover:underline transition-colors"
+                    >
+                      {isLogin 
+                        ? "Nog geen account? Registreer je hier" 
+                        : "Al een account? Log hier in"
+                      }
+                    </button>
+                  </div>
+                </>
+              )}
+            </CardContent>
+          </Card>
+        </div>
       </div>
 
       {/* Footer */}
       <div className="p-4 text-center">
-        <p className="text-sm text-charcoal-500">
+        <p className="text-sm text-muted-foreground">
           © {new Date().getFullYear()} Compassie Collectief
         </p>
       </div>
