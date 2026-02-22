@@ -1,5 +1,4 @@
-import { useEffect } from "react";
-import { Link, useSearchParams } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { CheckCircle2, ArrowRight, Mail } from "lucide-react";
@@ -7,29 +6,8 @@ import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import { motion } from "framer-motion";
 import SEO from "@/components/SEO";
-import { supabase } from "@/integrations/supabase/client";
 
 export default function BetalingSucces() {
-  const [searchParams] = useSearchParams();
-  const registrationId = searchParams.get("registration_id");
-
-  useEffect(() => {
-    // Update payment status if we have a registration ID
-    const updatePaymentStatus = async () => {
-      if (registrationId) {
-        await supabase
-          .from("registrations")
-          .update({ 
-            payment_status: "paid",
-            paid_at: new Date().toISOString(),
-          })
-          .eq("id", registrationId);
-      }
-    };
-
-    updatePaymentStatus();
-  }, [registrationId]);
-
   return (
     <div className="min-h-screen bg-background">
       <SEO 
