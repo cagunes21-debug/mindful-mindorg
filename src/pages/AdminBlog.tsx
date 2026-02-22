@@ -85,19 +85,7 @@ export default function AdminBlog() {
   const [editingPost, setEditingPost] = useState<Partial<BlogPost> & typeof emptyPost>(emptyPost);
   const [isNew, setIsNew] = useState(true);
 
-  // Auth check
-  useEffect(() => {
-    const checkAuth = async () => {
-      const { data: { session } } = await supabase.auth.getSession();
-      if (!session) {
-        navigate("/login");
-        return;
-      }
-      const { data } = await supabase.rpc("has_role", { _user_id: session.user.id, _role: "admin" });
-      if (!data) navigate("/");
-    };
-    checkAuth();
-  }, [navigate]);
+  // Auth is handled by ProtectedRoute in App.tsx
 
   const { data: posts, isLoading } = useQuery({
     queryKey: ["admin-blog-posts"],

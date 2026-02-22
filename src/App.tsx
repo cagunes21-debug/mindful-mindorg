@@ -8,6 +8,7 @@ import { HelmetProvider } from "react-helmet-async";
 import MindfulZelfcompassie from "./pages/MindfulZelfcompassie";
 import ExitIntentPopup from "./components/ExitIntentPopup";
 import StickyCTA from "./components/StickyCTA";
+import ProtectedRoute from "./components/ProtectedRoute";
 
 // Lazy-loaded routes for better Core Web Vitals
 const Index = lazy(() => import("./pages/Index"));
@@ -66,10 +67,10 @@ const App = () => (
               <Route path="/barcelona-retreat" element={<BewegingMildheidRetreat />} />
               <Route path="/bedrijven" element={<Bedrijven />} />
               <Route path="/login" element={<Auth />} />
-              <Route path="/admin" element={<AdminDashboard />} />
-              <Route path="/admin/klanten" element={<CustomerOverview />} />
-              <Route path="/admin/blog" element={<AdminBlog />} />
-              <Route path="/mijn-training" element={<ParticipantDashboard />} />
+              <Route path="/admin" element={<ProtectedRoute requireAdmin><AdminDashboard /></ProtectedRoute>} />
+              <Route path="/admin/klanten" element={<ProtectedRoute requireAdmin><CustomerOverview /></ProtectedRoute>} />
+              <Route path="/admin/blog" element={<ProtectedRoute requireAdmin><AdminBlog /></ProtectedRoute>} />
+              <Route path="/mijn-training" element={<ProtectedRoute><ParticipantDashboard /></ProtectedRoute>} />
               <Route path="/betaling-succes" element={<BetalingSucces />} />
               <Route path="/betaling-geannuleerd" element={<BetalingGeannuleerd />} />
               <Route path="/privacy" element={<Privacy />} />

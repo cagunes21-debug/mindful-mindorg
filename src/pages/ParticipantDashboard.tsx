@@ -91,26 +91,13 @@ const ParticipantDashboard = () => {
   const [selectedWeek, setSelectedWeek] = useState<number>(1);
 
   useEffect(() => {
-    const { data: { subscription } } = supabase.auth.onAuthStateChange(
-      (event, session) => {
-        setUser(session?.user ?? null);
-        if (!session?.user) {
-          navigate("/login");
-        }
-      }
-    );
-
     supabase.auth.getSession().then(({ data: { session } }) => {
       setUser(session?.user ?? null);
-      if (!session?.user) {
-        navigate("/login");
-      } else {
+      if (session?.user) {
         loadDashboardData(session.user.id);
       }
     });
-
-    return () => subscription.unsubscribe();
-  }, [navigate]);
+  }, []);
 
   const loadDashboardData = async (userId: string) => {
     try {

@@ -37,32 +37,13 @@ export default function CustomerOverview() {
   const navigate = useNavigate();
   const { toast } = useToast();
   const [isLoading, setIsLoading] = useState(true);
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [customers, setCustomers] = useState<Customer[]>([]);
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedCustomerEmail, setSelectedCustomerEmail] = useState<string | null>(null);
 
   useEffect(() => {
-    const checkAuth = async () => {
-      const { data: { session } } = await supabase.auth.getSession();
-      if (!session) {
-        navigate("/login");
-        return;
-      }
-      setIsAuthenticated(true);
-      fetchCustomers();
-    };
-
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
-      if (!session) {
-        navigate("/login");
-      }
-    });
-
-    checkAuth();
-
-    return () => subscription.unsubscribe();
-  }, [navigate]);
+    fetchCustomers();
+  }, []);
 
   const fetchCustomers = async () => {
     setIsLoading(true);
@@ -103,13 +84,6 @@ export default function CustomerOverview() {
     returningCustomers: customers.filter(c => (c.total_registrations || 0) > 1).length,
   };
 
-  if (!isAuthenticated) {
-    return (
-      <div className="min-h-screen flex items-center justify-center">
-        <Loader2 className="h-8 w-8 animate-spin text-sage-600" />
-      </div>
-    );
-  }
 
   return (
     <div className="min-h-screen bg-warm-50">
