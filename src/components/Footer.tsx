@@ -111,9 +111,14 @@ const Footer = () => {
               <p>© {new Date().getFullYear()} Mindful Mind. Alle rechten voorbehouden.</p>
               <p className="mt-1">KvK: 91593700</p>
             </div>
-            <Link to="/privacy" className="text-sm text-muted-foreground hover:text-terracotta-600 transition-colors">
-              Privacy & Voorwaarden
-            </Link>
+            <div className="flex gap-4">
+              <Link to="/privacy" className="text-sm text-muted-foreground hover:text-terracotta-600 transition-colors">
+                Privacyverklaring
+              </Link>
+              <Link to="/algemene-voorwaarden" className="text-sm text-muted-foreground hover:text-terracotta-600 transition-colors">
+                Algemene Voorwaarden
+              </Link>
+            </div>
           </div>
         </div>
       </div>
