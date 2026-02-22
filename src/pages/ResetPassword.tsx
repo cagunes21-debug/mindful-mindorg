@@ -22,6 +22,8 @@ const ResetPassword = () => {
   const { toast } = useToast();
 
   useEffect(() => {
+    const hasHashTokens = window.location.hash.includes("access_token");
+
     // Listen for auth state changes - Supabase auto-processes the hash tokens
     const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
       if (event === "PASSWORD_RECOVERY" || event === "SIGNED_IN" || event === "TOKEN_REFRESHED") {
@@ -32,15 +34,26 @@ const ResetPassword = () => {
       }
     });
 
-    // Also check if session already exists (fallback)
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      if (session) {
-        setHasSession(true);
-      }
-      setInitializing(false);
-    });
-
-    return () => subscription.unsubscribe();
+    if (hasHashTokens) {
+      // Hash tokens present - wait for onAuthStateChange to process them
+      // Set a timeout as fallback in case the event never fires
+      const timeout = setTimeout(() => {
+        setInitializing(false);
+      }, 5000);
+      return () => {
+        clearTimeout(timeout);
+        subscription.unsubscribe();
+      };
+    } else {
+      // No hash tokens - check existing session
+      supabase.auth.getSession().then(({ data: { session } }) => {
+        if (session) {
+          setHasSession(true);
+        }
+        setInitializing(false);
+      });
+      return () => subscription.unsubscribe();
+    }
   }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
