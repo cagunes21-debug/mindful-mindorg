@@ -364,23 +364,39 @@ const Agenda = () => {
       </section>
 
       {/* Barcelona Retreat */}
-      <section className="py-14 lg:py-16 bg-gradient-to-br from-terracotta-500 to-terracotta-600 relative overflow-hidden">
+      <section className="py-20 lg:py-24 bg-gradient-to-br from-terracotta-500 to-terracotta-600 relative overflow-hidden">
         <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(circle_at_70%_30%,rgba(255,255,255,0.1)_0%,transparent_50%)]" />
+        <div className="absolute bottom-0 left-0 w-96 h-96 bg-terracotta-400/30 rounded-full blur-3xl" />
         
         <div className="container relative mx-auto px-4">
-          <div className="mx-auto max-w-2xl text-center">
-            <h2 className="mb-3 text-2xl font-light text-white md:text-3xl leading-tight">
-              5-daagse MSC Retreat <span className="font-serif italic">in Barcelona</span>
+          <div className="mx-auto max-w-3xl text-center">
+            <span className="inline-flex items-center gap-2 mb-8 rounded-full bg-white/20 px-5 py-2.5 text-sm font-medium text-white">
+              <Sun className="h-4 w-4" />
+              Verdieping
+            </span>
+            
+            <h2 className="mb-6 text-3xl font-light text-white md:text-4xl leading-tight">
+              5-daagse MSC Retreat
+              <span className="block font-serif italic mt-2">in Barcelona</span>
             </h2>
             
-            <p className="mb-6 text-white/80 max-w-lg mx-auto">
-              Vertragen, loslaten en opladen — weg van de dagelijkse drukte. Binnenkort meer informatie.
+            <p className="mb-4 text-xl text-white/90 font-medium">
+              Een paar dagen helemaal voor jezelf
             </p>
             
-            <Button asChild className="bg-white text-terracotta-700 hover:bg-terracotta-50 rounded-full px-8">
+            <p className="mb-8 text-white/80 text-lg max-w-xl mx-auto leading-relaxed">
+              Vertragen, loslaten en opladen in een warme, gedragen setting, weg van de dagelijkse drukte. 
+              Een uitnodiging om te zakken uit het hoofd en weer contact te maken met wat er in jou leeft.
+            </p>
+            
+            <div className="inline-block bg-white/10 backdrop-blur-sm rounded-2xl px-6 py-4 border border-white/20 mb-8">
+              <p className="text-white/90">Binnenkort meer informatie</p>
+            </div>
+            
+            <Button asChild size="lg" className="bg-white text-terracotta-700 hover:bg-terracotta-50 px-10 py-7 text-base rounded-full shadow-lg">
               <a href="mailto:mindful-mind@outlook.com">
                 Meld je aan voor updates
-                <ArrowRight className="ml-2 h-4 w-4" />
+                <ArrowRight className="ml-2 h-5 w-5" />
               </a>
             </Button>
           </div>
