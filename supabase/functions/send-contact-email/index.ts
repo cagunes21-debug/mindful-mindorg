@@ -193,43 +193,76 @@ const handler = async (req: Request): Promise<Response> => {
 
     const confirmationHtml = isRegistration
       ? `
-        <div style="font-family: sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
-          <h1 style="color: #8B5A3C; font-size: 24px;">Bedankt voor je aanmelding, ${escapeHtml(sanitizedName)}!</h1>
-          <p style="color: #666; line-height: 1.6;">
-            We hebben je aanmelding voor <strong>${escapeHtml(training)}</strong> ontvangen.
-          </p>
-          ${trainingDate ? `<p style="color: #666; line-height: 1.6;">Startdatum: <strong>${escapeHtml(trainingDate)}</strong></p>` : ''}
-          ${trainingTime ? `<p style="color: #666; line-height: 1.6;">Tijd: <strong>${escapeHtml(trainingTime)}</strong></p>` : ''}
-          ${price ? `<p style="color: #666; line-height: 1.6;">Prijs: <strong>${escapeHtml(price)}</strong></p>` : ''}
-          <p style="color: #666; line-height: 1.6;">
-            We nemen zo snel mogelijk contact met je op met meer informatie over de training.
-          </p>
-          <p style="color: #666; line-height: 1.6;">
-            Met warme groet,<br>
-            <strong>Het Mindful Mind team</strong>
-          </p>
-          <hr style="border: none; border-top: 1px solid #eee; margin: 20px 0;">
-          <p style="color: #999; font-size: 12px;">
-            Dit is een automatisch gegenereerd bericht. Voor vragen kun je ons bereiken via mindful-mind@outlook.com
-          </p>
-        </div>
+        <!DOCTYPE html>
+        <html>
+        <head>
+          <meta charset="utf-8">
+          <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        </head>
+        <body style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; line-height: 1.6; color: #333; max-width: 600px; margin: 0 auto; padding: 20px;">
+          <div style="background: linear-gradient(135deg, #c8a77e 0%, #b8956e 100%); padding: 30px; border-radius: 12px 12px 0 0; text-align: center;">
+            <h1 style="color: white; margin: 0; font-weight: 300; font-size: 28px;">Mindful Mind</h1>
+          </div>
+          
+          <div style="background: #fdfaf6; padding: 30px; border-radius: 0 0 12px 12px; border: 1px solid #e8e0d5; border-top: none;">
+            <h2 style="color: #5a7a6b; margin-top: 0;">Beste ${escapeHtml(sanitizedName)},</h2>
+            
+            <p>Wat fijn dat je je hebt aangemeld voor <strong>${escapeHtml(training!)}</strong>!</p>
+            
+            <p>We hebben je aanmelding ontvangen en nemen zo snel mogelijk contact met je op met meer informatie.</p>
+            
+            <div style="background: white; padding: 20px; border-radius: 8px; margin: 20px 0;">
+              <h3 style="color: #5a7a6b; margin-top: 0; font-size: 16px;">Aanmeldingsgegevens:</h3>
+              <p style="margin: 5px 0;"><strong>Training:</strong> ${escapeHtml(training!)}</p>
+              ${trainingDate ? `<p style="margin: 5px 0;"><strong>Startdatum:</strong> ${escapeHtml(trainingDate)}</p>` : ''}
+              ${trainingTime ? `<p style="margin: 5px 0;"><strong>Tijd:</strong> ${escapeHtml(trainingTime)}</p>` : ''}
+              ${price ? `<p style="margin: 5px 0;"><strong>Kosten:</strong> ${escapeHtml(price)}</p>` : ''}
+            </div>
+            
+            <p style="color: #666; font-size: 14px;">Heb je vragen? Neem gerust contact met ons op via <a href="mailto:mindful-mind@outlook.com" style="color: #c8a77e;">mindful-mind@outlook.com</a></p>
+            
+            <p>Met warme groet,<br><strong>Team Mindful Mind</strong></p>
+          </div>
+          
+          <div style="text-align: center; padding: 20px; color: #999; font-size: 12px;">
+            <p>&copy; ${new Date().getFullYear()} Mindful Mind. Alle rechten voorbehouden.</p>
+          </div>
+        </body>
+        </html>
       `
       : `
-        <div style="font-family: sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
-          <h1 style="color: #8B5A3C; font-size: 24px;">Bedankt voor je bericht, ${escapeHtml(sanitizedName)}!</h1>
-          <p style="color: #666; line-height: 1.6;">
-            We hebben je bericht ontvangen en nemen zo snel mogelijk contact met je op.
-          </p>
-          ${training ? `<p style="color: #666; line-height: 1.6;">Je interesse in: <strong>${escapeHtml(training)}</strong></p>` : ''}
-          <p style="color: #666; line-height: 1.6;">
-            Met warme groet,<br>
-            <strong>Het Mindful Mind team</strong>
-          </p>
-          <hr style="border: none; border-top: 1px solid #eee; margin: 20px 0;">
-          <p style="color: #999; font-size: 12px;">
-            Dit is een automatisch gegenereerd bericht. Voor vragen kun je ons bereiken via mindful-mind@outlook.com
-          </p>
-        </div>
+        <!DOCTYPE html>
+        <html>
+        <head>
+          <meta charset="utf-8">
+          <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        </head>
+        <body style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; line-height: 1.6; color: #333; max-width: 600px; margin: 0 auto; padding: 20px;">
+          <div style="background: linear-gradient(135deg, #c8a77e 0%, #b8956e 100%); padding: 30px; border-radius: 12px 12px 0 0; text-align: center;">
+            <h1 style="color: white; margin: 0; font-weight: 300; font-size: 28px;">Mindful Mind</h1>
+          </div>
+          
+          <div style="background: #fdfaf6; padding: 30px; border-radius: 0 0 12px 12px; border: 1px solid #e8e0d5; border-top: none;">
+            <h2 style="color: #5a7a6b; margin-top: 0;">Beste ${escapeHtml(sanitizedName)},</h2>
+            
+            <p>Bedankt voor je bericht! We hebben het ontvangen en nemen zo snel mogelijk contact met je op.</p>
+            
+            ${training ? `
+            <div style="background: white; padding: 20px; border-radius: 8px; margin: 20px 0;">
+              <p style="margin: 5px 0;"><strong>Je interesse in:</strong> ${escapeHtml(training)}</p>
+            </div>
+            ` : ''}
+            
+            <p style="color: #666; font-size: 14px;">Heb je vragen? Neem gerust contact met ons op via <a href="mailto:mindful-mind@outlook.com" style="color: #c8a77e;">mindful-mind@outlook.com</a></p>
+            
+            <p>Met warme groet,<br><strong>Team Mindful Mind</strong></p>
+          </div>
+          
+          <div style="text-align: center; padding: 20px; color: #999; font-size: 12px;">
+            <p>&copy; ${new Date().getFullYear()} Mindful Mind. Alle rechten voorbehouden.</p>
+          </div>
+        </body>
+        </html>
       `;
 
     const confirmationEmail = await resend.emails.send({
