@@ -168,7 +168,7 @@ const handler = async (req: Request): Promise<Response> => {
     const escapeHtml = (str: string) => str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 
     const notificationEmail = await resend.emails.send({
-      from: "Mindful Mind <onboarding@resend.dev>",
+      from: "Mindful Mind <noreply@mindful-mind.org>",
       to: ["mindful-mind@outlook.com"],
       subject: emailSubject,
       html: `
@@ -233,7 +233,7 @@ const handler = async (req: Request): Promise<Response> => {
       `;
 
     const confirmationEmail = await resend.emails.send({
-      from: "Mindful Mind <onboarding@resend.dev>",
+      from: "Mindful Mind <noreply@mindful-mind.org>",
       to: [sanitizedEmail],
       subject: confirmationSubject,
       html: confirmationHtml,

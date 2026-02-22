@@ -185,7 +185,7 @@ serve(async (req) => {
       
       try {
         await resend.emails.send({
-          from: "Mindful Mind <noreply@mindful-mind.nl>",
+          from: "Mindful Mind <noreply@mindful-mind.org>",
           to: [registration.email],
           subject: `Bevestiging aanmelding: ${registration.training_name}`,
           html: `
