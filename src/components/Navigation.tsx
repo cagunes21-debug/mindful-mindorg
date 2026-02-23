@@ -157,8 +157,30 @@ const Navigation = () => {
                 Over
                 <ChevronDown className="h-4 w-4" />
               </DropdownMenuTrigger>
-              <DropdownMenuContent align="center" className="bg-background border-border">
-                {aboutLinks.map((link) => (
+              <DropdownMenuContent align="center" className="bg-background border-border w-56">
+                {aboutLinks.slice(0, 2).map((link) => (
+                  <DropdownMenuItem key={link.to} asChild>
+                    <Link 
+                      to={link.to} 
+                      className={`w-full cursor-pointer ${location.pathname === link.to ? 'text-primary font-medium' : ''}`}
+                    >
+                      {link.label}
+                    </Link>
+                  </DropdownMenuItem>
+                ))}
+                <div className="h-px bg-border my-1" />
+                {aboutLinks.slice(2, 4).map((link) => (
+                  <DropdownMenuItem key={link.to} asChild>
+                    <Link 
+                      to={link.to} 
+                      className={`w-full cursor-pointer ${location.pathname === link.to ? 'text-primary font-medium' : ''}`}
+                    >
+                      {link.label}
+                    </Link>
+                  </DropdownMenuItem>
+                ))}
+                <div className="h-px bg-border my-1" />
+                {aboutLinks.slice(4).map((link) => (
                   <DropdownMenuItem key={link.to} asChild>
                     <Link 
                       to={link.to} 
