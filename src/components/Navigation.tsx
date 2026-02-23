@@ -1,6 +1,6 @@
 import { NavLink } from "@/components/NavLink";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { Menu, X, ChevronDown, User, LogIn, LogOut, LayoutDashboard, BookOpen } from "lucide-react";
+import { Menu, X, ChevronDown, User, LogIn, LogOut, LayoutDashboard, BookOpen, MoreHorizontal } from "lucide-react";
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { supabase } from "@/integrations/supabase/client";
@@ -17,6 +17,7 @@ const Navigation = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [servicesOpen, setServicesOpen] = useState(false);
   const [aboutOpen, setAboutOpen] = useState(false);
+  const [moreOpen, setMoreOpen] = useState(false);
   const [user, setUser] = useState<SupabaseUser | null>(null);
   const [isAdmin, setIsAdmin] = useState(false);
   const location = useLocation();
@@ -69,13 +70,16 @@ const Navigation = () => {
   const aboutLinks = [
     { to: "/over-ons", label: "Over Ons" },
     { to: "/trainers", label: "Trainers" },
+  ];
+
+  const moreLinks = [
     { to: "/ervaringen", label: "Ervaringen" },
-    { to: "/blog", label: "Blog" },
     { to: "/faq", label: "Veelgestelde Vragen" },
   ];
 
   const isServicesActive = serviceLinks.some(link => location.pathname === link.to) || location.pathname === "/ons-aanbod";
   const isAboutActive = aboutLinks.some(link => location.pathname === link.to);
+  const isMoreActive = moreLinks.some(link => location.pathname === link.to);
 
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 bg-background/95 backdrop-blur-sm border-b border-border">
@@ -158,7 +162,7 @@ const Navigation = () => {
                 <ChevronDown className="h-4 w-4" />
               </DropdownMenuTrigger>
               <DropdownMenuContent align="center" className="bg-background border-border w-56">
-                {aboutLinks.slice(0, 2).map((link) => (
+                {aboutLinks.map((link) => (
                   <DropdownMenuItem key={link.to} asChild>
                     <Link 
                       to={link.to} 
@@ -168,19 +172,25 @@ const Navigation = () => {
                     </Link>
                   </DropdownMenuItem>
                 ))}
-                <div className="h-px bg-border my-1" />
-                {aboutLinks.slice(2, 4).map((link) => (
-                  <DropdownMenuItem key={link.to} asChild>
-                    <Link 
-                      to={link.to} 
-                      className={`w-full cursor-pointer ${location.pathname === link.to ? 'text-primary font-medium' : ''}`}
-                    >
-                      {link.label}
-                    </Link>
-                  </DropdownMenuItem>
-                ))}
-                <div className="h-px bg-border my-1" />
-                {aboutLinks.slice(4).map((link) => (
+              </DropdownMenuContent>
+            </DropdownMenu>
+
+            <NavLink
+              to="/blog"
+              className="text-sm font-medium text-muted-foreground transition-colors hover:text-primary"
+              activeClassName="text-primary"
+            >
+              Blog
+            </NavLink>
+
+            {/* Meer Dropdown */}
+            <DropdownMenu>
+              <DropdownMenuTrigger className={`flex items-center gap-1 text-sm font-medium transition-colors hover:text-primary ${isMoreActive ? 'text-primary' : 'text-muted-foreground'}`}>
+                Meer
+                <ChevronDown className="h-4 w-4" />
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="center" className="bg-background border-border w-56">
+                {moreLinks.map((link) => (
                   <DropdownMenuItem key={link.to} asChild>
                     <Link 
                       to={link.to} 
@@ -338,6 +348,41 @@ const Navigation = () => {
                 {aboutOpen && (
                   <div className="flex flex-col gap-2 pl-4 border-l-2 border-terracotta-200">
                     {aboutLinks.map((link) => (
+                      <NavLink
+                        key={link.to}
+                        to={link.to}
+                        className="text-sm text-muted-foreground transition-colors hover:text-primary"
+                        activeClassName="text-primary font-medium"
+                        onClick={() => setIsOpen(false)}
+                      >
+                        {link.label}
+                      </NavLink>
+                    ))}
+                  </div>
+                )}
+              </div>
+
+              <NavLink
+                to="/blog"
+                className="text-sm font-medium text-muted-foreground transition-colors hover:text-primary"
+                activeClassName="text-primary"
+                onClick={() => setIsOpen(false)}
+              >
+                Blog
+              </NavLink>
+
+              {/* Mobile Meer Section */}
+              <div className="flex flex-col gap-2">
+                <button
+                  onClick={() => setMoreOpen(!moreOpen)}
+                  className={`flex items-center justify-between text-sm font-medium transition-colors hover:text-primary ${isMoreActive ? 'text-primary' : 'text-muted-foreground'}`}
+                >
+                  Meer
+                  <ChevronDown className={`h-4 w-4 transition-transform ${moreOpen ? 'rotate-180' : ''}`} />
+                </button>
+                {moreOpen && (
+                  <div className="flex flex-col gap-2 pl-4 border-l-2 border-terracotta-200">
+                    {moreLinks.map((link) => (
                       <NavLink
                         key={link.to}
                         to={link.to}
