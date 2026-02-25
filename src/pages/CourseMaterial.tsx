@@ -8,7 +8,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
-import { BookOpen, Users, User, Headphones, ClipboardList, Presentation } from "lucide-react";
+import { BookOpen, Users, User, Headphones, ClipboardList, Presentation, ExternalLink, Play } from "lucide-react";
 import { Link } from "react-router-dom";
 
 interface CourseWeek {
@@ -19,6 +19,8 @@ interface CourseWeek {
   theme: string | null;
   content: Record<string, unknown>;
   course_type: string;
+  notebook_url: string | null;
+  notebook_audio_url: string | null;
 }
 
 interface Meditation {
@@ -146,6 +148,38 @@ const CourseMaterial = () => {
                     {a.description && <p className="text-xs text-muted-foreground mt-1">{a.description}</p>}
                   </div>
                 ))}
+              </div>
+            </div>
+          )}
+
+          {/* NotebookLM */}
+          {(week.notebook_url || week.notebook_audio_url) && (
+            <div className="border-t border-border pt-4 mt-4">
+              <h4 className="text-sm font-medium flex items-center gap-2 mb-3">
+                <BookOpen className="h-4 w-4 text-primary" /> NotebookLM
+              </h4>
+              <div className="space-y-3">
+                {week.notebook_audio_url && (
+                  <div className="bg-muted/50 rounded-lg px-3 py-3">
+                    <p className="text-xs text-muted-foreground mb-2 flex items-center gap-1">
+                      <Play className="h-3 w-3" /> Audio-overzicht
+                    </p>
+                    <audio controls className="w-full h-8" src={week.notebook_audio_url}>
+                      Je browser ondersteunt geen audio.
+                    </audio>
+                  </div>
+                )}
+                {week.notebook_url && (
+                  <a
+                    href={week.notebook_url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-2 text-sm text-primary hover:underline"
+                  >
+                    <ExternalLink className="h-4 w-4" />
+                    Open in NotebookLM
+                  </a>
+                )}
               </div>
             </div>
           )}
