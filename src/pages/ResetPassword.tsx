@@ -21,31 +21,51 @@ const ResetPassword = () => {
   const resolved = useRef(false);
 
   useEffect(() => {
-    // The URL contains hash tokens that Supabase auto-processes.
-    // We listen for the PASSWORD_RECOVERY event to know we can show the form.
+    // Listen for auth events (PASSWORD_RECOVERY or SIGNED_IN after token processing)
     const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
       if (resolved.current) return;
 
-      if (event === "PASSWORD_RECOVERY" && session) {
-        resolved.current = true;
-        setPageState("form");
-      } else if (event === "SIGNED_IN" && session) {
-        // Sometimes SIGNED_IN fires instead of PASSWORD_RECOVERY
-        resolved.current = true;
-        setPageState("form");
-      } else if (event === "TOKEN_REFRESHED" && session) {
+      if ((event === "PASSWORD_RECOVERY" || event === "SIGNED_IN" || event === "TOKEN_REFRESHED") && session) {
         resolved.current = true;
         setPageState("form");
       }
     });
 
-    // Fallback timeout: if no auth event fires within 8 seconds, show invalid
+    // Also check if there's already an active session (tokens may have been
+    // processed before the listener was set up)
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      if (resolved.current) return;
+      if (session) {
+        resolved.current = true;
+        setPageState("form");
+      }
+    });
+
+    // Check URL hash for recovery tokens as additional fallback
+    const hash = window.location.hash;
+    if (hash && (hash.includes("type=recovery") || hash.includes("access_token"))) {
+      // Tokens are present, give Supabase a moment to process them
+      setTimeout(() => {
+        if (!resolved.current) {
+          supabase.auth.getSession().then(({ data: { session } }) => {
+            if (!resolved.current) {
+              if (session) {
+                resolved.current = true;
+                setPageState("form");
+              }
+            }
+          });
+        }
+      }, 2000);
+    }
+
+    // Fallback timeout
     const timeout = setTimeout(() => {
       if (!resolved.current) {
         resolved.current = true;
         setPageState("invalid");
       }
-    }, 8000);
+    }, 10000);
 
     return () => {
       subscription.unsubscribe();
