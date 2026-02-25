@@ -56,21 +56,51 @@ const ResetPassword = () => {
       const queryType = url.searchParams.get("type");
       const hashType = hashParams.get("type");
 
+      const hashError = hashParams.get("error") || url.searchParams.get("error");
+      const hashErrorDescription =
+        hashParams.get("error_description") || url.searchParams.get("error_description");
+
+      const accessToken =
+        hashParams.get("access_token") || url.searchParams.get("access_token");
+      const refreshToken =
+        hashParams.get("refresh_token") || url.searchParams.get("refresh_token");
+
       try {
+        if (hashError) {
+          resolveToInvalid();
+          return;
+        }
+
+        if (accessToken && refreshToken) {
+          const { error: setSessionError } = await supabase.auth.setSession({
+            access_token: accessToken,
+            refresh_token: refreshToken,
+          });
+          if (!setSessionError) {
+            resolveToForm();
+            return;
+          }
+        }
+
         if (code) {
           await supabase.auth.exchangeCodeForSession(code);
         } else if (tokenHash && queryType === "recovery") {
           await supabase.auth.verifyOtp({ token_hash: tokenHash, type: "recovery" });
         } else if (hashType === "recovery" || hashParams.get("access_token")) {
           // Implicit flow; client processes hash tokens automatically.
-          // We just wait for session propagation below.
+          // We still wait for session propagation below.
         }
       } catch {
         // Invalid/expired token will be handled by session wait fallback.
       }
 
-      await waitForSession(15000);
-      if (!resolved.current) resolveToInvalid();
+      await waitForSession(20000);
+      if (!resolved.current) {
+        if (hashErrorDescription) {
+          console.error("Reset link error:", hashErrorDescription);
+        }
+        resolveToInvalid();
+      }
     };
 
     const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
