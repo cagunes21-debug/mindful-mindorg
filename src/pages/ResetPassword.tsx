@@ -21,55 +21,69 @@ const ResetPassword = () => {
   const resolved = useRef(false);
 
   useEffect(() => {
-    // Listen for auth events (PASSWORD_RECOVERY or SIGNED_IN after token processing)
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
-      if (resolved.current) return;
+    let cancelled = false;
 
-      if ((event === "PASSWORD_RECOVERY" || event === "SIGNED_IN" || event === "TOKEN_REFRESHED") && session) {
-        resolved.current = true;
-        setPageState("form");
-      }
-    });
+    const resolveToForm = () => {
+      if (resolved.current || cancelled) return;
+      resolved.current = true;
+      setPageState("form");
+    };
 
-    // Also check if there's already an active session (tokens may have been
-    // processed before the listener was set up)
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      if (resolved.current) return;
-      if (session) {
-        resolved.current = true;
-        setPageState("form");
-      }
-    });
+    const resolveToInvalid = () => {
+      if (resolved.current || cancelled) return;
+      resolved.current = true;
+      setPageState("invalid");
+    };
 
-    // Check URL hash for recovery tokens as additional fallback
-    const hash = window.location.hash;
-    if (hash && (hash.includes("type=recovery") || hash.includes("access_token"))) {
-      // Tokens are present, give Supabase a moment to process them
-      setTimeout(() => {
-        if (!resolved.current) {
-          supabase.auth.getSession().then(({ data: { session } }) => {
-            if (!resolved.current) {
-              if (session) {
-                resolved.current = true;
-                setPageState("form");
-              }
-            }
-          });
+    const waitForSession = async (timeoutMs = 15000) => {
+      const deadline = Date.now() + timeoutMs;
+      while (!cancelled && !resolved.current && Date.now() < deadline) {
+        const { data: { session } } = await supabase.auth.getSession();
+        if (session) {
+          resolveToForm();
+          return;
         }
-      }, 2000);
-    }
-
-    // Fallback timeout
-    const timeout = setTimeout(() => {
-      if (!resolved.current) {
-        resolved.current = true;
-        setPageState("invalid");
+        await new Promise((r) => setTimeout(r, 400));
       }
-    }, 10000);
+    };
+
+    const processRecoveryUrl = async () => {
+      const url = new URL(window.location.href);
+      const hashParams = new URLSearchParams(url.hash.replace("#", ""));
+
+      const code = url.searchParams.get("code");
+      const tokenHash = url.searchParams.get("token_hash");
+      const queryType = url.searchParams.get("type");
+      const hashType = hashParams.get("type");
+
+      try {
+        if (code) {
+          await supabase.auth.exchangeCodeForSession(code);
+        } else if (tokenHash && queryType === "recovery") {
+          await supabase.auth.verifyOtp({ token_hash: tokenHash, type: "recovery" });
+        } else if (hashType === "recovery" || hashParams.get("access_token")) {
+          // Implicit flow; client processes hash tokens automatically.
+          // We just wait for session propagation below.
+        }
+      } catch {
+        // Invalid/expired token will be handled by session wait fallback.
+      }
+
+      await waitForSession(15000);
+      if (!resolved.current) resolveToInvalid();
+    };
+
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
+      if ((event === "PASSWORD_RECOVERY" || event === "SIGNED_IN" || event === "TOKEN_REFRESHED") && session) {
+        resolveToForm();
+      }
+    });
+
+    processRecoveryUrl();
 
     return () => {
+      cancelled = true;
       subscription.unsubscribe();
-      clearTimeout(timeout);
     };
   }, []);
 
