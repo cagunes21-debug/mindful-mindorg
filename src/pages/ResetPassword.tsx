@@ -65,6 +65,24 @@ const ResetPassword = () => {
       const refreshToken =
         hashParams.get("refresh_token") || url.searchParams.get("refresh_token");
 
+      const hasRecoveryHints =
+        !!code ||
+        !!tokenHash ||
+        queryType === "recovery" ||
+        hashType === "recovery" ||
+        !!accessToken ||
+        !!refreshToken;
+
+      const fromVerify = document.referrer.includes("/auth/v1/verify") || document.referrer.includes("/verify");
+
+      console.log("[ResetPassword] URL diagnostics", {
+        href: window.location.href,
+        hasRecoveryHints,
+        fromVerify,
+        hashError,
+        hashErrorDescription,
+      });
+
       try {
         if (hashError) {
           resolveToInvalid();
@@ -80,22 +98,29 @@ const ResetPassword = () => {
             resolveToForm();
             return;
           }
+          console.warn("[ResetPassword] setSession failed", setSessionError.message);
         }
 
         if (code) {
           await supabase.auth.exchangeCodeForSession(code);
         } else if (tokenHash && queryType === "recovery") {
           await supabase.auth.verifyOtp({ token_hash: tokenHash, type: "recovery" });
-        } else if (hashType === "recovery" || hashParams.get("access_token")) {
-          // Implicit flow; client processes hash tokens automatically.
-          // We still wait for session propagation below.
         }
-      } catch {
-        // Invalid/expired token will be handled by session wait fallback.
+      } catch (e) {
+        console.warn("[ResetPassword] token processing warning", e);
       }
 
       await waitForSession(20000);
+
       if (!resolved.current) {
+        // If we clearly came from a verify/recovery context, prefer showing the form
+        // instead of a hard invalid screen to avoid false negatives.
+        if (hasRecoveryHints || fromVerify) {
+          console.warn("[ResetPassword] No session detected after recovery hints, opening form fallback");
+          resolveToForm();
+          return;
+        }
+
         if (hashErrorDescription) {
           console.error("Reset link error:", hashErrorDescription);
         }
@@ -135,6 +160,12 @@ const ResetPassword = () => {
     setSaving(false);
 
     if (updateError) {
+      console.error("[ResetPassword] updateUser failed", updateError.message);
+      setError(
+        updateError.message.toLowerCase().includes("auth session missing")
+          ? "Deze link kon niet bevestigd worden in je browser. Vraag een nieuwe resetlink aan en open die direct in dezelfde browser."
+          : "Kon wachtwoord niet wijzigen. Vraag een nieuwe resetlink aan."
+      );
       toast({
         variant: "destructive",
         title: "Fout",
