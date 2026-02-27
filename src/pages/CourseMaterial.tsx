@@ -166,36 +166,75 @@ const CourseMaterial = () => {
                 <ClipboardList className="h-4 w-4 text-primary" /> Oefeningen & scripts
               </h4>
               <div className="space-y-2">
-                {weekAssignments.map(a => (
-                  <div key={a.id} className="bg-muted/50 rounded-lg overflow-hidden">
-                    {a.instructions ? (
-                      <Collapsible>
-                        <CollapsibleTrigger className="w-full px-3 py-2 flex items-center justify-between hover:bg-muted/80 transition-colors">
-                          <div className="text-left">
-                            <p className="text-sm font-medium flex items-center gap-2">
-                              <FileText className="h-3.5 w-3.5 text-primary" />
-                              {a.title}
-                            </p>
-                            {a.description && <p className="text-xs text-muted-foreground mt-0.5 ml-5.5">{a.description}</p>}
+                  {weekAssignments.map(a => {
+                    const hasSubSections = a.instructions?.includes('## ');
+                    const subSections = hasSubSections
+                      ? a.instructions!.split(/^## /m).filter(Boolean).map(s => {
+                          const [heading, ...body] = s.split('\n');
+                          return { heading: heading.trim(), body: body.join('\n').trim() };
+                        })
+                      : null;
+
+                    return (
+                      <div key={a.id} className="bg-muted/50 rounded-lg overflow-hidden">
+                        {a.instructions ? (
+                          subSections ? (
+                            <div>
+                              <div className="px-3 py-2">
+                                <p className="text-sm font-medium flex items-center gap-2">
+                                  <FileText className="h-3.5 w-3.5 text-primary" />
+                                  {a.title}
+                                </p>
+                                {a.description && <p className="text-xs text-muted-foreground mt-0.5 ml-5.5">{a.description}</p>}
+                              </div>
+                              <div className="border-t border-border">
+                                {subSections.map((section, i) => (
+                                  <Collapsible key={i}>
+                                    <CollapsibleTrigger className="w-full px-4 py-2 flex items-center justify-between hover:bg-muted/80 transition-colors border-b border-border/50 last:border-b-0">
+                                      <span className="text-sm font-medium text-left">{section.heading}</span>
+                                      <span className="text-xs shrink-0 ml-2 border border-border rounded-md px-2 py-0.5">▾</span>
+                                    </CollapsibleTrigger>
+                                    <CollapsibleContent>
+                                      <div className="px-4 py-3 bg-background/50 border-b border-border/50">
+                                        <p className="text-sm text-muted-foreground whitespace-pre-line leading-relaxed italic">
+                                          {section.body}
+                                        </p>
+                                      </div>
+                                    </CollapsibleContent>
+                                  </Collapsible>
+                                ))}
+                              </div>
+                            </div>
+                          ) : (
+                            <Collapsible>
+                              <CollapsibleTrigger className="w-full px-3 py-2 flex items-center justify-between hover:bg-muted/80 transition-colors">
+                                <div className="text-left">
+                                  <p className="text-sm font-medium flex items-center gap-2">
+                                    <FileText className="h-3.5 w-3.5 text-primary" />
+                                    {a.title}
+                                  </p>
+                                  {a.description && <p className="text-xs text-muted-foreground mt-0.5 ml-5.5">{a.description}</p>}
+                                </div>
+                                <span className="text-xs shrink-0 ml-2 border border-border rounded-md px-2 py-0.5">Script ▾</span>
+                              </CollapsibleTrigger>
+                              <CollapsibleContent>
+                                <div className="px-4 py-3 border-t border-border bg-background/50">
+                                  <p className="text-sm text-muted-foreground whitespace-pre-line leading-relaxed italic">
+                                    {a.instructions}
+                                  </p>
+                                </div>
+                              </CollapsibleContent>
+                            </Collapsible>
+                          )
+                        ) : (
+                          <div className="px-3 py-2">
+                            <p className="text-sm font-medium">{a.title}</p>
+                            {a.description && <p className="text-xs text-muted-foreground mt-1">{a.description}</p>}
                           </div>
-                          <span className="text-xs shrink-0 ml-2 border border-border rounded-md px-2 py-0.5">Script ▾</span>
-                        </CollapsibleTrigger>
-                        <CollapsibleContent>
-                          <div className="px-4 py-3 border-t border-border bg-background/50">
-                            <p className="text-sm text-muted-foreground whitespace-pre-line leading-relaxed italic">
-                              {a.instructions}
-                            </p>
-                          </div>
-                        </CollapsibleContent>
-                      </Collapsible>
-                    ) : (
-                      <div className="px-3 py-2">
-                        <p className="text-sm font-medium">{a.title}</p>
-                        {a.description && <p className="text-xs text-muted-foreground mt-1">{a.description}</p>}
+                        )}
                       </div>
-                    )}
-                  </div>
-                ))}
+                    );
+                  })}
               </div>
             </div>
           )}
