@@ -8,7 +8,8 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
-import { BookOpen, Users, User, Headphones, ClipboardList, Presentation, ExternalLink, Play } from "lucide-react";
+import { BookOpen, Users, User, Headphones, ClipboardList, Presentation, ExternalLink, Play, FileText } from "lucide-react";
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 import { Link } from "react-router-dom";
 
 interface CourseWeek {
@@ -37,6 +38,7 @@ interface Assignment {
   title: string;
   description: string | null;
   instructions: string | null;
+  sort_order: number | null;
 }
 
 const CourseMaterial = () => {
@@ -54,7 +56,7 @@ const CourseMaterial = () => {
     const [weeksRes, medRes, assRes] = await Promise.all([
       supabase.from("course_weeks").select("*").order("week_number"),
       supabase.from("meditations").select("id, week_id, title, description, duration_minutes").order("sort_order"),
-      supabase.from("assignments").select("id, week_id, title, description, instructions").order("sort_order"),
+      supabase.from("assignments").select("id, week_id, title, description, instructions, sort_order").order("sort_order"),
     ]);
 
     const allWeeks = (weeksRes.data || []) as CourseWeek[];
@@ -161,13 +163,37 @@ const CourseMaterial = () => {
           {weekAssignments.length > 0 && (
             <div>
               <h4 className="text-sm font-medium flex items-center gap-2 mb-2">
-                <ClipboardList className="h-4 w-4 text-primary" /> Opdrachten
+                <ClipboardList className="h-4 w-4 text-primary" /> Oefeningen & scripts
               </h4>
               <div className="space-y-2">
                 {weekAssignments.map(a => (
-                  <div key={a.id} className="bg-muted/50 rounded-lg px-3 py-2">
-                    <p className="text-sm font-medium">{a.title}</p>
-                    {a.description && <p className="text-xs text-muted-foreground mt-1">{a.description}</p>}
+                  <div key={a.id} className="bg-muted/50 rounded-lg overflow-hidden">
+                    {a.instructions ? (
+                      <Collapsible>
+                        <CollapsibleTrigger className="w-full px-3 py-2 flex items-center justify-between hover:bg-muted/80 transition-colors">
+                          <div className="text-left">
+                            <p className="text-sm font-medium flex items-center gap-2">
+                              <FileText className="h-3.5 w-3.5 text-primary" />
+                              {a.title}
+                            </p>
+                            {a.description && <p className="text-xs text-muted-foreground mt-0.5 ml-5.5">{a.description}</p>}
+                          </div>
+                          <Badge variant="outline" className="text-xs shrink-0 ml-2">Script ▾</Badge>
+                        </CollapsibleTrigger>
+                        <CollapsibleContent>
+                          <div className="px-4 py-3 border-t border-border bg-background/50">
+                            <p className="text-sm text-muted-foreground whitespace-pre-line leading-relaxed italic">
+                              {a.instructions}
+                            </p>
+                          </div>
+                        </CollapsibleContent>
+                      </Collapsible>
+                    ) : (
+                      <div className="px-3 py-2">
+                        <p className="text-sm font-medium">{a.title}</p>
+                        {a.description && <p className="text-xs text-muted-foreground mt-1">{a.description}</p>}
+                      </div>
+                    )}
                   </div>
                 ))}
               </div>
