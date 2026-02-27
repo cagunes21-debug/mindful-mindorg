@@ -71,7 +71,7 @@ const CourseMaterial = () => {
   const WeekContent = ({ week, label }: { week: CourseWeek; label: string }) => {
     const weekMeditations = getWeekMeditations(week.id);
     const weekAssignments = getWeekAssignments(week.id);
-    const content = week.content as Record<string, string[]>;
+    const content = week.content as Record<string, unknown>;
 
     return (
       <AccordionItem value={week.id} className="border-border">
@@ -93,25 +93,47 @@ const CourseMaterial = () => {
             <p className="text-muted-foreground text-sm leading-relaxed">{week.description}</p>
           )}
 
-          {/* Content from JSON */}
-          {content?.meditations && content.meditations.length > 0 && (
+          {/* Content sections from JSON */}
+          {content?.sections && (content.sections as Array<{title: string; duration?: string; items?: string[]}>).length > 0 && (
+            <div className="space-y-3">
+              {(content.sections as Array<{title: string; duration?: string; items?: string[]}>).map((section, i) => (
+                <div key={i}>
+                  <h4 className="text-sm font-medium flex items-center gap-2 mb-1">
+                    <BookOpen className="h-4 w-4 text-primary" />
+                    {section.title}
+                    {section.duration && (
+                      <Badge variant="secondary" className="text-xs font-normal">{section.duration}</Badge>
+                    )}
+                  </h4>
+                  {section.items && section.items.length > 0 && (
+                    <ul className="text-sm text-muted-foreground space-y-1 ml-6 list-disc">
+                      {section.items.map((item: string, j: number) => <li key={j}>{item}</li>)}
+                    </ul>
+                  )}
+                </div>
+              ))}
+            </div>
+          )}
+
+          {/* Legacy content from JSON */}
+          {content?.meditations && (content.meditations as string[]).length > 0 && (
             <div>
               <h4 className="text-sm font-medium flex items-center gap-2 mb-2">
                 <Headphones className="h-4 w-4 text-primary" /> Meditaties (curriculum)
               </h4>
               <ul className="text-sm text-muted-foreground space-y-1 ml-6 list-disc">
-                {content.meditations.map((m: string, i: number) => <li key={i}>{m}</li>)}
+                {(content.meditations as string[]).map((m: string, i: number) => <li key={i}>{m}</li>)}
               </ul>
             </div>
           )}
 
-          {content?.exercises && content.exercises.length > 0 && (
+          {content?.exercises && (content.exercises as string[]).length > 0 && (
             <div>
               <h4 className="text-sm font-medium flex items-center gap-2 mb-2">
                 <ClipboardList className="h-4 w-4 text-primary" /> Oefeningen (curriculum)
               </h4>
               <ul className="text-sm text-muted-foreground space-y-1 ml-6 list-disc">
-                {content.exercises.map((e: string, i: number) => <li key={i}>{e}</li>)}
+                {(content.exercises as string[]).map((e: string, i: number) => <li key={i}>{e}</li>)}
               </ul>
             </div>
           )}
