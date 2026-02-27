@@ -178,7 +178,7 @@ const CourseMaterial = () => {
                             </p>
                             {a.description && <p className="text-xs text-muted-foreground mt-0.5 ml-5.5">{a.description}</p>}
                           </div>
-                          <Badge variant="outline" className="text-xs shrink-0 ml-2">Script ▾</Badge>
+                          <span className="text-xs shrink-0 ml-2 border border-border rounded-md px-2 py-0.5">Script ▾</span>
                         </CollapsibleTrigger>
                         <CollapsibleContent>
                           <div className="px-4 py-3 border-t border-border bg-background/50">
