@@ -416,71 +416,81 @@ const AdminEnrollments = () => {
               Upload presentaties die zichtbaar worden voor deelnemers wanneer de sessie is vrijgegeven.
             </p>
 
-            <div className="grid gap-4 md:grid-cols-2">
-              {courseWeeks.map(week => {
-                const label = week.course_type === "msc_8week" ? "Week" : "Sessie";
-                return (
-                  <Card key={week.id}>
-                    <CardContent className="p-4">
-                      <div className="flex items-center justify-between mb-3">
-                        <div>
-                          <Badge variant="outline" className="mb-1">{label} {week.week_number}</Badge>
-                          <p className="font-medium text-sm">{week.title}</p>
-                        </div>
-                        {week.presentation_url && (
-                          <Button
-                            variant="ghost"
-                            size="sm"
-                            onClick={() => removePresentationUrl(week.id)}
-                            className="text-destructive hover:text-destructive"
-                          >
-                            <Trash2 className="h-4 w-4" />
-                          </Button>
-                        )}
-                      </div>
+            {Object.entries(COURSE_TYPES).map(([type, typeName]) => {
+              const weeksForType = courseWeeks.filter(w => w.course_type === type);
+              if (weeksForType.length === 0) return null;
+              const label = type === "msc_8week" ? "Week" : "Sessie";
 
-                      {week.presentation_url ? (
-                        <div className="flex items-center gap-2 text-sm">
-                          <Presentation className="h-4 w-4 text-primary" />
-                          <a
-                            href={week.presentation_url}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="text-primary hover:underline truncate"
-                          >
-                            Presentatie bekijken
-                          </a>
-                        </div>
-                      ) : (
-                        <div>
-                          <Label
-                            htmlFor={`upload-${week.id}`}
-                            className="flex items-center gap-2 cursor-pointer text-sm text-muted-foreground hover:text-foreground transition-colors"
-                          >
-                            {uploadingFor === week.id ? (
-                              <Loader2 className="h-4 w-4 animate-spin" />
-                            ) : (
-                              <FileUp className="h-4 w-4" />
+              return (
+                <div key={type} className="mb-8">
+                  <h3 className="text-lg font-medium mb-3 flex items-center gap-2">
+                    <Badge variant="outline">{typeName}</Badge>
+                  </h3>
+                  <div className="grid gap-4 md:grid-cols-2">
+                    {weeksForType.map(week => (
+                      <Card key={week.id}>
+                        <CardContent className="p-4">
+                          <div className="flex items-center justify-between mb-3">
+                            <div>
+                              <Badge variant="outline" className="mb-1">{label} {week.week_number}</Badge>
+                              <p className="font-medium text-sm">{week.title}</p>
+                            </div>
+                            {week.presentation_url && (
+                              <Button
+                                variant="ghost"
+                                size="sm"
+                                onClick={() => removePresentationUrl(week.id)}
+                                className="text-destructive hover:text-destructive"
+                              >
+                                <Trash2 className="h-4 w-4" />
+                              </Button>
                             )}
-                            {uploadingFor === week.id ? "Uploaden..." : "Upload presentatie (PDF/PPTX)"}
-                          </Label>
-                          <Input
-                            id={`upload-${week.id}`}
-                            type="file"
-                            accept=".pdf,.pptx,.ppt"
-                            className="hidden"
-                            onChange={(e) => {
-                              const file = e.target.files?.[0];
-                              if (file) handlePresentationUpload(week.id, file);
-                            }}
-                          />
-                        </div>
-                      )}
-                    </CardContent>
-                  </Card>
-                );
-              })}
-            </div>
+                          </div>
+
+                          {week.presentation_url ? (
+                            <div className="flex items-center gap-2 text-sm">
+                              <Presentation className="h-4 w-4 text-primary" />
+                              <a
+                                href={week.presentation_url}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="text-primary hover:underline truncate"
+                              >
+                                Presentatie bekijken
+                              </a>
+                            </div>
+                          ) : (
+                            <div>
+                              <Label
+                                htmlFor={`upload-${week.id}`}
+                                className="flex items-center gap-2 cursor-pointer text-sm text-muted-foreground hover:text-foreground transition-colors"
+                              >
+                                {uploadingFor === week.id ? (
+                                  <Loader2 className="h-4 w-4 animate-spin" />
+                                ) : (
+                                  <FileUp className="h-4 w-4" />
+                                )}
+                                {uploadingFor === week.id ? "Uploaden..." : "Upload presentatie (PDF/PPTX)"}
+                              </Label>
+                              <Input
+                                id={`upload-${week.id}`}
+                                type="file"
+                                accept=".pdf,.pptx,.ppt"
+                                className="hidden"
+                                onChange={(e) => {
+                                  const file = e.target.files?.[0];
+                                  if (file) handlePresentationUpload(week.id, file);
+                                }}
+                              />
+                            </div>
+                          )}
+                        </CardContent>
+                      </Card>
+                    ))}
+                  </div>
+                </div>
+              );
+            })}
           </div>
         </div>
       </main>
