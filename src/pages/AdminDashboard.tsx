@@ -6,6 +6,7 @@ import { BookOpen, User, ClipboardList } from "lucide-react";
 import SEO from "@/components/SEO";
 import AdminCustomersSection from "@/components/admin/AdminCustomersSection";
 import AdminRegistrationsSection from "@/components/admin/AdminRegistrationsSection";
+import UpcomingSessionsWidget from "@/components/admin/UpcomingSessionsWidget";
 
 export default function AdminDashboard() {
   const navigate = useNavigate();
@@ -39,6 +40,11 @@ export default function AdminDashboard() {
               </Button>
             </div>
           </div>
+
+          {/* Weekoverzicht sessies */}
+          <section className="mb-8">
+            <UpcomingSessionsWidget />
+          </section>
 
           {/* Klanten Section */}
           <section id="section-klanten" className="mb-16 scroll-mt-28">
