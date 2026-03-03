@@ -9,6 +9,7 @@ import { Badge } from "@/components/ui/badge";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { Textarea } from "@/components/ui/textarea";
 import {
   Dialog,
   DialogContent,
@@ -23,7 +24,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { toast } from "sonner";
-import { Users, Eye, Upload, Presentation, ArrowLeft, Loader2, FileUp, Trash2 } from "lucide-react";
+import { Users, Eye, Upload, Presentation, ArrowLeft, Loader2, FileUp, Trash2, Plus } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
 interface Enrollment {
@@ -53,6 +54,12 @@ interface CourseWeek {
   presentation_url: string | null;
 }
 
+const COURSE_TYPES: Record<string, string> = {
+  msc_8week: "8-weekse Groepstraining",
+  individueel_6: "Individueel Traject (6 sessies)",
+  losse_sessie: "Losse Sessie",
+};
+
 const AdminEnrollments = () => {
   const navigate = useNavigate();
   const [enrollments, setEnrollments] = useState<EnrollmentWithEmail[]>([]);
@@ -60,9 +67,19 @@ const AdminEnrollments = () => {
   const [loading, setLoading] = useState(true);
   const [selectedEnrollment, setSelectedEnrollment] = useState<EnrollmentWithEmail | null>(null);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [isCreateDialogOpen, setIsCreateDialogOpen] = useState(false);
   const [saving, setSaving] = useState(false);
   const [uploadingFor, setUploadingFor] = useState<string | null>(null);
   const [filterCourseType, setFilterCourseType] = useState<string>("all");
+
+  // New enrollment form state
+  const [newEmail, setNewEmail] = useState("");
+  const [newName, setNewName] = useState("");
+  const [newCourseType, setNewCourseType] = useState("msc_8week");
+  const [newStartDate, setNewStartDate] = useState("");
+  const [newTrainerName, setNewTrainerName] = useState("");
+  const [newLocation, setNewLocation] = useState("");
+  const [creating, setCreating] = useState(false);
 
   useEffect(() => {
     loadData();
@@ -163,6 +180,97 @@ const AdminEnrollments = () => {
     }
   };
 
+  const createEnrollment = async () => {
+    if (!newEmail || !newStartDate) {
+      toast.error("Vul minimaal een e-mail en startdatum in");
+      return;
+    }
+    setCreating(true);
+    try {
+      // Find or create registration
+      const { data: existingReg } = await supabase
+        .from("registrations")
+        .select("id")
+        .eq("email", newEmail)
+        .limit(1);
+
+      let registrationId: string | null = null;
+      if (existingReg && existingReg.length > 0) {
+        registrationId = existingReg[0].id;
+      } else if (newName) {
+        const { data: newReg } = await supabase
+          .from("registrations")
+          .insert({ name: newName, email: newEmail, training_name: COURSE_TYPES[newCourseType] || newCourseType, status: "confirmed", payment_status: "paid" })
+          .select("id")
+          .single();
+        registrationId = newReg?.id || null;
+      }
+
+      // Look up user by email from registrations (we can't query auth.users)
+      // The enrollment needs a user_id. We'll look for an existing enrollment or ask admin to ensure user exists.
+      // For now, we search auth users via a workaround: check if there's a user with a matching registration
+      const { data: existingEnrollments } = await supabase
+        .from("enrollments")
+        .select("user_id")
+        .eq("registration_id", registrationId)
+        .limit(1);
+
+      let userId = existingEnrollments?.[0]?.user_id;
+
+      if (!userId) {
+        // Try to find user_id from other enrollments with same email
+        const { data: allRegs } = await supabase
+          .from("registrations")
+          .select("id")
+          .eq("email", newEmail);
+        
+        if (allRegs && allRegs.length > 0) {
+          const regIds = allRegs.map(r => r.id);
+          const { data: existingEnr } = await supabase
+            .from("enrollments")
+            .select("user_id")
+            .in("registration_id", regIds)
+            .limit(1);
+          userId = existingEnr?.[0]?.user_id;
+        }
+      }
+
+      if (!userId) {
+        toast.error("Geen gebruikersaccount gevonden voor dit e-mailadres. De deelnemer moet eerst een account aanmaken.");
+        setCreating(false);
+        return;
+      }
+
+      const { error } = await supabase
+        .from("enrollments")
+        .insert({
+          user_id: userId,
+          course_type: newCourseType,
+          start_date: newStartDate,
+          trainer_name: newTrainerName || null,
+          location: newLocation || null,
+          registration_id: registrationId,
+          unlocked_weeks: [1],
+          status: "active",
+        });
+
+      if (error) throw error;
+
+      toast.success("Inschrijving aangemaakt!");
+      setIsCreateDialogOpen(false);
+      setNewEmail("");
+      setNewName("");
+      setNewCourseType("msc_8week");
+      setNewStartDate("");
+      setNewTrainerName("");
+      setNewLocation("");
+      loadData();
+    } catch (err: any) {
+      toast.error("Fout bij aanmaken: " + err.message);
+    }
+    setCreating(false);
+  };
+
   const statusColors: Record<string, string> = {
     active: "bg-green-100 text-green-800",
     completed: "bg-blue-100 text-blue-800",
@@ -193,7 +301,7 @@ const AdminEnrollments = () => {
       <main className="container mx-auto px-4 pt-24 pb-16">
         <div className="max-w-5xl mx-auto">
           {/* Header */}
-          <div className="flex items-center justify-between mb-8">
+          <div className="flex items-center justify-between mb-8 flex-wrap gap-4">
             <div className="flex items-center gap-3">
               <Button variant="ghost" size="sm" onClick={() => navigate("/admin")}>
                 <ArrowLeft className="h-4 w-4" />
@@ -203,16 +311,23 @@ const AdminEnrollments = () => {
                 <p className="text-muted-foreground">Beheer sessie-zichtbaarheid en presentaties</p>
               </div>
             </div>
-            <Select value={filterCourseType} onValueChange={setFilterCourseType}>
-              <SelectTrigger className="w-[200px]">
-                <SelectValue />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="all">Alle programma's</SelectItem>
-                <SelectItem value="msc_8week">Groepstraining</SelectItem>
-                <SelectItem value="individueel_6">Individueel</SelectItem>
-              </SelectContent>
-            </Select>
+            <div className="flex items-center gap-3">
+              <Select value={filterCourseType} onValueChange={setFilterCourseType}>
+                <SelectTrigger className="w-[200px]">
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="all">Alle programma's</SelectItem>
+                  <SelectItem value="msc_8week">Groepstraining</SelectItem>
+                  <SelectItem value="individueel_6">Individueel (6)</SelectItem>
+                  <SelectItem value="losse_sessie">Losse Sessie</SelectItem>
+                </SelectContent>
+              </Select>
+              <Button onClick={() => setIsCreateDialogOpen(true)} className="gap-2">
+                <Plus className="h-4 w-4" />
+                Nieuwe inschrijving
+              </Button>
+            </div>
           </div>
 
           {/* Enrollments List */}
@@ -226,7 +341,7 @@ const AdminEnrollments = () => {
             )}
             {filtered.map(enrollment => {
               const weeks = getWeeksForEnrollment(enrollment.course_type);
-              const label = enrollment.course_type === "individueel_6" ? "Sessie" : "Week";
+              const label = enrollment.course_type === "msc_8week" ? "Week" : "Sessie";
               return (
                 <Card key={enrollment.id} className="hover:shadow-md transition-shadow">
                   <CardContent className="p-6">
@@ -240,7 +355,7 @@ const AdminEnrollments = () => {
                             {enrollment.status || "active"}
                           </Badge>
                           <Badge variant="outline">
-                            {enrollment.course_type === "individueel_6" ? "Individueel" : "Groep"}
+                            {COURSE_TYPES[enrollment.course_type] || enrollment.course_type}
                           </Badge>
                         </div>
                         <p className="text-sm text-muted-foreground">
@@ -303,7 +418,7 @@ const AdminEnrollments = () => {
 
             <div className="grid gap-4 md:grid-cols-2">
               {courseWeeks.map(week => {
-                const label = week.course_type === "individueel_6" ? "Sessie" : "Week";
+                const label = week.course_type === "msc_8week" ? "Week" : "Sessie";
                 return (
                   <Card key={week.id}>
                     <CardContent className="p-4">
@@ -385,7 +500,7 @@ const AdminEnrollments = () => {
               </p>
               {getWeeksForEnrollment(selectedEnrollment.course_type).map(week => {
                 const isUnlocked = (selectedEnrollment.unlocked_weeks || [1]).includes(week.week_number);
-                const label = selectedEnrollment.course_type === "individueel_6" ? "Sessie" : "Week";
+                const label = selectedEnrollment.course_type === "msc_8week" ? "Week" : "Sessie";
                 return (
                   <div
                     key={week.id}
@@ -414,6 +529,54 @@ const AdminEnrollments = () => {
           </DialogContent>
         </Dialog>
       )}
+
+      {/* Create Enrollment Dialog */}
+      <Dialog open={isCreateDialogOpen} onOpenChange={setIsCreateDialogOpen}>
+        <DialogContent className="sm:max-w-lg">
+          <DialogHeader>
+            <DialogTitle>Nieuwe inschrijving aanmaken</DialogTitle>
+          </DialogHeader>
+          <div className="space-y-4 mt-4">
+            <div>
+              <Label htmlFor="new-email">E-mailadres deelnemer *</Label>
+              <Input id="new-email" type="email" value={newEmail} onChange={e => setNewEmail(e.target.value)} placeholder="deelnemer@email.com" />
+            </div>
+            <div>
+              <Label htmlFor="new-name">Naam</Label>
+              <Input id="new-name" value={newName} onChange={e => setNewName(e.target.value)} placeholder="Volledige naam" />
+            </div>
+            <div>
+              <Label>Programma *</Label>
+              <Select value={newCourseType} onValueChange={setNewCourseType}>
+                <SelectTrigger>
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  {Object.entries(COURSE_TYPES).map(([key, label]) => (
+                    <SelectItem key={key} value={key}>{label}</SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+            <div>
+              <Label htmlFor="new-start">Startdatum *</Label>
+              <Input id="new-start" type="date" value={newStartDate} onChange={e => setNewStartDate(e.target.value)} />
+            </div>
+            <div>
+              <Label htmlFor="new-trainer">Trainer</Label>
+              <Input id="new-trainer" value={newTrainerName} onChange={e => setNewTrainerName(e.target.value)} placeholder="Naam trainer" />
+            </div>
+            <div>
+              <Label htmlFor="new-location">Locatie</Label>
+              <Input id="new-location" value={newLocation} onChange={e => setNewLocation(e.target.value)} placeholder="Locatie" />
+            </div>
+            <Button onClick={createEnrollment} disabled={creating} className="w-full">
+              {creating ? <Loader2 className="h-4 w-4 animate-spin mr-2" /> : <Plus className="h-4 w-4 mr-2" />}
+              Inschrijving aanmaken
+            </Button>
+          </div>
+        </DialogContent>
+      </Dialog>
 
       <Footer />
     </div>
