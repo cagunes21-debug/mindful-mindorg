@@ -633,6 +633,7 @@ export type Database = {
       }
     }
     Functions: {
+      enrollment_exists: { Args: { _enrollment_id: string }; Returns: boolean }
       has_role: {
         Args: {
           _role: Database["public"]["Enums"]["app_role"]
