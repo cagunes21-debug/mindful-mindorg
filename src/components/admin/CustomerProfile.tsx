@@ -117,6 +117,12 @@ export default function CustomerProfile({ email, onClose }: CustomerProfileProps
   const [newTrainerName, setNewTrainerName] = useState("");
   const [creating, setCreating] = useState(false);
 
+  // Extra training state
+  const [showExtraTraining, setShowExtraTraining] = useState(false);
+  const [extraTrainingName, setExtraTrainingName] = useState("8-weekse Mindful Zelfcompassie Training");
+  const [extraRemarks, setExtraRemarks] = useState("");
+  const [submittingExtra, setSubmittingExtra] = useState(false);
+
   useEffect(() => {
     fetchCustomerData();
   }, [email]);
@@ -286,6 +292,31 @@ export default function CustomerProfile({ email, onClose }: CustomerProfileProps
     setCreating(false);
   };
 
+  const submitExtraTraining = async () => {
+    if (!customer || !extraTrainingName.trim()) { toast.error("Selecteer een training"); return; }
+    setSubmittingExtra(true);
+    try {
+      const { error } = await supabase.from("registrations").insert({
+        name: customer.name,
+        email: customer.email,
+        phone: customer.phone || null,
+        training_name: extraTrainingName.trim(),
+        remarks: extraRemarks.trim() || null,
+        status: "pending",
+        payment_status: "pending",
+      });
+      if (error) throw error;
+      toast.success("Extra training aangemeld!");
+      setShowExtraTraining(false);
+      setExtraTrainingName("8-weekse Mindful Zelfcompassie Training");
+      setExtraRemarks("");
+      fetchCustomerData();
+    } catch (err: any) {
+      toast.error("Fout: " + err.message);
+    }
+    setSubmittingExtra(false);
+  };
+
   if (isLoading) {
     return (
       <Dialog open onOpenChange={onClose}>
@@ -335,6 +366,9 @@ export default function CustomerProfile({ email, onClose }: CustomerProfileProps
                 </div>
               )}
             </div>
+            <Button size="sm" className="gap-2" onClick={() => setShowExtraTraining(true)}>
+              <Plus className="h-4 w-4" /> Extra training
+            </Button>
           </div>
 
           {/* Stats */}
@@ -571,6 +605,50 @@ export default function CustomerProfile({ email, onClose }: CustomerProfileProps
           </div>
         </div>
       </DialogContent>
+
+      {/* Extra Training Dialog */}
+      {showExtraTraining && customer && (
+        <Dialog open onOpenChange={() => setShowExtraTraining(false)}>
+          <DialogContent className="sm:max-w-md">
+            <DialogHeader>
+              <DialogTitle>Extra training inschrijven</DialogTitle>
+              <DialogDescription>
+                Schrijf {customer.name} in voor een nieuwe training. Gegevens worden automatisch overgenomen.
+              </DialogDescription>
+            </DialogHeader>
+            <div className="space-y-4">
+              <div className="rounded-md bg-muted p-3 text-sm">
+                <p><strong>{customer.name}</strong></p>
+                <p className="text-muted-foreground">{customer.email}</p>
+                {customer.phone && <p className="text-muted-foreground">{customer.phone}</p>}
+              </div>
+              <div>
+                <Label>Training *</Label>
+                <Select value={extraTrainingName} onValueChange={setExtraTrainingName}>
+                  <SelectTrigger><SelectValue /></SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="8-weekse Mindful Zelfcompassie Training">8-weekse Mindful Zelfcompassie Training</SelectItem>
+                    <SelectItem value="Individueel Traject (6 sessies)">Individueel Traject (6 sessies)</SelectItem>
+                    <SelectItem value="Losse Sessie / Coaching">Losse Sessie / Coaching</SelectItem>
+                    <SelectItem value="Beweging & Mildheid Retreat">Beweging & Mildheid Retreat</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+              <div>
+                <Label>Opmerkingen</Label>
+                <Input value={extraRemarks} onChange={e => setExtraRemarks(e.target.value)} placeholder="Eventuele opmerkingen" />
+              </div>
+            </div>
+            <div className="flex justify-end gap-2 mt-4">
+              <Button variant="outline" onClick={() => setShowExtraTraining(false)}>Annuleren</Button>
+              <Button onClick={submitExtraTraining} disabled={submittingExtra}>
+                {submittingExtra && <Loader2 className="h-4 w-4 animate-spin mr-2" />}
+                Inschrijven
+              </Button>
+            </div>
+          </DialogContent>
+        </Dialog>
+      )}
     </Dialog>
   );
 }
