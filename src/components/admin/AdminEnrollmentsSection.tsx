@@ -13,7 +13,7 @@ import {
   Select, SelectContent, SelectItem, SelectTrigger, SelectValue,
 } from "@/components/ui/select";
 import { toast } from "sonner";
-import { Eye, Presentation, Loader2, FileUp, Trash2, Plus } from "lucide-react";
+import { Eye, Presentation, Loader2, Plus } from "lucide-react";
 
 interface Enrollment {
   id: string;
@@ -64,7 +64,6 @@ export default function AdminEnrollmentsSection() {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [isCreateDialogOpen, setIsCreateDialogOpen] = useState(false);
   const [saving, setSaving] = useState(false);
-  const [uploadingFor, setUploadingFor] = useState<string | null>(null);
   const [filterCourseType, setFilterCourseType] = useState<string>("all");
 
   const [newEmail, setNewEmail] = useState("");
@@ -130,28 +129,8 @@ export default function AdminEnrollmentsSection() {
     setSaving(false);
   };
 
-  const handlePresentationUpload = async (weekId: string, file: File) => {
-    setUploadingFor(weekId);
-    try {
-      const filePath = `week-${weekId}/${file.name}`;
-      const { error: uploadError } = await supabase.storage.from("presentations").upload(filePath, file, { upsert: true });
-      if (uploadError) throw uploadError;
-      const { data: urlData } = supabase.storage.from("presentations").getPublicUrl(filePath);
-      const { error: updateError } = await supabase.from("course_weeks").update({ presentation_url: urlData.publicUrl }).eq("id", weekId);
-      if (updateError) throw updateError;
-      setCourseWeeks(prev => prev.map(w => w.id === weekId ? { ...w, presentation_url: urlData.publicUrl } : w));
-      toast.success("Presentatie geüpload!");
-    } catch (err: any) { toast.error("Upload mislukt: " + err.message); }
-    setUploadingFor(null);
-  };
 
-  const removePresentationUrl = async (weekId: string) => {
-    const { error } = await supabase.from("course_weeks").update({ presentation_url: null }).eq("id", weekId);
-    if (!error) {
-      setCourseWeeks(prev => prev.map(w => w.id === weekId ? { ...w, presentation_url: null } : w));
-      toast.success("Presentatie verwijderd");
-    }
-  };
+
 
   const createEnrollment = async () => {
     if (!newEmail || !newStartDate) { toast.error("Vul minimaal een e-mail en startdatum in"); return; }
@@ -284,56 +263,6 @@ export default function AdminEnrollmentsSection() {
         })}
       </div>
 
-      {/* Presentations Section */}
-      <div className="mt-8">
-        <h3 className="text-lg font-medium mb-4 flex items-center gap-2">
-          <Presentation className="h-5 w-5 text-primary" />Presentaties per sessie
-        </h3>
-        {Object.entries(COURSE_TYPES).map(([type, typeName]) => {
-          const weeksForType = courseWeeks.filter(w => w.course_type === type);
-          if (weeksForType.length === 0) return null;
-          const weekLabel = type === "msc_8week" ? "Week" : "Sessie";
-          return (
-            <div key={type} className="mb-6">
-              <Badge variant="outline" className="mb-3">{typeName}</Badge>
-              <div className="grid gap-4 md:grid-cols-2">
-                {weeksForType.map(week => (
-                  <Card key={week.id}>
-                    <CardContent className="p-4">
-                      <div className="flex items-center justify-between mb-3">
-                        <div>
-                          <Badge variant="outline" className="mb-1">{weekLabel} {week.week_number}</Badge>
-                          <p className="font-medium text-sm">{week.title}</p>
-                        </div>
-                        {week.presentation_url && (
-                          <Button variant="ghost" size="sm" onClick={() => removePresentationUrl(week.id)} className="text-destructive hover:text-destructive">
-                            <Trash2 className="h-4 w-4" />
-                          </Button>
-                        )}
-                      </div>
-                      {week.presentation_url ? (
-                        <div className="flex items-center gap-2 text-sm">
-                          <Presentation className="h-4 w-4 text-primary" />
-                          <a href={week.presentation_url} target="_blank" rel="noopener noreferrer" className="text-primary hover:underline truncate">Presentatie bekijken</a>
-                        </div>
-                      ) : (
-                        <div>
-                          <Label htmlFor={`upload-${week.id}`} className="flex items-center gap-2 cursor-pointer text-sm text-muted-foreground hover:text-foreground transition-colors">
-                            {uploadingFor === week.id ? <Loader2 className="h-4 w-4 animate-spin" /> : <FileUp className="h-4 w-4" />}
-                            {uploadingFor === week.id ? "Uploaden..." : "Upload presentatie (PDF/PPTX)"}
-                          </Label>
-                          <Input id={`upload-${week.id}`} type="file" accept=".pdf,.pptx,.ppt" className="hidden"
-                            onChange={(e) => { const file = e.target.files?.[0]; if (file) handlePresentationUpload(week.id, file); }} />
-                        </div>
-                      )}
-                    </CardContent>
-                  </Card>
-                ))}
-              </div>
-            </div>
-          );
-        })}
-      </div>
 
       {/* Detail Dialog */}
       {selectedEnrollment && (
