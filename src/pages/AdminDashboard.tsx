@@ -2,11 +2,12 @@ import { useNavigate } from "react-router-dom";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import { Button } from "@/components/ui/button";
-import { BookOpen, User, ClipboardList } from "lucide-react";
+import { BookOpen, User, ClipboardList, BarChart3 } from "lucide-react";
 import SEO from "@/components/SEO";
 import AdminCustomersSection from "@/components/admin/AdminCustomersSection";
 import AdminRegistrationsSection from "@/components/admin/AdminRegistrationsSection";
 import UpcomingSessionsWidget from "@/components/admin/UpcomingSessionsWidget";
+import AdminScsOverview from "@/components/admin/AdminScsOverview";
 
 export default function AdminDashboard() {
   const navigate = useNavigate();
@@ -34,6 +35,9 @@ export default function AdminDashboard() {
               </Button>
               <Button variant="outline" size="sm" className="gap-2" onClick={() => scrollTo("section-aanmeldingen")}>
                 <ClipboardList className="h-4 w-4" />Aanmeldingen
+              </Button>
+              <Button variant="outline" size="sm" className="gap-2" onClick={() => scrollTo("section-scs")}>
+                <BarChart3 className="h-4 w-4" />SCS Scores
               </Button>
               <Button variant="outline" size="sm" className="gap-2" onClick={() => navigate("/admin/blog")}>
                 <BookOpen className="h-4 w-4" />Blog
@@ -63,6 +67,15 @@ export default function AdminDashboard() {
               Aanmeldingen & Betaling
             </h2>
             <AdminRegistrationsSection />
+          </section>
+
+          {/* SCS Scores Section */}
+          <section id="section-scs" className="mb-16 scroll-mt-28">
+            <h2 className="text-2xl font-light text-foreground mb-6 flex items-center gap-2 border-b pb-3">
+              <BarChart3 className="h-5 w-5 text-primary" />
+              Zelfcompassie Scores (SCS)
+            </h2>
+            <AdminScsOverview />
           </section>
         </div>
       </main>
