@@ -139,14 +139,29 @@ const ParticipantDashboard = () => {
     setEnrollment(selected);
     const courseType = selected.course_type || 'msc_8week';
 
-    const [weeksResult, meditationsResult, assignmentsResult, progressResult] = await Promise.all([
-      supabase.from("course_weeks").select("*").eq("course_type", courseType).order("week_number"),
-      supabase.from("meditations").select("*").order("sort_order"),
-      supabase.from("assignments").select("*").order("sort_order"),
+    // First load the weeks for this course type
+    const weeksResult = await supabase
+      .from("course_weeks")
+      .select("*")
+      .eq("course_type", courseType)
+      .order("week_number");
+
+    const courseWeeks = (weeksResult.data || []) as CourseWeek[];
+    setWeeks(courseWeeks);
+
+    // Then load meditations & assignments filtered by these week IDs
+    const weekIds = courseWeeks.map(w => w.id);
+
+    const [meditationsResult, assignmentsResult, progressResult] = await Promise.all([
+      weekIds.length > 0
+        ? supabase.from("meditations").select("*").in("week_id", weekIds).order("sort_order")
+        : Promise.resolve({ data: [] }),
+      weekIds.length > 0
+        ? supabase.from("assignments").select("*").in("week_id", weekIds).order("sort_order")
+        : Promise.resolve({ data: [] }),
       supabase.from("participant_progress").select("*").eq("enrollment_id", selected.id),
     ]);
 
-    if (weeksResult.data) setWeeks(weeksResult.data as CourseWeek[]);
     if (meditationsResult.data) setMeditations(meditationsResult.data as Meditation[]);
     if (assignmentsResult.data) setAssignments(assignmentsResult.data as Assignment[]);
     if (progressResult.data) setProgress(progressResult.data as ParticipantProgress[]);
