@@ -39,7 +39,15 @@ interface Enrollment {
   group_info: string | null;
   unlocked_weeks: number[];
   registration_id: string | null;
+  visible_sections: string[];
 }
+
+const SECTION_LABELS: Record<string, string> = {
+  meditations: "Meditaties",
+  assignments: "Opdrachten",
+  presentations: "Presentaties",
+  notebooks: "Werkboek",
+};
 
 interface EnrollmentWithEmail extends Enrollment {
   registration_email?: string;
@@ -133,6 +141,29 @@ const AdminEnrollments = () => {
         setSelectedEnrollment(prev => prev ? { ...prev, unlocked_weeks: newUnlocked } : null);
       }
       toast.success(`Sessie ${weekNumber} ${newUnlocked.includes(weekNumber) ? 'vrijgegeven' : 'vergrendeld'}`);
+    }
+    setSaving(false);
+  };
+
+  const toggleSection = async (enrollment: EnrollmentWithEmail, section: string) => {
+    const current = enrollment.visible_sections || ['meditations', 'assignments', 'presentations', 'notebooks'];
+    const updated = current.includes(section)
+      ? current.filter(s => s !== section)
+      : [...current, section];
+
+    setSaving(true);
+    const { error } = await supabase
+      .from("enrollments")
+      .update({ visible_sections: updated })
+      .eq("id", enrollment.id);
+
+    if (error) {
+      toast.error("Kon niet opslaan");
+    } else {
+      setEnrollments(prev =>
+        prev.map(e => e.id === enrollment.id ? { ...e, visible_sections: updated } : e)
+      );
+      toast.success(`${SECTION_LABELS[section]} ${updated.includes(section) ? 'zichtbaar' : 'verborgen'}`);
     }
     setSaving(false);
   };
@@ -397,6 +428,24 @@ const AdminEnrollments = () => {
                           >
                             {label} {week.week_number}
                           </button>
+                        );
+                      })}
+                    </div>
+
+                    {/* Content visibility toggles */}
+                    <div className="mt-3 flex flex-wrap gap-3 border-t pt-3">
+                      <span className="text-xs text-muted-foreground mr-1 self-center">Inhoud:</span>
+                      {Object.entries(SECTION_LABELS).map(([key, sectionLabel]) => {
+                        const isVisible = (enrollment.visible_sections || []).includes(key);
+                        return (
+                          <label key={key} className="flex items-center gap-1.5 cursor-pointer">
+                            <Checkbox
+                              checked={isVisible}
+                              disabled={saving}
+                              onCheckedChange={() => toggleSection(enrollment, key)}
+                            />
+                            <span className="text-xs">{sectionLabel}</span>
+                          </label>
                         );
                       })}
                     </div>

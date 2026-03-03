@@ -44,6 +44,7 @@ interface Enrollment {
   group_info: string | null;
   course_type: string;
   unlocked_weeks: number[];
+  visible_sections: string[];
 }
 
 interface CourseWeek {
@@ -207,6 +208,13 @@ const ParticipantDashboard = () => {
 
   const isWeekUnlocked = (weekNumber: number): boolean => {
     return getUnlockedWeeks().includes(weekNumber);
+  };
+
+  const isSectionVisible = (section: string): boolean => {
+    if (!enrollment) return true;
+    const sections = enrollment.visible_sections;
+    if (!sections || sections.length === 0) return true;
+    return sections.includes(section);
   };
 
   const getWeekProgress = (weekId: string): number => {
@@ -409,14 +417,18 @@ const ParticipantDashboard = () => {
                 <BookOpen className="h-4 w-4" />
                 <span className="hidden sm:inline">Weken</span>
               </TabsTrigger>
-              <TabsTrigger value="meditations" className="gap-2">
-                <Headphones className="h-4 w-4" />
-                <span className="hidden sm:inline">Meditaties</span>
-              </TabsTrigger>
-              <TabsTrigger value="assignments" className="gap-2">
-                <ClipboardList className="h-4 w-4" />
-                <span className="hidden sm:inline">Opdrachten</span>
-              </TabsTrigger>
+              {isSectionVisible('meditations') && (
+                <TabsTrigger value="meditations" className="gap-2">
+                  <Headphones className="h-4 w-4" />
+                  <span className="hidden sm:inline">Meditaties</span>
+                </TabsTrigger>
+              )}
+              {isSectionVisible('assignments') && (
+                <TabsTrigger value="assignments" className="gap-2">
+                  <ClipboardList className="h-4 w-4" />
+                  <span className="hidden sm:inline">Opdrachten</span>
+                </TabsTrigger>
+              )}
               <TabsTrigger value="info" className="gap-2">
                 <Info className="h-4 w-4" />
                 <span className="hidden sm:inline">Info</span>
@@ -459,11 +471,12 @@ const ParticipantDashboard = () => {
                      )}
                      
                      {/* Presentation */}
-                     {currentWeekData.presentation_url && (
+                     {isSectionVisible('presentations') && currentWeekData.presentation_url && (
                        <PresentationViewer url={currentWeekData.presentation_url} />
                      )}
 
                     {/* Week Meditations */}
+                    {isSectionVisible('meditations') && (
                     <div className="mb-6">
                       <h3 className="font-medium mb-3 flex items-center gap-2">
                         <Headphones className="h-4 w-4" />
@@ -485,8 +498,10 @@ const ParticipantDashboard = () => {
                         )}
                       </div>
                     </div>
+                    )}
 
                     {/* Week Assignments */}
+                    {isSectionVisible('assignments') && (
                     <div>
                       <h3 className="font-medium mb-3 flex items-center gap-2">
                         <ClipboardList className="h-4 w-4" />
@@ -512,6 +527,7 @@ const ParticipantDashboard = () => {
                         )}
                       </div>
                     </div>
+                    )}
                   </CardContent>
                 </Card>
               )}

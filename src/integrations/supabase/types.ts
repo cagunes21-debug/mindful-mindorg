@@ -163,6 +163,7 @@ export type Database = {
           unlocked_weeks: number[]
           updated_at: string
           user_id: string
+          visible_sections: string[]
         }
         Insert: {
           course_type?: string
@@ -178,6 +179,7 @@ export type Database = {
           unlocked_weeks?: number[]
           updated_at?: string
           user_id: string
+          visible_sections?: string[]
         }
         Update: {
           course_type?: string
@@ -193,6 +195,7 @@ export type Database = {
           unlocked_weeks?: number[]
           updated_at?: string
           user_id?: string
+          visible_sections?: string[]
         }
         Relationships: [
           {
