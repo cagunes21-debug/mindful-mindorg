@@ -429,21 +429,32 @@ const ParticipantDashboard = () => {
                            <BookOpen className="h-4 w-4" />
                            Presentatie
                          </h3>
-                         <Card className="border-warm-200">
-                           <CardContent className="p-4">
-                             {currentWeekData.presentation_url.endsWith('.pdf') ? (
-                               <iframe
-                                 src={currentWeekData.presentation_url}
-                                 className="w-full h-[500px] rounded-lg border"
-                                 title="Presentatie"
-                               />
-                             ) : (
-                               <iframe
-                                 src={`https://view.officeapps.live.com/op/embed.aspx?src=${encodeURIComponent(currentWeekData.presentation_url)}`}
-                                 className="w-full h-[500px] rounded-lg border"
-                                 title="Presentatie"
-                               />
-                             )}
+                         <Card className="border-warm-200 overflow-hidden">
+                           <CardContent className="p-0 relative">
+                             <div 
+                               className="w-full h-[500px]" 
+                               style={{ pointerEvents: 'auto' }}
+                               onContextMenu={(e) => e.preventDefault()}
+                             >
+                               {currentWeekData.presentation_url.endsWith('.pdf') ? (
+                                 <iframe
+                                   src={`${currentWeekData.presentation_url}#toolbar=0&navpanes=0&scrollbar=1`}
+                                   className="w-full h-full border-0"
+                                   title="Presentatie"
+                                   sandbox="allow-same-origin allow-scripts"
+                                 />
+                               ) : (
+                                 <iframe
+                                   src={`https://view.officeapps.live.com/op/embed.aspx?src=${encodeURIComponent(currentWeekData.presentation_url)}`}
+                                   className="w-full h-full border-0"
+                                   title="Presentatie"
+                                   sandbox="allow-same-origin allow-scripts allow-popups"
+                                 />
+                               )}
+                             </div>
+                             <p className="text-xs text-muted-foreground text-center py-2">
+                               Alleen bekijken — downloaden is niet beschikbaar
+                             </p>
                            </CardContent>
                          </Card>
                        </div>
