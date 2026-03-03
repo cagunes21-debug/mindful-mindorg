@@ -3,7 +3,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
-import { MessageSquare, Save, Loader2 } from "lucide-react";
+import { MessageSquare, Save, Loader2, CheckCircle2 } from "lucide-react";
 import { toast } from "sonner";
 import type { TrainerNote } from "./types";
 
@@ -12,6 +12,12 @@ const NOTE_TYPES = [
   { type: "aandachtspunt", label: "Belangrijk aandachtspunt", placeholder: "Waar moet je op letten bij deze deelnemer..." },
   { type: "reflectie", label: "Reflectie na laatste sessie", placeholder: "Hoe ging de laatste sessie, wat viel op..." },
 ];
+
+const EVALUATION_TYPE = {
+  type: "eindevaluatie",
+  label: "Eindevaluatie",
+  placeholder: "Hoe is het traject verlopen? Wat zijn de belangrijkste inzichten en resultaten? Aanbevelingen voor vervolg...",
+};
 
 interface TrainerNotesSectionProps {
   enrollmentId: string;
@@ -39,7 +45,8 @@ export default function TrainerNotesSection({ enrollmentId, existingNotes, onNot
   const saveAll = async () => {
     setSaving(true);
     try {
-      for (const { type } of NOTE_TYPES) {
+      const allTypes = [...NOTE_TYPES, EVALUATION_TYPE];
+      for (const { type } of allTypes) {
         const content = edits[type] || "";
         const existing = existingNotes.find(n => n.note_type === type);
         if (existing) {
@@ -92,6 +99,19 @@ export default function TrainerNotesSection({ enrollmentId, existingNotes, onNot
             />
           </div>
         ))}
+      </div>
+
+      {/* Eindevaluatie */}
+      <div className="mt-4 p-3 rounded-lg border border-primary/20 bg-primary/5 space-y-2">
+        <p className="text-xs font-medium flex items-center gap-1.5">
+          <CheckCircle2 className="h-3.5 w-3.5 text-primary" /> {EVALUATION_TYPE.label}
+        </p>
+        <Textarea
+          placeholder={EVALUATION_TYPE.placeholder}
+          value={edits[EVALUATION_TYPE.type] ?? ""}
+          onChange={(e) => handleChange(EVALUATION_TYPE.type, e.target.value)}
+          className="min-h-[60px] text-sm resize-none"
+        />
       </div>
     </div>
   );
