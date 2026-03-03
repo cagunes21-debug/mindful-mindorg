@@ -854,9 +854,9 @@ const MindfulZelfcompassie = () => {
                       <h4 className="font-medium text-foreground mb-4">Het pakket omvat:</h4>
                       <ul className="space-y-3">
                         {[
-                          "Intakegesprek (60 minuten)",
-                          "6 individuele sessies (60 min per sessie)",
-                          "Extra reflectiesessie van 30 minuten",
+                          "Intakegesprek",
+                          "6 individuele sessies",
+                          "Extra reflectiesessie (afronding en integratie)",
                           "Persoonlijke oefeningen en handvatten",
                           "Korte reflectie per mail tussen sessies",
                         ].map((item, i) => (
