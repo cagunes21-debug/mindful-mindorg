@@ -5,6 +5,8 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Textarea } from "@/components/ui/textarea";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import {
   Dialog,
   DialogContent,
@@ -12,7 +14,14 @@ import {
   DialogTitle,
   DialogDescription,
 } from "@/components/ui/dialog";
-import { Mail, Phone, Calendar, Euro, ShoppingBag, ArrowLeft, BookOpen, Headphones, ClipboardList, Presentation, FileText, Save, StickyNote, Eye, EyeOff, Lock, Unlock } from "lucide-react";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { Mail, Phone, Calendar, Euro, ShoppingBag, ArrowLeft, BookOpen, Headphones, ClipboardList, Presentation, FileText, Save, StickyNote, Eye, EyeOff, Lock, Unlock, Plus, Loader2 } from "lucide-react";
 import { format } from "date-fns";
 import { nl } from "date-fns/locale";
 import { toast } from "sonner";
@@ -100,6 +109,13 @@ export default function CustomerProfile({ email, onClose }: CustomerProfileProps
   const [savingNotes, setSavingNotes] = useState<string | null>(null);
   const [activeTraining, setActiveTraining] = useState<string | null>(null);
   const registrationRefs = useRef<Record<string, HTMLDivElement | null>>({});
+
+  // Create enrollment state
+  const [creatingForRegId, setCreatingForRegId] = useState<string | null>(null);
+  const [newCourseType, setNewCourseType] = useState("msc_8week");
+  const [newStartDate, setNewStartDate] = useState("");
+  const [newTrainerName, setNewTrainerName] = useState("");
+  const [creating, setCreating] = useState(false);
 
   useEffect(() => {
     fetchCustomerData();
@@ -208,6 +224,66 @@ export default function CustomerProfile({ email, onClose }: CustomerProfileProps
 
   const getEnrollmentForRegistration = (regId: string) => {
     return enrollments.find(e => e.registration_id === regId);
+  };
+
+  const createEnrollmentForReg = async (regId: string) => {
+    if (!newStartDate) { toast.error("Vul een startdatum in"); return; }
+    setCreating(true);
+    try {
+      // Find user_id from existing enrollments for this customer
+      let userId: string | undefined;
+      
+      // Check existing enrollments linked to any registration of this customer
+      const regIds = registrations.map(r => r.id);
+      if (regIds.length > 0) {
+        const { data: existingEnr } = await supabase
+          .from("enrollments")
+          .select("user_id")
+          .in("registration_id", regIds)
+          .limit(1);
+        userId = existingEnr?.[0]?.user_id;
+      }
+
+      if (!userId) {
+        // Try finding by email in all registrations
+        const { data: allRegs } = await supabase.from("registrations").select("id").eq("email", email);
+        if (allRegs && allRegs.length > 0) {
+          const { data: existingEnr } = await supabase
+            .from("enrollments")
+            .select("user_id")
+            .in("registration_id", allRegs.map(r => r.id))
+            .limit(1);
+          userId = existingEnr?.[0]?.user_id;
+        }
+      }
+
+      if (!userId) {
+        toast.error("Geen account gevonden. De deelnemer moet eerst een account aanmaken.");
+        setCreating(false);
+        return;
+      }
+
+      const { error } = await supabase.from("enrollments").insert({
+        user_id: userId,
+        course_type: newCourseType,
+        start_date: newStartDate,
+        trainer_name: newTrainerName || null,
+        registration_id: regId,
+        unlocked_weeks: [1],
+        status: "active",
+      });
+      if (error) throw error;
+
+      toast.success("Inschrijving aangemaakt!");
+      setCreatingForRegId(null);
+      setNewCourseType("msc_8week");
+      setNewStartDate("");
+      setNewTrainerName("");
+      fetchCustomerData();
+    } catch (err: any) {
+      toast.error("Fout bij aanmaken: " + err.message);
+    }
+    setCreating(false);
   };
 
   if (isLoading) {
@@ -416,11 +492,50 @@ export default function CustomerProfile({ email, onClose }: CustomerProfileProps
                               </div>
                             </>
                           ) : (
-                            <div className="border-t pt-3">
-                              <p className="text-xs text-muted-foreground flex items-center gap-1">
-                                <Lock className="h-3 w-3" />
-                                Geen inschrijving gekoppeld — maak een inschrijving aan via de Deelnemers-sectie om inhoud te beheren.
-                              </p>
+                            <div className="border-t pt-3 space-y-3">
+                              {creatingForRegId === reg.id ? (
+                                <div className="space-y-3 p-3 bg-muted/50 rounded-lg">
+                                  <p className="text-xs font-medium">Nieuwe inschrijving aanmaken</p>
+                                  <div className="grid grid-cols-2 gap-3">
+                                    <div>
+                                      <Label className="text-xs">Programma</Label>
+                                      <Select value={newCourseType} onValueChange={setNewCourseType}>
+                                        <SelectTrigger className="h-8 text-xs"><SelectValue /></SelectTrigger>
+                                        <SelectContent>
+                                          {Object.entries(COURSE_TYPES).map(([key, label]) => (
+                                            <SelectItem key={key} value={key}>{label}</SelectItem>
+                                          ))}
+                                        </SelectContent>
+                                      </Select>
+                                    </div>
+                                    <div>
+                                      <Label className="text-xs">Startdatum *</Label>
+                                      <Input type="date" className="h-8 text-xs" value={newStartDate} onChange={e => setNewStartDate(e.target.value)} />
+                                    </div>
+                                  </div>
+                                  <div>
+                                    <Label className="text-xs">Trainer (optioneel)</Label>
+                                    <Input className="h-8 text-xs" value={newTrainerName} onChange={e => setNewTrainerName(e.target.value)} placeholder="Naam trainer" />
+                                  </div>
+                                  <div className="flex gap-2">
+                                    <Button size="sm" onClick={() => createEnrollmentForReg(reg.id)} disabled={creating} className="gap-1.5 text-xs">
+                                      {creating ? <Loader2 className="h-3 w-3 animate-spin" /> : <Plus className="h-3 w-3" />}
+                                      Aanmaken
+                                    </Button>
+                                    <Button size="sm" variant="ghost" onClick={() => setCreatingForRegId(null)} className="text-xs">
+                                      Annuleren
+                                    </Button>
+                                  </div>
+                                </div>
+                              ) : (
+                                <div className="flex items-center gap-2">
+                                  <Lock className="h-3 w-3 text-muted-foreground" />
+                                  <p className="text-xs text-muted-foreground flex-1">Geen inschrijving gekoppeld</p>
+                                  <Button size="sm" variant="outline" className="gap-1.5 text-xs h-7" onClick={() => setCreatingForRegId(reg.id)}>
+                                    <Plus className="h-3 w-3" />Inschrijving aanmaken
+                                  </Button>
+                                </div>
+                              )}
                             </div>
                           )}
 
