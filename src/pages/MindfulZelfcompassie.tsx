@@ -738,8 +738,12 @@ const MindfulZelfcompassie = () => {
                     </div>
                     <h3 className="text-lg font-semibold text-foreground mb-1">🌿 Individueel Traject</h3>
                     <p className="text-xs text-muted-foreground mb-3">6-sessiepakket · incl. intake & reflectie</p>
-                    <p className="text-sm text-muted-foreground mb-4">Persoonlijk, op maat begeleid worden en écht de diepte ingaan op jouw thema's.</p>
-                    <p className="text-xl font-light text-terracotta-600">€650</p>
+                    <p className="text-sm text-muted-foreground mb-3">Persoonlijk, op maat begeleid worden en écht de diepte ingaan op jouw thema's.</p>
+                    <span className="inline-block rounded-full bg-terracotta-100 px-2.5 py-0.5 text-[10px] font-semibold text-terracotta-700 mb-2">✨ Aanbieding</span>
+                    <div className="flex items-center justify-center gap-2">
+                      <p className="text-base font-light text-muted-foreground line-through">€650</p>
+                      <p className="text-xl font-light text-terracotta-600">€550</p>
+                    </div>
                   </CardContent>
                 </Card>
 
@@ -870,7 +874,11 @@ const MindfulZelfcompassie = () => {
                       <div className="h-16 w-16 rounded-2xl bg-gradient-to-br from-warm-100 to-warm-200 flex items-center justify-center mb-4">
                         <Heart className="h-8 w-8 text-terracotta-600" />
                       </div>
-                      <p className="text-3xl font-light text-terracotta-600 mb-2">€650</p>
+                      <span className="inline-block rounded-full bg-terracotta-100 px-3 py-1 text-xs font-semibold text-terracotta-700 mb-3">✨ Tijdelijke aanbieding</span>
+                      <div className="flex items-center justify-center gap-3 mb-2">
+                        <p className="text-xl font-light text-muted-foreground line-through">€650</p>
+                        <p className="text-3xl font-light text-terracotta-600">€550</p>
+                      </div>
                       <p className="text-sm text-muted-foreground mb-6">voor het volledige traject</p>
                       <Button asChild className="bg-terracotta-600 hover:bg-terracotta-700 text-white rounded-full px-8">
                         <Link to="/contact">
