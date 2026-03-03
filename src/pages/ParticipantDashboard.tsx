@@ -363,16 +363,19 @@ const ParticipantDashboard = () => {
       <main className="container mx-auto px-4 pt-24 pb-16">
         <div className="max-w-6xl mx-auto">
           {/* Welcome Section */}
-          <Card className="mb-8 border-warm-200 bg-gradient-to-br from-warm-50 to-background">
-            <CardContent className="p-8">
-              <h1 className="text-3xl font-light text-foreground mb-3">
-                Welkom{user?.user_metadata?.full_name ? `, ${user.user_metadata.full_name.split(' ')[0]}` : ''} 👋
+          <Card className="mb-8 border-warm-200 bg-gradient-to-br from-warm-50 to-warm-100/30 shadow-sm">
+            <CardContent className="p-8 md:p-10">
+              <h1 className="text-3xl md:text-4xl font-light text-foreground mb-2">
+                Welkom{user?.user_metadata?.full_name ? ` ${user.user_metadata.full_name.split(' ')[0]}` : ''} 🌿
               </h1>
-              
+              <p className="text-lg text-muted-foreground mb-6">
+                {getCourseName()}
+              </p>
+
               {/* Training selector when multiple enrollments */}
-              {allEnrollments.length > 1 ? (
-                <div className="mb-4">
-                  <p className="text-sm text-muted-foreground mb-2">Je hebt meerdere trainingen. Kies hieronder welke je wilt bekijken:</p>
+              {allEnrollments.length > 1 && (
+                <div className="mb-6">
+                  <p className="text-sm text-muted-foreground mb-2">Je hebt meerdere trainingen:</p>
                   <div className="flex flex-wrap gap-2">
                     {allEnrollments.map(e => (
                       <Button
@@ -386,25 +389,36 @@ const ParticipantDashboard = () => {
                     ))}
                   </div>
                 </div>
-              ) : (
-                <p className="text-muted-foreground mb-4">
-                  {getCourseName()}
-                </p>
               )}
 
-              <div className="bg-background/70 rounded-lg p-4 text-sm text-muted-foreground space-y-2">
-                <p>
-                  Fijn dat je er bent! Dit is jouw persoonlijke leeromgeving. Hier vind je alles wat je nodig hebt voor je traject:
+              <div className="bg-background/80 rounded-xl p-6 text-muted-foreground space-y-4">
+                <p className="text-base leading-relaxed">
+                  Wat fijn dat je deze stap hebt gezet. Dit is jouw persoonlijke leeromgeving — 
+                  een veilige plek om in je eigen tempo te werken aan zelfcompassie en mindfulness.
                 </p>
-                <ul className="list-disc list-inside space-y-1 ml-2">
-                  <li>📖 <strong>Sessies</strong> — Bekijk de inhoud en presentaties per sessie</li>
-                  <li>🎧 <strong>Meditaties</strong> — Luister naar geleide meditaties</li>
-                  <li>📝 <strong>Opdrachten</strong> — Werk aan je persoonlijke oefeningen</li>
-                  <li>ℹ️ <strong>Info</strong> — Praktische informatie over je training</li>
-                </ul>
-                <p className="pt-2">
-                  Je trainer geeft stap voor stap nieuwe sessies vrij. Neem de tijd en wees mild voor jezelf. 💛
+                <p className="text-sm leading-relaxed">
+                  Hieronder vind je jouw sessies, meditaties en opdrachten. Je trainer geeft stap voor stap 
+                  nieuwe sessies vrij, zodat je rustig kunt werken aan elk onderdeel. 
+                  Er is geen haast — neem de tijd en wees mild voor jezelf. 💛
                 </p>
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-3 pt-2">
+                  <div className="flex items-center gap-2 text-sm">
+                    <BookOpen className="h-4 w-4 text-primary" />
+                    <span>Sessies</span>
+                  </div>
+                  <div className="flex items-center gap-2 text-sm">
+                    <Headphones className="h-4 w-4 text-primary" />
+                    <span>Meditaties</span>
+                  </div>
+                  <div className="flex items-center gap-2 text-sm">
+                    <ClipboardList className="h-4 w-4 text-primary" />
+                    <span>Opdrachten</span>
+                  </div>
+                  <div className="flex items-center gap-2 text-sm">
+                    <Info className="h-4 w-4 text-primary" />
+                    <span>Praktische info</span>
+                  </div>
+                </div>
               </div>
             </CardContent>
           </Card>
