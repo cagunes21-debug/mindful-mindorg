@@ -174,14 +174,6 @@ const Navigation = () => {
               </DropdownMenuContent>
             </DropdownMenu>
 
-            <NavLink
-              to="/blog"
-              className="text-sm font-medium text-muted-foreground transition-colors hover:text-primary"
-              activeClassName="text-primary"
-            >
-              Blog
-            </NavLink>
-
             {/* Meer Dropdown */}
             <DropdownMenu>
               <DropdownMenuTrigger className={`flex items-center gap-1 text-sm font-medium transition-colors hover:text-primary ${isMoreActive ? 'text-primary' : 'text-muted-foreground'}`}>
@@ -360,15 +352,6 @@ const Navigation = () => {
                   </div>
                 )}
               </div>
-
-              <NavLink
-                to="/blog"
-                className="text-sm font-medium text-muted-foreground transition-colors hover:text-primary"
-                activeClassName="text-primary"
-                onClick={() => setIsOpen(false)}
-              >
-                Blog
-              </NavLink>
 
               {/* Mobile Meer Section */}
               <div className="flex flex-col gap-2">
