@@ -278,7 +278,11 @@ const StadLanding = () => {
                   <p className="text-sm text-muted-foreground leading-relaxed mb-4 flex-grow">
                     Een volledig begeleidingstraject: intake (60 min), 6 individuele sessies (60 min) en een reflectiesessie (30 min).
                   </p>
-                  <p className="text-2xl font-semibold text-terracotta-600 mb-4">€650</p>
+                  <span className="inline-block rounded-full bg-terracotta-100 px-3 py-1 text-xs font-semibold text-terracotta-700 mb-2">✨ Aanbieding</span>
+                  <div className="flex items-center gap-3 mb-4">
+                    <p className="text-lg font-light text-muted-foreground line-through">€650</p>
+                    <p className="text-2xl font-semibold text-terracotta-600">€550</p>
+                  </div>
                   <Button asChild variant="outline" className="rounded-full border-terracotta-200 text-terracotta-600 hover:bg-terracotta-50 w-full">
                     <Link to="/coaching">Meer informatie</Link>
                   </Button>
