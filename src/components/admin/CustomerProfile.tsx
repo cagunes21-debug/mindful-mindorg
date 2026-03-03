@@ -1,7 +1,7 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Textarea } from "@/components/ui/textarea";
@@ -10,8 +10,9 @@ import {
   DialogContent,
   DialogHeader,
   DialogTitle,
+  DialogDescription,
 } from "@/components/ui/dialog";
-import { Mail, Phone, Calendar, Euro, ShoppingBag, ArrowLeft, BookOpen, Headphones, ClipboardList, Presentation, FileText, Save, StickyNote } from "lucide-react";
+import { Mail, Phone, Calendar, Euro, ShoppingBag, ArrowLeft, BookOpen, Headphones, ClipboardList, Presentation, FileText, Save, StickyNote, Eye, EyeOff, Lock, Unlock } from "lucide-react";
 import { format } from "date-fns";
 import { nl } from "date-fns/locale";
 import { toast } from "sonner";
@@ -52,6 +53,7 @@ interface Enrollment {
   unlocked_weeks: number[];
   visible_sections: string[];
   trainer_name: string | null;
+  registration_id: string | null;
 }
 
 interface CourseWeek {
@@ -96,6 +98,8 @@ export default function CustomerProfile({ email, onClose }: CustomerProfileProps
   const [saving, setSaving] = useState(false);
   const [trainerNotes, setTrainerNotes] = useState<Record<string, string>>({});
   const [savingNotes, setSavingNotes] = useState<string | null>(null);
+  const [activeTraining, setActiveTraining] = useState<string | null>(null);
+  const registrationRefs = useRef<Record<string, HTMLDivElement | null>>({});
 
   useEffect(() => {
     fetchCustomerData();
@@ -116,13 +120,11 @@ export default function CustomerProfile({ email, onClose }: CustomerProfileProps
       setRegistrations(regs);
       setCourseWeeks((weeksRes.data || []) as CourseWeek[]);
 
-      // Initialize trainer notes from registrations
       const notesMap: Record<string, string> = {};
       regs.forEach(r => { notesMap[r.id] = r.admin_notes || ""; });
       setTrainerNotes(notesMap);
 
-      // Load enrollments linked to this customer's registrations
-      const regIds = (regRes.data || []).map(r => r.id);
+      const regIds = regs.map(r => r.id);
       if (regIds.length > 0) {
         const { data: enrollData } = await supabase
           .from("enrollments")
@@ -195,10 +197,27 @@ export default function CustomerProfile({ email, onClose }: CustomerProfileProps
     setSavingNotes(null);
   };
 
+  const scrollToRegistration = (trainingName: string) => {
+    setActiveTraining(trainingName);
+    // Find first registration matching this training
+    const reg = registrations.find(r => r.training_name === trainingName);
+    if (reg && registrationRefs.current[reg.id]) {
+      registrationRefs.current[reg.id]?.scrollIntoView({ behavior: "smooth", block: "center" });
+    }
+  };
+
+  const getEnrollmentForRegistration = (regId: string) => {
+    return enrollments.find(e => e.registration_id === regId);
+  };
+
   if (isLoading) {
     return (
       <Dialog open onOpenChange={onClose}>
         <DialogContent className="sm:max-w-2xl">
+          <DialogHeader>
+            <DialogTitle>Klantprofiel</DialogTitle>
+            <DialogDescription>Laden...</DialogDescription>
+          </DialogHeader>
           <div className="flex items-center justify-center py-12">
             <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-terracotta-600" />
           </div>
@@ -211,13 +230,16 @@ export default function CustomerProfile({ email, onClose }: CustomerProfileProps
 
   return (
     <Dialog open onOpenChange={onClose}>
-      <DialogContent className="sm:max-w-2xl max-h-[90vh] overflow-y-auto">
+      <DialogContent className="sm:max-w-3xl max-h-[90vh] overflow-y-auto">
         <DialogHeader>
           <div className="flex items-center gap-2">
             <Button variant="ghost" size="sm" onClick={onClose} className="mr-2">
               <ArrowLeft className="h-4 w-4" />
             </Button>
-            <DialogTitle>Klantprofiel</DialogTitle>
+            <div>
+              <DialogTitle>Klantprofiel</DialogTitle>
+              <DialogDescription>{customer.name} — {customer.email}</DialogDescription>
+            </div>
           </div>
         </DialogHeader>
 
@@ -228,16 +250,12 @@ export default function CustomerProfile({ email, onClose }: CustomerProfileProps
               <h2 className="text-xl font-semibold">{customer.name}</h2>
               <div className="flex items-center gap-2 text-muted-foreground mt-1">
                 <Mail className="h-4 w-4" />
-                <a href={`mailto:${customer.email}`} className="text-terracotta-600 hover:underline">
-                  {customer.email}
-                </a>
+                <a href={`mailto:${customer.email}`} className="text-terracotta-600 hover:underline">{customer.email}</a>
               </div>
               {customer.phone && (
                 <div className="flex items-center gap-2 text-muted-foreground mt-1">
                   <Phone className="h-4 w-4" />
-                  <a href={`tel:${customer.phone}`} className="text-terracotta-600 hover:underline">
-                    {customer.phone}
-                  </a>
+                  <a href={`tel:${customer.phone}`} className="text-terracotta-600 hover:underline">{customer.phone}</a>
                 </div>
               )}
             </div>
@@ -276,160 +294,165 @@ export default function CustomerProfile({ email, onClose }: CustomerProfileProps
             </Card>
           </div>
 
-          {/* Enrollments with toggles */}
-          {enrollments.length > 0 && (
-            <div>
-              <h3 className="font-medium mb-3 flex items-center gap-2">
-                <BookOpen className="h-4 w-4" />
-                Inschrijvingen & Toegang
-              </h3>
-              <div className="space-y-4">
-                {enrollments.map(enrollment => {
-                  const weeks = courseWeeks.filter(w => w.course_type === enrollment.course_type);
-                  const label = enrollment.course_type === "msc_8week" ? "Week" : "Sessie";
-                  const enrollmentStatusColor = enrollment.status === "active" ? "bg-green-100 text-green-800" : "bg-muted text-muted-foreground";
-
-                  return (
-                    <Card key={enrollment.id}>
-                      <CardContent className="p-4 space-y-3">
-                        <div className="flex items-center justify-between">
-                          <div className="flex items-center gap-2">
-                            <Badge variant="outline">{COURSE_TYPES[enrollment.course_type] || enrollment.course_type}</Badge>
-                            <Badge className={enrollmentStatusColor}>{enrollment.status}</Badge>
-                          </div>
-                          <span className="text-xs text-muted-foreground">
-                            Start: {new Date(enrollment.start_date).toLocaleDateString("nl-NL")}
-                          </span>
-                        </div>
-
-                        {/* Session toggles */}
-                        <div>
-                          <p className="text-xs text-muted-foreground mb-2">Sessies vrijgeven:</p>
-                          <div className="flex flex-wrap gap-1.5">
-                            {weeks.map(week => {
-                              const isUnlocked = (enrollment.unlocked_weeks || [1]).includes(week.week_number);
-                              return (
-                                <button
-                                  key={week.id}
-                                  onClick={() => toggleWeek(enrollment, week.week_number)}
-                                  disabled={saving}
-                                  className={`px-2.5 py-1 rounded-full text-xs font-medium transition-colors ${
-                                    isUnlocked
-                                      ? "bg-primary/10 text-primary border border-primary/30"
-                                      : "bg-muted text-muted-foreground border border-border"
-                                  }`}
-                                >
-                                  {label} {week.week_number}
-                                </button>
-                              );
-                            })}
-                          </div>
-                        </div>
-
-                        {/* Content visibility */}
-                        <div className="border-t pt-3">
-                          <p className="text-xs text-muted-foreground mb-2">Zichtbare inhoud:</p>
-                          <div className="flex flex-wrap gap-3">
-                            {Object.entries(SECTION_LABELS).map(([key, { label: sectionLabel }]) => {
-                              const isVisible = (enrollment.visible_sections || ['meditations', 'assignments', 'presentations', 'notebooks']).includes(key);
-                              return (
-                                <label key={key} className="flex items-center gap-1.5 cursor-pointer">
-                                  <Checkbox
-                                    checked={isVisible}
-                                    disabled={saving}
-                                    onCheckedChange={() => toggleSection(enrollment, key)}
-                                  />
-                                  <span className="text-xs">{sectionLabel}</span>
-                                </label>
-                              );
-                            })}
-                          </div>
-                        </div>
-                      </CardContent>
-                    </Card>
-                  );
-                })}
-              </div>
-            </div>
-          )}
-
-          {/* Trainings */}
+          {/* Clickable Trainings */}
           <div>
             <h3 className="font-medium mb-3">Gevolgde trainingen</h3>
             <div className="flex flex-wrap gap-2">
               {customer.trainings?.map((training, idx) => (
-                <Badge key={idx} variant="secondary" className="bg-sage-100 text-sage-800">
+                <Badge
+                  key={idx}
+                  variant="secondary"
+                  className={`cursor-pointer transition-colors ${
+                    activeTraining === training
+                      ? "bg-primary/20 text-primary border-primary/30 ring-2 ring-primary/20"
+                      : "bg-sage-100 text-sage-800 hover:bg-sage-200"
+                  }`}
+                  onClick={() => scrollToRegistration(training)}
+                >
                   {training}
                 </Badge>
               ))}
             </div>
           </div>
 
-          {/* Trainer Notes */}
+          {/* Inhoud beheren per training */}
           <div>
             <h3 className="font-medium mb-3 flex items-center gap-2">
-              <StickyNote className="h-4 w-4" />
-              Trainernotities
+              <BookOpen className="h-4 w-4" />
+              Inhoud & Toegang beheren
             </h3>
-            <div className="space-y-3">
-              {registrations.map((reg) => (
-                <Card key={reg.id}>
-                  <CardContent className="py-3 px-4 space-y-2">
-                    <p className="text-sm font-medium text-muted-foreground">{reg.training_name}</p>
-                    <Textarea
-                      placeholder="Notities over deze deelnemer..."
-                      value={trainerNotes[reg.id] || ""}
-                      onChange={(e) => setTrainerNotes(prev => ({ ...prev, [reg.id]: e.target.value }))}
-                      className="min-h-[80px] text-sm"
-                    />
-                    <Button
-                      size="sm"
-                      variant="outline"
-                      onClick={() => saveTrainerNotes(reg.id)}
-                      disabled={savingNotes === reg.id}
-                      className="gap-1.5"
-                    >
-                      <Save className="h-3.5 w-3.5" />
-                      {savingNotes === reg.id ? "Opslaan..." : "Opslaan"}
-                    </Button>
-                  </CardContent>
-                </Card>
-              ))}
-            </div>
-          </div>
 
-          {/* Registration History */}
-          <div>
-            <h3 className="font-medium mb-3">Aanmeldingsgeschiedenis</h3>
-            <div className="space-y-3">
-              {registrations.map((reg) => (
-                <Card key={reg.id}>
-                  <CardContent className="py-3 px-4">
-                    <div className="flex items-center justify-between">
-                      <div>
-                        <p className="font-medium">{reg.training_name}</p>
-                        <p className="text-sm text-muted-foreground">
-                          {reg.training_date || format(new Date(reg.created_at), "d MMM yyyy", { locale: nl })}
-                        </p>
-                      </div>
-                      <div className="flex items-center gap-2">
-                        <Badge className={statusColors[reg.status]}>
-                          {reg.status}
-                        </Badge>
-                        <Badge className={paymentStatusColors[reg.payment_status || 'pending']}>
-                          {reg.payment_status || 'pending'}
-                        </Badge>
-                        {reg.price && (
-                          <span className="text-sm font-medium text-terracotta-600">
-                            {reg.price}
-                          </span>
-                        )}
-                      </div>
+            {registrations.length === 0 ? (
+              <p className="text-sm text-muted-foreground">Geen aanmeldingen gevonden.</p>
+            ) : (
+              <div className="space-y-4">
+                {registrations.map((reg) => {
+                  const enrollment = getEnrollmentForRegistration(reg.id);
+                  const weeks = enrollment ? courseWeeks.filter(w => w.course_type === enrollment.course_type) : [];
+                  const label = enrollment?.course_type === "msc_8week" ? "Week" : "Sessie";
+
+                  return (
+                    <div
+                      key={reg.id}
+                      ref={(el) => { registrationRefs.current[reg.id] = el; }}
+                    >
+                      <Card className={`transition-all ${activeTraining === reg.training_name ? "ring-2 ring-primary/30 shadow-md" : ""}`}>
+                        <CardContent className="p-4 space-y-3">
+                          {/* Training header */}
+                          <div className="flex items-center justify-between">
+                            <div className="flex items-center gap-2 flex-wrap">
+                              <span className="font-medium text-sm">{reg.training_name}</span>
+                              <Badge className={statusColors[reg.status]}>{reg.status}</Badge>
+                              <Badge className={paymentStatusColors[reg.payment_status || 'pending']}>
+                                {reg.payment_status || 'pending'}
+                              </Badge>
+                            </div>
+                            <span className="text-xs text-muted-foreground">
+                              {reg.training_date || format(new Date(reg.created_at), "d MMM yyyy", { locale: nl })}
+                            </span>
+                          </div>
+
+                          {enrollment ? (
+                            <>
+                              {/* Enrollment status */}
+                              <div className="flex items-center gap-2 text-xs text-muted-foreground">
+                                <Badge variant="outline" className="text-xs">
+                                  {COURSE_TYPES[enrollment.course_type] || enrollment.course_type}
+                                </Badge>
+                                <Badge className={enrollment.status === "active" ? "bg-green-100 text-green-800" : "bg-muted text-muted-foreground"}>
+                                  {enrollment.status}
+                                </Badge>
+                                <span>Start: {new Date(enrollment.start_date).toLocaleDateString("nl-NL")}</span>
+                              </div>
+
+                              {/* Session toggles */}
+                              <div className="border-t pt-3">
+                                <p className="text-xs text-muted-foreground mb-2 flex items-center gap-1">
+                                  <Unlock className="h-3 w-3" /> Sessies vrijgeven:
+                                </p>
+                                <div className="flex flex-wrap gap-1.5">
+                                  {weeks.map(week => {
+                                    const isUnlocked = (enrollment.unlocked_weeks || [1]).includes(week.week_number);
+                                    return (
+                                      <button
+                                        key={week.id}
+                                        onClick={() => toggleWeek(enrollment, week.week_number)}
+                                        disabled={saving}
+                                        className={`px-2.5 py-1 rounded-full text-xs font-medium transition-colors ${
+                                          isUnlocked
+                                            ? "bg-primary/10 text-primary border border-primary/30"
+                                            : "bg-muted text-muted-foreground border border-border"
+                                        }`}
+                                        title={week.title}
+                                      >
+                                        {label} {week.week_number}
+                                      </button>
+                                    );
+                                  })}
+                                </div>
+                              </div>
+
+                              {/* Content visibility */}
+                              <div className="border-t pt-3">
+                                <p className="text-xs text-muted-foreground mb-2 flex items-center gap-1">
+                                  <Eye className="h-3 w-3" /> Zichtbare inhoud:
+                                </p>
+                                <div className="flex flex-wrap gap-3">
+                                  {Object.entries(SECTION_LABELS).map(([key, { label: sectionLabel, icon: Icon }]) => {
+                                    const isVisible = (enrollment.visible_sections || ['meditations', 'assignments', 'presentations', 'notebooks']).includes(key);
+                                    return (
+                                      <label key={key} className="flex items-center gap-1.5 cursor-pointer">
+                                        <Checkbox
+                                          checked={isVisible}
+                                          disabled={saving}
+                                          onCheckedChange={() => toggleSection(enrollment, key)}
+                                        />
+                                        <Icon className="h-3 w-3 text-muted-foreground" />
+                                        <span className="text-xs">{sectionLabel}</span>
+                                      </label>
+                                    );
+                                  })}
+                                </div>
+                              </div>
+                            </>
+                          ) : (
+                            <div className="border-t pt-3">
+                              <p className="text-xs text-muted-foreground flex items-center gap-1">
+                                <Lock className="h-3 w-3" />
+                                Geen inschrijving gekoppeld — maak een inschrijving aan via de Deelnemers-sectie om inhoud te beheren.
+                              </p>
+                            </div>
+                          )}
+
+                          {/* Trainer notes */}
+                          <div className="border-t pt-3">
+                            <p className="text-xs text-muted-foreground mb-2 flex items-center gap-1">
+                              <StickyNote className="h-3 w-3" /> Trainernotitie:
+                            </p>
+                            <Textarea
+                              placeholder="Notities over deze deelnemer..."
+                              value={trainerNotes[reg.id] || ""}
+                              onChange={(e) => setTrainerNotes(prev => ({ ...prev, [reg.id]: e.target.value }))}
+                              className="min-h-[60px] text-sm"
+                            />
+                            <Button
+                              size="sm"
+                              variant="outline"
+                              onClick={() => saveTrainerNotes(reg.id)}
+                              disabled={savingNotes === reg.id}
+                              className="gap-1.5 mt-2"
+                            >
+                              <Save className="h-3.5 w-3.5" />
+                              {savingNotes === reg.id ? "Opslaan..." : "Opslaan"}
+                            </Button>
+                          </div>
+                        </CardContent>
+                      </Card>
                     </div>
-                  </CardContent>
-                </Card>
-              ))}
-            </div>
+                  );
+                })}
+              </div>
+            )}
           </div>
         </div>
       </DialogContent>
