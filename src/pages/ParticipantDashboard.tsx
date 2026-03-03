@@ -82,10 +82,17 @@ interface ParticipantProgress {
   notes: string | null;
 }
 
+const COURSE_TYPE_NAMES: Record<string, string> = {
+  'msc_8week': '8-weekse Groepstraining',
+  'individueel_6': 'Individueel Traject (6 sessies)',
+  'losse_sessie': 'Losse Sessie',
+};
+
 const ParticipantDashboard = () => {
   const navigate = useNavigate();
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
+  const [allEnrollments, setAllEnrollments] = useState<Enrollment[]>([]);
   const [enrollment, setEnrollment] = useState<Enrollment | null>(null);
   const [weeks, setWeeks] = useState<CourseWeek[]>([]);
   const [meditations, setMeditations] = useState<Meditation[]>([]);
@@ -97,54 +104,53 @@ const ParticipantDashboard = () => {
     supabase.auth.getSession().then(({ data: { session } }) => {
       setUser(session?.user ?? null);
       if (session?.user) {
-        loadDashboardData(session.user.id);
+        loadEnrollments(session.user.id);
       }
     });
   }, []);
 
-  const loadDashboardData = async (userId: string) => {
+  const loadEnrollments = async (userId: string) => {
     try {
       setLoading(true);
-
-      // Load enrollment
-      const { data: enrollmentData, error: enrollmentError } = await supabase
+      const { data: enrollmentsData, error } = await supabase
         .from("enrollments")
         .select("*")
         .eq("user_id", userId)
         .eq("status", "active")
-        .single();
+        .order("created_at", { ascending: false });
 
-      if (enrollmentError || !enrollmentData) {
+      if (error || !enrollmentsData || enrollmentsData.length === 0) {
         setLoading(false);
         return;
       }
 
-      setEnrollment(enrollmentData as Enrollment);
-
-      // Load all data in parallel
-      const courseType = enrollmentData.course_type || 'msc_8week';
-      const [weeksResult, meditationsResult, assignmentsResult, progressResult] = await Promise.all([
-        supabase.from("course_weeks").select("*").eq("course_type", courseType).order("week_number"),
-        supabase.from("meditations").select("*").order("sort_order"),
-        supabase.from("assignments").select("*").order("sort_order"),
-        supabase.from("participant_progress")
-          .select("*")
-          .eq("enrollment_id", enrollmentData.id)
-      ]);
-
-      if (weeksResult.data) setWeeks(weeksResult.data as CourseWeek[]);
-      if (meditationsResult.data) setMeditations(meditationsResult.data as Meditation[]);
-      if (assignmentsResult.data) setAssignments(assignmentsResult.data as Assignment[]);
-      if (progressResult.data) setProgress(progressResult.data as ParticipantProgress[]);
-
-      // Set selected week to current week
-      setSelectedWeek(enrollmentData.current_week || 1);
+      setAllEnrollments(enrollmentsData as Enrollment[]);
+      // Auto-select the first (most recent) enrollment
+      await selectEnrollment(enrollmentsData[0] as Enrollment);
     } catch (error) {
-      console.error("Error loading dashboard data:", error);
+      console.error("Error loading enrollments:", error);
       toast.error("Er ging iets mis bij het laden van de gegevens");
     } finally {
       setLoading(false);
     }
+  };
+
+  const selectEnrollment = async (selected: Enrollment) => {
+    setEnrollment(selected);
+    const courseType = selected.course_type || 'msc_8week';
+
+    const [weeksResult, meditationsResult, assignmentsResult, progressResult] = await Promise.all([
+      supabase.from("course_weeks").select("*").eq("course_type", courseType).order("week_number"),
+      supabase.from("meditations").select("*").order("sort_order"),
+      supabase.from("assignments").select("*").order("sort_order"),
+      supabase.from("participant_progress").select("*").eq("enrollment_id", selected.id),
+    ]);
+
+    if (weeksResult.data) setWeeks(weeksResult.data as CourseWeek[]);
+    if (meditationsResult.data) setMeditations(meditationsResult.data as Meditation[]);
+    if (assignmentsResult.data) setAssignments(assignmentsResult.data as Assignment[]);
+    if (progressResult.data) setProgress(progressResult.data as ParticipantProgress[]);
+    setSelectedWeek(selected.current_week || 1);
   };
 
   const getMaxWeeks = (): number => {
@@ -347,9 +353,30 @@ const ParticipantDashboard = () => {
               <h1 className="text-3xl font-light text-foreground mb-3">
                 Welkom{user?.user_metadata?.full_name ? `, ${user.user_metadata.full_name.split(' ')[0]}` : ''} 👋
               </h1>
-              <p className="text-muted-foreground mb-4">
-                {getCourseName()}
-              </p>
+              
+              {/* Training selector when multiple enrollments */}
+              {allEnrollments.length > 1 ? (
+                <div className="mb-4">
+                  <p className="text-sm text-muted-foreground mb-2">Je hebt meerdere trainingen. Kies hieronder welke je wilt bekijken:</p>
+                  <div className="flex flex-wrap gap-2">
+                    {allEnrollments.map(e => (
+                      <Button
+                        key={e.id}
+                        variant={enrollment?.id === e.id ? "default" : "outline"}
+                        size="sm"
+                        onClick={() => selectEnrollment(e)}
+                      >
+                        {COURSE_TYPE_NAMES[e.course_type] || e.course_type}
+                      </Button>
+                    ))}
+                  </div>
+                </div>
+              ) : (
+                <p className="text-muted-foreground mb-4">
+                  {getCourseName()}
+                </p>
+              )}
+
               <div className="bg-background/70 rounded-lg p-4 text-sm text-muted-foreground space-y-2">
                 <p>
                   Fijn dat je er bent! Dit is jouw persoonlijke leeromgeving. Hier vind je alles wat je nodig hebt voor je traject:
