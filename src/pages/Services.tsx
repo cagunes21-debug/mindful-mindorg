@@ -166,9 +166,9 @@ const Services = () => {
                   <h4 className="font-medium text-foreground mb-4">Het pakket omvat:</h4>
                   <ul className="space-y-3 mb-8">
                     {[
-                      "Intakegesprek (60 minuten)",
-                      "6 individuele sessies (60 minuten per sessie)",
-                      "Extra reflectiesessie van 30 minuten (afronding en integratie)",
+                      "Intakegesprek",
+                      "6 individuele sessies",
+                      "Extra reflectiesessie (afronding en integratie)",
                       "Persoonlijke oefeningen en handvatten",
                       "Mogelijkheid tot korte reflectie per mail tussen sessies",
                     ].map((item, i) => (
