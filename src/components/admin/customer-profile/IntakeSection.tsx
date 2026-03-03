@@ -108,10 +108,10 @@ export default function IntakeSection({ enrollment, onUpdate }: IntakeSectionPro
     toast.success("Intake-link gekopieerd!");
   };
 
-  const copyScsLink = () => {
-    const url = `${window.location.origin}/vragenlijst/${enrollment.id}`;
+  const copyScsLink = (type: "pre" | "post" = "pre") => {
+    const url = `${window.location.origin}/vragenlijst/${enrollment.id}${type === "post" ? "?type=post" : ""}`;
     navigator.clipboard.writeText(url);
-    toast.success("Vragenlijst-link gekopieerd!");
+    toast.success(`${type === "pre" ? "0-meting" : "Nameting"}-link gekopieerd!`);
   };
 
   const hasIntake = enrollment.intake_reason || enrollment.intake_theme || enrollment.intake_goal;
@@ -221,11 +221,16 @@ export default function IntakeSection({ enrollment, onUpdate }: IntakeSectionPro
       <div className="space-y-2">
         <div className="flex items-center justify-between">
           <p className="text-xs text-muted-foreground flex items-center gap-1 font-medium">
-            <ClipboardList className="h-3 w-3" /> Zelfcompassie Vragenlijst (0-meting)
+            <ClipboardList className="h-3 w-3" /> Zelfcompassie Vragenlijst
           </p>
-          <Button size="sm" variant="ghost" className="h-6 text-xs gap-1" onClick={copyScsLink}>
-            <Link2 className="h-3 w-3" /> Vragenlijst-link
-          </Button>
+          <div className="flex items-center gap-1">
+            <Button size="sm" variant="ghost" className="h-6 text-xs gap-1" onClick={() => copyScsLink("pre")}>
+              <Link2 className="h-3 w-3" /> 0-meting
+            </Button>
+            <Button size="sm" variant="ghost" className="h-6 text-xs gap-1" onClick={() => copyScsLink("post")}>
+              <Link2 className="h-3 w-3" /> Nameting
+            </Button>
+          </div>
         </div>
 
         {loadingSub ? (
@@ -273,7 +278,7 @@ export default function IntakeSection({ enrollment, onUpdate }: IntakeSectionPro
           <div className="flex items-center gap-2 text-xs text-muted-foreground bg-muted/20 rounded-lg p-3">
             <BarChart3 className="h-3.5 w-3.5" />
             <span className="flex-1">Deelnemer heeft de vragenlijst nog niet ingevuld.</span>
-            <Button size="sm" variant="outline" className="h-6 text-xs gap-1" onClick={copyScsLink}>
+            <Button size="sm" variant="outline" className="h-6 text-xs gap-1" onClick={() => copyScsLink("pre")}>
               <Copy className="h-3 w-3" /> Link kopiëren
             </Button>
           </div>
