@@ -4,6 +4,7 @@ const items = [
   "Over je grenzen heen gaat",
   "Veel piekert of in je hoofd zit",
   "Gevoelig bent voor prikkels",
+  "Last hebt van perfectionisme",
   "Meer verbinding wilt voelen",
   "Een nieuwe fase ingaat",
 ];
