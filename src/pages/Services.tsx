@@ -48,16 +48,36 @@ const Services = () => {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.2 }}
-              className="text-muted-foreground text-lg max-w-2xl mx-auto leading-relaxed"
+              className="text-muted-foreground text-lg max-w-2xl mx-auto leading-relaxed mb-8"
             >
               Iedereen bewandelt zijn of haar eigen pad. Soms wil je groeien in een groep, soms juist met persoonlijke begeleiding. Hieronder vind je de mogelijkheden.
             </motion.p>
+
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.3 }}
+              className="flex flex-wrap justify-center gap-3"
+            >
+              <a href="#groepstraject" className="inline-flex items-center gap-2 rounded-full bg-card border border-border/50 px-5 py-2.5 text-sm font-medium text-foreground hover:bg-primary/5 transition-colors">
+                <Users className="h-4 w-4 text-primary" />
+                Groepstraject
+              </a>
+              <a href="#individueel" className="inline-flex items-center gap-2 rounded-full bg-card border border-border/50 px-5 py-2.5 text-sm font-medium text-foreground hover:bg-primary/5 transition-colors">
+                <Heart className="h-4 w-4 text-primary" />
+                Individueel traject
+              </a>
+              <a href="#losse-sessies" className="inline-flex items-center gap-2 rounded-full bg-card border border-border/50 px-5 py-2.5 text-sm font-medium text-foreground hover:bg-primary/5 transition-colors">
+                <Sparkles className="h-4 w-4 text-primary" />
+                Losse sessies
+              </a>
+            </motion.div>
           </div>
         </div>
       </section>
 
       {/* 1. Groepstraject */}
-      <section className="py-20 lg:py-24 bg-white">
+      <section id="groepstraject" className="py-20 lg:py-24 bg-white">
         <div className="container mx-auto px-4">
           <div className="mx-auto max-w-4xl">
             <div className="grid gap-10 lg:grid-cols-2 items-center">
@@ -122,7 +142,7 @@ const Services = () => {
       </section>
 
       {/* 2. Individueel Traject */}
-      <section className="py-20 lg:py-24 bg-warm-50">
+      <section id="individueel" className="py-20 lg:py-24 bg-warm-50">
         <div className="container mx-auto px-4">
           <div className="mx-auto max-w-4xl">
             <div className="grid gap-10 lg:grid-cols-2 items-center">
@@ -193,7 +213,7 @@ const Services = () => {
       </section>
 
       {/* 3. Individuele Sessie (los) */}
-      <section className="py-20 lg:py-24 bg-white">
+      <section id="losse-sessies" className="py-20 lg:py-24 bg-white">
         <div className="container mx-auto px-4">
           <div className="mx-auto max-w-4xl">
             <ScrollReveal>
@@ -210,33 +230,14 @@ const Services = () => {
               </div>
             </ScrollReveal>
             
-            <div className="grid md:grid-cols-2 gap-8 max-w-3xl mx-auto">
-              <ScrollReveal animation="fade-right">
-                <Card className="border-warm-200 bg-warm-50 rounded-2xl overflow-hidden h-full">
-                  <CardContent className="p-8">
-                    <div className="h-12 w-12 rounded-xl bg-gradient-to-br from-terracotta-100 to-terracotta-200 flex items-center justify-center mb-5">
-                      <Sparkles className="h-6 w-6 text-terracotta-600" />
-                    </div>
-                    <h3 className="text-xl font-semibold text-foreground mb-2">Kennismakingssessie</h3>
-                    <p className="text-xs text-muted-foreground mb-4 font-medium">Eenmalig</p>
-                    <p className="text-muted-foreground leading-relaxed mb-6">
-                      Een eerste verdiepende sessie waarin we helder krijgen waar je staat en wat je nodig hebt. Je ervaart direct hoe het is om samen te werken en krijgt concrete inzichten.
-                    </p>
-                    <div className="pt-4 border-t border-warm-200">
-                      <p className="text-sm text-muted-foreground">60 minuten</p>
-                      <p className="text-2xl font-light text-terracotta-600 mt-1">€95</p>
-                    </div>
-                  </CardContent>
-                </Card>
-              </ScrollReveal>
-              
-              <ScrollReveal animation="fade-left" delay={0.2}>
-                <Card className="border-warm-200 bg-warm-50 rounded-2xl overflow-hidden h-full">
+            <div className="max-w-md mx-auto">
+              <ScrollReveal animation="fade-up">
+                <Card className="border-warm-200 bg-warm-50 rounded-2xl overflow-hidden">
                   <CardContent className="p-8">
                     <div className="h-12 w-12 rounded-xl bg-gradient-to-br from-sage-100 to-sage-200 flex items-center justify-center mb-5">
                       <Heart className="h-6 w-6 text-sage-600" />
                     </div>
-                    <h3 className="text-xl font-semibold text-foreground mb-2">Reguliere individuele sessie</h3>
+                    <h3 className="text-xl font-semibold text-foreground mb-2">Individuele sessie</h3>
                     <p className="text-xs text-muted-foreground mb-4 font-medium">Per sessie</p>
                     <p className="text-muted-foreground leading-relaxed mb-6">
                       Persoonlijke begeleiding, volledig afgestemd op jouw vraag of proces. We werken verdiepend en concreet aan wat op dat moment aandacht vraagt.
