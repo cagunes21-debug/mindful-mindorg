@@ -86,9 +86,10 @@ const PackageSection = () => {
             </Link>
           </div>
 
-          <p className="text-center text-xs text-muted-foreground mt-4">
-            Het kennismakingsgesprek is vrijblijvend en kosteloos.
-          </p>
+          <div className="text-center mt-4 space-y-1">
+            <p className="text-xs text-muted-foreground">📅 Sessies vinden online plaats · Betaling in termijnen mogelijk</p>
+            <p className="text-xs text-muted-foreground">Het kennismakingsgesprek is vrijblijvend en kosteloos.</p>
+          </div>
         </motion.div>
       </div>
     </section>
