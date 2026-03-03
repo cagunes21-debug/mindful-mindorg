@@ -3,8 +3,36 @@ import { supabase } from "@/integrations/supabase/client";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
-import { Loader2, BarChart3, TrendingUp, TrendingDown, Users, ArrowUpDown } from "lucide-react";
+import { Loader2, BarChart3, TrendingUp, TrendingDown, Users, ArrowUpDown, Download } from "lucide-react";
 import { Button } from "@/components/ui/button";
+
+const exportCsv = (rows: ScsRow[]) => {
+  const headers = ["Deelnemer","Email","Type","Totaalscore","Zelfvriendelijkheid","Zelfoordeel","Gedeelde menselijkheid","Isolatie","Mindfulness","Over-identificatie","Trainer","Cursustype","Datum"];
+  const csvRows = rows.map(r => [
+    r.participant_name || "",
+    r.participant_email || "",
+    r.measurement_type === "pre" ? "0-meting" : r.measurement_type === "post" ? "Nameting" : r.measurement_type,
+    r.overall_score?.toFixed(2) ?? "",
+    r.self_kindness?.toFixed(2) ?? "",
+    r.self_judgment?.toFixed(2) ?? "",
+    r.common_humanity?.toFixed(2) ?? "",
+    r.isolation?.toFixed(2) ?? "",
+    r.mindfulness?.toFixed(2) ?? "",
+    r.over_identification?.toFixed(2) ?? "",
+    r.trainer_name || "",
+    r.course_type || "",
+    new Date(r.submitted_at).toLocaleDateString("nl-NL"),
+  ].map(v => `"${String(v).replace(/"/g, '""')}"`).join(","));
+
+  const csv = [headers.join(","), ...csvRows].join("\n");
+  const blob = new Blob(["\uFEFF" + csv], { type: "text/csv;charset=utf-8;" });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = `scs-scores-${new Date().toISOString().slice(0, 10)}.csv`;
+  a.click();
+  URL.revokeObjectURL(url);
+};
 
 interface ScsRow {
   id: string;
@@ -180,6 +208,13 @@ export default function AdminScsOverview() {
 
   return (
     <div className="space-y-6">
+      {/* Export button */}
+      <div className="flex justify-end">
+        <Button variant="outline" size="sm" className="gap-2" onClick={() => exportCsv(sortedRows)}>
+          <Download className="h-4 w-4" /> Exporteer CSV
+        </Button>
+      </div>
+
       {/* Summary cards */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
         <Card>
