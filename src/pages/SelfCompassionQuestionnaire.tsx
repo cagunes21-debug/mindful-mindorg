@@ -114,14 +114,12 @@ export default function SelfCompassionQuestionnaire() {
 
   const checkEnrollment = async () => {
     setLoading(true);
-    const { data } = await supabase
-      .from("enrollments")
-      .select("id")
-      .eq("id", enrollmentId!)
-      .single();
-    setEnrollmentValid(!!data);
+    // Use SECURITY DEFINER function so unauthenticated users can check enrollment existence
+    const { data: exists } = await supabase
+      .rpc("enrollment_exists", { _enrollment_id: enrollmentId! });
+    setEnrollmentValid(!!exists);
 
-    if (data) {
+    if (exists) {
       // Check if this measurement type was already submitted
       const { data: existing } = await supabase
         .from("scs_submissions" as any)
