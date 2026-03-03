@@ -25,7 +25,6 @@ const Bedrijven = lazy(() => import("./pages/Bedrijven"));
 const Auth = lazy(() => import("./pages/Auth"));
 const AdminDashboard = lazy(() => import("./pages/AdminDashboard"));
 const AdminBlog = lazy(() => import("./pages/AdminBlog"));
-const CustomerOverview = lazy(() => import("./pages/CustomerOverview"));
 const ParticipantDashboard = lazy(() => import("./pages/ParticipantDashboard"));
 const BetalingSucces = lazy(() => import("./pages/BetalingSucces"));
 const BetalingGeannuleerd = lazy(() => import("./pages/BetalingGeannuleerd"));
@@ -38,7 +37,7 @@ const BlogPost = lazy(() => import("./pages/BlogPost"));
 const AlgemeneVoorwaarden = lazy(() => import("./pages/AlgemeneVoorwaarden"));
 const ResetPassword = lazy(() => import("./pages/ResetPassword"));
 const CourseMaterial = lazy(() => import("./pages/CourseMaterial"));
-const AdminEnrollments = lazy(() => import("./pages/AdminEnrollments"));
+
 const SessionPresentation = lazy(() => import("./pages/SessionPresentation"));
 const SelfCompassionPresentation = lazy(() => import("./pages/SelfCompassionPresentation"));
 const NotFound = lazy(() => import("./pages/NotFound"));
@@ -76,7 +75,7 @@ const App = () => (
               <Route path="/bedrijven" element={<Bedrijven />} />
               <Route path="/login" element={<Auth />} />
               <Route path="/admin" element={<ProtectedRoute requireAdmin><AdminDashboard /></ProtectedRoute>} />
-              <Route path="/admin/klanten" element={<ProtectedRoute requireAdmin><CustomerOverview /></ProtectedRoute>} />
+              <Route path="/admin/klanten" element={<ProtectedRoute requireAdmin><AdminDashboard /></ProtectedRoute>} />
               <Route path="/admin/blog" element={<ProtectedRoute requireAdmin><AdminBlog /></ProtectedRoute>} />
               <Route path="/mijn-training" element={<ProtectedRoute><ParticipantDashboard /></ProtectedRoute>} />
               <Route path="/betaling-succes" element={<BetalingSucces />} />
@@ -89,7 +88,7 @@ const App = () => (
               <Route path="/blog/:slug" element={<BlogPost />} />
               <Route path="/algemene-voorwaarden" element={<AlgemeneVoorwaarden />} />
               <Route path="/admin/cursusmateriaal" element={<ProtectedRoute requireAdmin><CourseMaterial /></ProtectedRoute>} />
-              <Route path="/admin/deelnemers" element={<ProtectedRoute requireAdmin><AdminEnrollments /></ProtectedRoute>} />
+              <Route path="/admin/deelnemers" element={<ProtectedRoute requireAdmin><AdminDashboard /></ProtectedRoute>} />
               <Route path="/admin/presentatie/zelfcompassie" element={<ProtectedRoute requireAdmin><SelfCompassionPresentation /></ProtectedRoute>} />
               <Route path="/admin/presentatie/:sessionNumber" element={<ProtectedRoute requireAdmin><SessionPresentation /></ProtectedRoute>} />
               <Route path="/reset-password" element={<ResetPassword />} />
