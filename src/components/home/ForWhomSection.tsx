@@ -26,19 +26,23 @@ const ForWhomSection = () => {
             </h2>
           </div>
 
-          <div className="md:w-2/3 flex flex-wrap gap-2 justify-center md:justify-start">
-            {items.map((item, i) => (
-              <motion.span
-                key={i}
-                initial={{ opacity: 0, scale: 0.9 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                viewport={{ once: true }}
-                transition={{ delay: 0.1 + i * 0.06 }}
-                className="inline-flex items-center gap-2 rounded-full bg-card border border-border/50 px-4 py-2 text-sm text-foreground"
-              >
-                <span className="w-1.5 h-1.5 rounded-full bg-primary flex-shrink-0" />
-                {item}
-              </motion.span>
+          <div className="md:w-2/3 grid grid-cols-1 sm:grid-cols-3 gap-2">
+            {[0, 1, 2].map((col) => (
+              <div key={col} className="flex flex-col gap-2">
+                {items.slice(col * 2, col * 2 + 2).map((item, i) => (
+                  <motion.span
+                    key={i}
+                    initial={{ opacity: 0, scale: 0.9 }}
+                    whileInView={{ opacity: 1, scale: 1 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: 0.1 + (col * 2 + i) * 0.06 }}
+                    className="inline-flex items-center gap-2 rounded-full bg-card border border-border/50 px-4 py-2 text-sm text-foreground"
+                  >
+                    <span className="w-1.5 h-1.5 rounded-full bg-primary flex-shrink-0" />
+                    {item}
+                  </motion.span>
+                ))}
+              </div>
             ))}
           </div>
         </motion.div>
