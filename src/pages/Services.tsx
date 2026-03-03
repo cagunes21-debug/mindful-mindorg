@@ -136,7 +136,13 @@ const Services = () => {
                       </div>
                       <h3 className="text-xl font-semibold text-foreground mb-3">Individueel Traject</h3>
                       <p className="text-muted-foreground mb-4">6 sessies · incl. intake & reflectie</p>
-                      <p className="text-3xl font-light text-terracotta-600">€650</p>
+                      <div className="inline-block rounded-full bg-terracotta-100 px-3 py-1 text-xs font-semibold text-terracotta-700 mb-3">
+                        ✨ Tijdelijke aanbieding
+                      </div>
+                      <div className="flex items-center justify-center gap-3">
+                        <p className="text-xl font-light text-muted-foreground line-through">€650</p>
+                        <p className="text-3xl font-light text-terracotta-600">€550</p>
+                      </div>
                     </CardContent>
                   </Card>
                 </div>
