@@ -76,7 +76,7 @@ serve(async (req) => {
 
       // Send email
       const { error: emailError } = await resend.emails.send({
-        from: "Compassie Collectief <noreply@mindful-mind.org>",
+        from: Deno.env.get("RESEND_FROM_EMAIL") || "Compassie Collectief <noreply@mindful-mind.org>",
         to: [email.trim()],
         subject: "Je verificatiecode voor wachtwoord reset",
         html: `
