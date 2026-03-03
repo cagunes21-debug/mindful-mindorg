@@ -397,6 +397,50 @@ export type Database = {
         }
         Relationships: []
       }
+      session_appointments: {
+        Row: {
+          created_at: string
+          enrollment_id: string
+          id: string
+          notes: string | null
+          session_date: string | null
+          session_time: string | null
+          status: string
+          updated_at: string
+          week_number: number
+        }
+        Insert: {
+          created_at?: string
+          enrollment_id: string
+          id?: string
+          notes?: string | null
+          session_date?: string | null
+          session_time?: string | null
+          status?: string
+          updated_at?: string
+          week_number: number
+        }
+        Update: {
+          created_at?: string
+          enrollment_id?: string
+          id?: string
+          notes?: string | null
+          session_date?: string | null
+          session_time?: string | null
+          status?: string
+          updated_at?: string
+          week_number?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "session_appointments_enrollment_id_fkey"
+            columns: ["enrollment_id"]
+            isOneToOne: false
+            referencedRelation: "enrollments"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       user_roles: {
         Row: {
           id: string
