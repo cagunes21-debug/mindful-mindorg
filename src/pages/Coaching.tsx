@@ -25,27 +25,19 @@ import {
 const packages = [
   {
     title: "Losse sessie",
-    description: "Eenmalige sessie voor kennismaking, specifieke vraag of opfrismoment",
-    price: "€95",
+    description: "Eenmalige sessie voor een specifieke vraag of opfrismoment",
+    price: "€125",
     duration: "60 minuten",
-    features: ["Online of op locatie", "Direct inplanbaar", "Geen verplichtingen"],
-  },
-  {
-    title: "3-sessies pakket",
-    description: "Verdiepend traject voor wie stapsgewijs wil werken aan zelfcompassie",
-    price: "€265",
-    originalPrice: "€285",
-    duration: "3 × 60 minuten",
-    features: ["€10 korting per sessie", "Thuisoefeningen", "Tussentijdse ondersteuning"],
-    popular: true,
+    features: ["Online via Zoom", "Direct inplanbaar", "Geen verplichtingen"],
   },
   {
     title: "6-sessies pakket",
     description: "Uitgebreid traject voor duurzame verandering en integratie",
-    price: "€510",
-    originalPrice: "€570",
-    duration: "6 × 60 minuten",
-    features: ["€10 korting per sessie", "Intensieve begeleiding", "Persoonlijk oefenprogramma"],
+    price: "€550",
+    originalPrice: "€650",
+    duration: "6 sessies · incl. intake & reflectie",
+    features: ["✨ Tijdelijke aanbieding", "Intensieve begeleiding", "Persoonlijk oefenprogramma", "Ondersteuning per mail"],
+    popular: true,
   },
 ];
 
@@ -81,8 +73,8 @@ const faqItems = [
     answer: "We werken via Zoom in een beveiligde omgeving. Je ontvangt een link per e-mail en logt in vanaf een rustige plek. De ervaring is persoonlijk en intiem, vergelijkbaar met een sessie op locatie.",
   },
   {
-    question: "Kan ik ook op locatie terecht?",
-    answer: "Ja, sessies kunnen plaatsvinden in Amersfoort. We hebben een rustige praktijkruimte waar je in alle privacy kunt werken aan je thema's.",
+    question: "Waar vinden de sessies plaats?",
+    answer: "Alle sessies vinden online plaats via Zoom. Je ontvangt een link per e-mail en logt in vanaf een rustige plek. De ervaring is persoonlijk en intiem.",
   },
   {
     question: "Hoe lang duurt een traject?",
@@ -99,7 +91,7 @@ const Coaching = () => {
     <div className="min-h-screen bg-background">
       <SEO 
         title="Individuele Begeleiding"
-        description="Persoonlijke begeleiding in zelfcompassie en mindfulness. Online of op locatie in Amersfoort. Maatwerk dat aansluit bij jouw leven en tempo."
+        description="Persoonlijke begeleiding in zelfcompassie en mindfulness. Online sessies die aansluiten bij jouw leven en tempo."
       />
       <FAQSchema items={faqItems} />
       <Navigation />
@@ -276,11 +268,11 @@ const Coaching = () => {
                             <p className="text-sm text-muted-foreground">Flexibel en vanuit je eigen vertrouwde omgeving</p>
                           </div>
                         </div>
-                        <div className="flex items-center gap-4 p-4 rounded-xl bg-warm-50">
-                          <MapPin className="h-6 w-6 text-terracotta-500" />
+                         <div className="flex items-center gap-4 p-4 rounded-xl bg-warm-50">
+                          <Video className="h-6 w-6 text-terracotta-500" />
                           <div>
-                            <p className="font-medium text-foreground">Op locatie in Amersfoort</p>
-                            <p className="text-sm text-muted-foreground">Rustige praktijkruimte met privacy</p>
+                            <p className="font-medium text-foreground">Online via Zoom</p>
+                            <p className="text-sm text-muted-foreground">Flexibel en vanuit je eigen vertrouwde omgeving</p>
                           </div>
                         </div>
                       </div>
@@ -308,7 +300,7 @@ const Coaching = () => {
               </div>
             </ScrollReveal>
             
-            <StaggerContainer className="grid gap-6 md:grid-cols-3">
+            <StaggerContainer className="grid gap-6 md:grid-cols-2 max-w-3xl mx-auto">
               {packages.map((pkg, index) => (
                 <StaggerItem key={index}>
                   <Card className={`border-0 rounded-3xl shadow-lg overflow-hidden h-full relative ${
