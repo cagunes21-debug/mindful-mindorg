@@ -1,12 +1,12 @@
 import { motion } from "framer-motion";
 
 const items = [
-  "Over je grenzen heen gaat",
-  "Veel piekert of in je hoofd zit",
-  "Gevoelig bent voor prikkels",
+  "Regelmatig over je grenzen heen gaat",
+  "Veel piekert of vastzit in je hoofd",
+  "Gevoelig bent voor prikkels en emoties",
   "Last hebt van perfectionisme",
-  "Meer verbinding wilt voelen",
-  "Een nieuwe fase ingaat",
+  "Meer verbinding met jezelf wilt voelen",
+  "In een nieuwe levensfase zit",
 ];
 
 const ForWhomSection = () => {
