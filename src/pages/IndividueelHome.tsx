@@ -12,6 +12,7 @@ import BenefitsSection from "@/components/home/BenefitsSection";
 import ApproachSection from "@/components/home/ApproachSection";
 import TrainersSection from "@/components/home/TrainersSection";
 import CTASection from "@/components/home/CTASection";
+import PackageSection from "@/components/home/PackageSection";
 
 const IndividueelHome = () => {
   return (
@@ -29,6 +30,7 @@ const IndividueelHome = () => {
       <HeroSection />
       <ForYouSection />
       <BenefitsSection />
+      <PackageSection />
       <ApproachSection />
       <TrainersSection />
       <CTASection />
