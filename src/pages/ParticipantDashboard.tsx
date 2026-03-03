@@ -149,6 +149,7 @@ const ParticipantDashboard = () => {
 
   const getMaxWeeks = (): number => {
     if (!enrollment) return 8;
+    if (enrollment.course_type === 'losse_sessie') return 1;
     return enrollment.course_type === 'individueel_6' ? 6 : 8;
   };
 
@@ -159,13 +160,17 @@ const ParticipantDashboard = () => {
 
   const getCourseName = (): string => {
     if (!enrollment) return '8-weekse Mindful Zelfcompassie Training';
-    return enrollment.course_type === 'individueel_6' 
-      ? 'Individueel Traject – 6 sessies' 
-      : '8-weekse Mindful Zelfcompassie Training';
+    const names: Record<string, string> = {
+      'msc_8week': '8-weekse Mindful Zelfcompassie Training',
+      'individueel_6': 'Individueel Traject – 6 sessies',
+      'losse_sessie': 'Losse Individuele Sessie',
+    };
+    return names[enrollment.course_type] || '8-weekse Mindful Zelfcompassie Training';
   };
 
   const getWeekLabel = (): string => {
-    return enrollment?.course_type === 'individueel_6' ? 'Sessie' : 'Week';
+    if (!enrollment) return 'Week';
+    return enrollment.course_type === 'msc_8week' ? 'Week' : 'Sessie';
   };
 
   const isWeekUnlocked = (weekNumber: number): boolean => {
