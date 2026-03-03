@@ -32,6 +32,7 @@ import MeditationPlayer from "@/components/participant/MeditationPlayer";
 import AssignmentCard from "@/components/participant/AssignmentCard";
 import PracticalInfoCard from "@/components/participant/PracticalInfoCard";
 import PresentationViewer from "@/components/participant/PresentationViewer";
+import WelcomeSection from "@/components/participant/WelcomeSection";
 
 interface Enrollment {
   id: string;
@@ -373,65 +374,12 @@ const ParticipantDashboard = () => {
       <main className="container mx-auto px-4 pt-24 pb-16">
         <div className="max-w-6xl mx-auto">
           {/* Welcome Section */}
-          <Card className="mb-8 border-warm-200 bg-gradient-to-br from-warm-50 to-warm-100/30 shadow-sm">
-            <CardContent className="p-8 md:p-10">
-              <h1 className="text-3xl md:text-4xl font-light text-foreground mb-2">
-                Welkom{user?.user_metadata?.full_name ? ` ${user.user_metadata.full_name.split(' ')[0]}` : ''} 🌿
-              </h1>
-              <p className="text-lg text-muted-foreground mb-6">
-                {getCourseName()}
-              </p>
-
-              {/* Training selector when multiple enrollments */}
-              {allEnrollments.length > 1 && (
-                <div className="mb-6">
-                  <p className="text-sm text-muted-foreground mb-2">Je hebt meerdere trainingen:</p>
-                  <div className="flex flex-wrap gap-2">
-                    {allEnrollments.map(e => (
-                      <Button
-                        key={e.id}
-                        variant={enrollment?.id === e.id ? "default" : "outline"}
-                        size="sm"
-                        onClick={() => selectEnrollment(e)}
-                      >
-                        {COURSE_TYPE_NAMES[e.course_type] || e.course_type}
-                      </Button>
-                    ))}
-                  </div>
-                </div>
-              )}
-
-              <div className="bg-background/80 rounded-xl p-6 text-muted-foreground space-y-4">
-                <p className="text-base leading-relaxed">
-                  Wat fijn dat je deze stap hebt gezet. Dit is jouw persoonlijke leeromgeving — 
-                  een veilige plek om in je eigen tempo te werken aan zelfcompassie en mindfulness.
-                </p>
-                <p className="text-sm leading-relaxed">
-                  Hieronder vind je jouw sessies, meditaties en opdrachten. Je trainer geeft stap voor stap 
-                  nieuwe sessies vrij, zodat je rustig kunt werken aan elk onderdeel. 
-                  Er is geen haast — neem de tijd en wees mild voor jezelf. 💛
-                </p>
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-3 pt-2">
-                  <div className="flex items-center gap-2 text-sm">
-                    <BookOpen className="h-4 w-4 text-primary" />
-                    <span>Sessies</span>
-                  </div>
-                  <div className="flex items-center gap-2 text-sm">
-                    <Headphones className="h-4 w-4 text-primary" />
-                    <span>Meditaties</span>
-                  </div>
-                  <div className="flex items-center gap-2 text-sm">
-                    <ClipboardList className="h-4 w-4 text-primary" />
-                    <span>Opdrachten</span>
-                  </div>
-                  <div className="flex items-center gap-2 text-sm">
-                    <Info className="h-4 w-4 text-primary" />
-                    <span>Praktische info</span>
-                  </div>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
+          <WelcomeSection
+            user={user}
+            enrollment={enrollment}
+            allEnrollments={allEnrollments}
+            onSelectEnrollment={selectEnrollment}
+          />
 
           {/* Progress Overview */}
           <Card className="mb-8 border-warm-200">
