@@ -10,6 +10,8 @@ import ExitIntentPopup from "./components/ExitIntentPopup";
 import StickyCTA from "./components/StickyCTA";
 import ProtectedRoute from "./components/ProtectedRoute";
 
+const IndividueelHome = lazy(() => import("./pages/IndividueelHome"));
+
 // Lazy-loaded routes for better Core Web Vitals
 const Index = lazy(() => import("./pages/Index"));
 const Services = lazy(() => import("./pages/Services"));
@@ -58,7 +60,8 @@ const App = () => (
           <StickyCTA />
           <Suspense fallback={<PageLoader />}>
             <Routes>
-              <Route path="/" element={<MindfulZelfcompassie />} />
+              <Route path="/" element={<IndividueelHome />} />
+              <Route path="/msc-training" element={<MindfulZelfcompassie />} />
               <Route path="/programmas" element={<Index />} />
               
               <Route path="/ons-aanbod" element={<Services />} />

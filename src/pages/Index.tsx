@@ -44,7 +44,7 @@ const programs = [
       "Je zoekt meer innerlijke rust en veerkracht",
     ],
     dates: [],
-    linkTo: "/",
+    linkTo: "/msc-training",
     available: true,
   },
   {
