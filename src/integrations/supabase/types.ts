@@ -462,6 +462,62 @@ export type Database = {
         }
         Relationships: []
       }
+      scs_submissions: {
+        Row: {
+          answers: Json
+          common_humanity: number | null
+          enrollment_id: string
+          id: string
+          isolation: number | null
+          measurement_type: string
+          mindfulness: number | null
+          over_identification: number | null
+          overall_score: number | null
+          self_judgment: number | null
+          self_kindness: number | null
+          submitted_at: string
+          updated_at: string
+        }
+        Insert: {
+          answers?: Json
+          common_humanity?: number | null
+          enrollment_id: string
+          id?: string
+          isolation?: number | null
+          measurement_type?: string
+          mindfulness?: number | null
+          over_identification?: number | null
+          overall_score?: number | null
+          self_judgment?: number | null
+          self_kindness?: number | null
+          submitted_at?: string
+          updated_at?: string
+        }
+        Update: {
+          answers?: Json
+          common_humanity?: number | null
+          enrollment_id?: string
+          id?: string
+          isolation?: number | null
+          measurement_type?: string
+          mindfulness?: number | null
+          over_identification?: number | null
+          overall_score?: number | null
+          self_judgment?: number | null
+          self_kindness?: number | null
+          submitted_at?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "scs_submissions_enrollment_id_fkey"
+            columns: ["enrollment_id"]
+            isOneToOne: false
+            referencedRelation: "enrollments"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       session_appointments: {
         Row: {
           created_at: string
