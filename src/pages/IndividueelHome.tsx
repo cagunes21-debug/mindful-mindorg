@@ -14,7 +14,7 @@ import TrainersSection from "@/components/home/TrainersSection";
 import CTASection from "@/components/home/CTASection";
 import PackageSection from "@/components/home/PackageSection";
 import ForWhomSection from "@/components/home/ForWhomSection";
-import SessionStructureSection from "@/components/home/SessionStructureSection";
+
 
 const IndividueelHome = () => {
   return (
@@ -35,7 +35,7 @@ const IndividueelHome = () => {
       <PackageSection />
       <ForWhomSection />
       <ApproachSection />
-      <SessionStructureSection />
+      
       <TrainersSection />
       <CTASection />
       <Footer />
