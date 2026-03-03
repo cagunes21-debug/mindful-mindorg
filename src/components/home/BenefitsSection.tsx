@@ -1,7 +1,7 @@
-import { Heart, Shield, Eye, Star, Pen } from "lucide-react";
+import { Heart, Shield, Eye, Star, Pen, Check } from "lucide-react";
 import { motion } from "framer-motion";
 
-const benefits = [
+const experiences = [
   {
     icon: Heart,
     title: "Mildheid voor jezelf",
@@ -44,6 +44,14 @@ const benefits = [
   },
 ];
 
+const results = [
+  "Meer innerlijke rust en minder piekeren",
+  "Sterkere grenzen leren stellen",
+  "Meer zelfvertrouwen en zelfcompassie",
+  "Beter omgaan met stress en emoties",
+  "Heldere keuzes maken vanuit wie jij écht bent",
+];
+
 const containerVariants = {
   hidden: {},
   visible: {
@@ -64,6 +72,7 @@ const BenefitsSection = () => {
       <div className="absolute bottom-10 -right-20 w-72 h-72 bg-lavender-200/20 rounded-full blur-3xl" />
 
       <div className="container mx-auto px-6 max-w-5xl relative">
+        {/* Header */}
         <div className="text-center mb-16">
           <motion.p
             initial={{ opacity: 0, y: 10 }}
@@ -91,14 +100,15 @@ const BenefitsSection = () => {
           />
         </div>
 
+        {/* Experience cards */}
         <motion.div
           variants={containerVariants}
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, margin: "-50px" }}
-          className="grid grid-cols-2 lg:grid-cols-3 gap-4"
+          className="grid grid-cols-2 lg:grid-cols-3 gap-4 mb-20"
         >
-          {benefits.map((benefit) => (
+          {experiences.map((benefit) => (
             <motion.div
               key={benefit.title}
               variants={cardVariants}
@@ -112,6 +122,36 @@ const BenefitsSection = () => {
             </motion.div>
           ))}
         </motion.div>
+
+        {/* Concrete results */}
+        <div className="max-w-2xl mx-auto">
+          <motion.h3
+            initial={{ opacity: 0, y: 15 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="text-2xl md:text-3xl font-serif text-foreground text-center mb-8"
+          >
+            Concreet levert het je <em className="italic text-primary">op</em>
+          </motion.h3>
+
+          <motion.ul className="space-y-3 max-w-md mx-auto">
+            {results.map((item, i) => (
+              <motion.li
+                key={i}
+                initial={{ opacity: 0, x: -20 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.08 }}
+                className="flex items-start gap-3 text-foreground"
+              >
+                <span className="mt-1 flex-shrink-0 w-6 h-6 rounded-full bg-primary/10 flex items-center justify-center">
+                  <Check className="h-3.5 w-3.5 text-primary" />
+                </span>
+                <span className="text-base leading-relaxed">{item}</span>
+              </motion.li>
+            ))}
+          </motion.ul>
+        </div>
       </div>
     </section>
   );
