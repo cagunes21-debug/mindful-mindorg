@@ -4,13 +4,14 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Checkbox } from "@/components/ui/checkbox";
+import { Textarea } from "@/components/ui/textarea";
 import {
   Dialog,
   DialogContent,
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { Mail, Phone, Calendar, Euro, ShoppingBag, ArrowLeft, BookOpen, Headphones, ClipboardList, Presentation, FileText } from "lucide-react";
+import { Mail, Phone, Calendar, Euro, ShoppingBag, ArrowLeft, BookOpen, Headphones, ClipboardList, Presentation, FileText, Save, StickyNote } from "lucide-react";
 import { format } from "date-fns";
 import { nl } from "date-fns/locale";
 import { toast } from "sonner";
@@ -40,6 +41,7 @@ interface Registration {
   payment_status: string | null;
   price: string | null;
   created_at: string;
+  admin_notes: string | null;
 }
 
 interface Enrollment {
@@ -92,6 +94,8 @@ export default function CustomerProfile({ email, onClose }: CustomerProfileProps
   const [courseWeeks, setCourseWeeks] = useState<CourseWeek[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [saving, setSaving] = useState(false);
+  const [trainerNotes, setTrainerNotes] = useState<Record<string, string>>({});
+  const [savingNotes, setSavingNotes] = useState<string | null>(null);
 
   useEffect(() => {
     fetchCustomerData();
@@ -102,14 +106,20 @@ export default function CustomerProfile({ email, onClose }: CustomerProfileProps
     try {
       const [customerRes, regRes, weeksRes] = await Promise.all([
         supabase.from("customers").select("*").eq("email", email).single(),
-        supabase.from("registrations").select("id, training_name, training_date, status, payment_status, price, created_at").eq("email", email).order("created_at", { ascending: false }),
+        supabase.from("registrations").select("id, training_name, training_date, status, payment_status, price, created_at, admin_notes").eq("email", email).order("created_at", { ascending: false }),
         supabase.from("course_weeks").select("id, week_number, title, course_type").order("week_number"),
       ]);
 
       if (customerRes.error) throw customerRes.error;
       setCustomer(customerRes.data);
-      setRegistrations(regRes.data || []);
+      const regs = (regRes.data || []) as Registration[];
+      setRegistrations(regs);
       setCourseWeeks((weeksRes.data || []) as CourseWeek[]);
+
+      // Initialize trainer notes from registrations
+      const notesMap: Record<string, string> = {};
+      regs.forEach(r => { notesMap[r.id] = r.admin_notes || ""; });
+      setTrainerNotes(notesMap);
 
       // Load enrollments linked to this customer's registrations
       const regIds = (regRes.data || []).map(r => r.id);
@@ -168,6 +178,21 @@ export default function CustomerProfile({ email, onClose }: CustomerProfileProps
       toast.error("Kon niet opslaan");
     }
     setSaving(false);
+  };
+
+  const saveTrainerNotes = async (regId: string) => {
+    setSavingNotes(regId);
+    const { error } = await supabase
+      .from("registrations")
+      .update({ admin_notes: trainerNotes[regId] || null })
+      .eq("id", regId);
+
+    if (!error) {
+      toast.success("Notitie opgeslagen");
+    } else {
+      toast.error("Kon notitie niet opslaan");
+    }
+    setSavingNotes(null);
   };
 
   if (isLoading) {
@@ -336,6 +361,39 @@ export default function CustomerProfile({ email, onClose }: CustomerProfileProps
                 <Badge key={idx} variant="secondary" className="bg-sage-100 text-sage-800">
                   {training}
                 </Badge>
+              ))}
+            </div>
+          </div>
+
+          {/* Trainer Notes */}
+          <div>
+            <h3 className="font-medium mb-3 flex items-center gap-2">
+              <StickyNote className="h-4 w-4" />
+              Trainernotities
+            </h3>
+            <div className="space-y-3">
+              {registrations.map((reg) => (
+                <Card key={reg.id}>
+                  <CardContent className="py-3 px-4 space-y-2">
+                    <p className="text-sm font-medium text-muted-foreground">{reg.training_name}</p>
+                    <Textarea
+                      placeholder="Notities over deze deelnemer..."
+                      value={trainerNotes[reg.id] || ""}
+                      onChange={(e) => setTrainerNotes(prev => ({ ...prev, [reg.id]: e.target.value }))}
+                      className="min-h-[80px] text-sm"
+                    />
+                    <Button
+                      size="sm"
+                      variant="outline"
+                      onClick={() => saveTrainerNotes(reg.id)}
+                      disabled={savingNotes === reg.id}
+                      className="gap-1.5"
+                    >
+                      <Save className="h-3.5 w-3.5" />
+                      {savingNotes === reg.id ? "Opslaan..." : "Opslaan"}
+                    </Button>
+                  </CardContent>
+                </Card>
               ))}
             </div>
           </div>
