@@ -66,7 +66,7 @@ export default function AdminDashboard() {
           <section id="section-aanmeldingen" className="mb-16 scroll-mt-28">
             <h2 className="text-2xl font-light text-foreground mb-6 flex items-center gap-2 border-b pb-3">
               <ClipboardList className="h-5 w-5 text-primary" />
-              Aanmeldingen
+              Aanmeldingen & Betaling
             </h2>
             <AdminRegistrationsSection />
           </section>
