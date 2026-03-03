@@ -5,7 +5,7 @@ const experiences = [
   {
     icon: Heart,
     title: "Mildheid voor jezelf",
-    description: "Je leert jezelf te troosten en steunen wanneer het moeilijk is, in plaats van jezelf te bekritiseren.",
+    description: "Je leert jezelf te steunen en te troosten wanneer het moeilijk is — in plaats van jezelf te bekritiseren.",
     gradient: "from-rose-100 to-rose-50",
     iconBg: "bg-rose-100",
     iconColor: "text-rose-500",
@@ -13,7 +13,7 @@ const experiences = [
   {
     icon: Shield,
     title: "Meer veerkracht",
-    description: "Je bouwt emotionele stabiliteit op en leert beter omgaan met stress, twijfel en tegenslag.",
+    description: "Je ontwikkelt emotionele stabiliteit en leert beter omgaan met stress, twijfel en tegenslag.",
     gradient: "from-lavender-100 to-lavender-50",
     iconBg: "bg-lavender-100",
     iconColor: "text-lavender-500",
@@ -21,7 +21,7 @@ const experiences = [
   {
     icon: Eye,
     title: "Rust in je hoofd",
-    description: "Je ontwikkelt de vaardigheid om even stil te staan, zonder te oordelen over wat je voelt.",
+    description: "Je ontdekt hoe je kunt vertragen en ruimte kunt maken voor je gedachten en gevoelens, zonder oordeel.",
     gradient: "from-sage-100 to-sage-50",
     iconBg: "bg-sage-100",
     iconColor: "text-sage-600",
@@ -29,15 +29,15 @@ const experiences = [
   {
     icon: Star,
     title: "Verbinding met jezelf",
-    description: "Je herstelt de relatie met jezelf en ontdekt wat je écht nodig hebt om in balans te leven.",
+    description: "Je herstelt de relatie met jezelf en wordt je bewuster van wat jij écht nodig hebt om in balans te leven.",
     gradient: "from-coral-100 to-coral-50",
     iconBg: "bg-coral-100",
     iconColor: "text-coral-500",
   },
   {
     icon: Pen,
-    title: "Handvatten voor elke dag",
-    description: "Je krijgt oefeningen en tools die je direct kunt inzetten — thuis, op werk, in relaties.",
+    title: "Praktische handvatten",
+    description: "Je ontvangt concrete oefeningen en tools die je direct kunt toepassen — thuis, op werk en in je relaties.",
     gradient: "from-terracotta-100 to-warm-100",
     iconBg: "bg-terracotta-100",
     iconColor: "text-terracotta-600",
@@ -46,10 +46,10 @@ const experiences = [
 
 const results = [
   "Meer innerlijke rust en minder piekeren",
-  "Sterkere grenzen leren stellen",
+  "Duidelijkere grenzen en minder over jezelf heen stappen",
   "Meer zelfvertrouwen en zelfcompassie",
-  "Beter omgaan met stress en emoties",
-  "Heldere keuzes maken vanuit wie jij écht bent",
+  "Meer grip op stress en emoties",
+  "Heldere keuzes die passen bij wie jij bent",
 ];
 
 const containerVariants = {
