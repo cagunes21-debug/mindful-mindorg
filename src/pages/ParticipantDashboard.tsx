@@ -116,17 +116,27 @@ const ParticipantDashboard = () => {
         .from("enrollments")
         .select("*")
         .eq("user_id", userId)
-        .eq("status", "active")
         .order("created_at", { ascending: false });
 
-      if (error || !enrollmentsData || enrollmentsData.length === 0) {
+      if (error) {
+        console.error("Enrollment query error:", error);
         setLoading(false);
         return;
       }
 
-      setAllEnrollments(enrollmentsData as Enrollment[]);
-      // Auto-select the first (most recent) enrollment
-      await selectEnrollment(enrollmentsData[0] as Enrollment);
+      // Filter active enrollments client-side to avoid enum casting issues
+      const activeEnrollments = (enrollmentsData || []).filter(
+        (e: any) => e.status === "active"
+      );
+
+      if (activeEnrollments.length === 0) {
+        console.log("No active enrollments found for user:", userId);
+        setLoading(false);
+        return;
+      }
+
+      setAllEnrollments(activeEnrollments as Enrollment[]);
+      await selectEnrollment(activeEnrollments[0] as Enrollment);
     } catch (error) {
       console.error("Error loading enrollments:", error);
       toast.error("Er ging iets mis bij het laden van de gegevens");
