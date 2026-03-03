@@ -4,40 +4,40 @@ import { motion } from "framer-motion";
 const benefits = [
   {
     icon: Heart,
-    title: "Zelfcompassie",
-    description: "Omgaan met moeilijkheden met mildheid in plaats van zelfkritiek.",
+    title: "Mildheid voor jezelf",
+    description: "Je leert jezelf te troosten en steunen wanneer het moeilijk is, in plaats van jezelf te bekritiseren.",
     gradient: "from-rose-100 to-rose-50",
     iconBg: "bg-rose-100",
     iconColor: "text-rose-500",
   },
   {
     icon: Shield,
-    title: "Emotionele balans",
-    description: "Meer veerkracht en innerlijke rust in uitdagende momenten.",
+    title: "Meer veerkracht",
+    description: "Je bouwt emotionele stabiliteit op en leert beter omgaan met stress, twijfel en tegenslag.",
     gradient: "from-lavender-100 to-lavender-50",
     iconBg: "bg-lavender-100",
     iconColor: "text-lavender-500",
   },
   {
     icon: Eye,
-    title: "Mindful bewustzijn",
-    description: "Leven met meer aanwezigheid en verbinding met jezelf.",
+    title: "Rust in je hoofd",
+    description: "Je ontwikkelt de vaardigheid om even stil te staan, zonder te oordelen over wat je voelt.",
     gradient: "from-sage-100 to-sage-50",
     iconBg: "bg-sage-100",
     iconColor: "text-sage-600",
   },
   {
     icon: Star,
-    title: "Innerlijke kracht",
-    description: "Een warme, ondersteunende relatie met jezelf opbouwen.",
+    title: "Verbinding met jezelf",
+    description: "Je herstelt de relatie met jezelf en ontdekt wat je écht nodig hebt om in balans te leven.",
     gradient: "from-coral-100 to-coral-50",
     iconBg: "bg-coral-100",
     iconColor: "text-coral-500",
   },
   {
     icon: Pen,
-    title: "Praktische tools",
-    description: "Concrete handvatten die je direct kunt toepassen in je dagelijks leven.",
+    title: "Handvatten voor elke dag",
+    description: "Je krijgt oefeningen en tools die je direct kunt inzetten — thuis, op werk, in relaties.",
     gradient: "from-terracotta-100 to-warm-100",
     iconBg: "bg-terracotta-100",
     iconColor: "text-terracotta-600",
@@ -96,19 +96,19 @@ const BenefitsSection = () => {
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, margin: "-50px" }}
-          className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6"
+          className="grid grid-cols-2 lg:grid-cols-3 gap-4"
         >
-          {benefits.map((benefit, i) => (
+          {benefits.map((benefit) => (
             <motion.div
               key={benefit.title}
               variants={cardVariants}
-              className={`group relative rounded-2xl p-8 bg-gradient-to-br ${benefit.gradient} border border-border/50 hover:shadow-xl hover:-translate-y-1 transition-all duration-300`}
+              className={`group relative rounded-xl p-5 bg-gradient-to-br ${benefit.gradient} border border-border/50 hover:shadow-lg hover:-translate-y-1 transition-all duration-300`}
             >
-              <div className={`w-14 h-14 rounded-xl ${benefit.iconBg} flex items-center justify-center mb-5 group-hover:scale-110 transition-transform duration-300`}>
-                <benefit.icon className={benefit.iconColor} size={26} />
+              <div className={`w-10 h-10 rounded-lg ${benefit.iconBg} flex items-center justify-center mb-3 group-hover:scale-110 transition-transform duration-300`}>
+                <benefit.icon className={benefit.iconColor} size={20} />
               </div>
-              <h3 className="font-serif text-xl text-foreground mb-2">{benefit.title}</h3>
-              <p className="text-muted-foreground leading-relaxed text-sm">{benefit.description}</p>
+              <h3 className="font-serif text-lg text-foreground mb-1.5">{benefit.title}</h3>
+              <p className="text-muted-foreground leading-relaxed text-xs">{benefit.description}</p>
             </motion.div>
           ))}
         </motion.div>
