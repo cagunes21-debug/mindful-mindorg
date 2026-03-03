@@ -22,7 +22,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Progress } from "@/components/ui/progress";
-import { Mail, Phone, Calendar, Euro, ShoppingBag, ArrowLeft, BookOpen, Headphones, ClipboardList, Presentation, FileText, Save, StickyNote, Eye, EyeOff, Lock, Unlock, Plus, Loader2, Clock, CheckCircle2, XCircle } from "lucide-react";
+import { Mail, Phone, Calendar, Euro, ShoppingBag, ArrowLeft, BookOpen, Headphones, ClipboardList, Presentation, FileText, Save, StickyNote, Eye, EyeOff, Lock, Unlock, Plus, Loader2, Clock, CheckCircle2, XCircle, Target, Heart, MessageSquare, AlertCircle } from "lucide-react";
 import { format } from "date-fns";
 import { nl } from "date-fns/locale";
 import { toast } from "sonner";
@@ -64,6 +64,16 @@ interface Enrollment {
   visible_sections: string[];
   trainer_name: string | null;
   registration_id: string | null;
+  intake_reason: string | null;
+  intake_theme: string | null;
+  intake_goal: string | null;
+}
+
+interface TrainerNote {
+  id: string;
+  enrollment_id: string;
+  note_type: string;
+  content: string;
 }
 
 interface CourseWeek {
@@ -115,12 +125,22 @@ export default function CustomerProfile({ email, onClose }: CustomerProfileProps
   const [enrollments, setEnrollments] = useState<Enrollment[]>([]);
   const [courseWeeks, setCourseWeeks] = useState<CourseWeek[]>([]);
   const [sessionAppointments, setSessionAppointments] = useState<SessionAppointment[]>([]);
+  const [structuredNotes, setStructuredNotes] = useState<TrainerNote[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [trainerNotes, setTrainerNotes] = useState<Record<string, string>>({});
   const [savingNotes, setSavingNotes] = useState<string | null>(null);
   const [activeTraining, setActiveTraining] = useState<string | null>(null);
   const registrationRefs = useRef<Record<string, HTMLDivElement | null>>({});
+
+  // Intake editing state
+  const [editingIntake, setEditingIntake] = useState<string | null>(null);
+  const [intakeForm, setIntakeForm] = useState({ reason: "", theme: "", goal: "" });
+  const [savingIntake, setSavingIntake] = useState(false);
+
+  // Structured notes editing
+  const [noteEdits, setNoteEdits] = useState<Record<string, string>>({});
+  const [savingNote, setSavingNote] = useState<string | null>(null);
 
   // Create enrollment state
   const [creatingForRegId, setCreatingForRegId] = useState<string | null>(null);
@@ -162,11 +182,26 @@ export default function CustomerProfile({ email, onClose }: CustomerProfileProps
       if (regIds.length > 0) {
         const { data: enrollData } = await supabase
           .from("enrollments")
-          .select("id, course_type, start_date, status, unlocked_weeks, visible_sections, trainer_name, registration_id")
+          .select("id, course_type, start_date, status, unlocked_weeks, visible_sections, trainer_name, registration_id, intake_reason, intake_theme, intake_goal")
           .in("registration_id", regIds)
           .order("created_at", { ascending: false });
         const enrs = (enrollData || []) as Enrollment[];
         setEnrollments(enrs);
+
+        // Fetch structured trainer notes
+        const allEnrIds = enrs.map(e => e.id);
+        if (allEnrIds.length > 0) {
+          const { data: notesData } = await supabase
+            .from("trainer_notes")
+            .select("id, enrollment_id, note_type, content")
+            .in("enrollment_id", allEnrIds);
+          const notes = (notesData || []) as TrainerNote[];
+          setStructuredNotes(notes);
+          // Pre-populate note edits
+          const edits: Record<string, string> = {};
+          notes.forEach(n => { edits[`${n.enrollment_id}_${n.note_type}`] = n.content; });
+          setNoteEdits(prev => ({ ...prev, ...edits }));
+        }
 
         // Fetch session appointments for individual/losse enrollments
         const individualEnrIds = enrs
@@ -361,6 +396,56 @@ export default function CustomerProfile({ email, onClose }: CustomerProfileProps
     return { completed, total: totalSessions, percentage: totalSessions > 0 ? (completed / totalSessions) * 100 : 0 };
   };
 
+  // Save intake fields
+  const saveIntake = async (enrollmentId: string) => {
+    setSavingIntake(true);
+    try {
+      const { error } = await supabase
+        .from("enrollments")
+        .update({
+          intake_reason: intakeForm.reason || null,
+          intake_theme: intakeForm.theme || null,
+          intake_goal: intakeForm.goal || null,
+        })
+        .eq("id", enrollmentId);
+      if (error) throw error;
+      setEnrollments(prev => prev.map(e => e.id === enrollmentId ? { ...e, intake_reason: intakeForm.reason || null, intake_theme: intakeForm.theme || null, intake_goal: intakeForm.goal || null } : e));
+      setEditingIntake(null);
+      toast.success("Intake opgeslagen");
+    } catch (err: any) {
+      toast.error("Fout: " + err.message);
+    }
+    setSavingIntake(false);
+  };
+
+  // Save structured note
+  const saveStructuredNote = async (enrollmentId: string, noteType: string) => {
+    const key = `${enrollmentId}_${noteType}`;
+    const content = noteEdits[key] || "";
+    setSavingNote(key);
+    try {
+      const existing = structuredNotes.find(n => n.enrollment_id === enrollmentId && n.note_type === noteType);
+      if (existing) {
+        const { error } = await supabase.from("trainer_notes").update({ content }).eq("id", existing.id);
+        if (error) throw error;
+        setStructuredNotes(prev => prev.map(n => n.id === existing.id ? { ...n, content } : n));
+      } else {
+        const { data, error } = await supabase.from("trainer_notes").insert({ enrollment_id: enrollmentId, note_type: noteType, content }).select().single();
+        if (error) throw error;
+        setStructuredNotes(prev => [...prev, data as TrainerNote]);
+      }
+      toast.success("Notitie opgeslagen");
+    } catch (err: any) {
+      toast.error("Fout: " + err.message);
+    }
+    setSavingNote(null);
+  };
+
+  const getNoteContent = (enrollmentId: string, noteType: string) => {
+    const key = `${enrollmentId}_${noteType}`;
+    return noteEdits[key] ?? structuredNotes.find(n => n.enrollment_id === enrollmentId && n.note_type === noteType)?.content ?? "";
+  };
+
 
   const submitExtraTraining = async () => {
     if (!customer || !extraTrainingName.trim()) { toast.error("Selecteer een training"); return; }
@@ -473,6 +558,47 @@ export default function CustomerProfile({ email, onClose }: CustomerProfileProps
               </CardContent>
             </Card>
           </div>
+
+          {/* Global Summary: Next session + Progress for individual enrollments */}
+          {(() => {
+            const individualEnrollments = enrollments.filter(e => e.course_type === "individueel_6" || e.course_type === "losse_sessie");
+            if (individualEnrollments.length === 0) return null;
+            
+            return (
+              <div className="space-y-2">
+                {individualEnrollments.map(enr => {
+                  const totalSessions = enr.course_type === "individueel_6" ? 6 : 1;
+                  const progress = getSessionProgress(enr.id, totalSessions);
+                  const nextSession = getNextSession(enr.id);
+                  const reg = registrations.find(r => r.id === enr.registration_id);
+
+                  return (
+                    <Card key={enr.id} className="border-primary/20 bg-primary/5">
+                      <CardContent className="p-4 space-y-2">
+                        <div className="flex items-center justify-between">
+                          <span className="text-sm font-medium">{COURSE_TYPES[enr.course_type]}</span>
+                          <span className="text-xs font-medium">{progress.completed} van {progress.total} sessies afgerond</span>
+                        </div>
+                        <Progress value={progress.percentage} className="h-2" />
+                        {nextSession && nextSession.session_date ? (
+                          <div className="flex items-center gap-2 text-sm">
+                            <Clock className="h-4 w-4 text-primary" />
+                            <span>Volgende sessie: <strong>{new Date(nextSession.session_date).toLocaleDateString("nl-NL", { weekday: "long", day: "numeric", month: "long" })}</strong>
+                            {nextSession.session_time && ` om ${nextSession.session_time.slice(0, 5)}`}</span>
+                          </div>
+                        ) : (
+                          <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                            <AlertCircle className="h-4 w-4" />
+                            <span>Nog geen sessie ingepland</span>
+                          </div>
+                        )}
+                      </CardContent>
+                    </Card>
+                  );
+                })}
+              </div>
+            );
+          })()}
 
           {/* Clickable Trainings */}
           <div>
@@ -719,28 +845,128 @@ export default function CustomerProfile({ email, onClose }: CustomerProfileProps
                             </div>
                           )}
 
-                          {/* Trainer notes */}
-                          <div className="border-t pt-3">
-                            <p className="text-xs text-muted-foreground mb-2 flex items-center gap-1">
-                              <StickyNote className="h-3 w-3" /> Trainernotitie:
-                            </p>
-                            <Textarea
-                              placeholder="Notities over deze deelnemer..."
-                              value={trainerNotes[reg.id] || ""}
-                              onChange={(e) => setTrainerNotes(prev => ({ ...prev, [reg.id]: e.target.value }))}
-                              className="min-h-[60px] text-sm"
-                            />
-                            <Button
-                              size="sm"
-                              variant="outline"
-                              onClick={() => saveTrainerNotes(reg.id)}
-                              disabled={savingNotes === reg.id}
-                              className="gap-1.5 mt-2"
-                            >
-                              <Save className="h-3.5 w-3.5" />
-                              {savingNotes === reg.id ? "Opslaan..." : "Opslaan"}
-                            </Button>
-                          </div>
+                          {/* Intake & Intentie - only for enrollments */}
+                          {enrollment && (enrollment.course_type === "individueel_6" || enrollment.course_type === "losse_sessie") && (
+                            <div className="border-t pt-3">
+                              <div className="flex items-center justify-between mb-2">
+                                <p className="text-xs text-muted-foreground flex items-center gap-1">
+                                  <Target className="h-3 w-3" /> Intake & Intentie
+                                </p>
+                                {editingIntake !== enrollment.id && (
+                                  <Button size="sm" variant="ghost" className="h-6 text-xs" onClick={() => {
+                                    setEditingIntake(enrollment.id);
+                                    setIntakeForm({
+                                      reason: enrollment.intake_reason || "",
+                                      theme: enrollment.intake_theme || "",
+                                      goal: enrollment.intake_goal || "",
+                                    });
+                                  }}>Bewerken</Button>
+                                )}
+                              </div>
+                              {editingIntake === enrollment.id ? (
+                                <div className="space-y-2">
+                                  <div>
+                                    <Label className="text-xs">Waarom gestart?</Label>
+                                    <Input className="h-8 text-xs" value={intakeForm.reason} onChange={e => setIntakeForm(f => ({ ...f, reason: e.target.value }))} placeholder="Reden van aanmelding" />
+                                  </div>
+                                  <div>
+                                    <Label className="text-xs">Belangrijk thema</Label>
+                                    <Input className="h-8 text-xs" value={intakeForm.theme} onChange={e => setIntakeForm(f => ({ ...f, theme: e.target.value }))} placeholder="Centraal thema" />
+                                  </div>
+                                  <div>
+                                    <Label className="text-xs">Doel van het traject</Label>
+                                    <Input className="h-8 text-xs" value={intakeForm.goal} onChange={e => setIntakeForm(f => ({ ...f, goal: e.target.value }))} placeholder="Wat wil de deelnemer bereiken?" />
+                                  </div>
+                                  <div className="flex gap-2">
+                                    <Button size="sm" className="gap-1.5 text-xs" onClick={() => saveIntake(enrollment.id)} disabled={savingIntake}>
+                                      {savingIntake ? <Loader2 className="h-3 w-3 animate-spin" /> : <Save className="h-3 w-3" />} Opslaan
+                                    </Button>
+                                    <Button size="sm" variant="ghost" className="text-xs" onClick={() => setEditingIntake(null)}>Annuleren</Button>
+                                  </div>
+                                </div>
+                              ) : (
+                                <div className="space-y-1 text-sm">
+                                  {enrollment.intake_reason || enrollment.intake_theme || enrollment.intake_goal ? (
+                                    <>
+                                      {enrollment.intake_reason && (
+                                        <div className="flex gap-2"><Heart className="h-3.5 w-3.5 text-muted-foreground shrink-0 mt-0.5" /><span>{enrollment.intake_reason}</span></div>
+                                      )}
+                                      {enrollment.intake_theme && (
+                                        <div className="flex gap-2"><Target className="h-3.5 w-3.5 text-muted-foreground shrink-0 mt-0.5" /><span>{enrollment.intake_theme}</span></div>
+                                      )}
+                                      {enrollment.intake_goal && (
+                                        <div className="flex gap-2"><CheckCircle2 className="h-3.5 w-3.5 text-muted-foreground shrink-0 mt-0.5" /><span>{enrollment.intake_goal}</span></div>
+                                      )}
+                                    </>
+                                  ) : (
+                                    <p className="text-xs text-muted-foreground italic">Nog geen intake ingevuld</p>
+                                  )}
+                                </div>
+                              )}
+                            </div>
+                          )}
+
+                          {/* Structured Trainer Notes */}
+                          {enrollment && (
+                            <div className="border-t pt-3 space-y-3">
+                              <p className="text-xs text-muted-foreground flex items-center gap-1">
+                                <MessageSquare className="h-3 w-3" /> Gestructureerde notities
+                              </p>
+                              {[
+                                { type: "intake", label: "Intake-notitie", placeholder: "Observaties en afspraken uit het intakegesprek..." },
+                                { type: "aandachtspunt", label: "Belangrijk aandachtspunt", placeholder: "Waar moet je op letten bij deze deelnemer..." },
+                                { type: "reflectie", label: "Reflectie na laatste sessie", placeholder: "Hoe ging de laatste sessie, wat viel op..." },
+                              ].map(({ type, label, placeholder }) => {
+                                const key = `${enrollment.id}_${type}`;
+                                return (
+                                  <div key={type}>
+                                    <Label className="text-xs font-medium">{label}</Label>
+                                    <Textarea
+                                      placeholder={placeholder}
+                                      value={noteEdits[key] ?? getNoteContent(enrollment.id, type)}
+                                      onChange={(e) => setNoteEdits(prev => ({ ...prev, [key]: e.target.value }))}
+                                      className="min-h-[50px] text-sm mt-1"
+                                    />
+                                    <Button
+                                      size="sm"
+                                      variant="outline"
+                                      onClick={() => saveStructuredNote(enrollment.id, type)}
+                                      disabled={savingNote === key}
+                                      className="gap-1.5 mt-1 h-7 text-xs"
+                                    >
+                                      <Save className="h-3 w-3" />
+                                      {savingNote === key ? "Opslaan..." : "Opslaan"}
+                                    </Button>
+                                  </div>
+                                );
+                              })}
+                            </div>
+                          )}
+
+                          {/* Legacy admin notes for registrations without enrollment */}
+                          {!enrollment && (
+                            <div className="border-t pt-3">
+                              <p className="text-xs text-muted-foreground mb-2 flex items-center gap-1">
+                                <StickyNote className="h-3 w-3" /> Notitie:
+                              </p>
+                              <Textarea
+                                placeholder="Notities over deze aanmelding..."
+                                value={trainerNotes[reg.id] || ""}
+                                onChange={(e) => setTrainerNotes(prev => ({ ...prev, [reg.id]: e.target.value }))}
+                                className="min-h-[60px] text-sm"
+                              />
+                              <Button
+                                size="sm"
+                                variant="outline"
+                                onClick={() => saveTrainerNotes(reg.id)}
+                                disabled={savingNotes === reg.id}
+                                className="gap-1.5 mt-2"
+                              >
+                                <Save className="h-3.5 w-3.5" />
+                                {savingNotes === reg.id ? "Opslaan..." : "Opslaan"}
+                              </Button>
+                            </div>
+                          )}
                         </CardContent>
                       </Card>
                     </div>
