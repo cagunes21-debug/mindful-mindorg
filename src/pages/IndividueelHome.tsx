@@ -33,9 +33,9 @@ const IndividueelHome = () => {
       <ForYouSection />
       <BenefitsSection />
       <ForWhomSection />
-      <SessionStructureSection />
       <PackageSection />
       <ApproachSection />
+      <SessionStructureSection />
       <TrainersSection />
       <CTASection />
       <Footer />
