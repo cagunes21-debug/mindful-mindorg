@@ -1,10 +1,14 @@
+import { useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
+import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { Checkbox } from "@/components/ui/checkbox";
+import { Label } from "@/components/ui/label";
 import { Progress } from "@/components/ui/progress";
 import {
   Select, SelectContent, SelectItem, SelectTrigger, SelectValue,
 } from "@/components/ui/select";
-import { Calendar, Clock, CheckCircle2, XCircle, AlertCircle } from "lucide-react";
+import { Calendar, Clock, CheckCircle2, XCircle, AlertCircle, Repeat, Loader2 } from "lucide-react";
 import { toast } from "sonner";
 import type { SessionAppointment, CourseWeek } from "./types";
 
@@ -19,6 +23,10 @@ interface SessionPlanningSectionProps {
 export default function SessionPlanningSection({
   enrollmentId, courseType, weeks, appointments, onAppointmentsChange,
 }: SessionPlanningSectionProps) {
+  const [recurringDate, setRecurringDate] = useState("");
+  const [recurringTime, setRecurringTime] = useState("");
+  const [applyingRecurring, setApplyingRecurring] = useState(false);
+
   const totalSessions = courseType === "individueel_6" ? 6 : 1;
   const completed = appointments.filter(a => a.status === "afgerond").length;
   const percentage = totalSessions > 0 ? (completed / totalSessions) * 100 : 0;
@@ -52,6 +60,49 @@ export default function SessionPlanningSection({
     }
   };
 
+  const applyWeeklyRecurrence = async () => {
+    if (!recurringDate) { toast.error("Kies een startdatum"); return; }
+    setApplyingRecurring(true);
+    try {
+      const startDate = new Date(recurringDate);
+      const time = recurringTime ? recurringTime + ":00" : null;
+      const updatedAppointments = [...appointments];
+
+      for (let i = 0; i < weeks.length; i++) {
+        const week = weeks[i];
+        const sessionDate = new Date(startDate);
+        sessionDate.setDate(sessionDate.getDate() + i * 7);
+        const dateStr = sessionDate.toISOString().split("T")[0];
+
+        const existing = updatedAppointments.find(a => a.enrollment_id === enrollmentId && a.week_number === week.week_number);
+        if (existing) {
+          const { error } = await supabase
+            .from("session_appointments")
+            .update({ session_date: dateStr, session_time: time, status: "gepland" })
+            .eq("id", existing.id);
+          if (error) throw error;
+          const idx = updatedAppointments.findIndex(a => a.id === existing.id);
+          updatedAppointments[idx] = { ...existing, session_date: dateStr, session_time: time, status: "gepland" };
+        } else {
+          const { data, error } = await supabase
+            .from("session_appointments")
+            .insert({ enrollment_id: enrollmentId, week_number: week.week_number, session_date: dateStr, session_time: time, status: "gepland" })
+            .select().single();
+          if (error) throw error;
+          updatedAppointments.push(data as SessionAppointment);
+        }
+      }
+
+      onAppointmentsChange(updatedAppointments);
+      toast.success(`${weeks.length} sessies wekelijks ingepland vanaf ${new Date(recurringDate).toLocaleDateString("nl-NL")}`);
+      setRecurringDate("");
+      setRecurringTime("");
+    } catch (err: any) {
+      toast.error("Fout: " + err.message);
+    }
+    setApplyingRecurring(false);
+  };
+
   return (
     <div className="space-y-3">
       <div className="flex items-center justify-between">
@@ -75,6 +126,30 @@ export default function SessionPlanningSection({
         <div className="flex items-center gap-2 text-sm text-muted-foreground">
           <AlertCircle className="h-4 w-4" />
           <span>Nog geen sessie ingepland</span>
+        </div>
+      )}
+
+      {/* Weekly recurrence option */}
+      {weeks.length > 1 && (
+        <div className="rounded-lg border border-dashed border-border p-3 space-y-2 bg-muted/20">
+          <p className="text-xs font-medium flex items-center gap-1.5">
+            <Repeat className="h-3 w-3" /> Wekelijks herhalen
+          </p>
+          <div className="flex items-end gap-2 flex-wrap">
+            <div className="space-y-1">
+              <Label className="text-[11px]">Startdatum</Label>
+              <Input type="date" className="h-7 text-xs w-[140px]" value={recurringDate} onChange={e => setRecurringDate(e.target.value)} />
+            </div>
+            <div className="space-y-1">
+              <Label className="text-[11px]">Tijd (optioneel)</Label>
+              <Input type="time" className="h-7 text-xs w-[100px]" value={recurringTime} onChange={e => setRecurringTime(e.target.value)} />
+            </div>
+            <Button size="sm" variant="outline" className="h-7 text-xs gap-1.5" onClick={applyWeeklyRecurrence} disabled={applyingRecurring || !recurringDate}>
+              {applyingRecurring ? <Loader2 className="h-3 w-3 animate-spin" /> : <Repeat className="h-3 w-3" />}
+              Toepassen
+            </Button>
+          </div>
+          <p className="text-[10px] text-muted-foreground">Vult alle {weeks.length} sessies in met wekelijkse herhaling vanaf de startdatum</p>
         </div>
       )}
 
