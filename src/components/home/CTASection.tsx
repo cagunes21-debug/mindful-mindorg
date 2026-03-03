@@ -13,12 +13,20 @@ const CTASection = () => {
         <p className="text-sm uppercase tracking-widest mb-10 opacity-70">
           Beperkte plekken beschikbaar
         </p>
-        <Link
-          to="/contact"
-          className="inline-block bg-primary-foreground text-primary px-10 py-4 rounded-lg font-sans font-semibold text-sm tracking-wide uppercase hover:opacity-90 transition-opacity"
-        >
-          Neem contact op
-        </Link>
+        <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+          <Link
+            to="/contact"
+            className="inline-block bg-primary-foreground text-primary px-10 py-4 rounded-lg font-sans font-semibold text-sm tracking-wide uppercase hover:opacity-90 transition-opacity"
+          >
+            Neem contact op
+          </Link>
+          <Link
+            to="/msc-training"
+            className="inline-block border border-primary-foreground/50 text-primary-foreground px-10 py-4 rounded-lg font-sans font-semibold text-sm tracking-wide uppercase hover:bg-primary-foreground/10 transition-colors"
+          >
+            Bekijk groepstraining
+          </Link>
+        </div>
       </div>
     </section>
   );
