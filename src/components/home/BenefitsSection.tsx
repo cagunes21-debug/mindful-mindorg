@@ -1,5 +1,19 @@
-import { Heart, Shield, Eye, Star, Pen, Check } from "lucide-react";
+import { Heart, Shield, Eye, Star, Pen, ArrowRight } from "lucide-react";
 import { motion } from "framer-motion";
+
+const feelings = [
+  { label: "Rust in je lichaam", color: "from-rose-200/60 to-rose-100/40", icon: "🌸" },
+  { label: "Zachtheid naar jezelf", color: "from-lavender-200/60 to-lavender-100/40", icon: "💜" },
+  { label: "Ruimte in je hoofd", color: "from-sage-200/60 to-sage-100/40", icon: "🍃" },
+  { label: "Vertrouwen in je gevoel", color: "from-coral-200/60 to-coral-100/40", icon: "✨" },
+];
+
+const concreteResults = [
+  { before: "Twijfelen over grenzen", after: "Je stelt duidelijker grenzen" },
+  { before: "Schuldgevoel bij 'nee'", after: "Je zegt vaker 'nee' zonder schuldgevoel" },
+  { before: "Stress opkroppen", after: "Je herkent stresssignalen eerder" },
+  { before: "Eindeloos twijfelen", after: "Je maakt keuzes zonder eindeloos te twijfelen" },
+];
 
 const experiences = [
   {
@@ -44,19 +58,9 @@ const experiences = [
   },
 ];
 
-const results = [
-  "Meer innerlijke rust en minder piekeren",
-  "Duidelijkere grenzen en minder over jezelf heen stappen",
-  "Meer zelfvertrouwen en zelfcompassie",
-  "Meer grip op stress en emoties",
-  "Heldere keuzes die passen bij wie jij bent",
-];
-
 const containerVariants = {
   hidden: {},
-  visible: {
-    transition: { staggerChildren: 0.12 },
-  },
+  visible: { transition: { staggerChildren: 0.12 } },
 };
 
 const cardVariants = {
@@ -67,7 +71,6 @@ const cardVariants = {
 const BenefitsSection = () => {
   return (
     <section className="py-20 md:py-28 bg-background relative overflow-hidden">
-      {/* Decorative blobs */}
       <div className="absolute top-10 -left-20 w-72 h-72 bg-rose-200/20 rounded-full blur-3xl" />
       <div className="absolute bottom-10 -right-20 w-72 h-72 bg-lavender-200/20 rounded-full blur-3xl" />
 
@@ -100,6 +103,28 @@ const BenefitsSection = () => {
           />
         </div>
 
+        {/* Feeling pills — visual & compact */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="flex flex-wrap justify-center gap-3 mb-16"
+        >
+          {feelings.map((f, i) => (
+            <motion.div
+              key={i}
+              initial={{ opacity: 0, scale: 0.8 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.2 + i * 0.1 }}
+              className={`bg-gradient-to-r ${f.color} rounded-full px-6 py-3 flex items-center gap-2 border border-border/30`}
+            >
+              <span className="text-lg">{f.icon}</span>
+              <span className="text-sm font-medium text-foreground">{f.label}</span>
+            </motion.div>
+          ))}
+        </motion.div>
+
         {/* Experience cards */}
         <motion.div
           variants={containerVariants}
@@ -123,34 +148,35 @@ const BenefitsSection = () => {
           ))}
         </motion.div>
 
-        {/* Concrete results */}
+        {/* Concrete results — before/after style */}
         <div className="max-w-2xl mx-auto">
           <motion.h3
             initial={{ opacity: 0, y: 15 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="text-2xl md:text-3xl font-serif text-foreground text-center mb-8"
+            className="text-2xl md:text-3xl font-serif text-foreground text-center mb-10"
           >
             Concreet levert het je <em className="italic text-primary">op</em>
           </motion.h3>
 
-          <motion.ul className="space-y-3 max-w-md mx-auto">
-            {results.map((item, i) => (
-              <motion.li
+          <div className="space-y-4 max-w-lg mx-auto">
+            {concreteResults.map((item, i) => (
+              <motion.div
                 key={i}
                 initial={{ opacity: 0, x: -20 }}
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true }}
-                transition={{ delay: i * 0.08 }}
-                className="flex items-start gap-3 text-foreground"
+                transition={{ delay: i * 0.1 }}
+                className="flex items-center gap-3 rounded-xl bg-card border border-border/50 p-4"
               >
-                <span className="mt-1 flex-shrink-0 w-6 h-6 rounded-full bg-primary/10 flex items-center justify-center">
-                  <Check className="h-3.5 w-3.5 text-primary" />
+                <span className="text-xs text-muted-foreground line-through flex-shrink-0 w-[140px] hidden sm:block">
+                  {item.before}
                 </span>
-                <span className="text-base leading-relaxed">{item}</span>
-              </motion.li>
+                <ArrowRight className="h-4 w-4 text-primary flex-shrink-0 hidden sm:block" />
+                <span className="text-sm font-medium text-foreground">{item.after}</span>
+              </motion.div>
             ))}
-          </motion.ul>
+          </div>
         </div>
       </div>
     </section>
