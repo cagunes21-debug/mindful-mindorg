@@ -14,6 +14,7 @@ const PRICE_MAP: Record<string, string> = {
   "8-weekse MSC Training": "price_1SwVkYGUBG17jvADOGuK8xn1",
   "MBSR – 4-daags intensief": "price_1SwVknGUBG17jvADGVl2QmY4",
   "MSC – 4-daags intensief": "price_1SwVl3GUBG17jvADj4bKc5fx",
+  "Individueel Traject": "price_1T6sXnGUBG17jvADNK4b4q38",
   // Fallback mappings for variations
   "8-weekse MSC Training (Nederlands)": "price_1SwVkYGUBG17jvADOGuK8xn1",
   "8-week MSC Training (English)": "price_1SwVkYGUBG17jvADOGuK8xn1",
@@ -41,6 +42,9 @@ function findPriceId(trainingName: string): string | null {
   }
   if (lowerName.includes("msc") && lowerName.includes("intensief")) {
     return PRICE_MAP["MSC – 4-daags intensief"];
+  }
+  if (lowerName.includes("individueel")) {
+    return PRICE_MAP["Individueel Traject"];
   }
   
   return null;
