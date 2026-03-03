@@ -7,117 +7,52 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Textarea } from "@/components/ui/textarea";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { Progress } from "@/components/ui/progress";
 import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogDescription,
+  Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription,
 } from "@/components/ui/dialog";
 import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
+  Select, SelectContent, SelectItem, SelectTrigger, SelectValue,
 } from "@/components/ui/select";
-import { Progress } from "@/components/ui/progress";
-import { Mail, Phone, Calendar, Euro, ShoppingBag, ArrowLeft, BookOpen, Headphones, ClipboardList, Presentation, FileText, Save, StickyNote, Eye, EyeOff, Lock, Unlock, Plus, Loader2, Clock, CheckCircle2, XCircle, Target, Heart, MessageSquare, AlertCircle } from "lucide-react";
+import {
+  Collapsible, CollapsibleContent, CollapsibleTrigger,
+} from "@/components/ui/collapsible";
+import {
+  Mail, Phone, Calendar, Euro, ShoppingBag, ArrowLeft, BookOpen,
+  Headphones, ClipboardList, Presentation, FileText, Save, StickyNote,
+  Eye, Lock, Unlock, Plus, Loader2, Clock, AlertCircle, ChevronDown,
+} from "lucide-react";
 import { format } from "date-fns";
 import { nl } from "date-fns/locale";
 import { toast } from "sonner";
+
+import IntakeSection from "./customer-profile/IntakeSection";
+import TrainerNotesSection from "./customer-profile/TrainerNotesSection";
+import SessionPlanningSection from "./customer-profile/SessionPlanningSection";
+import {
+  type CustomerData, type Registration, type Enrollment, type TrainerNote,
+  type CourseWeek, type SessionAppointment,
+  COURSE_TYPES, statusColors, paymentStatusColors,
+} from "./customer-profile/types";
+
+const SECTION_ICONS: Record<string, typeof Headphones> = {
+  meditations: Headphones,
+  assignments: ClipboardList,
+  presentations: Presentation,
+  notebooks: FileText,
+};
+
+const SECTION_LABELS_MAP: Record<string, string> = {
+  meditations: "Meditaties",
+  assignments: "Opdrachten",
+  presentations: "Presentaties",
+  notebooks: "Werkboek",
+};
 
 interface CustomerProfileProps {
   email: string;
   onClose: () => void;
 }
-
-interface CustomerData {
-  email: string;
-  name: string;
-  phone: string | null;
-  total_registrations: number;
-  paid_registrations: number;
-  total_spent: number;
-  first_registration: string;
-  last_registration: string;
-  trainings: string[];
-}
-
-interface Registration {
-  id: string;
-  training_name: string;
-  training_date: string | null;
-  status: string;
-  payment_status: string | null;
-  price: string | null;
-  created_at: string;
-  admin_notes: string | null;
-}
-
-interface Enrollment {
-  id: string;
-  course_type: string;
-  start_date: string;
-  status: string;
-  unlocked_weeks: number[];
-  visible_sections: string[];
-  trainer_name: string | null;
-  registration_id: string | null;
-  intake_reason: string | null;
-  intake_theme: string | null;
-  intake_goal: string | null;
-}
-
-interface TrainerNote {
-  id: string;
-  enrollment_id: string;
-  note_type: string;
-  content: string;
-}
-
-interface CourseWeek {
-  id: string;
-  week_number: number;
-  title: string;
-  course_type: string;
-}
-
-interface SessionAppointment {
-  id: string;
-  enrollment_id: string;
-  week_number: number;
-  session_date: string | null;
-  session_time: string | null;
-  status: string;
-  notes: string | null;
-}
-
-const COURSE_TYPES: Record<string, string> = {
-  msc_8week: "8-weekse Groepstraining",
-  individueel_6: "Individueel (6 sessies)",
-  losse_sessie: "Losse Sessie",
-};
-
-const SECTION_LABELS: Record<string, { label: string; icon: typeof Headphones }> = {
-  meditations: { label: "Meditaties", icon: Headphones },
-  assignments: { label: "Opdrachten", icon: ClipboardList },
-  presentations: { label: "Presentaties", icon: Presentation },
-  notebooks: { label: "Werkboek", icon: FileText },
-};
-
-const statusColors: Record<string, string> = {
-  pending: "bg-yellow-100 text-yellow-800",
-  confirmed: "bg-green-100 text-green-800",
-  cancelled: "bg-red-100 text-red-800",
-  completed: "bg-blue-100 text-blue-800",
-};
-
-const paymentStatusColors: Record<string, string> = {
-  pending: "bg-gray-100 text-gray-600",
-  awaiting_payment: "bg-amber-100 text-amber-700",
-  paid: "bg-emerald-100 text-emerald-700",
-};
 
 export default function CustomerProfile({ email, onClose }: CustomerProfileProps) {
   const [customer, setCustomer] = useState<CustomerData | null>(null);
@@ -130,17 +65,8 @@ export default function CustomerProfile({ email, onClose }: CustomerProfileProps
   const [saving, setSaving] = useState(false);
   const [trainerNotes, setTrainerNotes] = useState<Record<string, string>>({});
   const [savingNotes, setSavingNotes] = useState<string | null>(null);
-  const [activeTraining, setActiveTraining] = useState<string | null>(null);
+  const [openCards, setOpenCards] = useState<Record<string, boolean>>({});
   const registrationRefs = useRef<Record<string, HTMLDivElement | null>>({});
-
-  // Intake editing state
-  const [editingIntake, setEditingIntake] = useState<string | null>(null);
-  const [intakeForm, setIntakeForm] = useState({ reason: "", theme: "", goal: "" });
-  const [savingIntake, setSavingIntake] = useState(false);
-
-  // Structured notes editing
-  const [noteEdits, setNoteEdits] = useState<Record<string, string>>({});
-  const [savingNote, setSavingNote] = useState<string | null>(null);
 
   // Create enrollment state
   const [creatingForRegId, setCreatingForRegId] = useState<string | null>(null);
@@ -155,9 +81,7 @@ export default function CustomerProfile({ email, onClose }: CustomerProfileProps
   const [extraRemarks, setExtraRemarks] = useState("");
   const [submittingExtra, setSubmittingExtra] = useState(false);
 
-  useEffect(() => {
-    fetchCustomerData();
-  }, [email]);
+  useEffect(() => { fetchCustomerData(); }, [email]);
 
   const fetchCustomerData = async () => {
     setIsLoading(true);
@@ -178,6 +102,9 @@ export default function CustomerProfile({ email, onClose }: CustomerProfileProps
       regs.forEach(r => { notesMap[r.id] = r.admin_notes || ""; });
       setTrainerNotes(notesMap);
 
+      // Auto-open first card
+      if (regs.length > 0) setOpenCards({ [regs[0].id]: true });
+
       const regIds = regs.map(r => r.id);
       if (regIds.length > 0) {
         const { data: enrollData } = await supabase
@@ -188,32 +115,16 @@ export default function CustomerProfile({ email, onClose }: CustomerProfileProps
         const enrs = (enrollData || []) as Enrollment[];
         setEnrollments(enrs);
 
-        // Fetch structured trainer notes
         const allEnrIds = enrs.map(e => e.id);
         if (allEnrIds.length > 0) {
-          const { data: notesData } = await supabase
-            .from("trainer_notes")
-            .select("id, enrollment_id, note_type, content")
-            .in("enrollment_id", allEnrIds);
-          const notes = (notesData || []) as TrainerNote[];
-          setStructuredNotes(notes);
-          // Pre-populate note edits
-          const edits: Record<string, string> = {};
-          notes.forEach(n => { edits[`${n.enrollment_id}_${n.note_type}`] = n.content; });
-          setNoteEdits(prev => ({ ...prev, ...edits }));
-        }
-
-        // Fetch session appointments for individual/losse enrollments
-        const individualEnrIds = enrs
-          .filter(e => e.course_type === "individueel_6" || e.course_type === "losse_sessie")
-          .map(e => e.id);
-        if (individualEnrIds.length > 0) {
-          const { data: apptData } = await supabase
-            .from("session_appointments")
-            .select("*")
-            .in("enrollment_id", individualEnrIds)
-            .order("week_number");
-          setSessionAppointments((apptData || []) as SessionAppointment[]);
+          const [notesRes, apptRes] = await Promise.all([
+            supabase.from("trainer_notes").select("id, enrollment_id, note_type, content").in("enrollment_id", allEnrIds),
+            supabase.from("session_appointments").select("*")
+              .in("enrollment_id", enrs.filter(e => e.course_type === "individueel_6" || e.course_type === "losse_sessie").map(e => e.id))
+              .order("week_number"),
+          ]);
+          setStructuredNotes((notesRes.data || []) as TrainerNote[]);
+          setSessionAppointments((apptRes.data || []) as SessionAppointment[]);
         }
       }
     } catch (error) {
@@ -228,248 +139,99 @@ export default function CustomerProfile({ email, onClose }: CustomerProfileProps
     const updated = current.includes(weekNumber)
       ? current.filter(w => w !== weekNumber)
       : [...current, weekNumber].sort((a, b) => a - b);
-
     setSaving(true);
-    const { error } = await supabase
-      .from("enrollments")
-      .update({ unlocked_weeks: updated })
-      .eq("id", enrollment.id);
-
+    const { error } = await supabase.from("enrollments").update({ unlocked_weeks: updated }).eq("id", enrollment.id);
     if (!error) {
       setEnrollments(prev => prev.map(e => e.id === enrollment.id ? { ...e, unlocked_weeks: updated } : e));
       toast.success(`Sessie ${weekNumber} ${updated.includes(weekNumber) ? 'vrijgegeven' : 'vergrendeld'}`);
-    } else {
-      toast.error("Kon niet opslaan");
-    }
+    } else toast.error("Kon niet opslaan");
     setSaving(false);
   };
 
   const toggleSection = async (enrollment: Enrollment, section: string) => {
     const current = enrollment.visible_sections || ['meditations', 'assignments', 'presentations', 'notebooks'];
-    const updated = current.includes(section)
-      ? current.filter(s => s !== section)
-      : [...current, section];
-
+    const updated = current.includes(section) ? current.filter(s => s !== section) : [...current, section];
     setSaving(true);
-    const { error } = await supabase
-      .from("enrollments")
-      .update({ visible_sections: updated })
-      .eq("id", enrollment.id);
-
+    const { error } = await supabase.from("enrollments").update({ visible_sections: updated }).eq("id", enrollment.id);
     if (!error) {
       setEnrollments(prev => prev.map(e => e.id === enrollment.id ? { ...e, visible_sections: updated } : e));
-      toast.success(`${SECTION_LABELS[section]?.label} ${updated.includes(section) ? 'zichtbaar' : 'verborgen'}`);
-    } else {
-      toast.error("Kon niet opslaan");
-    }
+      toast.success(`${SECTION_LABELS_MAP[section]} ${updated.includes(section) ? 'zichtbaar' : 'verborgen'}`);
+    } else toast.error("Kon niet opslaan");
     setSaving(false);
   };
 
-  const saveTrainerNotes = async (regId: string) => {
+  const saveTrainerNotesLegacy = async (regId: string) => {
     setSavingNotes(regId);
-    const { error } = await supabase
-      .from("registrations")
-      .update({ admin_notes: trainerNotes[regId] || null })
-      .eq("id", regId);
-
-    if (!error) {
-      toast.success("Notitie opgeslagen");
-    } else {
-      toast.error("Kon notitie niet opslaan");
-    }
+    const { error } = await supabase.from("registrations").update({ admin_notes: trainerNotes[regId] || null }).eq("id", regId);
+    if (!error) toast.success("Notitie opgeslagen");
+    else toast.error("Kon notitie niet opslaan");
     setSavingNotes(null);
-  };
-
-  const scrollToRegistration = (trainingName: string) => {
-    setActiveTraining(trainingName);
-    // Find first registration matching this training
-    const reg = registrations.find(r => r.training_name === trainingName);
-    if (reg && registrationRefs.current[reg.id]) {
-      registrationRefs.current[reg.id]?.scrollIntoView({ behavior: "smooth", block: "center" });
-    }
-  };
-
-  const getEnrollmentForRegistration = (regId: string) => {
-    return enrollments.find(e => e.registration_id === regId);
   };
 
   const createEnrollmentForReg = async (regId: string) => {
     if (!newStartDate) { toast.error("Vul een startdatum in"); return; }
     setCreating(true);
     try {
-      // Find user_id from existing enrollments for this customer
       let userId: string | undefined;
-      
-      // Check existing enrollments linked to any registration of this customer
       const regIds = registrations.map(r => r.id);
       if (regIds.length > 0) {
-        const { data: existingEnr } = await supabase
-          .from("enrollments")
-          .select("user_id")
-          .in("registration_id", regIds)
-          .limit(1);
+        const { data: existingEnr } = await supabase.from("enrollments").select("user_id").in("registration_id", regIds).limit(1);
         userId = existingEnr?.[0]?.user_id;
       }
-
       if (!userId) {
-        // Try finding by email in all registrations
         const { data: allRegs } = await supabase.from("registrations").select("id").eq("email", email);
         if (allRegs && allRegs.length > 0) {
-          const { data: existingEnr } = await supabase
-            .from("enrollments")
-            .select("user_id")
-            .in("registration_id", allRegs.map(r => r.id))
-            .limit(1);
+          const { data: existingEnr } = await supabase.from("enrollments").select("user_id").in("registration_id", allRegs.map(r => r.id)).limit(1);
           userId = existingEnr?.[0]?.user_id;
         }
       }
-
-      if (!userId) {
-        toast.error("Geen account gevonden. De deelnemer moet eerst een account aanmaken.");
-        setCreating(false);
-        return;
-      }
+      if (!userId) { toast.error("Geen account gevonden. De deelnemer moet eerst een account aanmaken."); setCreating(false); return; }
 
       const { error } = await supabase.from("enrollments").insert({
-        user_id: userId,
-        course_type: newCourseType,
-        start_date: newStartDate,
-        trainer_name: newTrainerName || null,
-        registration_id: regId,
-        unlocked_weeks: [1],
-        status: "active",
+        user_id: userId, course_type: newCourseType, start_date: newStartDate,
+        trainer_name: newTrainerName || null, registration_id: regId, unlocked_weeks: [1], status: "active",
       });
       if (error) throw error;
-
       toast.success("Inschrijving aangemaakt!");
       setCreatingForRegId(null);
-      setNewCourseType("msc_8week");
-      setNewStartDate("");
-      setNewTrainerName("");
+      setNewCourseType("msc_8week"); setNewStartDate(""); setNewTrainerName("");
       fetchCustomerData();
-    } catch (err: any) {
-      toast.error("Fout bij aanmaken: " + err.message);
-    }
+    } catch (err: any) { toast.error("Fout bij aanmaken: " + err.message); }
     setCreating(false);
   };
-
-  // Session appointment helpers
-  const getAppointmentsForEnrollment = (enrollmentId: string) =>
-    sessionAppointments.filter(a => a.enrollment_id === enrollmentId);
-
-  const saveAppointment = async (enrollmentId: string, weekNumber: number, date: string | null, time: string | null, status: string) => {
-    const existing = sessionAppointments.find(a => a.enrollment_id === enrollmentId && a.week_number === weekNumber);
-    try {
-      if (existing) {
-        const { error } = await supabase
-          .from("session_appointments")
-          .update({ session_date: date, session_time: time, status })
-          .eq("id", existing.id);
-        if (error) throw error;
-        setSessionAppointments(prev => prev.map(a => a.id === existing.id ? { ...a, session_date: date, session_time: time, status } : a));
-      } else {
-        const { data, error } = await supabase
-          .from("session_appointments")
-          .insert({ enrollment_id: enrollmentId, week_number: weekNumber, session_date: date, session_time: time, status })
-          .select()
-          .single();
-        if (error) throw error;
-        setSessionAppointments(prev => [...prev, data as SessionAppointment]);
-      }
-      toast.success(`Sessie ${weekNumber} bijgewerkt`);
-    } catch (err: any) {
-      toast.error("Fout: " + err.message);
-    }
-  };
-
-  const getNextSession = (enrollmentId: string): SessionAppointment | null => {
-    const appts = getAppointmentsForEnrollment(enrollmentId);
-    const today = new Date().toISOString().split("T")[0];
-    return appts
-      .filter(a => a.status === "gepland" && a.session_date && a.session_date >= today)
-      .sort((a, b) => (a.session_date || "").localeCompare(b.session_date || ""))[0] || null;
-  };
-
-  const getSessionProgress = (enrollmentId: string, totalSessions: number) => {
-    const appts = getAppointmentsForEnrollment(enrollmentId);
-    const completed = appts.filter(a => a.status === "afgerond").length;
-    return { completed, total: totalSessions, percentage: totalSessions > 0 ? (completed / totalSessions) * 100 : 0 };
-  };
-
-  // Save intake fields
-  const saveIntake = async (enrollmentId: string) => {
-    setSavingIntake(true);
-    try {
-      const { error } = await supabase
-        .from("enrollments")
-        .update({
-          intake_reason: intakeForm.reason || null,
-          intake_theme: intakeForm.theme || null,
-          intake_goal: intakeForm.goal || null,
-        })
-        .eq("id", enrollmentId);
-      if (error) throw error;
-      setEnrollments(prev => prev.map(e => e.id === enrollmentId ? { ...e, intake_reason: intakeForm.reason || null, intake_theme: intakeForm.theme || null, intake_goal: intakeForm.goal || null } : e));
-      setEditingIntake(null);
-      toast.success("Intake opgeslagen");
-    } catch (err: any) {
-      toast.error("Fout: " + err.message);
-    }
-    setSavingIntake(false);
-  };
-
-  // Save structured note
-  const saveStructuredNote = async (enrollmentId: string, noteType: string) => {
-    const key = `${enrollmentId}_${noteType}`;
-    const content = noteEdits[key] || "";
-    setSavingNote(key);
-    try {
-      const existing = structuredNotes.find(n => n.enrollment_id === enrollmentId && n.note_type === noteType);
-      if (existing) {
-        const { error } = await supabase.from("trainer_notes").update({ content }).eq("id", existing.id);
-        if (error) throw error;
-        setStructuredNotes(prev => prev.map(n => n.id === existing.id ? { ...n, content } : n));
-      } else {
-        const { data, error } = await supabase.from("trainer_notes").insert({ enrollment_id: enrollmentId, note_type: noteType, content }).select().single();
-        if (error) throw error;
-        setStructuredNotes(prev => [...prev, data as TrainerNote]);
-      }
-      toast.success("Notitie opgeslagen");
-    } catch (err: any) {
-      toast.error("Fout: " + err.message);
-    }
-    setSavingNote(null);
-  };
-
-  const getNoteContent = (enrollmentId: string, noteType: string) => {
-    const key = `${enrollmentId}_${noteType}`;
-    return noteEdits[key] ?? structuredNotes.find(n => n.enrollment_id === enrollmentId && n.note_type === noteType)?.content ?? "";
-  };
-
 
   const submitExtraTraining = async () => {
     if (!customer || !extraTrainingName.trim()) { toast.error("Selecteer een training"); return; }
     setSubmittingExtra(true);
     try {
       const { error } = await supabase.from("registrations").insert({
-        name: customer.name,
-        email: customer.email,
-        phone: customer.phone || null,
-        training_name: extraTrainingName.trim(),
-        remarks: extraRemarks.trim() || null,
-        status: "pending",
-        payment_status: "pending",
+        name: customer.name, email: customer.email, phone: customer.phone || null,
+        training_name: extraTrainingName.trim(), remarks: extraRemarks.trim() || null,
+        status: "pending", payment_status: "pending",
       });
       if (error) throw error;
       toast.success("Extra training aangemeld!");
-      setShowExtraTraining(false);
-      setExtraTrainingName("8-weekse Mindful Zelfcompassie Training");
-      setExtraRemarks("");
+      setShowExtraTraining(false); setExtraTrainingName("8-weekse Mindful Zelfcompassie Training"); setExtraRemarks("");
       fetchCustomerData();
-    } catch (err: any) {
-      toast.error("Fout: " + err.message);
-    }
+    } catch (err: any) { toast.error("Fout: " + err.message); }
     setSubmittingExtra(false);
+  };
+
+  const toggleCard = (id: string) => setOpenCards(prev => ({ ...prev, [id]: !prev[id] }));
+
+  // Global next session across all enrollments
+  const getGlobalNextSession = () => {
+    const today = new Date().toISOString().split("T")[0];
+    return sessionAppointments
+      .filter(a => a.status === "gepland" && a.session_date && a.session_date >= today)
+      .sort((a, b) => (a.session_date || "").localeCompare(b.session_date || ""))[0] || null;
+  };
+
+  const getGlobalProgress = () => {
+    const individualEnrollments = enrollments.filter(e => e.course_type === "individueel_6" || e.course_type === "losse_sessie");
+    const totalSessions = individualEnrollments.reduce((sum, e) => sum + (e.course_type === "individueel_6" ? 6 : 1), 0);
+    const completed = sessionAppointments.filter(a => a.status === "afgerond" && individualEnrollments.some(e => e.id === a.enrollment_id)).length;
+    return { completed, total: totalSessions, percentage: totalSessions > 0 ? (completed / totalSessions) * 100 : 0 };
   };
 
   if (isLoading) {
@@ -481,7 +243,7 @@ export default function CustomerProfile({ email, onClose }: CustomerProfileProps
             <DialogDescription>Laden...</DialogDescription>
           </DialogHeader>
           <div className="flex items-center justify-center py-12">
-            <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-terracotta-600" />
+            <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary" />
           </div>
         </DialogContent>
       </Dialog>
@@ -489,6 +251,10 @@ export default function CustomerProfile({ email, onClose }: CustomerProfileProps
   }
 
   if (!customer) return null;
+
+  const globalNext = getGlobalNextSession();
+  const globalProgress = getGlobalProgress();
+  const hasIndividual = enrollments.some(e => e.course_type === "individueel_6" || e.course_type === "losse_sessie");
 
   return (
     <Dialog open onOpenChange={onClose}>
@@ -498,198 +264,143 @@ export default function CustomerProfile({ email, onClose }: CustomerProfileProps
             <Button variant="ghost" size="sm" onClick={onClose} className="mr-2">
               <ArrowLeft className="h-4 w-4" />
             </Button>
-            <div>
-              <DialogTitle>Klantprofiel</DialogTitle>
-              <DialogDescription>{customer.name} — {customer.email}</DialogDescription>
+            <div className="flex-1">
+              <DialogTitle className="text-lg">{customer.name}</DialogTitle>
+              <DialogDescription className="flex items-center gap-3 flex-wrap">
+                <span className="flex items-center gap-1"><Mail className="h-3 w-3" /><a href={`mailto:${customer.email}`} className="hover:underline">{customer.email}</a></span>
+                {customer.phone && <span className="flex items-center gap-1"><Phone className="h-3 w-3" /><a href={`tel:${customer.phone}`} className="hover:underline">{customer.phone}</a></span>}
+              </DialogDescription>
             </div>
+            <Button size="sm" variant="outline" className="gap-1.5 shrink-0" onClick={() => setShowExtraTraining(true)}>
+              <Plus className="h-3.5 w-3.5" /> Extra training
+            </Button>
           </div>
         </DialogHeader>
 
-        <div className="space-y-6">
-          {/* Customer Header */}
-          <div className="flex items-start justify-between">
-            <div>
-              <h2 className="text-xl font-semibold">{customer.name}</h2>
-              <div className="flex items-center gap-2 text-muted-foreground mt-1">
-                <Mail className="h-4 w-4" />
-                <a href={`mailto:${customer.email}`} className="text-terracotta-600 hover:underline">{customer.email}</a>
+        <div className="space-y-4">
+          {/* Compact Stats Row */}
+          <div className="grid grid-cols-3 gap-3">
+            <div className="flex items-center gap-2 p-3 rounded-lg bg-muted/50">
+              <ShoppingBag className="h-4 w-4 text-muted-foreground" />
+              <div>
+                <p className="text-xs text-muted-foreground">Aanmeldingen</p>
+                <p className="text-lg font-semibold leading-tight">{customer.total_registrations}</p>
               </div>
-              {customer.phone && (
-                <div className="flex items-center gap-2 text-muted-foreground mt-1">
-                  <Phone className="h-4 w-4" />
-                  <a href={`tel:${customer.phone}`} className="text-terracotta-600 hover:underline">{customer.phone}</a>
-                </div>
-              )}
             </div>
-            <Button size="sm" className="gap-2" onClick={() => setShowExtraTraining(true)}>
-              <Plus className="h-4 w-4" /> Extra training
-            </Button>
-          </div>
-
-          {/* Stats */}
-          <div className="grid grid-cols-3 gap-4">
-            <Card>
-              <CardContent className="pt-4">
-                <div className="flex items-center gap-2">
-                  <ShoppingBag className="h-4 w-4 text-sage-600" />
-                  <span className="text-sm text-muted-foreground">Aanmeldingen</span>
-                </div>
-                <p className="text-2xl font-semibold mt-1">{customer.total_registrations}</p>
-              </CardContent>
-            </Card>
-            <Card>
-              <CardContent className="pt-4">
-                <div className="flex items-center gap-2">
-                  <Euro className="h-4 w-4 text-terracotta-600" />
-                  <span className="text-sm text-muted-foreground">Totaal betaald</span>
-                </div>
-                <p className="text-2xl font-semibold mt-1">€{customer.total_spent?.toLocaleString('nl-NL') || 0}</p>
-              </CardContent>
-            </Card>
-            <Card>
-              <CardContent className="pt-4">
-                <div className="flex items-center gap-2">
-                  <Calendar className="h-4 w-4 text-sage-600" />
-                  <span className="text-sm text-muted-foreground">Klant sinds</span>
-                </div>
-                <p className="text-lg font-semibold mt-1">
-                  {format(new Date(customer.first_registration), "MMM yyyy", { locale: nl })}
-                </p>
-              </CardContent>
-            </Card>
-          </div>
-
-          {/* Global Summary: Next session + Progress for individual enrollments */}
-          {(() => {
-            const individualEnrollments = enrollments.filter(e => e.course_type === "individueel_6" || e.course_type === "losse_sessie");
-            if (individualEnrollments.length === 0) return null;
-            
-            return (
-              <div className="space-y-2">
-                {individualEnrollments.map(enr => {
-                  const totalSessions = enr.course_type === "individueel_6" ? 6 : 1;
-                  const progress = getSessionProgress(enr.id, totalSessions);
-                  const nextSession = getNextSession(enr.id);
-                  const reg = registrations.find(r => r.id === enr.registration_id);
-
-                  return (
-                    <Card key={enr.id} className="border-primary/20 bg-primary/5">
-                      <CardContent className="p-4 space-y-2">
-                        <div className="flex items-center justify-between">
-                          <span className="text-sm font-medium">{COURSE_TYPES[enr.course_type]}</span>
-                          <span className="text-xs font-medium">{progress.completed} van {progress.total} sessies afgerond</span>
-                        </div>
-                        <Progress value={progress.percentage} className="h-2" />
-                        {nextSession && nextSession.session_date ? (
-                          <div className="flex items-center gap-2 text-sm">
-                            <Clock className="h-4 w-4 text-primary" />
-                            <span>Volgende sessie: <strong>{new Date(nextSession.session_date).toLocaleDateString("nl-NL", { weekday: "long", day: "numeric", month: "long" })}</strong>
-                            {nextSession.session_time && ` om ${nextSession.session_time.slice(0, 5)}`}</span>
-                          </div>
-                        ) : (
-                          <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                            <AlertCircle className="h-4 w-4" />
-                            <span>Nog geen sessie ingepland</span>
-                          </div>
-                        )}
-                      </CardContent>
-                    </Card>
-                  );
-                })}
+            <div className="flex items-center gap-2 p-3 rounded-lg bg-muted/50">
+              <Euro className="h-4 w-4 text-muted-foreground" />
+              <div>
+                <p className="text-xs text-muted-foreground">Totaal betaald</p>
+                <p className="text-lg font-semibold leading-tight">€{customer.total_spent?.toLocaleString('nl-NL') || 0}</p>
               </div>
-            );
-          })()}
-
-          {/* Clickable Trainings */}
-          <div>
-            <h3 className="font-medium mb-3">Gevolgde trainingen</h3>
-            <div className="flex flex-wrap gap-2">
-              {customer.trainings?.map((training, idx) => (
-                <Badge
-                  key={idx}
-                  variant="secondary"
-                  className={`cursor-pointer transition-colors ${
-                    activeTraining === training
-                      ? "bg-primary/20 text-primary border-primary/30 ring-2 ring-primary/20"
-                      : "bg-sage-100 text-sage-800 hover:bg-sage-200"
-                  }`}
-                  onClick={() => scrollToRegistration(training)}
-                >
-                  {training}
-                </Badge>
-              ))}
+            </div>
+            <div className="flex items-center gap-2 p-3 rounded-lg bg-muted/50">
+              <Calendar className="h-4 w-4 text-muted-foreground" />
+              <div>
+                <p className="text-xs text-muted-foreground">Klant sinds</p>
+                <p className="text-lg font-semibold leading-tight">{format(new Date(customer.first_registration), "MMM yyyy", { locale: nl })}</p>
+              </div>
             </div>
           </div>
 
-          {/* Inhoud beheren per training */}
-          <div>
-            <h3 className="font-medium mb-3 flex items-center gap-2">
-              <BookOpen className="h-4 w-4" />
-              Inhoud & Toegang beheren
+          {/* Global Quick Summary - only if has individual enrollments */}
+          {hasIndividual && (
+            <Card className="border-primary/20 bg-primary/5">
+              <CardContent className="p-3 flex items-center gap-4">
+                <div className="flex-1 space-y-1.5">
+                  <div className="flex items-center justify-between text-xs">
+                    <span className="font-medium">Voortgang</span>
+                    <span>{globalProgress.completed} van {globalProgress.total} sessies</span>
+                  </div>
+                  <Progress value={globalProgress.percentage} className="h-1.5" />
+                </div>
+                <div className="border-l pl-4 text-sm shrink-0">
+                  {globalNext?.session_date ? (
+                    <div className="flex items-center gap-1.5">
+                      <Clock className="h-3.5 w-3.5 text-primary" />
+                      <span>
+                        <strong>{new Date(globalNext.session_date).toLocaleDateString("nl-NL", { weekday: "short", day: "numeric", month: "short" })}</strong>
+                        {globalNext.session_time && ` ${globalNext.session_time.slice(0, 5)}`}
+                      </span>
+                    </div>
+                  ) : (
+                    <span className="flex items-center gap-1.5 text-muted-foreground text-xs">
+                      <AlertCircle className="h-3.5 w-3.5" /> Geen sessie gepland
+                    </span>
+                  )}
+                </div>
+              </CardContent>
+            </Card>
+          )}
+
+          {/* Training badges */}
+          <div className="flex flex-wrap gap-1.5">
+            {customer.trainings?.map((training, idx) => (
+              <Badge key={idx} variant="secondary" className="text-xs cursor-pointer hover:bg-primary/10 transition-colors"
+                onClick={() => {
+                  const reg = registrations.find(r => r.training_name === training);
+                  if (reg) {
+                    setOpenCards(prev => ({ ...prev, [reg.id]: true }));
+                    setTimeout(() => registrationRefs.current[reg.id]?.scrollIntoView({ behavior: "smooth", block: "center" }), 100);
+                  }
+                }}
+              >
+                {training}
+              </Badge>
+            ))}
+          </div>
+
+          {/* Registration Cards - Collapsible */}
+          <div className="space-y-2">
+            <h3 className="font-medium text-sm flex items-center gap-2">
+              <BookOpen className="h-4 w-4" /> Trainingen & Inhoud
             </h3>
 
-            {registrations.length === 0 ? (
-              <p className="text-sm text-muted-foreground">Geen aanmeldingen gevonden.</p>
-            ) : (
-              <div className="space-y-4">
-                {registrations.map((reg) => {
-                  const enrollment = getEnrollmentForRegistration(reg.id);
-                  const weeks = enrollment ? courseWeeks.filter(w => w.course_type === enrollment.course_type) : [];
-                  const label = enrollment?.course_type === "msc_8week" ? "Week" : "Sessie";
+            {registrations.map((reg) => {
+              const enrollment = enrollments.find(e => e.registration_id === reg.id);
+              const weeks = enrollment ? courseWeeks.filter(w => w.course_type === enrollment.course_type) : [];
+              const label = enrollment?.course_type === "msc_8week" ? "Week" : "Sessie";
+              const isOpen = openCards[reg.id] ?? false;
+              const isIndividual = enrollment && (enrollment.course_type === "individueel_6" || enrollment.course_type === "losse_sessie");
 
-                  return (
-                    <div
-                      key={reg.id}
-                      ref={(el) => { registrationRefs.current[reg.id] = el; }}
-                    >
-                      <Card className={`transition-all ${activeTraining === reg.training_name ? "ring-2 ring-primary/30 shadow-md" : ""}`}>
-                        <CardContent className="p-4 space-y-3">
-                          {/* Training header */}
-                          <div className="flex items-center justify-between">
-                            <div className="flex items-center gap-2 flex-wrap">
-                              <span className="font-medium text-sm">{reg.training_name}</span>
-                              <Badge className={statusColors[reg.status]}>{reg.status}</Badge>
-                              <Badge className={paymentStatusColors[reg.payment_status || 'pending']}>
-                                {reg.payment_status || 'pending'}
-                              </Badge>
-                            </div>
-                            <span className="text-xs text-muted-foreground">
-                              {reg.training_date || format(new Date(reg.created_at), "d MMM yyyy", { locale: nl })}
-                            </span>
-                          </div>
+              return (
+                <div key={reg.id} ref={(el) => { registrationRefs.current[reg.id] = el; }}>
+                  <Collapsible open={isOpen} onOpenChange={() => toggleCard(reg.id)}>
+                    <Card className="transition-all">
+                      <CollapsibleTrigger className="w-full text-left">
+                        <CardContent className="p-3 flex items-center gap-2">
+                          <ChevronDown className={`h-4 w-4 text-muted-foreground transition-transform ${isOpen ? "rotate-0" : "-rotate-90"}`} />
+                          <span className="font-medium text-sm flex-1">{reg.training_name}</span>
+                          <Badge className={`${statusColors[reg.status]} text-[10px] px-1.5 py-0`}>{reg.status}</Badge>
+                          <Badge className={`${paymentStatusColors[reg.payment_status || 'pending']} text-[10px] px-1.5 py-0`}>{reg.payment_status || 'pending'}</Badge>
+                          <span className="text-xs text-muted-foreground">
+                            {reg.training_date || format(new Date(reg.created_at), "d MMM yyyy", { locale: nl })}
+                          </span>
+                        </CardContent>
+                      </CollapsibleTrigger>
 
+                      <CollapsibleContent>
+                        <CardContent className="px-4 pb-4 pt-0 space-y-4">
                           {enrollment ? (
                             <>
-                              {/* Enrollment status */}
+                              {/* Enrollment info */}
                               <div className="flex items-center gap-2 text-xs text-muted-foreground">
-                                <Badge variant="outline" className="text-xs">
-                                  {COURSE_TYPES[enrollment.course_type] || enrollment.course_type}
-                                </Badge>
-                                <Badge className={enrollment.status === "active" ? "bg-green-100 text-green-800" : "bg-muted text-muted-foreground"}>
-                                  {enrollment.status}
-                                </Badge>
+                                <Badge variant="outline" className="text-[10px]">{COURSE_TYPES[enrollment.course_type]}</Badge>
+                                <Badge className={enrollment.status === "active" ? "bg-green-100 text-green-800 text-[10px]" : "bg-muted text-muted-foreground text-[10px]"}>{enrollment.status}</Badge>
                                 <span>Start: {new Date(enrollment.start_date).toLocaleDateString("nl-NL")}</span>
                               </div>
 
                               {/* Session toggles */}
-                              <div className="border-t pt-3">
-                                <p className="text-xs text-muted-foreground mb-2 flex items-center gap-1">
-                                  <Unlock className="h-3 w-3" /> Sessies vrijgeven:
-                                </p>
-                                <div className="flex flex-wrap gap-1.5">
+                              <div className="space-y-2">
+                                <p className="text-xs text-muted-foreground flex items-center gap-1 font-medium"><Unlock className="h-3 w-3" /> {label}s vrijgeven</p>
+                                <div className="flex flex-wrap gap-1">
                                   {weeks.map(week => {
                                     const isUnlocked = (enrollment.unlocked_weeks || [1]).includes(week.week_number);
                                     return (
-                                      <button
-                                        key={week.id}
-                                        onClick={() => toggleWeek(enrollment, week.week_number)}
-                                        disabled={saving}
-                                        className={`px-2.5 py-1 rounded-full text-xs font-medium transition-colors ${
-                                          isUnlocked
-                                            ? "bg-primary/10 text-primary border border-primary/30"
-                                            : "bg-muted text-muted-foreground border border-border"
-                                        }`}
-                                        title={week.title}
+                                      <button key={week.id} onClick={() => toggleWeek(enrollment, week.week_number)} disabled={saving}
+                                        className={`px-2 py-0.5 rounded-full text-[11px] font-medium transition-colors ${
+                                          isUnlocked ? "bg-primary/10 text-primary border border-primary/30" : "bg-muted text-muted-foreground border border-border"
+                                        }`} title={week.title}
                                       >
                                         {label} {week.week_number}
                                       </button>
@@ -699,106 +410,66 @@ export default function CustomerProfile({ email, onClose }: CustomerProfileProps
                               </div>
 
                               {/* Content visibility */}
-                              <div className="border-t pt-3">
-                                <p className="text-xs text-muted-foreground mb-2 flex items-center gap-1">
-                                  <Eye className="h-3 w-3" /> Zichtbare inhoud:
-                                </p>
+                              <div className="space-y-2">
+                                <p className="text-xs text-muted-foreground flex items-center gap-1 font-medium"><Eye className="h-3 w-3" /> Zichtbare inhoud</p>
                                 <div className="flex flex-wrap gap-3">
-                                  {Object.entries(SECTION_LABELS).map(([key, { label: sectionLabel, icon: Icon }]) => {
+                                  {Object.entries(SECTION_ICONS).map(([key, Icon]) => {
                                     const isVisible = (enrollment.visible_sections || ['meditations', 'assignments', 'presentations', 'notebooks']).includes(key);
                                     return (
                                       <label key={key} className="flex items-center gap-1.5 cursor-pointer">
-                                        <Checkbox
-                                          checked={isVisible}
-                                          disabled={saving}
-                                          onCheckedChange={() => toggleSection(enrollment, key)}
-                                        />
+                                        <Checkbox checked={isVisible} disabled={saving} onCheckedChange={() => toggleSection(enrollment, key)} />
                                         <Icon className="h-3 w-3 text-muted-foreground" />
-                                        <span className="text-xs">{sectionLabel}</span>
+                                        <span className="text-xs">{SECTION_LABELS_MAP[key]}</span>
                                       </label>
                                     );
                                   })}
                                 </div>
                               </div>
 
-                              {/* Session Planning - only for individueel_6 and losse_sessie */}
-                              {(enrollment.course_type === "individueel_6" || enrollment.course_type === "losse_sessie") && (() => {
-                                const totalSessions = enrollment.course_type === "individueel_6" ? 6 : 1;
-                                const progress = getSessionProgress(enrollment.id, totalSessions);
-                                const nextSession = getNextSession(enrollment.id);
-                                const appts = getAppointmentsForEnrollment(enrollment.id);
+                              {/* Session Planning */}
+                              {isIndividual && (
+                                <div className="border-t pt-3">
+                                  <SessionPlanningSection
+                                    enrollmentId={enrollment.id}
+                                    courseType={enrollment.course_type}
+                                    weeks={weeks}
+                                    appointments={sessionAppointments.filter(a => a.enrollment_id === enrollment.id)}
+                                    onAppointmentsChange={(updated) => {
+                                      setSessionAppointments(prev => [
+                                        ...prev.filter(a => a.enrollment_id !== enrollment.id),
+                                        ...updated,
+                                      ]);
+                                    }}
+                                  />
+                                </div>
+                              )}
 
-                                return (
-                                  <div className="border-t pt-3 space-y-3">
-                                    {/* Next session + progress */}
-                                    <div className="flex items-center justify-between">
-                                      <p className="text-xs text-muted-foreground flex items-center gap-1">
-                                        <Calendar className="h-3 w-3" /> Sessieplanning
-                                      </p>
-                                      <span className="text-xs font-medium">
-                                        {progress.completed} van {progress.total} afgerond
-                                      </span>
-                                    </div>
-                                    <Progress value={progress.percentage} className="h-2" />
+                              {/* Intake */}
+                              {isIndividual && (
+                                <div className="border-t pt-3">
+                                  <IntakeSection
+                                    enrollment={enrollment}
+                                    onUpdate={(updated) => setEnrollments(prev => prev.map(e => e.id === updated.id ? updated : e))}
+                                  />
+                                </div>
+                              )}
 
-                                    {nextSession && nextSession.session_date && (
-                                      <div className="rounded-md bg-primary/5 border border-primary/20 p-2.5 flex items-center gap-2">
-                                        <Clock className="h-4 w-4 text-primary" />
-                                        <span className="text-sm font-medium">
-                                          Volgende sessie: {new Date(nextSession.session_date).toLocaleDateString("nl-NL", { weekday: "long", day: "numeric", month: "long" })}
-                                          {nextSession.session_time && ` om ${nextSession.session_time.slice(0, 5)}`}
-                                        </span>
-                                      </div>
-                                    )}
-
-                                    {/* Per-session rows */}
-                                    <div className="space-y-2">
-                                      {weeks.map(week => {
-                                        const appt = appts.find(a => a.week_number === week.week_number);
-                                        const apptStatus = appt?.status || "gepland";
-                                        const statusIcon = apptStatus === "afgerond" ? <CheckCircle2 className="h-3.5 w-3.5 text-primary" /> :
-                                          apptStatus === "geannuleerd" ? <XCircle className="h-3.5 w-3.5 text-destructive" /> :
-                                          <Clock className="h-3.5 w-3.5 text-accent-foreground" />;
-
-                                        return (
-                                          <div key={week.id} className="flex items-center gap-2 p-2 rounded-lg bg-muted/40 border border-border/50">
-                                            {statusIcon}
-                                            <span className="text-xs font-medium w-16 shrink-0">Sessie {week.week_number}</span>
-                                            <Input
-                                              type="date"
-                                              className="h-7 text-xs flex-1 min-w-[130px]"
-                                              value={appt?.session_date || ""}
-                                              onChange={(e) => saveAppointment(enrollment.id, week.week_number, e.target.value || null, appt?.session_time || null, apptStatus)}
-                                            />
-                                            <Input
-                                              type="time"
-                                              className="h-7 text-xs w-24"
-                                              value={appt?.session_time?.slice(0, 5) || ""}
-                                              onChange={(e) => saveAppointment(enrollment.id, week.week_number, appt?.session_date || null, e.target.value ? e.target.value + ":00" : null, apptStatus)}
-                                            />
-                                            <Select
-                                              value={apptStatus}
-                                              onValueChange={(val) => saveAppointment(enrollment.id, week.week_number, appt?.session_date || null, appt?.session_time || null, val)}
-                                            >
-                                              <SelectTrigger className="h-7 text-xs w-[120px]">
-                                                <SelectValue />
-                                              </SelectTrigger>
-                                              <SelectContent>
-                                                <SelectItem value="gepland">Gepland</SelectItem>
-                                                <SelectItem value="afgerond">Afgerond</SelectItem>
-                                                <SelectItem value="geannuleerd">Geannuleerd</SelectItem>
-                                              </SelectContent>
-                                            </Select>
-                                          </div>
-                                        );
-                                      })}
-                                    </div>
-                                  </div>
-                                );
-                              })()}
+                              {/* Trainer Notes */}
+                              <div className="border-t pt-3">
+                                <TrainerNotesSection
+                                  enrollmentId={enrollment.id}
+                                  existingNotes={structuredNotes.filter(n => n.enrollment_id === enrollment.id)}
+                                  onNotesUpdated={(updated) => {
+                                    setStructuredNotes(prev => [
+                                      ...prev.filter(n => n.enrollment_id !== enrollment.id),
+                                      ...updated,
+                                    ]);
+                                  }}
+                                />
+                              </div>
                             </>
                           ) : (
-                            <div className="border-t pt-3 space-y-3">
+                            <div className="space-y-3">
                               {creatingForRegId === reg.id ? (
                                 <div className="space-y-3 p-3 bg-muted/50 rounded-lg">
                                   <p className="text-xs font-medium">Nieuwe inschrijving aanmaken</p>
@@ -808,8 +479,8 @@ export default function CustomerProfile({ email, onClose }: CustomerProfileProps
                                       <Select value={newCourseType} onValueChange={setNewCourseType}>
                                         <SelectTrigger className="h-8 text-xs"><SelectValue /></SelectTrigger>
                                         <SelectContent>
-                                          {Object.entries(COURSE_TYPES).map(([key, label]) => (
-                                            <SelectItem key={key} value={key}>{label}</SelectItem>
+                                          {Object.entries(COURSE_TYPES).map(([key, lbl]) => (
+                                            <SelectItem key={key} value={key}>{lbl}</SelectItem>
                                           ))}
                                         </SelectContent>
                                       </Select>
@@ -825,12 +496,9 @@ export default function CustomerProfile({ email, onClose }: CustomerProfileProps
                                   </div>
                                   <div className="flex gap-2">
                                     <Button size="sm" onClick={() => createEnrollmentForReg(reg.id)} disabled={creating} className="gap-1.5 text-xs">
-                                      {creating ? <Loader2 className="h-3 w-3 animate-spin" /> : <Plus className="h-3 w-3" />}
-                                      Aanmaken
+                                      {creating ? <Loader2 className="h-3 w-3 animate-spin" /> : <Plus className="h-3 w-3" />} Aanmaken
                                     </Button>
-                                    <Button size="sm" variant="ghost" onClick={() => setCreatingForRegId(null)} className="text-xs">
-                                      Annuleren
-                                    </Button>
+                                    <Button size="sm" variant="ghost" onClick={() => setCreatingForRegId(null)} className="text-xs">Annuleren</Button>
                                   </div>
                                 </div>
                               ) : (
@@ -838,142 +506,28 @@ export default function CustomerProfile({ email, onClose }: CustomerProfileProps
                                   <Lock className="h-3 w-3 text-muted-foreground" />
                                   <p className="text-xs text-muted-foreground flex-1">Geen inschrijving gekoppeld</p>
                                   <Button size="sm" variant="outline" className="gap-1.5 text-xs h-7" onClick={() => setCreatingForRegId(reg.id)}>
-                                    <Plus className="h-3 w-3" />Inschrijving aanmaken
+                                    <Plus className="h-3 w-3" /> Inschrijving aanmaken
                                   </Button>
                                 </div>
                               )}
-                            </div>
-                          )}
 
-                          {/* Intake & Intentie - only for enrollments */}
-                          {enrollment && (enrollment.course_type === "individueel_6" || enrollment.course_type === "losse_sessie") && (
-                            <div className="border-t pt-3">
-                              <div className="flex items-center justify-between mb-2">
-                                <p className="text-xs text-muted-foreground flex items-center gap-1">
-                                  <Target className="h-3 w-3" /> Intake & Intentie
-                                </p>
-                                {editingIntake !== enrollment.id && (
-                                  <Button size="sm" variant="ghost" className="h-6 text-xs" onClick={() => {
-                                    setEditingIntake(enrollment.id);
-                                    setIntakeForm({
-                                      reason: enrollment.intake_reason || "",
-                                      theme: enrollment.intake_theme || "",
-                                      goal: enrollment.intake_goal || "",
-                                    });
-                                  }}>Bewerken</Button>
-                                )}
+                              {/* Legacy notes */}
+                              <div>
+                                <p className="text-xs text-muted-foreground mb-1 flex items-center gap-1"><StickyNote className="h-3 w-3" /> Notitie</p>
+                                <Textarea placeholder="Notities..." value={trainerNotes[reg.id] || ""} onChange={(e) => setTrainerNotes(prev => ({ ...prev, [reg.id]: e.target.value }))} className="min-h-[50px] text-sm" />
+                                <Button size="sm" variant="outline" onClick={() => saveTrainerNotesLegacy(reg.id)} disabled={savingNotes === reg.id} className="gap-1.5 mt-1.5 h-7 text-xs">
+                                  <Save className="h-3 w-3" /> {savingNotes === reg.id ? "Opslaan..." : "Opslaan"}
+                                </Button>
                               </div>
-                              {editingIntake === enrollment.id ? (
-                                <div className="space-y-2">
-                                  <div>
-                                    <Label className="text-xs">Waarom gestart?</Label>
-                                    <Input className="h-8 text-xs" value={intakeForm.reason} onChange={e => setIntakeForm(f => ({ ...f, reason: e.target.value }))} placeholder="Reden van aanmelding" />
-                                  </div>
-                                  <div>
-                                    <Label className="text-xs">Belangrijk thema</Label>
-                                    <Input className="h-8 text-xs" value={intakeForm.theme} onChange={e => setIntakeForm(f => ({ ...f, theme: e.target.value }))} placeholder="Centraal thema" />
-                                  </div>
-                                  <div>
-                                    <Label className="text-xs">Doel van het traject</Label>
-                                    <Input className="h-8 text-xs" value={intakeForm.goal} onChange={e => setIntakeForm(f => ({ ...f, goal: e.target.value }))} placeholder="Wat wil de deelnemer bereiken?" />
-                                  </div>
-                                  <div className="flex gap-2">
-                                    <Button size="sm" className="gap-1.5 text-xs" onClick={() => saveIntake(enrollment.id)} disabled={savingIntake}>
-                                      {savingIntake ? <Loader2 className="h-3 w-3 animate-spin" /> : <Save className="h-3 w-3" />} Opslaan
-                                    </Button>
-                                    <Button size="sm" variant="ghost" className="text-xs" onClick={() => setEditingIntake(null)}>Annuleren</Button>
-                                  </div>
-                                </div>
-                              ) : (
-                                <div className="space-y-1 text-sm">
-                                  {enrollment.intake_reason || enrollment.intake_theme || enrollment.intake_goal ? (
-                                    <>
-                                      {enrollment.intake_reason && (
-                                        <div className="flex gap-2"><Heart className="h-3.5 w-3.5 text-muted-foreground shrink-0 mt-0.5" /><span>{enrollment.intake_reason}</span></div>
-                                      )}
-                                      {enrollment.intake_theme && (
-                                        <div className="flex gap-2"><Target className="h-3.5 w-3.5 text-muted-foreground shrink-0 mt-0.5" /><span>{enrollment.intake_theme}</span></div>
-                                      )}
-                                      {enrollment.intake_goal && (
-                                        <div className="flex gap-2"><CheckCircle2 className="h-3.5 w-3.5 text-muted-foreground shrink-0 mt-0.5" /><span>{enrollment.intake_goal}</span></div>
-                                      )}
-                                    </>
-                                  ) : (
-                                    <p className="text-xs text-muted-foreground italic">Nog geen intake ingevuld</p>
-                                  )}
-                                </div>
-                              )}
-                            </div>
-                          )}
-
-                          {/* Structured Trainer Notes */}
-                          {enrollment && (
-                            <div className="border-t pt-3 space-y-3">
-                              <p className="text-xs text-muted-foreground flex items-center gap-1">
-                                <MessageSquare className="h-3 w-3" /> Gestructureerde notities
-                              </p>
-                              {[
-                                { type: "intake", label: "Intake-notitie", placeholder: "Observaties en afspraken uit het intakegesprek..." },
-                                { type: "aandachtspunt", label: "Belangrijk aandachtspunt", placeholder: "Waar moet je op letten bij deze deelnemer..." },
-                                { type: "reflectie", label: "Reflectie na laatste sessie", placeholder: "Hoe ging de laatste sessie, wat viel op..." },
-                              ].map(({ type, label, placeholder }) => {
-                                const key = `${enrollment.id}_${type}`;
-                                return (
-                                  <div key={type}>
-                                    <Label className="text-xs font-medium">{label}</Label>
-                                    <Textarea
-                                      placeholder={placeholder}
-                                      value={noteEdits[key] ?? getNoteContent(enrollment.id, type)}
-                                      onChange={(e) => setNoteEdits(prev => ({ ...prev, [key]: e.target.value }))}
-                                      className="min-h-[50px] text-sm mt-1"
-                                    />
-                                    <Button
-                                      size="sm"
-                                      variant="outline"
-                                      onClick={() => saveStructuredNote(enrollment.id, type)}
-                                      disabled={savingNote === key}
-                                      className="gap-1.5 mt-1 h-7 text-xs"
-                                    >
-                                      <Save className="h-3 w-3" />
-                                      {savingNote === key ? "Opslaan..." : "Opslaan"}
-                                    </Button>
-                                  </div>
-                                );
-                              })}
-                            </div>
-                          )}
-
-                          {/* Legacy admin notes for registrations without enrollment */}
-                          {!enrollment && (
-                            <div className="border-t pt-3">
-                              <p className="text-xs text-muted-foreground mb-2 flex items-center gap-1">
-                                <StickyNote className="h-3 w-3" /> Notitie:
-                              </p>
-                              <Textarea
-                                placeholder="Notities over deze aanmelding..."
-                                value={trainerNotes[reg.id] || ""}
-                                onChange={(e) => setTrainerNotes(prev => ({ ...prev, [reg.id]: e.target.value }))}
-                                className="min-h-[60px] text-sm"
-                              />
-                              <Button
-                                size="sm"
-                                variant="outline"
-                                onClick={() => saveTrainerNotes(reg.id)}
-                                disabled={savingNotes === reg.id}
-                                className="gap-1.5 mt-2"
-                              >
-                                <Save className="h-3.5 w-3.5" />
-                                {savingNotes === reg.id ? "Opslaan..." : "Opslaan"}
-                              </Button>
                             </div>
                           )}
                         </CardContent>
-                      </Card>
-                    </div>
-                  );
-                })}
-              </div>
-            )}
+                      </CollapsibleContent>
+                    </Card>
+                  </Collapsible>
+                </div>
+              );
+            })}
           </div>
         </div>
       </DialogContent>
@@ -984,15 +538,12 @@ export default function CustomerProfile({ email, onClose }: CustomerProfileProps
           <DialogContent className="sm:max-w-md">
             <DialogHeader>
               <DialogTitle>Extra training inschrijven</DialogTitle>
-              <DialogDescription>
-                Schrijf {customer.name} in voor een nieuwe training. Gegevens worden automatisch overgenomen.
-              </DialogDescription>
+              <DialogDescription>Schrijf {customer.name} in voor een nieuwe training.</DialogDescription>
             </DialogHeader>
             <div className="space-y-4">
               <div className="rounded-md bg-muted p-3 text-sm">
                 <p><strong>{customer.name}</strong></p>
                 <p className="text-muted-foreground">{customer.email}</p>
-                {customer.phone && <p className="text-muted-foreground">{customer.phone}</p>}
               </div>
               <div>
                 <Label>Training *</Label>
@@ -1014,8 +565,7 @@ export default function CustomerProfile({ email, onClose }: CustomerProfileProps
             <div className="flex justify-end gap-2 mt-4">
               <Button variant="outline" onClick={() => setShowExtraTraining(false)}>Annuleren</Button>
               <Button onClick={submitExtraTraining} disabled={submittingExtra}>
-                {submittingExtra && <Loader2 className="h-4 w-4 animate-spin mr-2" />}
-                Inschrijven
+                {submittingExtra && <Loader2 className="h-4 w-4 animate-spin mr-2" />} Inschrijven
               </Button>
             </div>
           </DialogContent>
