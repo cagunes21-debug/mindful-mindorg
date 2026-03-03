@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useSearchParams } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
@@ -90,10 +90,13 @@ const ITEMS_PER_PAGE = 6;
 
 export default function SelfCompassionQuestionnaire() {
   const { enrollmentId } = useParams<{ enrollmentId: string }>();
+  const [searchParams] = useSearchParams();
+  const measurementType = searchParams.get("type") === "post" ? "post" : "pre";
   const [loading, setLoading] = useState(true);
   const [submitting, setSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const [enrollmentValid, setEnrollmentValid] = useState(false);
+  const [alreadySubmitted, setAlreadySubmitted] = useState(false);
   const [answers, setAnswers] = useState<Record<string, string>>({});
   const [page, setPage] = useState(0);
   const [scores, setScores] = useState<{ overall: number; subscaleScores: Record<string, number> } | null>(null);
@@ -117,6 +120,18 @@ export default function SelfCompassionQuestionnaire() {
       .eq("id", enrollmentId!)
       .single();
     setEnrollmentValid(!!data);
+
+    if (data) {
+      // Check if this measurement type was already submitted
+      const { data: existing } = await supabase
+        .from("scs_submissions" as any)
+        .select("id")
+        .eq("enrollment_id", enrollmentId!)
+        .eq("measurement_type", measurementType)
+        .limit(1);
+      setAlreadySubmitted((existing as any[] || []).length > 0);
+    }
+
     setLoading(false);
   };
 
@@ -152,7 +167,7 @@ export default function SelfCompassionQuestionnaire() {
           isolation: Math.round(subscaleScores.isolation * 100) / 100,
           mindfulness: Math.round(subscaleScores.mindfulness * 100) / 100,
           over_identification: Math.round(subscaleScores.over_identification * 100) / 100,
-          measurement_type: "pre",
+          measurement_type: measurementType,
         });
 
       if (error) throw error;
@@ -178,6 +193,22 @@ export default function SelfCompassionQuestionnaire() {
         <Card className="max-w-md w-full">
           <CardContent className="pt-6 text-center">
             <p className="text-muted-foreground">Deze vragenlijst is niet beschikbaar of de link is ongeldig.</p>
+          </CardContent>
+        </Card>
+      </div>
+    );
+  }
+
+  if (alreadySubmitted) {
+    return (
+      <div className="min-h-screen bg-warm-50 flex items-center justify-center p-4">
+        <Card className="max-w-md w-full">
+          <CardContent className="pt-6 text-center space-y-3">
+            <CheckCircle2 className="h-10 w-10 text-primary mx-auto" />
+            <h2 className="text-lg font-medium">Al ingevuld</h2>
+            <p className="text-muted-foreground text-sm">
+              Je hebt de {measurementType === "pre" ? "0-meting" : "nameting"} al ingevuld. Bedankt!
+            </p>
           </CardContent>
         </Card>
       </div>
@@ -268,7 +299,12 @@ export default function SelfCompassionQuestionnaire() {
           <div className="flex items-center justify-center gap-2 text-primary">
             <Heart className="h-6 w-6" />
           </div>
-          <h1 className="text-2xl font-light text-foreground">Zelfcompassie Vragenlijst</h1>
+          <h1 className="text-2xl font-light text-foreground">
+            Zelfcompassie Vragenlijst
+            <span className="text-sm text-muted-foreground ml-2">
+              ({measurementType === "pre" ? "0-meting" : "Nameting"})
+            </span>
+          </h1>
           <p className="text-muted-foreground text-sm max-w-md mx-auto">
             Lees elke uitspraak zorgvuldig en geef aan hoe vaak je je zo gedraagt. 
             Er zijn geen goede of foute antwoorden.
