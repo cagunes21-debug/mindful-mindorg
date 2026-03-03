@@ -20,15 +20,22 @@ const PresentationViewer = ({ url }: PresentationViewerProps) => {
     setLoading(true);
     setError(null);
     try {
-      // Extract the file path from the full storage URL
-      const match = url.match(/\/storage\/v1\/object\/public\/presentations\/(.+)$/);
-      if (!match) {
-        setError("Ongeldig presentatie-pad");
-        setLoading(false);
-        return;
+      // Extract the file path from the full storage URL or use as-is if it's already a path
+      let filePath = url;
+      const match = url.match(/\/storage\/v1\/object\/(?:public|sign)\/presentations\/(.+?)(?:\?|$)/);
+      if (match) {
+        filePath = decodeURIComponent(match[1]);
+      } else if (url.startsWith("http")) {
+        // Try alternate pattern
+        const altMatch = url.match(/presentations\/(.+)$/);
+        if (altMatch) {
+          filePath = decodeURIComponent(altMatch[1]);
+        } else {
+          setError("Ongeldig presentatie-pad");
+          setLoading(false);
+          return;
+        }
       }
-
-      const filePath = decodeURIComponent(match[1]);
       
       const { data, error: signError } = await supabase.storage
         .from("presentations")
