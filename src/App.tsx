@@ -6,7 +6,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { HelmetProvider } from "react-helmet-async";
 import MindfulZelfcompassie from "./pages/MindfulZelfcompassie";
-import ExitIntentPopup from "./components/ExitIntentPopup";
+
 import StickyCTA from "./components/StickyCTA";
 import ProtectedRoute from "./components/ProtectedRoute";
 
@@ -59,7 +59,7 @@ const App = () => (
         <Toaster />
         <Sonner />
         <BrowserRouter>
-          <ExitIntentPopup />
+          
           <StickyCTA />
           <Suspense fallback={<PageLoader />}>
             <Routes>
