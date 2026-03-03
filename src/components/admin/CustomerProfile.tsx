@@ -21,7 +21,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Mail, Phone, Calendar, Euro, ShoppingBag, ArrowLeft, BookOpen, Headphones, ClipboardList, Presentation, FileText, Save, StickyNote, Eye, EyeOff, Lock, Unlock, Plus, Loader2 } from "lucide-react";
+import { Progress } from "@/components/ui/progress";
+import { Mail, Phone, Calendar, Euro, ShoppingBag, ArrowLeft, BookOpen, Headphones, ClipboardList, Presentation, FileText, Save, StickyNote, Eye, EyeOff, Lock, Unlock, Plus, Loader2, Clock, CheckCircle2, XCircle } from "lucide-react";
 import { format } from "date-fns";
 import { nl } from "date-fns/locale";
 import { toast } from "sonner";
@@ -72,6 +73,16 @@ interface CourseWeek {
   course_type: string;
 }
 
+interface SessionAppointment {
+  id: string;
+  enrollment_id: string;
+  week_number: number;
+  session_date: string | null;
+  session_time: string | null;
+  status: string;
+  notes: string | null;
+}
+
 const COURSE_TYPES: Record<string, string> = {
   msc_8week: "8-weekse Groepstraining",
   individueel_6: "Individueel (6 sessies)",
@@ -103,6 +114,7 @@ export default function CustomerProfile({ email, onClose }: CustomerProfileProps
   const [registrations, setRegistrations] = useState<Registration[]>([]);
   const [enrollments, setEnrollments] = useState<Enrollment[]>([]);
   const [courseWeeks, setCourseWeeks] = useState<CourseWeek[]>([]);
+  const [sessionAppointments, setSessionAppointments] = useState<SessionAppointment[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [trainerNotes, setTrainerNotes] = useState<Record<string, string>>({});
@@ -153,7 +165,21 @@ export default function CustomerProfile({ email, onClose }: CustomerProfileProps
           .select("id, course_type, start_date, status, unlocked_weeks, visible_sections, trainer_name, registration_id")
           .in("registration_id", regIds)
           .order("created_at", { ascending: false });
-        setEnrollments((enrollData || []) as Enrollment[]);
+        const enrs = (enrollData || []) as Enrollment[];
+        setEnrollments(enrs);
+
+        // Fetch session appointments for individual/losse enrollments
+        const individualEnrIds = enrs
+          .filter(e => e.course_type === "individueel_6" || e.course_type === "losse_sessie")
+          .map(e => e.id);
+        if (individualEnrIds.length > 0) {
+          const { data: apptData } = await supabase
+            .from("session_appointments")
+            .select("*")
+            .in("enrollment_id", individualEnrIds)
+            .order("week_number");
+          setSessionAppointments((apptData || []) as SessionAppointment[]);
+        }
       }
     } catch (error) {
       console.error("Error fetching customer data:", error);
@@ -291,6 +317,50 @@ export default function CustomerProfile({ email, onClose }: CustomerProfileProps
     }
     setCreating(false);
   };
+
+  // Session appointment helpers
+  const getAppointmentsForEnrollment = (enrollmentId: string) =>
+    sessionAppointments.filter(a => a.enrollment_id === enrollmentId);
+
+  const saveAppointment = async (enrollmentId: string, weekNumber: number, date: string | null, time: string | null, status: string) => {
+    const existing = sessionAppointments.find(a => a.enrollment_id === enrollmentId && a.week_number === weekNumber);
+    try {
+      if (existing) {
+        const { error } = await supabase
+          .from("session_appointments")
+          .update({ session_date: date, session_time: time, status })
+          .eq("id", existing.id);
+        if (error) throw error;
+        setSessionAppointments(prev => prev.map(a => a.id === existing.id ? { ...a, session_date: date, session_time: time, status } : a));
+      } else {
+        const { data, error } = await supabase
+          .from("session_appointments")
+          .insert({ enrollment_id: enrollmentId, week_number: weekNumber, session_date: date, session_time: time, status })
+          .select()
+          .single();
+        if (error) throw error;
+        setSessionAppointments(prev => [...prev, data as SessionAppointment]);
+      }
+      toast.success(`Sessie ${weekNumber} bijgewerkt`);
+    } catch (err: any) {
+      toast.error("Fout: " + err.message);
+    }
+  };
+
+  const getNextSession = (enrollmentId: string): SessionAppointment | null => {
+    const appts = getAppointmentsForEnrollment(enrollmentId);
+    const today = new Date().toISOString().split("T")[0];
+    return appts
+      .filter(a => a.status === "gepland" && a.session_date && a.session_date >= today)
+      .sort((a, b) => (a.session_date || "").localeCompare(b.session_date || ""))[0] || null;
+  };
+
+  const getSessionProgress = (enrollmentId: string, totalSessions: number) => {
+    const appts = getAppointmentsForEnrollment(enrollmentId);
+    const completed = appts.filter(a => a.status === "afgerond").length;
+    return { completed, total: totalSessions, percentage: totalSessions > 0 ? (completed / totalSessions) * 100 : 0 };
+  };
+
 
   const submitExtraTraining = async () => {
     if (!customer || !extraTrainingName.trim()) { toast.error("Selecteer een training"); return; }
@@ -524,6 +594,82 @@ export default function CustomerProfile({ email, onClose }: CustomerProfileProps
                                   })}
                                 </div>
                               </div>
+
+                              {/* Session Planning - only for individueel_6 and losse_sessie */}
+                              {(enrollment.course_type === "individueel_6" || enrollment.course_type === "losse_sessie") && (() => {
+                                const totalSessions = enrollment.course_type === "individueel_6" ? 6 : 1;
+                                const progress = getSessionProgress(enrollment.id, totalSessions);
+                                const nextSession = getNextSession(enrollment.id);
+                                const appts = getAppointmentsForEnrollment(enrollment.id);
+
+                                return (
+                                  <div className="border-t pt-3 space-y-3">
+                                    {/* Next session + progress */}
+                                    <div className="flex items-center justify-between">
+                                      <p className="text-xs text-muted-foreground flex items-center gap-1">
+                                        <Calendar className="h-3 w-3" /> Sessieplanning
+                                      </p>
+                                      <span className="text-xs font-medium">
+                                        {progress.completed} van {progress.total} afgerond
+                                      </span>
+                                    </div>
+                                    <Progress value={progress.percentage} className="h-2" />
+
+                                    {nextSession && nextSession.session_date && (
+                                      <div className="rounded-md bg-primary/5 border border-primary/20 p-2.5 flex items-center gap-2">
+                                        <Clock className="h-4 w-4 text-primary" />
+                                        <span className="text-sm font-medium">
+                                          Volgende sessie: {new Date(nextSession.session_date).toLocaleDateString("nl-NL", { weekday: "long", day: "numeric", month: "long" })}
+                                          {nextSession.session_time && ` om ${nextSession.session_time.slice(0, 5)}`}
+                                        </span>
+                                      </div>
+                                    )}
+
+                                    {/* Per-session rows */}
+                                    <div className="space-y-2">
+                                      {weeks.map(week => {
+                                        const appt = appts.find(a => a.week_number === week.week_number);
+                                        const apptStatus = appt?.status || "gepland";
+                                        const statusIcon = apptStatus === "afgerond" ? <CheckCircle2 className="h-3.5 w-3.5 text-primary" /> :
+                                          apptStatus === "geannuleerd" ? <XCircle className="h-3.5 w-3.5 text-destructive" /> :
+                                          <Clock className="h-3.5 w-3.5 text-accent-foreground" />;
+
+                                        return (
+                                          <div key={week.id} className="flex items-center gap-2 p-2 rounded-lg bg-muted/40 border border-border/50">
+                                            {statusIcon}
+                                            <span className="text-xs font-medium w-16 shrink-0">Sessie {week.week_number}</span>
+                                            <Input
+                                              type="date"
+                                              className="h-7 text-xs flex-1 min-w-[130px]"
+                                              value={appt?.session_date || ""}
+                                              onChange={(e) => saveAppointment(enrollment.id, week.week_number, e.target.value || null, appt?.session_time || null, apptStatus)}
+                                            />
+                                            <Input
+                                              type="time"
+                                              className="h-7 text-xs w-24"
+                                              value={appt?.session_time?.slice(0, 5) || ""}
+                                              onChange={(e) => saveAppointment(enrollment.id, week.week_number, appt?.session_date || null, e.target.value ? e.target.value + ":00" : null, apptStatus)}
+                                            />
+                                            <Select
+                                              value={apptStatus}
+                                              onValueChange={(val) => saveAppointment(enrollment.id, week.week_number, appt?.session_date || null, appt?.session_time || null, val)}
+                                            >
+                                              <SelectTrigger className="h-7 text-xs w-[120px]">
+                                                <SelectValue />
+                                              </SelectTrigger>
+                                              <SelectContent>
+                                                <SelectItem value="gepland">Gepland</SelectItem>
+                                                <SelectItem value="afgerond">Afgerond</SelectItem>
+                                                <SelectItem value="geannuleerd">Geannuleerd</SelectItem>
+                                              </SelectContent>
+                                            </Select>
+                                          </div>
+                                        );
+                                      })}
+                                    </div>
+                                  </div>
+                                );
+                              })()}
                             </>
                           ) : (
                             <div className="border-t pt-3 space-y-3">
