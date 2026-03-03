@@ -41,6 +41,7 @@ const CourseMaterial = lazy(() => import("./pages/CourseMaterial"));
 const SessionPresentation = lazy(() => import("./pages/SessionPresentation"));
 const SelfCompassionPresentation = lazy(() => import("./pages/SelfCompassionPresentation"));
 const IntakeForm = lazy(() => import("./pages/IntakeForm"));
+const SelfCompassionQuestionnaire = lazy(() => import("./pages/SelfCompassionQuestionnaire"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 
 const queryClient = new QueryClient();
@@ -94,6 +95,7 @@ const App = () => (
               <Route path="/admin/presentatie/:sessionNumber" element={<ProtectedRoute requireAdmin><SessionPresentation /></ProtectedRoute>} />
               <Route path="/reset-password" element={<ResetPassword />} />
               <Route path="/intake/:enrollmentId" element={<IntakeForm />} />
+              <Route path="/vragenlijst/:enrollmentId" element={<SelfCompassionQuestionnaire />} />
               
               {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
               <Route path="*" element={<NotFound />} />
