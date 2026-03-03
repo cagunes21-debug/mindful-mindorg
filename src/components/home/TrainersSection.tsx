@@ -3,10 +3,6 @@ const trainers = [
     name: "Çağla Güneş",
     role: "Traumatherapeut en Mindful Zelfcompassie-trainer",
   },
-  {
-    name: "Sabine Trampe",
-    role: "GGZ psycholoog en Mindful Zelfcompassie-trainer",
-  },
 ];
 
 const TrainersSection = () => {
@@ -19,7 +15,7 @@ const TrainersSection = () => {
           </h2>
           <div className="w-16 h-0.5 bg-primary mx-auto" />
         </div>
-        <div className="grid md:grid-cols-2 gap-12 max-w-2xl mx-auto">
+        <div className="max-w-sm mx-auto">
           {trainers.map((trainer) => (
             <div key={trainer.name} className="text-center">
               <div className="w-20 h-20 rounded-full bg-secondary mx-auto mb-4 flex items-center justify-center">
