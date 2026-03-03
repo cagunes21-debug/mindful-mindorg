@@ -112,6 +112,7 @@ export type Database = {
           id: string
           notebook_audio_url: string | null
           notebook_url: string | null
+          presentation_url: string | null
           theme: string | null
           title: string
           updated_at: string
@@ -125,6 +126,7 @@ export type Database = {
           id?: string
           notebook_audio_url?: string | null
           notebook_url?: string | null
+          presentation_url?: string | null
           theme?: string | null
           title: string
           updated_at?: string
@@ -138,6 +140,7 @@ export type Database = {
           id?: string
           notebook_audio_url?: string | null
           notebook_url?: string | null
+          presentation_url?: string | null
           theme?: string | null
           title?: string
           updated_at?: string
@@ -157,6 +160,7 @@ export type Database = {
           start_date: string
           status: Database["public"]["Enums"]["enrollment_status"] | null
           trainer_name: string | null
+          unlocked_weeks: number[]
           updated_at: string
           user_id: string
         }
@@ -171,6 +175,7 @@ export type Database = {
           start_date: string
           status?: Database["public"]["Enums"]["enrollment_status"] | null
           trainer_name?: string | null
+          unlocked_weeks?: number[]
           updated_at?: string
           user_id: string
         }
@@ -185,6 +190,7 @@ export type Database = {
           start_date?: string
           status?: Database["public"]["Enums"]["enrollment_status"] | null
           trainer_name?: string | null
+          unlocked_weeks?: number[]
           updated_at?: string
           user_id?: string
         }

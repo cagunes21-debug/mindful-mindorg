@@ -38,6 +38,7 @@ const BlogPost = lazy(() => import("./pages/BlogPost"));
 const AlgemeneVoorwaarden = lazy(() => import("./pages/AlgemeneVoorwaarden"));
 const ResetPassword = lazy(() => import("./pages/ResetPassword"));
 const CourseMaterial = lazy(() => import("./pages/CourseMaterial"));
+const AdminEnrollments = lazy(() => import("./pages/AdminEnrollments"));
 const SessionPresentation = lazy(() => import("./pages/SessionPresentation"));
 const SelfCompassionPresentation = lazy(() => import("./pages/SelfCompassionPresentation"));
 const NotFound = lazy(() => import("./pages/NotFound"));
@@ -88,6 +89,7 @@ const App = () => (
               <Route path="/blog/:slug" element={<BlogPost />} />
               <Route path="/algemene-voorwaarden" element={<AlgemeneVoorwaarden />} />
               <Route path="/admin/cursusmateriaal" element={<ProtectedRoute requireAdmin><CourseMaterial /></ProtectedRoute>} />
+              <Route path="/admin/deelnemers" element={<ProtectedRoute requireAdmin><AdminEnrollments /></ProtectedRoute>} />
               <Route path="/admin/presentatie/zelfcompassie" element={<ProtectedRoute requireAdmin><SelfCompassionPresentation /></ProtectedRoute>} />
               <Route path="/admin/presentatie/:sessionNumber" element={<ProtectedRoute requireAdmin><SessionPresentation /></ProtectedRoute>} />
               <Route path="/reset-password" element={<ResetPassword />} />

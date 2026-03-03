@@ -41,6 +41,7 @@ interface Enrollment {
   location: string | null;
   group_info: string | null;
   course_type: string;
+  unlocked_weeks: number[];
 }
 
 interface CourseWeek {
@@ -50,6 +51,7 @@ interface CourseWeek {
   description: string | null;
   theme: string | null;
   content: Record<string, unknown>;
+  presentation_url: string | null;
 }
 
 interface Meditation {
@@ -149,13 +151,9 @@ const ParticipantDashboard = () => {
     return enrollment.course_type === 'individueel_6' ? 6 : 8;
   };
 
-  const calculateUnlockedWeek = (): number => {
-    if (!enrollment) return 1;
-    const startDate = new Date(enrollment.start_date);
-    const today = new Date();
-    const diffTime = today.getTime() - startDate.getTime();
-    const diffWeeks = Math.floor(diffTime / (1000 * 60 * 60 * 24 * 7));
-    return Math.min(Math.max(diffWeeks + 1, 1), getMaxWeeks());
+  const getUnlockedWeeks = (): number[] => {
+    if (!enrollment) return [1];
+    return enrollment.unlocked_weeks || [1];
   };
 
   const getCourseName = (): string => {
@@ -170,7 +168,7 @@ const ParticipantDashboard = () => {
   };
 
   const isWeekUnlocked = (weekNumber: number): boolean => {
-    return weekNumber <= calculateUnlockedWeek();
+    return getUnlockedWeeks().includes(weekNumber);
   };
 
   const getWeekProgress = (weekId: string): number => {
@@ -324,7 +322,8 @@ const ParticipantDashboard = () => {
   }
 
   const currentWeekData = weeks.find(w => w.week_number === selectedWeek);
-  const unlockedWeek = calculateUnlockedWeek();
+  const unlockedWeeks = getUnlockedWeeks();
+  const maxUnlocked = unlockedWeeks.length > 0 ? Math.max(...unlockedWeeks) : 1;
 
   return (
     <div className="min-h-screen bg-background">
@@ -352,7 +351,7 @@ const ParticipantDashboard = () => {
               <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
                 <div className="flex-1">
                   <div className="flex items-center gap-2 mb-2">
-                    <span className="text-sm font-medium">{getWeekLabel()} {unlockedWeek} van {getMaxWeeks()}</span>
+                    <span className="text-sm font-medium">{unlockedWeeks.length} van {getMaxWeeks()} {getWeekLabel().toLowerCase()}s vrijgegeven</span>
                     <Badge variant="secondary">{getTotalProgress()}% voltooid</Badge>
                   </div>
                   <Progress value={getTotalProgress()} className="h-2" />
@@ -421,7 +420,34 @@ const ParticipantDashboard = () => {
                   <CardContent>
                     {currentWeekData.description && (
                       <p className="text-muted-foreground mb-6">{currentWeekData.description}</p>
-                    )}
+                     )}
+                     
+                     {/* Presentation */}
+                     {currentWeekData.presentation_url && (
+                       <div className="mb-6">
+                         <h3 className="font-medium mb-3 flex items-center gap-2">
+                           <BookOpen className="h-4 w-4" />
+                           Presentatie
+                         </h3>
+                         <Card className="border-warm-200">
+                           <CardContent className="p-4">
+                             {currentWeekData.presentation_url.endsWith('.pdf') ? (
+                               <iframe
+                                 src={currentWeekData.presentation_url}
+                                 className="w-full h-[500px] rounded-lg border"
+                                 title="Presentatie"
+                               />
+                             ) : (
+                               <iframe
+                                 src={`https://view.officeapps.live.com/op/embed.aspx?src=${encodeURIComponent(currentWeekData.presentation_url)}`}
+                                 className="w-full h-[500px] rounded-lg border"
+                                 title="Presentatie"
+                               />
+                             )}
+                           </CardContent>
+                         </Card>
+                       </div>
+                     )}
 
                     {/* Week Meditations */}
                     <div className="mb-6">
