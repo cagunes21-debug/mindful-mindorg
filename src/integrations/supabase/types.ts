@@ -155,6 +155,9 @@ export type Database = {
           current_week: number | null
           group_info: string | null
           id: string
+          intake_goal: string | null
+          intake_reason: string | null
+          intake_theme: string | null
           location: string | null
           registration_id: string | null
           start_date: string
@@ -171,6 +174,9 @@ export type Database = {
           current_week?: number | null
           group_info?: string | null
           id?: string
+          intake_goal?: string | null
+          intake_reason?: string | null
+          intake_theme?: string | null
           location?: string | null
           registration_id?: string | null
           start_date: string
@@ -187,6 +193,9 @@ export type Database = {
           current_week?: number | null
           group_info?: string | null
           id?: string
+          intake_goal?: string | null
+          intake_reason?: string | null
+          intake_theme?: string | null
           location?: string | null
           registration_id?: string | null
           start_date?: string
@@ -434,6 +443,41 @@ export type Database = {
         Relationships: [
           {
             foreignKeyName: "session_appointments_enrollment_id_fkey"
+            columns: ["enrollment_id"]
+            isOneToOne: false
+            referencedRelation: "enrollments"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      trainer_notes: {
+        Row: {
+          content: string
+          created_at: string
+          enrollment_id: string
+          id: string
+          note_type: string
+          updated_at: string
+        }
+        Insert: {
+          content?: string
+          created_at?: string
+          enrollment_id: string
+          id?: string
+          note_type?: string
+          updated_at?: string
+        }
+        Update: {
+          content?: string
+          created_at?: string
+          enrollment_id?: string
+          id?: string
+          note_type?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "trainer_notes_enrollment_id_fkey"
             columns: ["enrollment_id"]
             isOneToOne: false
             referencedRelation: "enrollments"
