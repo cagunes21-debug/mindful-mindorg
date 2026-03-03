@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 const trainers = [
   {
     name: "Çağla Güneş",
@@ -27,6 +29,20 @@ const TrainersSection = () => {
               <p className="text-muted-foreground text-sm">{trainer.role}</p>
             </div>
           ))}
+        </div>
+        <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mt-12">
+          <Link
+            to="/over-ons"
+            className="inline-block bg-primary text-primary-foreground px-8 py-3 rounded-lg font-sans font-semibold text-sm tracking-wide uppercase hover:opacity-90 transition-opacity"
+          >
+            Meer over Mindful Mind
+          </Link>
+          <Link
+            to="/trainers"
+            className="inline-block border border-border text-foreground px-8 py-3 rounded-lg font-sans font-semibold text-sm tracking-wide uppercase hover:bg-secondary transition-colors"
+          >
+            Over de trainers
+          </Link>
         </div>
       </div>
     </section>
