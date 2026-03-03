@@ -61,7 +61,7 @@ const Navigation = () => {
   };
 
   const serviceLinks = [
-    { to: "/msc-training", label: "MSC Training" },
+    { to: "/msc-training", label: "Groepstraject" },
     { to: "/coaching", label: "1-op-1 Begeleiding" },
     { to: "/programmas", label: "Alle programma's" },
     { to: "/bedrijven", label: "Bedrijfstrainingen" },
