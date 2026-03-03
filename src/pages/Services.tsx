@@ -225,7 +225,7 @@ const Services = () => {
                   🌿 Individuele Sessie <span className="font-serif italic text-terracotta-600">(los)</span>
                 </h2>
                 <p className="text-muted-foreground text-lg max-w-2xl mx-auto leading-relaxed">
-                  Wil je eerst kennismaken of een losse sessie boeken rond een specifiek thema?
+                  Wil je een losse sessie boeken rond een specifiek thema of vraagstuk?
                 </p>
               </div>
             </ScrollReveal>
@@ -292,8 +292,8 @@ const Services = () => {
                 <div className="flex items-start gap-3 p-4 rounded-xl bg-white/80 border border-warm-200">
                   <span className="text-lg mt-0.5">→</span>
                   <p className="text-foreground">
-                    <strong>Twijfel je nog of wil je eerst ervaren hoe het is?</strong><br />
-                    <span className="text-muted-foreground">Boek een kennismakingssessie</span>
+                    <strong>Wil je laagdrempelig starten met een losse sessie?</strong><br />
+                    <span className="text-muted-foreground">Boek een individuele sessie</span>
                   </p>
                 </div>
               </div>
