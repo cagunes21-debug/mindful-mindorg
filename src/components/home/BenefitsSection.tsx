@@ -1,4 +1,3 @@
-import { Heart, Shield, Eye, Star, Pen, ArrowRight } from "lucide-react";
 import { motion } from "framer-motion";
 
 const feelings = [
@@ -9,64 +8,11 @@ const feelings = [
 ];
 
 const concreteResults = [
-  { before: "Twijfelen over grenzen", after: "Je stelt duidelijker grenzen" },
-  { before: "Schuldgevoel bij 'nee'", after: "Je zegt vaker 'nee' zonder schuldgevoel" },
-  { before: "Stress opkroppen", after: "Je herkent stresssignalen eerder" },
-  { before: "Eindeloos twijfelen", after: "Je maakt keuzes zonder eindeloos te twijfelen" },
+  "Je stelt duidelijker grenzen",
+  "Je zegt vaker 'nee' zonder schuldgevoel",
+  "Je herkent stresssignalen eerder",
+  "Je maakt keuzes zonder eindeloos te twijfelen",
 ];
-
-const experiences = [
-  {
-    icon: Heart,
-    title: "Mildheid voor jezelf",
-    description: "Je leert jezelf te steunen en te troosten wanneer het moeilijk is — in plaats van jezelf te bekritiseren.",
-    gradient: "from-rose-100 to-rose-50",
-    iconBg: "bg-rose-100",
-    iconColor: "text-rose-500",
-  },
-  {
-    icon: Shield,
-    title: "Meer veerkracht",
-    description: "Je ontwikkelt emotionele stabiliteit en leert beter omgaan met stress, twijfel en tegenslag.",
-    gradient: "from-lavender-100 to-lavender-50",
-    iconBg: "bg-lavender-100",
-    iconColor: "text-lavender-500",
-  },
-  {
-    icon: Eye,
-    title: "Rust in je hoofd",
-    description: "Je ontdekt hoe je kunt vertragen en ruimte kunt maken voor je gedachten en gevoelens, zonder oordeel.",
-    gradient: "from-sage-100 to-sage-50",
-    iconBg: "bg-sage-100",
-    iconColor: "text-sage-600",
-  },
-  {
-    icon: Star,
-    title: "Verbinding met jezelf",
-    description: "Je herstelt de relatie met jezelf en wordt je bewuster van wat jij écht nodig hebt om in balans te leven.",
-    gradient: "from-coral-100 to-coral-50",
-    iconBg: "bg-coral-100",
-    iconColor: "text-coral-500",
-  },
-  {
-    icon: Pen,
-    title: "Praktische handvatten",
-    description: "Je ontvangt concrete oefeningen en tools die je direct kunt toepassen — thuis, op werk en in je relaties.",
-    gradient: "from-terracotta-100 to-warm-100",
-    iconBg: "bg-terracotta-100",
-    iconColor: "text-terracotta-600",
-  },
-];
-
-const containerVariants = {
-  hidden: {},
-  visible: { transition: { staggerChildren: 0.12 } },
-};
-
-const cardVariants = {
-  hidden: { opacity: 0, y: 30 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: "easeOut" as const } },
-};
 
 const BenefitsSection = () => {
   return (
@@ -76,7 +22,7 @@ const BenefitsSection = () => {
 
       <div className="container mx-auto px-6 max-w-5xl relative">
         {/* Header */}
-        <div className="text-center mb-16">
+        <div className="text-center mb-12">
           <motion.p
             initial={{ opacity: 0, y: 10 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -103,7 +49,7 @@ const BenefitsSection = () => {
           />
         </div>
 
-        {/* Feeling pills — visual & compact */}
+        {/* Feeling pills */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -125,56 +71,30 @@ const BenefitsSection = () => {
           ))}
         </motion.div>
 
-        {/* Experience cards */}
-        <motion.div
-          variants={containerVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: "-50px" }}
-          className="grid grid-cols-2 lg:grid-cols-3 gap-4 mb-20"
-        >
-          {experiences.map((benefit) => (
-            <motion.div
-              key={benefit.title}
-              variants={cardVariants}
-              className={`group relative rounded-xl p-5 bg-gradient-to-br ${benefit.gradient} border border-border/50 hover:shadow-lg hover:-translate-y-1 transition-all duration-300`}
-            >
-              <div className={`w-10 h-10 rounded-lg ${benefit.iconBg} flex items-center justify-center mb-3 group-hover:scale-110 transition-transform duration-300`}>
-                <benefit.icon className={benefit.iconColor} size={20} />
-              </div>
-              <h3 className="font-serif text-lg text-foreground mb-1.5">{benefit.title}</h3>
-              <p className="text-muted-foreground leading-relaxed text-xs">{benefit.description}</p>
-            </motion.div>
-          ))}
-        </motion.div>
-
-        {/* Concrete results — before/after style */}
-        <div className="max-w-2xl mx-auto">
+        {/* Concrete results */}
+        <div className="max-w-md mx-auto">
           <motion.h3
             initial={{ opacity: 0, y: 15 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="text-2xl md:text-3xl font-serif text-foreground text-center mb-10"
+            className="text-2xl md:text-3xl font-serif text-foreground text-center mb-8"
           >
             Concreet levert het je <em className="italic text-primary">op</em>
           </motion.h3>
 
-          <div className="space-y-4 max-w-lg mx-auto">
+          <div className="flex flex-wrap justify-center gap-2">
             {concreteResults.map((item, i) => (
-              <motion.div
+              <motion.span
                 key={i}
-                initial={{ opacity: 0, x: -20 }}
-                whileInView={{ opacity: 1, x: 0 }}
+                initial={{ opacity: 0, scale: 0.9 }}
+                whileInView={{ opacity: 1, scale: 1 }}
                 viewport={{ once: true }}
-                transition={{ delay: i * 0.1 }}
-                className="flex items-center gap-3 rounded-xl bg-card border border-border/50 p-4"
+                transition={{ delay: i * 0.08 }}
+                className="inline-flex items-center gap-2 rounded-full bg-card border border-border/50 px-4 py-2 text-sm text-foreground"
               >
-                <span className="text-xs text-muted-foreground line-through flex-shrink-0 w-[140px] hidden sm:block">
-                  {item.before}
-                </span>
-                <ArrowRight className="h-4 w-4 text-primary flex-shrink-0 hidden sm:block" />
-                <span className="text-sm font-medium text-foreground">{item.after}</span>
-              </motion.div>
+                <span className="w-1.5 h-1.5 rounded-full bg-primary flex-shrink-0" />
+                {item}
+              </motion.span>
             ))}
           </div>
         </div>
