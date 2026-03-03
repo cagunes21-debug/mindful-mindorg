@@ -216,6 +216,62 @@ export type Database = {
           },
         ]
       }
+      intake_submissions: {
+        Row: {
+          additional_notes: string | null
+          availability: string | null
+          emergency_contact: string | null
+          enrollment_id: string
+          expectations: string | null
+          goal: string | null
+          health_situation: string | null
+          id: string
+          main_theme: string | null
+          mindfulness_experience: string | null
+          reason: string | null
+          submitted_at: string
+          updated_at: string
+        }
+        Insert: {
+          additional_notes?: string | null
+          availability?: string | null
+          emergency_contact?: string | null
+          enrollment_id: string
+          expectations?: string | null
+          goal?: string | null
+          health_situation?: string | null
+          id?: string
+          main_theme?: string | null
+          mindfulness_experience?: string | null
+          reason?: string | null
+          submitted_at?: string
+          updated_at?: string
+        }
+        Update: {
+          additional_notes?: string | null
+          availability?: string | null
+          emergency_contact?: string | null
+          enrollment_id?: string
+          expectations?: string | null
+          goal?: string | null
+          health_situation?: string | null
+          id?: string
+          main_theme?: string | null
+          mindfulness_experience?: string | null
+          reason?: string | null
+          submitted_at?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "intake_submissions_enrollment_id_fkey"
+            columns: ["enrollment_id"]
+            isOneToOne: false
+            referencedRelation: "enrollments"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       meditations: {
         Row: {
           audio_url: string
