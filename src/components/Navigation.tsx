@@ -75,6 +75,7 @@ const Navigation = () => {
   const moreLinks = [
     { to: "/ervaringen", label: "Ervaringen" },
     { to: "/faq", label: "Veelgestelde Vragen" },
+    { to: "/blog", label: "Blog" },
   ];
 
   const isServicesActive = serviceLinks.some(link => location.pathname === link.to) || location.pathname === "/ons-aanbod";
