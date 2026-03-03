@@ -165,7 +165,7 @@ export default function AdminCustomersSection() {
           {filteredCustomers.length} van {customers.length} klanten
         </p>
         <Button size="sm" className="gap-2 ml-auto" onClick={() => setShowNewReg(true)}>
-          <Plus className="h-4 w-4" /> Nieuwe aanmelding
+          <Plus className="h-4 w-4" /> Nieuwe klant
         </Button>
       </div>
 
