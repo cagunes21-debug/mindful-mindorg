@@ -63,6 +63,7 @@ const Navigation = () => {
   const serviceLinks = [
     { to: "/msc-training", label: "Groepstraject" },
     { to: "/coaching", label: "Individuele Begeleiding" },
+    { to: "/barcelona-retreat", label: "Retreat" },
   ];
 
   const aboutLinks = [
@@ -138,13 +139,6 @@ const Navigation = () => {
               </DropdownMenuContent>
             </DropdownMenu>
 
-            <NavLink
-              to="/barcelona-retreat"
-              className="text-sm font-medium text-muted-foreground transition-colors hover:text-primary"
-              activeClassName="text-primary"
-            >
-              Retreat
-            </NavLink>
 
             <NavLink
               to="/agenda"
@@ -309,14 +303,6 @@ const Navigation = () => {
                 )}
               </div>
 
-              <NavLink
-                to="/barcelona-retreat"
-                className="text-sm font-medium text-muted-foreground transition-colors hover:text-primary"
-                activeClassName="text-primary"
-                onClick={() => setIsOpen(false)}
-              >
-                Retreat
-              </NavLink>
 
               <NavLink
                 to="/agenda"
