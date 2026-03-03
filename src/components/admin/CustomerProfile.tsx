@@ -255,6 +255,7 @@ export default function CustomerProfile({ email, onClose }: CustomerProfileProps
   const globalNext = getGlobalNextSession();
   const globalProgress = getGlobalProgress();
   const hasIndividual = enrollments.some(e => e.course_type === "individueel_6" || e.course_type === "losse_sessie");
+  const isLead = enrollments.length === 0;
 
   return (
     <Dialog open onOpenChange={onClose}>
@@ -265,7 +266,11 @@ export default function CustomerProfile({ email, onClose }: CustomerProfileProps
               <ArrowLeft className="h-4 w-4" />
             </Button>
             <div className="flex-1">
-              <DialogTitle className="text-lg">{customer.name}</DialogTitle>
+              <DialogTitle className="text-lg flex items-center gap-2">
+                {customer.name}
+                {isLead && <Badge className="bg-amber-100 text-amber-800 text-[10px] px-1.5 py-0 font-normal">Lead</Badge>}
+                {!isLead && <Badge className="bg-green-100 text-green-800 text-[10px] px-1.5 py-0 font-normal">Klant</Badge>}
+              </DialogTitle>
               <DialogDescription className="flex items-center gap-3 flex-wrap">
                 <span className="flex items-center gap-1"><Mail className="h-3 w-3" /><a href={`mailto:${customer.email}`} className="hover:underline">{customer.email}</a></span>
                 {customer.phone && <span className="flex items-center gap-1"><Phone className="h-3 w-3" /><a href={`tel:${customer.phone}`} className="hover:underline">{customer.phone}</a></span>}
