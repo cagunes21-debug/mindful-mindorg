@@ -341,15 +341,31 @@ const ParticipantDashboard = () => {
       
       <main className="container mx-auto px-4 pt-24 pb-16">
         <div className="max-w-6xl mx-auto">
-          {/* Header */}
-          <div className="mb-8">
-            <h1 className="text-3xl font-light text-foreground mb-2">
-              Welkom bij je training
-            </h1>
-            <p className="text-muted-foreground">
-              {getCourseName()}
-            </p>
-          </div>
+          {/* Welcome Section */}
+          <Card className="mb-8 border-warm-200 bg-gradient-to-br from-warm-50 to-background">
+            <CardContent className="p-8">
+              <h1 className="text-3xl font-light text-foreground mb-3">
+                Welkom{user?.user_metadata?.full_name ? `, ${user.user_metadata.full_name.split(' ')[0]}` : ''} 👋
+              </h1>
+              <p className="text-muted-foreground mb-4">
+                {getCourseName()}
+              </p>
+              <div className="bg-background/70 rounded-lg p-4 text-sm text-muted-foreground space-y-2">
+                <p>
+                  Fijn dat je er bent! Dit is jouw persoonlijke leeromgeving. Hier vind je alles wat je nodig hebt voor je traject:
+                </p>
+                <ul className="list-disc list-inside space-y-1 ml-2">
+                  <li>📖 <strong>Sessies</strong> — Bekijk de inhoud en presentaties per sessie</li>
+                  <li>🎧 <strong>Meditaties</strong> — Luister naar geleide meditaties</li>
+                  <li>📝 <strong>Opdrachten</strong> — Werk aan je persoonlijke oefeningen</li>
+                  <li>ℹ️ <strong>Info</strong> — Praktische informatie over je training</li>
+                </ul>
+                <p className="pt-2">
+                  Je trainer geeft stap voor stap nieuwe sessies vrij. Neem de tijd en wees mild voor jezelf. 💛
+                </p>
+              </div>
+            </CardContent>
+          </Card>
 
           {/* Progress Overview */}
           <Card className="mb-8 border-warm-200">
