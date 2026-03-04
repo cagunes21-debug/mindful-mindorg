@@ -281,24 +281,54 @@ export default function TherapySessionSection({ enrollmentId, clientName }: Prop
                   </CollapsibleTrigger>
                   <CollapsibleContent>
                     <CardContent className="px-3 pb-3 pt-0 space-y-2">
-                      {FIELDS.map(({ key, label }) => {
-                        const val = (session as any)[key];
-                        if (!val) return null;
-                        return (
-                          <div key={key}>
-                            <p className="text-[10px] font-semibold text-muted-foreground uppercase tracking-wide">{label}</p>
-                            <p className="text-xs leading-relaxed">{val}</p>
+                      {editingId === session.id ? (
+                        <>
+                          {FIELDS.map(({ key, label, placeholder }) => (
+                            <div key={key}>
+                              <Label className="text-[10px] font-semibold text-muted-foreground uppercase tracking-wide">{label}</Label>
+                              <Textarea
+                                placeholder={placeholder}
+                                value={editFields[key] || ""}
+                                onChange={e => setEditFields(prev => ({ ...prev, [key]: e.target.value }))}
+                                className="min-h-[50px] text-xs mt-0.5"
+                              />
+                            </div>
+                          ))}
+                          <div className="flex justify-end gap-1 pt-1">
+                            <Button size="sm" variant="ghost" onClick={cancelEditing} className="text-xs h-6 gap-1">
+                              <X className="h-3 w-3" /> Annuleren
+                            </Button>
+                            <Button size="sm" onClick={() => saveEdit(session.id)} disabled={savingEdit} className="text-xs h-6 gap-1">
+                              {savingEdit ? <Loader2 className="h-3 w-3 animate-spin" /> : <Save className="h-3 w-3" />}
+                              Opslaan
+                            </Button>
                           </div>
-                        );
-                      })}
-                      <div className="flex justify-end gap-1 pt-1">
-                        <Button size="sm" variant="ghost" onClick={() => exportSessionPdf(session, clientName)} className="text-xs h-6 gap-1">
-                          <Download className="h-3 w-3" /> PDF
-                        </Button>
-                        <Button size="sm" variant="ghost" onClick={() => deleteSession(session.id)} className="text-destructive text-[10px] h-6 gap-1">
-                          <Trash2 className="h-3 w-3" /> Verwijderen
-                        </Button>
-                      </div>
+                        </>
+                      ) : (
+                        <>
+                          {FIELDS.map(({ key, label }) => {
+                            const val = (session as any)[key];
+                            if (!val) return null;
+                            return (
+                              <div key={key}>
+                                <p className="text-[10px] font-semibold text-muted-foreground uppercase tracking-wide">{label}</p>
+                                <p className="text-xs leading-relaxed">{val}</p>
+                              </div>
+                            );
+                          })}
+                          <div className="flex justify-end gap-1 pt-1">
+                            <Button size="sm" variant="ghost" onClick={() => startEditing(session)} className="text-xs h-6 gap-1">
+                              <Pencil className="h-3 w-3" /> Bewerken
+                            </Button>
+                            <Button size="sm" variant="ghost" onClick={() => exportSessionPdf(session, clientName)} className="text-xs h-6 gap-1">
+                              <Download className="h-3 w-3" /> PDF
+                            </Button>
+                            <Button size="sm" variant="ghost" onClick={() => deleteSession(session.id)} className="text-destructive text-[10px] h-6 gap-1">
+                              <Trash2 className="h-3 w-3" /> Verwijderen
+                            </Button>
+                          </div>
+                        </>
+                      )}
                     </CardContent>
                   </CollapsibleContent>
                 </Card>
