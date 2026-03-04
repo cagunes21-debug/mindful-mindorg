@@ -33,6 +33,7 @@ import AssignmentCard from "@/components/participant/AssignmentCard";
 import PracticalInfoCard from "@/components/participant/PracticalInfoCard";
 import PresentationViewer from "@/components/participant/PresentationViewer";
 import WelcomeSection from "@/components/participant/WelcomeSection";
+import TrainingContentSection from "@/components/participant/TrainingContentSection";
 
 interface Enrollment {
   id: string;
@@ -409,6 +410,14 @@ const ParticipantDashboard = () => {
               </div>
             </CardContent>
           </Card>
+
+          {/* Training Content Items */}
+          <div className="mb-8">
+            <TrainingContentSection
+              courseType={enrollment.course_type}
+              unlockedWeeks={unlockedWeeks}
+            />
+          </div>
 
           {/* Main Tabs */}
           <Tabs defaultValue="weeks" className="space-y-6">

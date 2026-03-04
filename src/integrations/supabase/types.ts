@@ -680,6 +680,84 @@ export type Database = {
           },
         ]
       }
+      training_content_items: {
+        Row: {
+          content_type: string
+          created_at: string
+          description: string | null
+          file_url: string | null
+          id: string
+          is_visible: boolean
+          order_index: number
+          release_date: string | null
+          text_content: string | null
+          title: string
+          training_type: string
+          unit_number: number
+          updated_at: string
+        }
+        Insert: {
+          content_type?: string
+          created_at?: string
+          description?: string | null
+          file_url?: string | null
+          id?: string
+          is_visible?: boolean
+          order_index?: number
+          release_date?: string | null
+          text_content?: string | null
+          title: string
+          training_type: string
+          unit_number: number
+          updated_at?: string
+        }
+        Update: {
+          content_type?: string
+          created_at?: string
+          description?: string | null
+          file_url?: string | null
+          id?: string
+          is_visible?: boolean
+          order_index?: number
+          release_date?: string | null
+          text_content?: string | null
+          title?: string
+          training_type?: string
+          unit_number?: number
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      training_welcome_content: {
+        Row: {
+          created_at: string
+          id: string
+          intro_video_url: string | null
+          training_type: string
+          updated_at: string
+          welcome_message: string
+          welcome_title: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          intro_video_url?: string | null
+          training_type: string
+          updated_at?: string
+          welcome_message?: string
+          welcome_title?: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          intro_video_url?: string | null
+          training_type?: string
+          updated_at?: string
+          welcome_message?: string
+          welcome_title?: string
+        }
+        Relationships: []
+      }
       user_roles: {
         Row: {
           id: string

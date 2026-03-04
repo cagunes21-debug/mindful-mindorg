@@ -3,365 +3,535 @@ import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import SEO from "@/components/SEO";
 import { supabase } from "@/integrations/supabase/client";
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
-import { BookOpen, Users, User, Headphones, ClipboardList, Presentation, ExternalLink, Play, FileText } from "lucide-react";
-import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
-import { Link } from "react-router-dom";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+import { Label } from "@/components/ui/label";
+import { Switch } from "@/components/ui/switch";
+import {
+  Select, SelectContent, SelectItem, SelectTrigger, SelectValue,
+} from "@/components/ui/select";
+import {
+  Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription,
+} from "@/components/ui/dialog";
+import {
+  Collapsible, CollapsibleContent, CollapsibleTrigger,
+} from "@/components/ui/collapsible";
+import {
+  BookOpen, Plus, Trash2, Pencil, Save, Loader2, ChevronDown,
+  FileText, Video, Headphones, Link2, ClipboardList, Eye, EyeOff,
+  MessageSquare, GripVertical,
+} from "lucide-react";
+import { toast } from "sonner";
 
-interface CourseWeek {
+// Types
+type TrainingType = "msc_8_week" | "individual_6_sessions";
+
+interface ContentItem {
   id: string;
-  week_number: number;
+  training_type: TrainingType;
+  unit_number: number;
+  order_index: number;
   title: string;
   description: string | null;
-  theme: string | null;
-  content: Record<string, unknown>;
-  course_type: string;
-  notebook_url: string | null;
-  notebook_audio_url: string | null;
+  content_type: string;
+  text_content: string | null;
+  file_url: string | null;
+  is_visible: boolean;
+  release_date: string | null;
+  created_at: string;
 }
 
-interface Meditation {
-  id: string;
-  week_id: string;
-  title: string;
-  description: string | null;
-  duration_minutes: number | null;
+interface WelcomeContent {
+  id?: string;
+  training_type: TrainingType;
+  welcome_title: string;
+  welcome_message: string;
+  intro_video_url: string | null;
 }
 
-interface Assignment {
-  id: string;
-  week_id: string;
-  title: string;
-  description: string | null;
-  instructions: string | null;
-  sort_order: number | null;
-}
+const TRAINING_OPTIONS: { value: TrainingType; label: string; units: number; unitLabel: string }[] = [
+  { value: "msc_8_week", label: "8 Week Mindful Self-Compassion Training", units: 8, unitLabel: "Week" },
+  { value: "individual_6_sessions", label: "Individual Program – 6 Sessions", units: 6, unitLabel: "Sessie" },
+];
+
+const CONTENT_TYPES = [
+  { value: "text", label: "Tekst", icon: FileText },
+  { value: "video", label: "Video", icon: Video },
+  { value: "audio", label: "Audio", icon: Headphones },
+  { value: "pdf", label: "PDF", icon: FileText },
+  { value: "link", label: "Link", icon: Link2 },
+  { value: "assignment", label: "Opdracht", icon: ClipboardList },
+];
+
+const getContentIcon = (type: string) => {
+  const found = CONTENT_TYPES.find(c => c.value === type);
+  return found ? found.icon : FileText;
+};
 
 const CourseMaterial = () => {
-  const [groupWeeks, setGroupWeeks] = useState<CourseWeek[]>([]);
-  const [individualWeeks, setIndividualWeeks] = useState<CourseWeek[]>([]);
-  const [meditations, setMeditations] = useState<Meditation[]>([]);
-  const [assignments, setAssignments] = useState<Assignment[]>([]);
+  const [selectedTraining, setSelectedTraining] = useState<TrainingType>("msc_8_week");
+  const [selectedUnit, setSelectedUnit] = useState<number | "all">("all");
+  const [items, setItems] = useState<ContentItem[]>([]);
   const [loading, setLoading] = useState(true);
+  const [welcomeContent, setWelcomeContent] = useState<WelcomeContent | null>(null);
+  const [savingWelcome, setSavingWelcome] = useState(false);
+  const [showWelcomeEditor, setShowWelcomeEditor] = useState(false);
+
+  // Item editor state
+  const [showEditor, setShowEditor] = useState(false);
+  const [editingItem, setEditingItem] = useState<ContentItem | null>(null);
+  const [formData, setFormData] = useState({
+    title: "", description: "", content_type: "text", text_content: "",
+    file_url: "", unit_number: 1, order_index: 0, is_visible: true, release_date: "",
+  });
+  const [savingItem, setSavingItem] = useState(false);
+
+  const trainingConfig = TRAINING_OPTIONS.find(t => t.value === selectedTraining)!;
 
   useEffect(() => {
     loadData();
-  }, []);
+  }, [selectedTraining]);
 
   const loadData = async () => {
-    const [weeksRes, medRes, assRes] = await Promise.all([
-      supabase.from("course_weeks").select("*").order("week_number"),
-      supabase.from("meditations").select("id, week_id, title, description, duration_minutes").order("sort_order"),
-      supabase.from("assignments").select("id, week_id, title, description, instructions, sort_order").order("sort_order"),
+    setLoading(true);
+    const [itemsRes, welcomeRes] = await Promise.all([
+      supabase.from("training_content_items")
+        .select("*")
+        .eq("training_type", selectedTraining)
+        .order("unit_number")
+        .order("order_index"),
+      supabase.from("training_welcome_content")
+        .select("*")
+        .eq("training_type", selectedTraining)
+        .maybeSingle(),
     ]);
-
-    const allWeeks = (weeksRes.data || []) as CourseWeek[];
-    setGroupWeeks(allWeeks.filter(w => w.course_type === "msc_8week"));
-    setIndividualWeeks(allWeeks.filter(w => w.course_type === "individueel_6"));
-    setMeditations((medRes.data || []) as Meditation[]);
-    setAssignments((assRes.data || []) as Assignment[]);
+    setItems((itemsRes.data || []) as ContentItem[]);
+    setWelcomeContent(welcomeRes.data as WelcomeContent | null);
     setLoading(false);
   };
 
-  const getWeekMeditations = (weekId: string) => meditations.filter(m => m.week_id === weekId);
-  const getWeekAssignments = (weekId: string) => assignments.filter(a => a.week_id === weekId);
+  const filteredItems = selectedUnit === "all"
+    ? items
+    : items.filter(i => i.unit_number === selectedUnit);
 
-  const WeekContent = ({ week, label }: { week: CourseWeek; label: string }) => {
-    const weekMeditations = getWeekMeditations(week.id);
-    const weekAssignments = getWeekAssignments(week.id);
-    const content = week.content as Record<string, unknown>;
+  // Group by unit
+  const groupedItems = filteredItems.reduce<Record<number, ContentItem[]>>((acc, item) => {
+    if (!acc[item.unit_number]) acc[item.unit_number] = [];
+    acc[item.unit_number].push(item);
+    return acc;
+  }, {});
 
-    return (
-      <AccordionItem value={week.id} className="border-border">
-        <AccordionTrigger className="hover:no-underline px-4">
-          <div className="flex items-center gap-3 text-left">
-            <Badge variant="outline" className="shrink-0 font-mono">
-              {label} {week.week_number}
-            </Badge>
-            <div>
-              <span className="font-medium">{week.title}</span>
-              {week.theme && (
-                <span className="text-muted-foreground text-sm ml-2">— {week.theme}</span>
-              )}
-            </div>
-          </div>
-        </AccordionTrigger>
-        <AccordionContent className="px-4 pb-4 space-y-4">
-          {week.description && (
-            <p className="text-muted-foreground text-sm leading-relaxed">{week.description}</p>
-          )}
-
-          {/* Content sections from JSON */}
-          {content?.sections && (content.sections as Array<{title: string; duration?: string; items?: string[]}>).length > 0 && (
-            <div className="space-y-3">
-              {(content.sections as Array<{title: string; duration?: string; items?: string[]}>).map((section, i) => (
-                <div key={i}>
-                  <h4 className="text-sm font-medium flex items-center gap-2 mb-1">
-                    <BookOpen className="h-4 w-4 text-primary" />
-                    {section.title}
-                    {section.duration && (
-                      <Badge variant="secondary" className="text-xs font-normal">{section.duration}</Badge>
-                    )}
-                  </h4>
-                  {section.items && section.items.length > 0 && (
-                    <ul className="text-sm text-muted-foreground space-y-1 ml-6 list-disc">
-                      {section.items.map((item: string, j: number) => <li key={j}>{item}</li>)}
-                    </ul>
-                  )}
-                </div>
-              ))}
-            </div>
-          )}
-
-          {/* Legacy content from JSON */}
-          {content?.meditations && (content.meditations as string[]).length > 0 && (
-            <div>
-              <h4 className="text-sm font-medium flex items-center gap-2 mb-2">
-                <Headphones className="h-4 w-4 text-primary" /> Meditaties (curriculum)
-              </h4>
-              <ul className="text-sm text-muted-foreground space-y-1 ml-6 list-disc">
-                {(content.meditations as string[]).map((m: string, i: number) => <li key={i}>{m}</li>)}
-              </ul>
-            </div>
-          )}
-
-          {content?.exercises && (content.exercises as string[]).length > 0 && (
-            <div>
-              <h4 className="text-sm font-medium flex items-center gap-2 mb-2">
-                <ClipboardList className="h-4 w-4 text-primary" /> Oefeningen (curriculum)
-              </h4>
-              <ul className="text-sm text-muted-foreground space-y-1 ml-6 list-disc">
-                {(content.exercises as string[]).map((e: string, i: number) => <li key={i}>{e}</li>)}
-              </ul>
-            </div>
-          )}
-
-          {/* Database meditations */}
-          {weekMeditations.length > 0 && (
-            <div>
-              <h4 className="text-sm font-medium flex items-center gap-2 mb-2">
-                <Headphones className="h-4 w-4 text-primary" /> Audio meditaties
-              </h4>
-              <div className="space-y-2">
-                {weekMeditations.map(m => (
-                  <div key={m.id} className="flex items-center justify-between bg-muted/50 rounded-lg px-3 py-2 text-sm">
-                    <span>{m.title}</span>
-                    {m.duration_minutes && (
-                      <Badge variant="secondary" className="text-xs">{m.duration_minutes} min</Badge>
-                    )}
-                  </div>
-                ))}
-              </div>
-            </div>
-          )}
-
-          {/* Database assignments */}
-          {weekAssignments.length > 0 && (
-            <div>
-              <h4 className="text-sm font-medium flex items-center gap-2 mb-2">
-                <ClipboardList className="h-4 w-4 text-primary" /> Oefeningen & scripts
-              </h4>
-              <div className="space-y-2">
-                  {weekAssignments.map(a => {
-                    const hasSubSections = a.instructions?.includes('## ');
-                    const subSections = hasSubSections
-                      ? a.instructions!.split(/^## /m).filter(Boolean).map(s => {
-                          const [heading, ...body] = s.split('\n');
-                          return { heading: heading.trim(), body: body.join('\n').trim() };
-                        })
-                      : null;
-
-                    return (
-                      <div key={a.id} className="bg-muted/50 rounded-lg overflow-hidden">
-                        {a.instructions ? (
-                          subSections ? (
-                            <div>
-                              <div className="px-3 py-2">
-                                <p className="text-sm font-medium flex items-center gap-2">
-                                  <FileText className="h-3.5 w-3.5 text-primary" />
-                                  {a.title}
-                                </p>
-                                {a.description && <p className="text-xs text-muted-foreground mt-0.5 ml-5.5">{a.description}</p>}
-                              </div>
-                              <div className="border-t border-border">
-                                {subSections.map((section, i) => (
-                                  <Collapsible key={i}>
-                                    <CollapsibleTrigger className="w-full px-4 py-2 flex items-center justify-between hover:bg-muted/80 transition-colors border-b border-border/50 last:border-b-0">
-                                      <span className="text-sm font-medium text-left">{section.heading}</span>
-                                      <span className="text-xs shrink-0 ml-2 border border-border rounded-md px-2 py-0.5">▾</span>
-                                    </CollapsibleTrigger>
-                                    <CollapsibleContent>
-                                      <div className="px-4 py-3 bg-background/50 border-b border-border/50">
-                                        <p className="text-sm text-muted-foreground whitespace-pre-line leading-relaxed italic">
-                                          {section.body}
-                                        </p>
-                                      </div>
-                                    </CollapsibleContent>
-                                  </Collapsible>
-                                ))}
-                              </div>
-                            </div>
-                          ) : (
-                            <Collapsible>
-                              <CollapsibleTrigger className="w-full px-3 py-2 flex items-center justify-between hover:bg-muted/80 transition-colors">
-                                <div className="text-left">
-                                  <p className="text-sm font-medium flex items-center gap-2">
-                                    <FileText className="h-3.5 w-3.5 text-primary" />
-                                    {a.title}
-                                  </p>
-                                  {a.description && <p className="text-xs text-muted-foreground mt-0.5 ml-5.5">{a.description}</p>}
-                                </div>
-                                <span className="text-xs shrink-0 ml-2 border border-border rounded-md px-2 py-0.5">Script ▾</span>
-                              </CollapsibleTrigger>
-                              <CollapsibleContent>
-                                <div className="px-4 py-3 border-t border-border bg-background/50">
-                                  <p className="text-sm text-muted-foreground whitespace-pre-line leading-relaxed italic">
-                                    {a.instructions}
-                                  </p>
-                                </div>
-                              </CollapsibleContent>
-                            </Collapsible>
-                          )
-                        ) : (
-                          <div className="px-3 py-2">
-                            <p className="text-sm font-medium">{a.title}</p>
-                            {a.description && <p className="text-xs text-muted-foreground mt-1">{a.description}</p>}
-                          </div>
-                        )}
-                      </div>
-                    );
-                  })}
-              </div>
-            </div>
-          )}
-
-          {/* NotebookLM */}
-          {(week.notebook_url || week.notebook_audio_url) && (
-            <div className="border-t border-border pt-4 mt-4">
-              <h4 className="text-sm font-medium flex items-center gap-2 mb-3">
-                <BookOpen className="h-4 w-4 text-primary" /> NotebookLM
-              </h4>
-              <div className="space-y-3">
-                {week.notebook_audio_url && (
-                  <div className="bg-muted/50 rounded-lg px-3 py-3">
-                    <p className="text-xs text-muted-foreground mb-2 flex items-center gap-1">
-                      <Play className="h-3 w-3" /> Audio-overzicht
-                    </p>
-                    <audio controls className="w-full h-8" src={week.notebook_audio_url}>
-                      Je browser ondersteunt geen audio.
-                    </audio>
-                  </div>
-                )}
-                {week.notebook_url && (
-                  <a
-                    href={week.notebook_url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2 text-sm text-primary hover:underline"
-                  >
-                    <ExternalLink className="h-4 w-4" />
-                    Open in NotebookLM
-                  </a>
-                )}
-              </div>
-            </div>
-          )}
-        </AccordionContent>
-      </AccordionItem>
-    );
+  const openNewItem = () => {
+    setEditingItem(null);
+    setFormData({
+      title: "", description: "", content_type: "text", text_content: "",
+      file_url: "", unit_number: selectedUnit === "all" ? 1 : selectedUnit,
+      order_index: items.length, is_visible: true, release_date: "",
+    });
+    setShowEditor(true);
   };
 
-  if (loading) {
-    return (
-      <div className="min-h-screen bg-background">
-        <Navigation />
-        <main className="container mx-auto px-4 pt-24 pb-16 flex items-center justify-center h-64">
-          <div className="animate-pulse text-muted-foreground">Laden...</div>
-        </main>
-      </div>
-    );
-  }
+  const openEditItem = (item: ContentItem) => {
+    setEditingItem(item);
+    setFormData({
+      title: item.title,
+      description: item.description || "",
+      content_type: item.content_type,
+      text_content: item.text_content || "",
+      file_url: item.file_url || "",
+      unit_number: item.unit_number,
+      order_index: item.order_index,
+      is_visible: item.is_visible,
+      release_date: item.release_date ? item.release_date.split("T")[0] : "",
+    });
+    setShowEditor(true);
+  };
+
+  const saveItem = async () => {
+    if (!formData.title.trim()) { toast.error("Titel is verplicht"); return; }
+    setSavingItem(true);
+    try {
+      const payload = {
+        training_type: selectedTraining,
+        title: formData.title.trim(),
+        description: formData.description.trim() || null,
+        content_type: formData.content_type,
+        text_content: formData.text_content.trim() || null,
+        file_url: formData.file_url.trim() || null,
+        unit_number: formData.unit_number,
+        order_index: formData.order_index,
+        is_visible: formData.is_visible,
+        release_date: formData.release_date ? new Date(formData.release_date).toISOString() : null,
+      };
+
+      if (editingItem) {
+        const { error } = await supabase.from("training_content_items").update(payload).eq("id", editingItem.id);
+        if (error) throw error;
+        toast.success("Item bijgewerkt");
+      } else {
+        const { error } = await supabase.from("training_content_items").insert(payload);
+        if (error) throw error;
+        toast.success("Item aangemaakt");
+      }
+      setShowEditor(false);
+      loadData();
+    } catch (err: any) {
+      toast.error("Fout: " + err.message);
+    }
+    setSavingItem(false);
+  };
+
+  const deleteItem = async (id: string) => {
+    if (!confirm("Weet je zeker dat je dit item wilt verwijderen?")) return;
+    const { error } = await supabase.from("training_content_items").delete().eq("id", id);
+    if (!error) {
+      setItems(prev => prev.filter(i => i.id !== id));
+      toast.success("Item verwijderd");
+    } else toast.error("Kon niet verwijderen");
+  };
+
+  const toggleVisibility = async (item: ContentItem) => {
+    const { error } = await supabase.from("training_content_items")
+      .update({ is_visible: !item.is_visible }).eq("id", item.id);
+    if (!error) {
+      setItems(prev => prev.map(i => i.id === item.id ? { ...i, is_visible: !i.is_visible } : i));
+    }
+  };
+
+  // Welcome content
+  const saveWelcomeContent = async () => {
+    if (!welcomeContent) return;
+    setSavingWelcome(true);
+    try {
+      const payload = {
+        training_type: selectedTraining,
+        welcome_title: welcomeContent.welcome_title,
+        welcome_message: welcomeContent.welcome_message,
+        intro_video_url: welcomeContent.intro_video_url || null,
+      };
+      if (welcomeContent.id) {
+        const { error } = await supabase.from("training_welcome_content").update(payload).eq("id", welcomeContent.id);
+        if (error) throw error;
+      } else {
+        const { data, error } = await supabase.from("training_welcome_content").insert(payload).select().single();
+        if (error) throw error;
+        setWelcomeContent({ ...welcomeContent, id: (data as any).id });
+      }
+      toast.success("Welkomstbericht opgeslagen");
+    } catch (err: any) {
+      toast.error("Fout: " + err.message);
+    }
+    setSavingWelcome(false);
+  };
+
+  const initWelcomeContent = () => {
+    if (!welcomeContent) {
+      setWelcomeContent({
+        training_type: selectedTraining,
+        welcome_title: "",
+        welcome_message: "",
+        intro_video_url: null,
+      });
+    }
+    setShowWelcomeEditor(true);
+  };
 
   return (
     <div className="min-h-screen bg-background">
-      <SEO title="Cursusmateriaal | Mindful Mind" description="Overzicht van al het cursusmateriaal" />
+      <SEO title="Cursusmateriaal | Mindful Mind" description="Beheer cursusmateriaal per training" />
       <Navigation />
 
       <main className="container mx-auto px-4 pt-24 pb-16">
-        <div className="max-w-4xl mx-auto">
-          <div className="flex items-center justify-between mb-8">
+        <div className="max-w-5xl mx-auto">
+          {/* Header */}
+          <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6">
             <div>
-              <h1 className="text-3xl font-light text-foreground mb-1">Cursusmateriaal</h1>
-              <p className="text-muted-foreground">Overzicht van alle sessies, meditaties en opdrachten</p>
+              <h1 className="text-3xl font-light text-foreground">Cursusmateriaal</h1>
+              <p className="text-muted-foreground mt-1">Beheer content per training en eenheid</p>
             </div>
-            <Button asChild variant="outline" className="gap-2">
-              <Link to="/admin/presentatie/1">
-                <Presentation className="h-4 w-4" />
-                Presentatie Sessie 1
-              </Link>
+            <Button onClick={openNewItem} className="gap-2">
+              <Plus className="h-4 w-4" /> Nieuw item
             </Button>
           </div>
 
-          <Tabs defaultValue="group" className="space-y-6">
-            <TabsList className="grid w-full grid-cols-2">
-              <TabsTrigger value="group" className="gap-2">
-                <Users className="h-4 w-4" />
-                Groepstraining (8 weken)
-              </TabsTrigger>
-              <TabsTrigger value="individual" className="gap-2">
-                <User className="h-4 w-4" />
-                Individueel traject (6 sessies)
-              </TabsTrigger>
-            </TabsList>
+          {/* Filters */}
+          <div className="flex flex-col sm:flex-row gap-3 mb-6">
+            <div className="flex-1">
+              <Label className="text-xs mb-1 block">Training</Label>
+              <Select value={selectedTraining} onValueChange={(v) => { setSelectedTraining(v as TrainingType); setSelectedUnit("all"); }}>
+                <SelectTrigger><SelectValue /></SelectTrigger>
+                <SelectContent>
+                  {TRAINING_OPTIONS.map(t => (
+                    <SelectItem key={t.value} value={t.value}>{t.label}</SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+            <div className="w-48">
+              <Label className="text-xs mb-1 block">{trainingConfig.unitLabel}</Label>
+              <Select value={String(selectedUnit)} onValueChange={(v) => setSelectedUnit(v === "all" ? "all" : Number(v))}>
+                <SelectTrigger><SelectValue /></SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="all">Alle {trainingConfig.unitLabel.toLowerCase()}s</SelectItem>
+                  {Array.from({ length: trainingConfig.units }, (_, i) => i + 1).map(n => (
+                    <SelectItem key={n} value={String(n)}>{trainingConfig.unitLabel} {n}</SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+          </div>
 
-            <TabsContent value="group">
-              <Card>
-                <CardHeader>
-                  <CardTitle className="text-xl font-light flex items-center gap-2">
-                    <BookOpen className="h-5 w-5 text-primary" />
-                    8-weekse Mindful Zelfcompassie Training
-                  </CardTitle>
-                  <CardDescription>
-                    Standaard MSC-curriculum met {groupWeeks.length} weken, {meditations.filter(m => groupWeeks.some(w => w.id === m.week_id)).length} meditaties en {assignments.filter(a => groupWeeks.some(w => w.id === a.week_id)).length} opdrachten
-                  </CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <Accordion type="multiple" className="space-y-1">
-                    {groupWeeks.map(week => (
-                      <WeekContent key={week.id} week={week} label="Week" />
-                    ))}
-                  </Accordion>
-                </CardContent>
-              </Card>
-            </TabsContent>
+          {/* Welcome Content Section */}
+          <Card className="mb-6 border-primary/20">
+            <CardHeader className="pb-3">
+              <div className="flex items-center justify-between">
+                <CardTitle className="text-base flex items-center gap-2">
+                  <MessageSquare className="h-4 w-4 text-primary" /> Welkomstbericht
+                </CardTitle>
+                <Button size="sm" variant="outline" onClick={initWelcomeContent} className="gap-1.5 h-7 text-xs">
+                  <Pencil className="h-3 w-3" /> Bewerken
+                </Button>
+              </div>
+            </CardHeader>
+            {welcomeContent && (welcomeContent.welcome_title || welcomeContent.welcome_message) && (
+              <CardContent className="pt-0">
+                <div className="bg-muted/50 rounded-lg p-3 text-sm">
+                  {welcomeContent.welcome_title && <p className="font-medium mb-1">{welcomeContent.welcome_title}</p>}
+                  {welcomeContent.welcome_message && <p className="text-muted-foreground line-clamp-3">{welcomeContent.welcome_message}</p>}
+                  {welcomeContent.intro_video_url && (
+                    <p className="text-xs text-primary mt-1">🎥 Introductievideo ingesteld</p>
+                  )}
+                </div>
+              </CardContent>
+            )}
+            {(!welcomeContent || (!welcomeContent.welcome_title && !welcomeContent.welcome_message)) && (
+              <CardContent className="pt-0">
+                <p className="text-xs text-muted-foreground">Nog geen welkomstbericht ingesteld.</p>
+              </CardContent>
+            )}
+          </Card>
 
-            <TabsContent value="individual">
-              <Card>
-                <CardHeader>
-                  <CardTitle className="text-xl font-light flex items-center gap-2">
-                    <BookOpen className="h-5 w-5 text-primary" />
-                    Individueel Traject – 6 sessies
-                  </CardTitle>
-                  <CardDescription>
-                    Persoonlijk begeleidingstraject met {individualWeeks.length} sessies
-                  </CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <Accordion type="multiple" className="space-y-1">
-                    {individualWeeks.map(week => (
-                      <WeekContent key={week.id} week={week} label="Sessie" />
-                    ))}
-                  </Accordion>
-                </CardContent>
-              </Card>
-            </TabsContent>
-          </Tabs>
+          {/* Content Items List */}
+          {loading ? (
+            <div className="flex items-center justify-center py-12">
+              <Loader2 className="h-6 w-6 animate-spin text-muted-foreground" />
+            </div>
+          ) : filteredItems.length === 0 ? (
+            <Card>
+              <CardContent className="p-8 text-center">
+                <BookOpen className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
+                <p className="text-muted-foreground mb-4">Nog geen content items voor deze selectie.</p>
+                <Button onClick={openNewItem} className="gap-2">
+                  <Plus className="h-4 w-4" /> Eerste item toevoegen
+                </Button>
+              </CardContent>
+            </Card>
+          ) : (
+            <div className="space-y-4">
+              {Object.entries(groupedItems)
+                .sort(([a], [b]) => Number(a) - Number(b))
+                .map(([unitNum, unitItems]) => (
+                  <Collapsible key={unitNum} defaultOpen>
+                    <Card>
+                      <CollapsibleTrigger className="w-full text-left">
+                        <CardContent className="p-3 flex items-center gap-2">
+                          <ChevronDown className="h-4 w-4 text-muted-foreground" />
+                          <Badge variant="outline" className="font-mono">
+                            {trainingConfig.unitLabel} {unitNum}
+                          </Badge>
+                          <span className="text-sm text-muted-foreground flex-1">
+                            {unitItems.length} item{unitItems.length !== 1 ? "s" : ""}
+                          </span>
+                          <span className="text-xs text-muted-foreground">
+                            {unitItems.filter(i => !i.is_visible).length > 0 &&
+                              `${unitItems.filter(i => !i.is_visible).length} verborgen`
+                            }
+                          </span>
+                        </CardContent>
+                      </CollapsibleTrigger>
+                      <CollapsibleContent>
+                        <div className="px-3 pb-3 space-y-1.5">
+                          {unitItems.sort((a, b) => a.order_index - b.order_index).map(item => {
+                            const Icon = getContentIcon(item.content_type);
+                            return (
+                              <div
+                                key={item.id}
+                                className={`flex items-center gap-2 p-2 rounded-lg border text-sm transition-colors ${
+                                  item.is_visible ? "bg-background" : "bg-muted/30 opacity-60"
+                                }`}
+                              >
+                                <GripVertical className="h-3.5 w-3.5 text-muted-foreground shrink-0" />
+                                <Icon className="h-3.5 w-3.5 text-primary shrink-0" />
+                                <span className="flex-1 font-medium truncate">{item.title}</span>
+                                <Badge variant="secondary" className="text-[10px] shrink-0">
+                                  {CONTENT_TYPES.find(c => c.value === item.content_type)?.label || item.content_type}
+                                </Badge>
+                                {item.release_date && new Date(item.release_date) > new Date() && (
+                                  <Badge variant="outline" className="text-[10px] shrink-0">⏰ Gepland</Badge>
+                                )}
+                                <Button size="sm" variant="ghost" className="h-6 w-6 p-0"
+                                  onClick={() => toggleVisibility(item)}
+                                  title={item.is_visible ? "Verbergen" : "Zichtbaar maken"}>
+                                  {item.is_visible ? <Eye className="h-3 w-3" /> : <EyeOff className="h-3 w-3" />}
+                                </Button>
+                                <Button size="sm" variant="ghost" className="h-6 w-6 p-0"
+                                  onClick={() => openEditItem(item)}>
+                                  <Pencil className="h-3 w-3" />
+                                </Button>
+                                <Button size="sm" variant="ghost" className="h-6 w-6 p-0 text-destructive"
+                                  onClick={() => deleteItem(item.id)}>
+                                  <Trash2 className="h-3 w-3" />
+                                </Button>
+                              </div>
+                            );
+                          })}
+                        </div>
+                      </CollapsibleContent>
+                    </Card>
+                  </Collapsible>
+                ))}
+            </div>
+          )}
         </div>
       </main>
+
+      {/* Item Editor Dialog */}
+      <Dialog open={showEditor} onOpenChange={setShowEditor}>
+        <DialogContent className="sm:max-w-lg max-h-[90vh] overflow-y-auto">
+          <DialogHeader>
+            <DialogTitle>{editingItem ? "Item bewerken" : "Nieuw content item"}</DialogTitle>
+            <DialogDescription>
+              {trainingConfig.label}
+            </DialogDescription>
+          </DialogHeader>
+          <div className="space-y-4">
+            <div className="grid grid-cols-2 gap-3">
+              <div>
+                <Label className="text-xs">{trainingConfig.unitLabel}</Label>
+                <Select value={String(formData.unit_number)} onValueChange={v => setFormData(p => ({ ...p, unit_number: Number(v) }))}>
+                  <SelectTrigger className="mt-1"><SelectValue /></SelectTrigger>
+                  <SelectContent>
+                    {Array.from({ length: trainingConfig.units }, (_, i) => i + 1).map(n => (
+                      <SelectItem key={n} value={String(n)}>{trainingConfig.unitLabel} {n}</SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
+              <div>
+                <Label className="text-xs">Type</Label>
+                <Select value={formData.content_type} onValueChange={v => setFormData(p => ({ ...p, content_type: v }))}>
+                  <SelectTrigger className="mt-1"><SelectValue /></SelectTrigger>
+                  <SelectContent>
+                    {CONTENT_TYPES.map(ct => (
+                      <SelectItem key={ct.value} value={ct.value}>{ct.label}</SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
+            </div>
+
+            <div>
+              <Label className="text-xs">Titel *</Label>
+              <Input value={formData.title} onChange={e => setFormData(p => ({ ...p, title: e.target.value }))} className="mt-1" />
+            </div>
+
+            <div>
+              <Label className="text-xs">Beschrijving</Label>
+              <Textarea value={formData.description} onChange={e => setFormData(p => ({ ...p, description: e.target.value }))} className="mt-1 min-h-[60px]" />
+            </div>
+
+            {(formData.content_type === "text" || formData.content_type === "assignment") && (
+              <div>
+                <Label className="text-xs">Tekstinhoud</Label>
+                <Textarea value={formData.text_content} onChange={e => setFormData(p => ({ ...p, text_content: e.target.value }))} className="mt-1 min-h-[100px]" />
+              </div>
+            )}
+
+            {["video", "audio", "pdf", "link"].includes(formData.content_type) && (
+              <div>
+                <Label className="text-xs">Bestand URL / externe link</Label>
+                <Input value={formData.file_url} onChange={e => setFormData(p => ({ ...p, file_url: e.target.value }))} className="mt-1" placeholder="https://..." />
+              </div>
+            )}
+
+            <div className="grid grid-cols-2 gap-3">
+              <div>
+                <Label className="text-xs">Volgorde</Label>
+                <Input type="number" value={formData.order_index} onChange={e => setFormData(p => ({ ...p, order_index: Number(e.target.value) }))} className="mt-1" />
+              </div>
+              <div>
+                <Label className="text-xs">Publicatiedatum (optioneel)</Label>
+                <Input type="date" value={formData.release_date} onChange={e => setFormData(p => ({ ...p, release_date: e.target.value }))} className="mt-1" />
+              </div>
+            </div>
+
+            <div className="flex items-center gap-2">
+              <Switch checked={formData.is_visible} onCheckedChange={v => setFormData(p => ({ ...p, is_visible: v }))} />
+              <Label className="text-xs">Zichtbaar voor deelnemers</Label>
+            </div>
+
+            <div className="flex justify-end gap-2 pt-2">
+              <Button variant="outline" onClick={() => setShowEditor(false)}>Annuleren</Button>
+              <Button onClick={saveItem} disabled={savingItem} className="gap-2">
+                {savingItem ? <Loader2 className="h-4 w-4 animate-spin" /> : <Save className="h-4 w-4" />}
+                Opslaan
+              </Button>
+            </div>
+          </div>
+        </DialogContent>
+      </Dialog>
+
+      {/* Welcome Editor Dialog */}
+      <Dialog open={showWelcomeEditor} onOpenChange={setShowWelcomeEditor}>
+        <DialogContent className="sm:max-w-lg">
+          <DialogHeader>
+            <DialogTitle>Welkomstbericht bewerken</DialogTitle>
+            <DialogDescription>{trainingConfig.label}</DialogDescription>
+          </DialogHeader>
+          {welcomeContent && (
+            <div className="space-y-4">
+              <div>
+                <Label className="text-xs">Welkomsttitel</Label>
+                <Input
+                  value={welcomeContent.welcome_title}
+                  onChange={e => setWelcomeContent(prev => prev ? { ...prev, welcome_title: e.target.value } : prev)}
+                  className="mt-1"
+                  placeholder="Welkom bij je training!"
+                />
+              </div>
+              <div>
+                <Label className="text-xs">Welkomstbericht</Label>
+                <Textarea
+                  value={welcomeContent.welcome_message}
+                  onChange={e => setWelcomeContent(prev => prev ? { ...prev, welcome_message: e.target.value } : prev)}
+                  className="mt-1 min-h-[120px]"
+                  placeholder="Schrijf hier een welkomstbericht voor deelnemers..."
+                />
+              </div>
+              <div>
+                <Label className="text-xs">Introductievideo URL (optioneel)</Label>
+                <Input
+                  value={welcomeContent.intro_video_url || ""}
+                  onChange={e => setWelcomeContent(prev => prev ? { ...prev, intro_video_url: e.target.value || null } : prev)}
+                  className="mt-1"
+                  placeholder="https://youtube.com/..."
+                />
+              </div>
+              <div className="flex justify-end gap-2 pt-2">
+                <Button variant="outline" onClick={() => setShowWelcomeEditor(false)}>Annuleren</Button>
+                <Button onClick={saveWelcomeContent} disabled={savingWelcome} className="gap-2">
+                  {savingWelcome ? <Loader2 className="h-4 w-4 animate-spin" /> : <Save className="h-4 w-4" />}
+                  Opslaan
+                </Button>
+              </div>
+            </div>
+          )}
+        </DialogContent>
+      </Dialog>
+
       <Footer />
     </div>
   );
