@@ -479,9 +479,42 @@ const CourseMaterial = () => {
             )}
 
             {["video", "audio", "pdf", "link"].includes(formData.content_type) && (
-              <div>
-                <Label className="text-xs">Bestand URL / externe link</Label>
-                <Input value={formData.file_url} onChange={e => setFormData(p => ({ ...p, file_url: e.target.value }))} className="mt-1" placeholder="https://..." />
+              <div className="space-y-2">
+                <Label className="text-xs">Bestand uploaden of externe URL</Label>
+                <div className="flex gap-2">
+                  <input
+                    ref={fileInputRef}
+                    type="file"
+                    className="hidden"
+                    accept={
+                      formData.content_type === "pdf" ? ".pdf" :
+                      formData.content_type === "audio" ? "audio/*" :
+                      formData.content_type === "video" ? "video/*" :
+                      "*"
+                    }
+                    onChange={handleFileUpload}
+                  />
+                  <Button
+                    type="button"
+                    variant="outline"
+                    size="sm"
+                    className="gap-1.5 shrink-0"
+                    disabled={uploading}
+                    onClick={() => fileInputRef.current?.click()}
+                  >
+                    {uploading ? <Loader2 className="h-3.5 w-3.5 animate-spin" /> : <Upload className="h-3.5 w-3.5" />}
+                    {uploading ? "Uploaden..." : "Upload"}
+                  </Button>
+                  <Input
+                    value={formData.file_url}
+                    onChange={e => setFormData(p => ({ ...p, file_url: e.target.value }))}
+                    placeholder="Of plak een externe URL..."
+                    className="flex-1"
+                  />
+                </div>
+                {formData.file_url && !formData.file_url.startsWith("http") && (
+                  <p className="text-xs text-muted-foreground">📁 Geüpload bestand: {formData.file_url.split("/").pop()}</p>
+                )}
               </div>
             )}
 
