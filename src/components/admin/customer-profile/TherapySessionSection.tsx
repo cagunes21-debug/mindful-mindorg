@@ -146,6 +146,37 @@ export default function TherapySessionSection({ enrollmentId, clientName }: Prop
     setSessionDate(new Date().toISOString().split("T")[0]);
   };
 
+  const startEditing = (session: TherapySession) => {
+    setEditingId(session.id);
+    setEditFields({
+      helpvraag: session.helpvraag || "",
+      achtergrond: session.achtergrond || "",
+      belangrijkste_themas: session.belangrijkste_themas || "",
+      doelstelling: session.doelstelling || "",
+      observaties: session.observaties || "",
+      interventies: session.interventies || "",
+    });
+  };
+
+  const cancelEditing = () => {
+    setEditingId(null);
+    setEditFields({});
+  };
+
+  const saveEdit = async (id: string) => {
+    setSavingEdit(true);
+    try {
+      const { error } = await supabase.from("therapy_sessions").update(editFields).eq("id", id);
+      if (error) throw error;
+      setSessions(prev => prev.map(s => s.id === id ? { ...s, ...editFields } : s));
+      setEditingId(null);
+      toast.success("Sessienotities bijgewerkt");
+    } catch (err: any) {
+      toast.error("Fout: " + err.message);
+    }
+    setSavingEdit(false);
+  };
+
   return (
     <div className="space-y-3">
       <div className="flex items-center justify-between">
