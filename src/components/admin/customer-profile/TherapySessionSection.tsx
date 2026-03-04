@@ -10,8 +10,9 @@ import {
   Collapsible, CollapsibleContent, CollapsibleTrigger,
 } from "@/components/ui/collapsible";
 import {
-  Brain, Save, Loader2, Plus, ChevronDown, FileText, Calendar, Trash2,
+  Brain, Save, Loader2, Plus, ChevronDown, FileText, Calendar, Trash2, Download,
 } from "lucide-react";
+import { exportSessionPdf } from "./exportSessionPdf";
 import { toast } from "sonner";
 
 interface TherapySession {
@@ -40,9 +41,10 @@ const FIELDS = [
 
 interface Props {
   enrollmentId: string;
+  clientName?: string;
 }
 
-export default function TherapySessionSection({ enrollmentId }: Props) {
+export default function TherapySessionSection({ enrollmentId, clientName }: Props) {
   const [sessions, setSessions] = useState<TherapySession[]>([]);
   const [loading, setLoading] = useState(true);
   const [openSessions, setOpenSessions] = useState<Record<string, boolean>>({});
@@ -255,7 +257,10 @@ export default function TherapySessionSection({ enrollmentId }: Props) {
                           </div>
                         );
                       })}
-                      <div className="flex justify-end pt-1">
+                      <div className="flex justify-end gap-1 pt-1">
+                        <Button size="sm" variant="ghost" onClick={() => exportSessionPdf(session, clientName)} className="text-xs h-6 gap-1">
+                          <Download className="h-3 w-3" /> PDF
+                        </Button>
                         <Button size="sm" variant="ghost" onClick={() => deleteSession(session.id)} className="text-destructive text-[10px] h-6 gap-1">
                           <Trash2 className="h-3 w-3" /> Verwijderen
                         </Button>

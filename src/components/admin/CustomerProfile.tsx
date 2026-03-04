@@ -547,7 +547,7 @@ export default function CustomerProfile({ email, onClose }: CustomerProfileProps
                               {/* AI Therapy Session Notes */}
                               {isIndividual && (
                                 <div className="border-t pt-3">
-                                  <TherapySessionSection enrollmentId={enrollment.id} />
+                                  <TherapySessionSection enrollmentId={enrollment.id} clientName={customer.name || undefined} />
                                 </div>
                               )}
                             </>
