@@ -10,7 +10,7 @@ import {
   Collapsible, CollapsibleContent, CollapsibleTrigger,
 } from "@/components/ui/collapsible";
 import {
-  Brain, Save, Loader2, Plus, ChevronDown, FileText, Calendar, Trash2, Download,
+  Brain, Save, Loader2, Plus, ChevronDown, FileText, Calendar, Trash2, Download, Pencil, X,
 } from "lucide-react";
 import { exportSessionPdf } from "./exportSessionPdf";
 import { toast } from "sonner";
@@ -48,6 +48,9 @@ export default function TherapySessionSection({ enrollmentId, clientName }: Prop
   const [sessions, setSessions] = useState<TherapySession[]>([]);
   const [loading, setLoading] = useState(true);
   const [openSessions, setOpenSessions] = useState<Record<string, boolean>>({});
+  const [editingId, setEditingId] = useState<string | null>(null);
+  const [editFields, setEditFields] = useState<Record<string, string>>({});
+  const [savingEdit, setSavingEdit] = useState(false);
 
   // New session state
   const [showNew, setShowNew] = useState(false);
@@ -141,6 +144,37 @@ export default function TherapySessionSection({ enrollmentId, clientName }: Prop
     setFields({ helpvraag: "", achtergrond: "", belangrijkste_themas: "", doelstelling: "", observaties: "", interventies: "" });
     setHasGenerated(false);
     setSessionDate(new Date().toISOString().split("T")[0]);
+  };
+
+  const startEditing = (session: TherapySession) => {
+    setEditingId(session.id);
+    setEditFields({
+      helpvraag: session.helpvraag || "",
+      achtergrond: session.achtergrond || "",
+      belangrijkste_themas: session.belangrijkste_themas || "",
+      doelstelling: session.doelstelling || "",
+      observaties: session.observaties || "",
+      interventies: session.interventies || "",
+    });
+  };
+
+  const cancelEditing = () => {
+    setEditingId(null);
+    setEditFields({});
+  };
+
+  const saveEdit = async (id: string) => {
+    setSavingEdit(true);
+    try {
+      const { error } = await supabase.from("therapy_sessions").update(editFields).eq("id", id);
+      if (error) throw error;
+      setSessions(prev => prev.map(s => s.id === id ? { ...s, ...editFields } : s));
+      setEditingId(null);
+      toast.success("Sessienotities bijgewerkt");
+    } catch (err: any) {
+      toast.error("Fout: " + err.message);
+    }
+    setSavingEdit(false);
   };
 
   return (
@@ -247,24 +281,54 @@ export default function TherapySessionSection({ enrollmentId, clientName }: Prop
                   </CollapsibleTrigger>
                   <CollapsibleContent>
                     <CardContent className="px-3 pb-3 pt-0 space-y-2">
-                      {FIELDS.map(({ key, label }) => {
-                        const val = (session as any)[key];
-                        if (!val) return null;
-                        return (
-                          <div key={key}>
-                            <p className="text-[10px] font-semibold text-muted-foreground uppercase tracking-wide">{label}</p>
-                            <p className="text-xs leading-relaxed">{val}</p>
+                      {editingId === session.id ? (
+                        <>
+                          {FIELDS.map(({ key, label, placeholder }) => (
+                            <div key={key}>
+                              <Label className="text-[10px] font-semibold text-muted-foreground uppercase tracking-wide">{label}</Label>
+                              <Textarea
+                                placeholder={placeholder}
+                                value={editFields[key] || ""}
+                                onChange={e => setEditFields(prev => ({ ...prev, [key]: e.target.value }))}
+                                className="min-h-[50px] text-xs mt-0.5"
+                              />
+                            </div>
+                          ))}
+                          <div className="flex justify-end gap-1 pt-1">
+                            <Button size="sm" variant="ghost" onClick={cancelEditing} className="text-xs h-6 gap-1">
+                              <X className="h-3 w-3" /> Annuleren
+                            </Button>
+                            <Button size="sm" onClick={() => saveEdit(session.id)} disabled={savingEdit} className="text-xs h-6 gap-1">
+                              {savingEdit ? <Loader2 className="h-3 w-3 animate-spin" /> : <Save className="h-3 w-3" />}
+                              Opslaan
+                            </Button>
                           </div>
-                        );
-                      })}
-                      <div className="flex justify-end gap-1 pt-1">
-                        <Button size="sm" variant="ghost" onClick={() => exportSessionPdf(session, clientName)} className="text-xs h-6 gap-1">
-                          <Download className="h-3 w-3" /> PDF
-                        </Button>
-                        <Button size="sm" variant="ghost" onClick={() => deleteSession(session.id)} className="text-destructive text-[10px] h-6 gap-1">
-                          <Trash2 className="h-3 w-3" /> Verwijderen
-                        </Button>
-                      </div>
+                        </>
+                      ) : (
+                        <>
+                          {FIELDS.map(({ key, label }) => {
+                            const val = (session as any)[key];
+                            if (!val) return null;
+                            return (
+                              <div key={key}>
+                                <p className="text-[10px] font-semibold text-muted-foreground uppercase tracking-wide">{label}</p>
+                                <p className="text-xs leading-relaxed">{val}</p>
+                              </div>
+                            );
+                          })}
+                          <div className="flex justify-end gap-1 pt-1">
+                            <Button size="sm" variant="ghost" onClick={() => startEditing(session)} className="text-xs h-6 gap-1">
+                              <Pencil className="h-3 w-3" /> Bewerken
+                            </Button>
+                            <Button size="sm" variant="ghost" onClick={() => exportSessionPdf(session, clientName)} className="text-xs h-6 gap-1">
+                              <Download className="h-3 w-3" /> PDF
+                            </Button>
+                            <Button size="sm" variant="ghost" onClick={() => deleteSession(session.id)} className="text-destructive text-[10px] h-6 gap-1">
+                              <Trash2 className="h-3 w-3" /> Verwijderen
+                            </Button>
+                          </div>
+                        </>
+                      )}
                     </CardContent>
                   </CollapsibleContent>
                 </Card>
