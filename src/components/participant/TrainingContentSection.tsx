@@ -46,6 +46,7 @@ interface Props {
 const TrainingContentSection = ({ courseType, unlockedWeeks }: Props) => {
   const [items, setItems] = useState<ContentItem[]>([]);
   const [loading, setLoading] = useState(true);
+  const [signedUrls, setSignedUrls] = useState<Record<string, string>>({});
 
   const trainingType = COURSE_TO_TRAINING[courseType];
   const unitLabel = trainingType ? UNIT_LABELS[trainingType] || "Eenheid" : "Eenheid";
@@ -59,13 +60,26 @@ const TrainingContentSection = ({ courseType, unlockedWeeks }: Props) => {
       .eq("is_visible", true)
       .order("unit_number")
       .order("order_index")
-      .then(({ data }) => {
-        // Filter out items with future release_date
+      .then(async ({ data }) => {
         const now = new Date();
         const visible = (data || []).filter((item: any) =>
           !item.release_date || new Date(item.release_date) <= now
         ) as ContentItem[];
         setItems(visible);
+
+        // Generate signed URLs for private bucket files
+        const bucketFiles = visible.filter(i => i.file_url && !i.file_url.startsWith("http"));
+        if (bucketFiles.length > 0) {
+          const paths = bucketFiles.map(i => i.file_url!);
+          const { data: urls } = await supabase.storage
+            .from("training-content")
+            .createSignedUrls(paths, 3600);
+          if (urls) {
+            const map: Record<string, string> = {};
+            urls.forEach((u, idx) => { if (u.signedUrl) map[paths[idx]] = u.signedUrl; });
+            setSignedUrls(map);
+          }
+        }
         setLoading(false);
       });
   }, [trainingType]);
