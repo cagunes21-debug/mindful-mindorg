@@ -10,7 +10,7 @@ import {
   Collapsible, CollapsibleContent, CollapsibleTrigger,
 } from "@/components/ui/collapsible";
 import {
-  Brain, Save, Loader2, Plus, ChevronDown, FileText, Calendar, Trash2, Download,
+  Brain, Save, Loader2, Plus, ChevronDown, FileText, Calendar, Trash2, Download, Pencil, X,
 } from "lucide-react";
 import { exportSessionPdf } from "./exportSessionPdf";
 import { toast } from "sonner";
