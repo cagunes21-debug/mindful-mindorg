@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import SEO from "@/components/SEO";
@@ -22,7 +22,7 @@ import {
 import {
   BookOpen, Plus, Trash2, Pencil, Save, Loader2, ChevronDown,
   FileText, Video, Headphones, Link2, ClipboardList, Eye, EyeOff,
-  MessageSquare, GripVertical,
+  MessageSquare, GripVertical, Upload,
 } from "lucide-react";
 import { toast } from "sonner";
 
