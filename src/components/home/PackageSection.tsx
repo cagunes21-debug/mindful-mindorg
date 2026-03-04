@@ -62,8 +62,14 @@ const PackageSection = () => {
         >
           <div className="rounded-2xl border border-border bg-background p-8 shadow-sm">
             <div className="text-center mb-6">
-              <p className="text-4xl font-serif text-primary mb-1">€550</p>
-              <p className="text-sm text-muted-foreground">6 sessies · inclusief materiaal</p>
+              <div className="inline-flex items-baseline gap-2 mb-1">
+                <span className="text-lg text-muted-foreground line-through">€650</span>
+                <span className="text-4xl font-serif text-primary">€550</span>
+              </div>
+              <div className="flex items-center justify-center gap-2">
+                <span className="text-xs bg-terracotta-100 text-terracotta-700 px-2 py-0.5 rounded-full font-medium">✨ Tijdelijke aanbieding</span>
+              </div>
+              <p className="text-sm text-muted-foreground mt-1">6 sessies · inclusief materiaal</p>
             </div>
 
             <div className="w-full h-px bg-border mb-6" />
