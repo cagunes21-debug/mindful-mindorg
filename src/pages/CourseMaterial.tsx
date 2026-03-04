@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import SEO from "@/components/SEO";
@@ -22,7 +22,7 @@ import {
 import {
   BookOpen, Plus, Trash2, Pencil, Save, Loader2, ChevronDown,
   FileText, Video, Headphones, Link2, ClipboardList, Eye, EyeOff,
-  MessageSquare, GripVertical,
+  MessageSquare, GripVertical, Upload,
 } from "lucide-react";
 import { toast } from "sonner";
 
@@ -88,6 +88,8 @@ const CourseMaterial = () => {
     file_url: "", unit_number: 1, order_index: 0, is_visible: true, release_date: "",
   });
   const [savingItem, setSavingItem] = useState(false);
+  const [uploading, setUploading] = useState(false);
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   const trainingConfig = TRAINING_OPTIONS.find(t => t.value === selectedTraining)!;
 
@@ -199,6 +201,32 @@ const CourseMaterial = () => {
     if (!error) {
       setItems(prev => prev.map(i => i.id === item.id ? { ...i, is_visible: !i.is_visible } : i));
     }
+  };
+
+  const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    const maxSize = 50 * 1024 * 1024; // 50MB
+    if (file.size > maxSize) { toast.error("Bestand is te groot (max 50MB)"); return; }
+    setUploading(true);
+    try {
+      const ext = file.name.split(".").pop();
+      const path = `${selectedTraining}/${formData.unit_number}/${Date.now()}_${file.name}`;
+      const { error: uploadError } = await supabase.storage
+        .from("training-content")
+        .upload(path, file, { upsert: true });
+      if (uploadError) throw uploadError;
+      const { data: urlData } = supabase.storage
+        .from("training-content")
+        .getPublicUrl(path);
+      // Since bucket is private, we store the path and use signed URLs on participant side
+      setFormData(p => ({ ...p, file_url: path }));
+      toast.success(`Bestand "${file.name}" geüpload`);
+    } catch (err: any) {
+      toast.error("Upload mislukt: " + err.message);
+    }
+    setUploading(false);
+    if (fileInputRef.current) fileInputRef.current.value = "";
   };
 
   // Welcome content
@@ -451,9 +479,42 @@ const CourseMaterial = () => {
             )}
 
             {["video", "audio", "pdf", "link"].includes(formData.content_type) && (
-              <div>
-                <Label className="text-xs">Bestand URL / externe link</Label>
-                <Input value={formData.file_url} onChange={e => setFormData(p => ({ ...p, file_url: e.target.value }))} className="mt-1" placeholder="https://..." />
+              <div className="space-y-2">
+                <Label className="text-xs">Bestand uploaden of externe URL</Label>
+                <div className="flex gap-2">
+                  <input
+                    ref={fileInputRef}
+                    type="file"
+                    className="hidden"
+                    accept={
+                      formData.content_type === "pdf" ? ".pdf" :
+                      formData.content_type === "audio" ? "audio/*" :
+                      formData.content_type === "video" ? "video/*" :
+                      "*"
+                    }
+                    onChange={handleFileUpload}
+                  />
+                  <Button
+                    type="button"
+                    variant="outline"
+                    size="sm"
+                    className="gap-1.5 shrink-0"
+                    disabled={uploading}
+                    onClick={() => fileInputRef.current?.click()}
+                  >
+                    {uploading ? <Loader2 className="h-3.5 w-3.5 animate-spin" /> : <Upload className="h-3.5 w-3.5" />}
+                    {uploading ? "Uploaden..." : "Upload"}
+                  </Button>
+                  <Input
+                    value={formData.file_url}
+                    onChange={e => setFormData(p => ({ ...p, file_url: e.target.value }))}
+                    placeholder="Of plak een externe URL..."
+                    className="flex-1"
+                  />
+                </div>
+                {formData.file_url && !formData.file_url.startsWith("http") && (
+                  <p className="text-xs text-muted-foreground">📁 Geüpload bestand: {formData.file_url.split("/").pop()}</p>
+                )}
               </div>
             )}
 
