@@ -148,29 +148,35 @@ const TrainingContentSection = ({ courseType, unlockedWeeks }: Props) => {
                                 {item.text_content}
                               </div>
                             )}
-                            {item.file_url && item.content_type === "video" && (
-                              item.file_url.includes("youtube") || item.file_url.includes("youtu.be") ? (
+                            {item.file_url && item.content_type === "video" && (() => {
+                              const url = resolveUrl(item.file_url);
+                              if (!url) return null;
+                              return (url.includes("youtube") || url.includes("youtu.be")) ? (
                                 <div className="aspect-video rounded-lg overflow-hidden">
                                   <iframe
-                                    src={item.file_url.replace("watch?v=", "embed/").replace("youtu.be/", "youtube.com/embed/")}
+                                    src={url.replace("watch?v=", "embed/").replace("youtu.be/", "youtube.com/embed/")}
                                     className="w-full h-full"
                                     allowFullScreen
                                   />
                                 </div>
                               ) : (
-                                <video controls className="w-full rounded-lg" src={item.file_url} />
-                              )
-                            )}
-                            {item.file_url && item.content_type === "audio" && (
-                              <audio controls className="w-full" src={item.file_url} />
-                            )}
-                            {item.file_url && (item.content_type === "pdf" || item.content_type === "link") && (
-                              <a href={item.file_url} target="_blank" rel="noopener noreferrer"
-                                className="inline-flex items-center gap-2 text-sm text-primary hover:underline">
-                                <ExternalLink className="h-4 w-4" />
-                                {item.content_type === "pdf" ? "Open PDF" : "Open link"}
-                              </a>
-                            )}
+                                <video controls className="w-full rounded-lg" src={url} />
+                              );
+                            })()}
+                            {item.file_url && item.content_type === "audio" && (() => {
+                              const url = resolveUrl(item.file_url);
+                              return url ? <audio controls className="w-full" src={url} /> : null;
+                            })()}
+                            {item.file_url && (item.content_type === "pdf" || item.content_type === "link") && (() => {
+                              const url = resolveUrl(item.file_url);
+                              return url ? (
+                                <a href={url} target="_blank" rel="noopener noreferrer"
+                                  className="inline-flex items-center gap-2 text-sm text-primary hover:underline">
+                                  <ExternalLink className="h-4 w-4" />
+                                  {item.content_type === "pdf" ? "Open PDF" : "Open link"}
+                                </a>
+                              ) : null;
+                            })()}
                           </div>
                         </CollapsibleContent>
                       </Collapsible>
