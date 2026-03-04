@@ -96,6 +96,12 @@ const TrainingContentSection = ({ courseType, unlockedWeeks }: Props) => {
 
   if (Object.keys(grouped).length === 0) return null;
 
+  const resolveUrl = (fileUrl: string | null) => {
+    if (!fileUrl) return null;
+    if (fileUrl.startsWith("http")) return fileUrl;
+    return signedUrls[fileUrl] || null;
+  };
+
   return (
     <div className="space-y-3">
       <h3 className="font-medium text-sm text-muted-foreground flex items-center gap-2">
