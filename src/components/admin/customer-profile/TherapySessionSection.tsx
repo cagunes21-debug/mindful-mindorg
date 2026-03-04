@@ -41,6 +41,7 @@ const FIELDS = [
 
 interface Props {
   enrollmentId: string;
+  clientName?: string;
 }
 
 export default function TherapySessionSection({ enrollmentId }: Props) {
