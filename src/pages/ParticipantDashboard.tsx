@@ -33,6 +33,7 @@ import AssignmentCard from "@/components/participant/AssignmentCard";
 import PracticalInfoCard from "@/components/participant/PracticalInfoCard";
 import PresentationViewer from "@/components/participant/PresentationViewer";
 import WelcomeSection from "@/components/participant/WelcomeSection";
+import TrainingContentSection from "@/components/participant/TrainingContentSection";
 
 interface Enrollment {
   id: string;
