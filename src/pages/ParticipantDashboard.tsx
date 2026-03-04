@@ -411,6 +411,14 @@ const ParticipantDashboard = () => {
             </CardContent>
           </Card>
 
+          {/* Training Content Items */}
+          <div className="mb-8">
+            <TrainingContentSection
+              courseType={enrollment.course_type}
+              unlockedWeeks={unlockedWeeks}
+            />
+          </div>
+
           {/* Main Tabs */}
           <Tabs defaultValue="weeks" className="space-y-6">
             <TabsList className="grid w-full grid-cols-4 lg:w-auto lg:inline-grid">
