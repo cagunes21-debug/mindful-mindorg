@@ -44,7 +44,7 @@ interface Props {
   clientName?: string;
 }
 
-export default function TherapySessionSection({ enrollmentId }: Props) {
+export default function TherapySessionSection({ enrollmentId, clientName }: Props) {
   const [sessions, setSessions] = useState<TherapySession[]>([]);
   const [loading, setLoading] = useState(true);
   const [openSessions, setOpenSessions] = useState<Record<string, boolean>>({});
