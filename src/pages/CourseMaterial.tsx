@@ -203,6 +203,32 @@ const CourseMaterial = () => {
     }
   };
 
+  const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    const maxSize = 50 * 1024 * 1024; // 50MB
+    if (file.size > maxSize) { toast.error("Bestand is te groot (max 50MB)"); return; }
+    setUploading(true);
+    try {
+      const ext = file.name.split(".").pop();
+      const path = `${selectedTraining}/${formData.unit_number}/${Date.now()}_${file.name}`;
+      const { error: uploadError } = await supabase.storage
+        .from("training-content")
+        .upload(path, file, { upsert: true });
+      if (uploadError) throw uploadError;
+      const { data: urlData } = supabase.storage
+        .from("training-content")
+        .getPublicUrl(path);
+      // Since bucket is private, we store the path and use signed URLs on participant side
+      setFormData(p => ({ ...p, file_url: path }));
+      toast.success(`Bestand "${file.name}" geüpload`);
+    } catch (err: any) {
+      toast.error("Upload mislukt: " + err.message);
+    }
+    setUploading(false);
+    if (fileInputRef.current) fileInputRef.current.value = "";
+  };
+
   // Welcome content
   const saveWelcomeContent = async () => {
     if (!welcomeContent) return;
