@@ -589,6 +589,62 @@ export type Database = {
           },
         ]
       }
+      therapy_sessions: {
+        Row: {
+          achtergrond: string | null
+          belangrijkste_themas: string | null
+          created_at: string
+          doelstelling: string | null
+          enrollment_id: string
+          helpvraag: string | null
+          id: string
+          interventies: string | null
+          observaties: string | null
+          session_date: string | null
+          session_number: number | null
+          transcript: string
+          updated_at: string
+        }
+        Insert: {
+          achtergrond?: string | null
+          belangrijkste_themas?: string | null
+          created_at?: string
+          doelstelling?: string | null
+          enrollment_id: string
+          helpvraag?: string | null
+          id?: string
+          interventies?: string | null
+          observaties?: string | null
+          session_date?: string | null
+          session_number?: number | null
+          transcript?: string
+          updated_at?: string
+        }
+        Update: {
+          achtergrond?: string | null
+          belangrijkste_themas?: string | null
+          created_at?: string
+          doelstelling?: string | null
+          enrollment_id?: string
+          helpvraag?: string | null
+          id?: string
+          interventies?: string | null
+          observaties?: string | null
+          session_date?: string | null
+          session_number?: number | null
+          transcript?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "therapy_sessions_enrollment_id_fkey"
+            columns: ["enrollment_id"]
+            isOneToOne: false
+            referencedRelation: "enrollments"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       trainer_notes: {
         Row: {
           content: string

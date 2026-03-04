@@ -30,6 +30,7 @@ import { toast } from "sonner";
 import IntakeSection from "./customer-profile/IntakeSection";
 import TrainerNotesSection from "./customer-profile/TrainerNotesSection";
 import SessionPlanningSection from "./customer-profile/SessionPlanningSection";
+import TherapySessionSection from "./customer-profile/TherapySessionSection";
 import {
   type CustomerData, type Registration, type Enrollment, type TrainerNote,
   type CourseWeek, type SessionAppointment,
@@ -542,6 +543,13 @@ export default function CustomerProfile({ email, onClose }: CustomerProfileProps
                                   }}
                                 />
                               </div>
+
+                              {/* AI Therapy Session Notes */}
+                              {isIndividual && (
+                                <div className="border-t pt-3">
+                                  <TherapySessionSection enrollmentId={enrollment.id} />
+                                </div>
+                              )}
                             </>
                           ) : (
                             <div className="space-y-3">
