@@ -257,7 +257,10 @@ export default function TherapySessionSection({ enrollmentId, clientName }: Prop
                           </div>
                         );
                       })}
-                      <div className="flex justify-end pt-1">
+                      <div className="flex justify-end gap-1 pt-1">
+                        <Button size="sm" variant="ghost" onClick={() => exportSessionPdf(session, clientName)} className="text-xs h-6 gap-1">
+                          <Download className="h-3 w-3" /> PDF
+                        </Button>
                         <Button size="sm" variant="ghost" onClick={() => deleteSession(session.id)} className="text-destructive text-[10px] h-6 gap-1">
                           <Trash2 className="h-3 w-3" /> Verwijderen
                         </Button>
