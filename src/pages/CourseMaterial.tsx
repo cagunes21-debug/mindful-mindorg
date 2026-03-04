@@ -88,6 +88,8 @@ const CourseMaterial = () => {
     file_url: "", unit_number: 1, order_index: 0, is_visible: true, release_date: "",
   });
   const [savingItem, setSavingItem] = useState(false);
+  const [uploading, setUploading] = useState(false);
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   const trainingConfig = TRAINING_OPTIONS.find(t => t.value === selectedTraining)!;
 
