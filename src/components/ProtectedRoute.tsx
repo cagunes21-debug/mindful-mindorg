@@ -1,7 +1,6 @@
 import { useState, useEffect, ReactNode } from "react";
 import { useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
-import type { Session } from "@supabase/supabase-js";
 
 interface ProtectedRouteProps {
   children: ReactNode;
@@ -16,7 +15,9 @@ export default function ProtectedRoute({ children, requireAdmin = false }: Prote
   useEffect(() => {
     let mounted = true;
 
-    const checkAccess = async (session: Session | null) => {
+    const init = async () => {
+      const { data: { session } } = await supabase.auth.getSession();
+
       if (!session) {
         if (mounted) setLoading(false);
         navigate("/login", { replace: true });
@@ -24,17 +25,16 @@ export default function ProtectedRoute({ children, requireAdmin = false }: Prote
       }
 
       if (requireAdmin) {
-        try {
-          const { data, error } = await supabase.rpc("has_role", {
-            _user_id: session.user.id,
-            _role: "admin",
-          });
-          if (error || !data) {
-            if (mounted) setLoading(false);
-            navigate("/", { replace: true });
-            return;
-          }
-        } catch {
+        // Query user_roles directly instead of RPC to avoid deadlocks
+        const { data: roleData, error } = await supabase
+          .from("user_roles")
+          .select("role")
+          .eq("user_id", session.user.id)
+          .eq("role", "admin")
+          .maybeSingle();
+
+        if (error || !roleData) {
+          console.error("[ProtectedRoute] Admin check failed:", error);
           if (mounted) setLoading(false);
           navigate("/", { replace: true });
           return;
@@ -47,10 +47,10 @@ export default function ProtectedRoute({ children, requireAdmin = false }: Prote
       }
     };
 
-    // Listen for sign-out only — never do async work here
+    // Listen for sign-out
     const { data: { subscription } } = supabase.auth.onAuthStateChange(
-      (event, session) => {
-        if (event === "SIGNED_OUT" || !session) {
+      (event) => {
+        if (event === "SIGNED_OUT") {
           setAuthorized(false);
           setLoading(false);
           navigate("/login", { replace: true });
@@ -58,10 +58,7 @@ export default function ProtectedRoute({ children, requireAdmin = false }: Prote
       }
     );
 
-    // Do the actual async check outside of onAuthStateChange
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      checkAccess(session);
-    });
+    init();
 
     return () => {
       mounted = false;
