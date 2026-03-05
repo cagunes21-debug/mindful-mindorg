@@ -61,7 +61,15 @@ export default function CustomerProfile({ email, onClose }: CustomerProfileProps
         supabase.from("course_weeks").select("id, week_number, title, course_type").order("week_number"),
         supabase.from("clients").select("id").eq("email", email).limit(1),
       ]);
-      if (customerRes.error) throw customerRes.error;
+      if (customerRes.error) {
+        console.error("[CustomerProfile] Error fetching customer:", customerRes.error);
+        throw customerRes.error;
+      }
+      if (!customerRes.data) {
+        console.error("[CustomerProfile] No customer found for email:", email);
+        setIsLoading(false);
+        return;
+      }
       setCustomer(customerRes.data);
       const regs = (regRes.data || []) as Registration[];
       setRegistrations(regs);
