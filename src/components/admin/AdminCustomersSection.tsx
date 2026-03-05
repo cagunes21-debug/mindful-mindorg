@@ -653,7 +653,14 @@ export default function AdminCustomersSection({ initialTab = "customers" }: { in
 
       {/* Client Profile Modal (new - from clients table) */}
       {selectedClientId && (
-        <ClientProfileModal clientId={selectedClientId} onClose={() => { setSelectedClientId(null); fetchClients(); }} />
+        <ClientProfileModal
+          clientId={selectedClientId}
+          onClose={() => { setSelectedClientId(null); fetchClients(); }}
+          onOpenFullProfile={(email) => {
+            setSelectedClientId(null);
+            setSelectedCustomerEmail(email);
+          }}
+        />
       )}
 
       {/* New Client Dialog */}
@@ -811,7 +818,7 @@ export default function AdminCustomersSection({ initialTab = "customers" }: { in
 }
 
 // Client Profile Modal - for clients created via new CRM flow
-function ClientProfileModal({ clientId, onClose }: { clientId: string; onClose: () => void }) {
+function ClientProfileModal({ clientId, onClose, onOpenFullProfile }: { clientId: string; onClose: () => void; onOpenFullProfile?: (email: string) => void }) {
   const [client, setClient] = useState<Client | null>(null);
   const [enrollments, setEnrollments] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
@@ -922,6 +929,11 @@ function ClientProfileModal({ clientId, onClose }: { clientId: string; onClose: 
             <span className="flex items-center gap-1"><Mail className="h-3 w-3" />{client.email}</span>
             {client.phone && <span className="flex items-center gap-1"><Phone className="h-3 w-3" />{client.phone}</span>}
           </DialogDescription>
+          {onOpenFullProfile && (
+            <Button size="sm" variant="outline" className="mt-2 gap-1.5 text-xs" onClick={() => onOpenFullProfile(client.email)}>
+              <ArrowRight className="h-3 w-3" /> Volledig klantprofiel openen
+            </Button>
+          )}
         </DialogHeader>
 
         <div className="space-y-4">
