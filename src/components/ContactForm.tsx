@@ -109,8 +109,11 @@ export function ContactForm() {
           <Check className="h-8 w-8 text-sage-700" />
         </div>
         <h3 className="text-2xl font-light text-foreground mb-4">Bedankt voor je bericht!</h3>
-        <p className="text-muted-foreground mb-6">
-          We hebben je bericht ontvangen en nemen zo snel mogelijk contact met je op.
+        <p className="text-muted-foreground mb-2">
+          Bedankt voor je bericht. We nemen zo snel mogelijk contact met je op.
+        </p>
+        <p className="text-muted-foreground mb-6 text-sm">
+          Meestal reageren we binnen 1–2 werkdagen.
         </p>
         <Button
           variant="outline"
