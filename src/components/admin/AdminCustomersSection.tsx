@@ -169,7 +169,7 @@ export default function AdminCustomersSection() {
     );
   });
 
-  const newLeadCount = leads.filter(l => l.status === "new lead").length;
+  const newLeadCount = leads.filter(l => l.status === "new").length;
 
   const stats = {
     totalCustomers: customers.length,
