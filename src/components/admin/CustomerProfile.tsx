@@ -56,12 +56,20 @@ export default function CustomerProfile({ email, onClose }: CustomerProfileProps
     setIsLoading(true);
     try {
       const [customerRes, regRes, weeksRes, clientRes] = await Promise.all([
-        supabase.from("customers").select("*").eq("email", email).single(),
+        supabase.from("customers").select("*").eq("email", email).limit(1).maybeSingle(),
         supabase.from("registrations").select("id, training_name, training_date, status, payment_status, price, created_at, admin_notes").eq("email", email).order("created_at", { ascending: false }),
         supabase.from("course_weeks").select("id, week_number, title, course_type").order("week_number"),
         supabase.from("clients").select("id").eq("email", email).limit(1),
       ]);
-      if (customerRes.error) throw customerRes.error;
+      if (customerRes.error) {
+        console.error("[CustomerProfile] Error fetching customer:", customerRes.error);
+        throw customerRes.error;
+      }
+      if (!customerRes.data) {
+        console.error("[CustomerProfile] No customer found for email:", email);
+        setIsLoading(false);
+        return;
+      }
       setCustomer(customerRes.data);
       const regs = (regRes.data || []) as Registration[];
       setRegistrations(regs);
