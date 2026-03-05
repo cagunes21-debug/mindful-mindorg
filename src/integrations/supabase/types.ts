@@ -103,6 +103,53 @@ export type Database = {
         }
         Relationships: []
       }
+      client_sessions: {
+        Row: {
+          client_id: string
+          created_at: string
+          date: string
+          duration_overrides: Json | null
+          generated_plan_markdown: string | null
+          id: string
+          msc_session_id: string
+          selected_item_ids: string[] | null
+          target_duration_minutes: number
+          updated_at: string
+        }
+        Insert: {
+          client_id: string
+          created_at?: string
+          date?: string
+          duration_overrides?: Json | null
+          generated_plan_markdown?: string | null
+          id?: string
+          msc_session_id: string
+          selected_item_ids?: string[] | null
+          target_duration_minutes?: number
+          updated_at?: string
+        }
+        Update: {
+          client_id?: string
+          created_at?: string
+          date?: string
+          duration_overrides?: Json | null
+          generated_plan_markdown?: string | null
+          id?: string
+          msc_session_id?: string
+          selected_item_ids?: string[] | null
+          target_duration_minutes?: number
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "client_sessions_msc_session_id_fkey"
+            columns: ["msc_session_id"]
+            isOneToOne: false
+            referencedRelation: "msc_sessions"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       clients: {
         Row: {
           created_at: string
@@ -422,6 +469,89 @@ export type Database = {
             referencedColumns: ["id"]
           },
         ]
+      }
+      msc_items: {
+        Row: {
+          created_at: string
+          duration_minutes: number
+          id: string
+          instructions_markdown: string | null
+          is_optional: boolean
+          notes_for_therapist: string | null
+          session_id: string
+          sort_order: number
+          tags: string[] | null
+          title: string
+          type: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          duration_minutes?: number
+          id?: string
+          instructions_markdown?: string | null
+          is_optional?: boolean
+          notes_for_therapist?: string | null
+          session_id: string
+          sort_order?: number
+          tags?: string[] | null
+          title: string
+          type?: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          duration_minutes?: number
+          id?: string
+          instructions_markdown?: string | null
+          is_optional?: boolean
+          notes_for_therapist?: string | null
+          session_id?: string
+          sort_order?: number
+          tags?: string[] | null
+          title?: string
+          type?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "msc_items_session_id_fkey"
+            columns: ["session_id"]
+            isOneToOne: false
+            referencedRelation: "msc_sessions"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      msc_sessions: {
+        Row: {
+          created_at: string
+          default_duration_minutes: number
+          description: string | null
+          id: string
+          title: string
+          updated_at: string
+          week_number: number
+        }
+        Insert: {
+          created_at?: string
+          default_duration_minutes?: number
+          description?: string | null
+          id?: string
+          title: string
+          updated_at?: string
+          week_number: number
+        }
+        Update: {
+          created_at?: string
+          default_duration_minutes?: number
+          description?: string | null
+          id?: string
+          title?: string
+          updated_at?: string
+          week_number?: number
+        }
+        Relationships: []
       }
       newsletter_subscribers: {
         Row: {
