@@ -79,6 +79,9 @@ export default function AdminCustomersSection() {
   const [leadsSearchQuery, setLeadsSearchQuery] = useState("");
   
   const [selectedCustomerEmail, setSelectedCustomerEmail] = useState<string | null>(null);
+  const [selectedClientId, setSelectedClientId] = useState<string | null>(null);
+  const [showNewClient, setShowNewClient] = useState(false);
+  const [newClient, setNewClient] = useState({ first_name: "", last_name: "", email: "", phone: "", notes: "" });
   const [showNewReg, setShowNewReg] = useState(false);
   const [newReg, setNewReg] = useState({ name: "", email: "", phone: "", training_name: "8-weekse Mindful Zelfcompassie Training", remarks: "" });
   const [submitting, setSubmitting] = useState(false);
