@@ -80,14 +80,12 @@ export default function ProtectedRoute({ children, requireAdmin = false }: Prote
     const timeout = setTimeout(() => {
       if (!cancelled) {
         console.error("[ProtectedRoute] Admin check timed out");
-        controller.abort();
         navigate("/", { replace: true });
       }
     }, 8000);
 
     return () => {
       cancelled = true;
-      controller.abort();
       clearTimeout(timeout);
     };
   }, [session, requireAdmin, navigate]);
