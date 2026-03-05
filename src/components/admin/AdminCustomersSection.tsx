@@ -295,6 +295,7 @@ export default function AdminCustomersSection() {
   };
 
 
+  const submitNewRegistration = async () => {
     if (!newReg.name.trim() || !newReg.email.trim() || !newReg.training_name.trim()) {
       toast.error("Vul naam, e-mail en training in"); return;
     }
