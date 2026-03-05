@@ -239,7 +239,7 @@ export default function MscMaterialsLibrary() {
               <ArrowLeft className="h-5 w-5" />
             </Button>
             <div className="flex-1">
-              <h1 className="text-2xl font-light text-foreground">MSC Session 1 – Discovering Mindfulness and Self-Compassion</h1>
+              <h1 className="text-2xl font-light text-foreground">MSC Session 1 – Introduction to Mindful Self-Compassion</h1>
               <p className="text-muted-foreground text-sm mt-1">
                 {items.length} items · {totalDuration} minuten totaal
               </p>
