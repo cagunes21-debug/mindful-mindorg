@@ -14,6 +14,7 @@ export default function ProtectedRoute({ children, requireAdmin = false }: Prote
   const userIdRef = useRef<string | null>(null);
   const adminCheckedRef = useRef(false);
   const mountedRef = useRef(true);
+  const authStateRef = useRef<"loading" | "authenticated" | "unauthenticated">("loading");
 
   // Step 1: Use ONLY onAuthStateChange — it fires INITIAL_SESSION first, never hangs
   useEffect(() => {
@@ -31,6 +32,7 @@ export default function ProtectedRoute({ children, requireAdmin = false }: Prote
           userIdRef.current = null;
           adminCheckedRef.current = false;
           setAdminState(requireAdmin ? "loading" : "yes");
+          authStateRef.current = "unauthenticated";
           setAuthState("unauthenticated");
           return;
         }
@@ -38,9 +40,11 @@ export default function ProtectedRoute({ children, requireAdmin = false }: Prote
         // INITIAL_SESSION or SIGNED_IN or TOKEN_REFRESHED
         if (session?.user) {
           userIdRef.current = session.user.id;
+          authStateRef.current = "authenticated";
           setAuthState("authenticated");
         } else {
           userIdRef.current = null;
+          authStateRef.current = "unauthenticated";
           setAuthState("unauthenticated");
         }
       }
@@ -48,8 +52,9 @@ export default function ProtectedRoute({ children, requireAdmin = false }: Prote
 
     // Safety timeout — if no auth event after 5s, assume unauthenticated
     const timeout = setTimeout(() => {
-      if (mountedRef.current && authState === "loading") {
+      if (mountedRef.current && authStateRef.current === "loading") {
         console.warn("[ProtectedRoute] Auth timeout — no event received in 5s");
+        authStateRef.current = "unauthenticated";
         setAuthState("unauthenticated");
       }
     }, 5000);
