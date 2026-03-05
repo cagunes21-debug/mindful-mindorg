@@ -618,10 +618,16 @@ export default function AdminCustomersSection() {
                                       placeholder="Voeg interne notities toe over deze lead..."
                                       className="min-h-[80px] text-sm"
                                     />
-                                    <Button size="sm" className="mt-2" onClick={() => saveLeadNotes(lead.id)}>
-                                      Notities opslaan
-                                    </Button>
-                                  </div>
+                                    <div className="flex items-center gap-2 mt-2">
+                                      <Button size="sm" onClick={() => saveLeadNotes(lead.id)}>
+                                        Notities opslaan
+                                      </Button>
+                                      {lead.status !== "converted_to_client" && (
+                                        <Button size="sm" variant="default" className="gap-1.5 ml-auto" onClick={(e) => { e.stopPropagation(); openConvertLead(lead); }}>
+                                          <UserCheck className="h-3.5 w-3.5" /> Omzetten naar klant
+                                        </Button>
+                                      )}
+                                    </div>
                                 </div>
                               </TableCell>
                             </TableRow>
