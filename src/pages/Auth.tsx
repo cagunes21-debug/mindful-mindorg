@@ -65,7 +65,7 @@ const Auth = () => {
         }
         console.log("[Auth] Admin check done →", dest);
       } catch {
-        console.warn("[Auth] Admin check failed → /mijn-training");
+        console.warn("[Auth] Admin check failed → /mijn-trainingen");
       }
     }
     
