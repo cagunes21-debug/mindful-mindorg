@@ -35,6 +35,8 @@ const TYPE_COLORS: Record<string, string> = {
   informal_practice: "bg-amber-100 text-amber-800 dark:bg-amber-900 dark:text-amber-200",
   reflection: "bg-rose-100 text-rose-800 dark:bg-rose-900 dark:text-rose-200",
   homework: "bg-orange-100 text-orange-800 dark:bg-orange-900 dark:text-orange-200",
+  break: "bg-gray-100 text-gray-800 dark:bg-gray-900 dark:text-gray-200",
+  closing: "bg-teal-100 text-teal-800 dark:bg-teal-900 dark:text-teal-200",
 };
 
 interface MscItem {
