@@ -14,25 +14,44 @@ export default function ProtectedRoute({ children, requireAdmin = false }: Prote
   const [authorized, setAuthorized] = useState(false);
 
   useEffect(() => {
+    let mounted = true;
+
     const checkAccess = async (session: Session | null) => {
       if (!session) {
+        if (mounted) setLoading(false);
         navigate("/login", { replace: true });
         return;
       }
 
       if (requireAdmin) {
-        const { data } = await supabase.rpc("has_role", {
-          _user_id: session.user.id,
-          _role: "admin",
-        });
-        if (!data) {
+        try {
+          const { data, error } = await supabase.rpc("has_role", {
+            _user_id: session.user.id,
+            _role: "admin",
+          });
+          if (error) {
+            console.error("Error checking admin role:", error);
+            if (mounted) setLoading(false);
+            navigate("/", { replace: true });
+            return;
+          }
+          if (!data) {
+            if (mounted) setLoading(false);
+            navigate("/", { replace: true });
+            return;
+          }
+        } catch (err) {
+          console.error("Failed to check role:", err);
+          if (mounted) setLoading(false);
           navigate("/", { replace: true });
           return;
         }
       }
 
-      setAuthorized(true);
-      setLoading(false);
+      if (mounted) {
+        setAuthorized(true);
+        setLoading(false);
+      }
     };
 
     // Set up listener BEFORE getSession (per Supabase best practices)
@@ -40,6 +59,7 @@ export default function ProtectedRoute({ children, requireAdmin = false }: Prote
       (_event, session) => {
         if (!session) {
           setAuthorized(false);
+          setLoading(false);
           navigate("/login", { replace: true });
         }
       }
@@ -49,7 +69,10 @@ export default function ProtectedRoute({ children, requireAdmin = false }: Prote
       checkAccess(session);
     });
 
-    return () => subscription.unsubscribe();
+    return () => {
+      mounted = false;
+      subscription.unsubscribe();
+    };
   }, [navigate, requireAdmin]);
 
   if (loading) {
