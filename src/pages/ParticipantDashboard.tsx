@@ -408,10 +408,37 @@ const ParticipantDashboard = () => {
       <div className="min-h-screen bg-background">
         <Navigation />
         <main className="container mx-auto px-4 pt-24 pb-16">
-          <div className="flex items-center justify-center h-64">
-            <div className="animate-pulse text-muted-foreground">Laden...</div>
+          <div className="flex flex-col items-center justify-center h-64 gap-4">
+            <div className="w-8 h-8 border-2 border-terracotta-300 border-t-terracotta-600 rounded-full animate-spin" />
+            <p className="text-muted-foreground text-sm">Training laden...</p>
           </div>
         </main>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="min-h-screen bg-background">
+        <Navigation />
+        <main className="container mx-auto px-4 pt-24 pb-16">
+          <Card className="max-w-xl mx-auto">
+            <CardContent className="p-8 text-center">
+              <Info className="h-12 w-12 text-destructive mx-auto mb-4" />
+              <h2 className="text-xl font-medium mb-2">Er ging iets mis</h2>
+              <p className="text-muted-foreground mb-6">{error}</p>
+              <div className="flex gap-3 justify-center">
+                <Button variant="outline" onClick={() => window.location.reload()}>
+                  Pagina verversen
+                </Button>
+                <Button onClick={() => navigate("/login")}>
+                  Opnieuw inloggen
+                </Button>
+              </div>
+            </CardContent>
+          </Card>
+        </main>
+        <Footer />
       </div>
     );
   }
