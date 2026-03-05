@@ -30,10 +30,14 @@ const trainingHighlights = [
 type ResetStep = "email" | "otp" | "newPassword" | "success";
 
 const Auth = () => {
-  const [isLogin, setIsLogin] = useState(true);
+  const [searchParams] = useSearchParams();
+  const inviteSignup = searchParams.get("signup") === "true";
+  const inviteEmail = searchParams.get("email") || "";
+  
+  const [isLogin, setIsLogin] = useState(!inviteSignup);
   const [isForgotPassword, setIsForgotPassword] = useState(false);
   const [resetStep, setResetStep] = useState<ResetStep>("email");
-  const [email, setEmail] = useState("");
+  const [email, setEmail] = useState(inviteEmail);
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [otpCode, setOtpCode] = useState("");
