@@ -88,9 +88,12 @@ export default function AdminCustomersSection() {
   const [activeTab, setActiveTab] = useState("customers");
   const [expandedLeadId, setExpandedLeadId] = useState<string | null>(null);
   const [editingNotes, setEditingNotes] = useState<Record<string, string>>({});
+  const [clients, setClients] = useState<Client[]>([]);
+  
   useEffect(() => {
     fetchCustomers();
     fetchLeads();
+    fetchClients();
   }, []);
 
   const fetchCustomers = async () => {
