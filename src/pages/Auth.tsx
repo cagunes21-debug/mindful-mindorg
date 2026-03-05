@@ -220,7 +220,7 @@ const Auth = () => {
           }
         } else {
           toast({ title: "Welkom terug!", description: "Je bent succesvol ingelogd." });
-          await redirectAfterLogin(signInData?.user?.id);
+          redirectAfterLogin();
         }
       } else {
         const { error } = await supabase.auth.signUp({
