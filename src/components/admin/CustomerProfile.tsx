@@ -83,14 +83,6 @@ export default function CustomerProfile({ email, onClose }: CustomerProfileProps
   const [extraRemarks, setExtraRemarks] = useState("");
   const [submittingExtra, setSubmittingExtra] = useState(false);
 
-  // Convert lead state
-  const [showConvertLead, setShowConvertLead] = useState(false);
-  const [convertTraining, setConvertTraining] = useState("Individueel Traject (6 sessies)");
-  const [convertCourseType, setConvertCourseType] = useState("individueel_6");
-  const [convertStartDate, setConvertStartDate] = useState("");
-  const [convertTrainer, setConvertTrainer] = useState("");
-  const [convertRemarks, setConvertRemarks] = useState("");
-  const [converting, setConverting] = useState(false);
 
   useEffect(() => { fetchCustomerData(); }, [email]);
 
