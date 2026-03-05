@@ -49,32 +49,49 @@ const Auth = () => {
   const { toast } = useToast();
 
   useEffect(() => {
-    const handleSession = async (session: any) => {
-      if (!session?.user) return;
-      
-      // Check if user is admin to redirect appropriately
-      const { data } = await supabase
-        .rpc("has_role", { _user_id: session.user.id, _role: "admin" });
-      
-      if (data) {
-        console.log("[Auth] Admin detected, redirecting to /admin");
-        navigate("/admin", { replace: true });
-      } else {
-        console.log("[Auth] Regular user, redirecting to /");
-        navigate("/", { replace: true });
+    let cancelled = false;
+
+    const redirectByRole = async (userId: string) => {
+      if (cancelled) return;
+      try {
+        const { data } = await supabase
+          .rpc("has_role", { _user_id: userId, _role: "admin" });
+        if (cancelled) return;
+        if (data) {
+          console.log("[Auth] Admin detected, redirecting to /admin");
+          navigate("/admin", { replace: true });
+        } else {
+          console.log("[Auth] Regular user, redirecting to /");
+          navigate("/", { replace: true });
+        }
+      } catch (err) {
+        console.error("[Auth] Role check failed:", err);
+        if (!cancelled) navigate("/", { replace: true });
       }
     };
 
+    // Check if already logged in on mount
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      if (session?.user && !cancelled) {
+        console.log("[Auth] Existing session found, redirecting...");
+        redirectByRole(session.user.id);
+      }
+    });
+
+    // Listen only for new sign-ins (not INITIAL_SESSION to avoid double-fire)
     const { data: { subscription } } = supabase.auth.onAuthStateChange(
       (event, session) => {
-        if (event === "SIGNED_IN" || event === "INITIAL_SESSION") {
-          // Use setTimeout to avoid Supabase auth deadlock
-          setTimeout(() => handleSession(session), 0);
+        if (event === "SIGNED_IN" && session?.user) {
+          console.log("[Auth] SIGNED_IN event, redirecting...");
+          setTimeout(() => redirectByRole(session.user.id), 0);
         }
       }
     );
 
-    return () => subscription.unsubscribe();
+    return () => {
+      cancelled = true;
+      subscription.unsubscribe();
+    };
   }, [navigate]);
 
   const validateForm = () => {
