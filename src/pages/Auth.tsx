@@ -48,31 +48,28 @@ const Auth = () => {
   const navigate = useNavigate();
   const { toast } = useToast();
 
-  const redirectAfterLogin = (userId?: string) => {
+  const redirectAfterLogin = async (userId?: string) => {
     console.log("[Auth] redirectAfterLogin called, userId:", userId);
     
+    let dest = "/mijn-training";
+    
     if (userId) {
-      // Fire-and-forget admin check — redirect immediately if it takes too long
-      const timeout = setTimeout(() => {
-        console.log("[Auth] Admin check timeout → /mijn-training");
-        window.location.href = "/mijn-training";
-      }, 3000);
-      
-      Promise.resolve(supabase.rpc("has_role", { _user_id: userId, _role: "admin" }))
-        .then(({ data: isAdmin }) => {
-          clearTimeout(timeout);
-          const dest = isAdmin ? "/admin" : "/mijn-training";
-          console.log("[Auth] Admin check done, isAdmin:", isAdmin, "→", dest);
-          window.location.href = dest;
-        })
-        .catch(() => {
-          clearTimeout(timeout);
-          console.warn("[Auth] Admin check failed → /mijn-training");
-          window.location.href = "/mijn-training";
-        });
-    } else {
-      window.location.href = "/mijn-training";
+      try {
+        const raceResult = await Promise.race([
+          supabase.rpc("has_role", { _user_id: userId, _role: "admin" }),
+          new Promise<{ data: null }>((resolve) => setTimeout(() => resolve({ data: null }), 3000)),
+        ]);
+        
+        if (raceResult && 'data' in raceResult && raceResult.data === true) {
+          dest = "/admin";
+        }
+        console.log("[Auth] Admin check done →", dest);
+      } catch {
+        console.warn("[Auth] Admin check failed → /mijn-training");
+      }
     }
+    
+    navigate(dest, { replace: true });
   };
 
   useEffect(() => {
