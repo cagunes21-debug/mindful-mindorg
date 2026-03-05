@@ -30,9 +30,13 @@ export interface Enrollment {
   visible_sections: string[];
   trainer_name: string | null;
   registration_id: string | null;
+  client_id: string | null;
   intake_reason: string | null;
   intake_theme: string | null;
   intake_goal: string | null;
+  sessions_total: number | null;
+  sessions_used: number;
+  sessions_remaining: number | null;
 }
 
 export interface TrainerNote {
