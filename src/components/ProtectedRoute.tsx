@@ -58,8 +58,7 @@ export default function ProtectedRoute({ children, requireAdmin = false }: Prote
           .select("role")
           .eq("user_id", session.user.id)
           .eq("role", "admin")
-          .maybeSingle()
-          .abortSignal(controller.signal);
+          .maybeSingle();
 
         if (cancelled) return;
 
