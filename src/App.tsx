@@ -62,7 +62,7 @@ const App = () => (
         <Toaster />
         <Sonner />
         <BrowserRouter>
-          
+          <AutoLinker />
           <StickyCTA />
           <Suspense fallback={<PageLoader />}>
             <Routes>
