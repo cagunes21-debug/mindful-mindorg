@@ -173,7 +173,127 @@ export default function AdminCustomersSection() {
     }
   };
 
-  const submitNewRegistration = async () => {
+  const openConvertLead = (lead: Lead) => {
+    setConvertForm({
+      first_name: lead.first_name, last_name: lead.last_name,
+      email: lead.email,
+      training: "Individueel Traject (6 sessies)",
+      course_type: "individueel_6",
+      start_date: "", notes: "", send_invite: true,
+    });
+    setDuplicateClient(null);
+    setConvertingLead(lead);
+  };
+
+  const handleConvertLead = async () => {
+    if (!convertingLead || !convertForm.start_date) {
+      toast.error("Vul een startdatum in"); return;
+    }
+    setConvertSubmitting(true);
+    try {
+      const email = convertForm.email.trim().toLowerCase();
+
+      // Check for existing client
+      const { data: existingClients } = await supabase
+        .from("clients").select("*").eq("email", email).limit(1);
+
+      let clientId: string;
+      let clientUserId: string | null = null;
+
+      if (existingClients && existingClients.length > 0) {
+        if (!duplicateClient) {
+          // Show duplicate warning first
+          setDuplicateClient(existingClients[0] as Client);
+          setConvertSubmitting(false);
+          return;
+        }
+        // User confirmed — add training to existing client
+        clientId = existingClients[0].id;
+        clientUserId = existingClients[0].user_id || null;
+      } else {
+        // Create new client
+        const { data: newClientData, error: clientError } = await supabase
+          .from("clients").insert({
+            first_name: convertForm.first_name.trim(),
+            last_name: convertForm.last_name.trim(),
+            email,
+            phone: convertingLead.phone_number || null,
+            notes: convertForm.notes.trim() || null,
+          }).select("id, user_id").single();
+        if (clientError) throw clientError;
+        clientId = newClientData.id;
+        clientUserId = newClientData.user_id;
+      }
+
+      // Create registration
+      const fullName = `${convertForm.first_name.trim()} ${convertForm.last_name.trim()}`.trim();
+      const { data: regData, error: regError } = await supabase
+        .from("registrations").insert({
+          name: fullName, email,
+          phone: convertingLead.phone_number || null,
+          training_name: convertForm.training,
+          remarks: convertForm.notes.trim() || null,
+          status: "confirmed", payment_status: "pending",
+        }).select("id").single();
+      if (regError) throw regError;
+
+      // Create enrollment
+      const { error: enrError } = await supabase
+        .from("enrollments").insert({
+          client_id: clientId,
+          user_id: clientUserId || null,
+          course_type: convertForm.course_type,
+          start_date: convertForm.start_date,
+          registration_id: regData.id,
+          status: clientUserId ? "active" : "invited",
+          unlocked_weeks: [1],
+        });
+      if (enrError) throw enrError;
+
+      // Update lead status
+      await supabase.from("leads").update({
+        status: "converted_to_client",
+        updated_at: new Date().toISOString(),
+      }).eq("id", convertingLead.id);
+
+      // Send invitation email if checked
+      if (convertForm.send_invite && !clientUserId) {
+        const courseLabels: Record<string, string> = {
+          msc_8week: "8-weekse Mindful Zelfcompassie Training",
+          individueel_6: "Individueel Traject (6 sessies)",
+          losse_sessie: "Losse Sessie / Coaching",
+        };
+        try {
+          await supabase.functions.invoke("send-invitation-email", {
+            body: {
+              client_id: clientId,
+              enrollment_id: regData.id,
+              program_name: courseLabels[convertForm.course_type] || convertForm.training,
+              email,
+              first_name: convertForm.first_name.trim(),
+            },
+          });
+        } catch (inviteErr) {
+          console.error("Invite email failed:", inviteErr);
+        }
+      }
+
+      toast.success("Lead succesvol omgezet naar klant!");
+      setConvertingLead(null);
+      setDuplicateClient(null);
+      setLeads(prev => prev.map(l => l.id === convertingLead.id ? { ...l, status: "converted_to_client" } : l));
+      fetchClients();
+      fetchCustomers();
+
+      // Open the new client profile
+      setSelectedClientId(clientId);
+    } catch (err: any) {
+      toast.error("Fout: " + err.message);
+    }
+    setConvertSubmitting(false);
+  };
+
+
     if (!newReg.name.trim() || !newReg.email.trim() || !newReg.training_name.trim()) {
       toast.error("Vul naam, e-mail en training in"); return;
     }
