@@ -350,6 +350,7 @@ export default function AdminCustomersSection() {
                   <Table>
                     <TableHeader>
                       <TableRow>
+                        <TableHead className="w-8"></TableHead>
                         <TableHead>Naam</TableHead>
                         <TableHead>Contact</TableHead>
                         <TableHead>Interesse</TableHead>
@@ -360,44 +361,85 @@ export default function AdminCustomersSection() {
                     </TableHeader>
                     <TableBody>
                       {filteredLeads.map((lead) => (
-                        <TableRow key={lead.id}>
-                          <TableCell>
-                            <span className="font-medium">{lead.first_name} {lead.last_name}</span>
-                          </TableCell>
-                          <TableCell>
-                            <div className="flex flex-col gap-1">
-                              <div className="flex items-center gap-1 text-sm text-muted-foreground"><Mail className="h-3 w-3" />{lead.email}</div>
-                              {lead.phone_number && <div className="flex items-center gap-1 text-sm text-muted-foreground"><Phone className="h-3 w-3" />{lead.phone_number}</div>}
-                            </div>
-                          </TableCell>
-                          <TableCell>
-                            {lead.interest && <Badge variant="secondary" className="bg-sage-100 text-sage-800 text-xs">{lead.interest}</Badge>}
-                          </TableCell>
-                          <TableCell>
-                            <p className="text-sm text-muted-foreground max-w-[250px] truncate">{lead.message || "—"}</p>
-                          </TableCell>
-                          <TableCell>
-                            <Select value={lead.status} onValueChange={(v) => updateLeadStatus(lead.id, v)}>
-                              <SelectTrigger className="w-[130px] h-8">
-                                <Badge className={`${leadStatusColors[lead.status] || "bg-muted text-muted-foreground"} text-[10px] px-1.5 py-0`}>
-                                  {lead.status}
-                                </Badge>
-                              </SelectTrigger>
-                              <SelectContent>
-                                <SelectItem value="new lead">New lead</SelectItem>
-                                <SelectItem value="contacted">Contacted</SelectItem>
-                                <SelectItem value="qualified">Qualified</SelectItem>
-                                <SelectItem value="lost">Lost</SelectItem>
-                              </SelectContent>
-                            </Select>
-                          </TableCell>
-                          <TableCell>
-                            <div className="flex items-center gap-1 text-sm text-muted-foreground">
-                              <Clock className="h-3 w-3" />
-                              {format(new Date(lead.submission_date), "d MMM yyyy HH:mm", { locale: nl })}
-                            </div>
-                          </TableCell>
-                        </TableRow>
+                        <>
+                          <TableRow key={lead.id} className="cursor-pointer hover:bg-muted/50" onClick={() => {
+                            const newId = expandedLeadId === lead.id ? null : lead.id;
+                            setExpandedLeadId(newId);
+                            if (newId && !(lead.id in editingNotes)) {
+                              setEditingNotes(prev => ({ ...prev, [lead.id]: lead.notes || "" }));
+                            }
+                          }}>
+                            <TableCell className="w-8">
+                              {expandedLeadId === lead.id ? <ChevronUp className="h-4 w-4 text-muted-foreground" /> : <ChevronDown className="h-4 w-4 text-muted-foreground" />}
+                            </TableCell>
+                            <TableCell>
+                              <span className="font-medium">{lead.first_name} {lead.last_name}</span>
+                            </TableCell>
+                            <TableCell>
+                              <div className="flex flex-col gap-1">
+                                <div className="flex items-center gap-1 text-sm text-muted-foreground"><Mail className="h-3 w-3" />{lead.email}</div>
+                                {lead.phone_number && <div className="flex items-center gap-1 text-sm text-muted-foreground"><Phone className="h-3 w-3" />{lead.phone_number}</div>}
+                              </div>
+                            </TableCell>
+                            <TableCell>
+                              {lead.interest && <Badge variant="secondary" className="bg-sage-100 text-sage-800 text-xs">{lead.interest}</Badge>}
+                            </TableCell>
+                            <TableCell>
+                              <p className="text-sm text-muted-foreground max-w-[250px] truncate">{lead.message || "—"}</p>
+                            </TableCell>
+                            <TableCell onClick={(e) => e.stopPropagation()}>
+                              <Select value={lead.status} onValueChange={(v) => updateLeadStatus(lead.id, v)}>
+                                <SelectTrigger className="w-[160px] h-8">
+                                  <Badge className={`${leadStatusColors[lead.status] || "bg-muted text-muted-foreground"} text-[10px] px-1.5 py-0`}>
+                                    {leadStatusLabels[lead.status] || lead.status}
+                                  </Badge>
+                                </SelectTrigger>
+                                <SelectContent>
+                                  <SelectItem value="new">Nieuw</SelectItem>
+                                  <SelectItem value="contacted">Gecontacteerd</SelectItem>
+                                  <SelectItem value="intake_scheduled">Intake ingepland</SelectItem>
+                                  <SelectItem value="converted_to_client">Klant geworden</SelectItem>
+                                  <SelectItem value="not_interested">Niet geïnteresseerd</SelectItem>
+                                </SelectContent>
+                              </Select>
+                            </TableCell>
+                            <TableCell>
+                              <div className="flex items-center gap-1 text-sm text-muted-foreground">
+                                <Clock className="h-3 w-3" />
+                                {format(new Date(lead.submission_date), "d MMM yyyy HH:mm", { locale: nl })}
+                              </div>
+                            </TableCell>
+                          </TableRow>
+                          {expandedLeadId === lead.id && (
+                            <TableRow key={`${lead.id}-notes`}>
+                              <TableCell colSpan={7} className="bg-muted/30 border-b">
+                                <div className="p-3 space-y-3">
+                                  {lead.message && (
+                                    <div>
+                                      <p className="text-sm font-medium mb-1">Volledig bericht:</p>
+                                      <p className="text-sm text-muted-foreground whitespace-pre-wrap">{lead.message}</p>
+                                    </div>
+                                  )}
+                                  <div>
+                                    <div className="flex items-center gap-2 mb-1">
+                                      <StickyNote className="h-4 w-4 text-muted-foreground" />
+                                      <p className="text-sm font-medium">Interne notities:</p>
+                                    </div>
+                                    <Textarea
+                                      value={editingNotes[lead.id] ?? lead.notes ?? ""}
+                                      onChange={(e) => setEditingNotes(prev => ({ ...prev, [lead.id]: e.target.value }))}
+                                      placeholder="Voeg interne notities toe over deze lead..."
+                                      className="min-h-[80px] text-sm"
+                                    />
+                                    <Button size="sm" className="mt-2" onClick={() => saveLeadNotes(lead.id)}>
+                                      Notities opslaan
+                                    </Button>
+                                  </div>
+                                </div>
+                              </TableCell>
+                            </TableRow>
+                          )}
+                        </>
                       ))}
                     </TableBody>
                   </Table>
