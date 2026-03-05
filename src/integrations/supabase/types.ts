@@ -103,6 +103,42 @@ export type Database = {
         }
         Relationships: []
       }
+      clients: {
+        Row: {
+          created_at: string
+          email: string
+          first_name: string
+          id: string
+          last_name: string
+          notes: string | null
+          phone: string | null
+          updated_at: string
+          user_id: string | null
+        }
+        Insert: {
+          created_at?: string
+          email: string
+          first_name: string
+          id?: string
+          last_name?: string
+          notes?: string | null
+          phone?: string | null
+          updated_at?: string
+          user_id?: string | null
+        }
+        Update: {
+          created_at?: string
+          email?: string
+          first_name?: string
+          id?: string
+          last_name?: string
+          notes?: string | null
+          phone?: string | null
+          updated_at?: string
+          user_id?: string | null
+        }
+        Relationships: []
+      }
       course_weeks: {
         Row: {
           content: Json | null
@@ -150,6 +186,7 @@ export type Database = {
       }
       enrollments: {
         Row: {
+          client_id: string | null
           course_type: string
           created_at: string
           current_week: number | null
@@ -165,10 +202,11 @@ export type Database = {
           trainer_name: string | null
           unlocked_weeks: number[]
           updated_at: string
-          user_id: string
+          user_id: string | null
           visible_sections: string[]
         }
         Insert: {
+          client_id?: string | null
           course_type?: string
           created_at?: string
           current_week?: number | null
@@ -184,10 +222,11 @@ export type Database = {
           trainer_name?: string | null
           unlocked_weeks?: number[]
           updated_at?: string
-          user_id: string
+          user_id?: string | null
           visible_sections?: string[]
         }
         Update: {
+          client_id?: string | null
           course_type?: string
           created_at?: string
           current_week?: number | null
@@ -203,10 +242,17 @@ export type Database = {
           trainer_name?: string | null
           unlocked_weeks?: number[]
           updated_at?: string
-          user_id?: string
+          user_id?: string | null
           visible_sections?: string[]
         }
         Relationships: [
+          {
+            foreignKeyName: "enrollments_client_id_fkey"
+            columns: ["client_id"]
+            isOneToOne: false
+            referencedRelation: "clients"
+            referencedColumns: ["id"]
+          },
           {
             foreignKeyName: "enrollments_registration_id_fkey"
             columns: ["registration_id"]
@@ -847,10 +893,19 @@ export type Database = {
         }
         Returns: boolean
       }
+      link_user_to_client: {
+        Args: { _email: string; _user_id: string }
+        Returns: undefined
+      }
     }
     Enums: {
       app_role: "admin" | "moderator" | "user"
-      enrollment_status: "active" | "completed" | "paused" | "cancelled"
+      enrollment_status:
+        | "active"
+        | "completed"
+        | "paused"
+        | "cancelled"
+        | "invited"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -979,7 +1034,13 @@ export const Constants = {
   public: {
     Enums: {
       app_role: ["admin", "moderator", "user"],
-      enrollment_status: ["active", "completed", "paused", "cancelled"],
+      enrollment_status: [
+        "active",
+        "completed",
+        "paused",
+        "cancelled",
+        "invited",
+      ],
     },
   },
 } as const
