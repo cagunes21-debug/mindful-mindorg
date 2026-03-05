@@ -60,10 +60,15 @@ export default function ProtectedRoute({ children, requireAdmin = false }: Prote
       }
     };
 
+    console.log("[ProtectedRoute] useEffect fired, setting up auth listener");
+
     // Set up listener BEFORE getSession (per Supabase best practices)
     const { data: { subscription } } = supabase.auth.onAuthStateChange(
-      (_event, session) => {
-        if (!session) {
+      (event, session) => {
+        console.log("[ProtectedRoute] onAuthStateChange event:", event, "session:", !!session);
+        if (event === 'INITIAL_SESSION' || event === 'SIGNED_IN') {
+          checkAccess(session);
+        } else if (!session) {
           setAuthorized(false);
           setLoading(false);
           navigate("/login", { replace: true });
@@ -71,8 +76,13 @@ export default function ProtectedRoute({ children, requireAdmin = false }: Prote
       }
     );
 
+    console.log("[ProtectedRoute] About to call getSession()");
     supabase.auth.getSession().then(({ data: { session } }) => {
-      checkAccess(session);
+      console.log("[ProtectedRoute] getSession resolved, session:", !!session);
+      // checkAccess is handled by onAuthStateChange INITIAL_SESSION
+    }).catch(err => {
+      console.error("[ProtectedRoute] getSession error:", err);
+      if (mounted) setLoading(false);
     });
 
     return () => {
