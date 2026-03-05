@@ -3,7 +3,7 @@ import { useState } from "react";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import { Button } from "@/components/ui/button";
-import { BookOpen, User, ClipboardList, BarChart3, MessageCircle, Users, Euro, GraduationCap } from "lucide-react";
+import { BookOpen, User, ClipboardList, BarChart3, MessageCircle, Users, Euro, GraduationCap, Heart } from "lucide-react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import SEO from "@/components/SEO";
 import AdminCustomersSection from "@/components/admin/AdminCustomersSection";
@@ -30,6 +30,9 @@ export default function AdminDashboard() {
               <p className="text-muted-foreground mt-1">Beheer klanten, leads en financiën</p>
             </div>
             <div className="flex items-center gap-2 flex-wrap">
+              <Button variant="outline" size="sm" className="gap-2" onClick={() => navigate("/admin/msc-materials")}>
+                <Heart className="h-4 w-4" />MSC Session Builder
+              </Button>
               <Button variant="outline" size="sm" className="gap-2" onClick={() => navigate("/admin/cursusmateriaal")}>
                 <GraduationCap className="h-4 w-4" />Cursusmateriaal
               </Button>
