@@ -52,8 +52,9 @@ export default function ProtectedRoute({ children, requireAdmin = false }: Prote
 
     // Safety timeout — if no auth event after 5s, assume unauthenticated
     const timeout = setTimeout(() => {
-      if (mountedRef.current && authState === "loading") {
+      if (mountedRef.current && authStateRef.current === "loading") {
         console.warn("[ProtectedRoute] Auth timeout — no event received in 5s");
+        authStateRef.current = "unauthenticated";
         setAuthState("unauthenticated");
       }
     }, 5000);
