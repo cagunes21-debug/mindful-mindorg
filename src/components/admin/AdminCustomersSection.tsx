@@ -235,15 +235,6 @@ export default function AdminCustomersSection() {
               <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
               <Input placeholder="Zoek op naam, e-mail of training..." value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} className="pl-10" />
             </div>
-            <div className="flex items-center gap-1">
-              <Button variant={statusFilter === "all" ? "default" : "outline"} size="sm" onClick={() => setStatusFilter("all")}>Alle ({customers.length})</Button>
-              <Button variant={statusFilter === "klant" ? "default" : "outline"} size="sm" onClick={() => setStatusFilter("klant")} className="gap-1">
-                <span className="h-2 w-2 rounded-full bg-green-500" /> Klant ({klantCount})
-              </Button>
-              <Button variant={statusFilter === "lead" ? "default" : "outline"} size="sm" onClick={() => setStatusFilter("lead")} className="gap-1">
-                <span className="h-2 w-2 rounded-full bg-orange-500" /> Lead ({leadCount})
-              </Button>
-            </div>
             <p className="text-sm text-muted-foreground">{filteredCustomers.length} resultaten</p>
             <Button size="sm" className="gap-2 ml-auto" onClick={() => setShowNewReg(true)}>
               <Plus className="h-4 w-4" /> Nieuwe klant
