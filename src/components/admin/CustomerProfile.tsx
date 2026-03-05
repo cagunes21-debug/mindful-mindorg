@@ -589,62 +589,6 @@ export default function CustomerProfile({ email, onClose }: CustomerProfileProps
         </Dialog>
       )}
 
-      {/* Convert Lead Dialog */}
-      {showConvertLead && customer && (
-        <Dialog open onOpenChange={() => setShowConvertLead(false)}>
-          <DialogContent className="sm:max-w-md">
-            <DialogHeader>
-              <DialogTitle className="flex items-center gap-2">
-                <UserCheck className="h-5 w-5 text-primary" /> Lead omzetten naar klant
-              </DialogTitle>
-              <DialogDescription>Wijs een training toe aan {customer.name} en maak direct een inschrijving aan.</DialogDescription>
-            </DialogHeader>
-            <div className="space-y-4">
-              <div className="rounded-md bg-muted p-3 text-sm">
-                <p><strong>{customer.name}</strong></p>
-                <p className="text-muted-foreground">{customer.email}</p>
-              </div>
-              <div>
-                <Label>Training *</Label>
-                <Select value={convertTraining} onValueChange={(v) => {
-                  setConvertTraining(v);
-                  if (v.includes("8-weekse")) setConvertCourseType("msc_8week");
-                  else if (v.includes("Individueel")) setConvertCourseType("individueel_6");
-                  else if (v.includes("Losse")) setConvertCourseType("losse_sessie");
-                  else setConvertCourseType("msc_8week");
-                }}>
-                  <SelectTrigger><SelectValue /></SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="Individueel Traject (6 sessies)">Individueel Traject (6 sessies)</SelectItem>
-                    <SelectItem value="8-weekse Mindful Zelfcompassie Training">8-weekse Mindful Zelfcompassie Training</SelectItem>
-                    <SelectItem value="Losse Sessie / Coaching">Losse Sessie / Coaching</SelectItem>
-                    <SelectItem value="Beweging & Mildheid Retreat">Beweging & Mildheid Retreat</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
-              <div>
-                <Label>Startdatum *</Label>
-                <Input type="date" value={convertStartDate} onChange={e => setConvertStartDate(e.target.value)} />
-              </div>
-              <div>
-                <Label>Trainer (optioneel)</Label>
-                <Input value={convertTrainer} onChange={e => setConvertTrainer(e.target.value)} placeholder="Naam trainer" />
-              </div>
-              <div>
-                <Label>Opmerkingen</Label>
-                <Input value={convertRemarks} onChange={e => setConvertRemarks(e.target.value)} placeholder="Eventuele opmerkingen" />
-              </div>
-            </div>
-            <div className="flex justify-end gap-2 mt-4">
-              <Button variant="outline" onClick={() => setShowConvertLead(false)}>Annuleren</Button>
-              <Button onClick={convertLeadToClient} disabled={converting} className="gap-1.5">
-                {converting ? <Loader2 className="h-4 w-4 animate-spin" /> : <UserCheck className="h-4 w-4" />}
-                Omzetten naar klant
-              </Button>
-            </div>
-          </DialogContent>
-        </Dialog>
-      )}
     </Dialog>
   );
 }
