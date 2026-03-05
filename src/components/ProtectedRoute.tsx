@@ -23,6 +23,23 @@ export default function ProtectedRoute({ children, requireAdmin = false }: Prote
 
     console.log("[ProtectedRoute] Mount, path:", location.pathname, "requireAdmin:", requireAdmin);
 
+    // Proactively restore session from storage FIRST
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      if (!mountedRef.current) return;
+      if (session?.user) {
+        console.log("[ProtectedRoute] Session restored via getSession:", session.user.id);
+        userIdRef.current = session.user.id;
+        if (timeoutRef.current) {
+          clearTimeout(timeoutRef.current);
+          timeoutRef.current = null;
+        }
+        setAuthState("authenticated");
+      } else {
+        console.log("[ProtectedRoute] No session found via getSession");
+        setAuthState("unauthenticated");
+      }
+    });
+
     const { data: { subscription } } = supabase.auth.onAuthStateChange(
       (event, session) => {
         if (!mountedRef.current) return;
@@ -38,24 +55,19 @@ export default function ProtectedRoute({ children, requireAdmin = false }: Prote
 
         if (session?.user) {
           userIdRef.current = session.user.id;
-          // Cancel safety timeout — auth succeeded
           if (timeoutRef.current) {
             clearTimeout(timeoutRef.current);
             timeoutRef.current = null;
-            console.log("[ProtectedRoute] Safety timeout cancelled — session found");
           }
           setAuthState("authenticated");
-        } else {
-          userIdRef.current = null;
-          setAuthState("unauthenticated");
         }
       }
     );
 
-    // Safety timeout — only fires if no auth event arrives
+    // Safety timeout — only fires if neither getSession nor auth event arrives
     timeoutRef.current = setTimeout(() => {
       if (mountedRef.current) {
-        console.warn("[ProtectedRoute] Safety timeout — no auth event in 5s, assuming unauthenticated");
+        console.warn("[ProtectedRoute] Safety timeout — no session in 5s, assuming unauthenticated");
         setAuthState("unauthenticated");
       }
     }, 5000);
