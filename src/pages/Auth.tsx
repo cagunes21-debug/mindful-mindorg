@@ -49,21 +49,16 @@ const Auth = () => {
   const { toast } = useToast();
 
   const redirectAfterLogin = async () => {
-    // Check user role to determine redirect destination
     const { data: { session } } = await supabase.auth.getSession();
     const userId = session?.user?.id;
     
     if (userId) {
-      // Check if user is admin
-      const { data: roleData } = await supabase
-        .from("user_roles")
-        .select("role")
-        .eq("user_id", userId)
-        .eq("role", "admin")
-        .maybeSingle();
+      // Use RPC (SECURITY DEFINER) — bypasses RLS, won't hang
+      const { data: isAdmin } = await supabase
+        .rpc("has_role", { _user_id: userId, _role: "admin" });
 
-      const destination = roleData ? "/admin" : "/mijn-training";
-      console.log("[Auth] Login success, role:", roleData?.role ?? "user", "→ navigating to", destination);
+      const destination = isAdmin ? "/admin" : "/mijn-training";
+      console.log("[Auth] Login success, isAdmin:", isAdmin, "→ navigating to", destination);
       navigate(destination, { replace: true });
     } else {
       console.warn("[Auth] Login success but no session found, navigating to /");
