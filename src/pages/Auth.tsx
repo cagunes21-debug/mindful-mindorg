@@ -60,7 +60,7 @@ const Auth = () => {
     supabase.auth.getSession().then(({ data: { session } }) => {
       if (session?.user && !cancelled) {
         console.log("[Auth] Existing session found, redirecting...");
-        redirectByRole(session.user.id);
+        redirectAfterLogin();
       }
     });
 
