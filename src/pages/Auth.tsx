@@ -51,7 +51,7 @@ const Auth = () => {
   const redirectAfterLogin = async (userId?: string) => {
     console.log("[Auth] redirectAfterLogin called, userId:", userId);
     
-    let dest = "/mijn-training";
+    let dest = "/mijn-trainingen";
     
     if (userId) {
       try {
