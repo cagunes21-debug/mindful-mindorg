@@ -50,8 +50,8 @@ const Auth = () => {
 
   const redirectAfterLogin = () => {
     console.log("[Auth] Login success, navigating to /admin");
-    // Use window.location as navigate() doesn't always work after signIn
-    window.location.href = "/admin";
+    // Use navigate for SPA routing (preserves iframe context & query params)
+    navigate("/admin", { replace: true });
   };
 
   useEffect(() => {
