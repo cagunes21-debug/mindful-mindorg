@@ -183,27 +183,29 @@ export default function CustomerProfile({ email, onClose }: CustomerProfileProps
     if (!newStartDate) { toast.error("Vul een startdatum in"); return; }
     setCreating(true);
     try {
+      // Try to find user_id from existing enrollments
       let userId: string | undefined;
       const regIds = registrations.map(r => r.id);
       if (regIds.length > 0) {
-        const { data: existingEnr } = await supabase.from("enrollments").select("user_id").in("registration_id", regIds).limit(1);
+        const { data: existingEnr } = await supabase.from("enrollments").select("user_id").in("registration_id", regIds).not("user_id", "is", null).limit(1);
         userId = existingEnr?.[0]?.user_id;
       }
       if (!userId) {
         const { data: allRegs } = await supabase.from("registrations").select("id").eq("email", email);
         if (allRegs && allRegs.length > 0) {
-          const { data: existingEnr } = await supabase.from("enrollments").select("user_id").in("registration_id", allRegs.map(r => r.id)).limit(1);
+          const { data: existingEnr } = await supabase.from("enrollments").select("user_id").in("registration_id", allRegs.map(r => r.id)).not("user_id", "is", null).limit(1);
           userId = existingEnr?.[0]?.user_id;
         }
       }
-      if (!userId) { toast.error("Geen account gevonden. De deelnemer moet eerst een account aanmaken."); setCreating(false); return; }
 
+      // Create enrollment - user_id is now optional
       const { error } = await supabase.from("enrollments").insert({
-        user_id: userId, course_type: newCourseType, start_date: newStartDate,
-        trainer_name: newTrainerName || null, registration_id: regId, unlocked_weeks: [1], status: "active",
+        user_id: userId || null, course_type: newCourseType, start_date: newStartDate,
+        trainer_name: newTrainerName || null, registration_id: regId, unlocked_weeks: [1], 
+        status: userId ? "active" : "invited",
       });
       if (error) throw error;
-      toast.success("Inschrijving aangemaakt!");
+      toast.success(userId ? "Inschrijving aangemaakt!" : "Inschrijving aangemaakt! Account koppeling volgt na registratie.");
       setCreatingForRegId(null);
       setNewCourseType("msc_8week"); setNewStartDate(""); setNewTrainerName("");
       fetchCustomerData();
