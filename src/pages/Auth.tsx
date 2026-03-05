@@ -252,7 +252,7 @@ const Auth = () => {
           }
         } else {
           toast({ title: "Welkom terug!", description: "Je bent succesvol ingelogd." });
-          redirectAfterLogin();
+          await redirectAfterLogin(signInData?.user?.id);
         }
       } else {
         const { error } = await supabase.auth.signUp({
