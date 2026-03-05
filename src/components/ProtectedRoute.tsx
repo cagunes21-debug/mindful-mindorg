@@ -32,6 +32,7 @@ export default function ProtectedRoute({ children, requireAdmin = false }: Prote
           userIdRef.current = null;
           adminCheckedRef.current = false;
           setAdminState(requireAdmin ? "loading" : "yes");
+          authStateRef.current = "unauthenticated";
           setAuthState("unauthenticated");
           return;
         }
@@ -39,9 +40,11 @@ export default function ProtectedRoute({ children, requireAdmin = false }: Prote
         // INITIAL_SESSION or SIGNED_IN or TOKEN_REFRESHED
         if (session?.user) {
           userIdRef.current = session.user.id;
+          authStateRef.current = "authenticated";
           setAuthState("authenticated");
         } else {
           userIdRef.current = null;
+          authStateRef.current = "unauthenticated";
           setAuthState("unauthenticated");
         }
       }
