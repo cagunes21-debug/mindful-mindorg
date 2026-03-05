@@ -58,7 +58,7 @@ const Auth = () => {
         window.location.href = "/mijn-training";
       }, 3000);
       
-      supabase.rpc("has_role", { _user_id: userId, _role: "admin" })
+      Promise.resolve(supabase.rpc("has_role", { _user_id: userId, _role: "admin" }))
         .then(({ data: isAdmin }) => {
           clearTimeout(timeout);
           const dest = isAdmin ? "/admin" : "/mijn-training";
