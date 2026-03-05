@@ -63,7 +63,14 @@ export default function MscSessionBuilder() {
   const [dragIdx, setDragIdx] = useState<number | null>(null);
 
   useEffect(() => {
-    loadData();
+    // Wait for auth session to be restored before querying RLS-protected tables
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      if (session) {
+        loadData();
+      } else {
+        setLoading(false);
+      }
+    });
   }, []);
 
   const loadData = async () => {
