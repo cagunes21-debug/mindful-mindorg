@@ -48,21 +48,30 @@ const Auth = () => {
   const navigate = useNavigate();
   const { toast } = useToast();
 
-  const redirectAfterLogin = async () => {
-    const { data: { session } } = await supabase.auth.getSession();
-    const userId = session?.user?.id;
+  const redirectAfterLogin = (userId?: string) => {
+    console.log("[Auth] redirectAfterLogin called, userId:", userId);
     
     if (userId) {
-      // Use RPC (SECURITY DEFINER) — bypasses RLS, won't hang
-      const { data: isAdmin } = await supabase
-        .rpc("has_role", { _user_id: userId, _role: "admin" });
-
-      const destination = isAdmin ? "/admin" : "/mijn-training";
-      console.log("[Auth] Login success, isAdmin:", isAdmin, "→ navigating to", destination);
-      navigate(destination, { replace: true });
+      // Fire-and-forget admin check — redirect immediately if it takes too long
+      const timeout = setTimeout(() => {
+        console.log("[Auth] Admin check timeout → /mijn-training");
+        window.location.href = "/mijn-training";
+      }, 3000);
+      
+      Promise.resolve(supabase.rpc("has_role", { _user_id: userId, _role: "admin" }))
+        .then(({ data: isAdmin }) => {
+          clearTimeout(timeout);
+          const dest = isAdmin ? "/admin" : "/mijn-training";
+          console.log("[Auth] Admin check done, isAdmin:", isAdmin, "→", dest);
+          window.location.href = dest;
+        })
+        .catch(() => {
+          clearTimeout(timeout);
+          console.warn("[Auth] Admin check failed → /mijn-training");
+          window.location.href = "/mijn-training";
+        });
     } else {
-      console.warn("[Auth] Login success but no session found, navigating to /");
-      navigate("/", { replace: true });
+      window.location.href = "/mijn-training";
     }
   };
 
@@ -73,11 +82,23 @@ const Auth = () => {
     supabase.auth.getSession().then(({ data: { session } }) => {
       if (session?.user && !cancelled) {
         console.log("[Auth] Existing session found, redirecting...");
-        redirectAfterLogin();
+        redirectAfterLogin(session.user.id);
       }
     });
 
-    return () => { cancelled = true; };
+    // Also listen for auth state changes (e.g. signInWithPassword completing)
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
+      if (cancelled) return;
+      if (event === "SIGNED_IN" && session?.user) {
+        console.log("[Auth] SIGNED_IN event received, redirecting...");
+        redirectAfterLogin(session.user.id);
+      }
+    });
+
+    return () => {
+      cancelled = true;
+      subscription.unsubscribe();
+    };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -233,7 +254,7 @@ const Auth = () => {
           }
         } else {
           toast({ title: "Welkom terug!", description: "Je bent succesvol ingelogd." });
-          redirectAfterLogin();
+          redirectAfterLogin(signInData?.user?.id);
         }
       } else {
         const { error } = await supabase.auth.signUp({
