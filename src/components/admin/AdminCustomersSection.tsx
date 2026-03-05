@@ -12,7 +12,7 @@ import { Label } from "@/components/ui/label";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter } from "@/components/ui/dialog";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Textarea } from "@/components/ui/textarea";
-import { Loader2, Users, Search, Euro, Mail, Phone, ShoppingBag, Calendar, Plus, MessageCircle, Clock, StickyNote, ChevronDown, ChevronUp } from "lucide-react";
+import { Loader2, Users, Search, Euro, Mail, Phone, ShoppingBag, Calendar, Plus, MessageCircle, Clock, StickyNote, ChevronDown, ChevronUp, BookOpen, ClipboardList, BarChart3 } from "lucide-react";
 import { format } from "date-fns";
 import { nl } from "date-fns/locale";
 import { toast } from "sonner";
