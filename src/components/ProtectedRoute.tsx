@@ -14,6 +14,7 @@ export default function ProtectedRoute({ children, requireAdmin = false }: Prote
   const userIdRef = useRef<string | null>(null);
   const adminCheckedRef = useRef(false);
   const mountedRef = useRef(true);
+  const authStateRef = useRef<"loading" | "authenticated" | "unauthenticated">("loading");
 
   // Step 1: Use ONLY onAuthStateChange — it fires INITIAL_SESSION first, never hangs
   useEffect(() => {
