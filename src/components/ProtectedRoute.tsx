@@ -17,7 +17,9 @@ export default function ProtectedRoute({ children, requireAdmin = false }: Prote
     let mounted = true;
 
     const checkAccess = async (session: Session | null) => {
+      console.log("[ProtectedRoute] checkAccess called, session:", !!session, "requireAdmin:", requireAdmin);
       if (!session) {
+        console.log("[ProtectedRoute] No session, redirecting to login");
         if (mounted) setLoading(false);
         navigate("/login", { replace: true });
         return;
@@ -25,29 +27,33 @@ export default function ProtectedRoute({ children, requireAdmin = false }: Prote
 
       if (requireAdmin) {
         try {
+          console.log("[ProtectedRoute] Checking admin role for user:", session.user.id);
           const { data, error } = await supabase.rpc("has_role", {
             _user_id: session.user.id,
             _role: "admin",
           });
+          console.log("[ProtectedRoute] has_role result:", { data, error });
           if (error) {
-            console.error("Error checking admin role:", error);
+            console.error("[ProtectedRoute] Error checking admin role:", error);
             if (mounted) setLoading(false);
             navigate("/", { replace: true });
             return;
           }
           if (!data) {
+            console.log("[ProtectedRoute] User is not admin, redirecting to /");
             if (mounted) setLoading(false);
             navigate("/", { replace: true });
             return;
           }
         } catch (err) {
-          console.error("Failed to check role:", err);
+          console.error("[ProtectedRoute] Failed to check role:", err);
           if (mounted) setLoading(false);
           navigate("/", { replace: true });
           return;
         }
       }
 
+      console.log("[ProtectedRoute] Access granted!");
       if (mounted) {
         setAuthorized(true);
         setLoading(false);
