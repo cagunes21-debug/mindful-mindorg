@@ -24,6 +24,8 @@ const ITEM_TYPES = [
   { value: "informal_practice", label: "Informele praktijk" },
   { value: "reflection", label: "Reflectie" },
   { value: "homework", label: "Huiswerk" },
+  { value: "break", label: "Pauze" },
+  { value: "closing", label: "Afsluiting" },
 ];
 
 const TYPE_COLORS: Record<string, string> = {
