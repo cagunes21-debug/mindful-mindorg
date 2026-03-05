@@ -136,8 +136,6 @@ export default function AdminCustomersSection() {
   };
 
   const filteredCustomers = customers.filter(customer => {
-    if (statusFilter === "lead" && (customer.paid_registrations || 0) > 0) return false;
-    if (statusFilter === "klant" && (customer.paid_registrations || 0) === 0) return false;
     if (!searchQuery.trim()) return true;
     const query = searchQuery.toLowerCase();
     return (
