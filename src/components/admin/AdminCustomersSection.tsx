@@ -71,7 +71,7 @@ const leadStatusLabels: Record<string, string> = {
   "not_interested": "Niet geïnteresseerd",
 };
 
-export default function AdminCustomersSection() {
+export default function AdminCustomersSection({ initialTab = "customers" }: { initialTab?: string }) {
   const [isLoading, setIsLoading] = useState(true);
   const [customers, setCustomers] = useState<Customer[]>([]);
   const [leads, setLeads] = useState<Lead[]>([]);
@@ -86,7 +86,7 @@ export default function AdminCustomersSection() {
   const [showNewReg, setShowNewReg] = useState(false);
   const [newReg, setNewReg] = useState({ name: "", email: "", phone: "", training_name: "8-weekse Mindful Zelfcompassie Training", remarks: "" });
   const [submitting, setSubmitting] = useState(false);
-  const [activeTab, setActiveTab] = useState("customers");
+  const [activeTab, setActiveTab] = useState(initialTab);
   const [expandedLeadId, setExpandedLeadId] = useState<string | null>(null);
   const [editingNotes, setEditingNotes] = useState<Record<string, string>>({});
   const [clients, setClients] = useState<Client[]>([]);
