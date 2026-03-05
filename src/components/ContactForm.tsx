@@ -156,7 +156,7 @@ export function ContactForm() {
 
       <div className="grid gap-6 md:grid-cols-2">
         <div className="space-y-2">
-          <Label htmlFor="phone">Telefoon (optioneel)</Label>
+          <Label htmlFor="phone">Telefoonnummer (optioneel)</Label>
           <Input
             id="phone"
             type="tel"
