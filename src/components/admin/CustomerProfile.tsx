@@ -21,7 +21,6 @@ import {
   Mail, Phone, Calendar, Euro, ShoppingBag, ArrowLeft, BookOpen,
   Headphones, ClipboardList, Presentation, FileText, Save, StickyNote,
   Eye, Lock, Unlock, Plus, Loader2, Clock, AlertCircle, ChevronDown,
-  UserCheck,
 } from "lucide-react";
 import { format } from "date-fns";
 import { nl } from "date-fns/locale";
@@ -83,14 +82,6 @@ export default function CustomerProfile({ email, onClose }: CustomerProfileProps
   const [extraRemarks, setExtraRemarks] = useState("");
   const [submittingExtra, setSubmittingExtra] = useState(false);
 
-  // Convert lead state
-  const [showConvertLead, setShowConvertLead] = useState(false);
-  const [convertTraining, setConvertTraining] = useState("Individueel Traject (6 sessies)");
-  const [convertCourseType, setConvertCourseType] = useState("individueel_6");
-  const [convertStartDate, setConvertStartDate] = useState("");
-  const [convertTrainer, setConvertTrainer] = useState("");
-  const [convertRemarks, setConvertRemarks] = useState("");
-  const [converting, setConverting] = useState(false);
 
   useEffect(() => { fetchCustomerData(); }, [email]);
 
@@ -232,52 +223,6 @@ export default function CustomerProfile({ email, onClose }: CustomerProfileProps
 
   const toggleCard = (id: string) => setOpenCards(prev => ({ ...prev, [id]: !prev[id] }));
 
-  const convertLeadToClient = async () => {
-    if (!customer || !convertStartDate) { toast.error("Vul een startdatum in"); return; }
-    setConverting(true);
-    try {
-      // 1. Create registration
-      const { data: regData, error: regError } = await supabase.from("registrations").insert({
-        name: customer.name, email: customer.email, phone: customer.phone || null,
-        training_name: convertTraining, remarks: convertRemarks.trim() || null,
-        status: "confirmed", payment_status: "pending",
-      }).select("id").single();
-      if (regError) throw regError;
-
-      // 2. Also create a client record
-      const nameParts = customer.name.split(" ");
-      const firstName = nameParts[0] || "";
-      const lastName = nameParts.slice(1).join(" ") || "";
-      const { data: clientData } = await supabase.from("clients").insert({
-        first_name: firstName, last_name: lastName,
-        email: customer.email, phone: customer.phone || null,
-      }).select("id").single();
-
-      // 3. Find user_id from existing enrollments or skip
-      let userId: string | undefined;
-      const { data: allRegs } = await supabase.from("registrations").select("id").eq("email", email);
-      if (allRegs && allRegs.length > 0) {
-        const { data: existingEnr } = await supabase.from("enrollments").select("user_id").in("registration_id", allRegs.map(r => r.id)).not("user_id", "is", null).limit(1);
-        userId = existingEnr?.[0]?.user_id;
-      }
-
-      // 4. Create enrollment - user_id is optional
-      const { error: enrError } = await supabase.from("enrollments").insert({
-        user_id: userId || null, course_type: convertCourseType, start_date: convertStartDate,
-        trainer_name: convertTrainer || null, registration_id: regData.id,
-        client_id: clientData?.id || null,
-        unlocked_weeks: [1], status: userId ? "active" : "invited",
-      });
-      if (enrError) throw enrError;
-      toast.success(userId ? "Lead omgezet naar klant met inschrijving!" : "Lead omgezet! Inschrijving wordt gekoppeld zodra het account is aangemaakt.");
-
-      setShowConvertLead(false);
-      setConvertTraining("Individueel Traject (6 sessies)");
-      setConvertCourseType("individueel_6");
-      setConvertStartDate(""); setConvertTrainer(""); setConvertRemarks("");
-      fetchCustomerData();
-    } catch (err: any) { toast.error("Fout: " + err.message); }
-    setConverting(false);
   };
 
   // Global next session across all enrollments
@@ -316,7 +261,6 @@ export default function CustomerProfile({ email, onClose }: CustomerProfileProps
   const globalNext = getGlobalNextSession();
   const globalProgress = getGlobalProgress();
   const hasIndividual = enrollments.some(e => e.course_type === "individueel_6" || e.course_type === "losse_sessie");
-  const isLead = enrollments.length === 0;
 
   return (
     <Dialog open onOpenChange={onClose}>
@@ -329,8 +273,6 @@ export default function CustomerProfile({ email, onClose }: CustomerProfileProps
             <div className="flex-1">
               <DialogTitle className="text-lg flex items-center gap-2">
                 {customer.name}
-                {isLead && <Badge className="bg-amber-100 text-amber-800 text-[10px] px-1.5 py-0 font-normal">Lead</Badge>}
-                {!isLead && <Badge className="bg-green-100 text-green-800 text-[10px] px-1.5 py-0 font-normal">Klant</Badge>}
               </DialogTitle>
               <DialogDescription className="flex items-center gap-3 flex-wrap">
                 <span className="flex items-center gap-1"><Mail className="h-3 w-3" /><a href={`mailto:${customer.email}`} className="hover:underline">{customer.email}</a></span>
@@ -369,23 +311,6 @@ export default function CustomerProfile({ email, onClose }: CustomerProfileProps
             </div>
           </div>
 
-          {/* Lead Conversion CTA */}
-          {isLead && (
-            <Card className="border-amber-200 bg-amber-50">
-              <CardContent className="p-4 flex items-center gap-4">
-                <div className="p-2.5 bg-amber-100 rounded-full">
-                  <UserCheck className="h-5 w-5 text-amber-700" />
-                </div>
-                <div className="flex-1">
-                  <p className="font-medium text-sm">Deze klant is een Lead</p>
-                  <p className="text-xs text-muted-foreground">Wijs een training toe om deze lead om te zetten naar klant.</p>
-                </div>
-                <Button size="sm" className="gap-1.5 shrink-0" onClick={() => setShowConvertLead(true)}>
-                  <Plus className="h-3.5 w-3.5" /> Training toewijzen
-                </Button>
-              </CardContent>
-            </Card>
-          )}
 
           {/* Global Quick Summary - only if has individual enrollments */}
           {hasIndividual && (
@@ -663,62 +588,6 @@ export default function CustomerProfile({ email, onClose }: CustomerProfileProps
         </Dialog>
       )}
 
-      {/* Convert Lead Dialog */}
-      {showConvertLead && customer && (
-        <Dialog open onOpenChange={() => setShowConvertLead(false)}>
-          <DialogContent className="sm:max-w-md">
-            <DialogHeader>
-              <DialogTitle className="flex items-center gap-2">
-                <UserCheck className="h-5 w-5 text-primary" /> Lead omzetten naar klant
-              </DialogTitle>
-              <DialogDescription>Wijs een training toe aan {customer.name} en maak direct een inschrijving aan.</DialogDescription>
-            </DialogHeader>
-            <div className="space-y-4">
-              <div className="rounded-md bg-muted p-3 text-sm">
-                <p><strong>{customer.name}</strong></p>
-                <p className="text-muted-foreground">{customer.email}</p>
-              </div>
-              <div>
-                <Label>Training *</Label>
-                <Select value={convertTraining} onValueChange={(v) => {
-                  setConvertTraining(v);
-                  if (v.includes("8-weekse")) setConvertCourseType("msc_8week");
-                  else if (v.includes("Individueel")) setConvertCourseType("individueel_6");
-                  else if (v.includes("Losse")) setConvertCourseType("losse_sessie");
-                  else setConvertCourseType("msc_8week");
-                }}>
-                  <SelectTrigger><SelectValue /></SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="Individueel Traject (6 sessies)">Individueel Traject (6 sessies)</SelectItem>
-                    <SelectItem value="8-weekse Mindful Zelfcompassie Training">8-weekse Mindful Zelfcompassie Training</SelectItem>
-                    <SelectItem value="Losse Sessie / Coaching">Losse Sessie / Coaching</SelectItem>
-                    <SelectItem value="Beweging & Mildheid Retreat">Beweging & Mildheid Retreat</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
-              <div>
-                <Label>Startdatum *</Label>
-                <Input type="date" value={convertStartDate} onChange={e => setConvertStartDate(e.target.value)} />
-              </div>
-              <div>
-                <Label>Trainer (optioneel)</Label>
-                <Input value={convertTrainer} onChange={e => setConvertTrainer(e.target.value)} placeholder="Naam trainer" />
-              </div>
-              <div>
-                <Label>Opmerkingen</Label>
-                <Input value={convertRemarks} onChange={e => setConvertRemarks(e.target.value)} placeholder="Eventuele opmerkingen" />
-              </div>
-            </div>
-            <div className="flex justify-end gap-2 mt-4">
-              <Button variant="outline" onClick={() => setShowConvertLead(false)}>Annuleren</Button>
-              <Button onClick={convertLeadToClient} disabled={converting} className="gap-1.5">
-                {converting ? <Loader2 className="h-4 w-4 animate-spin" /> : <UserCheck className="h-4 w-4" />}
-                Omzetten naar klant
-              </Button>
-            </div>
-          </DialogContent>
-        </Dialog>
-      )}
     </Dialog>
   );
 }
