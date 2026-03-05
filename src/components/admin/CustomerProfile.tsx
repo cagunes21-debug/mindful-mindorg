@@ -274,8 +274,6 @@ export default function CustomerProfile({ email, onClose }: CustomerProfileProps
             <div className="flex-1">
               <DialogTitle className="text-lg flex items-center gap-2">
                 {customer.name}
-                {isLead && <Badge className="bg-amber-100 text-amber-800 text-[10px] px-1.5 py-0 font-normal">Lead</Badge>}
-                {!isLead && <Badge className="bg-green-100 text-green-800 text-[10px] px-1.5 py-0 font-normal">Klant</Badge>}
               </DialogTitle>
               <DialogDescription className="flex items-center gap-3 flex-wrap">
                 <span className="flex items-center gap-1"><Mail className="h-3 w-3" /><a href={`mailto:${customer.email}`} className="hover:underline">{customer.email}</a></span>
