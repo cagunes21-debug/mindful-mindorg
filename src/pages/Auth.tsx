@@ -48,21 +48,10 @@ const Auth = () => {
   const navigate = useNavigate();
   const { toast } = useToast();
 
-  const redirectByRole = async (userId: string) => {
-    try {
-      const { data } = await supabase
-        .rpc("has_role", { _user_id: userId, _role: "admin" });
-      if (data) {
-        console.log("[Auth] Admin detected, redirecting to /admin");
-        navigate("/admin", { replace: true });
-      } else {
-        console.log("[Auth] Regular user, redirecting to /");
-        navigate("/", { replace: true });
-      }
-    } catch (err) {
-      console.error("[Auth] Role check failed:", err);
-      navigate("/", { replace: true });
-    }
+  const redirectAfterLogin = () => {
+    console.log("[Auth] Login success, navigating to /admin");
+    // Use window.location as navigate() doesn't always work after signIn
+    window.location.href = "/admin";
   };
 
   useEffect(() => {
@@ -72,7 +61,7 @@ const Auth = () => {
     supabase.auth.getSession().then(({ data: { session } }) => {
       if (session?.user && !cancelled) {
         console.log("[Auth] Existing session found, redirecting...");
-        redirectByRole(session.user.id);
+        redirectAfterLogin();
       }
     });
 
@@ -216,7 +205,7 @@ const Auth = () => {
 
     try {
       if (isLogin) {
-        const { error } = await supabase.auth.signInWithPassword({
+        const { data: signInData, error } = await supabase.auth.signInWithPassword({
           email: email.trim(),
           password,
         });
@@ -231,10 +220,7 @@ const Auth = () => {
           }
         } else {
           toast({ title: "Welkom terug!", description: "Je bent succesvol ingelogd." });
-          const { data: { session } } = await supabase.auth.getSession();
-          if (session?.user) {
-            await redirectByRole(session.user.id);
-          }
+          redirectAfterLogin();
         }
       } else {
         const { error } = await supabase.auth.signUp({
