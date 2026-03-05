@@ -1,0 +1,1 @@
+ALTER VIEW public.customers SET (security_invoker = false);
