@@ -34,6 +34,23 @@ serve(async (req) => {
       });
     }
 
+    // Verify admin role
+    const userId = claimsData.claims.sub as string;
+    const supabaseAdmin = createClient(
+      Deno.env.get("SUPABASE_URL")!,
+      Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!
+    );
+    const { data: isAdmin } = await supabaseAdmin.rpc('has_role', {
+      _user_id: userId,
+      _role: 'admin'
+    });
+    if (!isAdmin) {
+      return new Response(JSON.stringify({ error: "Forbidden" }), {
+        status: 403,
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
+      });
+    }
+
     const { transcript } = await req.json();
     if (!transcript || transcript.trim().length < 50) {
       return new Response(JSON.stringify({ error: "Transcript is te kort. Plak minimaal een paar alinea's." }), {
