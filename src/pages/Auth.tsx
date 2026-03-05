@@ -48,21 +48,40 @@ const Auth = () => {
   const navigate = useNavigate();
   const { toast } = useToast();
 
-  const redirectAfterLogin = async () => {
-    const { data: { session } } = await supabase.auth.getSession();
-    const userId = session?.user?.id;
-    
-    if (userId) {
-      // Use RPC (SECURITY DEFINER) — bypasses RLS, won't hang
-      const { data: isAdmin } = await supabase
-        .rpc("has_role", { _user_id: userId, _role: "admin" });
+  const redirectAfterLogin = async (userId?: string) => {
+    try {
+      // If no userId passed, try to get from session
+      if (!userId) {
+        const { data: { session } } = await supabase.auth.getSession();
+        userId = session?.user?.id;
+      }
+      
+      if (!userId) {
+        console.warn("[Auth] No userId found, navigating to /");
+        navigate("/", { replace: true });
+        return;
+      }
+
+      console.log("[Auth] Checking admin role for:", userId);
+      
+      // Use RPC with timeout to prevent hanging
+      const rpcPromise = supabase.rpc("has_role", { _user_id: userId, _role: "admin" });
+      const timeoutPromise = new Promise((_, reject) => setTimeout(() => reject(new Error("timeout")), 5000));
+      
+      let isAdmin = false;
+      try {
+        const { data } = await Promise.race([rpcPromise, timeoutPromise]) as any;
+        isAdmin = !!data;
+      } catch (err) {
+        console.warn("[Auth] Admin check failed/timed out, defaulting to participant:", err);
+      }
 
       const destination = isAdmin ? "/admin" : "/mijn-training";
-      console.log("[Auth] Login success, isAdmin:", isAdmin, "→ navigating to", destination);
+      console.log("[Auth] Redirecting to:", destination, "isAdmin:", isAdmin);
       navigate(destination, { replace: true });
-    } else {
-      console.warn("[Auth] Login success but no session found, navigating to /");
-      navigate("/", { replace: true });
+    } catch (err) {
+      console.error("[Auth] redirectAfterLogin error:", err);
+      navigate("/mijn-training", { replace: true });
     }
   };
 
