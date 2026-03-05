@@ -260,7 +260,7 @@ const Auth = () => {
           // Redirect happens via onAuthStateChange listener
           // Safety fallback if event doesn't fire
           setTimeout(() => {
-            navigate("/mijn-training", { replace: true });
+            navigate("/mijn-trainingen", { replace: true });
           }, 5000);
         }
       } else {

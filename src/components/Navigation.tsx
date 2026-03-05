@@ -384,9 +384,9 @@ const Navigation = () => {
               {user && (
                 <>
                   <Button asChild variant="ghost" className="w-fit rounded-full text-muted-foreground hover:text-primary">
-                    <Link to="/mijn-training" onClick={() => setIsOpen(false)} className="flex items-center gap-2">
+                    <Link to="/mijn-trainingen" onClick={() => setIsOpen(false)} className="flex items-center gap-2">
                       <BookOpen className="h-4 w-4" />
-                      Mijn Training
+                      Mijn Trainingen
                     </Link>
                   </Button>
                   {isAdmin && (
