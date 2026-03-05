@@ -112,6 +112,19 @@ export default function AdminCustomersSection() {
     }
   };
 
+  const fetchClients = async () => {
+    try {
+      const { data, error } = await supabase
+        .from("clients")
+        .select("*")
+        .order("created_at", { ascending: false });
+      if (error) throw error;
+      setClients((data as Client[]) || []);
+    } catch (error) {
+      console.error("Error fetching clients:", error);
+    }
+  };
+
   const fetchLeads = async () => {
     setLeadsLoading(true);
     try {
