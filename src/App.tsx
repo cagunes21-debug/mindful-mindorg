@@ -43,6 +43,8 @@ const SessionPresentation = lazy(() => import("./pages/SessionPresentation"));
 const SelfCompassionPresentation = lazy(() => import("./pages/SelfCompassionPresentation"));
 const IntakeForm = lazy(() => import("./pages/IntakeForm"));
 const SelfCompassionQuestionnaire = lazy(() => import("./pages/SelfCompassionQuestionnaire"));
+const MscMaterialsLibrary = lazy(() => import("./pages/MscMaterialsLibrary"));
+const MscSessionBuilder = lazy(() => import("./pages/MscSessionBuilder"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 
 const queryClient = new QueryClient();
