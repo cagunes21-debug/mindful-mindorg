@@ -83,7 +83,8 @@ const Auth = () => {
     });
 
     return () => { cancelled = true; };
-  }, [navigate]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const validateForm = () => {
     const newErrors: Record<string, string> = {};
