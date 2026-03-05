@@ -30,6 +30,17 @@ interface Customer {
   trainings: string[];
 }
 
+interface Client {
+  id: string;
+  first_name: string;
+  last_name: string;
+  email: string;
+  phone: string | null;
+  notes: string | null;
+  user_id: string | null;
+  created_at: string;
+}
+
 interface Lead {
   id: string;
   first_name: string;
