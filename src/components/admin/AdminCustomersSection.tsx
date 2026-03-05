@@ -55,7 +55,7 @@ export default function AdminCustomersSection() {
   const [leadsLoading, setLeadsLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState("");
   const [leadsSearchQuery, setLeadsSearchQuery] = useState("");
-  const [statusFilter, setStatusFilter] = useState<"all" | "lead" | "klant">("all");
+  
   const [selectedCustomerEmail, setSelectedCustomerEmail] = useState<string | null>(null);
   const [showNewReg, setShowNewReg] = useState(false);
   const [newReg, setNewReg] = useState({ name: "", email: "", phone: "", training_name: "8-weekse Mindful Zelfcompassie Training", remarks: "" });
