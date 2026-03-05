@@ -272,6 +272,48 @@ export type Database = {
           },
         ]
       }
+      leads: {
+        Row: {
+          created_at: string
+          email: string
+          first_name: string
+          id: string
+          interest: string | null
+          last_name: string
+          message: string | null
+          phone_number: string | null
+          status: string
+          submission_date: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          email: string
+          first_name: string
+          id?: string
+          interest?: string | null
+          last_name?: string
+          message?: string | null
+          phone_number?: string | null
+          status?: string
+          submission_date?: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          email?: string
+          first_name?: string
+          id?: string
+          interest?: string | null
+          last_name?: string
+          message?: string | null
+          phone_number?: string | null
+          status?: string
+          submission_date?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       meditations: {
         Row: {
           audio_url: string
