@@ -50,7 +50,8 @@ const Auth = () => {
 
   const redirectAfterLogin = () => {
     console.log("[Auth] Login success, navigating to /admin");
-    navigate("/admin", { replace: true });
+    // Use window.location as navigate() doesn't always work after signIn
+    window.location.href = "/admin";
   };
 
   useEffect(() => {
