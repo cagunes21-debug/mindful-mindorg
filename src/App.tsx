@@ -9,6 +9,7 @@ import MindfulZelfcompassie from "./pages/MindfulZelfcompassie";
 
 import StickyCTA from "./components/StickyCTA";
 import ProtectedRoute from "./components/ProtectedRoute";
+import { useAutoLinkClient } from "./hooks/useAutoLinkClient";
 
 const IndividueelHome = lazy(() => import("./pages/IndividueelHome"));
 
@@ -52,6 +53,8 @@ const PageLoader = () => (
   </div>
 );
 
+const AutoLinker = () => { useAutoLinkClient(); return null; };
+
 const App = () => (
   <HelmetProvider>
     <QueryClientProvider client={queryClient}>
@@ -59,7 +62,7 @@ const App = () => (
         <Toaster />
         <Sonner />
         <BrowserRouter>
-          
+          <AutoLinker />
           <StickyCTA />
           <Suspense fallback={<PageLoader />}>
             <Routes>

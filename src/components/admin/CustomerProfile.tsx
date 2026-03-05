@@ -183,27 +183,29 @@ export default function CustomerProfile({ email, onClose }: CustomerProfileProps
     if (!newStartDate) { toast.error("Vul een startdatum in"); return; }
     setCreating(true);
     try {
+      // Try to find user_id from existing enrollments
       let userId: string | undefined;
       const regIds = registrations.map(r => r.id);
       if (regIds.length > 0) {
-        const { data: existingEnr } = await supabase.from("enrollments").select("user_id").in("registration_id", regIds).limit(1);
+        const { data: existingEnr } = await supabase.from("enrollments").select("user_id").in("registration_id", regIds).not("user_id", "is", null).limit(1);
         userId = existingEnr?.[0]?.user_id;
       }
       if (!userId) {
         const { data: allRegs } = await supabase.from("registrations").select("id").eq("email", email);
         if (allRegs && allRegs.length > 0) {
-          const { data: existingEnr } = await supabase.from("enrollments").select("user_id").in("registration_id", allRegs.map(r => r.id)).limit(1);
+          const { data: existingEnr } = await supabase.from("enrollments").select("user_id").in("registration_id", allRegs.map(r => r.id)).not("user_id", "is", null).limit(1);
           userId = existingEnr?.[0]?.user_id;
         }
       }
-      if (!userId) { toast.error("Geen account gevonden. De deelnemer moet eerst een account aanmaken."); setCreating(false); return; }
 
+      // Create enrollment - user_id is now optional
       const { error } = await supabase.from("enrollments").insert({
-        user_id: userId, course_type: newCourseType, start_date: newStartDate,
-        trainer_name: newTrainerName || null, registration_id: regId, unlocked_weeks: [1], status: "active",
+        user_id: userId || null, course_type: newCourseType, start_date: newStartDate,
+        trainer_name: newTrainerName || null, registration_id: regId, unlocked_weeks: [1], 
+        status: userId ? "active" : "invited",
       });
       if (error) throw error;
-      toast.success("Inschrijving aangemaakt!");
+      toast.success(userId ? "Inschrijving aangemaakt!" : "Inschrijving aangemaakt! Account koppeling volgt na registratie.");
       setCreatingForRegId(null);
       setNewCourseType("msc_8week"); setNewStartDate(""); setNewTrainerName("");
       fetchCustomerData();
@@ -242,26 +244,32 @@ export default function CustomerProfile({ email, onClose }: CustomerProfileProps
       }).select("id").single();
       if (regError) throw regError;
 
-      // 2. Find user_id from existing enrollments or skip
+      // 2. Also create a client record
+      const nameParts = customer.name.split(" ");
+      const firstName = nameParts[0] || "";
+      const lastName = nameParts.slice(1).join(" ") || "";
+      const { data: clientData } = await supabase.from("clients").insert({
+        first_name: firstName, last_name: lastName,
+        email: customer.email, phone: customer.phone || null,
+      }).select("id").single();
+
+      // 3. Find user_id from existing enrollments or skip
       let userId: string | undefined;
       const { data: allRegs } = await supabase.from("registrations").select("id").eq("email", email);
       if (allRegs && allRegs.length > 0) {
-        const { data: existingEnr } = await supabase.from("enrollments").select("user_id").in("registration_id", allRegs.map(r => r.id)).limit(1);
+        const { data: existingEnr } = await supabase.from("enrollments").select("user_id").in("registration_id", allRegs.map(r => r.id)).not("user_id", "is", null).limit(1);
         userId = existingEnr?.[0]?.user_id;
       }
 
-      if (userId) {
-        // 3. Create enrollment
-        const { error: enrError } = await supabase.from("enrollments").insert({
-          user_id: userId, course_type: convertCourseType, start_date: convertStartDate,
-          trainer_name: convertTrainer || null, registration_id: regData.id,
-          unlocked_weeks: [1], status: "active",
-        });
-        if (enrError) throw enrError;
-        toast.success("Lead omgezet naar klant met inschrijving!");
-      } else {
-        toast.success("Training toegewezen! Inschrijving volgt zodra het account is aangemaakt.");
-      }
+      // 4. Create enrollment - user_id is optional
+      const { error: enrError } = await supabase.from("enrollments").insert({
+        user_id: userId || null, course_type: convertCourseType, start_date: convertStartDate,
+        trainer_name: convertTrainer || null, registration_id: regData.id,
+        client_id: clientData?.id || null,
+        unlocked_weeks: [1], status: userId ? "active" : "invited",
+      });
+      if (enrError) throw enrError;
+      toast.success(userId ? "Lead omgezet naar klant met inschrijving!" : "Lead omgezet! Inschrijving wordt gekoppeld zodra het account is aangemaakt.");
 
       setShowConvertLead(false);
       setConvertTraining("Individueel Traject (6 sessies)");

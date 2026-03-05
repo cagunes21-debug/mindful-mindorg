@@ -12,7 +12,7 @@ import { Label } from "@/components/ui/label";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter } from "@/components/ui/dialog";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Textarea } from "@/components/ui/textarea";
-import { Loader2, Users, Search, Euro, Mail, Phone, ShoppingBag, Calendar, Plus, MessageCircle, Clock, StickyNote, ChevronDown, ChevronUp } from "lucide-react";
+import { Loader2, Users, Search, Euro, Mail, Phone, ShoppingBag, Calendar, Plus, MessageCircle, Clock, StickyNote, ChevronDown, ChevronUp, BookOpen, ClipboardList, BarChart3 } from "lucide-react";
 import { format } from "date-fns";
 import { nl } from "date-fns/locale";
 import { toast } from "sonner";
@@ -28,6 +28,17 @@ interface Customer {
   first_registration: string;
   last_registration: string;
   trainings: string[];
+}
+
+interface Client {
+  id: string;
+  first_name: string;
+  last_name: string;
+  email: string;
+  phone: string | null;
+  notes: string | null;
+  user_id: string | null;
+  created_at: string;
 }
 
 interface Lead {
@@ -68,15 +79,21 @@ export default function AdminCustomersSection() {
   const [leadsSearchQuery, setLeadsSearchQuery] = useState("");
   
   const [selectedCustomerEmail, setSelectedCustomerEmail] = useState<string | null>(null);
+  const [selectedClientId, setSelectedClientId] = useState<string | null>(null);
+  const [showNewClient, setShowNewClient] = useState(false);
+  const [newClient, setNewClient] = useState({ first_name: "", last_name: "", email: "", phone: "", notes: "" });
   const [showNewReg, setShowNewReg] = useState(false);
   const [newReg, setNewReg] = useState({ name: "", email: "", phone: "", training_name: "8-weekse Mindful Zelfcompassie Training", remarks: "" });
   const [submitting, setSubmitting] = useState(false);
   const [activeTab, setActiveTab] = useState("customers");
   const [expandedLeadId, setExpandedLeadId] = useState<string | null>(null);
   const [editingNotes, setEditingNotes] = useState<Record<string, string>>({});
+  const [clients, setClients] = useState<Client[]>([]);
+  
   useEffect(() => {
     fetchCustomers();
     fetchLeads();
+    fetchClients();
   }, []);
 
   const fetchCustomers = async () => {
@@ -92,6 +109,19 @@ export default function AdminCustomersSection() {
       console.error("Error fetching customers:", error);
     } finally {
       setIsLoading(false);
+    }
+  };
+
+  const fetchClients = async () => {
+    try {
+      const { data, error } = await supabase
+        .from("clients")
+        .select("*")
+        .order("created_at", { ascending: false });
+      if (error) throw error;
+      setClients((data as Client[]) || []);
+    } catch (error) {
+      console.error("Error fetching clients:", error);
     }
   };
 
@@ -152,6 +182,32 @@ export default function AdminCustomersSection() {
       setShowNewReg(false);
       setNewReg({ name: "", email: "", phone: "", training_name: "8-weekse Mindful Zelfcompassie Training", remarks: "" });
       fetchCustomers();
+    } catch (err: any) {
+      toast.error("Fout: " + err.message);
+    }
+    setSubmitting(false);
+  };
+
+  const submitNewClient = async () => {
+    if (!newClient.first_name.trim() || !newClient.email.trim()) {
+      toast.error("Vul voornaam en e-mail in"); return;
+    }
+    setSubmitting(true);
+    try {
+      const { data, error } = await supabase.from("clients").insert({
+        first_name: newClient.first_name.trim(),
+        last_name: newClient.last_name.trim(),
+        email: newClient.email.trim().toLowerCase(),
+        phone: newClient.phone.trim() || null,
+        notes: newClient.notes.trim() || null,
+      }).select("id").single();
+      if (error) throw error;
+      toast.success("Klant aangemaakt!");
+      setShowNewClient(false);
+      setNewClient({ first_name: "", last_name: "", email: "", phone: "", notes: "" });
+      fetchClients();
+      // Open the new client profile
+      setSelectedClientId(data.id);
     } catch (err: any) {
       toast.error("Fout: " + err.message);
     }
@@ -259,7 +315,7 @@ export default function AdminCustomersSection() {
               <Input placeholder="Zoek op naam, e-mail of training..." value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} className="pl-10" />
             </div>
             <p className="text-sm text-muted-foreground">{filteredCustomers.length} resultaten</p>
-            <Button size="sm" className="gap-2 ml-auto" onClick={() => setShowNewReg(true)}>
+            <Button size="sm" className="gap-2 ml-auto" onClick={() => setShowNewClient(true)}>
               <Plus className="h-4 w-4" /> Nieuwe klant
             </Button>
           </div>
@@ -450,12 +506,43 @@ export default function AdminCustomersSection() {
         </TabsContent>
       </Tabs>
 
-      {/* Customer Profile Modal */}
+      {/* Customer Profile Modal (legacy - from customers view) */}
       {selectedCustomerEmail && (
         <CustomerProfile email={selectedCustomerEmail} onClose={() => setSelectedCustomerEmail(null)} />
       )}
 
-      {/* New Registration Dialog */}
+      {/* Client Profile Modal (new - from clients table) */}
+      {selectedClientId && (
+        <ClientProfileModal clientId={selectedClientId} onClose={() => { setSelectedClientId(null); fetchClients(); }} />
+      )}
+
+      {/* New Client Dialog */}
+      <Dialog open={showNewClient} onOpenChange={setShowNewClient}>
+        <DialogContent className="sm:max-w-md">
+          <DialogHeader>
+            <DialogTitle>Nieuwe klant aanmaken</DialogTitle>
+            <DialogDescription>Maak een klantprofiel aan. Er is geen account nodig.</DialogDescription>
+          </DialogHeader>
+          <div className="space-y-4">
+            <div className="grid grid-cols-2 gap-3">
+              <div><Label>Voornaam *</Label><Input value={newClient.first_name} onChange={e => setNewClient(p => ({ ...p, first_name: e.target.value }))} placeholder="Voornaam" /></div>
+              <div><Label>Achternaam</Label><Input value={newClient.last_name} onChange={e => setNewClient(p => ({ ...p, last_name: e.target.value }))} placeholder="Achternaam" /></div>
+            </div>
+            <div><Label>E-mail *</Label><Input type="email" value={newClient.email} onChange={e => setNewClient(p => ({ ...p, email: e.target.value }))} placeholder="email@voorbeeld.nl" /></div>
+            <div><Label>Telefoon</Label><Input value={newClient.phone} onChange={e => setNewClient(p => ({ ...p, phone: e.target.value }))} placeholder="06-12345678" /></div>
+            <div><Label>Notities</Label><Textarea value={newClient.notes} onChange={e => setNewClient(p => ({ ...p, notes: e.target.value }))} placeholder="Interne notities over deze klant..." className="min-h-[60px]" /></div>
+          </div>
+          <DialogFooter>
+            <Button variant="outline" onClick={() => setShowNewClient(false)}>Annuleren</Button>
+            <Button onClick={submitNewClient} disabled={submitting}>
+              {submitting && <Loader2 className="h-4 w-4 animate-spin mr-2" />}
+              Aanmaken
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+
+      {/* New Registration Dialog (legacy) */}
       <Dialog open={showNewReg} onOpenChange={setShowNewReg}>
         <DialogContent className="sm:max-w-md">
           <DialogHeader>
@@ -490,5 +577,242 @@ export default function AdminCustomersSection() {
         </DialogContent>
       </Dialog>
     </div>
+  );
+}
+
+// Client Profile Modal - for clients created via new CRM flow
+function ClientProfileModal({ clientId, onClose }: { clientId: string; onClose: () => void }) {
+  const [client, setClient] = useState<Client | null>(null);
+  const [enrollments, setEnrollments] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [showCreateEnrollment, setShowCreateEnrollment] = useState(false);
+  const [courseType, setCourseType] = useState("individueel_6");
+  const [startDate, setStartDate] = useState("");
+  const [trainerName, setTrainerName] = useState("");
+  const [creating, setCreating] = useState(false);
+  const [sendingInvite, setSendingInvite] = useState(false);
+
+  useEffect(() => { fetchData(); }, [clientId]);
+
+  const fetchData = async () => {
+    setLoading(true);
+    const [clientRes, enrollRes] = await Promise.all([
+      supabase.from("clients").select("*").eq("id", clientId).single(),
+      supabase.from("enrollments").select("*").eq("client_id", clientId).order("created_at", { ascending: false }),
+    ]);
+    setClient(clientRes.data as Client | null);
+    setEnrollments((enrollRes.data || []) as any[]);
+    setLoading(false);
+  };
+
+  const createEnrollment = async () => {
+    if (!startDate) { toast.error("Vul een startdatum in"); return; }
+    setCreating(true);
+    try {
+      const { error } = await supabase.from("enrollments").insert({
+        client_id: clientId,
+        user_id: client?.user_id || null,
+        course_type: courseType,
+        start_date: startDate,
+        trainer_name: trainerName || null,
+        status: "invited",
+        unlocked_weeks: [1],
+      });
+      if (error) throw error;
+      toast.success("Inschrijving aangemaakt!");
+      setShowCreateEnrollment(false);
+      setCourseType("individueel_6"); setStartDate(""); setTrainerName("");
+      fetchData();
+    } catch (err: any) { toast.error("Fout: " + err.message); }
+    setCreating(false);
+  };
+
+  const sendInvitation = async (enrollment: any) => {
+    if (!client) return;
+    setSendingInvite(true);
+    try {
+      const courseLabels: Record<string, string> = {
+        msc_8week: "8-weekse Mindful Zelfcompassie Training",
+        individueel_6: "Individueel Traject (6 sessies)",
+        losse_sessie: "Losse Sessie / Coaching",
+      };
+      const { error } = await supabase.functions.invoke("send-invitation-email", {
+        body: {
+          client_id: clientId,
+          enrollment_id: enrollment.id,
+          program_name: courseLabels[enrollment.course_type] || enrollment.course_type,
+          email: client.email,
+          first_name: client.first_name,
+        },
+      });
+      if (error) throw error;
+      toast.success("Uitnodiging verstuurd naar " + client.email);
+    } catch (err: any) { toast.error("Fout bij versturen: " + err.message); }
+    setSendingInvite(false);
+  };
+
+  const copyQuestionnaireLink = (enrollmentId: string, type: "pre" | "post") => {
+    const url = `${window.location.origin}/vragenlijst/${enrollmentId}${type === "post" ? "?type=post" : ""}`;
+    navigator.clipboard.writeText(url);
+    toast.success(`${type === "pre" ? "0-meting" : "Nameting"}-link gekopieerd!`);
+  };
+
+  const copyIntakeLink = (enrollmentId: string) => {
+    const url = `${window.location.origin}/intake/${enrollmentId}`;
+    navigator.clipboard.writeText(url);
+    toast.success("Intake-link gekopieerd!");
+  };
+
+  if (loading || !client) {
+    return (
+      <Dialog open onOpenChange={onClose}>
+        <DialogContent className="sm:max-w-2xl">
+          <DialogHeader><DialogTitle>Klantprofiel</DialogTitle><DialogDescription>Laden...</DialogDescription></DialogHeader>
+          <div className="flex items-center justify-center py-12"><Loader2 className="h-8 w-8 animate-spin" /></div>
+        </DialogContent>
+      </Dialog>
+    );
+  }
+
+  const fullName = `${client.first_name} ${client.last_name}`.trim();
+  const hasAccount = !!client.user_id;
+
+  return (
+    <Dialog open onOpenChange={onClose}>
+      <DialogContent className="sm:max-w-2xl max-h-[90vh] overflow-y-auto">
+        <DialogHeader>
+          <DialogTitle className="text-lg flex items-center gap-2">
+            {fullName}
+            {hasAccount
+              ? <Badge className="bg-green-100 text-green-800 text-[10px] px-1.5 py-0">Account actief</Badge>
+              : <Badge className="bg-amber-100 text-amber-800 text-[10px] px-1.5 py-0">Geen account</Badge>
+            }
+          </DialogTitle>
+          <DialogDescription className="flex items-center gap-3 flex-wrap">
+            <span className="flex items-center gap-1"><Mail className="h-3 w-3" />{client.email}</span>
+            {client.phone && <span className="flex items-center gap-1"><Phone className="h-3 w-3" />{client.phone}</span>}
+          </DialogDescription>
+        </DialogHeader>
+
+        <div className="space-y-4">
+          {client.notes && (
+            <div className="bg-muted/30 rounded-lg p-3">
+              <p className="text-xs text-muted-foreground font-medium mb-1">Notities</p>
+              <p className="text-sm">{client.notes}</p>
+            </div>
+          )}
+
+          {/* Enrollments */}
+          <div className="space-y-2">
+            <div className="flex items-center justify-between">
+              <h3 className="font-medium text-sm flex items-center gap-2">
+                <BookOpen className="h-4 w-4" /> Inschrijvingen ({enrollments.length})
+              </h3>
+              <Button size="sm" variant="outline" className="gap-1.5 text-xs h-7" onClick={() => setShowCreateEnrollment(true)}>
+                <Plus className="h-3 w-3" /> Inschrijving
+              </Button>
+            </div>
+
+            {enrollments.length === 0 ? (
+              <div className="text-center py-8 text-muted-foreground text-sm">
+                Nog geen inschrijvingen. Maak een inschrijving aan om te beginnen.
+              </div>
+            ) : (
+              enrollments.map((enr) => {
+                const courseLabels: Record<string, string> = {
+                  msc_8week: "8-weekse Groepstraining",
+                  individueel_6: "Individueel (6 sessies)",
+                  losse_sessie: "Losse Sessie",
+                };
+                const statusLabel: Record<string, string> = {
+                  invited: "Uitgenodigd",
+                  active: "Actief",
+                  completed: "Afgerond",
+                  cancelled: "Geannuleerd",
+                  paused: "Gepauzeerd",
+                };
+                const statusColor: Record<string, string> = {
+                  invited: "bg-blue-100 text-blue-800",
+                  active: "bg-green-100 text-green-800",
+                  completed: "bg-primary/10 text-primary",
+                  cancelled: "bg-destructive/10 text-destructive",
+                  paused: "bg-yellow-100 text-yellow-800",
+                };
+                return (
+                  <Card key={enr.id}>
+                    <CardContent className="p-3 space-y-3">
+                      <div className="flex items-center gap-2">
+                        <span className="font-medium text-sm flex-1">{courseLabels[enr.course_type] || enr.course_type}</span>
+                        <Badge className={`${statusColor[enr.status] || "bg-muted text-muted-foreground"} text-[10px] px-1.5 py-0`}>
+                          {statusLabel[enr.status] || enr.status}
+                        </Badge>
+                        <span className="text-xs text-muted-foreground">
+                          Start: {new Date(enr.start_date).toLocaleDateString("nl-NL")}
+                        </span>
+                      </div>
+
+                      {/* Action buttons */}
+                      <div className="flex flex-wrap gap-1.5">
+                        {!hasAccount && (
+                          <Button size="sm" variant="outline" className="h-6 text-xs gap-1" onClick={() => sendInvitation(enr)} disabled={sendingInvite}>
+                            {sendingInvite ? <Loader2 className="h-3 w-3 animate-spin" /> : <Mail className="h-3 w-3" />}
+                            Account uitnodiging versturen
+                          </Button>
+                        )}
+                        <Button size="sm" variant="ghost" className="h-6 text-xs gap-1" onClick={() => copyIntakeLink(enr.id)}>
+                          <ClipboardList className="h-3 w-3" /> Intake-link
+                        </Button>
+                        <Button size="sm" variant="ghost" className="h-6 text-xs gap-1" onClick={() => copyQuestionnaireLink(enr.id, "pre")}>
+                          <BarChart3 className="h-3 w-3" /> 0-meting
+                        </Button>
+                        <Button size="sm" variant="ghost" className="h-6 text-xs gap-1" onClick={() => copyQuestionnaireLink(enr.id, "post")}>
+                          <BarChart3 className="h-3 w-3" /> Nameting
+                        </Button>
+                      </div>
+                    </CardContent>
+                  </Card>
+                );
+              })
+            )}
+          </div>
+
+          {/* Create Enrollment Form */}
+          {showCreateEnrollment && (
+            <Card className="border-primary/20">
+              <CardContent className="p-4 space-y-3">
+                <p className="text-sm font-medium">Nieuwe inschrijving voor {fullName}</p>
+                <div className="grid grid-cols-2 gap-3">
+                  <div>
+                    <Label className="text-xs">Programma</Label>
+                    <Select value={courseType} onValueChange={setCourseType}>
+                      <SelectTrigger className="h-8 text-xs"><SelectValue /></SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="msc_8week">8-weekse Groepstraining</SelectItem>
+                        <SelectItem value="individueel_6">Individueel (6 sessies)</SelectItem>
+                        <SelectItem value="losse_sessie">Losse Sessie</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+                  <div>
+                    <Label className="text-xs">Startdatum *</Label>
+                    <Input type="date" className="h-8 text-xs" value={startDate} onChange={e => setStartDate(e.target.value)} />
+                  </div>
+                </div>
+                <div>
+                  <Label className="text-xs">Trainer (optioneel)</Label>
+                  <Input className="h-8 text-xs" value={trainerName} onChange={e => setTrainerName(e.target.value)} placeholder="Naam trainer" />
+                </div>
+                <div className="flex gap-2">
+                  <Button size="sm" onClick={createEnrollment} disabled={creating} className="gap-1.5 text-xs">
+                    {creating ? <Loader2 className="h-3 w-3 animate-spin" /> : <Plus className="h-3 w-3" />} Aanmaken
+                  </Button>
+                  <Button size="sm" variant="ghost" className="text-xs" onClick={() => setShowCreateEnrollment(false)}>Annuleren</Button>
+                </div>
+              </CardContent>
+            </Card>
+          )}
+        </div>
+      </DialogContent>
+    </Dialog>
   );
 }
