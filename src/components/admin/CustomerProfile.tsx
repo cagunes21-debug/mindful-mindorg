@@ -312,23 +312,6 @@ export default function CustomerProfile({ email, onClose }: CustomerProfileProps
             </div>
           </div>
 
-          {/* Lead Conversion CTA */}
-          {isLead && (
-            <Card className="border-amber-200 bg-amber-50">
-              <CardContent className="p-4 flex items-center gap-4">
-                <div className="p-2.5 bg-amber-100 rounded-full">
-                  <UserCheck className="h-5 w-5 text-amber-700" />
-                </div>
-                <div className="flex-1">
-                  <p className="font-medium text-sm">Deze klant is een Lead</p>
-                  <p className="text-xs text-muted-foreground">Wijs een training toe om deze lead om te zetten naar klant.</p>
-                </div>
-                <Button size="sm" className="gap-1.5 shrink-0" onClick={() => setShowConvertLead(true)}>
-                  <Plus className="h-3.5 w-3.5" /> Training toewijzen
-                </Button>
-              </CardContent>
-            </Card>
-          )}
 
           {/* Global Quick Summary - only if has individual enrollments */}
           {hasIndividual && (
