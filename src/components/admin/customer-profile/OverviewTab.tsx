@@ -1,11 +1,14 @@
+import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 import {
   Mail, Phone, Calendar, Euro, ShoppingBag, Clock, AlertCircle, CheckCircle2,
+  Copy, FileText, BarChart3, ClipboardList,
 } from "lucide-react";
 import { format } from "date-fns";
 import { nl } from "date-fns/locale";
+import { toast } from "sonner";
 import type { CustomerData, SessionAppointment, Enrollment, Registration } from "./types";
 
 interface OverviewTabProps {
