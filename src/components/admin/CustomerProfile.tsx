@@ -21,7 +21,6 @@ import {
   Mail, Phone, Calendar, Euro, ShoppingBag, ArrowLeft, BookOpen,
   Headphones, ClipboardList, Presentation, FileText, Save, StickyNote,
   Eye, Lock, Unlock, Plus, Loader2, Clock, AlertCircle, ChevronDown,
-  UserCheck,
 } from "lucide-react";
 import { format } from "date-fns";
 import { nl } from "date-fns/locale";
