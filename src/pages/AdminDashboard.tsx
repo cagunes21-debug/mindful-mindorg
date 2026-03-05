@@ -30,6 +30,9 @@ export default function AdminDashboard() {
               <p className="text-muted-foreground mt-1">Beheer klanten, leads en financiën</p>
             </div>
             <div className="flex items-center gap-2 flex-wrap">
+              <Button variant="outline" size="sm" className="gap-2" onClick={() => navigate("/admin/msc-materials")}>
+                <Heart className="h-4 w-4" />MSC Session Builder
+              </Button>
               <Button variant="outline" size="sm" className="gap-2" onClick={() => navigate("/admin/cursusmateriaal")}>
                 <GraduationCap className="h-4 w-4" />Cursusmateriaal
               </Button>
