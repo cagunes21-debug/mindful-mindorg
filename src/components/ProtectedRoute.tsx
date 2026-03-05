@@ -49,7 +49,6 @@ export default function ProtectedRoute({ children, requireAdmin = false }: Prote
 
     // Check admin role with a timeout fallback
     let cancelled = false;
-    const controller = new AbortController();
 
     const checkAdmin = async () => {
       try {
