@@ -72,7 +72,14 @@ export default function MscMaterialsLibrary() {
   const [dragIdx, setDragIdx] = useState<number | null>(null);
 
   useEffect(() => {
-    loadSession();
+    // Wait for auth session to be restored before querying RLS-protected tables
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      if (session) {
+        loadSession();
+      } else {
+        setLoading(false);
+      }
+    });
   }, []);
 
   const loadSession = async () => {
