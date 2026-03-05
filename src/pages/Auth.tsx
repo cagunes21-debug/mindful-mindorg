@@ -244,7 +244,8 @@ const Auth = () => {
 
     try {
       if (isLogin) {
-        const { data: signInData, error } = await supabase.auth.signInWithPassword({
+        // Don't rely on this promise resolving — onAuthStateChange handles redirect
+        const { error } = await supabase.auth.signInWithPassword({
           email: email.trim(),
           password,
         });
@@ -259,7 +260,11 @@ const Auth = () => {
           }
         } else {
           toast({ title: "Welkom terug!", description: "Je bent succesvol ingelogd." });
-          redirectAfterLogin(signInData?.user?.id);
+          // Redirect happens via onAuthStateChange listener — no need to call here
+          // But add a safety fallback in case the event doesn't fire
+          setTimeout(() => {
+            window.location.href = "/mijn-training";
+          }, 5000);
         }
       } else {
         const { error } = await supabase.auth.signUp({
