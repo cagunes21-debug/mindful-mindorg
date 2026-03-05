@@ -95,6 +95,7 @@ const ParticipantDashboard = () => {
   const navigate = useNavigate();
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
   const [allEnrollments, setAllEnrollments] = useState<Enrollment[]>([]);
   const [enrollment, setEnrollment] = useState<Enrollment | null>(null);
   const [weeks, setWeeks] = useState<CourseWeek[]>([]);
@@ -104,28 +105,80 @@ const ParticipantDashboard = () => {
   const [selectedWeek, setSelectedWeek] = useState<number>(1);
 
   useEffect(() => {
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      setUser(session?.user ?? null);
-      if (session?.user) {
-        loadEnrollments(session.user.id);
+    let cancelled = false;
+
+    const init = async () => {
+      console.log("[ParticipantDashboard] Initializing...");
+      
+      try {
+        const { data: { session }, error: sessionError } = await supabase.auth.getSession();
+        
+        if (cancelled) return;
+        
+        if (sessionError) {
+          console.error("[ParticipantDashboard] Session error:", sessionError);
+          setError("Fout bij het laden van je sessie. Probeer opnieuw in te loggen.");
+          setLoading(false);
+          return;
+        }
+        
+        if (!session?.user) {
+          console.warn("[ParticipantDashboard] No session/user found");
+          setError("Je bent niet ingelogd. Log opnieuw in.");
+          setLoading(false);
+          return;
+        }
+        
+        console.log("[ParticipantDashboard] User found:", session.user.id);
+        setUser(session.user);
+        await loadEnrollments(session.user.id, cancelled);
+      } catch (err) {
+        if (!cancelled) {
+          console.error("[ParticipantDashboard] Init error:", err);
+          setError("Er ging iets mis bij het laden. Ververs de pagina.");
+          setLoading(false);
+        }
       }
-    });
+    };
+
+    // Safety timeout: never spin longer than 15s
+    const timeout = setTimeout(() => {
+      if (!cancelled) {
+        console.warn("[ParticipantDashboard] Safety timeout after 15s");
+        setLoading(false);
+        setError("Het laden duurde te lang. Ververs de pagina of probeer later opnieuw.");
+      }
+    }, 15000);
+
+    init();
+
+    return () => {
+      cancelled = true;
+      clearTimeout(timeout);
+    };
   }, []);
 
-  const loadEnrollments = async (userId: string) => {
+  const loadEnrollments = async (userId: string, cancelled?: boolean) => {
     try {
       setLoading(true);
+      console.log("[ParticipantDashboard] Loading enrollments for:", userId);
+      
       const { data: enrollmentsData, error } = await supabase
         .from("enrollments")
         .select("*")
         .eq("user_id", userId)
         .order("created_at", { ascending: false });
 
+      if (cancelled) return;
+
       if (error) {
-        console.error("Enrollment query error:", error);
+        console.error("[ParticipantDashboard] Enrollment query error:", error);
+        setError(`Fout bij het ophalen van je inschrijvingen: ${error.message}`);
         setLoading(false);
         return;
       }
+
+      console.log("[ParticipantDashboard] Enrollments found:", enrollmentsData?.length ?? 0);
 
       // Filter active enrollments client-side to avoid enum casting issues
       const activeEnrollments = (enrollmentsData || []).filter(
@@ -133,7 +186,7 @@ const ParticipantDashboard = () => {
       );
 
       if (activeEnrollments.length === 0) {
-        console.log("No active enrollments found for user:", userId);
+        console.log("[ParticipantDashboard] No active enrollments for user:", userId);
         setLoading(false);
         return;
       }
@@ -141,7 +194,8 @@ const ParticipantDashboard = () => {
       setAllEnrollments(activeEnrollments as Enrollment[]);
       await selectEnrollment(activeEnrollments[0] as Enrollment);
     } catch (error) {
-      console.error("Error loading enrollments:", error);
+      console.error("[ParticipantDashboard] Error loading enrollments:", error);
+      setError("Er ging iets mis bij het laden van de gegevens. Ververs de pagina.");
       toast.error("Er ging iets mis bij het laden van de gegevens");
     } finally {
       setLoading(false);
@@ -152,33 +206,50 @@ const ParticipantDashboard = () => {
     setEnrollment(selected);
     const courseType = selected.course_type || 'msc_8week';
 
-    // First load the weeks for this course type
-    const weeksResult = await supabase
-      .from("course_weeks")
-      .select("*")
-      .eq("course_type", courseType)
-      .order("week_number");
+    try {
+      console.log("[ParticipantDashboard] Loading content for enrollment:", selected.id, "courseType:", courseType);
 
-    const courseWeeks = (weeksResult.data || []) as CourseWeek[];
-    setWeeks(courseWeeks);
+      // First load the weeks for this course type
+      const weeksResult = await supabase
+        .from("course_weeks")
+        .select("*")
+        .eq("course_type", courseType)
+        .order("week_number");
 
-    // Then load meditations & assignments filtered by these week IDs
-    const weekIds = courseWeeks.map(w => w.id);
+      if (weeksResult.error) {
+        console.error("[ParticipantDashboard] Weeks query error:", weeksResult.error);
+      }
 
-    const [meditationsResult, assignmentsResult, progressResult] = await Promise.all([
-      weekIds.length > 0
-        ? supabase.from("meditations").select("*").in("week_id", weekIds).order("sort_order")
-        : Promise.resolve({ data: [] }),
-      weekIds.length > 0
-        ? supabase.from("assignments").select("*").in("week_id", weekIds).order("sort_order")
-        : Promise.resolve({ data: [] }),
-      supabase.from("participant_progress").select("*").eq("enrollment_id", selected.id),
-    ]);
+      const courseWeeks = (weeksResult.data || []) as CourseWeek[];
+      setWeeks(courseWeeks);
 
-    if (meditationsResult.data) setMeditations(meditationsResult.data as Meditation[]);
-    if (assignmentsResult.data) setAssignments(assignmentsResult.data as Assignment[]);
-    if (progressResult.data) setProgress(progressResult.data as ParticipantProgress[]);
-    setSelectedWeek(selected.current_week || 1);
+      // Then load meditations & assignments filtered by these week IDs
+      const weekIds = courseWeeks.map(w => w.id);
+
+      const [meditationsResult, assignmentsResult, progressResult] = await Promise.all([
+        weekIds.length > 0
+          ? supabase.from("meditations").select("*").in("week_id", weekIds).order("sort_order")
+          : Promise.resolve({ data: [], error: null }),
+        weekIds.length > 0
+          ? supabase.from("assignments").select("*").in("week_id", weekIds).order("sort_order")
+          : Promise.resolve({ data: [], error: null }),
+        supabase.from("participant_progress").select("*").eq("enrollment_id", selected.id),
+      ]);
+
+      if (meditationsResult.error) console.error("[ParticipantDashboard] Meditations error:", meditationsResult.error);
+      if (assignmentsResult.error) console.error("[ParticipantDashboard] Assignments error:", assignmentsResult.error);
+      if (progressResult.error) console.error("[ParticipantDashboard] Progress error:", progressResult.error);
+
+      if (meditationsResult.data) setMeditations(meditationsResult.data as Meditation[]);
+      if (assignmentsResult.data) setAssignments(assignmentsResult.data as Assignment[]);
+      if (progressResult.data) setProgress(progressResult.data as ParticipantProgress[]);
+      setSelectedWeek(selected.current_week || 1);
+      
+      console.log("[ParticipantDashboard] Content loaded: weeks:", courseWeeks.length, "meditations:", meditationsResult.data?.length ?? 0, "assignments:", assignmentsResult.data?.length ?? 0);
+    } catch (err) {
+      console.error("[ParticipantDashboard] selectEnrollment error:", err);
+      setError("Fout bij het laden van cursusmateriaal. Ververs de pagina.");
+    }
   };
 
   const getMaxWeeks = (): number => {
@@ -337,10 +408,37 @@ const ParticipantDashboard = () => {
       <div className="min-h-screen bg-background">
         <Navigation />
         <main className="container mx-auto px-4 pt-24 pb-16">
-          <div className="flex items-center justify-center h-64">
-            <div className="animate-pulse text-muted-foreground">Laden...</div>
+          <div className="flex flex-col items-center justify-center h-64 gap-4">
+            <div className="w-8 h-8 border-2 border-terracotta-300 border-t-terracotta-600 rounded-full animate-spin" />
+            <p className="text-muted-foreground text-sm">Training laden...</p>
           </div>
         </main>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="min-h-screen bg-background">
+        <Navigation />
+        <main className="container mx-auto px-4 pt-24 pb-16">
+          <Card className="max-w-xl mx-auto">
+            <CardContent className="p-8 text-center">
+              <Info className="h-12 w-12 text-destructive mx-auto mb-4" />
+              <h2 className="text-xl font-medium mb-2">Er ging iets mis</h2>
+              <p className="text-muted-foreground mb-6">{error}</p>
+              <div className="flex gap-3 justify-center">
+                <Button variant="outline" onClick={() => window.location.reload()}>
+                  Pagina verversen
+                </Button>
+                <Button onClick={() => navigate("/login")}>
+                  Opnieuw inloggen
+                </Button>
+              </div>
+            </CardContent>
+          </Card>
+        </main>
+        <Footer />
       </div>
     );
   }
