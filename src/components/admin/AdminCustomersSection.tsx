@@ -628,6 +628,7 @@ export default function AdminCustomersSection() {
                                         </Button>
                                       )}
                                     </div>
+                                  </div>
                                 </div>
                               </TableCell>
                             </TableRow>
