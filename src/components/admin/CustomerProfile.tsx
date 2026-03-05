@@ -56,7 +56,7 @@ export default function CustomerProfile({ email, onClose }: CustomerProfileProps
     setIsLoading(true);
     try {
       const [customerRes, regRes, weeksRes, clientRes] = await Promise.all([
-        supabase.from("customers").select("*").eq("email", email).single(),
+        supabase.from("customers").select("*").eq("email", email).limit(1).maybeSingle(),
         supabase.from("registrations").select("id, training_name, training_date, status, payment_status, price, created_at, admin_notes").eq("email", email).order("created_at", { ascending: false }),
         supabase.from("course_weeks").select("id, week_number, title, course_type").order("week_number"),
         supabase.from("clients").select("id").eq("email", email).limit(1),
