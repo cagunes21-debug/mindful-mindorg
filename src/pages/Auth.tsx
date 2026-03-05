@@ -257,10 +257,10 @@ const Auth = () => {
           }
         } else {
           toast({ title: "Welkom terug!", description: "Je bent succesvol ingelogd." });
-          // Redirect happens via onAuthStateChange listener — no need to call here
-          // But add a safety fallback in case the event doesn't fire
+          // Redirect happens via onAuthStateChange listener
+          // Safety fallback if event doesn't fire
           setTimeout(() => {
-            window.location.href = "/mijn-training";
+            navigate("/mijn-training", { replace: true });
           }, 5000);
         }
       } else {
