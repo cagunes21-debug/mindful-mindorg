@@ -1,3 +1,4 @@
+// CustomerProfile component
 import { useState, useEffect, useRef } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
@@ -222,8 +223,6 @@ export default function CustomerProfile({ email, onClose }: CustomerProfileProps
   };
 
   const toggleCard = (id: string) => setOpenCards(prev => ({ ...prev, [id]: !prev[id] }));
-
-  };
 
   // Global next session across all enrollments
   const getGlobalNextSession = () => {
