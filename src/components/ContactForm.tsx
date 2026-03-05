@@ -20,14 +20,11 @@ const contactSchema = z.object({
 type ContactFormData = z.infer<typeof contactSchema>;
 
 const trainings = [
-  "Workshop Zelfcompassie",
-  "8-weekse MSC Training (Nederlands)",
-  "8-weekse MSC Training (Engels)",
-  "4-daags MBSR Traject",
-  "4-daags MSC Traject",
-  "Barcelona Retreat",
-  "Individuele Begeleiding",
-  "Algemene vraag",
+  { label: "Algemene vraag", value: "general_question" },
+  { label: "Individuele begeleiding", value: "individual_guidance" },
+  { label: "8-weekse MSC training", value: "msc_training" },
+  { label: "Workshop Zelfcompassie", value: "workshop" },
+  { label: "Retreat", value: "retreat" },
 ];
 
 export function ContactForm() {
@@ -112,8 +109,11 @@ export function ContactForm() {
           <Check className="h-8 w-8 text-sage-700" />
         </div>
         <h3 className="text-2xl font-light text-foreground mb-4">Bedankt voor je bericht!</h3>
-        <p className="text-muted-foreground mb-6">
-          We hebben je bericht ontvangen en nemen zo snel mogelijk contact met je op.
+        <p className="text-muted-foreground mb-2">
+          Bedankt voor je bericht. We nemen zo snel mogelijk contact met je op.
+        </p>
+        <p className="text-muted-foreground mb-6 text-sm">
+          Meestal reageren we binnen 1–2 werkdagen.
         </p>
         <Button
           variant="outline"
@@ -159,7 +159,7 @@ export function ContactForm() {
 
       <div className="grid gap-6 md:grid-cols-2">
         <div className="space-y-2">
-          <Label htmlFor="phone">Telefoon (optioneel)</Label>
+          <Label htmlFor="phone">Telefoonnummer (optioneel)</Label>
           <Input
             id="phone"
             type="tel"
@@ -179,12 +179,12 @@ export function ContactForm() {
             disabled={isSubmitting}
           >
             <SelectTrigger className="rounded-xl">
-              <SelectValue placeholder="Selecteer een training" />
+              <SelectValue placeholder="Waar heb je interesse in?" />
             </SelectTrigger>
             <SelectContent>
               {trainings.map((training) => (
-                <SelectItem key={training} value={training}>
-                  {training}
+                <SelectItem key={training.value} value={training.value}>
+                  {training.label}
                 </SelectItem>
               ))}
             </SelectContent>
@@ -196,7 +196,7 @@ export function ContactForm() {
         <Label htmlFor="message">Bericht *</Label>
         <Textarea
           id="message"
-          placeholder="Stel je vraag of vertel ons wat je zoekt..."
+          placeholder="Hoe kunnen we je helpen?"
           value={formData.message}
           onChange={(e) => handleChange("message", e.target.value)}
           className={`min-h-[150px] rounded-xl ${errors.message ? "border-destructive" : ""}`}
