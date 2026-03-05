@@ -157,8 +157,6 @@ export default function AdminCustomersSection() {
     );
   });
 
-  const leadCount = customers.filter(c => (c.paid_registrations || 0) === 0).length;
-  const klantCount = customers.filter(c => (c.paid_registrations || 0) > 0).length;
   const newLeadCount = leads.filter(l => l.status === "new lead").length;
 
   const stats = {
