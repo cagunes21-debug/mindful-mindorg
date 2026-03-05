@@ -315,7 +315,7 @@ export default function AdminCustomersSection() {
               <Input placeholder="Zoek op naam, e-mail of training..." value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} className="pl-10" />
             </div>
             <p className="text-sm text-muted-foreground">{filteredCustomers.length} resultaten</p>
-            <Button size="sm" className="gap-2 ml-auto" onClick={() => setShowNewReg(true)}>
+            <Button size="sm" className="gap-2 ml-auto" onClick={() => setShowNewClient(true)}>
               <Plus className="h-4 w-4" /> Nieuwe klant
             </Button>
           </div>
