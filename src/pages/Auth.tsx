@@ -48,27 +48,25 @@ const Auth = () => {
   const navigate = useNavigate();
   const { toast } = useToast();
 
+  const redirectByRole = async (userId: string) => {
+    try {
+      const { data } = await supabase
+        .rpc("has_role", { _user_id: userId, _role: "admin" });
+      if (data) {
+        console.log("[Auth] Admin detected, redirecting to /admin");
+        navigate("/admin", { replace: true });
+      } else {
+        console.log("[Auth] Regular user, redirecting to /");
+        navigate("/", { replace: true });
+      }
+    } catch (err) {
+      console.error("[Auth] Role check failed:", err);
+      navigate("/", { replace: true });
+    }
+  };
+
   useEffect(() => {
     let cancelled = false;
-
-    const redirectByRole = async (userId: string) => {
-      if (cancelled) return;
-      try {
-        const { data } = await supabase
-          .rpc("has_role", { _user_id: userId, _role: "admin" });
-        if (cancelled) return;
-        if (data) {
-          console.log("[Auth] Admin detected, redirecting to /admin");
-          navigate("/admin", { replace: true });
-        } else {
-          console.log("[Auth] Regular user, redirecting to /");
-          navigate("/", { replace: true });
-        }
-      } catch (err) {
-        console.error("[Auth] Role check failed:", err);
-        if (!cancelled) navigate("/", { replace: true });
-      }
-    };
 
     // Check if already logged in on mount
     supabase.auth.getSession().then(({ data: { session } }) => {
@@ -78,20 +76,7 @@ const Auth = () => {
       }
     });
 
-    // Listen only for new sign-ins (not INITIAL_SESSION to avoid double-fire)
-    const { data: { subscription } } = supabase.auth.onAuthStateChange(
-      (event, session) => {
-        if (event === "SIGNED_IN" && session?.user) {
-          console.log("[Auth] SIGNED_IN event, redirecting...");
-          setTimeout(() => redirectByRole(session.user.id), 0);
-        }
-      }
-    );
-
-    return () => {
-      cancelled = true;
-      subscription.unsubscribe();
-    };
+    return () => { cancelled = true; };
   }, [navigate]);
 
   const validateForm = () => {
