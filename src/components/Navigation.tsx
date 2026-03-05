@@ -20,6 +20,7 @@ const Navigation = () => {
   const [moreOpen, setMoreOpen] = useState(false);
   const [user, setUser] = useState<SupabaseUser | null>(null);
   const [isAdmin, setIsAdmin] = useState(false);
+  const [authReady, setAuthReady] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
 
@@ -28,37 +29,48 @@ const Navigation = () => {
     if (error) {
       toast.error("Uitloggen mislukt");
     } else {
+      setIsAdmin(false);
       toast.success("Je bent uitgelogd");
       navigate("/login");
     }
   };
 
+  const checkAdminRole = async (userId: string) => {
+    try {
+      const { data } = await supabase.rpc('has_role', { _user_id: userId, _role: 'admin' });
+      setIsAdmin(data === true);
+    } catch {
+      setIsAdmin(false);
+    }
+  };
+
   useEffect(() => {
+    // Restore session first, then mark ready
+    supabase.auth.getSession().then(async ({ data: { session } }) => {
+      const currentUser = session?.user ?? null;
+      setUser(currentUser);
+      if (currentUser) {
+        await checkAdminRole(currentUser.id);
+      }
+      setAuthReady(true);
+    });
+
+    // Handle subsequent auth changes (login/logout)
     const { data: { subscription } } = supabase.auth.onAuthStateChange(
       (event, session) => {
-        setUser(session?.user ?? null);
-        if (session?.user) {
-          checkAdminRole(session.user.id);
+        const currentUser = session?.user ?? null;
+        setUser(currentUser);
+        if (currentUser) {
+          // Use setTimeout to avoid calling Supabase inside the callback synchronously
+          setTimeout(() => checkAdminRole(currentUser.id), 0);
         } else {
           setIsAdmin(false);
         }
       }
     );
 
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      setUser(session?.user ?? null);
-      if (session?.user) {
-        checkAdminRole(session.user.id);
-      }
-    });
-
     return () => subscription.unsubscribe();
   }, []);
-
-  const checkAdminRole = async (userId: string) => {
-    const { data } = await supabase.rpc('has_role', { _user_id: userId, _role: 'admin' });
-    setIsAdmin(data === true);
-  };
 
   const serviceLinks = [
     { to: "/msc-training", label: "Groepstraject" },
