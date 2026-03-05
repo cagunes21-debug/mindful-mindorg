@@ -78,19 +78,24 @@ const Auth = () => {
   useEffect(() => {
     let cancelled = false;
 
-    // Check if already logged in on mount
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      if (session?.user && !cancelled) {
-        console.log("[Auth] Existing session found, redirecting...");
-        redirectAfterLogin(session.user.id);
-      }
-    });
-
-    // Also listen for auth state changes (e.g. signInWithPassword completing)
+    // Set up listener FIRST (Supabase best practice)
     const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
       if (cancelled) return;
       if (event === "SIGNED_IN" && session?.user) {
-        console.log("[Auth] SIGNED_IN event received, redirecting...");
+        console.log("[Auth] SIGNED_IN event → scheduling redirect");
+        // Use setTimeout to break out of the auth callback context
+        // This prevents deadlocks when doing async work after auth events
+        const uid = session.user.id;
+        setTimeout(() => {
+          if (!cancelled) redirectAfterLogin(uid);
+        }, 0);
+      }
+    });
+
+    // THEN check existing session
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      if (session?.user && !cancelled) {
+        console.log("[Auth] Existing session found, redirecting...");
         redirectAfterLogin(session.user.id);
       }
     });
@@ -239,7 +244,8 @@ const Auth = () => {
 
     try {
       if (isLogin) {
-        const { data: signInData, error } = await supabase.auth.signInWithPassword({
+        // Don't rely on this promise resolving — onAuthStateChange handles redirect
+        const { error } = await supabase.auth.signInWithPassword({
           email: email.trim(),
           password,
         });
@@ -254,7 +260,11 @@ const Auth = () => {
           }
         } else {
           toast({ title: "Welkom terug!", description: "Je bent succesvol ingelogd." });
-          redirectAfterLogin(signInData?.user?.id);
+          // Redirect happens via onAuthStateChange listener — no need to call here
+          // But add a safety fallback in case the event doesn't fire
+          setTimeout(() => {
+            window.location.href = "/mijn-training";
+          }, 5000);
         }
       } else {
         const { error } = await supabase.auth.signUp({
