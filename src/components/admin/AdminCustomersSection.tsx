@@ -90,6 +90,17 @@ export default function AdminCustomersSection() {
   const [editingNotes, setEditingNotes] = useState<Record<string, string>>({});
   const [clients, setClients] = useState<Client[]>([]);
   
+  // Convert lead state
+  const [convertingLead, setConvertingLead] = useState<Lead | null>(null);
+  const [convertForm, setConvertForm] = useState({
+    first_name: "", last_name: "", email: "",
+    training: "Individueel Traject (6 sessies)",
+    course_type: "individueel_6",
+    start_date: "", notes: "", send_invite: true,
+  });
+  const [convertSubmitting, setConvertSubmitting] = useState(false);
+  const [duplicateClient, setDuplicateClient] = useState<Client | null>(null);
+  
   useEffect(() => {
     fetchCustomers();
     fetchLeads();
