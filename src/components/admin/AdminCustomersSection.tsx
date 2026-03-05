@@ -40,13 +40,23 @@ interface Lead {
   interest: string | null;
   status: string;
   submission_date: string;
+  notes: string | null;
 }
 
 const leadStatusColors: Record<string, string> = {
-  "new lead": "bg-blue-100 text-blue-800",
+  "new": "bg-blue-100 text-blue-800",
   "contacted": "bg-yellow-100 text-yellow-800",
-  "qualified": "bg-green-100 text-green-800",
-  "lost": "bg-red-100 text-red-800",
+  "intake_scheduled": "bg-purple-100 text-purple-800",
+  "converted_to_client": "bg-green-100 text-green-800",
+  "not_interested": "bg-red-100 text-red-800",
+};
+
+const leadStatusLabels: Record<string, string> = {
+  "new": "Nieuw",
+  "contacted": "Gecontacteerd",
+  "intake_scheduled": "Intake ingepland",
+  "converted_to_client": "Klant geworden",
+  "not_interested": "Niet geïnteresseerd",
 };
 
 export default function AdminCustomersSection() {
