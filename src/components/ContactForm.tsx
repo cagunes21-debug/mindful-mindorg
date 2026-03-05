@@ -20,14 +20,11 @@ const contactSchema = z.object({
 type ContactFormData = z.infer<typeof contactSchema>;
 
 const trainings = [
-  "Workshop Zelfcompassie",
-  "8-weekse MSC Training (Nederlands)",
-  "8-weekse MSC Training (Engels)",
-  "4-daags MBSR Traject",
-  "4-daags MSC Traject",
-  "Barcelona Retreat",
-  "Individuele Begeleiding",
-  "Algemene vraag",
+  { label: "Algemene vraag", value: "general_question" },
+  { label: "Individuele begeleiding", value: "individual_guidance" },
+  { label: "8-weekse MSC training", value: "msc_training" },
+  { label: "Workshop Zelfcompassie", value: "workshop" },
+  { label: "Retreat", value: "retreat" },
 ];
 
 export function ContactForm() {

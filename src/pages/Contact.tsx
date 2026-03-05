@@ -49,7 +49,9 @@ const Contact = () => {
               transition={{ duration: 0.6, delay: 0.2 }}
               className="text-muted-foreground text-lg max-w-2xl mx-auto leading-relaxed"
             >
-              Heb je vragen over onze trainingen of wil je je aanmelden? We helpen je graag verder.
+              Heb je een vraag of wil je meer informatie over begeleiding, trainingen of retreats?
+              <br />
+              Stuur gerust een bericht — we nemen zo snel mogelijk contact met je op.
             </motion.p>
           </div>
         </div>
