@@ -48,9 +48,31 @@ const Auth = () => {
   const navigate = useNavigate();
   const { toast } = useToast();
 
-  const redirectAfterLogin = () => {
-    console.log("[Auth] redirectAfterLogin → /mijn-training");
-    navigate("/mijn-training", { replace: true });
+  const redirectAfterLogin = (userId?: string) => {
+    console.log("[Auth] redirectAfterLogin called, userId:", userId);
+    
+    if (userId) {
+      // Fire-and-forget admin check — redirect immediately if it takes too long
+      const timeout = setTimeout(() => {
+        console.log("[Auth] Admin check timeout → /mijn-training");
+        window.location.href = "/mijn-training";
+      }, 3000);
+      
+      supabase.rpc("has_role", { _user_id: userId, _role: "admin" })
+        .then(({ data: isAdmin }) => {
+          clearTimeout(timeout);
+          const dest = isAdmin ? "/admin" : "/mijn-training";
+          console.log("[Auth] Admin check done, isAdmin:", isAdmin, "→", dest);
+          window.location.href = dest;
+        })
+        .catch(() => {
+          clearTimeout(timeout);
+          console.warn("[Auth] Admin check failed → /mijn-training");
+          window.location.href = "/mijn-training";
+        });
+    } else {
+      window.location.href = "/mijn-training";
+    }
   };
 
   useEffect(() => {
