@@ -55,10 +55,11 @@ export default function CustomerProfile({ email, onClose }: CustomerProfileProps
   const fetchCustomerData = async () => {
     setIsLoading(true);
     try {
-      const [customerRes, regRes, weeksRes] = await Promise.all([
+      const [customerRes, regRes, weeksRes, clientRes] = await Promise.all([
         supabase.from("customers").select("*").eq("email", email).single(),
         supabase.from("registrations").select("id, training_name, training_date, status, payment_status, price, created_at, admin_notes").eq("email", email).order("created_at", { ascending: false }),
         supabase.from("course_weeks").select("id, week_number, title, course_type").order("week_number"),
+        supabase.from("clients").select("id").eq("email", email).limit(1),
       ]);
       if (customerRes.error) throw customerRes.error;
       setCustomer(customerRes.data);
@@ -67,27 +68,48 @@ export default function CustomerProfile({ email, onClose }: CustomerProfileProps
       setCourseWeeks((weeksRes.data || []) as CourseWeek[]);
       if (regs.length > 0) setOpenCards({ [regs[0].id]: true });
 
+      // Fetch enrollments via registration_id AND client_id
       const regIds = regs.map(r => r.id);
-      if (regIds.length > 0) {
-        const { data: enrollData } = await supabase
-          .from("enrollments")
-          .select("id, course_type, start_date, status, unlocked_weeks, visible_sections, trainer_name, registration_id, intake_reason, intake_theme, intake_goal")
-          .in("registration_id", regIds)
-          .order("created_at", { ascending: false });
-        const enrs = (enrollData || []) as Enrollment[];
-        setEnrollments(enrs);
+      const clientId = clientRes.data?.[0]?.id;
+      let allEnrollments: Enrollment[] = [];
 
-        const allEnrIds = enrs.map(e => e.id);
-        if (allEnrIds.length > 0) {
-          const [notesRes, apptRes] = await Promise.all([
-            supabase.from("trainer_notes").select("id, enrollment_id, note_type, content").in("enrollment_id", allEnrIds),
-            supabase.from("session_appointments").select("*")
-              .in("enrollment_id", enrs.filter(e => e.course_type === "individueel_6" || e.course_type === "losse_sessie").map(e => e.id))
-              .order("week_number"),
-          ]);
-          setStructuredNotes((notesRes.data || []) as TrainerNote[]);
-          setSessionAppointments((apptRes.data || []) as SessionAppointment[]);
+      if (regIds.length > 0 || clientId) {
+        const queries = [];
+        if (regIds.length > 0) {
+          queries.push(
+            supabase.from("enrollments")
+              .select("id, course_type, start_date, status, unlocked_weeks, visible_sections, trainer_name, registration_id, intake_reason, intake_theme, intake_goal, client_id, sessions_total, sessions_used, sessions_remaining")
+              .in("registration_id", regIds)
+          );
         }
+        if (clientId) {
+          queries.push(
+            supabase.from("enrollments")
+              .select("id, course_type, start_date, status, unlocked_weeks, visible_sections, trainer_name, registration_id, intake_reason, intake_theme, intake_goal, client_id, sessions_total, sessions_used, sessions_remaining")
+              .eq("client_id", clientId)
+          );
+        }
+        const results = await Promise.all(queries);
+        const mergedMap = new Map<string, Enrollment>();
+        results.forEach(res => {
+          (res.data || []).forEach((e: any) => mergedMap.set(e.id, e as Enrollment));
+        });
+        allEnrollments = Array.from(mergedMap.values()).sort(
+          (a, b) => new Date(b.start_date).getTime() - new Date(a.start_date).getTime()
+        );
+      }
+      setEnrollments(allEnrollments);
+
+      const allEnrIds = allEnrollments.map(e => e.id);
+      if (allEnrIds.length > 0) {
+        const [notesRes, apptRes] = await Promise.all([
+          supabase.from("trainer_notes").select("id, enrollment_id, note_type, content").in("enrollment_id", allEnrIds),
+          supabase.from("session_appointments").select("*")
+            .in("enrollment_id", allEnrollments.filter(e => e.course_type === "individueel_6" || e.course_type === "losse_sessie").map(e => e.id))
+            .order("week_number"),
+        ]);
+        setStructuredNotes((notesRes.data || []) as TrainerNote[]);
+        setSessionAppointments((apptRes.data || []) as SessionAppointment[]);
       }
     } catch (error) {
       console.error("Error fetching customer data:", error);
