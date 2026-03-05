@@ -48,21 +48,9 @@ const Auth = () => {
   const navigate = useNavigate();
   const { toast } = useToast();
 
-  const redirectByRole = async (userId: string) => {
-    try {
-      const { data } = await supabase
-        .rpc("has_role", { _user_id: userId, _role: "admin" });
-      if (data) {
-        console.log("[Auth] Admin detected, redirecting to /admin");
-        navigate("/admin", { replace: true });
-      } else {
-        console.log("[Auth] Regular user, redirecting to /");
-        navigate("/", { replace: true });
-      }
-    } catch (err) {
-      console.error("[Auth] Role check failed:", err);
-      navigate("/", { replace: true });
-    }
+  const redirectAfterLogin = () => {
+    console.log("[Auth] Login success, navigating to /admin");
+    navigate("/admin", { replace: true });
   };
 
   useEffect(() => {
