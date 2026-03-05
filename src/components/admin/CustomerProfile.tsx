@@ -262,7 +262,6 @@ export default function CustomerProfile({ email, onClose }: CustomerProfileProps
   const globalNext = getGlobalNextSession();
   const globalProgress = getGlobalProgress();
   const hasIndividual = enrollments.some(e => e.course_type === "individueel_6" || e.course_type === "losse_sessie");
-  const isLead = enrollments.length === 0;
 
   return (
     <Dialog open onOpenChange={onClose}>
