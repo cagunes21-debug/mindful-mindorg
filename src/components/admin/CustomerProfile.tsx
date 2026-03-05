@@ -224,8 +224,6 @@ export default function CustomerProfile({ email, onClose }: CustomerProfileProps
 
   const toggleCard = (id: string) => setOpenCards(prev => ({ ...prev, [id]: !prev[id] }));
 
-  };
-
   // Global next session across all enrollments
   const getGlobalNextSession = () => {
     const today = new Date().toISOString().split("T")[0];
