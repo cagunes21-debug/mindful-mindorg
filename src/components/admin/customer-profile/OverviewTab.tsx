@@ -1,11 +1,14 @@
+import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 import {
   Mail, Phone, Calendar, Euro, ShoppingBag, Clock, AlertCircle, CheckCircle2,
+  Copy, FileText, BarChart3, ClipboardList,
 } from "lucide-react";
 import { format } from "date-fns";
 import { nl } from "date-fns/locale";
+import { toast } from "sonner";
 import type { CustomerData, SessionAppointment, Enrollment, Registration } from "./types";
 
 interface OverviewTabProps {
@@ -132,6 +135,39 @@ export default function OverviewTab({
             </div>
           </CardContent>
         </Card>
+      )}
+
+      {/* Quick questionnaire links */}
+      {enrollments.length > 0 && (
+        <div>
+          <p className="text-xs text-muted-foreground font-medium mb-1.5 flex items-center gap-1.5">
+            <ClipboardList className="h-3.5 w-3.5" /> Snelle links
+          </p>
+          <div className="space-y-1.5">
+            {enrollments.map(enrollment => {
+              const intakeUrl = `${window.location.origin}/intake/${enrollment.id}`;
+              const preUrl = `${window.location.origin}/vragenlijst/${enrollment.id}`;
+              const postUrl = `${window.location.origin}/vragenlijst/${enrollment.id}?type=post`;
+              const copyLink = (url: string, label: string) => {
+                navigator.clipboard.writeText(url);
+                toast.success(`${label} gekopieerd!`);
+              };
+              return (
+                <div key={enrollment.id} className="flex flex-wrap items-center gap-1.5">
+                  <Button size="sm" variant="ghost" className="h-6 text-xs gap-1" onClick={() => copyLink(intakeUrl, "Intake-link")}>
+                    <FileText className="h-3 w-3" /> Intake
+                  </Button>
+                  <Button size="sm" variant="ghost" className="h-6 text-xs gap-1" onClick={() => copyLink(preUrl, "0-meting link")}>
+                    <BarChart3 className="h-3 w-3" /> 0-meting
+                  </Button>
+                  <Button size="sm" variant="ghost" className="h-6 text-xs gap-1" onClick={() => copyLink(postUrl, "Nameting link")}>
+                    <BarChart3 className="h-3 w-3" /> Nameting
+                  </Button>
+                </div>
+              );
+            })}
+          </div>
+        </div>
       )}
     </div>
   );
