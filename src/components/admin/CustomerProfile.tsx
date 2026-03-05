@@ -224,52 +224,6 @@ export default function CustomerProfile({ email, onClose }: CustomerProfileProps
 
   const toggleCard = (id: string) => setOpenCards(prev => ({ ...prev, [id]: !prev[id] }));
 
-  const convertLeadToClient = async () => {
-    if (!customer || !convertStartDate) { toast.error("Vul een startdatum in"); return; }
-    setConverting(true);
-    try {
-      // 1. Create registration
-      const { data: regData, error: regError } = await supabase.from("registrations").insert({
-        name: customer.name, email: customer.email, phone: customer.phone || null,
-        training_name: convertTraining, remarks: convertRemarks.trim() || null,
-        status: "confirmed", payment_status: "pending",
-      }).select("id").single();
-      if (regError) throw regError;
-
-      // 2. Also create a client record
-      const nameParts = customer.name.split(" ");
-      const firstName = nameParts[0] || "";
-      const lastName = nameParts.slice(1).join(" ") || "";
-      const { data: clientData } = await supabase.from("clients").insert({
-        first_name: firstName, last_name: lastName,
-        email: customer.email, phone: customer.phone || null,
-      }).select("id").single();
-
-      // 3. Find user_id from existing enrollments or skip
-      let userId: string | undefined;
-      const { data: allRegs } = await supabase.from("registrations").select("id").eq("email", email);
-      if (allRegs && allRegs.length > 0) {
-        const { data: existingEnr } = await supabase.from("enrollments").select("user_id").in("registration_id", allRegs.map(r => r.id)).not("user_id", "is", null).limit(1);
-        userId = existingEnr?.[0]?.user_id;
-      }
-
-      // 4. Create enrollment - user_id is optional
-      const { error: enrError } = await supabase.from("enrollments").insert({
-        user_id: userId || null, course_type: convertCourseType, start_date: convertStartDate,
-        trainer_name: convertTrainer || null, registration_id: regData.id,
-        client_id: clientData?.id || null,
-        unlocked_weeks: [1], status: userId ? "active" : "invited",
-      });
-      if (enrError) throw enrError;
-      toast.success(userId ? "Lead omgezet naar klant met inschrijving!" : "Lead omgezet! Inschrijving wordt gekoppeld zodra het account is aangemaakt.");
-
-      setShowConvertLead(false);
-      setConvertTraining("Individueel Traject (6 sessies)");
-      setConvertCourseType("individueel_6");
-      setConvertStartDate(""); setConvertTrainer(""); setConvertRemarks("");
-      fetchCustomerData();
-    } catch (err: any) { toast.error("Fout: " + err.message); }
-    setConverting(false);
   };
 
   // Global next session across all enrollments
