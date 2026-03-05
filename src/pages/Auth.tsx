@@ -51,7 +51,7 @@ const Auth = () => {
   const redirectAfterLogin = async (userId?: string) => {
     console.log("[Auth] redirectAfterLogin called, userId:", userId);
     
-    let dest = "/mijn-training";
+    let dest = "/mijn-trainingen";
     
     if (userId) {
       try {
@@ -65,7 +65,7 @@ const Auth = () => {
         }
         console.log("[Auth] Admin check done →", dest);
       } catch {
-        console.warn("[Auth] Admin check failed → /mijn-training");
+        console.warn("[Auth] Admin check failed → /mijn-trainingen");
       }
     }
     
@@ -260,7 +260,7 @@ const Auth = () => {
           // Redirect happens via onAuthStateChange listener
           // Safety fallback if event doesn't fire
           setTimeout(() => {
-            navigate("/mijn-training", { replace: true });
+            navigate("/mijn-trainingen", { replace: true });
           }, 5000);
         }
       } else {

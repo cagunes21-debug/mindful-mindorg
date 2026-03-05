@@ -3,7 +3,7 @@ import { Link, useLocation } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { ArrowRight, X } from "lucide-react";
 
-const HIDDEN_ROUTES = ["/login", "/admin", "/mijn-training", "/betaling-succes", "/betaling-geannuleerd"];
+const HIDDEN_ROUTES = ["/login", "/admin", "/mijn-trainingen", "/betaling-succes", "/betaling-geannuleerd"];
 const CTA_DISMISSED_KEY = "sticky_cta_dismissed";
 
 const StickyCTA = () => {
