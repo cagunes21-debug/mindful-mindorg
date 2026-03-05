@@ -49,19 +49,30 @@ const Auth = () => {
   const { toast } = useToast();
 
   useEffect(() => {
+    const handleSession = async (session: any) => {
+      if (!session?.user) return;
+      
+      // Check if user is admin to redirect appropriately
+      const { data } = await supabase
+        .rpc("has_role", { _user_id: session.user.id, _role: "admin" });
+      
+      if (data) {
+        console.log("[Auth] Admin detected, redirecting to /admin");
+        navigate("/admin", { replace: true });
+      } else {
+        console.log("[Auth] Regular user, redirecting to /");
+        navigate("/", { replace: true });
+      }
+    };
+
     const { data: { subscription } } = supabase.auth.onAuthStateChange(
       (event, session) => {
-        if (session?.user) {
-          navigate("/");
+        if (event === "SIGNED_IN" || event === "INITIAL_SESSION") {
+          // Use setTimeout to avoid Supabase auth deadlock
+          setTimeout(() => handleSession(session), 0);
         }
       }
     );
-
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      if (session?.user) {
-        navigate("/");
-      }
-    });
 
     return () => subscription.unsubscribe();
   }, [navigate]);

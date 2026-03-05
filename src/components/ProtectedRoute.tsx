@@ -85,6 +85,7 @@ export default function ProtectedRoute({ children, requireAdmin = false }: Prote
 
     (async () => {
       try {
+        // Primary: direct query on user_roles
         const { data, error } = await supabase
           .from("user_roles")
           .select("role")
@@ -94,15 +95,33 @@ export default function ProtectedRoute({ children, requireAdmin = false }: Prote
 
         if (cancelled || !mountedRef.current) return;
 
-        if (error) {
-          console.error("[ProtectedRoute] Admin query error:", error.message);
-          setAdminState("no");
-        } else if (!data) {
-          console.warn("[ProtectedRoute] No admin role found for:", userId);
-          setAdminState("no");
-        } else {
-          console.log("[ProtectedRoute] Admin confirmed ✓");
+        if (data) {
+          console.log("[ProtectedRoute] Admin confirmed via direct query ✓");
           setAdminState("yes");
+          return;
+        }
+
+        if (error) {
+          console.warn("[ProtectedRoute] Direct query failed:", error.message, "— trying RPC fallback");
+        } else {
+          console.warn("[ProtectedRoute] No admin role via direct query — trying RPC fallback");
+        }
+
+        // Fallback: use has_role RPC (SECURITY DEFINER, bypasses RLS)
+        const { data: hasRole, error: rpcError } = await supabase
+          .rpc("has_role", { _user_id: userId, _role: "admin" });
+
+        if (cancelled || !mountedRef.current) return;
+
+        if (rpcError) {
+          console.error("[ProtectedRoute] RPC has_role error:", rpcError.message);
+          setAdminState("no");
+        } else if (hasRole) {
+          console.log("[ProtectedRoute] Admin confirmed via RPC ✓");
+          setAdminState("yes");
+        } else {
+          console.warn("[ProtectedRoute] Not admin (both checks failed)");
+          setAdminState("no");
         }
       } catch (err) {
         if (cancelled || !mountedRef.current) return;
