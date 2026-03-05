@@ -72,7 +72,8 @@ export default function AdminCustomersSection() {
   const [newReg, setNewReg] = useState({ name: "", email: "", phone: "", training_name: "8-weekse Mindful Zelfcompassie Training", remarks: "" });
   const [submitting, setSubmitting] = useState(false);
   const [activeTab, setActiveTab] = useState("customers");
-
+  const [expandedLeadId, setExpandedLeadId] = useState<string | null>(null);
+  const [editingNotes, setEditingNotes] = useState<Record<string, string>>({});
   useEffect(() => {
     fetchCustomers();
     fetchLeads();
