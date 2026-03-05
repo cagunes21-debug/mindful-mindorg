@@ -281,6 +281,7 @@ export type Database = {
           interest: string | null
           last_name: string
           message: string | null
+          notes: string | null
           phone_number: string | null
           status: string
           submission_date: string
@@ -294,6 +295,7 @@ export type Database = {
           interest?: string | null
           last_name?: string
           message?: string | null
+          notes?: string | null
           phone_number?: string | null
           status?: string
           submission_date?: string
@@ -307,6 +309,7 @@ export type Database = {
           interest?: string | null
           last_name?: string
           message?: string | null
+          notes?: string | null
           phone_number?: string | null
           status?: string
           submission_date?: string

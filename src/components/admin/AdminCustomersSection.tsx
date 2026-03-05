@@ -11,7 +11,8 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Label } from "@/components/ui/label";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter } from "@/components/ui/dialog";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Loader2, Users, Search, Euro, Mail, Phone, ShoppingBag, Calendar, Plus, MessageCircle, Clock } from "lucide-react";
+import { Textarea } from "@/components/ui/textarea";
+import { Loader2, Users, Search, Euro, Mail, Phone, ShoppingBag, Calendar, Plus, MessageCircle, Clock, StickyNote, ChevronDown, ChevronUp } from "lucide-react";
 import { format } from "date-fns";
 import { nl } from "date-fns/locale";
 import { toast } from "sonner";
@@ -39,13 +40,23 @@ interface Lead {
   interest: string | null;
   status: string;
   submission_date: string;
+  notes: string | null;
 }
 
 const leadStatusColors: Record<string, string> = {
-  "new lead": "bg-blue-100 text-blue-800",
+  "new": "bg-blue-100 text-blue-800",
   "contacted": "bg-yellow-100 text-yellow-800",
-  "qualified": "bg-green-100 text-green-800",
-  "lost": "bg-red-100 text-red-800",
+  "intake_scheduled": "bg-purple-100 text-purple-800",
+  "converted_to_client": "bg-green-100 text-green-800",
+  "not_interested": "bg-red-100 text-red-800",
+};
+
+const leadStatusLabels: Record<string, string> = {
+  "new": "Nieuw",
+  "contacted": "Gecontacteerd",
+  "intake_scheduled": "Intake ingepland",
+  "converted_to_client": "Klant geworden",
+  "not_interested": "Niet geïnteresseerd",
 };
 
 export default function AdminCustomersSection() {
@@ -61,7 +72,8 @@ export default function AdminCustomersSection() {
   const [newReg, setNewReg] = useState({ name: "", email: "", phone: "", training_name: "8-weekse Mindful Zelfcompassie Training", remarks: "" });
   const [submitting, setSubmitting] = useState(false);
   const [activeTab, setActiveTab] = useState("customers");
-
+  const [expandedLeadId, setExpandedLeadId] = useState<string | null>(null);
+  const [editingNotes, setEditingNotes] = useState<Record<string, string>>({});
   useEffect(() => {
     fetchCustomers();
     fetchLeads();
@@ -106,6 +118,17 @@ export default function AdminCustomersSection() {
     } else {
       toast.success("Status bijgewerkt");
       setLeads(prev => prev.map(l => l.id === id ? { ...l, status: newStatus } : l));
+    }
+  };
+
+  const saveLeadNotes = async (id: string) => {
+    const notesText = editingNotes[id] ?? "";
+    const { error } = await supabase.from("leads").update({ notes: notesText, updated_at: new Date().toISOString() }).eq("id", id);
+    if (error) {
+      toast.error("Fout bij opslaan notities");
+    } else {
+      toast.success("Notities opgeslagen");
+      setLeads(prev => prev.map(l => l.id === id ? { ...l, notes: notesText } : l));
     }
   };
 
@@ -157,7 +180,7 @@ export default function AdminCustomersSection() {
     );
   });
 
-  const newLeadCount = leads.filter(l => l.status === "new lead").length;
+  const newLeadCount = leads.filter(l => l.status === "new").length;
 
   const stats = {
     totalCustomers: customers.length,
@@ -327,6 +350,7 @@ export default function AdminCustomersSection() {
                   <Table>
                     <TableHeader>
                       <TableRow>
+                        <TableHead className="w-8"></TableHead>
                         <TableHead>Naam</TableHead>
                         <TableHead>Contact</TableHead>
                         <TableHead>Interesse</TableHead>
@@ -337,44 +361,85 @@ export default function AdminCustomersSection() {
                     </TableHeader>
                     <TableBody>
                       {filteredLeads.map((lead) => (
-                        <TableRow key={lead.id}>
-                          <TableCell>
-                            <span className="font-medium">{lead.first_name} {lead.last_name}</span>
-                          </TableCell>
-                          <TableCell>
-                            <div className="flex flex-col gap-1">
-                              <div className="flex items-center gap-1 text-sm text-muted-foreground"><Mail className="h-3 w-3" />{lead.email}</div>
-                              {lead.phone_number && <div className="flex items-center gap-1 text-sm text-muted-foreground"><Phone className="h-3 w-3" />{lead.phone_number}</div>}
-                            </div>
-                          </TableCell>
-                          <TableCell>
-                            {lead.interest && <Badge variant="secondary" className="bg-sage-100 text-sage-800 text-xs">{lead.interest}</Badge>}
-                          </TableCell>
-                          <TableCell>
-                            <p className="text-sm text-muted-foreground max-w-[250px] truncate">{lead.message || "—"}</p>
-                          </TableCell>
-                          <TableCell>
-                            <Select value={lead.status} onValueChange={(v) => updateLeadStatus(lead.id, v)}>
-                              <SelectTrigger className="w-[130px] h-8">
-                                <Badge className={`${leadStatusColors[lead.status] || "bg-muted text-muted-foreground"} text-[10px] px-1.5 py-0`}>
-                                  {lead.status}
-                                </Badge>
-                              </SelectTrigger>
-                              <SelectContent>
-                                <SelectItem value="new lead">New lead</SelectItem>
-                                <SelectItem value="contacted">Contacted</SelectItem>
-                                <SelectItem value="qualified">Qualified</SelectItem>
-                                <SelectItem value="lost">Lost</SelectItem>
-                              </SelectContent>
-                            </Select>
-                          </TableCell>
-                          <TableCell>
-                            <div className="flex items-center gap-1 text-sm text-muted-foreground">
-                              <Clock className="h-3 w-3" />
-                              {format(new Date(lead.submission_date), "d MMM yyyy HH:mm", { locale: nl })}
-                            </div>
-                          </TableCell>
-                        </TableRow>
+                        <>
+                          <TableRow key={lead.id} className="cursor-pointer hover:bg-muted/50" onClick={() => {
+                            const newId = expandedLeadId === lead.id ? null : lead.id;
+                            setExpandedLeadId(newId);
+                            if (newId && !(lead.id in editingNotes)) {
+                              setEditingNotes(prev => ({ ...prev, [lead.id]: lead.notes || "" }));
+                            }
+                          }}>
+                            <TableCell className="w-8">
+                              {expandedLeadId === lead.id ? <ChevronUp className="h-4 w-4 text-muted-foreground" /> : <ChevronDown className="h-4 w-4 text-muted-foreground" />}
+                            </TableCell>
+                            <TableCell>
+                              <span className="font-medium">{lead.first_name} {lead.last_name}</span>
+                            </TableCell>
+                            <TableCell>
+                              <div className="flex flex-col gap-1">
+                                <div className="flex items-center gap-1 text-sm text-muted-foreground"><Mail className="h-3 w-3" />{lead.email}</div>
+                                {lead.phone_number && <div className="flex items-center gap-1 text-sm text-muted-foreground"><Phone className="h-3 w-3" />{lead.phone_number}</div>}
+                              </div>
+                            </TableCell>
+                            <TableCell>
+                              {lead.interest && <Badge variant="secondary" className="bg-sage-100 text-sage-800 text-xs">{lead.interest}</Badge>}
+                            </TableCell>
+                            <TableCell>
+                              <p className="text-sm text-muted-foreground max-w-[250px] truncate">{lead.message || "—"}</p>
+                            </TableCell>
+                            <TableCell onClick={(e) => e.stopPropagation()}>
+                              <Select value={lead.status} onValueChange={(v) => updateLeadStatus(lead.id, v)}>
+                                <SelectTrigger className="w-[160px] h-8">
+                                  <Badge className={`${leadStatusColors[lead.status] || "bg-muted text-muted-foreground"} text-[10px] px-1.5 py-0`}>
+                                    {leadStatusLabels[lead.status] || lead.status}
+                                  </Badge>
+                                </SelectTrigger>
+                                <SelectContent>
+                                  <SelectItem value="new">Nieuw</SelectItem>
+                                  <SelectItem value="contacted">Gecontacteerd</SelectItem>
+                                  <SelectItem value="intake_scheduled">Intake ingepland</SelectItem>
+                                  <SelectItem value="converted_to_client">Klant geworden</SelectItem>
+                                  <SelectItem value="not_interested">Niet geïnteresseerd</SelectItem>
+                                </SelectContent>
+                              </Select>
+                            </TableCell>
+                            <TableCell>
+                              <div className="flex items-center gap-1 text-sm text-muted-foreground">
+                                <Clock className="h-3 w-3" />
+                                {format(new Date(lead.submission_date), "d MMM yyyy HH:mm", { locale: nl })}
+                              </div>
+                            </TableCell>
+                          </TableRow>
+                          {expandedLeadId === lead.id && (
+                            <TableRow key={`${lead.id}-notes`}>
+                              <TableCell colSpan={7} className="bg-muted/30 border-b">
+                                <div className="p-3 space-y-3">
+                                  {lead.message && (
+                                    <div>
+                                      <p className="text-sm font-medium mb-1">Volledig bericht:</p>
+                                      <p className="text-sm text-muted-foreground whitespace-pre-wrap">{lead.message}</p>
+                                    </div>
+                                  )}
+                                  <div>
+                                    <div className="flex items-center gap-2 mb-1">
+                                      <StickyNote className="h-4 w-4 text-muted-foreground" />
+                                      <p className="text-sm font-medium">Interne notities:</p>
+                                    </div>
+                                    <Textarea
+                                      value={editingNotes[lead.id] ?? lead.notes ?? ""}
+                                      onChange={(e) => setEditingNotes(prev => ({ ...prev, [lead.id]: e.target.value }))}
+                                      placeholder="Voeg interne notities toe over deze lead..."
+                                      className="min-h-[80px] text-sm"
+                                    />
+                                    <Button size="sm" className="mt-2" onClick={() => saveLeadNotes(lead.id)}>
+                                      Notities opslaan
+                                    </Button>
+                                  </div>
+                                </div>
+                              </TableCell>
+                            </TableRow>
+                          )}
+                        </>
                       ))}
                     </TableBody>
                   </Table>
