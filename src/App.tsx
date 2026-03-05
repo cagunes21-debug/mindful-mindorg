@@ -53,6 +53,8 @@ const PageLoader = () => (
   </div>
 );
 
+const AutoLinker = () => { useAutoLinkClient(); return null; };
+
 const App = () => (
   <HelmetProvider>
     <QueryClientProvider client={queryClient}>
