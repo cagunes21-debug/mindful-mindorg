@@ -216,7 +216,7 @@ const Auth = () => {
 
     try {
       if (isLogin) {
-        const { error } = await supabase.auth.signInWithPassword({
+        const { data: signInData, error } = await supabase.auth.signInWithPassword({
           email: email.trim(),
           password,
         });
@@ -231,9 +231,12 @@ const Auth = () => {
           }
         } else {
           toast({ title: "Welkom terug!", description: "Je bent succesvol ingelogd." });
-          const { data: { session } } = await supabase.auth.getSession();
-          if (session?.user) {
-            await redirectByRole(session.user.id);
+          const userId = signInData?.session?.user?.id || signInData?.user?.id;
+          if (userId) {
+            await redirectByRole(userId);
+          } else {
+            console.warn("[Auth] No user ID after login, redirecting to home");
+            navigate("/", { replace: true });
           }
         }
       } else {
