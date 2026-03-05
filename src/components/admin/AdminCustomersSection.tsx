@@ -811,7 +811,7 @@ export default function AdminCustomersSection({ initialTab = "customers" }: { in
 }
 
 // Client Profile Modal - for clients created via new CRM flow
-function ClientProfileModal({ clientId, onClose }: { clientId: string; onClose: () => void }) {
+function ClientProfileModal({ clientId, onClose, onOpenFullProfile }: { clientId: string; onClose: () => void; onOpenFullProfile?: (email: string) => void }) {
   const [client, setClient] = useState<Client | null>(null);
   const [enrollments, setEnrollments] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
