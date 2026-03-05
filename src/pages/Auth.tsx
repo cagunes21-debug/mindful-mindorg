@@ -48,10 +48,27 @@ const Auth = () => {
   const navigate = useNavigate();
   const { toast } = useToast();
 
-  const redirectAfterLogin = () => {
-    console.log("[Auth] Login success, navigating to /admin");
-    // Use navigate for SPA routing (preserves iframe context & query params)
-    navigate("/admin", { replace: true });
+  const redirectAfterLogin = async () => {
+    // Check user role to determine redirect destination
+    const { data: { session } } = await supabase.auth.getSession();
+    const userId = session?.user?.id;
+    
+    if (userId) {
+      // Check if user is admin
+      const { data: roleData } = await supabase
+        .from("user_roles")
+        .select("role")
+        .eq("user_id", userId)
+        .eq("role", "admin")
+        .maybeSingle();
+
+      const destination = roleData ? "/admin" : "/mijn-training";
+      console.log("[Auth] Login success, role:", roleData?.role ?? "user", "→ navigating to", destination);
+      navigate(destination, { replace: true });
+    } else {
+      console.warn("[Auth] Login success but no session found, navigating to /");
+      navigate("/", { replace: true });
+    }
   };
 
   useEffect(() => {
@@ -66,7 +83,8 @@ const Auth = () => {
     });
 
     return () => { cancelled = true; };
-  }, [navigate]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const validateForm = () => {
     const newErrors: Record<string, string> = {};

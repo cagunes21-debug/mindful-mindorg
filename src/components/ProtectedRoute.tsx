@@ -95,44 +95,22 @@ export default function ProtectedRoute({ children, requireAdmin = false }: Prote
 
     console.log("[ProtectedRoute] Checking admin role for:", userId);
 
-    (async () => {
+    // Use RPC only (SECURITY DEFINER, bypasses RLS — no hanging queries)
+    const checkAdmin = async () => {
       try {
-        // Primary: direct query on user_roles
-        const { data, error } = await supabase
-          .from("user_roles")
-          .select("role")
-          .eq("user_id", userId)
-          .eq("role", "admin")
-          .maybeSingle();
-
-        if (cancelled || !mountedRef.current) return;
-
-        if (data) {
-          console.log("[ProtectedRoute] Admin confirmed via direct query ✓");
-          setAdminState("yes");
-          return;
-        }
-
-        if (error) {
-          console.warn("[ProtectedRoute] Direct query failed:", error.message, "— trying RPC fallback");
-        } else {
-          console.warn("[ProtectedRoute] No admin role via direct query — trying RPC fallback");
-        }
-
-        // Fallback: use has_role RPC (SECURITY DEFINER, bypasses RLS)
-        const { data: hasRole, error: rpcError } = await supabase
+        const { data: hasRole, error } = await supabase
           .rpc("has_role", { _user_id: userId, _role: "admin" });
 
         if (cancelled || !mountedRef.current) return;
 
-        if (rpcError) {
-          console.error("[ProtectedRoute] RPC has_role error:", rpcError.message);
+        if (error) {
+          console.error("[ProtectedRoute] RPC has_role error:", error.message);
           setAdminState("no");
         } else if (hasRole) {
           console.log("[ProtectedRoute] Admin confirmed via RPC ✓");
           setAdminState("yes");
         } else {
-          console.warn("[ProtectedRoute] Not admin (both checks failed)");
+          console.warn("[ProtectedRoute] Not admin");
           setAdminState("no");
         }
       } catch (err) {
@@ -140,9 +118,22 @@ export default function ProtectedRoute({ children, requireAdmin = false }: Prote
         console.error("[ProtectedRoute] Admin check exception:", err);
         setAdminState("no");
       }
-    })();
+    };
 
-    return () => { cancelled = true; };
+    // Add a safety timeout for the admin check
+    const adminTimeout = setTimeout(() => {
+      if (!cancelled && mountedRef.current && adminState === "loading") {
+        console.warn("[ProtectedRoute] Admin check timed out after 8s — denying");
+        setAdminState("no");
+      }
+    }, 8000);
+
+    checkAdmin();
+
+    return () => {
+      cancelled = true;
+      clearTimeout(adminTimeout);
+    };
   }, [authState, requireAdmin]);
 
   // Redirects — only on definitive states, prevent loops
