@@ -193,7 +193,7 @@ export function ContactForm() {
         <Label htmlFor="message">Bericht *</Label>
         <Textarea
           id="message"
-          placeholder="Stel je vraag of vertel ons wat je zoekt..."
+          placeholder="Hoe kunnen we je helpen?"
           value={formData.message}
           onChange={(e) => handleChange("message", e.target.value)}
           className={`min-h-[150px] rounded-xl ${errors.message ? "border-destructive" : ""}`}
