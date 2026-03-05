@@ -292,6 +292,23 @@ export default function SelfCompassionQuestionnaire() {
       <SEO title="Zelfcompassie Vragenlijst | Mindful Mind" description="Vul de zelfcompassie vragenlijst in" />
 
       <div className="max-w-2xl mx-auto space-y-6">
+        {/* Shareable link */}
+        <div className="flex items-center gap-2 p-3 rounded-lg bg-muted/50 border border-border/50">
+          <span className="text-xs text-muted-foreground shrink-0">Link:</span>
+          <code className="text-xs flex-1 truncate select-all">{window.location.href}</code>
+          <Button
+            size="sm"
+            variant="outline"
+            className="h-7 text-xs gap-1 shrink-0"
+            onClick={() => {
+              navigator.clipboard.writeText(window.location.href);
+              toast.success("Link gekopieerd!");
+            }}
+          >
+            Kopieer
+          </Button>
+        </div>
+
         {/* Header */}
         <div className="text-center space-y-2">
           <div className="flex items-center justify-center gap-2 text-primary">
