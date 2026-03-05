@@ -653,7 +653,14 @@ export default function AdminCustomersSection({ initialTab = "customers" }: { in
 
       {/* Client Profile Modal (new - from clients table) */}
       {selectedClientId && (
-        <ClientProfileModal clientId={selectedClientId} onClose={() => { setSelectedClientId(null); fetchClients(); }} />
+        <ClientProfileModal
+          clientId={selectedClientId}
+          onClose={() => { setSelectedClientId(null); fetchClients(); }}
+          onOpenFullProfile={(email) => {
+            setSelectedClientId(null);
+            setSelectedCustomerEmail(email);
+          }}
+        />
       )}
 
       {/* New Client Dialog */}
