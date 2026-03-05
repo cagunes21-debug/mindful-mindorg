@@ -264,14 +264,7 @@ export default function AdminCustomersSection() {
                       {filteredCustomers.map((customer) => (
                         <TableRow key={customer.email} className="cursor-pointer hover:bg-muted/50" onClick={() => setSelectedCustomerEmail(customer.email)}>
                           <TableCell>
-                            <div className="flex items-center gap-2">
-                              <span className="font-medium">{customer.name}</span>
-                              {(customer.paid_registrations || 0) > 0 ? (
-                                <Badge className="bg-green-100 text-green-800 text-[10px] px-1.5 py-0">Klant</Badge>
-                              ) : (
-                                <Badge className="bg-orange-100 text-orange-800 text-[10px] px-1.5 py-0">Lead</Badge>
-                              )}
-                            </div>
+                            <span className="font-medium">{customer.name}</span>
                           </TableCell>
                           <TableCell>
                             <div className="flex flex-col gap-1">
