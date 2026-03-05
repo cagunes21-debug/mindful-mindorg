@@ -188,6 +188,32 @@ export default function AdminCustomersSection() {
     setSubmitting(false);
   };
 
+  const submitNewClient = async () => {
+    if (!newClient.first_name.trim() || !newClient.email.trim()) {
+      toast.error("Vul voornaam en e-mail in"); return;
+    }
+    setSubmitting(true);
+    try {
+      const { data, error } = await supabase.from("clients").insert({
+        first_name: newClient.first_name.trim(),
+        last_name: newClient.last_name.trim(),
+        email: newClient.email.trim().toLowerCase(),
+        phone: newClient.phone.trim() || null,
+        notes: newClient.notes.trim() || null,
+      }).select("id").single();
+      if (error) throw error;
+      toast.success("Klant aangemaakt!");
+      setShowNewClient(false);
+      setNewClient({ first_name: "", last_name: "", email: "", phone: "", notes: "" });
+      fetchClients();
+      // Open the new client profile
+      setSelectedClientId(data.id);
+    } catch (err: any) {
+      toast.error("Fout: " + err.message);
+    }
+    setSubmitting(false);
+  };
+
   const filteredCustomers = customers.filter(customer => {
     if (!searchQuery.trim()) return true;
     const query = searchQuery.toLowerCase();
