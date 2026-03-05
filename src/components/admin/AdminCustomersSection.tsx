@@ -55,7 +55,7 @@ export default function AdminCustomersSection() {
   const [leadsLoading, setLeadsLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState("");
   const [leadsSearchQuery, setLeadsSearchQuery] = useState("");
-  const [statusFilter, setStatusFilter] = useState<"all" | "lead" | "klant">("all");
+  
   const [selectedCustomerEmail, setSelectedCustomerEmail] = useState<string | null>(null);
   const [showNewReg, setShowNewReg] = useState(false);
   const [newReg, setNewReg] = useState({ name: "", email: "", phone: "", training_name: "8-weekse Mindful Zelfcompassie Training", remarks: "" });
@@ -136,8 +136,6 @@ export default function AdminCustomersSection() {
   };
 
   const filteredCustomers = customers.filter(customer => {
-    if (statusFilter === "lead" && (customer.paid_registrations || 0) > 0) return false;
-    if (statusFilter === "klant" && (customer.paid_registrations || 0) === 0) return false;
     if (!searchQuery.trim()) return true;
     const query = searchQuery.toLowerCase();
     return (
@@ -159,8 +157,6 @@ export default function AdminCustomersSection() {
     );
   });
 
-  const leadCount = customers.filter(c => (c.paid_registrations || 0) === 0).length;
-  const klantCount = customers.filter(c => (c.paid_registrations || 0) > 0).length;
   const newLeadCount = leads.filter(l => l.status === "new lead").length;
 
   const stats = {
@@ -239,15 +235,6 @@ export default function AdminCustomersSection() {
               <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
               <Input placeholder="Zoek op naam, e-mail of training..." value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} className="pl-10" />
             </div>
-            <div className="flex items-center gap-1">
-              <Button variant={statusFilter === "all" ? "default" : "outline"} size="sm" onClick={() => setStatusFilter("all")}>Alle ({customers.length})</Button>
-              <Button variant={statusFilter === "klant" ? "default" : "outline"} size="sm" onClick={() => setStatusFilter("klant")} className="gap-1">
-                <span className="h-2 w-2 rounded-full bg-green-500" /> Klant ({klantCount})
-              </Button>
-              <Button variant={statusFilter === "lead" ? "default" : "outline"} size="sm" onClick={() => setStatusFilter("lead")} className="gap-1">
-                <span className="h-2 w-2 rounded-full bg-orange-500" /> Lead ({leadCount})
-              </Button>
-            </div>
             <p className="text-sm text-muted-foreground">{filteredCustomers.length} resultaten</p>
             <Button size="sm" className="gap-2 ml-auto" onClick={() => setShowNewReg(true)}>
               <Plus className="h-4 w-4" /> Nieuwe klant
@@ -277,14 +264,7 @@ export default function AdminCustomersSection() {
                       {filteredCustomers.map((customer) => (
                         <TableRow key={customer.email} className="cursor-pointer hover:bg-muted/50" onClick={() => setSelectedCustomerEmail(customer.email)}>
                           <TableCell>
-                            <div className="flex items-center gap-2">
-                              <span className="font-medium">{customer.name}</span>
-                              {(customer.paid_registrations || 0) > 0 ? (
-                                <Badge className="bg-green-100 text-green-800 text-[10px] px-1.5 py-0">Klant</Badge>
-                              ) : (
-                                <Badge className="bg-orange-100 text-orange-800 text-[10px] px-1.5 py-0">Lead</Badge>
-                              )}
-                            </div>
+                            <span className="font-medium">{customer.name}</span>
                           </TableCell>
                           <TableCell>
                             <div className="flex flex-col gap-1">
