@@ -121,6 +121,17 @@ export default function AdminCustomersSection() {
     }
   };
 
+  const saveLeadNotes = async (id: string) => {
+    const notesText = editingNotes[id] ?? "";
+    const { error } = await supabase.from("leads").update({ notes: notesText, updated_at: new Date().toISOString() }).eq("id", id);
+    if (error) {
+      toast.error("Fout bij opslaan notities");
+    } else {
+      toast.success("Notities opgeslagen");
+      setLeads(prev => prev.map(l => l.id === id ? { ...l, notes: notesText } : l));
+    }
+  };
+
   const submitNewRegistration = async () => {
     if (!newReg.name.trim() || !newReg.email.trim() || !newReg.training_name.trim()) {
       toast.error("Vul naam, e-mail en training in"); return;
