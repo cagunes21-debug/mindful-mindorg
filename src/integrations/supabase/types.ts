@@ -197,9 +197,13 @@ export type Database = {
           intake_theme: string | null
           location: string | null
           registration_id: string | null
+          sessions_remaining: number | null
+          sessions_total: number | null
+          sessions_used: number
           start_date: string
           status: Database["public"]["Enums"]["enrollment_status"] | null
           trainer_name: string | null
+          training_id: string | null
           unlocked_weeks: number[]
           updated_at: string
           user_id: string | null
@@ -217,9 +221,13 @@ export type Database = {
           intake_theme?: string | null
           location?: string | null
           registration_id?: string | null
+          sessions_remaining?: number | null
+          sessions_total?: number | null
+          sessions_used?: number
           start_date: string
           status?: Database["public"]["Enums"]["enrollment_status"] | null
           trainer_name?: string | null
+          training_id?: string | null
           unlocked_weeks?: number[]
           updated_at?: string
           user_id?: string | null
@@ -237,9 +245,13 @@ export type Database = {
           intake_theme?: string | null
           location?: string | null
           registration_id?: string | null
+          sessions_remaining?: number | null
+          sessions_total?: number | null
+          sessions_used?: number
           start_date?: string
           status?: Database["public"]["Enums"]["enrollment_status"] | null
           trainer_name?: string | null
+          training_id?: string | null
           unlocked_weeks?: number[]
           updated_at?: string
           user_id?: string | null
@@ -258,6 +270,13 @@ export type Database = {
             columns: ["registration_id"]
             isOneToOne: false
             referencedRelation: "registrations"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "enrollments_training_id_fkey"
+            columns: ["training_id"]
+            isOneToOne: false
+            referencedRelation: "trainings"
             referencedColumns: ["id"]
           },
         ]
@@ -428,6 +447,111 @@ export type Database = {
         }
         Relationships: []
       }
+      order_items: {
+        Row: {
+          created_at: string
+          description: string
+          id: string
+          order_id: string
+          quantity: number
+          registration_id: string | null
+          total: number
+          training_id: string | null
+          unit_price: number
+        }
+        Insert: {
+          created_at?: string
+          description: string
+          id?: string
+          order_id: string
+          quantity?: number
+          registration_id?: string | null
+          total?: number
+          training_id?: string | null
+          unit_price?: number
+        }
+        Update: {
+          created_at?: string
+          description?: string
+          id?: string
+          order_id?: string
+          quantity?: number
+          registration_id?: string | null
+          total?: number
+          training_id?: string | null
+          unit_price?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "order_items_order_id_fkey"
+            columns: ["order_id"]
+            isOneToOne: false
+            referencedRelation: "orders"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "order_items_registration_id_fkey"
+            columns: ["registration_id"]
+            isOneToOne: false
+            referencedRelation: "registrations"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "order_items_training_id_fkey"
+            columns: ["training_id"]
+            isOneToOne: false
+            referencedRelation: "trainings"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      orders: {
+        Row: {
+          client_id: string | null
+          created_at: string
+          discount: number
+          id: string
+          notes: string | null
+          order_number: string
+          status: string
+          subtotal: number
+          total: number
+          updated_at: string
+        }
+        Insert: {
+          client_id?: string | null
+          created_at?: string
+          discount?: number
+          id?: string
+          notes?: string | null
+          order_number?: string
+          status?: string
+          subtotal?: number
+          total?: number
+          updated_at?: string
+        }
+        Update: {
+          client_id?: string | null
+          created_at?: string
+          discount?: number
+          id?: string
+          notes?: string | null
+          order_number?: string
+          status?: string
+          subtotal?: number
+          total?: number
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "orders_client_id_fkey"
+            columns: ["client_id"]
+            isOneToOne: false
+            referencedRelation: "clients"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       participant_progress: {
         Row: {
           assignment_id: string | null
@@ -516,6 +640,53 @@ export type Database = {
           used?: boolean
         }
         Relationships: []
+      }
+      payments: {
+        Row: {
+          amount: number
+          created_at: string
+          id: string
+          method: string
+          notes: string | null
+          order_id: string
+          paid_at: string | null
+          status: string
+          stripe_payment_id: string | null
+          updated_at: string
+        }
+        Insert: {
+          amount?: number
+          created_at?: string
+          id?: string
+          method?: string
+          notes?: string | null
+          order_id: string
+          paid_at?: string | null
+          status?: string
+          stripe_payment_id?: string | null
+          updated_at?: string
+        }
+        Update: {
+          amount?: number
+          created_at?: string
+          id?: string
+          method?: string
+          notes?: string | null
+          order_id?: string
+          paid_at?: string | null
+          status?: string
+          stripe_payment_id?: string | null
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "payments_order_id_fkey"
+            columns: ["order_id"]
+            isOneToOne: false
+            referencedRelation: "orders"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       registrations: {
         Row: {
@@ -846,6 +1017,45 @@ export type Database = {
           updated_at?: string
           welcome_message?: string
           welcome_title?: string
+        }
+        Relationships: []
+      }
+      trainings: {
+        Row: {
+          created_at: string
+          description: string | null
+          duration_weeks: number | null
+          id: string
+          is_active: boolean
+          name: string
+          price: number | null
+          sessions: number
+          type: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          description?: string | null
+          duration_weeks?: number | null
+          id?: string
+          is_active?: boolean
+          name: string
+          price?: number | null
+          sessions?: number
+          type: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          description?: string | null
+          duration_weeks?: number | null
+          id?: string
+          is_active?: boolean
+          name?: string
+          price?: number | null
+          sessions?: number
+          type?: string
+          updated_at?: string
         }
         Relationships: []
       }
