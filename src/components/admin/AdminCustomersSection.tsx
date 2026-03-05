@@ -714,6 +714,96 @@ export default function AdminCustomersSection() {
           </DialogFooter>
         </DialogContent>
       </Dialog>
+
+      {/* Convert Lead → Client Modal */}
+      {convertingLead && (
+        <Dialog open onOpenChange={() => { setConvertingLead(null); setDuplicateClient(null); }}>
+          <DialogContent className="sm:max-w-md">
+            <DialogHeader>
+              <DialogTitle className="flex items-center gap-2">
+                <UserCheck className="h-5 w-5 text-primary" /> Lead omzetten naar klant
+              </DialogTitle>
+              <DialogDescription>Maak een klantprofiel en inschrijving aan voor deze lead.</DialogDescription>
+            </DialogHeader>
+
+            {duplicateClient ? (
+              <div className="space-y-4">
+                <div className="rounded-md bg-amber-50 border border-amber-200 p-4">
+                  <p className="text-sm font-medium text-amber-800">Er bestaat al een klant met dit e-mailadres.</p>
+                  <p className="text-sm text-amber-700 mt-1">{duplicateClient.first_name} {duplicateClient.last_name} — {duplicateClient.email}</p>
+                  <p className="text-sm text-muted-foreground mt-2">Wil je een training toevoegen aan deze bestaande klant?</p>
+                </div>
+                <DialogFooter>
+                  <Button variant="outline" onClick={() => setDuplicateClient(null)}>Terug</Button>
+                  <Button onClick={handleConvertLead} disabled={convertSubmitting} className="gap-1.5">
+                    {convertSubmitting && <Loader2 className="h-4 w-4 animate-spin" />}
+                    <ArrowRight className="h-4 w-4" /> Training toevoegen
+                  </Button>
+                </DialogFooter>
+              </div>
+            ) : (
+              <div className="space-y-4">
+                <div className="grid grid-cols-2 gap-3">
+                  <div>
+                    <Label>Voornaam *</Label>
+                    <Input value={convertForm.first_name} onChange={e => setConvertForm(p => ({ ...p, first_name: e.target.value }))} />
+                  </div>
+                  <div>
+                    <Label>Achternaam</Label>
+                    <Input value={convertForm.last_name} onChange={e => setConvertForm(p => ({ ...p, last_name: e.target.value }))} />
+                  </div>
+                </div>
+                <div>
+                  <Label>E-mail *</Label>
+                  <Input type="email" value={convertForm.email} onChange={e => setConvertForm(p => ({ ...p, email: e.target.value }))} />
+                </div>
+                <div>
+                  <Label>Training *</Label>
+                  <Select value={convertForm.training} onValueChange={(v) => {
+                    let ct = "msc_8week";
+                    if (v.includes("Individueel")) ct = "individueel_6";
+                    else if (v.includes("Losse")) ct = "losse_sessie";
+                    setConvertForm(p => ({ ...p, training: v, course_type: ct }));
+                  }}>
+                    <SelectTrigger><SelectValue /></SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="Individueel Traject (6 sessies)">Individueel Traject (6 sessies)</SelectItem>
+                      <SelectItem value="8-weekse Mindful Zelfcompassie Training">8-weekse Mindful Zelfcompassie Training</SelectItem>
+                      <SelectItem value="Losse Sessie / Coaching">Losse Sessie / Coaching</SelectItem>
+                      <SelectItem value="Beweging & Mildheid Retreat">Beweging & Mildheid Retreat</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+                <div>
+                  <Label>Startdatum *</Label>
+                  <Input type="date" value={convertForm.start_date} onChange={e => setConvertForm(p => ({ ...p, start_date: e.target.value }))} />
+                </div>
+                <div className="flex items-center gap-2">
+                  <input
+                    type="checkbox"
+                    id="send-invite"
+                    checked={convertForm.send_invite}
+                    onChange={e => setConvertForm(p => ({ ...p, send_invite: e.target.checked }))}
+                    className="rounded border-input"
+                  />
+                  <Label htmlFor="send-invite" className="text-sm font-normal cursor-pointer">Uitnodigingsmail versturen</Label>
+                </div>
+                <div>
+                  <Label>Notities (optioneel)</Label>
+                  <Textarea value={convertForm.notes} onChange={e => setConvertForm(p => ({ ...p, notes: e.target.value }))} placeholder="Eventuele opmerkingen..." className="min-h-[60px]" />
+                </div>
+                <DialogFooter>
+                  <Button variant="outline" onClick={() => { setConvertingLead(null); setDuplicateClient(null); }}>Annuleren</Button>
+                  <Button onClick={handleConvertLead} disabled={convertSubmitting} className="gap-1.5">
+                    {convertSubmitting && <Loader2 className="h-4 w-4 animate-spin" />}
+                    <UserCheck className="h-4 w-4" /> Omzetten naar klant
+                  </Button>
+                </DialogFooter>
+              </div>
+            )}
+          </DialogContent>
+        </Dialog>
+      )}
     </div>
   );
 }
