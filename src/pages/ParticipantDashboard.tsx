@@ -206,33 +206,50 @@ const ParticipantDashboard = () => {
     setEnrollment(selected);
     const courseType = selected.course_type || 'msc_8week';
 
-    // First load the weeks for this course type
-    const weeksResult = await supabase
-      .from("course_weeks")
-      .select("*")
-      .eq("course_type", courseType)
-      .order("week_number");
+    try {
+      console.log("[ParticipantDashboard] Loading content for enrollment:", selected.id, "courseType:", courseType);
 
-    const courseWeeks = (weeksResult.data || []) as CourseWeek[];
-    setWeeks(courseWeeks);
+      // First load the weeks for this course type
+      const weeksResult = await supabase
+        .from("course_weeks")
+        .select("*")
+        .eq("course_type", courseType)
+        .order("week_number");
 
-    // Then load meditations & assignments filtered by these week IDs
-    const weekIds = courseWeeks.map(w => w.id);
+      if (weeksResult.error) {
+        console.error("[ParticipantDashboard] Weeks query error:", weeksResult.error);
+      }
 
-    const [meditationsResult, assignmentsResult, progressResult] = await Promise.all([
-      weekIds.length > 0
-        ? supabase.from("meditations").select("*").in("week_id", weekIds).order("sort_order")
-        : Promise.resolve({ data: [] }),
-      weekIds.length > 0
-        ? supabase.from("assignments").select("*").in("week_id", weekIds).order("sort_order")
-        : Promise.resolve({ data: [] }),
-      supabase.from("participant_progress").select("*").eq("enrollment_id", selected.id),
-    ]);
+      const courseWeeks = (weeksResult.data || []) as CourseWeek[];
+      setWeeks(courseWeeks);
 
-    if (meditationsResult.data) setMeditations(meditationsResult.data as Meditation[]);
-    if (assignmentsResult.data) setAssignments(assignmentsResult.data as Assignment[]);
-    if (progressResult.data) setProgress(progressResult.data as ParticipantProgress[]);
-    setSelectedWeek(selected.current_week || 1);
+      // Then load meditations & assignments filtered by these week IDs
+      const weekIds = courseWeeks.map(w => w.id);
+
+      const [meditationsResult, assignmentsResult, progressResult] = await Promise.all([
+        weekIds.length > 0
+          ? supabase.from("meditations").select("*").in("week_id", weekIds).order("sort_order")
+          : Promise.resolve({ data: [], error: null }),
+        weekIds.length > 0
+          ? supabase.from("assignments").select("*").in("week_id", weekIds).order("sort_order")
+          : Promise.resolve({ data: [], error: null }),
+        supabase.from("participant_progress").select("*").eq("enrollment_id", selected.id),
+      ]);
+
+      if (meditationsResult.error) console.error("[ParticipantDashboard] Meditations error:", meditationsResult.error);
+      if (assignmentsResult.error) console.error("[ParticipantDashboard] Assignments error:", assignmentsResult.error);
+      if (progressResult.error) console.error("[ParticipantDashboard] Progress error:", progressResult.error);
+
+      if (meditationsResult.data) setMeditations(meditationsResult.data as Meditation[]);
+      if (assignmentsResult.data) setAssignments(assignmentsResult.data as Assignment[]);
+      if (progressResult.data) setProgress(progressResult.data as ParticipantProgress[]);
+      setSelectedWeek(selected.current_week || 1);
+      
+      console.log("[ParticipantDashboard] Content loaded: weeks:", courseWeeks.length, "meditations:", meditationsResult.data?.length ?? 0, "assignments:", assignmentsResult.data?.length ?? 0);
+    } catch (err) {
+      console.error("[ParticipantDashboard] selectEnrollment error:", err);
+      setError("Fout bij het laden van cursusmateriaal. Ververs de pagina.");
+    }
   };
 
   const getMaxWeeks = (): number => {
