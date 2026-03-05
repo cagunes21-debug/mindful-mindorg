@@ -922,6 +922,11 @@ function ClientProfileModal({ clientId, onClose, onOpenFullProfile }: { clientId
             <span className="flex items-center gap-1"><Mail className="h-3 w-3" />{client.email}</span>
             {client.phone && <span className="flex items-center gap-1"><Phone className="h-3 w-3" />{client.phone}</span>}
           </DialogDescription>
+          {onOpenFullProfile && (
+            <Button size="sm" variant="outline" className="mt-2 gap-1.5 text-xs" onClick={() => onOpenFullProfile(client.email)}>
+              <ArrowRight className="h-3 w-3" /> Volledig klantprofiel openen
+            </Button>
+          )}
         </DialogHeader>
 
         <div className="space-y-4">
