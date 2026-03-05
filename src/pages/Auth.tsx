@@ -231,6 +231,10 @@ const Auth = () => {
           }
         } else {
           toast({ title: "Welkom terug!", description: "Je bent succesvol ingelogd." });
+          const { data: { session } } = await supabase.auth.getSession();
+          if (session?.user) {
+            await redirectByRole(session.user.id);
+          }
         }
       } else {
         const { error } = await supabase.auth.signUp({
