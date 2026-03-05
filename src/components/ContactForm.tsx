@@ -176,12 +176,12 @@ export function ContactForm() {
             disabled={isSubmitting}
           >
             <SelectTrigger className="rounded-xl">
-              <SelectValue placeholder="Selecteer een training" />
+              <SelectValue placeholder="Waar heb je interesse in?" />
             </SelectTrigger>
             <SelectContent>
               {trainings.map((training) => (
-                <SelectItem key={training} value={training}>
-                  {training}
+                <SelectItem key={training.value} value={training.value}>
+                  {training.label}
                 </SelectItem>
               ))}
             </SelectContent>
