@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef, ReactNode } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 
 interface ProtectedRouteProps {
@@ -9,19 +9,19 @@ interface ProtectedRouteProps {
 
 export default function ProtectedRoute({ children, requireAdmin = false }: ProtectedRouteProps) {
   const navigate = useNavigate();
+  const location = useLocation();
   const [authState, setAuthState] = useState<"loading" | "authenticated" | "unauthenticated">("loading");
   const [adminState, setAdminState] = useState<"loading" | "yes" | "no">(requireAdmin ? "loading" : "yes");
   const userIdRef = useRef<string | null>(null);
   const adminCheckedRef = useRef(false);
   const mountedRef = useRef(true);
-  const authStateRef = useRef<"loading" | "authenticated" | "unauthenticated">("loading");
+  const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-  // Step 1: Use ONLY onAuthStateChange — it fires INITIAL_SESSION first, never hangs
   useEffect(() => {
     mountedRef.current = true;
     adminCheckedRef.current = false;
 
-    console.log("[ProtectedRoute] Mount, requireAdmin:", requireAdmin);
+    console.log("[ProtectedRoute] Mount, path:", location.pathname, "requireAdmin:", requireAdmin);
 
     const { data: { subscription } } = supabase.auth.onAuthStateChange(
       (event, session) => {
@@ -32,29 +32,30 @@ export default function ProtectedRoute({ children, requireAdmin = false }: Prote
           userIdRef.current = null;
           adminCheckedRef.current = false;
           setAdminState(requireAdmin ? "loading" : "yes");
-          authStateRef.current = "unauthenticated";
           setAuthState("unauthenticated");
           return;
         }
 
-        // INITIAL_SESSION or SIGNED_IN or TOKEN_REFRESHED
         if (session?.user) {
           userIdRef.current = session.user.id;
-          authStateRef.current = "authenticated";
+          // Cancel safety timeout — auth succeeded
+          if (timeoutRef.current) {
+            clearTimeout(timeoutRef.current);
+            timeoutRef.current = null;
+            console.log("[ProtectedRoute] Safety timeout cancelled — session found");
+          }
           setAuthState("authenticated");
         } else {
           userIdRef.current = null;
-          authStateRef.current = "unauthenticated";
           setAuthState("unauthenticated");
         }
       }
     );
 
-    // Safety timeout — if no auth event after 5s, assume unauthenticated
-    const timeout = setTimeout(() => {
-      if (mountedRef.current && authStateRef.current === "loading") {
-        console.warn("[ProtectedRoute] Auth timeout — no event received in 5s");
-        authStateRef.current = "unauthenticated";
+    // Safety timeout — only fires if no auth event arrives
+    timeoutRef.current = setTimeout(() => {
+      if (mountedRef.current) {
+        console.warn("[ProtectedRoute] Safety timeout — no auth event in 5s, assuming unauthenticated");
         setAuthState("unauthenticated");
       }
     }, 5000);
@@ -62,16 +63,17 @@ export default function ProtectedRoute({ children, requireAdmin = false }: Prote
     return () => {
       mountedRef.current = false;
       subscription.unsubscribe();
-      clearTimeout(timeout);
+      if (timeoutRef.current) clearTimeout(timeoutRef.current);
     };
   }, []);
 
-  // Step 2: Check admin role ONCE when authenticated
+  // Check admin role ONCE when authenticated
   useEffect(() => {
     if (authState !== "authenticated" || !requireAdmin || adminCheckedRef.current) return;
 
     const userId = userIdRef.current;
     if (!userId) {
+      console.warn("[ProtectedRoute] Authenticated but no userId ref — denying admin");
       setAdminState("no");
       return;
     }
@@ -79,7 +81,7 @@ export default function ProtectedRoute({ children, requireAdmin = false }: Prote
     adminCheckedRef.current = true;
     let cancelled = false;
 
-    console.log("[ProtectedRoute] Checking admin for:", userId);
+    console.log("[ProtectedRoute] Checking admin role for:", userId);
 
     (async () => {
       try {
@@ -96,7 +98,7 @@ export default function ProtectedRoute({ children, requireAdmin = false }: Prote
           console.error("[ProtectedRoute] Admin query error:", error.message);
           setAdminState("no");
         } else if (!data) {
-          console.warn("[ProtectedRoute] No admin role for:", userId);
+          console.warn("[ProtectedRoute] No admin role found for:", userId);
           setAdminState("no");
         } else {
           console.log("[ProtectedRoute] Admin confirmed ✓");
@@ -112,18 +114,22 @@ export default function ProtectedRoute({ children, requireAdmin = false }: Prote
     return () => { cancelled = true; };
   }, [authState, requireAdmin]);
 
-  // Step 3: Redirects — only on definitive states
+  // Redirects — only on definitive states, prevent loops
   useEffect(() => {
     if (authState === "unauthenticated") {
-      console.log("[ProtectedRoute] → redirect /login");
-      navigate("/login", { replace: true });
+      if (location.pathname !== "/login") {
+        console.log("[ProtectedRoute] → redirect /login (from", location.pathname, ")");
+        navigate("/login", { replace: true });
+      }
     } else if (authState === "authenticated" && requireAdmin && adminState === "no") {
-      console.log("[ProtectedRoute] → redirect / (not admin)");
-      navigate("/", { replace: true });
+      if (location.pathname !== "/") {
+        console.log("[ProtectedRoute] → redirect / (not admin)");
+        navigate("/", { replace: true });
+      }
     }
-  }, [authState, adminState, requireAdmin, navigate]);
+  }, [authState, adminState, requireAdmin, navigate, location.pathname]);
 
-  // Render
+  // Loading state
   if (authState === "loading" || (requireAdmin && authState === "authenticated" && adminState === "loading")) {
     return (
       <div className="min-h-screen bg-background flex items-center justify-center">
