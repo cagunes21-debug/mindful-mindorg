@@ -10,7 +10,8 @@ import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Label } from "@/components/ui/label";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter } from "@/components/ui/dialog";
-import { Loader2, Users, Search, Euro, Mail, Phone, ShoppingBag, Calendar, Plus } from "lucide-react";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Loader2, Users, Search, Euro, Mail, Phone, ShoppingBag, Calendar, Plus, MessageCircle, Clock } from "lucide-react";
 import { format } from "date-fns";
 import { nl } from "date-fns/locale";
 import { toast } from "sonner";
@@ -28,18 +29,42 @@ interface Customer {
   trainings: string[];
 }
 
+interface Lead {
+  id: string;
+  first_name: string;
+  last_name: string;
+  email: string;
+  phone_number: string | null;
+  message: string | null;
+  interest: string | null;
+  status: string;
+  submission_date: string;
+}
+
+const leadStatusColors: Record<string, string> = {
+  "new lead": "bg-blue-100 text-blue-800",
+  "contacted": "bg-yellow-100 text-yellow-800",
+  "qualified": "bg-green-100 text-green-800",
+  "lost": "bg-red-100 text-red-800",
+};
+
 export default function AdminCustomersSection() {
   const [isLoading, setIsLoading] = useState(true);
   const [customers, setCustomers] = useState<Customer[]>([]);
+  const [leads, setLeads] = useState<Lead[]>([]);
+  const [leadsLoading, setLeadsLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState("");
+  const [leadsSearchQuery, setLeadsSearchQuery] = useState("");
   const [statusFilter, setStatusFilter] = useState<"all" | "lead" | "klant">("all");
   const [selectedCustomerEmail, setSelectedCustomerEmail] = useState<string | null>(null);
   const [showNewReg, setShowNewReg] = useState(false);
   const [newReg, setNewReg] = useState({ name: "", email: "", phone: "", training_name: "8-weekse Mindful Zelfcompassie Training", remarks: "" });
   const [submitting, setSubmitting] = useState(false);
+  const [activeTab, setActiveTab] = useState("customers");
 
   useEffect(() => {
     fetchCustomers();
+    fetchLeads();
   }, []);
 
   const fetchCustomers = async () => {
@@ -55,6 +80,32 @@ export default function AdminCustomersSection() {
       console.error("Error fetching customers:", error);
     } finally {
       setIsLoading(false);
+    }
+  };
+
+  const fetchLeads = async () => {
+    setLeadsLoading(true);
+    try {
+      const { data, error } = await supabase
+        .from("leads")
+        .select("*")
+        .order("submission_date", { ascending: false });
+      if (error) throw error;
+      setLeads((data as Lead[]) || []);
+    } catch (error) {
+      console.error("Error fetching leads:", error);
+    } finally {
+      setLeadsLoading(false);
+    }
+  };
+
+  const updateLeadStatus = async (id: string, newStatus: string) => {
+    const { error } = await supabase.from("leads").update({ status: newStatus, updated_at: new Date().toISOString() }).eq("id", id);
+    if (error) {
+      toast.error("Fout bij bijwerken status");
+    } else {
+      toast.success("Status bijgewerkt");
+      setLeads(prev => prev.map(l => l.id === id ? { ...l, status: newStatus } : l));
     }
   };
 
@@ -85,10 +136,8 @@ export default function AdminCustomersSection() {
   };
 
   const filteredCustomers = customers.filter(customer => {
-    // Status filter
     if (statusFilter === "lead" && (customer.paid_registrations || 0) > 0) return false;
     if (statusFilter === "klant" && (customer.paid_registrations || 0) === 0) return false;
-    
     if (!searchQuery.trim()) return true;
     const query = searchQuery.toLowerCase();
     return (
@@ -98,14 +147,27 @@ export default function AdminCustomersSection() {
     );
   });
 
+  const filteredLeads = leads.filter(lead => {
+    if (!leadsSearchQuery.trim()) return true;
+    const q = leadsSearchQuery.toLowerCase();
+    return (
+      lead.first_name?.toLowerCase().includes(q) ||
+      lead.last_name?.toLowerCase().includes(q) ||
+      lead.email?.toLowerCase().includes(q) ||
+      lead.interest?.toLowerCase().includes(q) ||
+      lead.message?.toLowerCase().includes(q)
+    );
+  });
+
   const leadCount = customers.filter(c => (c.paid_registrations || 0) === 0).length;
   const klantCount = customers.filter(c => (c.paid_registrations || 0) > 0).length;
+  const newLeadCount = leads.filter(l => l.status === "new lead").length;
 
   const stats = {
     totalCustomers: customers.length,
     totalRevenue: customers.reduce((sum, c) => sum + (c.total_spent || 0), 0),
     totalRegistrations: customers.reduce((sum, c) => sum + (c.total_registrations || 0), 0),
-    returningCustomers: customers.filter(c => (c.total_registrations || 0) > 1).length,
+    formLeads: leads.length,
   };
 
   return (
@@ -148,156 +210,204 @@ export default function AdminCustomersSection() {
         <Card>
           <CardContent className="pt-6">
             <div className="flex items-center gap-3">
-              <div className="p-2 bg-green-100 rounded-lg"><Calendar className="h-5 w-5 text-green-700" /></div>
+              <div className="p-2 bg-orange-100 rounded-lg"><MessageCircle className="h-5 w-5 text-orange-700" /></div>
               <div>
-                <p className="text-2xl font-semibold">{stats.returningCustomers}</p>
-                <p className="text-sm text-muted-foreground">Terugkerend</p>
+                <p className="text-2xl font-semibold">{stats.formLeads}{newLeadCount > 0 && <span className="text-sm font-normal text-blue-600 ml-1">({newLeadCount} nieuw)</span>}</p>
+                <p className="text-sm text-muted-foreground">Website leads</p>
               </div>
             </div>
           </CardContent>
         </Card>
       </div>
 
-      {/* Search & Filter */}
-      <div className="flex flex-wrap items-center gap-3 mb-4">
-        <div className="relative flex-1 max-w-sm">
-          <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-          <Input
-            placeholder="Zoek op naam, e-mail of training..."
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            className="pl-10"
-          />
-        </div>
-        <div className="flex items-center gap-1">
-          <Button
-            variant={statusFilter === "all" ? "default" : "outline"}
-            size="sm"
-            onClick={() => setStatusFilter("all")}
-          >
-            Alle ({customers.length})
-          </Button>
-          <Button
-            variant={statusFilter === "klant" ? "default" : "outline"}
-            size="sm"
-            onClick={() => setStatusFilter("klant")}
-            className="gap-1"
-          >
-            <span className="h-2 w-2 rounded-full bg-green-500" />
-            Klant ({klantCount})
-          </Button>
-          <Button
-            variant={statusFilter === "lead" ? "default" : "outline"}
-            size="sm"
-            onClick={() => setStatusFilter("lead")}
-            className="gap-1"
-          >
-            <span className="h-2 w-2 rounded-full bg-orange-500" />
-            Lead ({leadCount})
-          </Button>
-        </div>
-        <p className="text-sm text-muted-foreground">
-          {filteredCustomers.length} resultaten
-        </p>
-        <Button size="sm" className="gap-2 ml-auto" onClick={() => setShowNewReg(true)}>
-          <Plus className="h-4 w-4" /> Nieuwe klant
-        </Button>
-      </div>
+      <Tabs value={activeTab} onValueChange={setActiveTab}>
+        <TabsList className="mb-4">
+          <TabsTrigger value="customers" className="gap-2">
+            <Users className="h-4 w-4" /> Klanten ({customers.length})
+          </TabsTrigger>
+          <TabsTrigger value="leads" className="gap-2">
+            <MessageCircle className="h-4 w-4" /> Website Leads ({leads.length})
+            {newLeadCount > 0 && <Badge className="bg-blue-500 text-white text-[10px] ml-1 px-1.5 py-0">{newLeadCount}</Badge>}
+          </TabsTrigger>
+        </TabsList>
 
-      {/* Table */}
-      <Card>
-        <CardContent className="pt-4">
-          {isLoading ? (
-            <div className="flex items-center justify-center py-12">
-              <Loader2 className="h-8 w-8 animate-spin text-sage-600" />
+        {/* CUSTOMERS TAB */}
+        <TabsContent value="customers">
+          {/* Search & Filter */}
+          <div className="flex flex-wrap items-center gap-3 mb-4">
+            <div className="relative flex-1 max-w-sm">
+              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+              <Input placeholder="Zoek op naam, e-mail of training..." value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} className="pl-10" />
             </div>
-          ) : filteredCustomers.length === 0 ? (
-            <div className="text-center py-12 text-muted-foreground">
-              {searchQuery ? "Geen klanten gevonden" : "Nog geen klanten"}
+            <div className="flex items-center gap-1">
+              <Button variant={statusFilter === "all" ? "default" : "outline"} size="sm" onClick={() => setStatusFilter("all")}>Alle ({customers.length})</Button>
+              <Button variant={statusFilter === "klant" ? "default" : "outline"} size="sm" onClick={() => setStatusFilter("klant")} className="gap-1">
+                <span className="h-2 w-2 rounded-full bg-green-500" /> Klant ({klantCount})
+              </Button>
+              <Button variant={statusFilter === "lead" ? "default" : "outline"} size="sm" onClick={() => setStatusFilter("lead")} className="gap-1">
+                <span className="h-2 w-2 rounded-full bg-orange-500" /> Lead ({leadCount})
+              </Button>
             </div>
-          ) : (
-            <div className="overflow-x-auto">
-              <Table>
-                <TableHeader>
-                  <TableRow>
-                    <TableHead>Klant</TableHead>
-                    <TableHead>Contact</TableHead>
-                    <TableHead className="text-center">Aanmeldingen</TableHead>
-                    <TableHead className="text-right">Totaal betaald</TableHead>
-                    <TableHead>Trainingen</TableHead>
-                    <TableHead>Laatste activiteit</TableHead>
-                  </TableRow>
-                </TableHeader>
-                <TableBody>
-                  {filteredCustomers.map((customer) => (
-                    <TableRow
-                      key={customer.email}
-                      className="cursor-pointer hover:bg-muted/50"
-                      onClick={() => setSelectedCustomerEmail(customer.email)}
-                    >
-                      <TableCell>
-                        <div className="flex items-center gap-2">
-                          <span className="font-medium">{customer.name}</span>
-                          {(customer.paid_registrations || 0) > 0 ? (
-                            <Badge className="bg-green-100 text-green-800 text-[10px] px-1.5 py-0">Klant</Badge>
-                          ) : (
-                            <Badge className="bg-orange-100 text-orange-800 text-[10px] px-1.5 py-0">Lead</Badge>
-                          )}
-                        </div>
-                      </TableCell>
-                      <TableCell>
-                        <div className="flex flex-col gap-1">
-                          <div className="flex items-center gap-1 text-sm text-muted-foreground">
-                            <Mail className="h-3 w-3" />{customer.email}
-                          </div>
-                          {customer.phone && (
-                            <div className="flex items-center gap-1 text-sm text-muted-foreground">
-                              <Phone className="h-3 w-3" />{customer.phone}
+            <p className="text-sm text-muted-foreground">{filteredCustomers.length} resultaten</p>
+            <Button size="sm" className="gap-2 ml-auto" onClick={() => setShowNewReg(true)}>
+              <Plus className="h-4 w-4" /> Nieuwe klant
+            </Button>
+          </div>
+
+          <Card>
+            <CardContent className="pt-4">
+              {isLoading ? (
+                <div className="flex items-center justify-center py-12"><Loader2 className="h-8 w-8 animate-spin text-sage-600" /></div>
+              ) : filteredCustomers.length === 0 ? (
+                <div className="text-center py-12 text-muted-foreground">{searchQuery ? "Geen klanten gevonden" : "Nog geen klanten"}</div>
+              ) : (
+                <div className="overflow-x-auto">
+                  <Table>
+                    <TableHeader>
+                      <TableRow>
+                        <TableHead>Klant</TableHead>
+                        <TableHead>Contact</TableHead>
+                        <TableHead className="text-center">Aanmeldingen</TableHead>
+                        <TableHead className="text-right">Totaal betaald</TableHead>
+                        <TableHead>Trainingen</TableHead>
+                        <TableHead>Laatste activiteit</TableHead>
+                      </TableRow>
+                    </TableHeader>
+                    <TableBody>
+                      {filteredCustomers.map((customer) => (
+                        <TableRow key={customer.email} className="cursor-pointer hover:bg-muted/50" onClick={() => setSelectedCustomerEmail(customer.email)}>
+                          <TableCell>
+                            <div className="flex items-center gap-2">
+                              <span className="font-medium">{customer.name}</span>
+                              {(customer.paid_registrations || 0) > 0 ? (
+                                <Badge className="bg-green-100 text-green-800 text-[10px] px-1.5 py-0">Klant</Badge>
+                              ) : (
+                                <Badge className="bg-orange-100 text-orange-800 text-[10px] px-1.5 py-0">Lead</Badge>
+                              )}
                             </div>
-                          )}
-                        </div>
-                      </TableCell>
-                      <TableCell className="text-center">
-                        <div className="flex flex-col items-center">
-                          <span className="font-semibold">{customer.total_registrations}</span>
-                          <span className="text-xs text-muted-foreground">({customer.paid_registrations} betaald)</span>
-                        </div>
-                      </TableCell>
-                      <TableCell className="text-right">
-                        <span className="font-semibold text-terracotta-600">€{customer.total_spent?.toLocaleString('nl-NL') || 0}</span>
-                      </TableCell>
-                      <TableCell>
-                        <div className="flex flex-wrap gap-1 max-w-[200px]">
-                          {customer.trainings?.slice(0, 2).map((training, idx) => (
-                            <Badge key={idx} variant="secondary" className="bg-sage-100 text-sage-800 text-xs">
-                              {training.length > 20 ? training.substring(0, 20) + '...' : training}
-                            </Badge>
-                          ))}
-                          {customer.trainings && customer.trainings.length > 2 && (
-                            <Badge variant="outline" className="text-xs">+{customer.trainings.length - 2}</Badge>
-                          )}
-                        </div>
-                      </TableCell>
-                      <TableCell>
-                        <div className="text-sm text-muted-foreground">
-                          {customer.last_registration && format(new Date(customer.last_registration), "d MMM yyyy", { locale: nl })}
-                        </div>
-                      </TableCell>
-                    </TableRow>
-                  ))}
-                </TableBody>
-              </Table>
+                          </TableCell>
+                          <TableCell>
+                            <div className="flex flex-col gap-1">
+                              <div className="flex items-center gap-1 text-sm text-muted-foreground"><Mail className="h-3 w-3" />{customer.email}</div>
+                              {customer.phone && <div className="flex items-center gap-1 text-sm text-muted-foreground"><Phone className="h-3 w-3" />{customer.phone}</div>}
+                            </div>
+                          </TableCell>
+                          <TableCell className="text-center">
+                            <div className="flex flex-col items-center">
+                              <span className="font-semibold">{customer.total_registrations}</span>
+                              <span className="text-xs text-muted-foreground">({customer.paid_registrations} betaald)</span>
+                            </div>
+                          </TableCell>
+                          <TableCell className="text-right">
+                            <span className="font-semibold text-terracotta-600">€{customer.total_spent?.toLocaleString('nl-NL') || 0}</span>
+                          </TableCell>
+                          <TableCell>
+                            <div className="flex flex-wrap gap-1 max-w-[200px]">
+                              {customer.trainings?.slice(0, 2).map((training, idx) => (
+                                <Badge key={idx} variant="secondary" className="bg-sage-100 text-sage-800 text-xs">
+                                  {training.length > 20 ? training.substring(0, 20) + '...' : training}
+                                </Badge>
+                              ))}
+                              {customer.trainings && customer.trainings.length > 2 && <Badge variant="outline" className="text-xs">+{customer.trainings.length - 2}</Badge>}
+                            </div>
+                          </TableCell>
+                          <TableCell>
+                            <div className="text-sm text-muted-foreground">
+                              {customer.last_registration && format(new Date(customer.last_registration), "d MMM yyyy", { locale: nl })}
+                            </div>
+                          </TableCell>
+                        </TableRow>
+                      ))}
+                    </TableBody>
+                  </Table>
+                </div>
+              )}
+            </CardContent>
+          </Card>
+        </TabsContent>
+
+        {/* LEADS TAB */}
+        <TabsContent value="leads">
+          <div className="flex flex-wrap items-center gap-3 mb-4">
+            <div className="relative flex-1 max-w-sm">
+              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+              <Input placeholder="Zoek op naam, e-mail of interesse..." value={leadsSearchQuery} onChange={(e) => setLeadsSearchQuery(e.target.value)} className="pl-10" />
             </div>
-          )}
-        </CardContent>
-      </Card>
+            <p className="text-sm text-muted-foreground">{filteredLeads.length} resultaten</p>
+          </div>
+
+          <Card>
+            <CardContent className="pt-4">
+              {leadsLoading ? (
+                <div className="flex items-center justify-center py-12"><Loader2 className="h-8 w-8 animate-spin text-sage-600" /></div>
+              ) : filteredLeads.length === 0 ? (
+                <div className="text-center py-12 text-muted-foreground">{leadsSearchQuery ? "Geen leads gevonden" : "Nog geen website leads"}</div>
+              ) : (
+                <div className="overflow-x-auto">
+                  <Table>
+                    <TableHeader>
+                      <TableRow>
+                        <TableHead>Naam</TableHead>
+                        <TableHead>Contact</TableHead>
+                        <TableHead>Interesse</TableHead>
+                        <TableHead>Bericht</TableHead>
+                        <TableHead>Status</TableHead>
+                        <TableHead>Datum</TableHead>
+                      </TableRow>
+                    </TableHeader>
+                    <TableBody>
+                      {filteredLeads.map((lead) => (
+                        <TableRow key={lead.id}>
+                          <TableCell>
+                            <span className="font-medium">{lead.first_name} {lead.last_name}</span>
+                          </TableCell>
+                          <TableCell>
+                            <div className="flex flex-col gap-1">
+                              <div className="flex items-center gap-1 text-sm text-muted-foreground"><Mail className="h-3 w-3" />{lead.email}</div>
+                              {lead.phone_number && <div className="flex items-center gap-1 text-sm text-muted-foreground"><Phone className="h-3 w-3" />{lead.phone_number}</div>}
+                            </div>
+                          </TableCell>
+                          <TableCell>
+                            {lead.interest && <Badge variant="secondary" className="bg-sage-100 text-sage-800 text-xs">{lead.interest}</Badge>}
+                          </TableCell>
+                          <TableCell>
+                            <p className="text-sm text-muted-foreground max-w-[250px] truncate">{lead.message || "—"}</p>
+                          </TableCell>
+                          <TableCell>
+                            <Select value={lead.status} onValueChange={(v) => updateLeadStatus(lead.id, v)}>
+                              <SelectTrigger className="w-[130px] h-8">
+                                <Badge className={`${leadStatusColors[lead.status] || "bg-muted text-muted-foreground"} text-[10px] px-1.5 py-0`}>
+                                  {lead.status}
+                                </Badge>
+                              </SelectTrigger>
+                              <SelectContent>
+                                <SelectItem value="new lead">New lead</SelectItem>
+                                <SelectItem value="contacted">Contacted</SelectItem>
+                                <SelectItem value="qualified">Qualified</SelectItem>
+                                <SelectItem value="lost">Lost</SelectItem>
+                              </SelectContent>
+                            </Select>
+                          </TableCell>
+                          <TableCell>
+                            <div className="flex items-center gap-1 text-sm text-muted-foreground">
+                              <Clock className="h-3 w-3" />
+                              {format(new Date(lead.submission_date), "d MMM yyyy HH:mm", { locale: nl })}
+                            </div>
+                          </TableCell>
+                        </TableRow>
+                      ))}
+                    </TableBody>
+                  </Table>
+                </div>
+              )}
+            </CardContent>
+          </Card>
+        </TabsContent>
+      </Tabs>
 
       {/* Customer Profile Modal */}
       {selectedCustomerEmail && (
-        <CustomerProfile
-          email={selectedCustomerEmail}
-          onClose={() => setSelectedCustomerEmail(null)}
-        />
+        <CustomerProfile email={selectedCustomerEmail} onClose={() => setSelectedCustomerEmail(null)} />
       )}
 
       {/* New Registration Dialog */}
@@ -308,18 +418,9 @@ export default function AdminCustomersSection() {
             <DialogDescription>Maak handmatig een aanmelding aan voor een klant.</DialogDescription>
           </DialogHeader>
           <div className="space-y-4">
-            <div>
-              <Label>Naam *</Label>
-              <Input value={newReg.name} onChange={e => setNewReg(p => ({ ...p, name: e.target.value }))} placeholder="Volledige naam" />
-            </div>
-            <div>
-              <Label>E-mail *</Label>
-              <Input type="email" value={newReg.email} onChange={e => setNewReg(p => ({ ...p, email: e.target.value }))} placeholder="email@voorbeeld.nl" />
-            </div>
-            <div>
-              <Label>Telefoon</Label>
-              <Input value={newReg.phone} onChange={e => setNewReg(p => ({ ...p, phone: e.target.value }))} placeholder="06-12345678" />
-            </div>
+            <div><Label>Naam *</Label><Input value={newReg.name} onChange={e => setNewReg(p => ({ ...p, name: e.target.value }))} placeholder="Volledige naam" /></div>
+            <div><Label>E-mail *</Label><Input type="email" value={newReg.email} onChange={e => setNewReg(p => ({ ...p, email: e.target.value }))} placeholder="email@voorbeeld.nl" /></div>
+            <div><Label>Telefoon</Label><Input value={newReg.phone} onChange={e => setNewReg(p => ({ ...p, phone: e.target.value }))} placeholder="06-12345678" /></div>
             <div>
               <Label>Training *</Label>
               <Select value={newReg.training_name} onValueChange={v => setNewReg(p => ({ ...p, training_name: v }))}>
@@ -332,10 +433,7 @@ export default function AdminCustomersSection() {
                 </SelectContent>
               </Select>
             </div>
-            <div>
-              <Label>Opmerkingen</Label>
-              <Input value={newReg.remarks} onChange={e => setNewReg(p => ({ ...p, remarks: e.target.value }))} placeholder="Eventuele opmerkingen" />
-            </div>
+            <div><Label>Opmerkingen</Label><Input value={newReg.remarks} onChange={e => setNewReg(p => ({ ...p, remarks: e.target.value }))} placeholder="Eventuele opmerkingen" /></div>
           </div>
           <DialogFooter>
             <Button variant="outline" onClick={() => setShowNewReg(false)}>Annuleren</Button>

@@ -127,6 +127,37 @@ const handler = async (req: Request): Promise<Response> => {
     const sanitizedMessage = message.trim();
     const sanitizedRemarks = remarks?.trim() || null;
 
+    // Always create a lead in the CRM from contact form submissions
+    {
+      const supabaseUrl = Deno.env.get("SUPABASE_URL")!;
+      const supabaseServiceKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!;
+      const supabaseLead = createClient(supabaseUrl, supabaseServiceKey);
+
+      // Split name into first and last
+      const nameParts = sanitizedName.split(/\s+/);
+      const firstName = nameParts[0] || sanitizedName;
+      const lastName = nameParts.slice(1).join(" ") || "";
+
+      const { error: leadError } = await supabaseLead
+        .from("leads")
+        .insert({
+          first_name: firstName,
+          last_name: lastName,
+          email: sanitizedEmail,
+          phone_number: sanitizedPhone,
+          message: sanitizedMessage,
+          interest: training || null,
+          status: "new lead",
+          submission_date: new Date().toISOString(),
+        });
+
+      if (leadError) {
+        console.error("Error creating lead:", leadError);
+      } else {
+        console.log("Lead created successfully for:", sanitizedEmail);
+      }
+    }
+
     // If this is a registration, save to database
     if (isRegistration && training) {
       console.log("Saving registration to database:", { name: sanitizedName, email: sanitizedEmail, training });
