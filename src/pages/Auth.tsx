@@ -219,13 +219,7 @@ const Auth = () => {
           }
         } else {
           toast({ title: "Welkom terug!", description: "Je bent succesvol ingelogd." });
-          const userId = signInData?.session?.user?.id || signInData?.user?.id;
-          if (userId) {
-            await redirectByRole(userId);
-          } else {
-            console.warn("[Auth] No user ID after login, redirecting to home");
-            navigate("/", { replace: true });
-          }
+          redirectAfterLogin();
         }
       } else {
         const { error } = await supabase.auth.signUp({
