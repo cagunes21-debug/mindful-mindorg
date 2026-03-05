@@ -9,6 +9,7 @@ import MindfulZelfcompassie from "./pages/MindfulZelfcompassie";
 
 import StickyCTA from "./components/StickyCTA";
 import ProtectedRoute from "./components/ProtectedRoute";
+import { useAutoLinkClient } from "./hooks/useAutoLinkClient";
 
 const IndividueelHome = lazy(() => import("./pages/IndividueelHome"));
 
