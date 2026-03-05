@@ -166,15 +166,46 @@ export default function AdminRegistrationsSection() {
     link.click();
   };
 
+  const pipelineSteps = [
+    { key: "pending", label: "Aanmelding", icon: Calendar, count: registrations.filter(r => r.status === "pending" && (r.payment_status || "pending") === "pending").length, color: "bg-yellow-500", bgLight: "bg-yellow-50 border-yellow-200", textColor: "text-yellow-700" },
+    { key: "confirmed", label: "Bevestigd", icon: Users, count: registrations.filter(r => r.status === "confirmed" && (r.payment_status || "pending") === "pending").length, color: "bg-blue-500", bgLight: "bg-blue-50 border-blue-200", textColor: "text-blue-700" },
+    { key: "awaiting", label: "Betaallink verstuurd", icon: Send, count: registrations.filter(r => r.payment_status === "awaiting_payment").length, color: "bg-amber-500", bgLight: "bg-amber-50 border-amber-200", textColor: "text-amber-700" },
+    { key: "paid", label: "Betaald", icon: CreditCard, count: registrations.filter(r => r.payment_status === "paid").length, color: "bg-emerald-500", bgLight: "bg-emerald-50 border-emerald-200", textColor: "text-emerald-700" },
+  ];
+
   return (
     <div>
-      {/* Stats */}
-      <div className="grid grid-cols-2 md:grid-cols-5 gap-4 mb-6">
-        <Card><CardContent className="pt-6"><div className="flex items-center gap-3"><div className="p-2 bg-sage-100 rounded-lg"><Users className="h-5 w-5 text-sage-700" /></div><div><p className="text-2xl font-semibold">{stats.total}</p><p className="text-sm text-muted-foreground">Totaal</p></div></div></CardContent></Card>
-        <Card><CardContent className="pt-6"><div className="flex items-center gap-3"><div className="p-2 bg-yellow-100 rounded-lg"><Calendar className="h-5 w-5 text-yellow-700" /></div><div><p className="text-2xl font-semibold">{stats.pending}</p><p className="text-sm text-muted-foreground">In afwachting</p></div></div></CardContent></Card>
-        <Card><CardContent className="pt-6"><div className="flex items-center gap-3"><div className="p-2 bg-green-100 rounded-lg"><Users className="h-5 w-5 text-green-700" /></div><div><p className="text-2xl font-semibold">{stats.confirmed}</p><p className="text-sm text-muted-foreground">Bevestigd</p></div></div></CardContent></Card>
-        <Card><CardContent className="pt-6"><div className="flex items-center gap-3"><div className="p-2 bg-emerald-100 rounded-lg"><CreditCard className="h-5 w-5 text-emerald-700" /></div><div><p className="text-2xl font-semibold">{stats.paid}</p><p className="text-sm text-muted-foreground">Betaald</p></div></div></CardContent></Card>
-        <Card><CardContent className="pt-6"><div className="flex items-center gap-3"><div className="p-2 bg-terracotta-100 rounded-lg"><Euro className="h-5 w-5 text-terracotta-700" /></div><div><p className="text-2xl font-semibold">€{stats.totalRevenue.toLocaleString('nl-NL')}</p><p className="text-sm text-muted-foreground">Omzet</p></div></div></CardContent></Card>
+      {/* Payment Pipeline */}
+      <div className="mb-8">
+        <div className="flex items-center gap-0 overflow-x-auto">
+          {pipelineSteps.map((step, idx) => {
+            const Icon = step.icon;
+            return (
+              <div key={step.key} className="flex items-center flex-1 min-w-0">
+                <div className={`flex-1 rounded-xl border p-4 ${step.bgLight} relative`}>
+                  <div className="flex items-center gap-3">
+                    <div className={`h-10 w-10 rounded-full ${step.color} flex items-center justify-center flex-shrink-0`}>
+                      <Icon className="h-5 w-5 text-white" />
+                    </div>
+                    <div className="min-w-0">
+                      <p className={`text-2xl font-bold ${step.textColor}`}>{step.count}</p>
+                      <p className="text-xs text-muted-foreground truncate">{step.label}</p>
+                    </div>
+                  </div>
+                </div>
+                {idx < pipelineSteps.length - 1 && (
+                  <div className="flex-shrink-0 mx-1 text-muted-foreground/40 text-xl">→</div>
+                )}
+              </div>
+            );
+          })}
+        </div>
+        <div className="mt-3 flex items-center gap-2 text-sm text-muted-foreground">
+          <Euro className="h-4 w-4 text-terracotta-600" />
+          <span>Totale omzet: <strong className="text-terracotta-600">€{stats.totalRevenue.toLocaleString('nl-NL')}</strong></span>
+          <span className="mx-2">·</span>
+          <span>{stats.total} aanmeldingen totaal</span>
+        </div>
       </div>
 
       {/* Search and Filters */}
