@@ -253,6 +253,9 @@ const About = () => {
             {/* Two pathways */}
             <ScrollReveal delay={0.2}>
               <div className="mt-12 mb-8">
+                <p className="text-center text-foreground text-lg font-medium mb-8">
+                  In de loop van de tijd zijn twee heldere paden ontstaan in haar werk:
+                </p>
                 <StaggerContainer className="grid gap-6 md:grid-cols-2">
                   <StaggerItem>
                     <div className="bg-white rounded-3xl p-8 border border-terracotta-100 h-full">
