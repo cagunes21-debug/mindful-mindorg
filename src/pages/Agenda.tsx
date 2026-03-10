@@ -30,14 +30,6 @@ const workshopDates = {
 
 const mscTrainingsNL = [
   {
-    day: "Zaterdag (middag)",
-    startDate: "21 maart 2026",
-    time: "15:00 – 17:00",
-    followUp: ["28 mrt", "4, 11, 18, 25 apr", "9, 16, 23 mei"],
-    price: "€550",
-    full: true,
-  },
-  {
     day: "Dinsdag (avond)",
     startDate: "7 april 2026",
     time: "19:00 – 21:00",
