@@ -14,6 +14,7 @@ import TrainersSection from "@/components/home/TrainersSection";
 import CTASection from "@/components/home/CTASection";
 import PackageSection from "@/components/home/PackageSection";
 import ForWhomSection from "@/components/home/ForWhomSection";
+import GroupTrainingTeaser from "@/components/home/GroupTrainingTeaser";
 
 
 const IndividueelHome = () => {
@@ -34,6 +35,7 @@ const IndividueelHome = () => {
       <BenefitsSection />
       <PackageSection />
       <ForWhomSection />
+      <GroupTrainingTeaser />
       <ApproachSection />
       
       <TrainersSection />
