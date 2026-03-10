@@ -55,7 +55,7 @@ const testimonials = [
   {
     quote: "Ik voelde me vanaf het begin veilig en gezien. De sessies online werkten verrassend goed en gaven me de flexibiliteit die ik nodig had.",
     author: "Nadia",
-    role: "Coaching cliënt",
+    role: "Deelnemer",
   },
 ];
 
