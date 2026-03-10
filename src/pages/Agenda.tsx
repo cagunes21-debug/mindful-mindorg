@@ -254,11 +254,16 @@ const Agenda = () => {
                 <h3 className="text-xl font-semibold text-foreground">Online – Nederlandstalige training</h3>
               </div>
               
-              <div className="grid gap-6 md:grid-cols-3">
+               <div className="grid gap-6 md:grid-cols-2">
                 {mscTrainingsNL.map((training, index) => (
-                  <Card key={index} className="border-terracotta-200 bg-white rounded-3xl overflow-hidden hover:shadow-md transition-shadow">
+                  <Card key={index} className={`border-terracotta-200 rounded-3xl overflow-hidden transition-shadow ${training.full ? 'bg-warm-50 opacity-75' : 'bg-white hover:shadow-md'}`}>
                     <CardContent className="p-6">
-                      <p className="font-semibold text-foreground mb-4">{training.day}</p>
+                      <div className="flex items-center justify-between mb-4">
+                        <p className="font-semibold text-foreground">{training.day}</p>
+                        {training.full && (
+                          <span className="inline-block rounded-full bg-terracotta-100 px-3 py-1 text-xs font-semibold text-terracotta-700">Vol</span>
+                        )}
+                      </div>
                       
                       <div className="space-y-2 text-sm mb-4">
                         <div className="flex items-start gap-2">
