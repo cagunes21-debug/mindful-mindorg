@@ -21,7 +21,7 @@ const trainers = [
     role: "Psycholoog • Mindfulness & Zelfcompassie Trainer",
     tagline: "Ruimte Creëren voor Authenticiteit",
     bio: "Sabine is psycholoog binnen de geestelijke gezondheidszorg en trainer in mindfulness en zelfcompassie. Zij werkt vanuit een diepe overtuiging: iedereen verdient zachtheid, ruimte en vriendelijkheid — juist wanneer het leven moeilijk wordt.",
-    journey: "Haar reis begon vijftien jaar geleden via het boeddhisme. Wat haar raakte was de nuchtere en tegelijkertijd diep menselijke benadering: meditatie als een manier om jezelf met open aandacht te ontmoeten.",
+    journey: "Haar reis begon vijftien jaar geleden via het boeddhisme. Wat haar raakte was de nuchtere en tegelijkertijd diep menselijke benadering: meditatie als een manier om jezelf met open aandacht te ontmoeten.\n\nSabine volgde de Mindful Self-Compassion (MSC) training bij Chris Germer, mede-ontwikkelaar van het programma, aan de Mindfulness Academie in Amsterdam. Vanuit deze basis begeleidt zij mensen in het ontwikkelen van meer bewustzijn, veerkracht en zelfcompassie, zowel in mindfulnessprogramma's als in haar werk binnen de geestelijke gezondheidszorg.",
     specializations: [
       "Mindfulness (MBSR/MBCT)",
       "ACT (Acceptance and Commitment Therapy)",
