@@ -135,8 +135,40 @@ const Agenda = () => {
               transition={{ duration: 0.6, delay: 0.2 }}
               className="text-muted-foreground text-lg max-w-2xl mx-auto leading-relaxed"
             >
-              Kies de vorm die past bij jouw behoefte, beschikbare tijd en mate van verdieping. Je kunt instappen met een workshop, een 8-weekse training volgen of kiezen voor een intensiever traject.
+              Kies de vorm die past bij jouw behoefte, beschikbare tijd en mate van verdieping.
             </motion.p>
+
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.3 }}
+              className="flex flex-wrap justify-center gap-3 mt-8"
+            >
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => document.getElementById('groepstraining')?.scrollIntoView({ behavior: 'smooth' })}
+                className="rounded-full border-terracotta-300 text-terracotta-600 hover:bg-terracotta-50"
+              >
+                Groepstraining
+              </Button>
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => document.getElementById('workshops')?.scrollIntoView({ behavior: 'smooth' })}
+                className="rounded-full border-warm-300 text-warm-700 hover:bg-warm-50"
+              >
+                Workshop
+              </Button>
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => document.getElementById('retreat')?.scrollIntoView({ behavior: 'smooth' })}
+                className="rounded-full border-terracotta-300 text-terracotta-600 hover:bg-terracotta-50"
+              >
+                Retreat
+              </Button>
+            </motion.div>
           </div>
         </div>
       </section>
@@ -218,7 +250,7 @@ const Agenda = () => {
       </section>
 
       {/* Workshops */}
-      <section className="py-10 lg:py-14 bg-white">
+      <section id="workshops" className="py-10 lg:py-14 bg-white scroll-mt-20">
         <div className="container mx-auto px-4">
           <div className="mx-auto max-w-4xl">
             <div className="text-center mb-8">
@@ -273,7 +305,7 @@ const Agenda = () => {
       </section>
 
       {/* 8-Week MSC Training */}
-      <section className="py-20 lg:py-24 bg-warm-50">
+      <section id="groepstraining" className="py-20 lg:py-24 bg-warm-50 scroll-mt-20">
         <div className="container mx-auto px-4">
           <div className="mx-auto max-w-5xl">
             <div className="text-center mb-12">
@@ -422,7 +454,7 @@ const Agenda = () => {
       </section>
 
       {/* Barcelona Retreat */}
-      <section className="py-20 lg:py-24 bg-gradient-to-br from-terracotta-500 to-terracotta-600 relative overflow-hidden">
+      <section id="retreat" className="py-20 lg:py-24 bg-gradient-to-br from-terracotta-500 to-terracotta-600 relative overflow-hidden scroll-mt-20">
         <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(circle_at_70%_30%,rgba(255,255,255,0.1)_0%,transparent_50%)]" />
         <div className="absolute bottom-0 left-0 w-96 h-96 bg-terracotta-400/30 rounded-full blur-3xl" />
         
