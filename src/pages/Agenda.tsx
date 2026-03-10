@@ -213,7 +213,10 @@ const Agenda = () => {
                       ))}
                     </ul>
                     
-                    <p className="text-lg font-semibold text-terracotta-600 mb-4">{workshop.price}</p>
+                    <p className="text-lg font-semibold text-terracotta-600 mb-2">{workshop.price}</p>
+                    <p className="text-xs text-muted-foreground mb-4">
+                      Bij inschrijving voor een groepstraining of individueel traject wordt dit bedrag in mindering gebracht.
+                    </p>
                     
                     <Button 
                       onClick={() => openRegistration({

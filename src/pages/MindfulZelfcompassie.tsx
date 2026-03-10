@@ -55,8 +55,8 @@ const trainingDates = [
 ];
 
 const workshopDates = [
-  { lang: "Workshop 1", date: "Maandag 1 juni 2026", time: "19:30 – 20:30", price: "€45" },
-  { lang: "Workshop 2", date: "Zaterdag 5 september 2026", time: "10:00 – 11:00", price: "€45" },
+  { lang: "Workshop 1", date: "Maandag 1 juni 2026", time: "19:30 – 20:30", price: "€55" },
+  { lang: "Workshop 2", date: "Zaterdag 5 september 2026", time: "10:00 – 11:00", price: "€55" },
 ];
 
 const weeklySessions = [
