@@ -3,7 +3,7 @@ import { useState } from "react";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import { Button } from "@/components/ui/button";
-import { BookOpen, User, ClipboardList, BarChart3, MessageCircle, Users, Euro, GraduationCap, Heart } from "lucide-react";
+import { BookOpen, User, ClipboardList, BarChart3, MessageCircle, Users, Euro, GraduationCap, Heart, Mail } from "lucide-react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import SEO from "@/components/SEO";
 import AdminCustomersSection from "@/components/admin/AdminCustomersSection";
@@ -11,6 +11,7 @@ import AdminRegistrationsSection from "@/components/admin/AdminRegistrationsSect
 import UpcomingSessionsWidget from "@/components/admin/UpcomingSessionsWidget";
 import AdminScsOverview from "@/components/admin/AdminScsOverview";
 import AdminFinanceSection from "@/components/admin/AdminFinanceSection";
+import AdminNewsletterSection from "@/components/admin/AdminNewsletterSection";
 
 export default function AdminDashboard() {
   const navigate = useNavigate();
@@ -65,6 +66,14 @@ export default function AdminDashboard() {
                     Leads (CRM)
                   </h2>
                   <AdminCustomersSection initialTab="leads" />
+                </section>
+
+                <section>
+                  <h2 className="text-2xl font-light text-foreground mb-6 flex items-center gap-2 border-b pb-3">
+                    <Mail className="h-5 w-5 text-primary" />
+                    Nieuwsbrief
+                  </h2>
+                  <AdminNewsletterSection />
                 </section>
               </div>
             </TabsContent>
