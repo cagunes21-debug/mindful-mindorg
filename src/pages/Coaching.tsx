@@ -343,7 +343,7 @@ const Coaching = () => {
                           ? "bg-terracotta-600 hover:bg-terracotta-700 text-white" 
                           : "bg-warm-200 hover:bg-warm-300 text-foreground"
                       }`}>
-                        <a href="mailto:mindful-mind@outlook.com?subject=Aanvraag coaching">
+                        <a href="mailto:mindful-mind@outlook.com?subject=Aanvraag individuele begeleiding">
                           Neem contact op
                         </a>
                       </Button>
