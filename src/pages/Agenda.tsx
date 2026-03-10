@@ -44,6 +44,7 @@ const mscTrainingsNL = [
     followUp: ["14, 21 apr", "12, 19, 26 mei", "2, 9, 16 jun"],
     price: "€550",
     full: false,
+    lastSpot: true,
   },
   {
     day: "Maandag (avond)",
