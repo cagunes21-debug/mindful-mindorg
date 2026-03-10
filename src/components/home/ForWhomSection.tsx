@@ -9,6 +9,12 @@ const items = [
   "In een nieuwe levensfase zit",
 ];
 
+const steps = [
+  { number: "01", title: "Kennismaking", description: "Een vrijblijvend gesprek om je wensen en behoeften te verkennen." },
+  { number: "02", title: "Op maat", description: "Sessies afgestemd op jouw persoonlijke situatie en tempo." },
+  { number: "03", title: "Integratie", description: "Oefeningen en tools om zelfcompassie in je dagelijks leven te weven." },
+];
+
 const ForWhomSection = () => {
   return (
     <section className="py-12 md:py-16 bg-background relative">
@@ -43,6 +49,37 @@ const ForWhomSection = () => {
                   </motion.span>
                 ))}
               </div>
+            ))}
+          </div>
+        </motion.div>
+
+        {/* Individuele begeleiding stappen */}
+        <motion.div
+          initial={{ opacity: 0, y: 15 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ delay: 0.2 }}
+          className="mt-10 pt-8 border-t border-border/30"
+        >
+          <p className="text-xs uppercase tracking-[0.2em] text-muted-foreground mb-5 text-center md:text-left">
+            Individuele begeleiding
+          </p>
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+            {steps.map((step, i) => (
+              <motion.div
+                key={i}
+                initial={{ opacity: 0, y: 10 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: 0.3 + i * 0.1 }}
+                className="flex gap-3"
+              >
+                <span className="text-lg font-light text-primary/40">{step.number}</span>
+                <div>
+                  <p className="text-sm font-medium text-foreground mb-0.5">{step.title}</p>
+                  <p className="text-xs text-muted-foreground leading-relaxed">{step.description}</p>
+                </div>
+              </motion.div>
             ))}
           </div>
         </motion.div>
