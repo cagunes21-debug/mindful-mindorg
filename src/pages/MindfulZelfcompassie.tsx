@@ -61,18 +61,14 @@ const workshopDates = [
   { lang: "Workshop 2", date: "Zaterdag 5 september 2026", time: "10:00 – 11:00", price: "€55" },
 ];
 
-const weeklySessions = [
-  { lang: "Nederlands", day: "Donderdag", time: "12:15 – 12:45", description: "Korte geleide meditatie om midden op de dag even stil te staan.", price: "€30" },
-  { lang: "English", day: "Tuesday", time: "12:15 – 12:45", description: "A short guided meditation to pause and reconnect during your day.", price: "€30" },
-];
+
 
 const MindfulZelfcompassie = () => {
   const [isRegistrationOpen, setIsRegistrationOpen] = useState(false);
   const [selectedTraining, setSelectedTraining] = useState<typeof trainingDates[0] | null>(null);
   const [isWorkshopRegistrationOpen, setIsWorkshopRegistrationOpen] = useState(false);
   const [selectedWorkshop, setSelectedWorkshop] = useState<typeof workshopDates[0] | null>(null);
-  const [isWeeklyRegistrationOpen, setIsWeeklyRegistrationOpen] = useState(false);
-  const [selectedWeekly, setSelectedWeekly] = useState<typeof weeklySessions[0] | null>(null);
+
 
   const openRegistration = (training: typeof trainingDates[0]) => {
     setSelectedTraining(training);
@@ -84,10 +80,7 @@ const MindfulZelfcompassie = () => {
     setIsWorkshopRegistrationOpen(true);
   };
 
-  const openWeeklyRegistration = (session: typeof weeklySessions[0]) => {
-    setSelectedWeekly(session);
-    setIsWeeklyRegistrationOpen(true);
-  };
+
 
   return (
     <div className="min-h-screen bg-background">
@@ -1293,27 +1286,7 @@ const MindfulZelfcompassie = () => {
         </DialogContent>
       </Dialog>
 
-      {/* Weekly Session Registration Modal */}
-      <Dialog open={isWeeklyRegistrationOpen} onOpenChange={setIsWeeklyRegistrationOpen}>
-        <DialogContent className="sm:max-w-md max-h-[90vh] overflow-y-auto">
-          <DialogHeader>
-            <DialogTitle className="text-xl font-light">
-              Aanmelden voor wekelijkse sessie
-            </DialogTitle>
-          </DialogHeader>
-          {selectedWeekly && (
-            <RegistrationForm
-              trainingName={`Wekelijkse Sessie (${selectedWeekly.lang})`}
-              trainingDate={`Elke ${selectedWeekly.day}`}
-              trainingTime={selectedWeekly.time}
-              price={selectedWeekly.price}
-              onSuccess={() => {
-                setTimeout(() => setIsWeeklyRegistrationOpen(false), 2000);
-              }}
-            />
-          )}
-        </DialogContent>
-      </Dialog>
+
     </div>
   );
 };
