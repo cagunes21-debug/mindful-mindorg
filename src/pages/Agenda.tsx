@@ -192,9 +192,7 @@ const Agenda = () => {
                 <Card key={key} className="border-warm-200 bg-gradient-to-br from-warm-50 to-white rounded-3xl overflow-hidden">
                   <CardContent className="p-8">
                     <div className="flex items-center gap-3 mb-6">
-                      <span className={`inline-block rounded-full px-4 py-1.5 text-xs font-semibold ${
-                        key === 'nl' ? 'bg-terracotta-100 text-terracotta-700' : 'bg-sage-200 text-sage-800'
-                      }`}>
+                      <span className="inline-block rounded-full px-4 py-1.5 text-xs font-semibold bg-terracotta-100 text-terracotta-700">
                         {workshop.lang}
                       </span>
                     </div>
