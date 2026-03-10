@@ -270,6 +270,9 @@ const Agenda = () => {
                         {training.full && (
                           <span className="inline-block rounded-full bg-terracotta-100 px-3 py-1 text-xs font-semibold text-terracotta-700">Vol</span>
                         )}
+                        {training.lastSpot && (
+                          <span className="inline-block rounded-full bg-amber-100 px-3 py-1 text-xs font-semibold text-amber-700 animate-pulse">Laatste plek!</span>
+                        )}
                       </div>
                       
                       <div className="space-y-2 text-sm mb-4">
