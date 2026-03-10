@@ -44,6 +44,7 @@ const mscTrainingsNL = [
     followUp: ["14, 21 apr", "12, 19, 26 mei", "2, 9, 16 jun"],
     price: "€550",
     full: false,
+    lastSpot: true,
   },
   {
     day: "Maandag (avond)",
@@ -268,6 +269,9 @@ const Agenda = () => {
                         <p className="font-semibold text-foreground">{training.day}</p>
                         {training.full && (
                           <span className="inline-block rounded-full bg-terracotta-100 px-3 py-1 text-xs font-semibold text-terracotta-700">Vol</span>
+                        )}
+                        {training.lastSpot && (
+                          <span className="inline-block rounded-full bg-amber-100 px-3 py-1 text-xs font-semibold text-amber-700 animate-pulse">Laatste plek!</span>
                         )}
                       </div>
                       
