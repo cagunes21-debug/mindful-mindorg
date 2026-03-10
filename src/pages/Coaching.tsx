@@ -45,17 +45,17 @@ const testimonials = [
   {
     quote: "De individuele sessies waren precies wat ik nodig had. In mijn eigen tempo, met volledige aandacht voor mijn persoonlijke thema's.",
     author: "Renate",
-    role: "Coaching cliënt",
+    role: "Deelnemer",
   },
   {
     quote: "Na jaren worstelen met perfectionisme heb ik eindelijk tools gevonden die echt werken. De persoonlijke aanpak maakte het verschil.",
     author: "Bas",
-    role: "Coaching cliënt",
+    role: "Deelnemer",
   },
   {
     quote: "Ik voelde me vanaf het begin veilig en gezien. De sessies online werkten verrassend goed en gaven me de flexibiliteit die ik nodig had.",
     author: "Nadia",
-    role: "Coaching cliënt",
+    role: "Deelnemer",
   },
 ];
 
@@ -69,7 +69,7 @@ const faqItems = [
     answer: "In de groepstraining volg je een vast curriculum samen met anderen. Bij individuele begeleiding stemmen we de inhoud volledig af op jouw persoonlijke situatie, thema's en tempo. Je krijgt onverdeelde aandacht en maatwerk.",
   },
   {
-    question: "Hoe werkt online coaching?",
+    question: "Hoe werken de online sessies?",
     answer: "We werken via Zoom in een beveiligde omgeving. Je ontvangt een link per e-mail en logt in vanaf een rustige plek. De ervaring is persoonlijk en intiem, vergelijkbaar met een sessie op locatie.",
   },
   {
@@ -81,8 +81,8 @@ const faqItems = [
     answer: "Dat hangt af van jouw behoeften en doelen. Sommige mensen hebben genoeg aan 3 sessies, anderen kiezen voor een langer traject. We evalueren samen wat je nodig hebt.",
   },
   {
-    question: "Wordt coaching vergoed door de zorgverzekering?",
-    answer: "Onze coaching valt niet onder de reguliere zorgverzekering. Sommige aanvullende verzekeringen vergoeden wel coaching of persoonlijke ontwikkeling. Check je polis of neem contact op met je verzekeraar.",
+    question: "Wordt begeleiding vergoed door de zorgverzekering?",
+    answer: "Onze begeleiding valt niet onder de reguliere zorgverzekering. Sommige aanvullende verzekeringen vergoeden wel persoonlijke ontwikkeling. Check je polis of neem contact op met je verzekeraar.",
   },
 ];
 
@@ -147,7 +147,7 @@ const Coaching = () => {
                 </a>
               </Button>
               <Button asChild size="lg" variant="outline" className="border-terracotta-300 text-terracotta-700 hover:bg-terracotta-50 rounded-full px-8">
-                <a href="mailto:mindful-mind@outlook.com?subject=Vraag over coaching">
+                <a href="mailto:mindful-mind@outlook.com?subject=Vraag over individuele begeleiding">
                   Plan een kennismaking
                 </a>
               </Button>
@@ -163,7 +163,7 @@ const Coaching = () => {
             <ScrollReveal>
               <div className="text-center mb-14">
                 <h2 className="mb-6 text-3xl font-light text-foreground md:text-4xl leading-tight">
-                  Coaching is voor jou als je <span className="font-serif italic text-terracotta-600">herkenning vindt in:</span>
+                  Individuele begeleiding is voor jou als je <span className="font-serif italic text-terracotta-600">herkenning vindt in:</span>
                 </h2>
               </div>
             </ScrollReveal>
@@ -229,7 +229,7 @@ const Coaching = () => {
                     Onze <span className="font-serif italic text-terracotta-600">benadering</span>
                   </h2>
                   <p className="text-muted-foreground text-lg leading-relaxed mb-6">
-                    Onze coaching is geworteld in Mindful Self-Compassion (MSC) en aangevuld met 
+                    Onze begeleiding is geworteld in Mindful Self-Compassion (MSC) en aangevuld met 
                     inzichten uit ACT, somatische therapie en trauma-sensitieve mindfulness.
                   </p>
                   <p className="text-muted-foreground text-lg leading-relaxed mb-8">
@@ -343,7 +343,7 @@ const Coaching = () => {
                           ? "bg-terracotta-600 hover:bg-terracotta-700 text-white" 
                           : "bg-warm-200 hover:bg-warm-300 text-foreground"
                       }`}>
-                        <a href="mailto:mindful-mind@outlook.com?subject=Aanvraag coaching">
+                        <a href="mailto:mindful-mind@outlook.com?subject=Aanvraag individuele begeleiding">
                           Neem contact op
                         </a>
                       </Button>
@@ -471,7 +471,7 @@ const Coaching = () => {
               <span className="block font-serif italic mt-2">Neem de eerste stap</span>
             </h2>
             <p className="text-terracotta-100 text-lg mb-8">
-              Plan een gratis telefonische kennismaking en ontdek wat coaching voor jou kan betekenen.
+              Plan een gratis telefonische kennismaking en ontdek wat individuele begeleiding voor jou kan betekenen.
             </p>
             <div className="flex flex-col gap-4 sm:flex-row sm:justify-center">
               <Button asChild size="lg" className="bg-white text-terracotta-700 hover:bg-terracotta-50 rounded-full px-8">
