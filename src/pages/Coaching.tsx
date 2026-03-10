@@ -268,13 +268,6 @@ const Coaching = () => {
                             <p className="text-sm text-muted-foreground">Flexibel en vanuit je eigen vertrouwde omgeving</p>
                           </div>
                         </div>
-                         <div className="flex items-center gap-4 p-4 rounded-xl bg-warm-50">
-                          <Video className="h-6 w-6 text-terracotta-500" />
-                          <div>
-                            <p className="font-medium text-foreground">Online via Zoom</p>
-                            <p className="text-sm text-muted-foreground">Flexibel en vanuit je eigen vertrouwde omgeving</p>
-                          </div>
-                        </div>
                       </div>
                     </CardContent>
                   </Card>
