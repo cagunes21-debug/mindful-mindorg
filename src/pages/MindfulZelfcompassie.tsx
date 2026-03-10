@@ -44,6 +44,14 @@ const trainingDates = [
     dates: "Follow-up: 29 Apr, 6, 13, 20, 27 May, 3, 10 Jun",
     price: "€550",
   },
+  {
+    language: "Nederlands",
+    day: "Maandag (avond)",
+    startDate: "28 september 2026",
+    time: "19:00 – 21:00",
+    dates: "Vervolgdata: 5, 12, 26 okt, 2, 9, 16, 23, 30 nov",
+    price: "€550",
+  },
 ];
 
 const workshopDates = [
