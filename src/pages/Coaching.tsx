@@ -28,7 +28,7 @@ const packages = [
     description: "Eenmalige sessie voor een specifieke vraag of opfrismoment",
     price: "€110",
     duration: "60 minuten",
-    features: ["Online via Zoom", "Direct inplanbaar", "Geen verplichtingen"],
+    features: ["Direct inplanbaar", "Geen verplichtingen"],
   },
   {
     title: "6-sessies pakket",
