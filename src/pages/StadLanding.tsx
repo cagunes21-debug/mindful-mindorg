@@ -314,7 +314,7 @@ const StadLanding = () => {
                   <p className="text-sm text-muted-foreground leading-relaxed mb-4 flex-grow">
                     Losse sessies voor gerichte ondersteuning bij specifieke thema's rondom zelfcompassie en mindfulness.
                   </p>
-                  <p className="text-2xl font-semibold text-terracotta-600 mb-4">€125</p>
+                  <p className="text-2xl font-semibold text-terracotta-600 mb-4">€110</p>
                   <Button asChild variant="outline" className="rounded-full border-terracotta-200 text-terracotta-600 hover:bg-terracotta-50 w-full">
                     <Link to="/contact">Sessie boeken</Link>
                   </Button>

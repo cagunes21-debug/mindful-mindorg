@@ -756,8 +756,8 @@ const MindfulZelfcompassie = () => {
                     </div>
                     <h3 className="text-lg font-semibold text-foreground mb-1">🌿 Individuele Sessie</h3>
                     <p className="text-xs text-muted-foreground mb-3">Los · kennismaking of verdieping</p>
-                    <p className="text-sm text-muted-foreground mb-4">Eerst kennismaken of een losse sessie boeken rond een specifiek thema.</p>
-                    <p className="text-xl font-light text-terracotta-600">vanaf €95</p>
+                    <p className="text-sm text-muted-foreground mb-4">Boek een losse sessie rond een specifiek thema of als kennismaking.</p>
+                    <p className="text-xl font-light text-terracotta-600">€110</p>
                   </CardContent>
                 </Card>
               </div>

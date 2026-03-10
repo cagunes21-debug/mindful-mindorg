@@ -244,7 +244,7 @@ const Services = () => {
                     </p>
                     <div className="pt-4 border-t border-warm-200">
                       <p className="text-sm text-muted-foreground">60 minuten</p>
-                      <p className="text-2xl font-light text-terracotta-600 mt-1">€125</p>
+                      <p className="text-2xl font-light text-terracotta-600 mt-1">€110</p>
                     </div>
                   </CardContent>
                 </Card>

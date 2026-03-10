@@ -26,7 +26,7 @@ const packages = [
   {
     title: "Losse sessie",
     description: "Eenmalige sessie voor een specifieke vraag of opfrismoment",
-    price: "€125",
+    price: "€110",
     duration: "60 minuten",
     features: ["Online via Zoom", "Direct inplanbaar", "Geen verplichtingen"],
   },
