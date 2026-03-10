@@ -81,8 +81,8 @@ const faqItems = [
     answer: "Dat hangt af van jouw behoeften en doelen. Sommige mensen hebben genoeg aan 3 sessies, anderen kiezen voor een langer traject. We evalueren samen wat je nodig hebt.",
   },
   {
-    question: "Wordt coaching vergoed door de zorgverzekering?",
-    answer: "Onze coaching valt niet onder de reguliere zorgverzekering. Sommige aanvullende verzekeringen vergoeden wel coaching of persoonlijke ontwikkeling. Check je polis of neem contact op met je verzekeraar.",
+    question: "Wordt begeleiding vergoed door de zorgverzekering?",
+    answer: "Onze begeleiding valt niet onder de reguliere zorgverzekering. Sommige aanvullende verzekeringen vergoeden wel persoonlijke ontwikkeling. Check je polis of neem contact op met je verzekeraar.",
   },
 ];
 
