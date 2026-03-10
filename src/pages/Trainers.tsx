@@ -53,8 +53,8 @@ const trainers = [
     specializations: [
       "Mindful Self-Compassion (MSC)",
       "Leiderschapsontwikkeling",
-      "Innerlijk leiderschap",
       "Veerkracht en omgaan met stress",
+      "Innerlijk leiderschap",
     ],
     color: "terracotta",
   },
