@@ -50,7 +50,7 @@ const testimonials = [
   {
     quote: "Na jaren worstelen met perfectionisme heb ik eindelijk tools gevonden die echt werken. De persoonlijke aanpak maakte het verschil.",
     author: "Bas",
-    role: "Coaching cliënt",
+    role: "Deelnemer",
   },
   {
     quote: "Ik voelde me vanaf het begin veilig en gezien. De sessies online werkten verrassend goed en gaven me de flexibiliteit die ik nodig had.",
