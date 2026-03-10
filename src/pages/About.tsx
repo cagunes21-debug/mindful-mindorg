@@ -294,6 +294,24 @@ const About = () => {
         </div>
       </section>
 
+      {/* Meet the Trainers Bridge */}
+      <section className="py-16 lg:py-20 bg-warm-50">
+        <div className="container mx-auto px-4">
+          <div className="mx-auto max-w-2xl text-center">
+            <ScrollReveal>
+              <p className="text-muted-foreground text-lg leading-relaxed mb-6">
+                Achter Mindful Mind staat een team van ervaren trainers die werken vanuit warmte, expertise en een diepe persoonlijke beoefening.
+              </p>
+              <Button asChild variant="outline" className="border-terracotta-300 text-terracotta-600 hover:bg-terracotta-50 rounded-full px-8">
+                <Link to="/trainers">
+                  Ontmoet de trainers
+                  <ArrowRight className="ml-2 h-4 w-4" />
+                </Link>
+              </Button>
+            </ScrollReveal>
+          </div>
+        </div>
+      </section>
 
 
       {/* CTA Section */}
