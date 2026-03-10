@@ -52,7 +52,10 @@ const mscTrainingsNL = [
     time: "19:00 – 21:00",
     followUp: ["5, 12, 26 okt", "2, 9, 16, 23, 30 nov"],
     price: "€550",
+    earlyBirdPrice: "€495",
+    earlyBirdDeadline: "1 augustus 2026",
     full: false,
+    featured: true,
   },
 ];
 
