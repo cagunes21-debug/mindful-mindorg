@@ -229,7 +229,7 @@ const Coaching = () => {
                     Onze <span className="font-serif italic text-terracotta-600">benadering</span>
                   </h2>
                   <p className="text-muted-foreground text-lg leading-relaxed mb-6">
-                    Onze coaching is geworteld in Mindful Self-Compassion (MSC) en aangevuld met 
+                    Onze begeleiding is geworteld in Mindful Self-Compassion (MSC) en aangevuld met 
                     inzichten uit ACT, somatische therapie en trauma-sensitieve mindfulness.
                   </p>
                   <p className="text-muted-foreground text-lg leading-relaxed mb-8">
