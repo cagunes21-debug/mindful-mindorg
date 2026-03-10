@@ -801,6 +801,11 @@ const MindfulZelfcompassie = () => {
                         <div className={`px-6 py-3 ${training.language === "Nederlands" ? "bg-terracotta-500" : "bg-sage-600"}`}>
                           <div className="flex items-center justify-between">
                             <span className="text-white font-medium">{training.language}</span>
+                            {training.earlyBirdPrice && (
+                              <span className="inline-flex items-center gap-1 rounded-full bg-white/20 px-3 py-1 text-xs font-semibold text-white">
+                                ✨ Early bird
+                              </span>
+                            )}
                           </div>
                         </div>
                         <CardContent className="p-6">
