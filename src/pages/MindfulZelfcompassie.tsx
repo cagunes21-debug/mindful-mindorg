@@ -61,10 +61,7 @@ const workshopDates = [
   { lang: "Workshop 2", date: "Zaterdag 5 september 2026", time: "10:00 – 11:00", price: "€55" },
 ];
 
-const weeklySessions = [
-  { lang: "Nederlands", day: "Donderdag", time: "12:15 – 12:45", description: "Korte geleide meditatie om midden op de dag even stil te staan.", price: "€30" },
-  { lang: "English", day: "Tuesday", time: "12:15 – 12:45", description: "A short guided meditation to pause and reconnect during your day.", price: "€30" },
-];
+
 
 const MindfulZelfcompassie = () => {
   const [isRegistrationOpen, setIsRegistrationOpen] = useState(false);
