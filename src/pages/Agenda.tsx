@@ -286,15 +286,16 @@ const Agenda = () => {
                         <p className="text-lg font-semibold text-terracotta-600">{training.price}</p>
                         <Button 
                           size="sm" 
+                          disabled={training.full}
                           onClick={() => openRegistration({
                             name: `8-weekse MSC Training (Nederlands)`,
                             date: training.startDate,
                             time: training.time,
                             price: training.price,
                           })}
-                          className="bg-terracotta-600 hover:bg-terracotta-700 text-white rounded-full"
+                          className="bg-terracotta-600 hover:bg-terracotta-700 text-white rounded-full disabled:opacity-50"
                         >
-                          Reserveer
+                          {training.full ? 'Vol' : 'Reserveer'}
                         </Button>
                       </div>
                     </CardContent>
