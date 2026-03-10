@@ -62,30 +62,8 @@ const mscTrainingsEN = [
   },
 ];
 
-const intensivePrograms = [
-  {
-    title: "MBSR – 4-daags intensief",
-    subtitle: "Mindfulness-Based Stress Reduction",
-    description: "Een verdiepend traject voor wie stress en spanning beter wil leren herkennen en hier met meer rust en mildheid mee om wil gaan.",
-    startDate: "28 februari 2026",
-    time: "11:00 – 16:00",
-    location: "Amersfoort (De Glind)",
-    followUp: ["14 maart", "28 maart", "11 april"],
-    price: "€550",
-    color: "sage",
-  },
-  {
-    title: "MSC – 4-daags intensief",
-    subtitle: "Mindful Self-Compassion",
-    description: "Voor wie de stap wil zetten van begrijpen naar belichamen. Je verdiept zelfcompassie en creëert ruimte voor echte integratie.",
-    startDate: "25 april 2026",
-    time: "11:00 – 16:00",
-    location: "Amersfoort (De Glind)",
-    followUp: ["9 mei", "23 mei", "6 juni"],
-    price: "€550",
-    color: "terracotta",
-  },
-];
+
+
 
 const Agenda = () => {
   const [selectedTraining, setSelectedTraining] = useState<SelectedTraining | null>(null);
