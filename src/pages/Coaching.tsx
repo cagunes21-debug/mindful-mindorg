@@ -163,7 +163,7 @@ const Coaching = () => {
             <ScrollReveal>
               <div className="text-center mb-14">
                 <h2 className="mb-6 text-3xl font-light text-foreground md:text-4xl leading-tight">
-                  Coaching is voor jou als je <span className="font-serif italic text-terracotta-600">herkenning vindt in:</span>
+                  Individuele begeleiding is voor jou als je <span className="font-serif italic text-terracotta-600">herkenning vindt in:</span>
                 </h2>
               </div>
             </ScrollReveal>
