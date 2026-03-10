@@ -30,18 +30,12 @@ const workshopDates = {
 
 const mscTrainingsNL = [
   {
-    day: "Maandag (avond)",
-    startDate: "16 februari 2026",
-    time: "19:00 – 21:00",
-    followUp: ["23 feb", "2, 9, 16, 23 mrt", "13, 20 apr", "4 mei"],
-    price: "€550",
-  },
-  {
     day: "Zaterdag (middag)",
     startDate: "21 maart 2026",
     time: "15:00 – 17:00",
     followUp: ["28 mrt", "4, 11, 18, 25 apr", "9, 16, 23 mei"],
     price: "€550",
+    full: true,
   },
   {
     day: "Dinsdag (avond)",
@@ -49,23 +43,18 @@ const mscTrainingsNL = [
     time: "19:00 – 21:00",
     followUp: ["14, 21 apr", "12, 19, 26 mei", "2, 9, 16 jun"],
     price: "€550",
+    full: false,
   },
 ];
 
 const mscTrainingsEN = [
-  {
-    day: "Sunday (afternoon)",
-    startDate: "18 January 2026",
-    time: "16:00 – 18:00",
-    followUp: ["25 Jan", "1, 8, 15, 22 Feb", "1, 8 Mar"],
-    price: "€550",
-  },
   {
     day: "Wednesday (evening)",
     startDate: "4 March 2026",
     time: "19:00 – 21:00",
     followUp: ["11, 18, 25 Mar", "28 Mar (retreat)", "1, 8, 15, 22 Apr"],
     price: "€550",
+    full: true,
   },
 ];
 
@@ -265,11 +254,16 @@ const Agenda = () => {
                 <h3 className="text-xl font-semibold text-foreground">Online – Nederlandstalige training</h3>
               </div>
               
-              <div className="grid gap-6 md:grid-cols-3">
+               <div className="grid gap-6 md:grid-cols-2">
                 {mscTrainingsNL.map((training, index) => (
-                  <Card key={index} className="border-terracotta-200 bg-white rounded-3xl overflow-hidden hover:shadow-md transition-shadow">
+                  <Card key={index} className={`border-terracotta-200 rounded-3xl overflow-hidden transition-shadow ${training.full ? 'bg-warm-50 opacity-75' : 'bg-white hover:shadow-md'}`}>
                     <CardContent className="p-6">
-                      <p className="font-semibold text-foreground mb-4">{training.day}</p>
+                      <div className="flex items-center justify-between mb-4">
+                        <p className="font-semibold text-foreground">{training.day}</p>
+                        {training.full && (
+                          <span className="inline-block rounded-full bg-terracotta-100 px-3 py-1 text-xs font-semibold text-terracotta-700">Vol</span>
+                        )}
+                      </div>
                       
                       <div className="space-y-2 text-sm mb-4">
                         <div className="flex items-start gap-2">
@@ -292,15 +286,16 @@ const Agenda = () => {
                         <p className="text-lg font-semibold text-terracotta-600">{training.price}</p>
                         <Button 
                           size="sm" 
+                          disabled={training.full}
                           onClick={() => openRegistration({
                             name: `8-weekse MSC Training (Nederlands)`,
                             date: training.startDate,
                             time: training.time,
                             price: training.price,
                           })}
-                          className="bg-terracotta-600 hover:bg-terracotta-700 text-white rounded-full"
+                          className="bg-terracotta-600 hover:bg-terracotta-700 text-white rounded-full disabled:opacity-50"
                         >
-                          Reserveer
+                          {training.full ? 'Vol' : 'Reserveer'}
                         </Button>
                       </div>
                     </CardContent>
@@ -318,9 +313,14 @@ const Agenda = () => {
               
               <div className="grid gap-6 md:grid-cols-2">
                 {mscTrainingsEN.map((training, index) => (
-                  <Card key={index} className="border-sage-200 bg-white rounded-3xl overflow-hidden hover:shadow-md transition-shadow">
+                  <Card key={index} className={`border-sage-200 rounded-3xl overflow-hidden transition-shadow ${training.full ? 'bg-warm-50 opacity-75' : 'bg-white hover:shadow-md'}`}>
                     <CardContent className="p-6">
-                      <p className="font-semibold text-foreground mb-4">{training.day}</p>
+                      <div className="flex items-center justify-between mb-4">
+                        <p className="font-semibold text-foreground">{training.day}</p>
+                        {training.full && (
+                          <span className="inline-block rounded-full bg-sage-200 px-3 py-1 text-xs font-semibold text-sage-800">Full</span>
+                        )}
+                      </div>
                       
                       <div className="space-y-2 text-sm mb-4">
                         <div className="flex items-start gap-2">
@@ -343,15 +343,16 @@ const Agenda = () => {
                         <p className="text-lg font-semibold text-sage-700">{training.price}</p>
                         <Button 
                           size="sm" 
+                          disabled={training.full}
                           onClick={() => openRegistration({
                             name: `8-week MSC Training (English)`,
                             date: training.startDate,
                             time: training.time,
                             price: training.price,
                           })}
-                          className="bg-sage-600 hover:bg-sage-700 text-white rounded-full"
+                          className="bg-sage-600 hover:bg-sage-700 text-white rounded-full disabled:opacity-50"
                         >
-                          Reserve
+                          {training.full ? 'Full' : 'Reserve'}
                         </Button>
                       </div>
                     </CardContent>
