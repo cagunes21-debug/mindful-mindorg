@@ -53,15 +53,6 @@ const trainers = [
     specializations: [],
     color: "terracotta",
   },
-  {
-    name: "Morgan Healey",
-    role: "Mindful Zelfcompassie Trainer • Onderzoeker",
-    tagline: "Neurospirituality Lab, Brigham and Women's Hospital",
-    bio: "Morgan is trainer en Lab Manager bij het Neurospirituality Lab, waar zij onderzoekt welke delen van de hersenen actief zijn bij transcendente ervaringen.",
-    journey: "Haar benadering is zacht, trauma-sensitief en diep relationeel. Ze bewaart een zorgvuldige balans tussen wetenschappelijke precisie en menselijke warmte.",
-    specializations: [],
-    color: "sage",
-  },
 ];
 
 const Trainers = () => {
