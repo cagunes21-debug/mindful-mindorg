@@ -253,10 +253,6 @@ const About = () => {
             {/* Two pathways */}
             <ScrollReveal delay={0.2}>
               <div className="mt-12 mb-8">
-                <p className="text-center text-foreground text-lg font-medium mb-8">
-                  In de loop van de tijd zijn twee heldere paden ontstaan in haar werk:
-                </p>
-
                 <StaggerContainer className="grid gap-6 md:grid-cols-2">
                   <StaggerItem>
                     <div className="bg-white rounded-3xl p-8 border border-terracotta-100 h-full">
@@ -265,7 +261,7 @@ const About = () => {
                       </div>
                       <h3 className="text-xl font-semibold text-foreground mb-3">Mindful Mind</h3>
                       <p className="text-muted-foreground leading-relaxed">
-                        De plek waar Çağla mindfulness-gebaseerde trainingen en educatie aanbiedt. De focus ligt op het cultiveren van bewustzijn, zelfcompassie en belichaamde aanwezigheid via gestructureerde programma's en groepsleren.
+                        Een plek voor mindfulness-gebaseerde trainingen en educatie. Hier ligt de focus op het ontwikkelen van bewustzijn, zelfcompassie en belichaamde aanwezigheid, aangeboden in groepsprogramma's en individuele begeleiding.
                       </p>
                     </div>
                   </StaggerItem>
@@ -276,7 +272,7 @@ const About = () => {
                       </div>
                       <h3 className="text-xl font-semibold text-foreground mb-3">In Harmonia</h3>
                       <p className="text-muted-foreground leading-relaxed">
-                        Gewijd aan therapeutisch werk. Deze ruimte biedt een meer individuele, relationele en procesgerichte benadering, waarbij mensen worden ondersteund bij het ontmoeten van diepere emotionele lagen, patronen en levensovergangen.
+                        Een ruimte voor therapeutisch werk, waar mensen worden begeleid in individuele sessies bij het verkennen van diepere emotionele lagen, patronen en levensovergangen.
                       </p>
                     </div>
                   </StaggerItem>
@@ -287,7 +283,7 @@ const About = () => {
             <ScrollReveal delay={0.3}>
               <div className="bg-gradient-to-r from-terracotta-50 to-warm-50 rounded-2xl p-6 lg:p-8 border border-terracotta-200 text-center">
                 <p className="text-foreground text-lg leading-relaxed font-medium">
-                  Beide paden komen voort uit dezelfde bron: een toewijding aan aanwezigheid, eerlijkheid en zachte diepte. Samen weerspiegelen ze twee uitdrukkingen van één intentie — <span className="text-terracotta-600">anderen ondersteunen bij het opnieuw verbinden met zichzelf</span>, op een manier die gegrond, respectvol en oprecht voelt.
+                  Beide paden komen voort uit dezelfde bron: een toewijding aan aanwezigheid, eerlijkheid en zorgvuldige aandacht. Samen weerspiegelen zij één intentie — <span className="text-terracotta-600">het ondersteunen van mensen in het opnieuw verbinden met zichzelf</span>.
                 </p>
               </div>
             </ScrollReveal>
