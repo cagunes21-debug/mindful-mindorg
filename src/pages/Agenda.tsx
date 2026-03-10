@@ -250,7 +250,7 @@ const Agenda = () => {
       </section>
 
       {/* Workshops */}
-      <section className="py-10 lg:py-14 bg-white">
+      <section id="workshops" className="py-10 lg:py-14 bg-white scroll-mt-20">
         <div className="container mx-auto px-4">
           <div className="mx-auto max-w-4xl">
             <div className="text-center mb-8">
