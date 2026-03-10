@@ -471,7 +471,7 @@ const Coaching = () => {
               <span className="block font-serif italic mt-2">Neem de eerste stap</span>
             </h2>
             <p className="text-terracotta-100 text-lg mb-8">
-              Plan een gratis telefonische kennismaking en ontdek wat coaching voor jou kan betekenen.
+              Plan een gratis telefonische kennismaking en ontdek wat individuele begeleiding voor jou kan betekenen.
             </p>
             <div className="flex flex-col gap-4 sm:flex-row sm:justify-center">
               <Button asChild size="lg" className="bg-white text-terracotta-700 hover:bg-terracotta-50 rounded-full px-8">
