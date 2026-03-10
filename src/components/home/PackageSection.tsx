@@ -96,6 +96,7 @@ const PackageSection = () => {
             <p className="text-xs text-muted-foreground">📅 Sessies vinden online plaats · Betaling in termijnen mogelijk</p>
             <p className="text-xs text-muted-foreground">Het kennismakingsgesprek is vrijblijvend en kosteloos.</p>
           </div>
+        </motion.div>
       </div>
     </section>
   );
