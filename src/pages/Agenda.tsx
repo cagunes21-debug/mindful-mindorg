@@ -45,6 +45,14 @@ const mscTrainingsNL = [
     price: "€550",
     full: false,
   },
+  {
+    day: "Maandag (avond)",
+    startDate: "28 september 2026",
+    time: "19:00 – 21:00",
+    followUp: ["5, 12, 26 okt", "2, 9, 16, 23, 30 nov"],
+    price: "€550",
+    full: false,
+  },
 ];
 
 const mscTrainingsEN = [
