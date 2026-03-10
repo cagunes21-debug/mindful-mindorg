@@ -147,7 +147,7 @@ const Coaching = () => {
                 </a>
               </Button>
               <Button asChild size="lg" variant="outline" className="border-terracotta-300 text-terracotta-700 hover:bg-terracotta-50 rounded-full px-8">
-                <a href="mailto:mindful-mind@outlook.com?subject=Vraag over coaching">
+                <a href="mailto:mindful-mind@outlook.com?subject=Vraag over individuele begeleiding">
                   Plan een kennismaking
                 </a>
               </Button>
