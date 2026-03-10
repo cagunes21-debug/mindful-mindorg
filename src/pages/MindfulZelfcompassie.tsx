@@ -1286,27 +1286,7 @@ const MindfulZelfcompassie = () => {
         </DialogContent>
       </Dialog>
 
-      {/* Weekly Session Registration Modal */}
-      <Dialog open={isWeeklyRegistrationOpen} onOpenChange={setIsWeeklyRegistrationOpen}>
-        <DialogContent className="sm:max-w-md max-h-[90vh] overflow-y-auto">
-          <DialogHeader>
-            <DialogTitle className="text-xl font-light">
-              Aanmelden voor wekelijkse sessie
-            </DialogTitle>
-          </DialogHeader>
-          {selectedWeekly && (
-            <RegistrationForm
-              trainingName={`Wekelijkse Sessie (${selectedWeekly.lang})`}
-              trainingDate={`Elke ${selectedWeekly.day}`}
-              trainingTime={selectedWeekly.time}
-              price={selectedWeekly.price}
-              onSuccess={() => {
-                setTimeout(() => setIsWeeklyRegistrationOpen(false), 2000);
-              }}
-            />
-          )}
-        </DialogContent>
-      </Dialog>
+
     </div>
   );
 };
