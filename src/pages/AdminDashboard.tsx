@@ -67,6 +67,14 @@ export default function AdminDashboard() {
                   </h2>
                   <AdminCustomersSection initialTab="leads" />
                 </section>
+
+                <section>
+                  <h2 className="text-2xl font-light text-foreground mb-6 flex items-center gap-2 border-b pb-3">
+                    <Mail className="h-5 w-5 text-primary" />
+                    Nieuwsbrief
+                  </h2>
+                  <AdminNewsletterSection />
+                </section>
               </div>
             </TabsContent>
 
