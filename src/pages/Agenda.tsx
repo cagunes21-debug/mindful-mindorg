@@ -24,8 +24,8 @@ interface SelectedTraining {
 }
 
 const workshopDates = {
-  workshop1: { lang: "Workshop 1", time: "19:30 – 20:30", dates: ["Maandag 1 juni"], price: "€45" },
-  workshop2: { lang: "Workshop 2", time: "10:00 – 11:00", dates: ["Zaterdag 5 september"], price: "€45" },
+  workshop1: { lang: "Workshop 1", time: "19:30 – 20:30", dates: ["Maandag 1 juni"], price: "€55" },
+  workshop2: { lang: "Workshop 2", time: "10:00 – 11:00", dates: ["Zaterdag 5 september"], price: "€55" },
 };
 
 const mscTrainingsNL = [
