@@ -11,6 +11,7 @@ import AdminRegistrationsSection from "@/components/admin/AdminRegistrationsSect
 import UpcomingSessionsWidget from "@/components/admin/UpcomingSessionsWidget";
 import AdminScsOverview from "@/components/admin/AdminScsOverview";
 import AdminFinanceSection from "@/components/admin/AdminFinanceSection";
+import AdminNewsletterSection from "@/components/admin/AdminNewsletterSection";
 
 export default function AdminDashboard() {
   const navigate = useNavigate();
