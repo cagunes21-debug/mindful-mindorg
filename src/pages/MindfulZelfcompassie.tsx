@@ -756,8 +756,8 @@ const MindfulZelfcompassie = () => {
                     </div>
                     <h3 className="text-lg font-semibold text-foreground mb-1">🌿 Individuele Sessie</h3>
                     <p className="text-xs text-muted-foreground mb-3">Los · kennismaking of verdieping</p>
-                    <p className="text-sm text-muted-foreground mb-4">Eerst kennismaken of een losse sessie boeken rond een specifiek thema.</p>
-                    <p className="text-xl font-light text-terracotta-600">vanaf €95</p>
+                    <p className="text-sm text-muted-foreground mb-4">Boek een losse sessie rond een specifiek thema of als kennismaking.</p>
+                    <p className="text-xl font-light text-terracotta-600">€110</p>
                   </CardContent>
                 </Card>
               </div>
@@ -927,54 +927,32 @@ const MindfulZelfcompassie = () => {
                 </div>
                 
                 <p className="text-muted-foreground mb-6 max-w-2xl">
-                  Wil je eerst kennismaken of een losse sessie boeken rond een specifiek thema?
+                  Wil je eerst kennismaken of een losse sessie boeken rond een specifiek thema? 
+                  Boek een sessie — of het nu je eerste is of een vervolg.
                 </p>
 
-                <div className="grid md:grid-cols-2 gap-6">
-                  <Card className="border-warm-200 bg-white hover:shadow-lg transition-all duration-300 rounded-2xl">
-                    <CardContent className="p-6">
-                      <div className="h-12 w-12 rounded-xl bg-gradient-to-br from-terracotta-100 to-terracotta-200 flex items-center justify-center mb-4">
-                        <Sparkles className="h-6 w-6 text-terracotta-600" />
+                <Card className="border-warm-200 bg-white hover:shadow-lg transition-all duration-300 rounded-2xl max-w-md">
+                  <CardContent className="p-6">
+                    <div className="h-12 w-12 rounded-xl bg-gradient-to-br from-terracotta-100 to-terracotta-200 flex items-center justify-center mb-4">
+                      <Sparkles className="h-6 w-6 text-terracotta-600" />
+                    </div>
+                    <h4 className="text-lg font-semibold text-foreground mb-1">Individuele sessie</h4>
+                    <p className="text-xs text-muted-foreground mb-3 font-medium">Per sessie · kennismaking, verdieping of vervolg</p>
+                    <p className="text-sm text-muted-foreground mb-4 leading-relaxed">
+                      Persoonlijke begeleiding, volledig afgestemd op jouw vraag of proces. 
+                      Ook geschikt als eerste kennismaking.
+                    </p>
+                    <div className="pt-4 border-t border-warm-200 flex items-center justify-between">
+                      <div>
+                        <p className="text-xs text-muted-foreground">60 minuten</p>
+                        <p className="text-2xl font-light text-terracotta-600">€110</p>
                       </div>
-                      <h4 className="text-lg font-semibold text-foreground mb-1">Kennismakingssessie</h4>
-                      <p className="text-xs text-muted-foreground mb-3 font-medium">Eenmalig</p>
-                      <p className="text-sm text-muted-foreground mb-4 leading-relaxed">
-                        Een eerste verdiepende sessie waarin we helder krijgen waar je staat en wat je nodig hebt. Je ervaart direct hoe het is om samen te werken.
-                      </p>
-                      <div className="pt-4 border-t border-warm-200 flex items-center justify-between">
-                        <div>
-                          <p className="text-xs text-muted-foreground">60 minuten</p>
-                          <p className="text-2xl font-light text-terracotta-600">€95</p>
-                        </div>
-                        <Button asChild size="sm" className="bg-terracotta-600 hover:bg-terracotta-700 text-white rounded-full">
-                          <Link to="/contact">Boek sessie</Link>
-                        </Button>
-                      </div>
-                    </CardContent>
-                  </Card>
-
-                  <Card className="border-warm-200 bg-white hover:shadow-lg transition-all duration-300 rounded-2xl">
-                    <CardContent className="p-6">
-                      <div className="h-12 w-12 rounded-xl bg-gradient-to-br from-sage-100 to-sage-200 flex items-center justify-center mb-4">
-                        <Heart className="h-6 w-6 text-sage-600" />
-                      </div>
-                      <h4 className="text-lg font-semibold text-foreground mb-1">Reguliere individuele sessie</h4>
-                      <p className="text-xs text-muted-foreground mb-3 font-medium">Per sessie</p>
-                      <p className="text-sm text-muted-foreground mb-4 leading-relaxed">
-                        Persoonlijke begeleiding, volledig afgestemd op jouw vraag of proces. We werken verdiepend en concreet aan wat aandacht vraagt.
-                      </p>
-                      <div className="pt-4 border-t border-warm-200 flex items-center justify-between">
-                        <div>
-                          <p className="text-xs text-muted-foreground">60 minuten</p>
-                          <p className="text-2xl font-light text-terracotta-600">€125</p>
-                        </div>
-                        <Button asChild size="sm" className="bg-terracotta-600 hover:bg-terracotta-700 text-white rounded-full">
-                          <Link to="/contact">Boek sessie</Link>
-                        </Button>
-                      </div>
-                    </CardContent>
-                  </Card>
-                </div>
+                      <Button asChild size="sm" className="bg-terracotta-600 hover:bg-terracotta-700 text-white rounded-full">
+                        <Link to="/contact">Boek sessie</Link>
+                      </Button>
+                    </div>
+                  </CardContent>
+                </Card>
               </div>
             </ScrollReveal>
 
