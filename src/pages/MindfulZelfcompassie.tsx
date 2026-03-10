@@ -80,10 +80,7 @@ const MindfulZelfcompassie = () => {
     setIsWorkshopRegistrationOpen(true);
   };
 
-  const openWeeklyRegistration = (session: typeof weeklySessions[0]) => {
-    setSelectedWeekly(session);
-    setIsWeeklyRegistrationOpen(true);
-  };
+
 
   return (
     <div className="min-h-screen bg-background">
