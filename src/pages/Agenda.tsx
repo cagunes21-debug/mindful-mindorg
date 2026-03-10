@@ -375,7 +375,16 @@ const Agenda = () => {
                       </p>
                       
                       <div className="flex items-center justify-between pt-4 border-t border-warm-200">
-                        <p className="text-lg font-semibold text-terracotta-600">{training.price}</p>
+                        <div>
+                          {training.earlyBirdPrice ? (
+                            <>
+                              <p className="text-xs text-muted-foreground line-through">{training.price}</p>
+                              <p className="text-lg font-semibold text-terracotta-600">{training.earlyBirdPrice}</p>
+                            </>
+                          ) : (
+                            <p className="text-lg font-semibold text-terracotta-600">{training.price}</p>
+                          )}
+                        </div>
                         <Button 
                           size="sm" 
                           disabled={training.full}
@@ -383,7 +392,7 @@ const Agenda = () => {
                             name: `8-weekse MSC Training (Nederlands)`,
                             date: training.startDate,
                             time: training.time,
-                            price: training.price,
+                            price: training.earlyBirdPrice || training.price,
                           })}
                           className="bg-terracotta-600 hover:bg-terracotta-700 text-white rounded-full disabled:opacity-50"
                         >
