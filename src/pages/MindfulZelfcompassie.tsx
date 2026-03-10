@@ -810,7 +810,17 @@ const MindfulZelfcompassie = () => {
                           <p className="text-sm text-muted-foreground mb-4">{training.dates}</p>
                           <UrgencyBadge className="mb-4" />
                           <div className="pt-3 border-t border-warm-200 flex items-center justify-between">
-                            <p className="text-2xl font-light text-terracotta-600">{training.price}</p>
+                            <div>
+                              {training.earlyBirdPrice ? (
+                                <>
+                                  <p className="text-xs text-muted-foreground line-through">{training.price}</p>
+                                  <p className="text-2xl font-light text-terracotta-600">{training.earlyBirdPrice}</p>
+                                  <p className="text-xs text-sage-700 font-medium">Early bird t/m {training.earlyBirdDeadline}</p>
+                                </>
+                              ) : (
+                                <p className="text-2xl font-light text-terracotta-600">{training.price}</p>
+                              )}
+                            </div>
                             <Button 
                               className="bg-terracotta-600 hover:bg-terracotta-700 text-white rounded-full"
                               onClick={() => openRegistration(training)}
