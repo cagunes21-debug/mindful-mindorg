@@ -170,6 +170,82 @@ const Agenda = () => {
           </div>
         </div>
       </section>
+      {/* Featured September Training */}
+      <section className="py-12 lg:py-16 bg-gradient-to-br from-terracotta-50 via-warm-50 to-sage-50">
+        <div className="container mx-auto px-4">
+          <div className="mx-auto max-w-4xl">
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.7, delay: 0.3 }}
+              className="relative overflow-hidden rounded-3xl bg-white border-2 border-terracotta-200 shadow-xl"
+            >
+              {/* Early bird ribbon */}
+              <div className="absolute top-4 right-4 z-10">
+                <span className="inline-flex items-center gap-1.5 rounded-full bg-terracotta-600 px-4 py-2 text-sm font-semibold text-white shadow-lg">
+                  <Sparkles className="h-4 w-4" />
+                  Early bird – €495
+                </span>
+              </div>
+
+              <div className="p-8 md:p-12">
+                <span className="inline-block rounded-full bg-sage-100 px-4 py-1.5 text-xs font-semibold text-sage-800 mb-4">
+                  Nieuw — Inschrijving geopend
+                </span>
+                
+                <h2 className="text-2xl md:text-3xl font-light text-foreground mb-2 leading-tight">
+                  8-weekse MSC Training
+                  <span className="font-serif italic text-terracotta-600"> — september 2026</span>
+                </h2>
+                
+                <p className="text-muted-foreground mb-6 max-w-2xl leading-relaxed">
+                  Start het najaar met meer zelfcompassie. Leer in 8 weken omgaan met stress en zelfkritiek 
+                  — met meer vriendelijkheid en veerkracht. Kleine groep, persoonlijke begeleiding.
+                </p>
+
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+                  <div className="flex items-center gap-2 text-sm text-foreground">
+                    <Calendar className="h-4 w-4 text-terracotta-500" />
+                    <span>Start 28 sept</span>
+                  </div>
+                  <div className="flex items-center gap-2 text-sm text-foreground">
+                    <Clock className="h-4 w-4 text-terracotta-500" />
+                    <span>19:00 – 21:00</span>
+                  </div>
+                  <div className="flex items-center gap-2 text-sm text-foreground">
+                    <Globe className="h-4 w-4 text-terracotta-500" />
+                    <span>Online (NL)</span>
+                  </div>
+                  <div className="flex items-center gap-2 text-sm text-foreground">
+                    <MapPin className="h-4 w-4 text-terracotta-500" />
+                    <span>9 sessies</span>
+                  </div>
+                </div>
+
+                <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
+                  <Button 
+                    onClick={() => openRegistration({
+                      name: "8-weekse MSC Training (Nederlands) — September",
+                      date: "28 september 2026",
+                      time: "19:00 – 21:00",
+                      price: "€495 (early bird)",
+                    })}
+                    size="lg"
+                    className="bg-terracotta-600 hover:bg-terracotta-700 text-white rounded-full px-10 py-6 text-base shadow-lg"
+                  >
+                    Schrijf je in met early bird korting
+                    <ArrowRight className="ml-2 h-5 w-5" />
+                  </Button>
+                  <div className="text-sm text-muted-foreground">
+                    <p><span className="line-through">€550</span> → <span className="font-semibold text-terracotta-600">€495</span></p>
+                    <p>Early bird t/m 1 augustus 2026</p>
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+          </div>
+        </div>
+      </section>
 
       {/* Workshops */}
       <section className="py-16 lg:py-20 bg-white">
