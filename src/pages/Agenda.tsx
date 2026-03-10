@@ -313,9 +313,14 @@ const Agenda = () => {
               
               <div className="grid gap-6 md:grid-cols-2">
                 {mscTrainingsEN.map((training, index) => (
-                  <Card key={index} className="border-sage-200 bg-white rounded-3xl overflow-hidden hover:shadow-md transition-shadow">
+                  <Card key={index} className={`border-sage-200 rounded-3xl overflow-hidden transition-shadow ${training.full ? 'bg-warm-50 opacity-75' : 'bg-white hover:shadow-md'}`}>
                     <CardContent className="p-6">
-                      <p className="font-semibold text-foreground mb-4">{training.day}</p>
+                      <div className="flex items-center justify-between mb-4">
+                        <p className="font-semibold text-foreground">{training.day}</p>
+                        {training.full && (
+                          <span className="inline-block rounded-full bg-sage-200 px-3 py-1 text-xs font-semibold text-sage-800">Full</span>
+                        )}
+                      </div>
                       
                       <div className="space-y-2 text-sm mb-4">
                         <div className="flex items-start gap-2">
@@ -338,15 +343,16 @@ const Agenda = () => {
                         <p className="text-lg font-semibold text-sage-700">{training.price}</p>
                         <Button 
                           size="sm" 
+                          disabled={training.full}
                           onClick={() => openRegistration({
                             name: `8-week MSC Training (English)`,
                             date: training.startDate,
                             time: training.time,
                             price: training.price,
                           })}
-                          className="bg-sage-600 hover:bg-sage-700 text-white rounded-full"
+                          className="bg-sage-600 hover:bg-sage-700 text-white rounded-full disabled:opacity-50"
                         >
-                          Reserve
+                          {training.full ? 'Full' : 'Reserve'}
                         </Button>
                       </div>
                     </CardContent>
