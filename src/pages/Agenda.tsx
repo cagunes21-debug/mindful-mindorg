@@ -305,7 +305,7 @@ const Agenda = () => {
       </section>
 
       {/* 8-Week MSC Training */}
-      <section className="py-20 lg:py-24 bg-warm-50">
+      <section id="groepstraining" className="py-20 lg:py-24 bg-warm-50 scroll-mt-20">
         <div className="container mx-auto px-4">
           <div className="mx-auto max-w-5xl">
             <div className="text-center mb-12">
