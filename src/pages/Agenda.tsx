@@ -49,18 +49,12 @@ const mscTrainingsNL = [
 
 const mscTrainingsEN = [
   {
-    day: "Sunday (afternoon)",
-    startDate: "18 January 2026",
-    time: "16:00 – 18:00",
-    followUp: ["25 Jan", "1, 8, 15, 22 Feb", "1, 8 Mar"],
-    price: "€550",
-  },
-  {
     day: "Wednesday (evening)",
     startDate: "4 March 2026",
     time: "19:00 – 21:00",
     followUp: ["11, 18, 25 Mar", "28 Mar (retreat)", "1, 8, 15, 22 Apr"],
     price: "€550",
+    full: true,
   },
 ];
 

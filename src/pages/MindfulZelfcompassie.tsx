@@ -37,14 +37,6 @@ import natureCalm from "@/assets/nature-calm.jpg";
 
 const trainingDates = [
   {
-    language: "Nederlands",
-    day: "Maandag (avond)",
-    startDate: "16 februari 2026",
-    time: "19:00 – 21:00",
-    dates: "Vervolgdata: 23 feb, 2, 9, 16, 23 mrt, 13, 20 apr, 4 mei",
-    price: "€550",
-  },
-  {
     language: "English",
     day: "Wednesday (evening)",
     startDate: "22 April 2026",
