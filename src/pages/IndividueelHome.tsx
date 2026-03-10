@@ -37,9 +37,8 @@ const IndividueelHome = () => {
       <ApproachSection />
       <ForWhomSection />
       <GroupTrainingTeaser />
-      
-      <TrainersSection />
       <CTASection />
+      <TrainersSection />
       <Footer />
     </div>
   );
