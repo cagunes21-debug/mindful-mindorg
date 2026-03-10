@@ -135,8 +135,40 @@ const Agenda = () => {
               transition={{ duration: 0.6, delay: 0.2 }}
               className="text-muted-foreground text-lg max-w-2xl mx-auto leading-relaxed"
             >
-              Kies de vorm die past bij jouw behoefte, beschikbare tijd en mate van verdieping. Je kunt instappen met een workshop, een 8-weekse training volgen of kiezen voor een intensiever traject.
+              Kies de vorm die past bij jouw behoefte, beschikbare tijd en mate van verdieping.
             </motion.p>
+
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.3 }}
+              className="flex flex-wrap justify-center gap-3 mt-8"
+            >
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => document.getElementById('groepstraining')?.scrollIntoView({ behavior: 'smooth' })}
+                className="rounded-full border-terracotta-300 text-terracotta-600 hover:bg-terracotta-50"
+              >
+                Groepstraining
+              </Button>
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => document.getElementById('workshops')?.scrollIntoView({ behavior: 'smooth' })}
+                className="rounded-full border-warm-300 text-warm-700 hover:bg-warm-50"
+              >
+                Workshop
+              </Button>
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => document.getElementById('retreat')?.scrollIntoView({ behavior: 'smooth' })}
+                className="rounded-full border-terracotta-300 text-terracotta-600 hover:bg-terracotta-50"
+              >
+                Retreat
+              </Button>
+            </motion.div>
           </div>
         </div>
       </section>
