@@ -45,7 +45,7 @@ const testimonials = [
   {
     quote: "De individuele sessies waren precies wat ik nodig had. In mijn eigen tempo, met volledige aandacht voor mijn persoonlijke thema's.",
     author: "Renate",
-    role: "Coaching cliënt",
+    role: "Deelnemer",
   },
   {
     quote: "Na jaren worstelen met perfectionisme heb ik eindelijk tools gevonden die echt werken. De persoonlijke aanpak maakte het verschil.",
