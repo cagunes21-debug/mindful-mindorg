@@ -48,8 +48,8 @@ const trainers = [
     name: "Maria Schmidt",
     role: "Mindful Zelfcompassie Trainer",
     tagline: "Leadership Coach & Trainer",
-    bio: "Maria heeft meer dan tien jaar ervaring in leiderschapsontwikkeling en het begeleiden van mensen bij het omgaan met druk, verandering en persoonlijke groei. In haar werk staat het versterken van innerlijk leiderschap en zelfcompassie centraal.\n\nHaar intentie is om deelnemers te ondersteunen in het ontdekken van hun eigen wijsheid en het worden van hun eigen beste leraar.",
-    journey: "Maria's manier van lesgeven wordt vaak omschreven als warm, gegrond en bekrachtigend. Met haar rustige en toegankelijke aanwezigheid creëert zij een veilige ruimte waarin deelnemers zichzelf met meer openheid en compassie kunnen ontmoeten.",
+    bio: "Maria heeft meer dan tien jaar ervaring in leiderschapsontwikkeling en het begeleiden van mensen bij het omgaan met druk, verandering en persoonlijke groei. In haar werk staat het versterken van innerlijk leiderschap en zelfcompassie centraal.\n\nZij brengt daarnaast jarenlange ervaring mee uit het bedrijfsleven, waardoor zij de uitdagingen van professionals en leiders goed begrijpt.",
+    journey: "Maria volgde de Mindful Self-Compassion (MSC) training bij Chris Germer, mede-ontwikkelaar van het programma, aan de Mindfulness Academie in Amsterdam. Haar manier van lesgeven wordt vaak omschreven als warm, gegrond en bekrachtigend, waarbij zij een veilige ruimte creëert waarin deelnemers zichzelf met meer openheid en compassie kunnen ontmoeten.",
     specializations: [
       "Mindful Self-Compassion (MSC)",
       "Leiderschapsontwikkeling",
