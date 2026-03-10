@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import NewsletterForm from "@/components/NewsletterForm";
 
 const CTASection = () => {
   return (
@@ -13,7 +14,7 @@ const CTASection = () => {
         <p className="text-sm uppercase tracking-widest mb-10 opacity-70">
           Begin vandaag met jouw persoonlijke traject
         </p>
-        <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+        <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-12">
           <Link
             to="/contact"
             className="inline-block bg-primary-foreground text-primary px-10 py-4 rounded-lg font-sans font-semibold text-sm tracking-wide uppercase hover:opacity-90 transition-opacity"
@@ -26,6 +27,16 @@ const CTASection = () => {
           >
             Ontdek de groepstraining
           </Link>
+        </div>
+
+        {/* Nieuwsbrief */}
+        <div className="border-t border-primary-foreground/20 pt-8">
+          <p className="text-sm opacity-80 mb-3">
+            Nog niet klaar om te starten? Ontvang maandelijks tips over mindfulness en zelfcompassie.
+          </p>
+          <div className="max-w-sm mx-auto">
+            <NewsletterForm variant="inline" />
+          </div>
         </div>
       </div>
     </section>
