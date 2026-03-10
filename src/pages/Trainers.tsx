@@ -32,10 +32,10 @@ const trainers = [
   },
   {
     name: "Çağla Güneş",
-    role: "Somatic Therapist • Lichaamsgerichte Psychotherapeut",
+    role: "Traumatherapeut • Lichaamsgerichte Psychotherapeut",
     tagline: "Mindfulness & Zelfcompassie Trainer",
-    bio: "Çağla is lichaamsgerichte therapeut en trainer in mindfulness en zelfcompassie. Zij werkt vanuit een diepe oriëntatie op innerlijke verbinding en bewustzijn, geworteld in een meditatiepraktijk die begon op haar achtste en zich verdiepte door jarenlange Vipassana-retraites.",
-    journey: "Jaren van reizen en wonen in het buitenland brachten haar steeds dichter bij haar essentie. Haar verbinding met haar wortels in Cappadocië vormt een belangrijk fundament in haar werk. Zij volgde de MSC-training bij Chris Germer en Mila de Koning, wat haar benadering verrijkte met compassie en trauma-sensitiviteit.",
+    bio: "Çağla is traumatherapeut en trainer in mindfulness en zelfcompassie. In haar werk staat de verbinding met het lichaam, innerlijk bewustzijn en zelfcompassie centraal. Zij begeleidt mensen bij het herstellen van contact met zichzelf en het ontwikkelen van meer innerlijke stabiliteit en veerkracht.",
+    journey: "Naast haar therapeutisch werk heeft zij zich verdiept in mindfulness en zelfcompassie. Zij volgde de Mindful Self-Compassion (MSC) training bij Chris Germer, mede-ontwikkelaar van het programma, en Mila de Koning aan de Mindfulness Academie in Amsterdam. Deze training verrijkte haar werk met een compassiegerichte en trauma-sensitieve benadering.",
     specializations: [
       "Mindfulness (MBSR/MBCT)",
       "Psychosomatische therapie",
