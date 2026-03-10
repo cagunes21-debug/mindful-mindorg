@@ -19,14 +19,20 @@ const HeroSection = () => {
             <em className="italic">innerlijke kracht</em>
           </h1>
           <p className="text-lg md:text-xl text-secondary font-light leading-relaxed mb-10 max-w-lg animate-fade-in-up" style={{ animationDelay: "0.3s" }}>
-            Individuele sessies Mindful Zelfcompassie — op jouw tempo, afgestemd op jouw behoeften.
+            Mindful Zelfcompassie — individueel of in een groepstraining. Op jouw tempo, afgestemd op jouw behoeften.
           </p>
-          <div className="animate-fade-in-up" style={{ animationDelay: "0.45s" }}>
+          <div className="flex flex-col sm:flex-row gap-4 animate-fade-in-up" style={{ animationDelay: "0.45s" }}>
             <Link
               to="/contact"
               className="inline-block bg-primary text-primary-foreground px-8 py-4 rounded-lg font-sans font-semibold text-sm tracking-wide uppercase hover:opacity-90 transition-opacity"
             >
               Plan een kennismaking
+            </Link>
+            <Link
+              to="/msc-training"
+              className="inline-block border border-primary-foreground/50 text-primary-foreground px-8 py-4 rounded-lg font-sans font-semibold text-sm tracking-wide uppercase hover:bg-primary-foreground/10 transition-colors"
+            >
+              Ontdek de groepstraining
             </Link>
           </div>
         </div>
