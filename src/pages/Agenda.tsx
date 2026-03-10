@@ -240,65 +240,51 @@ const Agenda = () => {
       </section>
 
       {/* Workshops */}
-      <section className="py-16 lg:py-20 bg-white">
+      <section className="py-10 lg:py-14 bg-white">
         <div className="container mx-auto px-4">
           <div className="mx-auto max-w-4xl">
-            <div className="text-center mb-12">
-              <span className="inline-block rounded-full bg-sage-100 px-4 py-1.5 text-xs font-semibold text-sage-800 mb-4">
+            <div className="text-center mb-8">
+              <span className="inline-block rounded-full bg-sage-100 px-4 py-1.5 text-xs font-semibold text-sage-800 mb-3">
                 Laagdrempelig
               </span>
-              <h2 className="text-3xl font-light text-foreground md:text-4xl leading-tight mb-4">
+              <h2 className="text-2xl font-light text-foreground md:text-3xl leading-tight mb-2">
                 Workshop <span className="font-serif italic text-terracotta-600">Zelfcompassie</span>
               </h2>
-              <p className="text-terracotta-600 font-medium mb-6">
-                Kennismaken, verdiepen of opfrissen — zonder langdurige verplichting
-              </p>
-              <p className="text-muted-foreground max-w-2xl mx-auto">
-                Maak in een rustige en veilige setting kennis met de essentie van zelfcompassie. 
-                Ervaar hoe mildheid en vriendelijkheid je kunnen ondersteunen bij stress en zelfkritiek.
+              <p className="text-sm text-muted-foreground max-w-xl mx-auto">
+                Maak kennis met de essentie van zelfcompassie — zonder langdurige verplichting.
               </p>
             </div>
             
-            <div className="grid gap-6 md:grid-cols-2">
+            <div className="grid gap-4 md:grid-cols-2">
               {Object.entries(workshopDates).map(([key, workshop]) => (
-                <Card key={key} className="border-warm-200 bg-gradient-to-br from-warm-50 to-white rounded-3xl overflow-hidden">
-                  <CardContent className="p-8">
-                    <div className="flex items-center gap-3 mb-6">
-                      <span className="inline-block rounded-full px-4 py-1.5 text-xs font-semibold bg-terracotta-100 text-terracotta-700">
-                        {workshop.lang}
-                      </span>
+                <Card key={key} className="border-warm-200 bg-warm-50/50 rounded-2xl overflow-hidden">
+                  <CardContent className="p-5 flex items-center justify-between gap-4">
+                    <div className="flex-1 min-w-0">
+                      <div className="flex items-center gap-2 mb-1">
+                        <span className="inline-block rounded-full px-3 py-1 text-xs font-semibold bg-terracotta-100 text-terracotta-700">
+                          {workshop.lang}
+                        </span>
+                        <span className="text-sm font-medium text-foreground">{workshop.dates[0]} 2026</span>
+                      </div>
+                      <div className="flex items-center gap-3 text-xs text-muted-foreground mb-1">
+                        <span className="flex items-center gap-1"><Clock className="h-3 w-3" />{workshop.time}</span>
+                        <span className="font-semibold text-terracotta-600 text-sm">{workshop.price}</span>
+                      </div>
+                      <p className="text-xs text-muted-foreground">
+                        Bij vervolginschrijving wordt dit bedrag in mindering gebracht.
+                      </p>
                     </div>
-                    
-                    <div className="flex items-center gap-2 text-sm text-muted-foreground mb-4">
-                      <Clock className="h-4 w-4" />
-                      {workshop.time}
-                    </div>
-                    
-                    <p className="text-sm font-medium text-foreground mb-3">Data:</p>
-                    <ul className="space-y-2 mb-4">
-                      {workshop.dates.map((date) => (
-                        <li key={date} className="flex items-center gap-2 text-foreground">
-                          <span className="h-1.5 w-1.5 rounded-full bg-terracotta-400" />
-                          {date} 2026
-                        </li>
-                      ))}
-                    </ul>
-                    
-                    <p className="text-lg font-semibold text-terracotta-600 mb-2">{workshop.price}</p>
-                    <p className="text-xs text-muted-foreground mb-4">
-                      Bij inschrijving voor een groepstraining of individueel traject wordt dit bedrag in mindering gebracht.
-                    </p>
-                    
                     <Button 
+                      size="sm"
                       onClick={() => openRegistration({
                         name: `Workshop Zelfcompassie (${workshop.lang})`,
                         date: `${workshop.dates[0]} 2026`,
                         time: workshop.time,
                         price: workshop.price,
                       })}
-                      className="w-full bg-terracotta-600 hover:bg-terracotta-700 text-white rounded-full"
+                      className="bg-terracotta-600 hover:bg-terracotta-700 text-white rounded-full shrink-0"
                     >
-                      Meld je aan
+                      Aanmelden
                     </Button>
                   </CardContent>
                 </Card>
