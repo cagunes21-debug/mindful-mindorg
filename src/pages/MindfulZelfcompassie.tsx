@@ -68,8 +68,7 @@ const MindfulZelfcompassie = () => {
   const [selectedTraining, setSelectedTraining] = useState<typeof trainingDates[0] | null>(null);
   const [isWorkshopRegistrationOpen, setIsWorkshopRegistrationOpen] = useState(false);
   const [selectedWorkshop, setSelectedWorkshop] = useState<typeof workshopDates[0] | null>(null);
-  const [isWeeklyRegistrationOpen, setIsWeeklyRegistrationOpen] = useState(false);
-  const [selectedWeekly, setSelectedWeekly] = useState<typeof weeklySessions[0] | null>(null);
+
 
   const openRegistration = (training: typeof trainingDates[0]) => {
     setSelectedTraining(training);
