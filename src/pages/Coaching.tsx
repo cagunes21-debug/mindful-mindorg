@@ -480,7 +480,7 @@ const Coaching = () => {
                   <ArrowRight className="ml-2 h-4 w-4" />
                 </a>
               </Button>
-              <Button asChild size="lg" variant="outline" className="border-white/30 text-white hover:bg-white/10 rounded-full px-8">
+              <Button asChild size="lg" variant="outline" className="border-white text-white hover:bg-white/20 rounded-full px-8">
                 <Link to="/contact">
                   Stel een vraag
                 </Link>
