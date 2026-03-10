@@ -24,8 +24,8 @@ interface SelectedTraining {
 }
 
 const workshopDates = {
-  nl: { lang: "Nederlands", time: "19:00 – 20:00", dates: ["11 februari"], price: "€45" },
-  en: { lang: "Engels", time: "19:00 – 20:00", dates: ["10 februari"], price: "€45" },
+  workshop1: { lang: "Workshop 1", time: "19:30 – 20:30", dates: ["Maandag 1 juni"], price: "€45" },
+  workshop2: { lang: "Workshop 2", time: "10:00 – 11:00", dates: ["Zaterdag 5 september"], price: "€45" },
 };
 
 const mscTrainingsNL = [
@@ -192,9 +192,7 @@ const Agenda = () => {
                 <Card key={key} className="border-warm-200 bg-gradient-to-br from-warm-50 to-white rounded-3xl overflow-hidden">
                   <CardContent className="p-8">
                     <div className="flex items-center gap-3 mb-6">
-                      <span className={`inline-block rounded-full px-4 py-1.5 text-xs font-semibold ${
-                        key === 'nl' ? 'bg-terracotta-100 text-terracotta-700' : 'bg-sage-200 text-sage-800'
-                      }`}>
+                      <span className="inline-block rounded-full px-4 py-1.5 text-xs font-semibold bg-terracotta-100 text-terracotta-700">
                         {workshop.lang}
                       </span>
                     </div>
