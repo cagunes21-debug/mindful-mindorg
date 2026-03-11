@@ -458,10 +458,9 @@ const CourseMaterial = () => {
                 })}
             </div>
           )}
-            </div>
-          )}
         </div>
       </main>
+
 
       {/* Item Editor Dialog */}
       <Dialog open={showEditor} onOpenChange={setShowEditor}>
