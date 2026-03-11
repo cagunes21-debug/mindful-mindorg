@@ -4,7 +4,7 @@ import { ScrollReveal } from "@/components/ScrollReveal";
 
 const GroupTrainingTeaser = () => {
   return (
-    <section className="py-16 lg:py-20 bg-gradient-to-br from-sage-50 via-warm-50 to-terracotta-50/30">
+    <section className="py-20 md:py-28 bg-gradient-to-br from-sage-50 via-warm-50 to-terracotta-50/30">
       <div className="container mx-auto px-6">
         <ScrollReveal>
           <div className="max-w-4xl mx-auto">
@@ -14,7 +14,7 @@ const GroupTrainingTeaser = () => {
                   <Users className="h-3.5 w-3.5" />
                   Groepstraining
                 </span>
-                <h2 className="text-2xl md:text-3xl font-serif text-foreground mb-3 leading-tight">
+                <h2 className="text-3xl md:text-4xl font-serif text-foreground mb-3 leading-tight">
                   Liever samen groeien?
                 </h2>
                 <p className="text-muted-foreground leading-relaxed mb-4">

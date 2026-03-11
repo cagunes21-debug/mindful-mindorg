@@ -54,7 +54,7 @@ const AccessibilityToolbar = () => {
   };
 
   return (
-    <div className="fixed bottom-6 right-6 z-50">
+    <div className="fixed bottom-6 left-6 z-50">
       <AnimatePresence>
         {isOpen && (
           <motion.div
@@ -62,7 +62,7 @@ const AccessibilityToolbar = () => {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 10, scale: 0.95 }}
             transition={{ duration: 0.2 }}
-            className="absolute bottom-16 right-0 bg-white rounded-2xl shadow-lg border border-warm-200 p-4 min-w-[200px]"
+            className="absolute bottom-16 left-0 bg-white rounded-2xl shadow-lg border border-warm-200 p-4 min-w-[200px]"
           >
             <p className="text-sm font-medium text-foreground mb-3">Tekstgrootte</p>
             <div className="flex items-center justify-between gap-2 mb-3">

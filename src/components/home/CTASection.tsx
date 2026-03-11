@@ -3,14 +3,14 @@ import { Link } from "react-router-dom";
 const CTASection = () => {
   return (
     <section className="py-20 md:py-28 bg-primary text-primary-foreground">
-      <div className="container mx-auto px-6 max-w-3xl text-center">
+      <div className="container mx-auto px-6 max-w-4xl text-center">
         <h2 className="text-3xl md:text-4xl font-serif mb-4">
           Meld je nu aan
         </h2>
         <p className="text-xl font-serif italic mb-2 opacity-90">
           Je bent welkom zoals je bent
         </p>
-        <p className="text-sm uppercase tracking-widest mb-10 opacity-70">
+        <p className="text-sm uppercase tracking-[0.2em] mb-10 opacity-70">
           Begin vandaag met jouw persoonlijke traject
         </p>
         <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
