@@ -104,6 +104,8 @@ export default function ProtectedRoute({ children, requireAdmin = false }: Prote
     sessionRef.current = null;
     adminCheckedRef.current = false;
     authResolvedRef.current = true;
+    // Clear admin cache on sign-out
+    try { Object.keys(sessionStorage).filter(k => k.startsWith("admin_role_")).forEach(k => sessionStorage.removeItem(k)); } catch {}
     setAdminState(requireAdmin ? "loading" : "yes");
     setAuthState("unauthenticated");
   }, [requireAdmin]);
