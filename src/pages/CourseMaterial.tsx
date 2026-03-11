@@ -22,7 +22,7 @@ import {
 import {
   BookOpen, Plus, Trash2, Pencil, Save, Loader2, ChevronDown,
   FileText, Video, Headphones, Link2, ClipboardList, Eye, EyeOff,
-  MessageSquare, GripVertical, Upload,
+  MessageSquare, GripVertical, Upload, Bot, User,
 } from "lucide-react";
 import { toast } from "sonner";
 
