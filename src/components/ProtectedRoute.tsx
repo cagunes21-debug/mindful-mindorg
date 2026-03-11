@@ -18,6 +18,7 @@ export default function ProtectedRoute({ children, requireAdmin = false }: Prote
   const userIdRef = useRef<string | null>(null);
   const adminCheckedRef = useRef(false);
   const mountedRef = useRef(true);
+  const authResolvedRef = useRef(false);
 
   useEffect(() => {
     mountedRef.current = true;
