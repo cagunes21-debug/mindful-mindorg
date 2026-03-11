@@ -15,49 +15,43 @@ export default function ProtectedRoute({ children, requireAdmin = false }: Prote
   const location = useLocation();
   const [authState, setAuthState] = useState<"loading" | "authenticated" | "unauthenticated">("loading");
   const [adminState, setAdminState] = useState<"loading" | "yes" | "no" | "error">(requireAdmin ? "loading" : "yes");
-  const userIdRef = useRef<string | null>(null);
-  const adminCheckedRef = useRef(false);
   const mountedRef = useRef(true);
-  const authResolvedRef = useRef(false);
+  const adminCheckedRef = useRef(false);
+  const sessionRef = useRef<{ userId: string; accessToken: string } | null>(null);
 
   useEffect(() => {
     mountedRef.current = true;
     adminCheckedRef.current = false;
 
-    // Listen FIRST (best practice)
     const { data: { subscription } } = supabase.auth.onAuthStateChange(
       (event, session) => {
         if (!mountedRef.current) return;
         if (event === "SIGNED_OUT") {
-          userIdRef.current = null;
+          sessionRef.current = null;
           adminCheckedRef.current = false;
           setAdminState(requireAdmin ? "loading" : "yes");
           setAuthState("unauthenticated");
           return;
         }
         if (session?.user) {
-          userIdRef.current = session.user.id;
-          authResolvedRef.current = true;
+          sessionRef.current = { userId: session.user.id, accessToken: session.access_token };
           setAuthState("authenticated");
         }
       }
     );
 
-    // THEN restore session
     supabase.auth.getSession().then(({ data: { session } }) => {
       if (!mountedRef.current) return;
       if (session?.user) {
-        userIdRef.current = session.user.id;
-        authResolvedRef.current = true;
+        sessionRef.current = { userId: session.user.id, accessToken: session.access_token };
         setAuthState("authenticated");
       } else {
         setAuthState("unauthenticated");
       }
     });
 
-    // Safety timeout
     const timeout = setTimeout(() => {
-      if (mountedRef.current && !authResolvedRef.current) {
+      if (mountedRef.current && authState === "loading") {
         setAuthState("unauthenticated");
       }
     }, 5000);
@@ -69,35 +63,48 @@ export default function ProtectedRoute({ children, requireAdmin = false }: Prote
     };
   }, []);
 
-  // Admin check
+  // Admin check using direct fetch (bypasses Supabase client session timing issues)
   useEffect(() => {
     if (authState !== "authenticated" || !requireAdmin || adminCheckedRef.current) return;
-    const userId = userIdRef.current;
-    if (!userId) { setAdminState("no"); return; }
+    const session = sessionRef.current;
+    if (!session) { setAdminState("no"); return; }
 
     adminCheckedRef.current = true;
     let cancelled = false;
 
-    const checkOnce = async (): Promise<"yes" | "no" | "error"> => {
+    const checkAdmin = async (): Promise<"yes" | "no" | "error"> => {
       try {
-        // Try RPC first
-        const rpcResult = await Promise.race([
-          supabase.rpc("has_role", { _user_id: userId, _role: "admin" }),
-          new Promise<null>((resolve) => setTimeout(() => resolve(null), 5000)),
+        const res = await Promise.race([
+          fetch(
+            `${import.meta.env.VITE_SUPABASE_URL}/rest/v1/rpc/has_role`,
+            {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+                "apikey": import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY,
+                "Authorization": `Bearer ${session.accessToken}`,
+              },
+              body: JSON.stringify({ _user_id: session.userId, _role: "admin" }),
+            }
+          ),
+          new Promise<never>((_, reject) => setTimeout(() => reject(new Error("timeout")), 8000)),
         ]);
-        
-        if (rpcResult && 'data' in rpcResult && rpcResult.data === true) return "yes";
-        if (rpcResult && 'data' in rpcResult && rpcResult.data === false) return "no";
-        
-        // RPC failed or timed out — fallback: query user_roles directly
-        console.warn("[ProtectedRoute] RPC failed, trying direct query");
+
+        const data = await res.json();
+        console.log("[ProtectedRoute] has_role result:", data);
+
+        if (data === true) return "yes";
+        if (data === false) return "no";
+
+        // Unexpected response, try direct query fallback
+        console.warn("[ProtectedRoute] Unexpected RPC response, trying direct query");
         const { data: roles, error: queryError } = await supabase
           .from("user_roles")
           .select("role")
-          .eq("user_id", userId)
+          .eq("user_id", session.userId)
           .eq("role", "admin")
           .maybeSingle();
-        
+
         if (queryError) {
           console.error("[ProtectedRoute] Direct query error:", queryError);
           return "error";
@@ -109,20 +116,21 @@ export default function ProtectedRoute({ children, requireAdmin = false }: Prote
       }
     };
 
-    const check = async () => {
-      let outcome = await checkOnce();
+    const run = async () => {
+      let result = await checkAdmin();
       // Retry once on error
-      if (outcome === "error" && !cancelled && mountedRef.current) {
+      if (result === "error" && !cancelled && mountedRef.current) {
         await new Promise(r => setTimeout(r, 1500));
         if (!cancelled && mountedRef.current) {
-          outcome = await checkOnce();
+          result = await checkAdmin();
         }
       }
       if (!cancelled && mountedRef.current) {
-        setAdminState(outcome);
+        setAdminState(result);
       }
     };
-    check();
+
+    run();
     return () => { cancelled = true; };
   }, [authState, requireAdmin]);
 
