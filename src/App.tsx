@@ -45,6 +45,7 @@ const IntakeForm = lazy(() => import("./pages/IntakeForm"));
 const SelfCompassionQuestionnaire = lazy(() => import("./pages/SelfCompassionQuestionnaire"));
 const MscMaterialsLibrary = lazy(() => import("./pages/MscMaterialsLibrary"));
 const MscSessionBuilder = lazy(() => import("./pages/MscSessionBuilder"));
+const AdminContent = lazy(() => import("./pages/AdminContent"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 
 const queryClient = new QueryClient();
