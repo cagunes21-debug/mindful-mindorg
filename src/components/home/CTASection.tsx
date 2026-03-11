@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 const CTASection = () => {
   return (
     <section className="py-20 md:py-28 bg-primary text-primary-foreground">
-      <div className="container mx-auto px-6 max-w-3xl text-center">
+      <div className="container mx-auto px-6 max-w-4xl text-center">
         <h2 className="text-3xl md:text-4xl font-serif mb-4">
           Meld je nu aan
         </h2>
