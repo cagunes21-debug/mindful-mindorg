@@ -40,6 +40,7 @@ interface ContentItem {
   text_content: string | null;
   file_url: string | null;
   is_visible: boolean;
+  is_system: boolean;
   release_date: string | null;
   created_at: string;
 }
