@@ -48,28 +48,29 @@ const Auth = () => {
   const navigate = useNavigate();
   const { toast } = useToast();
 
-  const redirectAfterLogin = async (userId?: string) => {
-    console.log("[Auth] redirectAfterLogin called, userId:", userId);
-    
-    let dest = "/mijn-trainingen";
-    
-    if (userId) {
-      try {
-        const raceResult = await Promise.race([
-          supabase.rpc("has_role", { _user_id: userId, _role: "admin" }),
-          new Promise<{ data: null }>((resolve) => setTimeout(() => resolve({ data: null }), 3000)),
-        ]);
-        
-        if (raceResult && 'data' in raceResult && raceResult.data === true) {
-          dest = "/admin";
-        }
-        console.log("[Auth] Admin check done →", dest);
-      } catch {
-        console.warn("[Auth] Admin check failed → /mijn-trainingen");
-      }
+  const redirectAfterLogin = (userId?: string) => {
+    if (!userId) {
+      navigate("/mijn-trainingen", { replace: true });
+      return;
     }
     
-    navigate(dest, { replace: true });
+    // Try admin check, but redirect immediately on any failure
+    supabase.rpc("has_role", { _user_id: userId, _role: "admin" })
+      .then(({ data, error }) => {
+        if (!error && data === true) {
+          navigate("/admin", { replace: true });
+        } else {
+          navigate("/mijn-trainingen", { replace: true });
+        }
+      })
+      .catch(() => {
+        navigate("/mijn-trainingen", { replace: true });
+      });
+    
+    // Hard fallback
+    setTimeout(() => {
+      navigate("/mijn-trainingen", { replace: true });
+    }, 4000);
   };
 
   useEffect(() => {
