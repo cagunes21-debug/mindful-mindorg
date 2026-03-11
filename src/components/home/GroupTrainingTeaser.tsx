@@ -4,7 +4,7 @@ import { ScrollReveal } from "@/components/ScrollReveal";
 
 const GroupTrainingTeaser = () => {
   return (
-    <section className="py-16 lg:py-20 bg-gradient-to-br from-sage-50 via-warm-50 to-terracotta-50/30">
+    <section className="py-20 md:py-28 bg-gradient-to-br from-sage-50 via-warm-50 to-terracotta-50/30">
       <div className="container mx-auto px-6">
         <ScrollReveal>
           <div className="max-w-4xl mx-auto">
