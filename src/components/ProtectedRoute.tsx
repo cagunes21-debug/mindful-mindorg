@@ -80,17 +80,29 @@ export default function ProtectedRoute({ children, requireAdmin = false }: Prote
 
     const checkOnce = async (): Promise<"yes" | "no" | "error"> => {
       try {
-        const result = await Promise.race([
+        // Try RPC first
+        const rpcResult = await Promise.race([
           supabase.rpc("has_role", { _user_id: userId, _role: "admin" }),
-          new Promise<null>((resolve) => setTimeout(() => resolve(null), 10000)),
+          new Promise<null>((resolve) => setTimeout(() => resolve(null), 5000)),
         ]);
-        if (result === null) return "error";
-        if ('error' in result && result.error) {
-          console.error("[ProtectedRoute] Admin check error:", result.error);
+        
+        if (rpcResult && 'data' in rpcResult && rpcResult.data === true) return "yes";
+        if (rpcResult && 'data' in rpcResult && rpcResult.data === false) return "no";
+        
+        // RPC failed or timed out — fallback: query user_roles directly
+        console.warn("[ProtectedRoute] RPC failed, trying direct query");
+        const { data: roles, error: queryError } = await supabase
+          .from("user_roles")
+          .select("role")
+          .eq("user_id", userId)
+          .eq("role", "admin")
+          .maybeSingle();
+        
+        if (queryError) {
+          console.error("[ProtectedRoute] Direct query error:", queryError);
           return "error";
         }
-        if ('data' in result && result.data === true) return "yes";
-        return "no";
+        return roles ? "yes" : "no";
       } catch (e) {
         console.error("[ProtectedRoute] Admin check exception:", e);
         return "error";
