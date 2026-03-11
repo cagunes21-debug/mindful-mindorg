@@ -20,7 +20,7 @@ const BenefitsSection = () => {
       <div className="absolute top-10 -left-20 w-72 h-72 bg-rose-200/20 rounded-full blur-3xl" />
       <div className="absolute bottom-10 -right-20 w-72 h-72 bg-lavender-200/20 rounded-full blur-3xl" />
 
-      <div className="container mx-auto px-6 max-w-5xl relative">
+      <div className="container mx-auto px-6 max-w-4xl relative">
         {/* Header */}
         <div className="text-center mb-12">
           <motion.p
