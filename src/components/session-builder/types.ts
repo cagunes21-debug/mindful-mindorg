@@ -17,6 +17,7 @@ export interface MscItem {
   tags: string[] | null;
   is_optional: boolean;
   sort_order: number;
+  is_system: boolean;
 }
 
 export interface SessionPlanBlock {
