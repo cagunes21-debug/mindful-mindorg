@@ -99,20 +99,28 @@ const CourseMaterial = () => {
 
   const loadData = async () => {
     setLoading(true);
-    const [itemsRes, welcomeRes] = await Promise.all([
-      supabase.from("training_content_items")
-        .select("*")
-        .eq("training_type", selectedTraining)
-        .order("unit_number")
-        .order("order_index"),
-      supabase.from("training_welcome_content")
-        .select("*")
-        .eq("training_type", selectedTraining)
-        .maybeSingle(),
-    ]);
-    setItems((itemsRes.data || []) as ContentItem[]);
-    setWelcomeContent(welcomeRes.data as WelcomeContent | null);
-    setLoading(false);
+    try {
+      const [itemsRes, welcomeRes] = await Promise.all([
+        supabase.from("training_content_items")
+          .select("*")
+          .eq("training_type", selectedTraining)
+          .order("unit_number")
+          .order("order_index"),
+        supabase.from("training_welcome_content")
+          .select("*")
+          .eq("training_type", selectedTraining)
+          .maybeSingle(),
+      ]);
+      if (itemsRes.error) console.error("Error loading content items:", itemsRes.error);
+      if (welcomeRes.error) console.error("Error loading welcome content:", welcomeRes.error);
+      setItems((itemsRes.data || []) as ContentItem[]);
+      setWelcomeContent(welcomeRes.data as WelcomeContent | null);
+    } catch (err) {
+      console.error("Failed to load course data:", err);
+      toast.error("Kon cursusmateriaal niet laden");
+    } finally {
+      setLoading(false);
+    }
   };
 
   const filteredItems = selectedUnit === "all"
