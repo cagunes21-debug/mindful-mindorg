@@ -50,24 +50,24 @@ const Auth = () => {
 
   const redirectAfterLogin = (userId?: string) => {
     if (!userId) {
-      navigate("/mijn-trainingen", { replace: true });
+      window.location.href = "/mijn-trainingen";
       return;
     }
     
-    // Try admin check, but redirect immediately on any failure
-    const rpcPromise = supabase.rpc("has_role", { _user_id: userId, _role: "admin" });
-    rpcPromise.then(({ data, error }) => {
-      if (!error && data === true) {
-        navigate("/admin", { replace: true });
-      } else {
-        navigate("/mijn-trainingen", { replace: true });
-      }
-    });
-    
-    // Hard fallback
-    setTimeout(() => {
-      navigate("/mijn-trainingen", { replace: true });
-    }, 4000);
+    // Try admin check with a timeout, then redirect
+    const timeout = setTimeout(() => {
+      window.location.href = "/mijn-trainingen";
+    }, 3000);
+
+    supabase.rpc("has_role", { _user_id: userId, _role: "admin" })
+      .then(({ data, error }) => {
+        clearTimeout(timeout);
+        if (!error && data === true) {
+          window.location.href = "/admin";
+        } else {
+          window.location.href = "/mijn-trainingen";
+        }
+      });
   };
 
   useEffect(() => {
@@ -258,7 +258,7 @@ const Auth = () => {
           // Redirect happens via onAuthStateChange listener
           // Safety fallback if event doesn't fire
           setTimeout(() => {
-            navigate("/mijn-trainingen", { replace: true });
+            window.location.href = "/mijn-trainingen";
           }, 5000);
         }
       } else {
