@@ -277,6 +277,58 @@ const CourseMaterial = () => {
     setShowWelcomeEditor(true);
   };
 
+  const renderContentRow = (item: ContentItem, source: "system" | "custom") => {
+    const Icon = getContentIcon(item.content_type);
+
+    return (
+      <div
+        key={item.id}
+        className={`flex items-center gap-2 p-2 rounded-lg border text-sm transition-colors ${
+          item.is_visible ? "bg-background" : "bg-muted/30 opacity-60"
+        }`}
+      >
+        <GripVertical className="h-3.5 w-3.5 text-muted-foreground shrink-0" />
+        <Icon className="h-3.5 w-3.5 text-primary shrink-0" />
+        <span className="flex-1 font-medium truncate">{item.title}</span>
+
+        <Badge variant={source === "system" ? "default" : "outline"} className="text-[10px] shrink-0">
+          {source === "system" ? "Door Lovable" : "Eigen"}
+        </Badge>
+
+        <Badge variant="secondary" className="text-[10px] shrink-0">
+          {CONTENT_TYPES.find(c => c.value === item.content_type)?.label || item.content_type}
+        </Badge>
+
+        {item.release_date && new Date(item.release_date) > new Date() && (
+          <Badge variant="outline" className="text-[10px] shrink-0">⏰ Gepland</Badge>
+        )}
+
+        <Button
+          size="sm"
+          variant="ghost"
+          className="h-6 w-6 p-0"
+          onClick={() => toggleVisibility(item)}
+          title={item.is_visible ? "Verbergen" : "Zichtbaar maken"}
+        >
+          {item.is_visible ? <Eye className="h-3 w-3" /> : <EyeOff className="h-3 w-3" />}
+        </Button>
+
+        <Button size="sm" variant="ghost" className="h-6 w-6 p-0" onClick={() => openEditItem(item)}>
+          <Pencil className="h-3 w-3" />
+        </Button>
+
+        <Button
+          size="sm"
+          variant="ghost"
+          className="h-6 w-6 p-0 text-destructive"
+          onClick={() => deleteItem(item.id)}
+        >
+          <Trash2 className="h-3 w-3" />
+        </Button>
+      </div>
+    );
+  };
+
   return (
     <div className="min-h-screen bg-background">
       <SEO title="Cursusmateriaal | Mindful Mind" description="Beheer cursusmateriaal per training" />
