@@ -18,6 +18,7 @@ export default function ProtectedRoute({ children, requireAdmin = false }: Prote
   const userIdRef = useRef<string | null>(null);
   const adminCheckedRef = useRef(false);
   const mountedRef = useRef(true);
+  const authResolvedRef = useRef(false);
 
   useEffect(() => {
     mountedRef.current = true;
@@ -36,6 +37,7 @@ export default function ProtectedRoute({ children, requireAdmin = false }: Prote
         }
         if (session?.user) {
           userIdRef.current = session.user.id;
+          authResolvedRef.current = true;
           setAuthState("authenticated");
         }
       }
@@ -46,6 +48,7 @@ export default function ProtectedRoute({ children, requireAdmin = false }: Prote
       if (!mountedRef.current) return;
       if (session?.user) {
         userIdRef.current = session.user.id;
+        authResolvedRef.current = true;
         setAuthState("authenticated");
       } else {
         setAuthState("unauthenticated");
@@ -54,7 +57,7 @@ export default function ProtectedRoute({ children, requireAdmin = false }: Prote
 
     // Safety timeout
     const timeout = setTimeout(() => {
-      if (mountedRef.current && authState === "loading") {
+      if (mountedRef.current && !authResolvedRef.current) {
         setAuthState("unauthenticated");
       }
     }, 5000);
