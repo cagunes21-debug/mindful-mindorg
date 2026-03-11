@@ -48,6 +48,7 @@ export default function ProtectedRoute({ children, requireAdmin = false }: Prote
       if (!mountedRef.current) return;
       if (session?.user) {
         userIdRef.current = session.user.id;
+        authResolvedRef.current = true;
         setAuthState("authenticated");
       } else {
         setAuthState("unauthenticated");
