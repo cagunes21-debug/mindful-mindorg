@@ -8,18 +8,11 @@ import { ArrowLeft, GraduationCap, Heart, Presentation, BookOpen, FileText, Musi
 
 const contentSections = [
   {
-    title: "Cursusmateriaal",
-    description: "Beheer welkomstberichten, video's, audio, PDF's en opdrachten per training.",
+    title: "Content Library",
+    description: "Beheer cursusmateriaal, meditaties, oefeningen en onderwerpen voor alle trainingen en sessies.",
     icon: GraduationCap,
     path: "/admin/cursusmateriaal",
     color: "bg-sage-100 text-sage-700",
-  },
-  {
-    title: "MSC Materials Library",
-    description: "Beheer de bibliotheek van meditaties, oefeningen en onderwerpen voor MSC sessies.",
-    icon: Heart,
-    path: "/admin/msc-materials",
-    color: "bg-rose-100 text-rose-700",
   },
   {
     title: "MSC Session Builder",
