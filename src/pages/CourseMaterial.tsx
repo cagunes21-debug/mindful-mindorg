@@ -22,7 +22,7 @@ import {
 import {
   BookOpen, Plus, Trash2, Pencil, Save, Loader2, ChevronDown,
   FileText, Video, Headphones, Link2, ClipboardList, Eye, EyeOff,
-  MessageSquare, GripVertical, Upload,
+  MessageSquare, GripVertical, Upload, Bot, User,
 } from "lucide-react";
 import { toast } from "sonner";
 
@@ -40,6 +40,7 @@ interface ContentItem {
   text_content: string | null;
   file_url: string | null;
   is_visible: boolean;
+  is_system: boolean;
   release_date: string | null;
   created_at: string;
 }
@@ -174,6 +175,7 @@ const CourseMaterial = () => {
         unit_number: formData.unit_number,
         order_index: formData.order_index,
         is_visible: formData.is_visible,
+        is_system: editingItem?.is_system ?? false,
         release_date: formData.release_date ? new Date(formData.release_date).toISOString() : null,
       };
 
@@ -275,6 +277,58 @@ const CourseMaterial = () => {
     setShowWelcomeEditor(true);
   };
 
+  const renderContentRow = (item: ContentItem, source: "system" | "custom") => {
+    const Icon = getContentIcon(item.content_type);
+
+    return (
+      <div
+        key={item.id}
+        className={`flex items-center gap-2 p-2 rounded-lg border text-sm transition-colors ${
+          item.is_visible ? "bg-background" : "bg-muted/30 opacity-60"
+        }`}
+      >
+        <GripVertical className="h-3.5 w-3.5 text-muted-foreground shrink-0" />
+        <Icon className="h-3.5 w-3.5 text-primary shrink-0" />
+        <span className="flex-1 font-medium truncate">{item.title}</span>
+
+        <Badge variant={source === "system" ? "default" : "outline"} className="text-[10px] shrink-0">
+          {source === "system" ? "Door Lovable" : "Eigen"}
+        </Badge>
+
+        <Badge variant="secondary" className="text-[10px] shrink-0">
+          {CONTENT_TYPES.find(c => c.value === item.content_type)?.label || item.content_type}
+        </Badge>
+
+        {item.release_date && new Date(item.release_date) > new Date() && (
+          <Badge variant="outline" className="text-[10px] shrink-0">⏰ Gepland</Badge>
+        )}
+
+        <Button
+          size="sm"
+          variant="ghost"
+          className="h-6 w-6 p-0"
+          onClick={() => toggleVisibility(item)}
+          title={item.is_visible ? "Verbergen" : "Zichtbaar maken"}
+        >
+          {item.is_visible ? <Eye className="h-3 w-3" /> : <EyeOff className="h-3 w-3" />}
+        </Button>
+
+        <Button size="sm" variant="ghost" className="h-6 w-6 p-0" onClick={() => openEditItem(item)}>
+          <Pencil className="h-3 w-3" />
+        </Button>
+
+        <Button
+          size="sm"
+          variant="ghost"
+          className="h-6 w-6 p-0 text-destructive"
+          onClick={() => deleteItem(item.id)}
+        >
+          <Trash2 className="h-3 w-3" />
+        </Button>
+      </div>
+    );
+  };
+
   return (
     <div className="min-h-screen bg-background">
       <SEO title="Cursusmateriaal | Mindful Mind" description="Beheer cursusmateriaal per training" />
@@ -362,9 +416,11 @@ const CourseMaterial = () => {
                 .map(unitNum => {
                   const unitItems = (groupedItems[unitNum] || []).sort((a, b) => a.order_index - b.order_index);
                   const hiddenCount = unitItems.filter(i => !i.is_visible).length;
+                  const systemItems = unitItems.filter(i => i.is_system);
+                  const customItems = unitItems.filter(i => !i.is_system);
+
                   return (
                     <Collapsible key={unitNum} defaultOpen={unitItems.length > 0}>
-                      
                       <Card>
                         <CollapsibleTrigger className="w-full text-left group">
                           <CardContent className="p-3 flex items-center gap-2">
@@ -384,8 +440,9 @@ const CourseMaterial = () => {
                             )}
                           </CardContent>
                         </CollapsibleTrigger>
+
                         <CollapsibleContent>
-                          <div className="px-3 pb-3 space-y-1.5">
+                          <div className="px-3 pb-3 space-y-2">
                             {unitItems.length === 0 ? (
                               <div className="text-center py-4">
                                 <p className="text-sm text-muted-foreground mb-2">Nog geen content voor deze {trainingConfig.unitLabel.toLowerCase()}</p>
@@ -403,51 +460,44 @@ const CourseMaterial = () => {
                               </div>
                             ) : (
                               <>
-                                {unitItems.map(item => {
-                                  const Icon = getContentIcon(item.content_type);
-                                  return (
-                                    <div
-                                      key={item.id}
-                                      className={`flex items-center gap-2 p-2 rounded-lg border text-sm transition-colors ${
-                                        item.is_visible ? "bg-background" : "bg-muted/30 opacity-60"
-                                      }`}
-                                    >
-                                      <GripVertical className="h-3.5 w-3.5 text-muted-foreground shrink-0" />
-                                      <Icon className="h-3.5 w-3.5 text-primary shrink-0" />
-                                      <span className="flex-1 font-medium truncate">{item.title}</span>
-                                      <Badge variant="secondary" className="text-[10px] shrink-0">
-                                        {CONTENT_TYPES.find(c => c.value === item.content_type)?.label || item.content_type}
-                                      </Badge>
-                                      {item.release_date && new Date(item.release_date) > new Date() && (
-                                        <Badge variant="outline" className="text-[10px] shrink-0">⏰ Gepland</Badge>
-                                      )}
-                                      <Button size="sm" variant="ghost" className="h-6 w-6 p-0"
-                                        onClick={() => toggleVisibility(item)}
-                                        title={item.is_visible ? "Verbergen" : "Zichtbaar maken"}>
-                                        {item.is_visible ? <Eye className="h-3 w-3" /> : <EyeOff className="h-3 w-3" />}
-                                      </Button>
-                                      <Button size="sm" variant="ghost" className="h-6 w-6 p-0"
-                                        onClick={() => openEditItem(item)}>
-                                        <Pencil className="h-3 w-3" />
-                                      </Button>
-                                      <Button size="sm" variant="ghost" className="h-6 w-6 p-0 text-destructive"
-                                        onClick={() => deleteItem(item.id)}>
-                                        <Trash2 className="h-3 w-3" />
-                                      </Button>
+                                {systemItems.length > 0 && (
+                                  <div className="rounded-lg border border-primary/20 bg-primary/5 p-2">
+                                    <div className="flex items-center gap-2 mb-1.5 px-1">
+                                      <Bot className="h-3.5 w-3.5 text-primary" />
+                                      <span className="text-xs font-medium text-foreground">Standaard content (door Lovable toegevoegd)</span>
                                     </div>
-                                  );
-                                })}
-                                <Button size="sm" variant="ghost" className="w-full gap-1.5 text-xs text-muted-foreground mt-1" onClick={() => {
-                                  setEditingItem(null);
-                                  setFormData({
-                                    title: "", description: "", content_type: "text", text_content: "",
-                                    file_url: "", unit_number: unitNum,
-                                    order_index: unitItems.length, is_visible: true, release_date: "",
-                                  });
-                                  setShowEditor(true);
-                                }}>
-                                  <Plus className="h-3 w-3" /> Item toevoegen
-                                </Button>
+                                    <div className="space-y-1">
+                                      {systemItems.map(item => renderContentRow(item, "system"))}
+                                    </div>
+                                  </div>
+                                )}
+
+                                <div className="rounded-lg border p-2 bg-background">
+                                  <div className="flex items-center gap-2 mb-1.5 px-1">
+                                    <User className="h-3.5 w-3.5 text-muted-foreground" />
+                                    <span className="text-xs font-medium text-foreground">Jouw toevoegingen</span>
+                                  </div>
+
+                                  {customItems.length === 0 ? (
+                                    <p className="text-xs text-muted-foreground px-1 py-2">Nog geen eigen items in deze {trainingConfig.unitLabel.toLowerCase()}.</p>
+                                  ) : (
+                                    <div className="space-y-1">
+                                      {customItems.map(item => renderContentRow(item, "custom"))}
+                                    </div>
+                                  )}
+
+                                  <Button size="sm" variant="ghost" className="w-full gap-1.5 text-xs text-muted-foreground mt-1" onClick={() => {
+                                    setEditingItem(null);
+                                    setFormData({
+                                      title: "", description: "", content_type: "text", text_content: "",
+                                      file_url: "", unit_number: unitNum,
+                                      order_index: unitItems.length, is_visible: true, release_date: "",
+                                    });
+                                    setShowEditor(true);
+                                  }}>
+                                    <Plus className="h-3 w-3" /> Eigen item toevoegen
+                                  </Button>
+                                </div>
                               </>
                             )}
                           </div>

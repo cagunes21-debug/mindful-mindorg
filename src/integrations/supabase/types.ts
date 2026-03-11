@@ -1082,6 +1082,7 @@ export type Database = {
           description: string | null
           file_url: string | null
           id: string
+          is_system: boolean
           is_visible: boolean
           order_index: number
           release_date: string | null
@@ -1097,6 +1098,7 @@ export type Database = {
           description?: string | null
           file_url?: string | null
           id?: string
+          is_system?: boolean
           is_visible?: boolean
           order_index?: number
           release_date?: string | null
@@ -1112,6 +1114,7 @@ export type Database = {
           description?: string | null
           file_url?: string | null
           id?: string
+          is_system?: boolean
           is_visible?: boolean
           order_index?: number
           release_date?: string | null
