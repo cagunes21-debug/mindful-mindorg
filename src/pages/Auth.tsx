@@ -48,50 +48,66 @@ const Auth = () => {
   const navigate = useNavigate();
   const { toast } = useToast();
 
-  const redirectAfterLogin = (userId?: string) => {
-    if (!userId) {
-      window.location.href = "/mijn-trainingen";
-      return;
-    }
+  const redirectAfterLogin = async (userId: string, accessToken: string) => {
+    console.log("[Auth] redirectAfterLogin called for user:", userId);
     
-    // Try admin check with a timeout, then redirect
-    const timeout = setTimeout(() => {
-      window.location.href = "/mijn-trainingen";
-    }, 3000);
+    try {
+      // Use fetch directly with the access token to avoid any client session timing issues
+      const res = await Promise.race([
+        fetch(
+          `${import.meta.env.VITE_SUPABASE_URL}/rest/v1/rpc/has_role`,
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              "apikey": import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY,
+              "Authorization": `Bearer ${accessToken}`,
+            },
+            body: JSON.stringify({ _user_id: userId, _role: "admin" }),
+          }
+        ).then(r => r.json()),
+        new Promise((_, reject) => setTimeout(() => reject(new Error("timeout")), 5000)),
+      ]);
 
-    supabase.rpc("has_role", { _user_id: userId, _role: "admin" })
-      .then(({ data, error }) => {
-        clearTimeout(timeout);
-        if (!error && data === true) {
-          window.location.href = "/admin";
-        } else {
-          window.location.href = "/mijn-trainingen";
-        }
-      });
+      console.log("[Auth] has_role result:", res);
+      if (res === true) {
+        console.log("[Auth] Admin detected, redirecting to /admin");
+        window.location.href = "/admin";
+        return;
+      }
+    } catch (err) {
+      console.warn("[Auth] Admin check failed, defaulting to participant:", err);
+    }
+
+    console.log("[Auth] Redirecting to /mijn-trainingen");
+    window.location.href = "/mijn-trainingen";
   };
 
   useEffect(() => {
     let cancelled = false;
+    let redirecting = false;
+
+    const doRedirect = (userId: string, accessToken: string) => {
+      if (cancelled || redirecting) return;
+      redirecting = true;
+      redirectAfterLogin(userId, accessToken);
+    };
 
     // Set up listener FIRST (Supabase best practice)
     const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
       if (cancelled) return;
-      if (event === "SIGNED_IN" && session?.user) {
-        console.log("[Auth] SIGNED_IN event → scheduling redirect");
-        // Use setTimeout to break out of the auth callback context
-        // This prevents deadlocks when doing async work after auth events
-        const uid = session.user.id;
-        setTimeout(() => {
-          if (!cancelled) redirectAfterLogin(uid);
-        }, 0);
+      if (event === "SIGNED_IN" && session?.user && session.access_token) {
+        console.log("[Auth] SIGNED_IN event received");
+        // Break out of auth callback context to prevent deadlocks
+        setTimeout(() => doRedirect(session.user.id, session.access_token), 0);
       }
     });
 
     // THEN check existing session
     supabase.auth.getSession().then(({ data: { session } }) => {
-      if (session?.user && !cancelled) {
-        console.log("[Auth] Existing session found, redirecting...");
-        redirectAfterLogin(session.user.id);
+      if (session?.user && session.access_token && !cancelled) {
+        console.log("[Auth] Existing session found");
+        doRedirect(session.user.id, session.access_token);
       }
     });
 
