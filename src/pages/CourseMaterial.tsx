@@ -175,6 +175,7 @@ const CourseMaterial = () => {
         unit_number: formData.unit_number,
         order_index: formData.order_index,
         is_visible: formData.is_visible,
+        is_system: editingItem?.is_system ?? false,
         release_date: formData.release_date ? new Date(formData.release_date).toISOString() : null,
       };
 
