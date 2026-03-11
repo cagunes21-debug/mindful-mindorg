@@ -355,69 +355,82 @@ const CourseMaterial = () => {
             <div className="flex items-center justify-center py-12">
               <Loader2 className="h-6 w-6 animate-spin text-muted-foreground" />
             </div>
-          ) : filteredItems.length === 0 ? (
-            <Card>
-              <CardContent className="p-8 text-center">
-                <BookOpen className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
-                <p className="text-muted-foreground mb-4">Nog geen content items voor deze selectie.</p>
-                <Button onClick={openNewItem} className="gap-2">
-                  <Plus className="h-4 w-4" /> Eerste item toevoegen
-                </Button>
-              </CardContent>
-            </Card>
           ) : (
-            <div className="space-y-4">
-              {Object.entries(groupedItems)
-                .sort(([a], [b]) => Number(a) - Number(b))
-                .map(([unitNum, unitItems]) => (
-                  <Collapsible key={unitNum} defaultOpen>
-                    <Card>
-                      <CollapsibleTrigger className="w-full text-left">
-                        <CardContent className="p-3 flex items-center gap-2">
-                          <ChevronDown className="h-4 w-4 text-muted-foreground" />
-                          <Badge variant="outline" className="font-mono">
-                            {trainingConfig.unitLabel} {unitNum}
-                          </Badge>
-                          <span className="text-sm text-muted-foreground flex-1">
-                            {unitItems.length} item{unitItems.length !== 1 ? "s" : ""}
-                          </span>
-                          <span className="text-xs text-muted-foreground">
-                            {unitItems.filter(i => !i.is_visible).length > 0 &&
-                              `${unitItems.filter(i => !i.is_visible).length} verborgen`
-                            }
-                          </span>
-                        </CardContent>
-                      </CollapsibleTrigger>
-                      <CollapsibleContent>
-                        <div className="px-3 pb-3 space-y-1.5">
-                          {unitItems.sort((a, b) => a.order_index - b.order_index).map(item => {
-                            const Icon = getContentIcon(item.content_type);
-                            return (
-                              <div
-                                key={item.id}
-                                className={`flex items-center gap-2 p-2 rounded-lg border text-sm transition-colors ${
-                                  item.is_visible ? "bg-background" : "bg-muted/30 opacity-60"
-                                }`}
-                              >
-                                <GripVertical className="h-3.5 w-3.5 text-muted-foreground shrink-0" />
-                                <Icon className="h-3.5 w-3.5 text-primary shrink-0" />
-                                <span className="flex-1 font-medium truncate">{item.title}</span>
-                                <Badge variant="secondary" className="text-[10px] shrink-0">
-                                  {CONTENT_TYPES.find(c => c.value === item.content_type)?.label || item.content_type}
-                                </Badge>
-                                {item.release_date && new Date(item.release_date) > new Date() && (
-                                  <Badge variant="outline" className="text-[10px] shrink-0">⏰ Gepland</Badge>
-                                )}
-                                <Button size="sm" variant="ghost" className="h-6 w-6 p-0"
-                                  onClick={() => toggleVisibility(item)}
-                                  title={item.is_visible ? "Verbergen" : "Zichtbaar maken"}>
-                                  {item.is_visible ? <Eye className="h-3 w-3" /> : <EyeOff className="h-3 w-3" />}
+            <div className="space-y-3">
+              {Array.from({ length: trainingConfig.units }, (_, i) => i + 1)
+                .filter(unitNum => selectedUnit === "all" || selectedUnit === unitNum)
+                .map(unitNum => {
+                  const unitItems = (groupedItems[unitNum] || []).sort((a, b) => a.order_index - b.order_index);
+                  const hiddenCount = unitItems.filter(i => !i.is_visible).length;
+                  return (
+                    <Collapsible key={unitNum} defaultOpen={unitItems.length > 0}>
+                      {({ open }: { open?: boolean }) => null}
+                      <Card>
+                        <CollapsibleTrigger className="w-full text-left group">
+                          <CardContent className="p-3 flex items-center gap-2">
+                            <ChevronDown className="h-4 w-4 text-muted-foreground transition-transform duration-200 group-data-[state=closed]:-rotate-90" />
+                            <Badge variant="outline" className="font-mono">
+                              {trainingConfig.unitLabel} {unitNum}
+                            </Badge>
+                            <span className="text-sm text-muted-foreground flex-1">
+                              {unitItems.length === 0
+                                ? "Nog geen items"
+                                : `${unitItems.length} item${unitItems.length !== 1 ? "s" : ""}`}
+                            </span>
+                            {hiddenCount > 0 && (
+                              <span className="text-xs text-muted-foreground">
+                                {hiddenCount} verborgen
+                              </span>
+                            )}
+                          </CardContent>
+                        </CollapsibleTrigger>
+                        <CollapsibleContent>
+                          <div className="px-3 pb-3 space-y-1.5">
+                            {unitItems.length === 0 ? (
+                              <div className="text-center py-4">
+                                <p className="text-sm text-muted-foreground mb-2">Nog geen content voor deze {trainingConfig.unitLabel.toLowerCase()}</p>
+                                <Button size="sm" variant="outline" className="gap-1.5" onClick={() => {
+                                  setEditingItem(null);
+                                  setFormData({
+                                    title: "", description: "", content_type: "text", text_content: "",
+                                    file_url: "", unit_number: unitNum,
+                                    order_index: 0, is_visible: true, release_date: "",
+                                  });
+                                  setShowEditor(true);
+                                }}>
+                                  <Plus className="h-3.5 w-3.5" /> Item toevoegen
                                 </Button>
-                                <Button size="sm" variant="ghost" className="h-6 w-6 p-0"
-                                  onClick={() => openEditItem(item)}>
-                                  <Pencil className="h-3 w-3" />
-                                </Button>
-                                <Button size="sm" variant="ghost" className="h-6 w-6 p-0 text-destructive"
+                              </div>
+                            ) : (
+                              <>
+                                {unitItems.map(item => {
+                                  const Icon = getContentIcon(item.content_type);
+                                  return (
+                                    <div
+                                      key={item.id}
+                                      className={`flex items-center gap-2 p-2 rounded-lg border text-sm transition-colors ${
+                                        item.is_visible ? "bg-background" : "bg-muted/30 opacity-60"
+                                      }`}
+                                    >
+                                      <GripVertical className="h-3.5 w-3.5 text-muted-foreground shrink-0" />
+                                      <Icon className="h-3.5 w-3.5 text-primary shrink-0" />
+                                      <span className="flex-1 font-medium truncate">{item.title}</span>
+                                      <Badge variant="secondary" className="text-[10px] shrink-0">
+                                        {CONTENT_TYPES.find(c => c.value === item.content_type)?.label || item.content_type}
+                                      </Badge>
+                                      {item.release_date && new Date(item.release_date) > new Date() && (
+                                        <Badge variant="outline" className="text-[10px] shrink-0">⏰ Gepland</Badge>
+                                      )}
+                                      <Button size="sm" variant="ghost" className="h-6 w-6 p-0"
+                                        onClick={() => toggleVisibility(item)}
+                                        title={item.is_visible ? "Verbergen" : "Zichtbaar maken"}>
+                                        {item.is_visible ? <Eye className="h-3 w-3" /> : <EyeOff className="h-3 w-3" />}
+                                      </Button>
+                                      <Button size="sm" variant="ghost" className="h-6 w-6 p-0"
+                                        onClick={() => openEditItem(item)}>
+                                        <Pencil className="h-3 w-3" />
+                                      </Button>
+                                      <Button size="sm" variant="ghost" className="h-6 w-6 p-0 text-destructive"
                                   onClick={() => deleteItem(item.id)}>
                                   <Trash2 className="h-3 w-3" />
                                 </Button>
