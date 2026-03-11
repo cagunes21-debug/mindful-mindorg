@@ -26,8 +26,8 @@ const ForWhomSection = () => {
           className="flex flex-col md:flex-row items-center gap-8"
         >
           <div className="md:w-1/3 text-center md:text-left">
-            <p className="text-sm uppercase tracking-[0.2em] text-muted-foreground mb-2">🌿 Herkenning</p>
-            <h2 className="text-2xl md:text-3xl font-serif text-foreground">
+            <p className="text-sm uppercase tracking-[0.2em] text-muted-foreground mb-3">🌿 Herkenning</p>
+            <h2 className="text-3xl md:text-4xl font-serif text-foreground">
               Voor wie is dit <em className="italic text-primary">traject?</em>
             </h2>
           </div>
