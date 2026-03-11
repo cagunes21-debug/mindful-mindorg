@@ -272,10 +272,10 @@ const Auth = () => {
         } else {
           toast({ title: "Welkom terug!", description: "Je bent succesvol ingelogd." });
           // Redirect happens via onAuthStateChange listener
-          // Safety fallback if event doesn't fire
+          // Safety fallback if event doesn't fire within 8s
           setTimeout(() => {
             window.location.href = "/mijn-trainingen";
-          }, 5000);
+          }, 8000);
         }
       } else {
         const { error } = await supabase.auth.signUp({
