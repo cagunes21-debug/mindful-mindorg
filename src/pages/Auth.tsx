@@ -48,11 +48,15 @@ const Auth = () => {
   const navigate = useNavigate();
   const { toast } = useToast();
 
+  // Prefetch admin dashboard chunk so it's ready when we redirect
+  useEffect(() => {
+    import("./AdminDashboard");
+  }, []);
+
   const redirectAfterLogin = async (userId: string, accessToken: string) => {
     console.log("[Auth] redirectAfterLogin called for user:", userId);
     
     try {
-      // Use fetch directly with the access token to avoid any client session timing issues
       const res = await Promise.race([
         fetch(
           `${import.meta.env.VITE_SUPABASE_URL}/rest/v1/rpc/has_role`,
@@ -72,7 +76,7 @@ const Auth = () => {
       console.log("[Auth] has_role result:", res);
       if (res === true) {
         console.log("[Auth] Admin detected, redirecting to /admin");
-        window.location.href = "/admin";
+        navigate("/admin", { replace: true });
         return;
       }
     } catch (err) {
@@ -80,7 +84,7 @@ const Auth = () => {
     }
 
     console.log("[Auth] Redirecting to /mijn-trainingen");
-    window.location.href = "/mijn-trainingen";
+    navigate("/mijn-trainingen", { replace: true });
   };
 
   useEffect(() => {

@@ -104,6 +104,8 @@ export default function ProtectedRoute({ children, requireAdmin = false }: Prote
     sessionRef.current = null;
     adminCheckedRef.current = false;
     authResolvedRef.current = true;
+    // Clear admin cache on sign-out
+    try { Object.keys(sessionStorage).filter(k => k.startsWith("admin_role_")).forEach(k => sessionStorage.removeItem(k)); } catch {}
     setAdminState(requireAdmin ? "loading" : "yes");
     setAuthState("unauthenticated");
   }, [requireAdmin]);
@@ -164,6 +166,16 @@ export default function ProtectedRoute({ children, requireAdmin = false }: Prote
       return;
     }
 
+    // Fast path: check sessionStorage cache (same browser session)
+    const cacheKey = `admin_role_${session.userId}`;
+    const cached = sessionStorage.getItem(cacheKey);
+    if (cached === "yes") {
+      console.log(LOG_PREFIX, "Admin role from cache → yes");
+      adminCheckedRef.current = true;
+      setAdminState("yes");
+      return;
+    }
+
     adminCheckedRef.current = true;
     let cancelled = false;
 
@@ -181,6 +193,9 @@ export default function ProtectedRoute({ children, requireAdmin = false }: Prote
 
       if (!cancelled && mountedRef.current) {
         console.log(LOG_PREFIX, "Admin state resolved:", result);
+        if (result === "yes") {
+          sessionStorage.setItem(cacheKey, "yes");
+        }
         setAdminState(result);
       }
     })();
