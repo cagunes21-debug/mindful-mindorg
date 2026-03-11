@@ -78,25 +78,36 @@ export default function ProtectedRoute({ children, requireAdmin = false }: Prote
     adminCheckedRef.current = true;
     let cancelled = false;
 
-    const check = async () => {
+    const checkOnce = async (): Promise<"yes" | "no" | "error"> => {
       try {
         const result = await Promise.race([
           supabase.rpc("has_role", { _user_id: userId, _role: "admin" }),
-          new Promise<null>((resolve) => setTimeout(() => resolve(null), 5000)),
+          new Promise<null>((resolve) => setTimeout(() => resolve(null), 10000)),
         ]);
-        if (cancelled || !mountedRef.current) return;
-        if (result === null) {
-          setAdminState("error");
-        } else if ('error' in result && result.error) {
+        if (result === null) return "error";
+        if ('error' in result && result.error) {
           console.error("[ProtectedRoute] Admin check error:", result.error);
-          setAdminState("error");
-        } else if ('data' in result && result.data === true) {
-          setAdminState("yes");
-        } else {
-          setAdminState("no");
+          return "error";
         }
-      } catch {
-        if (!cancelled && mountedRef.current) setAdminState("error");
+        if ('data' in result && result.data === true) return "yes";
+        return "no";
+      } catch (e) {
+        console.error("[ProtectedRoute] Admin check exception:", e);
+        return "error";
+      }
+    };
+
+    const check = async () => {
+      let outcome = await checkOnce();
+      // Retry once on error
+      if (outcome === "error" && !cancelled && mountedRef.current) {
+        await new Promise(r => setTimeout(r, 1500));
+        if (!cancelled && mountedRef.current) {
+          outcome = await checkOnce();
+        }
+      }
+      if (!cancelled && mountedRef.current) {
+        setAdminState(outcome);
       }
     };
     check();
