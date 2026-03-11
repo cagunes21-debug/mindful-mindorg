@@ -258,7 +258,7 @@ const Auth = () => {
           // Redirect happens via onAuthStateChange listener
           // Safety fallback if event doesn't fire
           setTimeout(() => {
-            navigate("/mijn-trainingen", { replace: true });
+            window.location.href = "/mijn-trainingen";
           }, 5000);
         }
       } else {
