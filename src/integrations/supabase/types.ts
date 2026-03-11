@@ -477,6 +477,7 @@ export type Database = {
           id: string
           instructions_markdown: string | null
           is_optional: boolean
+          is_system: boolean
           notes_for_therapist: string | null
           session_id: string
           sort_order: number
@@ -491,6 +492,7 @@ export type Database = {
           id?: string
           instructions_markdown?: string | null
           is_optional?: boolean
+          is_system?: boolean
           notes_for_therapist?: string | null
           session_id: string
           sort_order?: number
@@ -505,6 +507,7 @@ export type Database = {
           id?: string
           instructions_markdown?: string | null
           is_optional?: boolean
+          is_system?: boolean
           notes_for_therapist?: string | null
           session_id?: string
           sort_order?: number
