@@ -17,24 +17,34 @@ export default function ProtectedRoute({ children, requireAdmin = false }: Prote
   const [adminState, setAdminState] = useState<"loading" | "yes" | "no" | "error">(requireAdmin ? "loading" : "yes");
   const mountedRef = useRef(true);
   const adminCheckedRef = useRef(false);
+  const authResolvedRef = useRef(false); // tracks whether auth has been resolved (prevents stale closure issues)
   const sessionRef = useRef<{ userId: string; accessToken: string } | null>(null);
 
   useEffect(() => {
     mountedRef.current = true;
     adminCheckedRef.current = false;
+    authResolvedRef.current = false;
+
+    console.log("[ProtectedRoute] Initializing auth check...");
 
     const { data: { subscription } } = supabase.auth.onAuthStateChange(
       (event, session) => {
         if (!mountedRef.current) return;
+        console.log("[ProtectedRoute] onAuthStateChange:", event);
+
         if (event === "SIGNED_OUT") {
+          console.log("[ProtectedRoute] User signed out");
           sessionRef.current = null;
           adminCheckedRef.current = false;
+          authResolvedRef.current = true;
           setAdminState(requireAdmin ? "loading" : "yes");
           setAuthState("unauthenticated");
           return;
         }
         if (session?.user) {
+          console.log("[ProtectedRoute] User authenticated:", session.user.id);
           sessionRef.current = { userId: session.user.id, accessToken: session.access_token };
+          authResolvedRef.current = true;
           setAuthState("authenticated");
         }
       }
@@ -43,18 +53,24 @@ export default function ProtectedRoute({ children, requireAdmin = false }: Prote
     supabase.auth.getSession().then(({ data: { session } }) => {
       if (!mountedRef.current) return;
       if (session?.user) {
+        console.log("[ProtectedRoute] Session restored for:", session.user.id);
         sessionRef.current = { userId: session.user.id, accessToken: session.access_token };
+        authResolvedRef.current = true;
         setAuthState("authenticated");
       } else {
+        console.log("[ProtectedRoute] No session found");
+        authResolvedRef.current = true;
         setAuthState("unauthenticated");
       }
     });
 
+    // Safety timeout — uses ref instead of stale closure to avoid false logout
     const timeout = setTimeout(() => {
-      if (mountedRef.current && authState === "loading") {
+      if (mountedRef.current && !authResolvedRef.current) {
+        console.warn("[ProtectedRoute] Auth timeout after 6s — no session resolved");
         setAuthState("unauthenticated");
       }
-    }, 5000);
+    }, 6000);
 
     return () => {
       mountedRef.current = false;
@@ -63,17 +79,22 @@ export default function ProtectedRoute({ children, requireAdmin = false }: Prote
     };
   }, []);
 
-  // Admin check using direct fetch (bypasses Supabase client session timing issues)
+  // Admin check using direct fetch
   useEffect(() => {
     if (authState !== "authenticated" || !requireAdmin || adminCheckedRef.current) return;
     const session = sessionRef.current;
-    if (!session) { setAdminState("no"); return; }
+    if (!session) {
+      console.warn("[ProtectedRoute] No session ref for admin check");
+      setAdminState("no");
+      return;
+    }
 
     adminCheckedRef.current = true;
     let cancelled = false;
 
     const checkAdmin = async (): Promise<"yes" | "no" | "error"> => {
       try {
+        console.log("[ProtectedRoute] Checking admin role via direct fetch...");
         const res = await Promise.race([
           fetch(
             `${import.meta.env.VITE_SUPABASE_URL}/rest/v1/rpc/has_role`,
@@ -91,12 +112,12 @@ export default function ProtectedRoute({ children, requireAdmin = false }: Prote
         ]);
 
         const data = await res.json();
-        console.log("[ProtectedRoute] has_role result:", data);
+        console.log("[ProtectedRoute] has_role response:", data);
 
         if (data === true) return "yes";
         if (data === false) return "no";
 
-        // Unexpected response, try direct query fallback
+        // Unexpected response — fallback to direct query
         console.warn("[ProtectedRoute] Unexpected RPC response, trying direct query");
         const { data: roles, error: queryError } = await supabase
           .from("user_roles")
@@ -118,14 +139,15 @@ export default function ProtectedRoute({ children, requireAdmin = false }: Prote
 
     const run = async () => {
       let result = await checkAdmin();
-      // Retry once on error
       if (result === "error" && !cancelled && mountedRef.current) {
+        console.log("[ProtectedRoute] Retrying admin check...");
         await new Promise(r => setTimeout(r, 1500));
         if (!cancelled && mountedRef.current) {
           result = await checkAdmin();
         }
       }
       if (!cancelled && mountedRef.current) {
+        console.log("[ProtectedRoute] Final admin state:", result);
         setAdminState(result);
       }
     };
@@ -137,6 +159,7 @@ export default function ProtectedRoute({ children, requireAdmin = false }: Prote
   // Redirect unauthenticated
   useEffect(() => {
     if (authState === "unauthenticated" && location.pathname !== "/login") {
+      console.log("[ProtectedRoute] Redirecting unauthenticated user to /login");
       navigate("/login", { replace: true });
     }
   }, [authState, navigate, location.pathname]);
