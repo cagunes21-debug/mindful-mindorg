@@ -10,7 +10,7 @@ const CTASection = () => {
         <p className="text-xl font-serif italic mb-2 opacity-90">
           Je bent welkom zoals je bent
         </p>
-        <p className="text-sm uppercase tracking-widest mb-10 opacity-70">
+        <p className="text-sm uppercase tracking-[0.2em] mb-10 opacity-70">
           Begin vandaag met jouw persoonlijke traject
         </p>
         <div className="flex flex-col sm:flex-row items-center justify-center gap-4">

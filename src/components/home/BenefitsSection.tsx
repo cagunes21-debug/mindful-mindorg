@@ -36,7 +36,7 @@ const BenefitsSection = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.1 }}
-            className="text-3xl md:text-5xl font-serif text-foreground mb-4"
+            className="text-3xl md:text-4xl font-serif text-foreground mb-4"
           >
             Wat je zult <em className="italic text-primary">ervaren</em>
           </motion.h2>

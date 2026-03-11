@@ -14,7 +14,7 @@ const GroupTrainingTeaser = () => {
                   <Users className="h-3.5 w-3.5" />
                   Groepstraining
                 </span>
-                <h2 className="text-2xl md:text-3xl font-serif text-foreground mb-3 leading-tight">
+                <h2 className="text-3xl md:text-4xl font-serif text-foreground mb-3 leading-tight">
                   Liever samen groeien?
                 </h2>
                 <p className="text-muted-foreground leading-relaxed mb-4">

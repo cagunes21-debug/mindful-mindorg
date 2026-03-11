@@ -10,7 +10,7 @@ const HeroSection = () => {
       </div>
       <div className="relative z-10 container mx-auto px-6 py-20">
         <div className="max-w-2xl">
-          <p className="text-secondary font-sans text-sm tracking-[0.25em] uppercase mb-4 animate-fade-in-up">
+          <p className="text-secondary font-sans text-sm tracking-[0.2em] uppercase mb-4 animate-fade-in-up">
             Mindful Mind · Individuele Begeleiding
           </p>
           <h1 className="text-4xl md:text-6xl lg:text-7xl font-serif text-primary-foreground leading-tight mb-6 animate-fade-in-up" style={{ animationDelay: "0.15s" }}>

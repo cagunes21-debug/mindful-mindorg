@@ -31,7 +31,7 @@ const PackageSection = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.1 }}
-            className="text-3xl md:text-5xl font-serif text-foreground mb-4"
+            className="text-3xl md:text-4xl font-serif text-foreground mb-4"
           >
             Mindful <em className="italic text-primary">Me</em>
           </motion.h2>
