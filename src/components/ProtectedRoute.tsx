@@ -37,6 +37,7 @@ export default function ProtectedRoute({ children, requireAdmin = false }: Prote
         }
         if (session?.user) {
           userIdRef.current = session.user.id;
+          authResolvedRef.current = true;
           setAuthState("authenticated");
         }
       }
