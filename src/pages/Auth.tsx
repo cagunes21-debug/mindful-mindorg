@@ -55,17 +55,14 @@ const Auth = () => {
     }
     
     // Try admin check, but redirect immediately on any failure
-    supabase.rpc("has_role", { _user_id: userId, _role: "admin" })
-      .then(({ data, error }) => {
-        if (!error && data === true) {
-          navigate("/admin", { replace: true });
-        } else {
-          navigate("/mijn-trainingen", { replace: true });
-        }
-      })
-      .catch(() => {
+    const rpcPromise = supabase.rpc("has_role", { _user_id: userId, _role: "admin" });
+    rpcPromise.then(({ data, error }) => {
+      if (!error && data === true) {
+        navigate("/admin", { replace: true });
+      } else {
         navigate("/mijn-trainingen", { replace: true });
-      });
+      }
+    });
     
     // Hard fallback
     setTimeout(() => {
