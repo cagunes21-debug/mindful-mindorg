@@ -57,7 +57,7 @@ export default function ProtectedRoute({ children, requireAdmin = false }: Prote
 
     // Safety timeout
     const timeout = setTimeout(() => {
-      if (mountedRef.current && authState === "loading") {
+      if (mountedRef.current && !authResolvedRef.current) {
         setAuthState("unauthenticated");
       }
     }, 5000);
