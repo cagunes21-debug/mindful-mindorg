@@ -364,7 +364,7 @@ const CourseMaterial = () => {
                   const hiddenCount = unitItems.filter(i => !i.is_visible).length;
                   return (
                     <Collapsible key={unitNum} defaultOpen={unitItems.length > 0}>
-                      {({ open }: { open?: boolean }) => null}
+                      
                       <Card>
                         <CollapsibleTrigger className="w-full text-left group">
                           <CardContent className="p-3 flex items-center gap-2">
