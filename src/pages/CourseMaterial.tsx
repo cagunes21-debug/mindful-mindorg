@@ -431,17 +431,33 @@ const CourseMaterial = () => {
                                         <Pencil className="h-3 w-3" />
                                       </Button>
                                       <Button size="sm" variant="ghost" className="h-6 w-6 p-0 text-destructive"
-                                  onClick={() => deleteItem(item.id)}>
-                                  <Trash2 className="h-3 w-3" />
+                                        onClick={() => deleteItem(item.id)}>
+                                        <Trash2 className="h-3 w-3" />
+                                      </Button>
+                                    </div>
+                                  );
+                                })}
+                                <Button size="sm" variant="ghost" className="w-full gap-1.5 text-xs text-muted-foreground mt-1" onClick={() => {
+                                  setEditingItem(null);
+                                  setFormData({
+                                    title: "", description: "", content_type: "text", text_content: "",
+                                    file_url: "", unit_number: unitNum,
+                                    order_index: unitItems.length, is_visible: true, release_date: "",
+                                  });
+                                  setShowEditor(true);
+                                }}>
+                                  <Plus className="h-3 w-3" /> Item toevoegen
                                 </Button>
-                              </div>
-                            );
-                          })}
-                        </div>
-                      </CollapsibleContent>
-                    </Card>
-                  </Collapsible>
-                ))}
+                              </>
+                            )}
+                          </div>
+                        </CollapsibleContent>
+                      </Card>
+                    </Collapsible>
+                  );
+                })}
+            </div>
+          )}
             </div>
           )}
         </div>
