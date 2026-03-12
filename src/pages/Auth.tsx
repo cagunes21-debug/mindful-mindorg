@@ -20,7 +20,7 @@ const passwordSchema = z.string()
 
 const trainingHighlights = [
   "8 wekelijkse groepssessies van 2 uur",
-  "Halve dag stilte-retreat",
+  "Stilte-retreat sessie",
   "Toegang tot online leeromgeving",
   "Geleide meditaties en oefeningen",
   "Persoonlijk werkboek",
