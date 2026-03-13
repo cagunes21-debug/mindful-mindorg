@@ -55,11 +55,6 @@ export default function AdminDashboard() {
               <h1 className="text-3xl font-light text-foreground">Admin Dashboard</h1>
               <p className="text-muted-foreground mt-1">Beheer klanten, leads en financiën</p>
             </div>
-            <div className="flex items-center gap-2 flex-wrap">
-              <Button variant="outline" size="sm" className="gap-2" onClick={() => navigate("/admin/content")}>
-                <FileText className="h-4 w-4" />Content Beheer
-              </Button>
-            </div>
           </div>
 
           {/* Main Navigation Tabs */}
