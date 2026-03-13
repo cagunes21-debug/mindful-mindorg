@@ -98,7 +98,6 @@ const App = () => (
               <Route path="/admin/cursusmateriaal" element={<ProtectedRoute requireAdmin><CourseMaterial /></ProtectedRoute>} />
               <Route path="/admin/deelnemers" element={<ProtectedRoute requireAdmin><AdminDashboard /></ProtectedRoute>} />
               <Route path="/admin/msc-materials" element={<ProtectedRoute requireAdmin><MscMaterialsLibrary /></ProtectedRoute>} />
-              <Route path="/admin/msc-builder" element={<ProtectedRoute requireAdmin><MscSessionBuilder /></ProtectedRoute>} />
               <Route path="/admin/presentatie/zelfcompassie" element={<ProtectedRoute requireAdmin><SelfCompassionPresentation /></ProtectedRoute>} />
               <Route path="/admin/presentatie/:sessionNumber" element={<ProtectedRoute requireAdmin><SessionPresentation /></ProtectedRoute>} />
               <Route path="/reset-password" element={<ResetPassword />} />
