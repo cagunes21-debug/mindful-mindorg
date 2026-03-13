@@ -141,6 +141,31 @@ export default function AdminDashboard() {
                 </section>
               </div>
             </TabsContent>
+
+            {/* Content / Mijn Trainingen Section */}
+            <TabsContent value="content">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                {contentSections.map((section) => (
+                  <Card
+                    key={section.path}
+                    className="cursor-pointer hover:shadow-md transition-shadow"
+                    onClick={() => navigate(section.path)}
+                  >
+                    <CardHeader className="pb-3">
+                      <div className="flex items-center gap-3">
+                        <div className={`h-10 w-10 rounded-lg flex items-center justify-center ${section.color}`}>
+                          <section.icon className="h-5 w-5" />
+                        </div>
+                        <CardTitle className="text-lg font-medium">{section.title}</CardTitle>
+                      </div>
+                    </CardHeader>
+                    <CardContent>
+                      <CardDescription className="text-sm">{section.description}</CardDescription>
+                    </CardContent>
+                  </Card>
+                ))}
+              </div>
+            </TabsContent>
           </Tabs>
         </div>
       </main>
