@@ -94,7 +94,7 @@ const App = () => (
               <Route path="/blog" element={<Blog />} />
               <Route path="/blog/:slug" element={<BlogPost />} />
               <Route path="/algemene-voorwaarden" element={<AlgemeneVoorwaarden />} />
-              <Route path="/admin/content" element={<ProtectedRoute requireAdmin><AdminContent /></ProtectedRoute>} />
+              <Route path="/admin/msc-builder" element={<ProtectedRoute requireAdmin><MscSessionBuilder /></ProtectedRoute>} />
               <Route path="/admin/cursusmateriaal" element={<ProtectedRoute requireAdmin><CourseMaterial /></ProtectedRoute>} />
               <Route path="/admin/deelnemers" element={<ProtectedRoute requireAdmin><AdminDashboard /></ProtectedRoute>} />
               <Route path="/admin/msc-materials" element={<ProtectedRoute requireAdmin><MscMaterialsLibrary /></ProtectedRoute>} />
