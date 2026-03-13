@@ -46,6 +46,8 @@ const SelfCompassionQuestionnaire = lazy(() => import("./pages/SelfCompassionQue
 const MscMaterialsLibrary = lazy(() => import("./pages/MscMaterialsLibrary"));
 const MscSessionBuilder = lazy(() => import("./pages/MscSessionBuilder"));
 const AdminContent = lazy(() => import("./pages/AdminContent"));
+const ContentLogin = lazy(() => import("./pages/ContentLogin"));
+const ContentBeheer = lazy(() => import("./pages/ContentBeheer"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 
 const queryClient = new QueryClient();
@@ -106,6 +108,9 @@ const App = () => (
               <Route path="/reset-password" element={<ResetPassword />} />
               <Route path="/intake/:enrollmentId" element={<IntakeForm />} />
               <Route path="/vragenlijst/:enrollmentId" element={<SelfCompassionQuestionnaire />} />
+              
+              <Route path="/content-login" element={<ContentLogin />} />
+              <Route path="/content-beheer" element={<ProtectedRoute requireAdmin><ContentBeheer /></ProtectedRoute>} />
               
               {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
               <Route path="*" element={<NotFound />} />
