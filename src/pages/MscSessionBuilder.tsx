@@ -172,7 +172,7 @@ export default function MscSessionBuilder() {
       <main className="pt-24 pb-16">
         <div className="container max-w-7xl mx-auto px-4">
           <div className="flex items-center gap-3 mb-6">
-            <Button variant="ghost" size="icon" onClick={() => navigate("/admin/content")}>
+            <Button variant="ghost" size="icon" onClick={() => navigate("/admin")}>
               <ArrowLeft className="h-5 w-5" />
             </Button>
             <h1 className="text-2xl font-light text-foreground">Individual Session Builder</h1>
