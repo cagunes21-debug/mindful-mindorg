@@ -104,8 +104,6 @@ const App = () => (
               <Route path="/intake/:enrollmentId" element={<IntakeForm />} />
               <Route path="/vragenlijst/:enrollmentId" element={<SelfCompassionQuestionnaire />} />
               
-              <Route path="/content-login" element={<ContentLogin />} />
-              <Route path="/content-beheer" element={<ProtectedRoute requireAdmin><ContentBeheer /></ProtectedRoute>} />
               
               {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
               <Route path="*" element={<NotFound />} />
