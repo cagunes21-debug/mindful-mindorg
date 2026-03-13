@@ -3,7 +3,8 @@ import { useState } from "react";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import { Button } from "@/components/ui/button";
-import { BookOpen, User, ClipboardList, BarChart3, MessageCircle, Users, Euro, GraduationCap, Heart, Mail, FileText } from "lucide-react";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { BookOpen, User, ClipboardList, BarChart3, MessageCircle, Users, Euro, GraduationCap, Heart, Mail, FileText, Presentation } from "lucide-react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import SEO from "@/components/SEO";
 import AdminCustomersSection from "@/components/admin/AdminCustomersSection";
@@ -12,6 +13,30 @@ import UpcomingSessionsWidget from "@/components/admin/UpcomingSessionsWidget";
 import AdminScsOverview from "@/components/admin/AdminScsOverview";
 import AdminFinanceSection from "@/components/admin/AdminFinanceSection";
 import AdminNewsletterSection from "@/components/admin/AdminNewsletterSection";
+
+const contentSections = [
+  {
+    title: "Content Library",
+    description: "Beheer cursusmateriaal, meditaties, oefeningen en onderwerpen voor alle trainingen en sessies.",
+    icon: GraduationCap,
+    path: "/admin/cursusmateriaal",
+    color: "bg-sage-100 text-sage-700",
+  },
+  {
+    title: "MSC Session Builder",
+    description: "Stel individuele sessies samen uit de materiaalbibliotheek.",
+    icon: Presentation,
+    path: "/admin/msc-builder",
+    color: "bg-blue-100 text-blue-700",
+  },
+  {
+    title: "Blog",
+    description: "Schrijf en publiceer blogartikelen over mindfulness en zelfcompassie.",
+    icon: BookOpen,
+    path: "/admin/blog",
+    color: "bg-amber-100 text-amber-700",
+  },
+];
 
 export default function AdminDashboard() {
   const navigate = useNavigate();
@@ -30,11 +55,6 @@ export default function AdminDashboard() {
               <h1 className="text-3xl font-light text-foreground">Admin Dashboard</h1>
               <p className="text-muted-foreground mt-1">Beheer klanten, leads en financiën</p>
             </div>
-            <div className="flex items-center gap-2 flex-wrap">
-              <Button variant="outline" size="sm" className="gap-2" onClick={() => navigate("/admin/content")}>
-                <FileText className="h-4 w-4" />Content Beheer
-              </Button>
-            </div>
           </div>
 
           {/* Main Navigation Tabs */}
@@ -48,6 +68,9 @@ export default function AdminDashboard() {
               </TabsTrigger>
               <TabsTrigger value="finance" className="gap-2">
                 <Euro className="h-4 w-4" /> Financiën
+              </TabsTrigger>
+              <TabsTrigger value="content" className="gap-2">
+                <FileText className="h-4 w-4" /> Mijn Trainingen
               </TabsTrigger>
             </TabsList>
 
@@ -116,6 +139,31 @@ export default function AdminDashboard() {
                   </h2>
                   <AdminFinanceSection />
                 </section>
+              </div>
+            </TabsContent>
+
+            {/* Content / Mijn Trainingen Section */}
+            <TabsContent value="content">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                {contentSections.map((section) => (
+                  <Card
+                    key={section.path}
+                    className="cursor-pointer hover:shadow-md transition-shadow"
+                    onClick={() => navigate(section.path)}
+                  >
+                    <CardHeader className="pb-3">
+                      <div className="flex items-center gap-3">
+                        <div className={`h-10 w-10 rounded-lg flex items-center justify-center ${section.color}`}>
+                          <section.icon className="h-5 w-5" />
+                        </div>
+                        <CardTitle className="text-lg font-medium">{section.title}</CardTitle>
+                      </div>
+                    </CardHeader>
+                    <CardContent>
+                      <CardDescription className="text-sm">{section.description}</CardDescription>
+                    </CardContent>
+                  </Card>
+                ))}
               </div>
             </TabsContent>
           </Tabs>
