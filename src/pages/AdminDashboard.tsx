@@ -69,6 +69,9 @@ export default function AdminDashboard() {
               <TabsTrigger value="finance" className="gap-2">
                 <Euro className="h-4 w-4" /> Financiën
               </TabsTrigger>
+              <TabsTrigger value="content" className="gap-2">
+                <FileText className="h-4 w-4" /> Mijn Trainingen
+              </TabsTrigger>
             </TabsList>
 
             {/* CRM Section - Leads */}
