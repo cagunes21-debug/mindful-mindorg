@@ -3,7 +3,8 @@ import { useState } from "react";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import { Button } from "@/components/ui/button";
-import { BookOpen, User, ClipboardList, BarChart3, MessageCircle, Users, Euro, GraduationCap, Heart, Mail, FileText } from "lucide-react";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { BookOpen, User, ClipboardList, BarChart3, MessageCircle, Users, Euro, GraduationCap, Heart, Mail, FileText, Presentation } from "lucide-react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import SEO from "@/components/SEO";
 import AdminCustomersSection from "@/components/admin/AdminCustomersSection";
@@ -12,6 +13,30 @@ import UpcomingSessionsWidget from "@/components/admin/UpcomingSessionsWidget";
 import AdminScsOverview from "@/components/admin/AdminScsOverview";
 import AdminFinanceSection from "@/components/admin/AdminFinanceSection";
 import AdminNewsletterSection from "@/components/admin/AdminNewsletterSection";
+
+const contentSections = [
+  {
+    title: "Content Library",
+    description: "Beheer cursusmateriaal, meditaties, oefeningen en onderwerpen voor alle trainingen en sessies.",
+    icon: GraduationCap,
+    path: "/admin/cursusmateriaal",
+    color: "bg-sage-100 text-sage-700",
+  },
+  {
+    title: "MSC Session Builder",
+    description: "Stel individuele sessies samen uit de materiaalbibliotheek.",
+    icon: Presentation,
+    path: "/admin/msc-builder",
+    color: "bg-blue-100 text-blue-700",
+  },
+  {
+    title: "Blog",
+    description: "Schrijf en publiceer blogartikelen over mindfulness en zelfcompassie.",
+    icon: BookOpen,
+    path: "/admin/blog",
+    color: "bg-amber-100 text-amber-700",
+  },
+];
 
 export default function AdminDashboard() {
   const navigate = useNavigate();
