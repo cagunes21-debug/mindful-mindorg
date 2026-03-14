@@ -11,8 +11,8 @@ const PROCESS_STEPS = [
     title: "Nieuw binnengekomen",
     status: "new",
     icon: UserPlus,
-    color: "bg-slate-100 text-slate-700 border-slate-200",
-    dotColor: "bg-slate-400",
+    color: "bg-[#f1efe8] text-[#5f5e5a] border-[#e0ded6]",
+    dotColor: "bg-[#5f5e5a]",
     description: "Lead komt binnen via contactformulier, WhatsApp of telefoon.",
     actions: [
       "Bekijk de gegevens en het bericht van de lead",
