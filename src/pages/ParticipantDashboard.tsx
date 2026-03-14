@@ -325,7 +325,8 @@ const ParticipantDashboard = () => {
                 <AlertCircle className="h-7 w-7 text-terracotta-600" />
               </div>
               <h2 className="text-xl font-light mb-2">Er ging iets mis</h2>
-              <p className="text-sm text-muted-foreground mb-6">{error}</p>
+              <p className="text-sm text-muted-foreground mb-2">{error}</p>
+              <p className="text-xs text-muted-foreground mb-6">Open de browserconsole (F12) voor meer details.</p>
               <div className="flex gap-3 justify-center">
                 <Button variant="outline" className="border-warm-200" onClick={() => window.location.reload()}>
                   Verversen
