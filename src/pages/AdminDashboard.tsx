@@ -271,51 +271,30 @@ export default function AdminDashboard() {
             </div>
           )}
 
-          {/* ─── Clients ─── */}
-          {activeSection === "clients" && (
+          {/* ─── Section pages (non-overview) ─── */}
+          {activeSection !== "overview" && activeMeta && (
             <div className="space-y-4">
-              <h1 className="text-2xl font-bold text-foreground tracking-tight">Klanten & Trainingen</h1>
-              <AdminCustomersSection initialTab="customers" />
-            </div>
-          )}
+              {/* Breadcrumb / back bar */}
+              <div className="flex items-center gap-2">
+                <button
+                  onClick={() => setActiveSection("overview")}
+                  className="inline-flex items-center gap-1.5 text-sm text-primary hover:text-primary/80 font-medium transition-colors group"
+                >
+                  <ChevronLeft className="h-4 w-4 group-hover:-translate-x-0.5 transition-transform" />
+                  Overzicht
+                </button>
+                <span className="text-muted-foreground/40">/</span>
+                <span className="text-sm text-muted-foreground">{activeMeta.label}</span>
+              </div>
 
-          {/* ─── CRM / Leads ─── */}
-          {activeSection === "crm" && (
-            <div className="space-y-4">
-              <h1 className="text-2xl font-bold text-foreground tracking-tight">Leads & CRM</h1>
-              <AdminCustomersSection initialTab="leads" />
-            </div>
-          )}
+              <h1 className="text-2xl font-bold text-foreground tracking-tight">{activeMeta.label}</h1>
 
-          {/* ─── Registrations ─── */}
-          {activeSection === "registrations" && (
-            <div className="space-y-4">
-              <h1 className="text-2xl font-bold text-foreground tracking-tight">Aanmeldingen & Betaling</h1>
-              <AdminRegistrationsSection />
-            </div>
-          )}
-
-          {/* ─── Finance ─── */}
-          {activeSection === "finance" && (
-            <div className="space-y-4">
-              <h1 className="text-2xl font-bold text-foreground tracking-tight">Financiën</h1>
-              <AdminFinanceSection />
-            </div>
-          )}
-
-          {/* ─── SCS Scores ─── */}
-          {activeSection === "scs" && (
-            <div className="space-y-4">
-              <h1 className="text-2xl font-bold text-foreground tracking-tight">Zelfcompassie Scores (SCS)</h1>
-              <AdminScsOverview />
-            </div>
-          )}
-
-          {/* ─── Newsletter ─── */}
-          {activeSection === "newsletter" && (
-            <div className="space-y-4">
-              <h1 className="text-2xl font-bold text-foreground tracking-tight">Nieuwsbrief</h1>
-              <AdminNewsletterSection />
+              {activeSection === "clients" && <AdminCustomersSection initialTab="customers" />}
+              {activeSection === "crm" && <AdminCustomersSection initialTab="leads" />}
+              {activeSection === "registrations" && <AdminRegistrationsSection />}
+              {activeSection === "finance" && <AdminFinanceSection />}
+              {activeSection === "scs" && <AdminScsOverview />}
+              {activeSection === "newsletter" && <AdminNewsletterSection />}
             </div>
           )}
         </div>
