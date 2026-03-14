@@ -73,14 +73,14 @@ const STAGES = [
   {
     key: "registration",
     label: "Aanmelding",
-    color: { bg: "#FEF3E2", text: "#92400E", border: "#FCD9A8", dot: "#D97706" },
+    color: { bg: "#E8F2FD", text: "#1A5FAA", border: "#A8CFF0", dot: "#378ADD" },
     actionLabel: "Omzetten naar cliënt →",
     nextStage: "converted_to_client",
   },
   {
     key: "converted_to_client",
     label: "Deelnemer / cliënt",
-    color: { bg: "#EAF3DE", text: "#3B6D11", border: "#C0DD97", dot: "#639922" },
+    color: { bg: "#E2F5EE", text: "#0E6B4A", border: "#8FD9BA", dot: "#1D9E75" },
     actionLabel: "Klantprofiel →",
     nextStage: null,
   },
