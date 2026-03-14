@@ -95,7 +95,6 @@ const NAV = [
   {
     group: "Relatiebeheer",
     items: [
-      { id: "pipeline", label: "Pipeline",  icon: GitBranch },
       { id: "clients",  label: "Klanten",   icon: Users },
     ],
   },
