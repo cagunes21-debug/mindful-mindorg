@@ -237,12 +237,6 @@ export default function AdminCustomersSection({ initialTab = "customers" }: { in
       {/* ── Tabs ── */}
       <Tabs value={activeTab} onValueChange={setActiveTab}>
         <TabsList className="h-9">
-          <TabsTrigger value="customers" className="gap-1.5 text-xs">
-            <Users className="h-3.5 w-3.5" /> Klanten
-            <Badge variant="secondary" className="text-[10px] px-1.5 py-0 h-4 ml-0.5">
-              {customers.length}
-            </Badge>
-          </TabsTrigger>
           <TabsTrigger value="leads" className="gap-1.5 text-xs">
             <TrendingUp className="h-3.5 w-3.5" /> Leads & Pipeline
             {newLeadCount > 0 && (
@@ -250,6 +244,12 @@ export default function AdminCustomersSection({ initialTab = "customers" }: { in
                 {newLeadCount}
               </Badge>
             )}
+          </TabsTrigger>
+          <TabsTrigger value="customers" className="gap-1.5 text-xs">
+            <Users className="h-3.5 w-3.5" /> Klanten
+            <Badge variant="secondary" className="text-[10px] px-1.5 py-0 h-4 ml-0.5">
+              {customers.length}
+            </Badge>
           </TabsTrigger>
         </TabsList>
 
