@@ -52,42 +52,42 @@ const STAGES = [
   {
     key: "new",
     label: "Nieuwe lead",
-    color: { bg: "#F1EFE8", text: "#444441", border: "#D3D1C7", dot: "#888780" },
+    color: { bg: "bg-muted/50", text: "text-muted-foreground", border: "border-border", dot: "bg-muted-foreground", dotHex: "#888780" },
     actionLabel: "Contact opnemen →",
     nextStage: "contacted",
   },
   {
     key: "contacted",
     label: "Contact opgenomen",
-    color: { bg: "#FAEEDA", text: "#854F0B", border: "#FAC775", dot: "#EF9F27" },
+    color: { bg: "bg-amber-50", text: "text-amber-800", border: "border-amber-200", dot: "bg-amber-500", dotHex: "#EF9F27" },
     actionLabel: "Kennismaking plannen →",
     nextStage: "intake_scheduled",
   },
   {
     key: "intake_scheduled",
     label: "Kennismaking gepland",
-    color: { bg: "#EEEDFE", text: "#534AB7", border: "#CECBF6", dot: "#7F77DD" },
+    color: { bg: "bg-purple-50", text: "text-purple-800", border: "border-purple-200", dot: "bg-purple-500", dotHex: "#7F77DD" },
     actionLabel: "Aanmelding maken →",
     nextStage: "aanmelding",
   },
   {
     key: "aanmelding",
     label: "Aanmelding",
-    color: { bg: "#E6F1FB", text: "#185FA5", border: "#B5D4F4", dot: "#378ADD" },
+    color: { bg: "bg-blue-50", text: "text-blue-800", border: "border-blue-200", dot: "bg-blue-500", dotHex: "#378ADD" },
     actionLabel: "Omzetten naar klant →",
     nextStage: "converted_to_client",
   },
   {
     key: "converted_to_client",
     label: "Deelnemer / cliënt",
-    color: { bg: "#EAF3DE", text: "#3B6D11", border: "#C0DD97", dot: "#639922" },
+    color: { bg: "bg-green-50", text: "text-green-800", border: "border-green-200", dot: "bg-green-500", dotHex: "#639922" },
     actionLabel: "Klantprofiel →",
     nextStage: null,
   },
   {
     key: "not_interested",
     label: "Niet geïnteresseerd",
-    color: { bg: "#F1EFE8", text: "#5F5E5A", border: "#D3D1C7", dot: "#B4B2A9" },
+    color: { bg: "bg-muted/30", text: "text-muted-foreground", border: "border-border", dot: "bg-muted-foreground/50", dotHex: "#B4B2A9" },
     actionLabel: null,
     nextStage: null,
   },
@@ -115,29 +115,22 @@ function LeadCard({
 
   return (
     <div
-      style={{
-        background: "var(--color-background-primary)",
-        border: "0.5px solid var(--color-border-tertiary)",
-        borderRadius: 10,
-        padding: "10px 12px",
-        cursor: "pointer",
-        transition: "border-color 0.15s",
-      }}
+      className="bg-card border border-border/60 rounded-lg p-3 cursor-pointer hover:border-border hover:shadow-sm transition-all"
       onClick={() => onOpenDetail(lead)}
     >
-      <p style={{ fontSize: 13, fontWeight: 500, color: "var(--color-text-primary)", marginBottom: 2 }}>
+      <p className="text-[13px] font-medium text-foreground mb-0.5">
         {lead.first_name} {lead.last_name}
       </p>
       {lead.interest && (
-        <p style={{ fontSize: 11, color: "var(--color-text-secondary)", marginBottom: 6 }}>
+        <p className="text-[11px] text-muted-foreground mb-1.5">
           {lead.interest}
         </p>
       )}
-      <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: lead.notes ? 6 : 0 }}>
-        <span style={{ fontSize: 10, color: "var(--color-text-tertiary)" }}>{dateLabel}</span>
+      <div className="flex items-center justify-between mb-0">
+        <span className="text-[10px] text-muted-foreground/70">{dateLabel}</span>
         {lead.notes && (
           <span title={lead.notes}>
-            <StickyNote style={{ width: 11, height: 11, color: "var(--color-text-tertiary)" }} />
+            <StickyNote className="h-[11px] w-[11px] text-muted-foreground/50" />
           </span>
         )}
       </div>
@@ -145,33 +138,22 @@ function LeadCard({
       {/* Action button */}
       {stage.actionLabel && stage.nextStage && (
         <div
-          style={{
-            marginTop: 8,
-            paddingTop: 8,
-            borderTop: "0.5px solid var(--color-border-tertiary)",
-            display: "flex",
-            gap: 5,
-          }}
+          className="mt-2 pt-2 border-t border-border/50 flex gap-1.5"
           onClick={e => e.stopPropagation()}
         >
           <button
             onClick={() => onOpenDetail(lead)}
-            style={{
-              flex: 1, padding: "4px 0", border: "0.5px solid var(--color-border-tertiary)",
-              borderRadius: 6, fontSize: 10, background: "transparent", cursor: "pointer",
-              color: "var(--color-text-secondary)",
-            }}
+            className="flex-1 py-1 border border-border/60 rounded-md text-[10px] bg-transparent cursor-pointer text-muted-foreground hover:bg-muted/30 transition-colors"
           >
             Notitie
           </button>
           <button
             onClick={() => onMoveNext(lead)}
-            style={{
-              flex: 2, padding: "4px 8px",
-              background: stage.color.bg, border: `0.5px solid ${stage.color.border}`,
-              borderRadius: 6, fontSize: 10, fontWeight: 500, cursor: "pointer",
-              color: stage.color.text,
-            }}
+            className={cn(
+              "flex-[2] py-1 px-2 rounded-md text-[10px] font-medium cursor-pointer transition-colors border",
+              stage.color.bg, stage.color.text, stage.color.border,
+              "hover:opacity-80"
+            )}
           >
             {stage.actionLabel}
           </button>
@@ -688,7 +670,6 @@ export default function CrmPipelineSection() {
     const stage = STAGES.find(s => s.key === lead.status);
     if (!stage?.nextStage) return;
 
-    // If moving to converted, open the convert modal instead
     if (stage.nextStage === "converted_to_client") {
       setConvertingLead(lead);
       return;
@@ -764,112 +745,78 @@ export default function CrmPipelineSection() {
         </Button>
       </div>
 
-      {/* Stage counts */}
+      {/* Stage summary cards */}
       <div className="grid grid-cols-5 gap-2">
         {ACTIVE_STAGES.map(stage => {
           const count = filteredLeads(stage.key).length;
           return (
-            <div
+            <Card
               key={stage.key}
-              style={{
-                background: "var(--color-background-primary)",
-                border: "0.5px solid var(--color-border-tertiary)",
-                borderTop: `2px solid ${stage.color.dot}`,
-                borderRadius: 10,
-                padding: "10px 12px",
-                textAlign: "center",
-              }}
+              className={cn("border-border/60 overflow-hidden")}
+              style={{ borderTopWidth: 2, borderTopColor: stage.color.dotHex }}
             >
-              <p style={{ fontSize: 20, fontWeight: 700, color: "var(--color-text-primary)", lineHeight: 1 }}>
-                {count}
-              </p>
-              <p style={{ fontSize: 10, color: "var(--color-text-secondary)", marginTop: 3 }}>
-                {stage.label}
-              </p>
-            </div>
+              <CardContent className="p-3 text-center">
+                <p className="text-xl font-bold text-foreground leading-tight">{count}</p>
+                <p className="text-[10px] text-muted-foreground mt-0.5">{stage.label}</p>
+              </CardContent>
+            </Card>
           );
         })}
       </div>
 
-      {/* Pipeline board */}
-      <div
-        style={{
-          display: "grid",
-          gridTemplateColumns: "repeat(5, 1fr)",
-          gap: 10,
-          alignItems: "start",
-          overflowX: "auto",
-        }}
-      >
-        {ACTIVE_STAGES.map(stage => {
-          const stageLeads = filteredLeads(stage.key);
-          return (
-            <div
-              key={stage.key}
-              style={{
-                background: "var(--color-background-secondary)",
-                borderRadius: 12,
-                padding: 10,
-                minHeight: 120,
-              }}
-            >
-              {/* Column header */}
-              <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 10, padding: "0 2px" }}>
-                <span style={{ fontSize: 11, fontWeight: 500, color: "var(--color-text-primary)" }}>
-                  {stage.label}
-                </span>
-                <span
-                  style={{
-                    minWidth: 18, height: 18, padding: "0 5px",
-                    background: stage.color.bg, color: stage.color.text,
-                    borderRadius: 9, fontSize: 10, fontWeight: 700,
-                    display: "flex", alignItems: "center", justifyContent: "center",
-                  }}
-                >
-                  {stageLeads.length}
-                </span>
-              </div>
-
-              {/* Cards */}
-              <div style={{ display: "flex", flexDirection: "column", gap: 7 }}>
-                {stageLeads.length === 0 ? (
-                  <div style={{
-                    border: "0.5px dashed var(--color-border-tertiary)",
-                    borderRadius: 8, padding: "16px 8px",
-                    textAlign: "center", fontSize: 11,
-                    color: "var(--color-text-tertiary)",
-                  }}>
-                    Geen leads
-                  </div>
-                ) : (
-                  stageLeads.map(lead => (
-                    <LeadCard
-                      key={lead.id}
-                      lead={lead}
-                      stage={stage}
-                      onMoveNext={moveToNext}
-                      onOpenDetail={setSelectedLead}
-                    />
-                  ))
-                )}
-              </div>
-
-              {/* Add to this column */}
-              <button
-                onClick={() => setShowNewLead(true)}
-                style={{
-                  display: "flex", alignItems: "center", justifyContent: "center",
-                  gap: 4, padding: "6px", marginTop: 7, width: "100%",
-                  border: "0.5px dashed var(--color-border-tertiary)",
-                  borderRadius: 8, fontSize: 11, color: "var(--color-text-tertiary)",
-                  background: "transparent", cursor: "pointer",
-                }}
+      {/* Pipeline board — horizontal scroll on mobile */}
+      <div className="overflow-x-auto -mx-4 sm:-mx-6 px-4 sm:px-6 pb-2">
+        <div className="grid grid-cols-5 gap-3 min-w-[800px]">
+          {ACTIVE_STAGES.map(stage => {
+            const stageLeads = filteredLeads(stage.key);
+            return (
+              <div
+                key={stage.key}
+                className="bg-muted/30 rounded-xl p-2.5 min-h-[120px]"
               >
-                <Plus style={{ width: 12, height: 12 }} /> Lead toevoegen
-              </button>
-            </div>
-          );
-        })}
+                {/* Column header */}
+                <div className="flex items-center justify-between mb-2.5 px-0.5">
+                  <span className="text-[11px] font-medium text-foreground">
+                    {stage.label}
+                  </span>
+                  <span className={cn(
+                    "min-w-[18px] h-[18px] px-1.5 rounded-full text-[10px] font-bold flex items-center justify-center",
+                    stage.color.bg, stage.color.text
+                  )}>
+                    {stageLeads.length}
+                  </span>
+                </div>
+
+                {/* Cards */}
+                <div className="flex flex-col gap-2">
+                  {stageLeads.length === 0 ? (
+                    <div className="border border-dashed border-border/60 rounded-lg py-4 px-2 text-center text-[11px] text-muted-foreground/50">
+                      Geen leads
+                    </div>
+                  ) : (
+                    stageLeads.map(lead => (
+                      <LeadCard
+                        key={lead.id}
+                        lead={lead}
+                        stage={stage}
+                        onMoveNext={moveToNext}
+                        onOpenDetail={setSelectedLead}
+                      />
+                    ))
+                  )}
+                </div>
+
+                {/* Add button */}
+                <button
+                  onClick={() => setShowNewLead(true)}
+                  className="flex items-center justify-center gap-1 py-1.5 mt-2 w-full border border-dashed border-border/60 rounded-lg text-[11px] text-muted-foreground/50 bg-transparent cursor-pointer hover:border-border hover:text-muted-foreground transition-colors"
+                >
+                  <Plus className="h-3 w-3" /> Toevoegen
+                </button>
+              </div>
+            );
+          })}
+        </div>
       </div>
 
       {/* Not interested — collapsed row */}
