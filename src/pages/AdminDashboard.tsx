@@ -5,7 +5,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import {
   BookOpen, ClipboardList, BarChart3, MessageCircle, Users, Euro,
   GraduationCap, Mail, Presentation, TrendingUp, UserPlus,
-  LogOut, Menu, ChevronRight, ChevronLeft, X, Home,
+  LogOut, Menu, ChevronRight, ChevronLeft, X, Home, CalendarDays,
 } from "lucide-react";
 import SEO from "@/components/SEO";
 import AdminCustomersSection from "@/components/admin/AdminCustomersSection";
@@ -15,10 +15,12 @@ import AdminScsOverview from "@/components/admin/AdminScsOverview";
 import AdminFinanceSection from "@/components/admin/AdminFinanceSection";
 import AdminNewsletterSection from "@/components/admin/AdminNewsletterSection";
 import { cn } from "@/lib/utils";
+import AgendaSection from "@/components/admin/AgendaSection";
 
 /* ─── Nav config ─── */
 const navItems = [
   { id: "overview", label: "Overzicht", icon: Home },
+  { id: "agenda", label: "Agenda", icon: CalendarDays },
   { id: "clients", label: "Klanten", icon: Users },
   { id: "crm", label: "Leads & CRM", icon: MessageCircle },
   { id: "registrations", label: "Aanmeldingen", icon: ClipboardList },
@@ -289,6 +291,7 @@ export default function AdminDashboard() {
 
               <h1 className="text-2xl font-bold text-foreground tracking-tight">{activeMeta.label}</h1>
 
+              {activeSection === "agenda" && <AgendaSection />}
               {activeSection === "clients" && <AdminCustomersSection initialTab="customers" />}
               {activeSection === "crm" && <AdminCustomersSection initialTab="leads" />}
               {activeSection === "registrations" && <AdminRegistrationsSection />}
