@@ -44,58 +44,22 @@ interface Lead {
   updated_at?: string;
 }
 
-// ─── Pipeline stages ─────────────────────────────────────────────────────────
+// ─── Pipeline stages (leads only) ────────────────────────────────────────────
 
 const STAGES = [
-  { key: "new",                label: "Nieuw",           tagClass: "bg-stone-100 text-stone-700 border-stone-200", dotClass: "bg-stone-400" },
-  { key: "contact_attempt",    label: "Gecontacteerd",   tagClass: "bg-sky-50 text-sky-700 border-sky-200",        dotClass: "bg-sky-400" },
-  { key: "in_conversation",    label: "Geïnteresseerd",  tagClass: "bg-amber-50 text-amber-700 border-amber-200",  dotClass: "bg-amber-400" },
-  { key: "intake_scheduled",   label: "Kennismaking",    tagClass: "bg-violet-50 text-violet-700 border-violet-200", dotClass: "bg-violet-400" },
-  { key: "registered",         label: "Aangemeld",       tagClass: "bg-emerald-50 text-emerald-700 border-emerald-200", dotClass: "bg-emerald-400" },
-  { key: "converted_to_client",label: "Klant",           tagClass: "bg-green-100 text-green-800 border-green-300", dotClass: "bg-green-600" },
-  { key: "not_interested",     label: "Afgewezen",       tagClass: "bg-muted text-muted-foreground border-border",  dotClass: "bg-muted-foreground" },
+  { key: "new",             label: "Nieuw",          tagClass: "bg-stone-100 text-stone-700 border-stone-200", dotClass: "bg-stone-400" },
+  { key: "contact_attempt", label: "Gecontacteerd",  tagClass: "bg-sky-50 text-sky-700 border-sky-200",        dotClass: "bg-sky-400" },
+  { key: "in_conversation", label: "Geïnteresseerd", tagClass: "bg-amber-50 text-amber-700 border-amber-200",  dotClass: "bg-amber-400" },
+  { key: "intake_scheduled",label: "Kennismaking",   tagClass: "bg-violet-50 text-violet-700 border-violet-200", dotClass: "bg-violet-400" },
+  { key: "registered",      label: "Aangemeld",      tagClass: "bg-emerald-50 text-emerald-700 border-emerald-200", dotClass: "bg-emerald-400" },
+  { key: "not_interested",  label: "Afgewezen",      tagClass: "bg-muted text-muted-foreground border-border",  dotClass: "bg-muted-foreground" },
 ];
 
-const ACTIVE_STAGES = STAGES.filter(s => s.key !== "not_interested");
-const STAGE_ORDER = ACTIVE_STAGES.map(s => s.key);
+const LEAD_STAGES = STAGES.filter(s => s.key !== "not_interested");
+const STAGE_ORDER = LEAD_STAGES.map(s => s.key);
 
 function getStageInfo(key: string) {
   return STAGES.find(s => s.key === key) || STAGES[0];
-}
-
-// ─── Visual Pipeline Progress ─────────────────────────────────────────────────
-
-function PipelineProgress({ stageCounts, activeFilter, onFilter }: {
-  stageCounts: Record<string, number>;
-  activeFilter: string | null;
-  onFilter: (key: string | null) => void;
-}) {
-  const total = Object.values(stageCounts).reduce((a, b) => a + b, 0);
-
-  return (
-    <div className="flex items-stretch gap-1 rounded-lg border border-border/60 bg-card p-1.5 overflow-x-auto">
-      {ACTIVE_STAGES.map((stage, i) => {
-        const count = stageCounts[stage.key] || 0;
-        const isActive = activeFilter === stage.key;
-        return (
-          <button
-            key={stage.key}
-            onClick={() => onFilter(isActive ? null : stage.key)}
-            className={cn(
-              "flex-1 min-w-[80px] flex flex-col items-center gap-1 py-2 px-2 rounded-md transition-all cursor-pointer",
-              isActive
-                ? "bg-foreground/5 ring-1 ring-foreground/15"
-                : "hover:bg-accent/40"
-            )}
-          >
-            <div className={cn("w-2.5 h-2.5 rounded-full", stage.dotClass)} />
-            <span className="text-lg font-bold leading-none">{count}</span>
-            <span className="text-[9px] text-muted-foreground leading-tight text-center whitespace-nowrap">{stage.label}</span>
-          </button>
-        );
-      })}
-    </div>
-  );
 }
 
 // ─── Status Tag ───────────────────────────────────────────────────────────────
