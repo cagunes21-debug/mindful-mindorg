@@ -5,7 +5,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import {
   BookOpen, ClipboardList, BarChart3, MessageCircle, Users, Euro,
   GraduationCap, Mail, Presentation, TrendingUp, UserPlus,
-  LogOut, Menu, ChevronRight, X, Home,
+  LogOut, Menu, ChevronRight, ChevronLeft, X, Home,
 } from "lucide-react";
 import SEO from "@/components/SEO";
 import AdminCustomersSection from "@/components/admin/AdminCustomersSection";
