@@ -76,7 +76,7 @@ const Auth = () => {
       console.log("[Auth] has_role result:", res);
       if (res === true) {
         console.log("[Auth] Admin detected, redirecting to /admin");
-        window.location.href = "/admin";
+        navigate("/admin", { replace: true });
         return;
       }
     } catch (err) {
@@ -84,7 +84,7 @@ const Auth = () => {
     }
 
     console.log("[Auth] Redirecting to /mijn-trainingen");
-    window.location.href = "/mijn-trainingen";
+    navigate("/mijn-trainingen", { replace: true });
   };
 
   useEffect(() => {
@@ -278,7 +278,7 @@ const Auth = () => {
           // Redirect happens via onAuthStateChange listener
           // Safety fallback if event doesn't fire within 8s
           setTimeout(() => {
-            window.location.href = "/mijn-trainingen";
+            navigate("/mijn-trainingen", { replace: true });
           }, 8000);
         }
       } else {
