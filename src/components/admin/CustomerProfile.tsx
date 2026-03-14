@@ -549,6 +549,7 @@ export default function CustomerProfile({ email, onClose }: CustomerProfileProps
               customer={customer} enrollments={enrollments} registrations={registrations}
               sessionAppointments={sessionAppointments} structuredNotes={structuredNotes}
               onTrainingClick={handleTrainingClick} onTabChange={setActiveTab}
+              clientId={clientId} onRefresh={fetchCustomerData}
             />
           </TabsContent>
 
