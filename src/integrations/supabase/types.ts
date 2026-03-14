@@ -200,6 +200,7 @@ export type Database = {
           last_name: string
           notes: string | null
           phone: string | null
+          source: string | null
           updated_at: string
           user_id: string | null
         }
@@ -211,6 +212,7 @@ export type Database = {
           last_name?: string
           notes?: string | null
           phone?: string | null
+          source?: string | null
           updated_at?: string
           user_id?: string | null
         }
@@ -222,6 +224,7 @@ export type Database = {
           last_name?: string
           notes?: string | null
           phone?: string | null
+          source?: string | null
           updated_at?: string
           user_id?: string | null
         }
@@ -411,6 +414,7 @@ export type Database = {
         Row: {
           additional_notes: string | null
           availability: string | null
+          contraindications: string | null
           daily_impact: string | null
           duration_of_issue: string | null
           emergency_contact: string | null
@@ -419,16 +423,20 @@ export type Database = {
           goal: string | null
           health_situation: string | null
           id: string
+          intake_date: string | null
+          intake_duration_minutes: number | null
           main_theme: string | null
           mindfulness_experience: string | null
           previous_therapy: string | null
           reason: string | null
           submitted_at: string
+          suitability_assessment: string | null
           updated_at: string
         }
         Insert: {
           additional_notes?: string | null
           availability?: string | null
+          contraindications?: string | null
           daily_impact?: string | null
           duration_of_issue?: string | null
           emergency_contact?: string | null
@@ -437,16 +445,20 @@ export type Database = {
           goal?: string | null
           health_situation?: string | null
           id?: string
+          intake_date?: string | null
+          intake_duration_minutes?: number | null
           main_theme?: string | null
           mindfulness_experience?: string | null
           previous_therapy?: string | null
           reason?: string | null
           submitted_at?: string
+          suitability_assessment?: string | null
           updated_at?: string
         }
         Update: {
           additional_notes?: string | null
           availability?: string | null
+          contraindications?: string | null
           daily_impact?: string | null
           duration_of_issue?: string | null
           emergency_contact?: string | null
@@ -455,11 +467,14 @@ export type Database = {
           goal?: string | null
           health_situation?: string | null
           id?: string
+          intake_date?: string | null
+          intake_duration_minutes?: number | null
           main_theme?: string | null
           mindfulness_experience?: string | null
           previous_therapy?: string | null
           reason?: string | null
           submitted_at?: string
+          suitability_assessment?: string | null
           updated_at?: string
         }
         Relationships: [
