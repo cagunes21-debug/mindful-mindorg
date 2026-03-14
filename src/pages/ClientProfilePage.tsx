@@ -199,7 +199,26 @@ function QuickStats({ customer, enrollments, sessionAppointments }: {
   );
 }
 
-// ─── Sessions Section (with scheduling, status, notes) ───────────────────────
+// ─── Session Templates ────────────────────────────────────────────────────────
+
+const INTAKE_TEMPLATE_FIELDS = [
+  { key: "aanmeldreden", label: "Aanmeldreden", placeholder: "Waarom meldt de cliënt zich aan?" },
+  { key: "achtergrond", label: "Achtergrond & context", placeholder: "Relevante voorgeschiedenis, levenssituatie..." },
+  { key: "klachten", label: "Klachten & impact", placeholder: "Wat ervaart de cliënt? Hoe beïnvloedt het dagelijks leven?" },
+  { key: "doelen", label: "Doelen & verwachtingen", placeholder: "Wat hoopt de cliënt te bereiken?" },
+  { key: "observaties", label: "Observaties therapeut", placeholder: "Eerste indruk, houding, non-verbale signalen..." },
+  { key: "plan", label: "Voorlopig plan", placeholder: "Werkwijze, focus eerste sessies, afspraken..." },
+] as const;
+
+const SESSION_TEMPLATE_FIELDS = [
+  { key: "thema", label: "Thema van de sessie", placeholder: "Waar ging de sessie over?" },
+  { key: "besproken", label: "Wat is besproken", placeholder: "Samenvatting van de inhoud..." },
+  { key: "oefeningen", label: "Oefeningen & interventies", placeholder: "Welke oefeningen of technieken zijn gebruikt?" },
+  { key: "observaties", label: "Observaties", placeholder: "Wat viel op? Emoties, patronen, doorbraken..." },
+  { key: "huiswerk", label: "Huiswerk & afspraken", placeholder: "Wat neemt de cliënt mee? Oefeningen voor thuis..." },
+] as const;
+
+// ─── Sessions Section (with scheduling, status, notes, templates) ────────────
 
 function SessionsSection({ sessionAppointments, enrollments, onUpdate }: {
   sessionAppointments: SessionAppointment[];
@@ -217,9 +236,16 @@ function SessionsSection({ sessionAppointments, enrollments, onUpdate }: {
   const [editDate, setEditDate] = useState("");
   const [editTime, setEditTime] = useState("");
   const [updatingId, setUpdatingId] = useState<string | null>(null);
+  const [expandedSession, setExpandedSession] = useState<string | null>(null);
+  const [sessionNotes, setSessionNotes] = useState<Record<string, Record<string, string>>>({});
+  const [savingNotes, setSavingNotes] = useState<string | null>(null);
 
   const indivEnrollments = enrollments.filter(e => e.course_type === "individueel_6" || e.course_type === "losse_sessie");
   const activeEnrollment = indivEnrollments.find(e => e.status === "active") || indivEnrollments[0];
+
+  const sessionsTotal = activeEnrollment?.sessions_total || 6;
+  const sessionsUsed = activeEnrollment?.sessions_used || 0;
+  const currentStep = sessionsUsed + 1; // next session to do
 
   const handleAdd = async () => {
     if (!activeEnrollment || !addDate) { toast.error("Selecteer een datum"); return; }
@@ -266,8 +292,7 @@ function SessionsSection({ sessionAppointments, enrollments, onUpdate }: {
         session_time: editTime || null,
       }).eq("id", editingId);
       if (error) throw error;
-      
-      // If marking as completed, also increment sessions_used
+
       if (editStatus === "afgerond") {
         const appt = sessionAppointments.find(a => a.id === editingId);
         if (appt) {
@@ -275,12 +300,12 @@ function SessionsSection({ sessionAppointments, enrollments, onUpdate }: {
           if (enrollment) {
             const completedCount = sessionAppointments.filter(
               a => a.enrollment_id === enrollment.id && a.status === "afgerond"
-            ).length + 1; // +1 for current
+            ).length + 1;
             await supabase.from("enrollments").update({ sessions_used: completedCount }).eq("id", enrollment.id);
           }
         }
       }
-      
+
       toast.success("Sessie bijgewerkt");
       setEditingId(null);
       onUpdate();
@@ -297,9 +322,92 @@ function SessionsSection({ sessionAppointments, enrollments, onUpdate }: {
     else toast.error("Kon niet verwijderen");
   };
 
+  const saveSessionNotes = async (apptId: string, notes: Record<string, string>) => {
+    setSavingNotes(apptId);
+    try {
+      const notesJson = JSON.stringify(notes);
+      const { error } = await supabase.from("session_appointments").update({
+        notes: notesJson,
+      }).eq("id", apptId);
+      if (error) throw error;
+      toast.success("Sessienotities opgeslagen");
+      onUpdate();
+    } catch (err: any) {
+      toast.error("Fout: " + err.message);
+    }
+    setSavingNotes(null);
+  };
+
+  const loadSessionNotes = (appt: SessionAppointment): Record<string, string> => {
+    if (sessionNotes[appt.id]) return sessionNotes[appt.id];
+    // Try to parse existing notes as JSON, fallback to empty
+    if (appt.notes) {
+      try {
+        const parsed = JSON.parse(appt.notes);
+        if (typeof parsed === "object" && !Array.isArray(parsed)) return parsed;
+      } catch { /* plain text note, ignore */ }
+    }
+    return {};
+  };
+
+  const updateNoteField = (apptId: string, key: string, value: string) => {
+    setSessionNotes(prev => ({
+      ...prev,
+      [apptId]: { ...(prev[apptId] || {}), [key]: value },
+    }));
+  };
+
+  // Sort appointments by week_number
+  const sortedAppts = [...sessionAppointments].sort((a, b) => a.week_number - b.week_number);
+
   return (
-    <div className="space-y-3">
-      {/* Add button */}
+    <div className="space-y-5">
+      {/* ── Progress Stepper ── */}
+      {activeEnrollment && (
+        <div className="space-y-3">
+          <div className="flex items-center justify-between">
+            <p className="text-sm font-semibold">Traject voortgang</p>
+            <span className="text-xs text-muted-foreground">{sessionsUsed} van {sessionsTotal} afgerond</span>
+          </div>
+          <div className="flex items-center gap-1">
+            {Array.from({ length: sessionsTotal }, (_, i) => {
+              const stepNum = i + 1;
+              const appt = sortedAppts.find(a => a.week_number === stepNum);
+              const isCompleted = appt?.status === "afgerond";
+              const isCurrent = stepNum === currentStep;
+              const isCancelled = appt?.status === "geannuleerd";
+
+              return (
+                <div key={stepNum} className="flex items-center flex-1">
+                  <button
+                    onClick={() => appt && setExpandedSession(expandedSession === appt.id ? null : appt.id)}
+                    className={`flex items-center justify-center h-8 w-8 rounded-full text-xs font-bold transition-all shrink-0 ${
+                      isCompleted
+                        ? "bg-green-500 text-white shadow-sm"
+                        : isCancelled
+                        ? "bg-red-200 text-red-700"
+                        : isCurrent
+                        ? "bg-primary text-primary-foreground ring-2 ring-primary/30 shadow-md"
+                        : "bg-muted text-muted-foreground"
+                    }`}
+                  >
+                    {isCompleted ? "✓" : stepNum}
+                  </button>
+                  {i < sessionsTotal - 1 && (
+                    <div className={`h-0.5 flex-1 mx-1 rounded ${isCompleted ? "bg-green-400" : "bg-border"}`} />
+                  )}
+                </div>
+              );
+            })}
+          </div>
+          <div className="flex justify-between px-1">
+            <span className="text-[10px] text-muted-foreground">Intake</span>
+            <span className="text-[10px] text-muted-foreground">Sessie 6</span>
+          </div>
+        </div>
+      )}
+
+      {/* ── Add button ── */}
       {activeEnrollment && (
         <div className="flex justify-end">
           <Button size="sm" variant="outline" onClick={() => setShowAdd(!showAdd)} className="gap-1.5 text-xs">
@@ -308,7 +416,7 @@ function SessionsSection({ sessionAppointments, enrollments, onUpdate }: {
         </div>
       )}
 
-      {/* Add form */}
+      {/* ── Add form ── */}
       {showAdd && (
         <Card className="border-primary/20 bg-primary/5">
           <CardContent className="p-3 space-y-3">
@@ -323,10 +431,6 @@ function SessionsSection({ sessionAppointments, enrollments, onUpdate }: {
                 <Input type="time" value={addTime} onChange={e => setAddTime(e.target.value)} className="h-8 text-xs mt-1" />
               </div>
             </div>
-            <div>
-              <Label className="text-xs">Notitie</Label>
-              <Textarea value={addNotes} onChange={e => setAddNotes(e.target.value)} placeholder="Optionele notitie..." className="min-h-[40px] resize-none text-sm mt-1" />
-            </div>
             <div className="flex gap-2 justify-end">
               <Button size="sm" variant="ghost" onClick={() => setShowAdd(false)} className="text-xs h-7">Annuleren</Button>
               <Button size="sm" onClick={handleAdd} disabled={saving} className="gap-1.5 text-xs h-7">
@@ -338,15 +442,21 @@ function SessionsSection({ sessionAppointments, enrollments, onUpdate }: {
         </Card>
       )}
 
-      {/* Sessions list */}
-      {sessionAppointments.length === 0 ? (
+      {/* ── Sessions list with templates ── */}
+      {sortedAppts.length === 0 ? (
         <p className="text-sm text-muted-foreground py-4">Nog geen sessies ingepland.</p>
       ) : (
         <div className="space-y-2">
-          {sessionAppointments.map(appt => {
+          {sortedAppts.map(appt => {
             const isEditing = editingId === appt.id;
+            const isExpanded = expandedSession === appt.id;
+            const isIntake = appt.week_number === 1;
+            const templateFields = isIntake ? INTAKE_TEMPLATE_FIELDS : SESSION_TEMPLATE_FIELDS;
+            const currentNotes = sessionNotes[appt.id] || loadSessionNotes(appt);
+            const hasNotesContent = Object.values(currentNotes).some(v => v?.trim());
+
             return (
-              <Card key={appt.id} className="border-border/60">
+              <Card key={appt.id} className={`border-border/60 transition-all ${isExpanded ? "ring-1 ring-primary/20" : ""}`}>
                 <CardContent className="p-3">
                   {isEditing ? (
                     <div className="space-y-3">
@@ -371,10 +481,6 @@ function SessionsSection({ sessionAppointments, enrollments, onUpdate }: {
                           </Select>
                         </div>
                       </div>
-                      <div>
-                        <Label className="text-[10px]">Notitie</Label>
-                        <Textarea value={editNotes} onChange={e => setEditNotes(e.target.value)} className="min-h-[40px] resize-none text-xs mt-0.5" placeholder="Sessienotitie..." />
-                      </div>
                       <div className="flex gap-1.5 justify-end">
                         <Button size="sm" variant="ghost" onClick={() => setEditingId(null)} className="text-xs h-6 gap-1"><X className="h-3 w-3" /> Annuleren</Button>
                         <Button size="sm" onClick={saveEdit} disabled={updatingId === appt.id} className="text-xs h-6 gap-1">
@@ -383,34 +489,72 @@ function SessionsSection({ sessionAppointments, enrollments, onUpdate }: {
                       </div>
                     </div>
                   ) : (
-                    <div className="flex items-start gap-3">
-                      <div className={`h-2.5 w-2.5 rounded-full shrink-0 mt-1.5 ${
-                        appt.status === "afgerond" ? "bg-green-500" : appt.status === "geannuleerd" ? "bg-red-400" : "bg-amber-400"
-                      }`} />
-                      <div className="flex-1 min-w-0">
-                        <div className="flex items-center gap-2">
-                          <span className="text-sm font-medium">Sessie {appt.week_number}</span>
-                          <Badge variant="outline" className="text-[10px]">
-                            {appt.status === "afgerond" ? "✓ Afgerond" : appt.status === "geannuleerd" ? "Geannuleerd" : "Gepland"}
-                          </Badge>
+                    <>
+                      <div
+                        className="flex items-start gap-3 cursor-pointer"
+                        onClick={() => setExpandedSession(isExpanded ? null : appt.id)}
+                      >
+                        <div className={`h-2.5 w-2.5 rounded-full shrink-0 mt-1.5 ${
+                          appt.status === "afgerond" ? "bg-green-500" : appt.status === "geannuleerd" ? "bg-red-400" : "bg-amber-400"
+                        }`} />
+                        <div className="flex-1 min-w-0">
+                          <div className="flex items-center gap-2">
+                            <span className="text-sm font-medium">
+                              {isIntake ? "Sessie 1 — Intake" : `Sessie ${appt.week_number}`}
+                            </span>
+                            <Badge variant="outline" className="text-[10px]">
+                              {appt.status === "afgerond" ? "✓ Afgerond" : appt.status === "geannuleerd" ? "Geannuleerd" : "Gepland"}
+                            </Badge>
+                            {hasNotesContent && <Badge variant="secondary" className="text-[10px]"><FileText className="h-2.5 w-2.5 mr-0.5" />Notities</Badge>}
+                          </div>
+                          <div className="text-xs text-muted-foreground mt-0.5">
+                            {appt.session_date ? format(new Date(appt.session_date), "d MMM yyyy", { locale: nl }) : "Niet gepland"}
+                            {appt.session_time && <span className="ml-1">{appt.session_time.slice(0, 5)}</span>}
+                          </div>
                         </div>
-                        <div className="text-xs text-muted-foreground mt-0.5">
-                          {appt.session_date ? format(new Date(appt.session_date), "d MMM yyyy", { locale: nl }) : "Niet gepland"}
-                          {appt.session_time && <span className="ml-1">{appt.session_time.slice(0, 5)}</span>}
+                        <div className="flex gap-1 shrink-0" onClick={e => e.stopPropagation()}>
+                          <Button size="sm" variant="ghost" onClick={() => startEdit(appt)} className="h-6 w-6 p-0">
+                            <Pencil className="h-3 w-3" />
+                          </Button>
+                          <Button size="sm" variant="ghost" onClick={() => deleteAppt(appt.id)} className="h-6 w-6 p-0 text-destructive">
+                            <Trash2 className="h-3 w-3" />
+                          </Button>
                         </div>
-                        {appt.notes && (
-                          <p className="text-xs text-muted-foreground mt-1 bg-muted/50 rounded px-2 py-1">{appt.notes}</p>
-                        )}
+                        <ChevronDown className={`h-4 w-4 text-muted-foreground transition-transform shrink-0 mt-0.5 ${isExpanded ? "rotate-180" : ""}`} />
                       </div>
-                      <div className="flex gap-1 shrink-0">
-                        <Button size="sm" variant="ghost" onClick={() => startEdit(appt)} className="h-6 w-6 p-0">
-                          <Pencil className="h-3 w-3" />
-                        </Button>
-                        <Button size="sm" variant="ghost" onClick={() => deleteAppt(appt.id)} className="h-6 w-6 p-0 text-destructive">
-                          <Trash2 className="h-3 w-3" />
-                        </Button>
-                      </div>
-                    </div>
+
+                      {/* ── Expanded template ── */}
+                      {isExpanded && (
+                        <div className="mt-4 pt-3 border-t border-border/60 space-y-3">
+                          <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wide">
+                            {isIntake ? "Intake template" : `Sessie ${appt.week_number} notities`}
+                          </p>
+                          {templateFields.map(field => (
+                            <div key={field.key}>
+                              <Label className="text-xs font-medium">{field.label}</Label>
+                              <Textarea
+                                placeholder={field.placeholder}
+                                value={currentNotes[field.key] || ""}
+                                onChange={e => updateNoteField(appt.id, field.key, e.target.value)}
+                                className="min-h-[48px] resize-none text-sm mt-1"
+                              />
+                            </div>
+                          ))}
+                          <div className="flex justify-end pt-1">
+                            <Button
+                              size="sm"
+                              variant="outline"
+                              onClick={() => saveSessionNotes(appt.id, sessionNotes[appt.id] || currentNotes)}
+                              disabled={savingNotes === appt.id}
+                              className="gap-1.5 text-xs"
+                            >
+                              {savingNotes === appt.id ? <Loader2 className="h-3.5 w-3.5 animate-spin" /> : <Save className="h-3.5 w-3.5" />}
+                              Opslaan
+                            </Button>
+                          </div>
+                        </div>
+                      )}
+                    </>
                   )}
                 </CardContent>
               </Card>
