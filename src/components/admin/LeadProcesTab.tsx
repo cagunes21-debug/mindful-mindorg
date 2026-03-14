@@ -89,8 +89,8 @@ const PROCESS_STEPS = [
     title: "Deelnemer / Klant",
     status: "converted_to_client",
     icon: PartyPopper,
-    color: "bg-green-50 text-green-700 border-green-200",
-    dotColor: "bg-green-500",
+    color: "bg-[#085041] text-[#e1f5ee] border-[#085041]",
+    dotColor: "bg-[#e1f5ee]",
     description: "De lead is omgezet naar een actieve klant met een lopend traject.",
     actions: [
       "Gebruik 'Omzetten naar klant' in het lead-detail",
