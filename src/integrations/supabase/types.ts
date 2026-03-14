@@ -411,6 +411,8 @@ export type Database = {
         Row: {
           additional_notes: string | null
           availability: string | null
+          daily_impact: string | null
+          duration_of_issue: string | null
           emergency_contact: string | null
           enrollment_id: string
           expectations: string | null
@@ -419,6 +421,7 @@ export type Database = {
           id: string
           main_theme: string | null
           mindfulness_experience: string | null
+          previous_therapy: string | null
           reason: string | null
           submitted_at: string
           updated_at: string
@@ -426,6 +429,8 @@ export type Database = {
         Insert: {
           additional_notes?: string | null
           availability?: string | null
+          daily_impact?: string | null
+          duration_of_issue?: string | null
           emergency_contact?: string | null
           enrollment_id: string
           expectations?: string | null
@@ -434,6 +439,7 @@ export type Database = {
           id?: string
           main_theme?: string | null
           mindfulness_experience?: string | null
+          previous_therapy?: string | null
           reason?: string | null
           submitted_at?: string
           updated_at?: string
@@ -441,6 +447,8 @@ export type Database = {
         Update: {
           additional_notes?: string | null
           availability?: string | null
+          daily_impact?: string | null
+          duration_of_issue?: string | null
           emergency_contact?: string | null
           enrollment_id?: string
           expectations?: string | null
@@ -449,6 +457,7 @@ export type Database = {
           id?: string
           main_theme?: string | null
           mindfulness_experience?: string | null
+          previous_therapy?: string | null
           reason?: string | null
           submitted_at?: string
           updated_at?: string
