@@ -759,12 +759,6 @@ export default function ClientProfilePage() {
             <div className="flex flex-wrap items-center gap-x-4 gap-y-1 mt-1">
               <span className="text-xs text-muted-foreground flex items-center gap-1"><Mail className="h-3 w-3" />{customer.email}</span>
               {customer.phone && <span className="text-xs text-muted-foreground flex items-center gap-1"><Phone className="h-3 w-3" />{customer.phone}</span>}
-              {activeEnrollment && (
-                <Badge variant="secondary" className="text-[10px]">
-                  {activeEnrollment.course_type === "individueel_6" ? "Individueel traject" :
-                   activeEnrollment.course_type === "losse_sessie" ? "Losse sessie" : "Groepstraining"}
-                </Badge>
-              )}
             </div>
           </div>
           <Button size="sm" variant="outline" className="gap-1.5 shrink-0" onClick={() => setShowExtraTraining(true)}>
