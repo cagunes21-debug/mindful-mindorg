@@ -854,7 +854,7 @@ export default function AdminDashboard() {
                   label="Nieuwe leads"
                   value={statsLoading ? "…" : stats.leads}
                   color="bg-amber-50 text-amber-700"
-                  onClick={() => handleNav("pipeline")}
+                  onClick={() => { handleNav("clients"); }}
                 />
                 <StatCard
                   icon={Euro}
