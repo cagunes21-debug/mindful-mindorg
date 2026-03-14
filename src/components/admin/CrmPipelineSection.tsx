@@ -15,8 +15,8 @@ import {
 } from "@/components/ui/select";
 import {
   ChevronRight, Plus, Loader2, Mail, Phone, MessageSquare,
-  Calendar, Clock, UserCheck, ArrowRight, X, StickyNote,
-  Search,
+  Calendar, UserCheck, ArrowRight, StickyNote,
+  Search, PhoneCall, MessagesSquare, CalendarCheck, ClipboardCheck, PartyPopper,
 } from "lucide-react";
 import { toast } from "sonner";
 import { format } from "date-fns";
@@ -46,48 +46,83 @@ interface Client {
   email: string;
 }
 
-// ─── Pipeline config ──────────────────────────────────────────────────────────
+// ─── Pipeline config — 6 active stages + archive ──────────────────────────────
 
 const STAGES = [
   {
     key: "new",
-    label: "Nieuwe lead",
-    color: { bg: "bg-muted/50", text: "text-muted-foreground", border: "border-border", dot: "bg-muted-foreground", dotHex: "#888780" },
+    label: "Nieuw",
+    icon: Plus,
+    color: "#64748B",       // slate
+    bgClass: "bg-slate-50",
+    textClass: "text-slate-700",
+    borderClass: "border-slate-200",
     actionLabel: "Contact opnemen →",
-    nextStage: "contacted",
+    nextStage: "contact_attempt",
   },
   {
-    key: "contacted",
-    label: "Contact opgenomen",
-    color: { bg: "bg-amber-50", text: "text-amber-800", border: "border-amber-200", dot: "bg-amber-500", dotHex: "#EF9F27" },
+    key: "contact_attempt",
+    label: "Contactpoging",
+    icon: PhoneCall,
+    color: "#F59E0B",       // amber
+    bgClass: "bg-amber-50",
+    textClass: "text-amber-700",
+    borderClass: "border-amber-200",
+    actionLabel: "In gesprek →",
+    nextStage: "in_conversation",
+  },
+  {
+    key: "in_conversation",
+    label: "In gesprek",
+    icon: MessagesSquare,
+    color: "#8B5CF6",       // violet
+    bgClass: "bg-violet-50",
+    textClass: "text-violet-700",
+    borderClass: "border-violet-200",
     actionLabel: "Kennismaking plannen →",
     nextStage: "intake_scheduled",
   },
   {
     key: "intake_scheduled",
-    label: "Kennismaking gepland",
-    color: { bg: "bg-purple-50", text: "text-purple-800", border: "border-purple-200", dot: "bg-purple-500", dotHex: "#7F77DD" },
-    actionLabel: "Aanmelding maken →",
-    nextStage: "aanmelding",
+    label: "Kennismaking",
+    icon: CalendarCheck,
+    color: "#3B82F6",       // blue
+    bgClass: "bg-blue-50",
+    textClass: "text-blue-700",
+    borderClass: "border-blue-200",
+    actionLabel: "Aanmelden →",
+    nextStage: "registered",
   },
   {
-    key: "aanmelding",
-    label: "Aanmelding",
-    color: { bg: "bg-blue-50", text: "text-blue-800", border: "border-blue-200", dot: "bg-blue-500", dotHex: "#378ADD" },
+    key: "registered",
+    label: "Aangemeld",
+    icon: ClipboardCheck,
+    color: "#10B981",       // emerald
+    bgClass: "bg-emerald-50",
+    textClass: "text-emerald-700",
+    borderClass: "border-emerald-200",
     actionLabel: "Omzetten naar klant →",
     nextStage: "converted_to_client",
   },
   {
     key: "converted_to_client",
-    label: "Deelnemer / cliënt",
-    color: { bg: "bg-green-50", text: "text-green-800", border: "border-green-200", dot: "bg-green-500", dotHex: "#639922" },
-    actionLabel: "Klantprofiel →",
+    label: "Deelnemer",
+    icon: PartyPopper,
+    color: "#059669",       // green-dark
+    bgClass: "bg-green-50",
+    textClass: "text-green-700",
+    borderClass: "border-green-200",
+    actionLabel: null,
     nextStage: null,
   },
   {
     key: "not_interested",
     label: "Niet geïnteresseerd",
-    color: { bg: "bg-muted/30", text: "text-muted-foreground", border: "border-border", dot: "bg-muted-foreground/50", dotHex: "#B4B2A9" },
+    icon: null,
+    color: "#94A3B8",
+    bgClass: "bg-muted/30",
+    textClass: "text-muted-foreground",
+    borderClass: "border-border",
     actionLabel: null,
     nextStage: null,
   },
@@ -111,49 +146,56 @@ function LeadCard({
   const daysSince = Math.floor(
     (Date.now() - new Date(lead.submission_date).getTime()) / 86400000
   );
-  const dateLabel = daysSince === 0 ? "Vandaag" : daysSince === 1 ? "Gisteren" : `${daysSince} dagen`;
+  const dateLabel = daysSince === 0 ? "Vandaag" : daysSince === 1 ? "Gisteren" : `${daysSince}d geleden`;
 
   return (
     <div
-      className="bg-card border border-border/60 rounded-lg p-3 cursor-pointer hover:border-border hover:shadow-sm transition-all"
+      className="bg-card border border-border/60 rounded-lg p-3 cursor-pointer hover:shadow-md hover:border-border transition-all group"
       onClick={() => onOpenDetail(lead)}
     >
-      <p className="text-[13px] font-medium text-foreground mb-0.5">
-        {lead.first_name} {lead.last_name}
-      </p>
-      {lead.interest && (
-        <p className="text-[11px] text-muted-foreground mb-1.5">
-          {lead.interest}
-        </p>
-      )}
-      <div className="flex items-center justify-between mb-0">
-        <span className="text-[10px] text-muted-foreground/70">{dateLabel}</span>
-        {lead.notes && (
-          <span title={lead.notes}>
-            <StickyNote className="h-[11px] w-[11px] text-muted-foreground/50" />
-          </span>
-        )}
+      {/* Colored left accent */}
+      <div className="flex gap-2.5">
+        <div
+          className="w-1 rounded-full flex-shrink-0 self-stretch"
+          style={{ backgroundColor: stage.color }}
+        />
+        <div className="flex-1 min-w-0">
+          <p className="text-[13px] font-semibold text-foreground truncate">
+            {lead.first_name} {lead.last_name}
+          </p>
+          {lead.interest && (
+            <p className="text-[11px] text-muted-foreground truncate mt-0.5">
+              {lead.interest}
+            </p>
+          )}
+          <div className="flex items-center gap-2 mt-1.5">
+            <span className="text-[10px] text-muted-foreground/60">{dateLabel}</span>
+            {lead.notes && (
+              <StickyNote className="h-[10px] w-[10px] text-amber-400" />
+            )}
+            {lead.phone_number && (
+              <Phone className="h-[10px] w-[10px] text-muted-foreground/40" />
+            )}
+          </div>
+        </div>
       </div>
 
-      {/* Action button */}
+      {/* Action area */}
       {stage.actionLabel && stage.nextStage && (
         <div
-          className="mt-2 pt-2 border-t border-border/50 flex gap-1.5"
+          className="mt-2.5 pt-2 border-t border-border/40 flex gap-1.5"
           onClick={e => e.stopPropagation()}
         >
           <button
             onClick={() => onOpenDetail(lead)}
-            className="flex-1 py-1 border border-border/60 rounded-md text-[10px] bg-transparent cursor-pointer text-muted-foreground hover:bg-muted/30 transition-colors"
+            className="flex-1 py-1.5 border border-border/60 rounded-md text-[10px] bg-transparent cursor-pointer text-muted-foreground hover:bg-muted/40 transition-colors"
           >
-            Notitie
+            📝 Notitie
           </button>
           <button
             onClick={() => onMoveNext(lead)}
-            className={cn(
-              "flex-[2] py-1 px-2 rounded-md text-[10px] font-medium cursor-pointer transition-colors border",
-              stage.color.bg, stage.color.text, stage.color.border,
-              "hover:opacity-80"
-            )}
+            className="flex-[2] py-1.5 px-2 rounded-md text-[10px] font-semibold cursor-pointer transition-all text-white hover:opacity-90"
+            style={{ backgroundColor: stage.color }}
           >
             {stage.actionLabel}
           </button>
@@ -211,6 +253,7 @@ function LeadDetailModal({
       <DialogContent className="sm:max-w-md">
         <DialogHeader>
           <DialogTitle className="flex items-center gap-2">
+            <div className="w-3 h-3 rounded-full" style={{ backgroundColor: stage.color }} />
             {lead.first_name} {lead.last_name}
           </DialogTitle>
           <DialogDescription className="flex items-center gap-3 flex-wrap">
@@ -258,7 +301,12 @@ function LeadDetailModal({
               </SelectTrigger>
               <SelectContent>
                 {STAGES.map(s => (
-                  <SelectItem key={s.key} value={s.key}>{s.label}</SelectItem>
+                  <SelectItem key={s.key} value={s.key}>
+                    <span className="flex items-center gap-2">
+                      <span className="w-2 h-2 rounded-full inline-block" style={{ backgroundColor: s.color }} />
+                      {s.label}
+                    </span>
+                  </SelectItem>
                 ))}
               </SelectContent>
             </Select>
@@ -364,7 +412,6 @@ function ConvertLeadModal({
         clientUserId = newClient.user_id;
       }
 
-      // Create enrollment
       const { data: enrData, error: enrErr } = await supabase
         .from("enrollments")
         .insert({
@@ -379,13 +426,11 @@ function ConvertLeadModal({
         .single();
       if (enrErr) throw enrErr;
 
-      // Update lead status
       await supabase
         .from("leads")
         .update({ status: "converted_to_client", updated_at: new Date().toISOString() })
         .eq("id", lead.id);
 
-      // Send invite
       if (form.send_invite && !clientUserId) {
         const labels: Record<string, string> = {
           msc_8week: "8-weekse Mindful Zelfcompassie Training",
@@ -714,6 +759,8 @@ export default function CrmPipelineSection() {
       );
     });
 
+  const totalActive = leads.filter(l => l.status !== "not_interested").length;
+
   if (loading) {
     return (
       <div className="flex items-center justify-center py-16">
@@ -736,6 +783,7 @@ export default function CrmPipelineSection() {
             className="pl-10"
           />
         </div>
+        <span className="text-xs text-muted-foreground">{totalActive} actieve leads</span>
         <Button
           size="sm"
           className="ml-auto gap-2 bg-terracotta-600 hover:bg-terracotta-700 text-white"
@@ -745,52 +793,65 @@ export default function CrmPipelineSection() {
         </Button>
       </div>
 
-      {/* Stage summary cards */}
-      <div className="grid grid-cols-5 gap-2">
+      {/* Stage summary row — colored pill badges */}
+      <div className="flex gap-2 flex-wrap">
         {ACTIVE_STAGES.map(stage => {
           const count = filteredLeads(stage.key).length;
+          const Icon = stage.icon;
           return (
-            <Card
+            <div
               key={stage.key}
-              className={cn("border-border/60 overflow-hidden")}
-              style={{ borderTopWidth: 2, borderTopColor: stage.color.dotHex }}
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded-full border text-xs font-medium"
+              style={{
+                borderColor: stage.color + "40",
+                backgroundColor: stage.color + "10",
+                color: stage.color,
+              }}
             >
-              <CardContent className="p-3 text-center">
-                <p className="text-xl font-bold text-foreground leading-tight">{count}</p>
-                <p className="text-[10px] text-muted-foreground mt-0.5">{stage.label}</p>
-              </CardContent>
-            </Card>
+              {Icon && <Icon className="h-3 w-3" />}
+              <span>{stage.label}</span>
+              <span className="ml-0.5 font-bold">{count}</span>
+            </div>
           );
         })}
       </div>
 
-      {/* Pipeline board — horizontal scroll on mobile */}
+      {/* Pipeline board — 6 columns, horizontal scroll on mobile */}
       <div className="overflow-x-auto -mx-4 sm:-mx-6 px-4 sm:px-6 pb-2">
-        <div className="grid grid-cols-5 gap-3 min-w-[800px]">
+        <div className="grid grid-cols-6 gap-2.5 min-w-[960px]">
           {ACTIVE_STAGES.map(stage => {
             const stageLeads = filteredLeads(stage.key);
+            const Icon = stage.icon;
             return (
               <div
                 key={stage.key}
-                className="bg-muted/30 rounded-xl p-2.5 min-h-[120px]"
+                className="rounded-xl min-h-[140px] flex flex-col"
+                style={{ backgroundColor: stage.color + "08" }}
               >
-                {/* Column header */}
-                <div className="flex items-center justify-between mb-2.5 px-0.5">
-                  <span className="text-[11px] font-medium text-foreground">
+                {/* Column header with colored top bar */}
+                <div
+                  className="h-1 rounded-t-xl"
+                  style={{ backgroundColor: stage.color }}
+                />
+                <div className="flex items-center gap-1.5 px-2.5 pt-2.5 pb-2">
+                  {Icon && (
+                    <Icon className="h-3.5 w-3.5 flex-shrink-0" style={{ color: stage.color }} />
+                  )}
+                  <span className="text-[11px] font-semibold text-foreground truncate">
                     {stage.label}
                   </span>
-                  <span className={cn(
-                    "min-w-[18px] h-[18px] px-1.5 rounded-full text-[10px] font-bold flex items-center justify-center",
-                    stage.color.bg, stage.color.text
-                  )}>
+                  <span
+                    className="ml-auto min-w-[20px] h-[20px] px-1.5 rounded-full text-[10px] font-bold flex items-center justify-center text-white"
+                    style={{ backgroundColor: stage.color }}
+                  >
                     {stageLeads.length}
                   </span>
                 </div>
 
                 {/* Cards */}
-                <div className="flex flex-col gap-2">
+                <div className="flex flex-col gap-2 px-2 pb-2 flex-1">
                   {stageLeads.length === 0 ? (
-                    <div className="border border-dashed border-border/60 rounded-lg py-4 px-2 text-center text-[11px] text-muted-foreground/50">
+                    <div className="border border-dashed rounded-lg py-6 px-2 text-center text-[11px] text-muted-foreground/40 flex-1 flex items-center justify-center" style={{ borderColor: stage.color + "30" }}>
                       Geen leads
                     </div>
                   ) : (
@@ -806,25 +867,28 @@ export default function CrmPipelineSection() {
                   )}
                 </div>
 
-                {/* Add button */}
-                <button
-                  onClick={() => setShowNewLead(true)}
-                  className="flex items-center justify-center gap-1 py-1.5 mt-2 w-full border border-dashed border-border/60 rounded-lg text-[11px] text-muted-foreground/50 bg-transparent cursor-pointer hover:border-border hover:text-muted-foreground transition-colors"
-                >
-                  <Plus className="h-3 w-3" /> Toevoegen
-                </button>
+                {/* Add button at bottom */}
+                {stage.key !== "converted_to_client" && (
+                  <button
+                    onClick={() => setShowNewLead(true)}
+                    className="flex items-center justify-center gap-1 py-2 mx-2 mb-2 border border-dashed rounded-lg text-[11px] text-muted-foreground/40 bg-transparent cursor-pointer hover:text-muted-foreground transition-colors"
+                    style={{ borderColor: stage.color + "30" }}
+                  >
+                    <Plus className="h-3 w-3" /> Toevoegen
+                  </button>
+                )}
               </div>
             );
           })}
         </div>
       </div>
 
-      {/* Not interested — collapsed row */}
+      {/* Not interested — collapsed archive */}
       {leads.filter(l => l.status === "not_interested").length > 0 && (
         <details className="group">
           <summary className="text-xs text-muted-foreground cursor-pointer hover:text-foreground transition-colors list-none flex items-center gap-2 py-1">
             <ChevronRight className="h-3 w-3 group-open:rotate-90 transition-transform" />
-            {leads.filter(l => l.status === "not_interested").length} niet geïnteresseerde leads
+            {leads.filter(l => l.status === "not_interested").length} niet geïnteresseerde leads (archief)
           </summary>
           <div className="mt-3 grid grid-cols-2 md:grid-cols-4 gap-2">
             {leads.filter(l => l.status === "not_interested").map(lead => (
