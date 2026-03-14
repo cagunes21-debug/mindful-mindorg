@@ -17,6 +17,7 @@ import SessionsTab from "@/components/admin/customer-profile/SessionsTab";
 import QuestionnairesTab from "@/components/admin/customer-profile/QuestionnairesTab";
 import NotesTab from "@/components/admin/customer-profile/NotesTab";
 import PaymentsTab from "@/components/admin/customer-profile/PaymentsTab";
+import IntakeFormSection from "@/components/admin/customer-profile/IntakeFormSection";
 import {
   type CustomerData, type Registration, type Enrollment, type TrainerNote,
   type CourseWeek, type SessionAppointment,
@@ -184,6 +185,14 @@ export default function ClientProfilePage() {
             clientId={clientId} onRefresh={fetchCustomerData}
           />
         </section>
+
+        {/* Intake */}
+        {enrollments.length > 0 && (
+          <section>
+            <h2 className="text-sm font-semibold text-muted-foreground uppercase tracking-wide mb-3">Intake</h2>
+            <IntakeFormSection enrollmentId={enrollments[0].id} />
+          </section>
+        )}
 
         {/* Trainingen */}
         <section>
