@@ -1126,6 +1126,78 @@ export type Database = {
         }
         Relationships: []
       }
+      training_dates: {
+        Row: {
+          created_at: string | null
+          day_label: string | null
+          early_bird_deadline: string | null
+          early_bird_price: number | null
+          follow_up_dates: string | null
+          id: string
+          is_featured: boolean | null
+          is_full: boolean | null
+          is_visible: boolean | null
+          language: string
+          location: string | null
+          max_spots: number | null
+          name: string
+          notes: string | null
+          price: number
+          short_name: string | null
+          start_date: string
+          time_end: string | null
+          time_start: string | null
+          type: string
+          updated_at: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          day_label?: string | null
+          early_bird_deadline?: string | null
+          early_bird_price?: number | null
+          follow_up_dates?: string | null
+          id?: string
+          is_featured?: boolean | null
+          is_full?: boolean | null
+          is_visible?: boolean | null
+          language?: string
+          location?: string | null
+          max_spots?: number | null
+          name: string
+          notes?: string | null
+          price?: number
+          short_name?: string | null
+          start_date: string
+          time_end?: string | null
+          time_start?: string | null
+          type?: string
+          updated_at?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          day_label?: string | null
+          early_bird_deadline?: string | null
+          early_bird_price?: number | null
+          follow_up_dates?: string | null
+          id?: string
+          is_featured?: boolean | null
+          is_full?: boolean | null
+          is_visible?: boolean | null
+          language?: string
+          location?: string | null
+          max_spots?: number | null
+          name?: string
+          notes?: string | null
+          price?: number
+          short_name?: string | null
+          start_date?: string
+          time_end?: string | null
+          time_start?: string | null
+          type?: string
+          updated_at?: string | null
+        }
+        Relationships: []
+      }
       training_welcome_content: {
         Row: {
           created_at: string
@@ -1226,6 +1298,36 @@ export type Database = {
           total_registrations: number | null
           total_spent: number | null
           trainings: string[] | null
+        }
+        Relationships: []
+      }
+      training_dates_with_counts: {
+        Row: {
+          awaiting_payment_count: number | null
+          created_at: string | null
+          day_label: string | null
+          early_bird_deadline: string | null
+          early_bird_price: number | null
+          follow_up_dates: string | null
+          id: string | null
+          is_featured: boolean | null
+          is_full: boolean | null
+          is_visible: boolean | null
+          language: string | null
+          location: string | null
+          max_spots: number | null
+          name: string | null
+          notes: string | null
+          paid_count: number | null
+          price: number | null
+          registrations_count: number | null
+          short_name: string | null
+          spots_remaining: number | null
+          start_date: string | null
+          time_end: string | null
+          time_start: string | null
+          type: string | null
+          updated_at: string | null
         }
         Relationships: []
       }
