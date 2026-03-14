@@ -475,6 +475,7 @@ export default function AgendaSection() {
   const [trainings, setTrainings] = useState<TrainingWithCount[]>([]);
   const [loading, setLoading]     = useState(true);
   const [filter, setFilter]       = useState<"upcoming" | "past" | "all">("upcoming");
+  const [typeFilter, setTypeFilter] = useState<"all" | "msc_8week" | "individueel" | "workshop" | "retreat">("all");
   const [editing, setEditing]     = useState<TrainingWithCount | null | "new">(null);
 
   useEffect(() => { load(); }, []);
@@ -535,8 +536,9 @@ export default function AgendaSection() {
   const now = new Date();
   const filtered = trainings.filter(t => {
     const d = new Date(t.start_date);
-    if (filter === "upcoming") return d >= now;
-    if (filter === "past")     return d < now;
+    if (filter === "upcoming" && d < now) return false;
+    if (filter === "past" && d >= now) return false;
+    if (typeFilter !== "all" && t.type !== typeFilter) return false;
     return true;
   });
 
@@ -596,6 +598,29 @@ export default function AgendaSection() {
           ))}
         </div>
 
+        <div className="flex gap-1 bg-muted/50 rounded-lg p-1">
+          {([
+            { value: "all", label: "Alle types" },
+            { value: "msc_8week", label: "Groepstraining" },
+            { value: "individueel", label: "Individueel" },
+            { value: "workshop", label: "Workshop" },
+            { value: "retreat", label: "Retreat" },
+          ] as const).map(f => (
+            <button
+              key={f.value}
+              onClick={() => setTypeFilter(f.value)}
+              className={cn(
+                "px-3 py-1.5 rounded-md text-xs font-medium transition-all",
+                typeFilter === f.value
+                  ? "bg-background text-foreground shadow-sm"
+                  : "text-muted-foreground hover:text-foreground"
+              )}
+            >
+              {f.label}
+            </button>
+          ))}
+        </div>
+
         <Button
           size="sm"
           className="ml-auto gap-2 bg-terracotta-600 hover:bg-terracotta-700 text-white"
@@ -605,7 +630,7 @@ export default function AgendaSection() {
         </Button>
       </div>
 
-      {/* Training cards */}
+      {/* Training cards grouped by type */}
       {loading ? (
         <div className="flex justify-center py-16">
           <Loader2 className="h-8 w-8 animate-spin text-terracotta-400" />
@@ -614,7 +639,39 @@ export default function AgendaSection() {
         <div className="text-center py-16 text-sm text-muted-foreground">
           {filter === "upcoming" ? "Geen komende trainingen" : "Geen trainingen gevonden"}
         </div>
+      ) : typeFilter === "all" ? (
+        // Grouped view when showing all types
+        <div className="space-y-8">
+          {(["msc_8week", "individueel", "workshop", "retreat"] as const).map(type => {
+            const items = filtered.filter(t => t.type === type);
+            if (items.length === 0) return null;
+            return (
+              <section key={type}>
+                <div className="flex items-center gap-2 mb-3">
+                  <Badge className={cn("text-xs font-medium", TYPE_COLORS[type])}>
+                    {TYPE_LABELS[type]}
+                  </Badge>
+                  <span className="text-xs text-muted-foreground">
+                    ({items.length} {items.length === 1 ? "datum" : "data"})
+                  </span>
+                </div>
+                <div className="grid gap-4 md:grid-cols-2">
+                  {items.map(t => (
+                    <TrainingCard
+                      key={t.id}
+                      training={t}
+                      onEdit={setEditing}
+                      onToggleVisible={toggleVisible}
+                      onToggleFull={toggleFull}
+                    />
+                  ))}
+                </div>
+              </section>
+            );
+          })}
+        </div>
       ) : (
+        // Flat view when filtering by specific type
         <div className="grid gap-4 md:grid-cols-2">
           {filtered.map(t => (
             <TrainingCard
