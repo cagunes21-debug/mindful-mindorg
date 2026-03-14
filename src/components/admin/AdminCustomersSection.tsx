@@ -22,7 +22,7 @@ import {
 import { format } from "date-fns";
 import { nl } from "date-fns/locale";
 import { toast } from "sonner";
-import CustomerProfile from "@/components/admin/CustomerProfile";
+
 import CrmPipelineSection from "@/components/admin/CrmPipelineSection";
 import LeadProcesTab from "@/components/admin/LeadProcesTab";
 
