@@ -130,15 +130,17 @@ export default function ProtectedRoute({ children, requireAdmin = false }: Prote
       }
     });
 
-    // Then restore persisted session
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      if (!mountedRef.current || authResolvedRef.current) return;
-      if (session?.user) {
-        resolveAuthenticated(session.user.id, session.access_token);
-      } else {
-        resolveUnauthenticated("no persisted session");
-      }
-    });
+    // Then restore persisted session (with small delay to let listener register)
+    setTimeout(() => {
+      supabase.auth.getSession().then(({ data: { session } }) => {
+        if (!mountedRef.current || authResolvedRef.current) return;
+        if (session?.user) {
+          resolveAuthenticated(session.user.id, session.access_token);
+        } else {
+          resolveUnauthenticated("no persisted session");
+        }
+      });
+    }, 500);
 
     // Safety net — only fires if nothing resolved in time
     const safetyTimeout = setTimeout(() => {
