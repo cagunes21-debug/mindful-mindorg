@@ -844,9 +844,16 @@ export default function CrmPipelineSection() {
                   {Icon && (
                     <Icon className="h-3.5 w-3.5 flex-shrink-0" style={{ color: stage.color }} />
                   )}
-                  <span className="text-[11px] font-semibold text-foreground truncate">
-                    {stage.label}
-                  </span>
+                  <div className="flex flex-col min-w-0">
+                    <span className="text-[11px] font-semibold text-foreground truncate">
+                      {stage.label}
+                    </span>
+                    {stage.subtitle && (
+                      <span className="text-[9px] text-muted-foreground/60 truncate leading-tight">
+                        {stage.subtitle}
+                      </span>
+                    )}
+                  </div>
                   <span
                     className="ml-auto min-w-[20px] h-[20px] px-1.5 rounded-full text-[10px] font-bold flex items-center justify-center text-white"
                     style={{ backgroundColor: stage.color }}
