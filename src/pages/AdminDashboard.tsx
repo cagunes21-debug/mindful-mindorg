@@ -235,117 +235,146 @@ function LopendeTrainingenSection({ onViewDeelnemer }: { onViewDeelnemer: (id: s
     </Card>
   );
 
-  return (
-    <div className="space-y-3">
-      {groups.map((group, idx) => {
-        const key = `${group.course_type}__${group.start_date}`;
-        const isOpen = expanded === key;
-        const max = MAX_WEEKS[group.course_type] || 8;
-        const avgUnlocked = Math.round(
-          group.enrollments.reduce((s, e) => s + (e.unlocked_weeks || []).length, 0) / group.enrollments.length
-        );
+  const groupGroups = groups.filter(g => g.course_type === "msc_8week");
+  const individualGroups = groups.filter(g => g.course_type === "individueel_6" || g.course_type === "losse_sessie");
 
-        return (
-          <Card key={idx} className="overflow-hidden border-border/60 hover:border-border transition-colors">
-            <button
-              className="w-full text-left"
-              onClick={() => setExpanded(isOpen ? null : key)}
-            >
-              <CardContent className="p-5 flex items-center gap-4">
-                <div className="h-11 w-11 rounded-xl bg-terracotta-50 border border-terracotta-100 flex items-center justify-center shrink-0">
-                  <BookOpen className="h-5 w-5 text-terracotta-600" />
-                </div>
+  const renderGroup = (group: TrainingGroup, idx: number) => {
+    const key = `${group.course_type}__${group.start_date}`;
+    const isOpen = expanded === key;
+    const max = MAX_WEEKS[group.course_type] || 8;
+    const avgUnlocked = Math.round(
+      group.enrollments.reduce((s, e) => s + (e.unlocked_weeks || []).length, 0) / group.enrollments.length
+    );
 
-                <div className="flex-1 min-w-0">
-                  <p className="font-medium text-sm text-foreground">
-                    {COURSE_LABELS[group.course_type] || group.course_type}
-                  </p>
-                  <div className="flex items-center gap-3 mt-0.5 flex-wrap">
-                    <span className="text-xs text-muted-foreground flex items-center gap-1">
-                      <Calendar className="h-3 w-3" />
-                      Start: {format(new Date(group.start_date), "d MMM yyyy", { locale: nl })}
-                    </span>
-                    {group.trainer_name && (
-                      <span className="text-xs text-muted-foreground">
-                        Trainer: {group.trainer_name}
-                      </span>
-                    )}
-                  </div>
-                </div>
+    return (
+      <Card key={idx} className="overflow-hidden border-border/60 hover:border-border transition-colors">
+        <button
+          className="w-full text-left"
+          onClick={() => setExpanded(isOpen ? null : key)}
+        >
+          <CardContent className="p-5 flex items-center gap-4">
+            <div className="h-11 w-11 rounded-xl bg-terracotta-50 border border-terracotta-100 flex items-center justify-center shrink-0">
+              <BookOpen className="h-5 w-5 text-terracotta-600" />
+            </div>
 
-                <div className="hidden sm:flex flex-col items-end gap-1 shrink-0">
-                  <div className="flex gap-0.5">
-                    {Array.from({ length: max }, (_, i) => i + 1).map(w => (
-                      <div
-                        key={w}
-                        className={cn("h-2 w-2 rounded-sm", w <= avgUnlocked ? "bg-terracotta-500" : "bg-muted")}
-                      />
-                    ))}
-                  </div>
-                  <span className="text-xs text-muted-foreground">gem. week {avgUnlocked}/{max}</span>
-                </div>
-
-                <div className="text-right shrink-0">
-                  <p className="text-xl font-bold text-foreground">{group.enrollments.length}</p>
-                  <p className="text-xs text-muted-foreground">
-                    {group.enrollments.length === 1 ? "deelnemer" : "deelnemers"}
-                  </p>
-                </div>
-
-                <ChevronRight className={cn("h-4 w-4 text-muted-foreground transition-transform shrink-0", isOpen && "rotate-90")} />
-              </CardContent>
-            </button>
-
-            {isOpen && (
-              <div className="border-t">
-                <Table>
-                  <TableHeader>
-                    <TableRow>
-                      <TableHead className="text-xs">Deelnemer</TableHead>
-                      <TableHead className="text-xs">Weken</TableHead>
-                      <TableHead className="text-xs">Status</TableHead>
-                      <TableHead className="text-xs text-right">Profiel</TableHead>
-                    </TableRow>
-                  </TableHeader>
-                  <TableBody>
-                    {group.enrollments.map(e => {
-                      const unlocked = (e.unlocked_weeks || []).length;
-                      return (
-                        <TableRow key={e.id}>
-                          <TableCell className="py-2">
-                            <p className="text-sm font-medium">{e.client_name}</p>
-                            <p className="text-xs text-muted-foreground">{e.client_email}</p>
-                          </TableCell>
-                          <TableCell className="py-2">
-                            <div className="flex items-center gap-2">
-                              <div className="flex gap-0.5">
-                                {Array.from({ length: max }, (_, i) => i + 1).map(w => (
-                                  <div key={w} className={cn("h-2 w-2 rounded-sm", (e.unlocked_weeks || []).includes(w) ? "bg-terracotta-500" : "bg-muted")} />
-                                ))}
-                              </div>
-                              <span className="text-xs text-muted-foreground">{unlocked}/{max}</span>
-                            </div>
-                          </TableCell>
-                          <TableCell className="py-2">
-                            <Badge className={cn("text-[10px] px-1.5 py-0", STATUS_COLORS[e.status] || "bg-muted")}>
-                              {STATUS_LABELS[e.status] || e.status}
-                            </Badge>
-                          </TableCell>
-                          <TableCell className="py-2 text-right">
-                            <Button variant="ghost" size="sm" className="h-7 text-xs gap-1" onClick={() => onViewDeelnemer(e.id)}>
-                              <ExternalLink className="h-3 w-3" /> Beheer
-                            </Button>
-                          </TableCell>
-                        </TableRow>
-                      );
-                    })}
-                  </TableBody>
-                </Table>
+            <div className="flex-1 min-w-0">
+              <p className="font-medium text-sm text-foreground">
+                {COURSE_LABELS[group.course_type] || group.course_type}
+              </p>
+              <div className="flex items-center gap-3 mt-0.5 flex-wrap">
+                <span className="text-xs text-muted-foreground flex items-center gap-1">
+                  <Calendar className="h-3 w-3" />
+                  Start: {format(new Date(group.start_date), "d MMM yyyy", { locale: nl })}
+                </span>
+                {group.trainer_name && (
+                  <span className="text-xs text-muted-foreground">
+                    Trainer: {group.trainer_name}
+                  </span>
+                )}
               </div>
-            )}
-          </Card>
-        );
-      })}
+            </div>
+
+            <div className="hidden sm:flex flex-col items-end gap-1 shrink-0">
+              <div className="flex gap-0.5">
+                {Array.from({ length: max }, (_, i) => i + 1).map(w => (
+                  <div
+                    key={w}
+                    className={cn("h-2 w-2 rounded-sm", w <= avgUnlocked ? "bg-terracotta-500" : "bg-muted")}
+                  />
+                ))}
+              </div>
+              <span className="text-xs text-muted-foreground">gem. week {avgUnlocked}/{max}</span>
+            </div>
+
+            <div className="text-right shrink-0">
+              <p className="text-xl font-bold text-foreground">{group.enrollments.length}</p>
+              <p className="text-xs text-muted-foreground">
+                {group.enrollments.length === 1 ? "deelnemer" : "deelnemers"}
+              </p>
+            </div>
+
+            <ChevronRight className={cn("h-4 w-4 text-muted-foreground transition-transform shrink-0", isOpen && "rotate-90")} />
+          </CardContent>
+        </button>
+
+        {isOpen && (
+          <div className="border-t">
+            <Table>
+              <TableHeader>
+                <TableRow>
+                  <TableHead className="text-xs">Deelnemer</TableHead>
+                  <TableHead className="text-xs">Weken</TableHead>
+                  <TableHead className="text-xs">Status</TableHead>
+                  <TableHead className="text-xs text-right">Profiel</TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                {group.enrollments.map(e => {
+                  const unlocked = (e.unlocked_weeks || []).length;
+                  return (
+                    <TableRow key={e.id}>
+                      <TableCell className="py-2">
+                        <p className="text-sm font-medium">{e.client_name}</p>
+                        <p className="text-xs text-muted-foreground">{e.client_email}</p>
+                      </TableCell>
+                      <TableCell className="py-2">
+                        <div className="flex items-center gap-2">
+                          <div className="flex gap-0.5">
+                            {Array.from({ length: max }, (_, i) => i + 1).map(w => (
+                              <div key={w} className={cn("h-2 w-2 rounded-sm", (e.unlocked_weeks || []).includes(w) ? "bg-terracotta-500" : "bg-muted")} />
+                            ))}
+                          </div>
+                          <span className="text-xs text-muted-foreground">{unlocked}/{max}</span>
+                        </div>
+                      </TableCell>
+                      <TableCell className="py-2">
+                        <Badge className={cn("text-[10px] px-1.5 py-0", STATUS_COLORS[e.status] || "bg-muted")}>
+                          {STATUS_LABELS[e.status] || e.status}
+                        </Badge>
+                      </TableCell>
+                      <TableCell className="py-2 text-right">
+                        <Button variant="ghost" size="sm" className="h-7 text-xs gap-1" onClick={() => onViewDeelnemer(e.id)}>
+                          <ExternalLink className="h-3 w-3" /> Beheer
+                        </Button>
+                      </TableCell>
+                    </TableRow>
+                  );
+                })}
+              </TableBody>
+            </Table>
+          </div>
+        )}
+      </Card>
+    );
+  };
+
+  return (
+    <div className="space-y-8">
+      {groupGroups.length > 0 && (
+        <section>
+          <div className="flex items-center gap-2 mb-3">
+            <Badge className="bg-green-100 text-green-800 border-green-200 text-xs font-medium">Groep</Badge>
+            <h3 className="text-sm font-medium text-foreground">8-weekse Groepstraining</h3>
+            <span className="text-xs text-muted-foreground">({groupGroups.reduce((s, g) => s + g.enrollments.length, 0)} deelnemers)</span>
+          </div>
+          <div className="space-y-3">
+            {groupGroups.map((g, i) => renderGroup(g, i))}
+          </div>
+        </section>
+      )}
+
+      {individualGroups.length > 0 && (
+        <section>
+          <div className="flex items-center gap-2 mb-3">
+            <Badge className="bg-blue-100 text-blue-800 border-blue-200 text-xs font-medium">Individueel</Badge>
+            <h3 className="text-sm font-medium text-foreground">Individuele Trajecten</h3>
+            <span className="text-xs text-muted-foreground">({individualGroups.reduce((s, g) => s + g.enrollments.length, 0)} cliënten)</span>
+          </div>
+          <div className="space-y-3">
+            {individualGroups.map((g, i) => renderGroup(g, i + groupGroups.length))}
+          </div>
+        </section>
+      )}
     </div>
   );
 }
