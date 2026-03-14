@@ -742,7 +742,7 @@ export default function AdminDashboard() {
               <div className="space-y-0.5">
                 {group.items.map(item => {
                   const active = activeSection === item.id;
-                  const badge = item.id === "pipeline" && stats.leads > 0 ? stats.leads : undefined;
+                  const badge = item.id === "clients" && stats.leads > 0 ? stats.leads : undefined;
                   return (
                     <button key={item.id} onClick={() => handleNav(item.id)}
                       className={cn(
