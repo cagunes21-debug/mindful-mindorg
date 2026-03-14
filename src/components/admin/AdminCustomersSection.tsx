@@ -79,7 +79,6 @@ export default function AdminCustomersSection({ initialTab = "customers" }: { in
   const [customers, setCustomers] = useState<Customer[]>([]);
   const [allLeads, setAllLeads] = useState<any[]>([]);
   const [searchQuery, setSearchQuery] = useState("");
-  const [selectedCustomerEmail, setSelectedCustomerEmail] = useState<string | null>(null);
   const [showNewClient, setShowNewClient] = useState(false);
   const [newClient, setNewClient] = useState({ first_name: "", last_name: "", email: "", phone: "", notes: "" });
   const [submitting, setSubmitting] = useState(false);
