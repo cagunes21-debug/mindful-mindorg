@@ -376,13 +376,6 @@ export default function AdminCustomersSection({ initialTab = "customers" }: { in
         </TabsContent>
       </Tabs>
 
-      {/* Customer Profile Modal */}
-      {selectedCustomerEmail && (
-        <CustomerProfile
-          email={selectedCustomerEmail}
-          onClose={() => setSelectedCustomerEmail(null)}
-        />
-      )}
 
       {/* New Client Dialog */}
       <Dialog open={showNewClient} onOpenChange={setShowNewClient}>
