@@ -15,6 +15,7 @@ import AdminScsOverview from "@/components/admin/AdminScsOverview";
 import AdminFinanceSection from "@/components/admin/AdminFinanceSection";
 import AdminNewsletterSection from "@/components/admin/AdminNewsletterSection";
 import { cn } from "@/lib/utils";
+import AgendaSection from "@/components/admin/AgendaSection";
 
 /* ─── Nav config ─── */
 const navItems = [
