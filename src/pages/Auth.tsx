@@ -76,7 +76,7 @@ const Auth = () => {
       console.log("[Auth] has_role result:", res);
       if (res === true) {
         console.log("[Auth] Admin detected, redirecting to /admin");
-        navigate("/admin", { replace: true });
+        navigate("/admin");
         return;
       }
     } catch (err) {
@@ -84,7 +84,7 @@ const Auth = () => {
     }
 
     console.log("[Auth] Redirecting to /mijn-trainingen");
-    navigate("/mijn-trainingen", { replace: true });
+    navigate("/mijn-trainingen");
   };
 
   useEffect(() => {
