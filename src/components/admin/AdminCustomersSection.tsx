@@ -368,6 +368,11 @@ export default function AdminCustomersSection({ initialTab = "customers" }: { in
         <TabsContent value="leads" className="mt-4">
           <CrmPipelineSection onLeadsChange={fetchAllLeads} />
         </TabsContent>
+
+        {/* ── LEAD PROCES TAB ── */}
+        <TabsContent value="proces" className="mt-4">
+          <LeadProcesTab />
+        </TabsContent>
       </Tabs>
 
       {/* Customer Profile Modal */}
