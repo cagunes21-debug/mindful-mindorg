@@ -84,7 +84,7 @@ const Auth = () => {
     }
 
     console.log("[Auth] Redirecting to /mijn-trainingen");
-    window.location.href = "/mijn-trainingen";
+    navigate("/mijn-trainingen", { replace: true });
   };
 
   useEffect(() => {
