@@ -942,6 +942,13 @@ export default function ClientProfilePage() {
                   <TherapySessionSection enrollmentId={enr.id} clientName={customer.name || undefined} />
                 </Section>
               ))}
+
+              {/* SCS Questionnaire results */}
+              {enrollments.length > 0 && (
+                <Section title="Zelfcompassie Vragenlijst (SCS)" icon={BarChart3}>
+                  <ScsResultsSection enrollmentIds={enrollments.map(e => e.id)} />
+                </Section>
+              )}
             </div>
           </TabsContent>
 
