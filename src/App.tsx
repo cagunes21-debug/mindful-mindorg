@@ -107,6 +107,8 @@ const App = () => (
               <Route path="/vragenlijst/:enrollmentId" element={<SelfCompassionQuestionnaire />} />
               
               
+              <Route path="/admin-cms" element={<ProtectedRoute requireAdmin><AdminCMS /></ProtectedRoute>} />
+              
               {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
               <Route path="*" element={<NotFound />} />
             </Routes>
