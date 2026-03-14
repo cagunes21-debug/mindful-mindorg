@@ -1,8 +1,8 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { Calendar, Clock, Globe, MapPin, ArrowRight, Sparkles, Sun } from "lucide-react";
+import { Calendar, Clock, Globe, MapPin, ArrowRight, Sparkles, Sun, Loader2 } from "lucide-react";
 import {
   Dialog,
   DialogContent,
@@ -15,6 +15,7 @@ import { ScrollReveal, StaggerContainer, StaggerItem } from "@/components/Scroll
 import { motion } from "framer-motion";
 import SEO from "@/components/SEO";
 import { RegistrationForm } from "@/components/RegistrationForm";
+import { supabase } from "@/integrations/supabase/client";
 
 interface SelectedTraining {
   name: string;
@@ -23,56 +24,66 @@ interface SelectedTraining {
   price?: string;
 }
 
-const workshopDates = {
-  workshop1: { lang: "Workshop 1", time: "19:30 – 20:30", dates: ["Maandag 1 juni"], price: "€55" },
-  workshop2: { lang: "Workshop 2", time: "10:00 – 11:00", dates: ["Zaterdag 5 september"], price: "€55" },
+interface TrainingDate {
+  id: string;
+  name: string;
+  short_name: string | null;
+  type: string;
+  language: string;
+  day_label: string | null;
+  start_date: string;
+  time_start: string | null;
+  time_end: string | null;
+  follow_up_dates: string | null;
+  location: string | null;
+  price: number;
+  early_bird_price: number | null;
+  early_bird_deadline: string | null;
+  max_spots: number | null;
+  is_full: boolean;
+  is_featured: boolean;
+  is_visible: boolean;
+  notes: string | null;
+}
+
+const formatDate = (dateStr: string, lang: string = 'nl') => {
+  const date = new Date(dateStr + 'T00:00:00');
+  const locale = lang === 'en' ? 'en-GB' : 'nl-NL';
+  return date.toLocaleDateString(locale, { day: 'numeric', month: 'long', year: 'numeric' });
 };
 
-const mscTrainingsNL = [
-  {
-    day: "Dinsdag (avond)",
-    startDate: "7 april 2026",
-    time: "19:00 – 21:00",
-    followUp: ["14, 21 apr", "12, 19, 26 mei", "2, 9, 16 jun"],
-    price: "€550",
-    full: false,
-    lastSpot: true,
-  },
-  {
-    day: "Maandag (avond)",
-    startDate: "28 september 2026",
-    time: "19:00 – 21:00",
-    followUp: ["5, 12, 26 okt", "2, 9, 16, 23, 30 nov"],
-    price: "€550",
-    earlyBirdPrice: "€495",
-    earlyBirdDeadline: "1 augustus 2026",
-    full: false,
-    featured: true,
-  },
-];
-
-const mscTrainingsEN = [
-  {
-    day: "Wednesday (evening)",
-    startDate: "4 March 2026",
-    time: "19:00 – 21:00",
-    followUp: ["11, 18, 25 Mar", "28 Mar (retreat)", "1, 8, 15, 22 Apr"],
-    price: "€550",
-    full: true,
-  },
-];
-
-
-
+const formatPrice = (cents: number) => `€${cents}`;
 
 const Agenda = () => {
   const [selectedTraining, setSelectedTraining] = useState<SelectedTraining | null>(null);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [trainingDates, setTrainingDates] = useState<TrainingDate[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchDates = async () => {
+      const { data } = await supabase
+        .from("training_dates")
+        .select("*")
+        .eq("is_visible", true)
+        .order("start_date");
+      setTrainingDates((data as TrainingDate[]) || []);
+      setLoading(false);
+    };
+    fetchDates();
+  }, []);
 
   const openRegistration = (training: SelectedTraining) => {
     setSelectedTraining(training);
     setIsDialogOpen(true);
   };
+
+  const featured = trainingDates.find(t => t.is_featured);
+  const workshops = trainingDates.filter(t => t.type === 'workshop');
+  const mscNL = trainingDates.filter(t => t.type === 'msc_8week' && t.language === 'nl');
+  const mscEN = trainingDates.filter(t => t.type === 'msc_8week' && t.language === 'en');
+
+  const hasLastSpot = (t: TrainingDate) => t.notes?.toLowerCase().includes('laatste plek');
 
   return (
     <div className="min-h-screen bg-background">
@@ -172,286 +183,316 @@ const Agenda = () => {
           </div>
         </div>
       </section>
-      {/* Featured September Training */}
-      <section className="py-12 lg:py-16 bg-gradient-to-br from-terracotta-50 via-warm-50 to-sage-50">
-        <div className="container mx-auto px-4">
-          <div className="mx-auto max-w-4xl">
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.7, delay: 0.3 }}
-              className="relative overflow-hidden rounded-3xl bg-white border-2 border-terracotta-200 shadow-xl"
-            >
-              {/* Early bird ribbon */}
-              <div className="absolute top-4 right-4 z-10">
-                <span className="inline-flex items-center gap-1.5 rounded-full bg-terracotta-600 px-4 py-2 text-sm font-semibold text-white shadow-lg">
-                  <Sparkles className="h-4 w-4" />
-                  Early bird – €495
-                </span>
-              </div>
 
-              <div className="p-8 md:p-12">
-                <span className="inline-block rounded-full bg-sage-100 px-4 py-1.5 text-xs font-semibold text-sage-800 mb-4">
-                  Nieuw — Inschrijving geopend
-                </span>
-                
-                <h2 className="text-2xl md:text-3xl font-light text-foreground mb-2 leading-tight">
-                  8-weekse MSC Training
-                  <span className="font-serif italic text-terracotta-600"> — september 2026</span>
-                </h2>
-                
-                <p className="text-muted-foreground mb-6 max-w-2xl leading-relaxed">
-                  Start het najaar met meer zelfcompassie. Leer in 8 weken omgaan met stress en zelfkritiek 
-                  — met meer vriendelijkheid en veerkracht. Kleine groep, persoonlijke begeleiding.
-                </p>
-
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
-                  <div className="flex items-center gap-2 text-sm text-foreground">
-                    <Calendar className="h-4 w-4 text-terracotta-500" />
-                    <span>Start 28 sept</span>
-                  </div>
-                  <div className="flex items-center gap-2 text-sm text-foreground">
-                    <Clock className="h-4 w-4 text-terracotta-500" />
-                    <span>19:00 – 21:00</span>
-                  </div>
-                  <div className="flex items-center gap-2 text-sm text-foreground">
-                    <Globe className="h-4 w-4 text-terracotta-500" />
-                    <span>Online (NL)</span>
-                  </div>
-                  <div className="flex items-center gap-2 text-sm text-foreground">
-                    <MapPin className="h-4 w-4 text-terracotta-500" />
-                    <span>9 sessies</span>
-                  </div>
-                </div>
-
-                <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
-                  <Button 
-                    onClick={() => openRegistration({
-                      name: "8-weekse MSC Training (Nederlands) — September",
-                      date: "28 september 2026",
-                      time: "19:00 – 21:00",
-                      price: "€495 (early bird)",
-                    })}
-                    size="lg"
-                    className="bg-terracotta-600 hover:bg-terracotta-700 text-white rounded-full px-10 py-6 text-base shadow-lg"
+      {loading ? (
+        <div className="flex items-center justify-center py-20">
+          <Loader2 className="h-6 w-6 animate-spin text-muted-foreground" />
+        </div>
+      ) : (
+        <>
+          {/* Featured Training */}
+          {featured && (
+            <section className="py-12 lg:py-16 bg-gradient-to-br from-terracotta-50 via-warm-50 to-sage-50">
+              <div className="container mx-auto px-4">
+                <div className="mx-auto max-w-4xl">
+                  <motion.div
+                    initial={{ opacity: 0, y: 30 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.7, delay: 0.3 }}
+                    className="relative overflow-hidden rounded-3xl bg-white border-2 border-terracotta-200 shadow-xl"
                   >
-                    Schrijf je in met early bird korting
-                    <ArrowRight className="ml-2 h-5 w-5" />
-                  </Button>
-                  <div className="text-sm text-muted-foreground">
-                    <p><span className="line-through">€550</span> → <span className="font-semibold text-terracotta-600">€495</span></p>
-                    <p>Early bird t/m 1 augustus 2026</p>
+                    {featured.early_bird_price && (
+                      <div className="absolute top-4 right-4 z-10">
+                        <span className="inline-flex items-center gap-1.5 rounded-full bg-terracotta-600 px-4 py-2 text-sm font-semibold text-white shadow-lg">
+                          <Sparkles className="h-4 w-4" />
+                          Early bird – {formatPrice(featured.early_bird_price)}
+                        </span>
+                      </div>
+                    )}
+
+                    <div className="p-8 md:p-12">
+                      <span className="inline-block rounded-full bg-sage-100 px-4 py-1.5 text-xs font-semibold text-sage-800 mb-4">
+                        Nieuw — Inschrijving geopend
+                      </span>
+                      
+                      <h2 className="text-2xl md:text-3xl font-light text-foreground mb-2 leading-tight">
+                        {featured.name.split('(')[0].trim()}
+                        <span className="font-serif italic text-terracotta-600">
+                          {' — '}
+                          {new Date(featured.start_date + 'T00:00:00').toLocaleDateString('nl-NL', { month: 'long', year: 'numeric' })}
+                        </span>
+                      </h2>
+                      
+                      <p className="text-muted-foreground mb-6 max-w-2xl leading-relaxed">
+                        Start het najaar met meer zelfcompassie. Leer in 8 weken omgaan met stress en zelfkritiek 
+                        — met meer vriendelijkheid en veerkracht. Kleine groep, persoonlijke begeleiding.
+                      </p>
+
+                      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+                        <div className="flex items-center gap-2 text-sm text-foreground">
+                          <Calendar className="h-4 w-4 text-terracotta-500" />
+                          <span>Start {new Date(featured.start_date + 'T00:00:00').toLocaleDateString('nl-NL', { day: 'numeric', month: 'short' })}</span>
+                        </div>
+                        <div className="flex items-center gap-2 text-sm text-foreground">
+                          <Clock className="h-4 w-4 text-terracotta-500" />
+                          <span>{featured.time_start} – {featured.time_end}</span>
+                        </div>
+                        <div className="flex items-center gap-2 text-sm text-foreground">
+                          <Globe className="h-4 w-4 text-terracotta-500" />
+                          <span>{featured.location} ({featured.language.toUpperCase()})</span>
+                        </div>
+                        <div className="flex items-center gap-2 text-sm text-foreground">
+                          <MapPin className="h-4 w-4 text-terracotta-500" />
+                          <span>9 sessies</span>
+                        </div>
+                      </div>
+
+                      <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
+                        <Button 
+                          onClick={() => openRegistration({
+                            name: featured.name,
+                            date: formatDate(featured.start_date),
+                            time: `${featured.time_start} – ${featured.time_end}`,
+                            price: featured.early_bird_price ? `${formatPrice(featured.early_bird_price)} (early bird)` : formatPrice(featured.price),
+                          })}
+                          size="lg"
+                          className="bg-terracotta-600 hover:bg-terracotta-700 text-white rounded-full px-10 py-6 text-base shadow-lg"
+                        >
+                          Schrijf je in{featured.early_bird_price ? ' met early bird korting' : ''}
+                          <ArrowRight className="ml-2 h-5 w-5" />
+                        </Button>
+                        {featured.early_bird_price && featured.early_bird_deadline && (
+                          <div className="text-sm text-muted-foreground">
+                            <p><span className="line-through">{formatPrice(featured.price)}</span> → <span className="font-semibold text-terracotta-600">{formatPrice(featured.early_bird_price)}</span></p>
+                            <p>Early bird t/m {formatDate(featured.early_bird_deadline)}</p>
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                  </motion.div>
+                </div>
+              </div>
+            </section>
+          )}
+
+          {/* Workshops */}
+          {workshops.length > 0 && (
+            <section id="workshops" className="py-10 lg:py-14 bg-white scroll-mt-20">
+              <div className="container mx-auto px-4">
+                <div className="mx-auto max-w-4xl">
+                  <div className="text-center mb-8">
+                    <span className="inline-block rounded-full bg-sage-100 px-4 py-1.5 text-xs font-semibold text-sage-800 mb-3">
+                      Laagdrempelig
+                    </span>
+                    <h2 className="text-2xl font-light text-foreground md:text-3xl leading-tight mb-2">
+                      Workshop <span className="font-serif italic text-terracotta-600">Zelfcompassie</span>
+                    </h2>
+                    <p className="text-sm text-muted-foreground max-w-xl mx-auto">
+                      Maak kennis met de essentie van zelfcompassie — zonder langdurige verplichting.
+                    </p>
+                  </div>
+                  
+                  <div className="grid gap-4 md:grid-cols-2">
+                    {workshops.map((workshop) => (
+                      <Card key={workshop.id} className="border-warm-200 bg-warm-50/50 rounded-2xl overflow-hidden">
+                        <CardContent className="p-5 flex items-center justify-between gap-4">
+                          <div className="flex-1 min-w-0">
+                            <div className="flex items-center gap-2 mb-1">
+                              <span className="inline-block rounded-full px-3 py-1 text-xs font-semibold bg-terracotta-100 text-terracotta-700">
+                                {workshop.short_name || workshop.name}
+                              </span>
+                              <span className="text-sm font-medium text-foreground">
+                                {workshop.day_label} {formatDate(workshop.start_date, workshop.language)}
+                              </span>
+                            </div>
+                            <div className="flex items-center gap-3 text-xs text-muted-foreground mb-1">
+                              <span className="flex items-center gap-1"><Clock className="h-3 w-3" />{workshop.time_start} – {workshop.time_end}</span>
+                              <span className="font-semibold text-terracotta-600 text-sm">{formatPrice(workshop.price)}</span>
+                            </div>
+                            <p className="text-xs text-muted-foreground">
+                              Bij vervolginschrijving wordt dit bedrag in mindering gebracht.
+                            </p>
+                          </div>
+                          <Button 
+                            size="sm"
+                            disabled={workshop.is_full}
+                            onClick={() => openRegistration({
+                              name: workshop.name,
+                              date: formatDate(workshop.start_date, workshop.language),
+                              time: `${workshop.time_start} – ${workshop.time_end}`,
+                              price: formatPrice(workshop.price),
+                            })}
+                            className="bg-terracotta-600 hover:bg-terracotta-700 text-white rounded-full shrink-0"
+                          >
+                            {workshop.is_full ? 'Vol' : 'Aanmelden'}
+                          </Button>
+                        </CardContent>
+                      </Card>
+                    ))}
                   </div>
                 </div>
               </div>
-            </motion.div>
-          </div>
-        </div>
-      </section>
+            </section>
+          )}
 
-      {/* Workshops */}
-      <section id="workshops" className="py-10 lg:py-14 bg-white scroll-mt-20">
-        <div className="container mx-auto px-4">
-          <div className="mx-auto max-w-4xl">
-            <div className="text-center mb-8">
-              <span className="inline-block rounded-full bg-sage-100 px-4 py-1.5 text-xs font-semibold text-sage-800 mb-3">
-                Laagdrempelig
-              </span>
-              <h2 className="text-2xl font-light text-foreground md:text-3xl leading-tight mb-2">
-                Workshop <span className="font-serif italic text-terracotta-600">Zelfcompassie</span>
-              </h2>
-              <p className="text-sm text-muted-foreground max-w-xl mx-auto">
-                Maak kennis met de essentie van zelfcompassie — zonder langdurige verplichting.
-              </p>
-            </div>
-            
-            <div className="grid gap-4 md:grid-cols-2">
-              {Object.entries(workshopDates).map(([key, workshop]) => (
-                <Card key={key} className="border-warm-200 bg-warm-50/50 rounded-2xl overflow-hidden">
-                  <CardContent className="p-5 flex items-center justify-between gap-4">
-                    <div className="flex-1 min-w-0">
-                      <div className="flex items-center gap-2 mb-1">
-                        <span className="inline-block rounded-full px-3 py-1 text-xs font-semibold bg-terracotta-100 text-terracotta-700">
-                          {workshop.lang}
-                        </span>
-                        <span className="text-sm font-medium text-foreground">{workshop.dates[0]} 2026</span>
-                      </div>
-                      <div className="flex items-center gap-3 text-xs text-muted-foreground mb-1">
-                        <span className="flex items-center gap-1"><Clock className="h-3 w-3" />{workshop.time}</span>
-                        <span className="font-semibold text-terracotta-600 text-sm">{workshop.price}</span>
-                      </div>
-                      <p className="text-xs text-muted-foreground">
-                        Bij vervolginschrijving wordt dit bedrag in mindering gebracht.
-                      </p>
+          {/* 8-Week MSC Training */}
+          <section id="groepstraining" className="py-20 lg:py-24 bg-warm-50 scroll-mt-20">
+            <div className="container mx-auto px-4">
+              <div className="mx-auto max-w-5xl">
+                <div className="text-center mb-12">
+                  <span className="inline-block rounded-full bg-terracotta-100 px-4 py-1.5 text-xs font-semibold text-terracotta-700 mb-4">
+                    Kernprogramma
+                  </span>
+                  <h2 className="text-3xl font-light text-foreground md:text-4xl leading-tight mb-4">
+                    8-weekse Mindful Zelfcompassie <span className="font-serif italic text-terracotta-600">(MSC)</span>
+                  </h2>
+                  <p className="text-terracotta-600 font-medium mb-6">
+                    Voor wie zelfcompassie structureel wil integreren in het dagelijks leven
+                  </p>
+                  <p className="text-muted-foreground max-w-2xl mx-auto">
+                    Een diepgaande, wetenschappelijk onderbouwde training waarin je leert omgaan met stress, 
+                    moeilijke emoties en zelfkritiek — met meer vriendelijkheid en veerkracht.
+                  </p>
+                </div>
+                
+                {/* Dutch Trainings */}
+                {mscNL.length > 0 && (
+                  <div className="mb-12">
+                    <div className="flex items-center gap-3 mb-6">
+                      <Globe className="h-5 w-5 text-terracotta-600" />
+                      <h3 className="text-xl font-semibold text-foreground">Online – Nederlandstalige training</h3>
                     </div>
-                    <Button 
-                      size="sm"
-                      onClick={() => openRegistration({
-                        name: `Workshop Zelfcompassie (${workshop.lang})`,
-                        date: `${workshop.dates[0]} 2026`,
-                        time: workshop.time,
-                        price: workshop.price,
-                      })}
-                      className="bg-terracotta-600 hover:bg-terracotta-700 text-white rounded-full shrink-0"
-                    >
-                      Aanmelden
-                    </Button>
-                  </CardContent>
-                </Card>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* 8-Week MSC Training */}
-      <section id="groepstraining" className="py-20 lg:py-24 bg-warm-50 scroll-mt-20">
-        <div className="container mx-auto px-4">
-          <div className="mx-auto max-w-5xl">
-            <div className="text-center mb-12">
-              <span className="inline-block rounded-full bg-terracotta-100 px-4 py-1.5 text-xs font-semibold text-terracotta-700 mb-4">
-                Kernprogramma
-              </span>
-              <h2 className="text-3xl font-light text-foreground md:text-4xl leading-tight mb-4">
-                8-weekse Mindful Zelfcompassie <span className="font-serif italic text-terracotta-600">(MSC)</span>
-              </h2>
-              <p className="text-terracotta-600 font-medium mb-6">
-                Voor wie zelfcompassie structureel wil integreren in het dagelijks leven
-              </p>
-              <p className="text-muted-foreground max-w-2xl mx-auto">
-                Een diepgaande, wetenschappelijk onderbouwde training waarin je leert omgaan met stress, 
-                moeilijke emoties en zelfkritiek — met meer vriendelijkheid en veerkracht.
-              </p>
-            </div>
-            
-            {/* Dutch Trainings */}
-            <div className="mb-12">
-              <div className="flex items-center gap-3 mb-6">
-                <Globe className="h-5 w-5 text-terracotta-600" />
-                <h3 className="text-xl font-semibold text-foreground">Online – Nederlandstalige training</h3>
-              </div>
-              
-               <div className="grid gap-6 md:grid-cols-2">
-                {mscTrainingsNL.map((training, index) => (
-                  <Card key={index} className={`border-terracotta-200 rounded-3xl overflow-hidden transition-shadow ${training.full ? 'bg-warm-50 opacity-75' : 'bg-white hover:shadow-md'}`}>
-                    <CardContent className="p-6">
-                      <div className="flex items-center justify-between mb-4">
-                        <p className="font-semibold text-foreground">{training.day}</p>
-                        {training.full && (
-                          <span className="inline-block rounded-full bg-terracotta-100 px-3 py-1 text-xs font-semibold text-terracotta-700">Vol</span>
-                        )}
-                        {training.lastSpot && (
-                          <span className="inline-block rounded-full bg-amber-100 px-3 py-1 text-xs font-semibold text-amber-700 animate-pulse">Laatste plek!</span>
-                        )}
-                      </div>
-                      
-                      <div className="space-y-2 text-sm mb-4">
-                        <div className="flex items-start gap-2">
-                          <Calendar className="h-4 w-4 text-terracotta-500 mt-0.5" />
-                          <div>
-                            <p className="font-medium text-foreground">Start: {training.startDate}</p>
-                          </div>
-                        </div>
-                        <div className="flex items-center gap-2">
-                          <Clock className="h-4 w-4 text-terracotta-500" />
-                          <p className="text-muted-foreground">{training.time}</p>
-                        </div>
-                      </div>
-                      
-                      <p className="text-xs text-muted-foreground mb-4">
-                        Vervolgdata: {training.followUp.join(", ")}
-                      </p>
-                      
-                      <div className="flex items-center justify-between pt-4 border-t border-warm-200">
-                        <div>
-                          {training.earlyBirdPrice ? (
-                            <>
-                              <p className="text-xs text-muted-foreground line-through">{training.price}</p>
-                              <p className="text-lg font-semibold text-terracotta-600">{training.earlyBirdPrice}</p>
-                            </>
-                          ) : (
-                            <p className="text-lg font-semibold text-terracotta-600">{training.price}</p>
-                          )}
-                        </div>
-                        <Button 
-                          size="sm" 
-                          disabled={training.full}
-                          onClick={() => openRegistration({
-                            name: `8-weekse MSC Training (Nederlands)`,
-                            date: training.startDate,
-                            time: training.time,
-                            price: training.earlyBirdPrice || training.price,
-                          })}
-                          className="bg-terracotta-600 hover:bg-terracotta-700 text-white rounded-full disabled:opacity-50"
-                        >
-                          {training.full ? 'Vol' : 'Reserveer'}
-                        </Button>
-                      </div>
-                    </CardContent>
-                  </Card>
-                ))}
-              </div>
-            </div>
-            
-            {/* English Trainings */}
-            <div>
-              <div className="flex items-center gap-3 mb-6">
-                <Globe className="h-5 w-5 text-sage-700" />
-                <h3 className="text-xl font-semibold text-foreground">Online – English training</h3>
-              </div>
-              
-              <div className="grid gap-6 md:grid-cols-2">
-                {mscTrainingsEN.map((training, index) => (
-                  <Card key={index} className={`border-sage-200 rounded-3xl overflow-hidden transition-shadow ${training.full ? 'bg-warm-50 opacity-75' : 'bg-white hover:shadow-md'}`}>
-                    <CardContent className="p-6">
-                      <div className="flex items-center justify-between mb-4">
-                        <p className="font-semibold text-foreground">{training.day}</p>
-                        {training.full && (
-                          <span className="inline-block rounded-full bg-sage-200 px-3 py-1 text-xs font-semibold text-sage-800">Full</span>
-                        )}
-                      </div>
-                      
-                      <div className="space-y-2 text-sm mb-4">
-                        <div className="flex items-start gap-2">
-                          <Calendar className="h-4 w-4 text-sage-600 mt-0.5" />
-                          <div>
-                            <p className="font-medium text-foreground">Start: {training.startDate}</p>
-                          </div>
-                        </div>
-                        <div className="flex items-center gap-2">
-                          <Clock className="h-4 w-4 text-sage-600" />
-                          <p className="text-muted-foreground">{training.time}</p>
-                        </div>
-                      </div>
-                      
-                      <p className="text-xs text-muted-foreground mb-4">
-                        Follow-up: {training.followUp.join(", ")}
-                      </p>
-                      
-                      <div className="flex items-center justify-between pt-4 border-t border-warm-200">
-                        <p className="text-lg font-semibold text-sage-700">{training.price}</p>
-                        <Button 
-                          size="sm" 
-                          disabled={training.full}
-                          onClick={() => openRegistration({
-                            name: `8-week MSC Training (English)`,
-                            date: training.startDate,
-                            time: training.time,
-                            price: training.price,
-                          })}
-                          className="bg-sage-600 hover:bg-sage-700 text-white rounded-full disabled:opacity-50"
-                        >
-                          {training.full ? 'Full' : 'Reserve'}
-                        </Button>
-                      </div>
-                    </CardContent>
-                  </Card>
-                ))}
+                    
+                    <div className="grid gap-6 md:grid-cols-2">
+                      {mscNL.map((training) => (
+                        <Card key={training.id} className={`border-terracotta-200 rounded-3xl overflow-hidden transition-shadow ${training.is_full ? 'bg-warm-50 opacity-75' : 'bg-white hover:shadow-md'}`}>
+                          <CardContent className="p-6">
+                            <div className="flex items-center justify-between mb-4">
+                              <p className="font-semibold text-foreground">{training.day_label}</p>
+                              {training.is_full && (
+                                <span className="inline-block rounded-full bg-terracotta-100 px-3 py-1 text-xs font-semibold text-terracotta-700">Vol</span>
+                              )}
+                              {hasLastSpot(training) && (
+                                <span className="inline-block rounded-full bg-amber-100 px-3 py-1 text-xs font-semibold text-amber-700 animate-pulse">Laatste plek!</span>
+                              )}
+                            </div>
+                            
+                            <div className="space-y-2 text-sm mb-4">
+                              <div className="flex items-start gap-2">
+                                <Calendar className="h-4 w-4 text-terracotta-500 mt-0.5" />
+                                <div>
+                                  <p className="font-medium text-foreground">Start: {formatDate(training.start_date)}</p>
+                                </div>
+                              </div>
+                              <div className="flex items-center gap-2">
+                                <Clock className="h-4 w-4 text-terracotta-500" />
+                                <p className="text-muted-foreground">{training.time_start} – {training.time_end}</p>
+                              </div>
+                            </div>
+                            
+                            {training.follow_up_dates && (
+                              <p className="text-xs text-muted-foreground mb-4">
+                                Vervolgdata: {training.follow_up_dates}
+                              </p>
+                            )}
+                            
+                            <div className="flex items-center justify-between pt-4 border-t border-warm-200">
+                              <div>
+                                {training.early_bird_price ? (
+                                  <>
+                                    <p className="text-xs text-muted-foreground line-through">{formatPrice(training.price)}</p>
+                                    <p className="text-lg font-semibold text-terracotta-600">{formatPrice(training.early_bird_price)}</p>
+                                  </>
+                                ) : (
+                                  <p className="text-lg font-semibold text-terracotta-600">{formatPrice(training.price)}</p>
+                                )}
+                              </div>
+                              <Button 
+                                size="sm" 
+                                disabled={training.is_full}
+                                onClick={() => openRegistration({
+                                  name: training.name,
+                                  date: formatDate(training.start_date),
+                                  time: `${training.time_start} – ${training.time_end}`,
+                                  price: training.early_bird_price ? formatPrice(training.early_bird_price) : formatPrice(training.price),
+                                })}
+                                className="bg-terracotta-600 hover:bg-terracotta-700 text-white rounded-full disabled:opacity-50"
+                              >
+                                {training.is_full ? 'Vol' : 'Reserveer'}
+                              </Button>
+                            </div>
+                          </CardContent>
+                        </Card>
+                      ))}
+                    </div>
+                  </div>
+                )}
+                
+                {/* English Trainings */}
+                {mscEN.length > 0 && (
+                  <div>
+                    <div className="flex items-center gap-3 mb-6">
+                      <Globe className="h-5 w-5 text-sage-700" />
+                      <h3 className="text-xl font-semibold text-foreground">Online – English training</h3>
+                    </div>
+                    
+                    <div className="grid gap-6 md:grid-cols-2">
+                      {mscEN.map((training) => (
+                        <Card key={training.id} className={`border-sage-200 rounded-3xl overflow-hidden transition-shadow ${training.is_full ? 'bg-warm-50 opacity-75' : 'bg-white hover:shadow-md'}`}>
+                          <CardContent className="p-6">
+                            <div className="flex items-center justify-between mb-4">
+                              <p className="font-semibold text-foreground">{training.day_label}</p>
+                              {training.is_full && (
+                                <span className="inline-block rounded-full bg-sage-200 px-3 py-1 text-xs font-semibold text-sage-800">Full</span>
+                              )}
+                            </div>
+                            
+                            <div className="space-y-2 text-sm mb-4">
+                              <div className="flex items-start gap-2">
+                                <Calendar className="h-4 w-4 text-sage-600 mt-0.5" />
+                                <div>
+                                  <p className="font-medium text-foreground">Start: {formatDate(training.start_date, 'en')}</p>
+                                </div>
+                              </div>
+                              <div className="flex items-center gap-2">
+                                <Clock className="h-4 w-4 text-sage-600" />
+                                <p className="text-muted-foreground">{training.time_start} – {training.time_end}</p>
+                              </div>
+                            </div>
+                            
+                            {training.follow_up_dates && (
+                              <p className="text-xs text-muted-foreground mb-4">
+                                Follow-up: {training.follow_up_dates}
+                              </p>
+                            )}
+                            
+                            <div className="flex items-center justify-between pt-4 border-t border-warm-200">
+                              <p className="text-lg font-semibold text-sage-700">{formatPrice(training.price)}</p>
+                              <Button 
+                                size="sm" 
+                                disabled={training.is_full}
+                                onClick={() => openRegistration({
+                                  name: training.name,
+                                  date: formatDate(training.start_date, 'en'),
+                                  time: `${training.time_start} – ${training.time_end}`,
+                                  price: formatPrice(training.price),
+                                })}
+                                className="bg-sage-600 hover:bg-sage-700 text-white rounded-full disabled:opacity-50"
+                              >
+                                {training.is_full ? 'Full' : 'Reserve'}
+                              </Button>
+                            </div>
+                          </CardContent>
+                        </Card>
+                      ))}
+                    </div>
+                  </div>
+                )}
               </div>
             </div>
-          </div>
-        </div>
-      </section>
+          </section>
+        </>
+      )}
 
       {/* Barcelona Retreat */}
       <section id="retreat" className="py-20 lg:py-24 bg-gradient-to-br from-terracotta-500 to-terracotta-600 relative overflow-hidden scroll-mt-20">
@@ -492,7 +533,6 @@ const Agenda = () => {
           </div>
         </div>
       </section>
-
 
       {/* CTA */}
       <section className="py-16 lg:py-20 bg-warm-50">
