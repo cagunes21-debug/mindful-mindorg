@@ -1,12 +1,11 @@
-import { useNavigate, useLocation } from "react-router-dom";
-import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { useState, useEffect, useCallback } from "react";
 import { supabase } from "@/integrations/supabase/client";
-import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import {
-  BookOpen, User, ClipboardList, BarChart3, MessageCircle, Users, Euro,
-  GraduationCap, Mail, FileText, Presentation, TrendingUp, UserPlus,
-  CalendarDays, LogOut, Menu, ChevronRight,
+  BookOpen, ClipboardList, BarChart3, MessageCircle, Users, Euro,
+  GraduationCap, Mail, Presentation, TrendingUp, UserPlus,
+  LogOut, Menu, ChevronRight, X, Home,
 } from "lucide-react";
 import SEO from "@/components/SEO";
 import AdminCustomersSection from "@/components/admin/AdminCustomersSection";
@@ -17,9 +16,9 @@ import AdminFinanceSection from "@/components/admin/AdminFinanceSection";
 import AdminNewsletterSection from "@/components/admin/AdminNewsletterSection";
 import { cn } from "@/lib/utils";
 
-/* ─── Sidebar nav items ─── */
+/* ─── Nav config ─── */
 const navItems = [
-  { id: "overview", label: "Overzicht", icon: BarChart3 },
+  { id: "overview", label: "Overzicht", icon: Home },
   { id: "clients", label: "Klanten", icon: Users },
   { id: "crm", label: "Leads & CRM", icon: MessageCircle },
   { id: "registrations", label: "Aanmeldingen", icon: ClipboardList },
@@ -29,9 +28,9 @@ const navItems = [
 ];
 
 const contentLinks = [
-  { title: "Content Library", icon: GraduationCap, path: "/admin/cursusmateriaal", color: "text-sage-700 bg-sage-100" },
-  { title: "Session Builder", icon: Presentation, path: "/admin/msc-builder", color: "text-blue-700 bg-blue-100" },
-  { title: "Blog", icon: BookOpen, path: "/admin/blog", color: "text-amber-700 bg-amber-100" },
+  { title: "Content Library", icon: GraduationCap, path: "/admin/cursusmateriaal", color: "bg-sage-100 text-sage-700" },
+  { title: "Session Builder", icon: Presentation, path: "/admin/msc-builder", color: "bg-blue-100 text-blue-700" },
+  { title: "Blog", icon: BookOpen, path: "/admin/blog", color: "bg-amber-100 text-amber-700" },
 ];
 
 /* ─── Quick stats hook ─── */
@@ -40,7 +39,7 @@ function useQuickStats() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    async function fetch() {
+    (async () => {
       try {
         const [clientsRes, leadsRes, regsRes, ordersRes] = await Promise.all([
           supabase.from("clients").select("id", { count: "exact", head: true }),
@@ -59,8 +58,7 @@ function useQuickStats() {
         console.error("Stats fetch error:", e);
       }
       setLoading(false);
-    }
-    fetch();
+    })();
   }, []);
 
   return { stats, loading };
@@ -72,16 +70,22 @@ function StatCard({ icon: Icon, label, value, accent, onClick }: {
 }) {
   return (
     <Card
-      className={cn("cursor-pointer hover:shadow-md transition-all group border-l-4", accent)}
+      className={cn(
+        "cursor-pointer hover:shadow-lg transition-all duration-200 group border-l-4 bg-card/80 backdrop-blur-sm",
+        accent
+      )}
       onClick={onClick}
     >
-      <CardContent className="p-4 flex items-center gap-4">
-        <div className="h-10 w-10 rounded-lg bg-muted/50 flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform">
+      <CardContent className="p-4 flex items-center gap-3">
+        <div className={cn(
+          "h-10 w-10 rounded-xl flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform duration-200",
+          accent.replace("border-l-", "bg-").replace("500", "100")
+        )}>
           <Icon className="h-5 w-5 text-muted-foreground" />
         </div>
         <div className="min-w-0">
-          <p className="text-2xl font-semibold text-foreground leading-tight">{value}</p>
-          <p className="text-xs text-muted-foreground truncate">{label}</p>
+          <p className="text-2xl font-bold text-foreground leading-tight tracking-tight">{value}</p>
+          <p className="text-[11px] text-muted-foreground truncate">{label}</p>
         </div>
       </CardContent>
     </Card>
@@ -92,93 +96,143 @@ function StatCard({ icon: Icon, label, value, accent, onClick }: {
 export default function AdminDashboard() {
   const navigate = useNavigate();
   const [activeSection, setActiveSection] = useState("overview");
-  const [sidebarOpen, setSidebarOpen] = useState(true);
+  const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
   const { stats, loading: statsLoading } = useQuickStats();
+
+  // Detect mobile
+  useEffect(() => {
+    const check = () => {
+      const mobile = window.innerWidth < 768;
+      setIsMobile(mobile);
+      if (!mobile) setSidebarOpen(true);
+      else setSidebarOpen(false);
+    };
+    check();
+    window.addEventListener("resize", check);
+    return () => window.removeEventListener("resize", check);
+  }, []);
+
+  const handleNav = useCallback((id: string) => {
+    setActiveSection(id);
+    if (isMobile) setSidebarOpen(false);
+  }, [isMobile]);
 
   const handleLogout = async () => {
     await supabase.auth.signOut();
     navigate("/login");
   };
 
+  const activeMeta = navItems.find(n => n.id === activeSection);
+
   return (
     <div className="min-h-screen bg-background flex">
       <SEO title="Admin Dashboard | Mindful Mind" description="Beheer klanten, deelnemers en aanmeldingen" />
 
+      {/* ─── Mobile overlay ─── */}
+      {isMobile && sidebarOpen && (
+        <div
+          className="fixed inset-0 bg-foreground/20 backdrop-blur-sm z-40 animate-in fade-in duration-200"
+          onClick={() => setSidebarOpen(false)}
+        />
+      )}
+
       {/* ─── Sidebar ─── */}
       <aside
         className={cn(
-          "bg-card border-r border-border flex flex-col shrink-0 transition-all duration-200 sticky top-0 h-screen z-30",
-          sidebarOpen ? "w-56" : "w-14"
+          "bg-card border-r border-border flex flex-col shrink-0 transition-all duration-300 z-50 h-screen",
+          // Desktop: sticky, always visible
+          "md:sticky md:top-0 md:w-56",
+          // Mobile: fixed overlay
+          isMobile && "fixed top-0 left-0 w-64 shadow-2xl",
+          isMobile && !sidebarOpen && "-translate-x-full",
+          isMobile && sidebarOpen && "translate-x-0",
         )}
       >
-        {/* Logo / toggle */}
-        <div className="h-14 flex items-center gap-2 px-3 border-b border-border shrink-0">
-          <button onClick={() => setSidebarOpen(!sidebarOpen)} className="p-1.5 rounded-md hover:bg-muted transition-colors">
-            <Menu className="h-4 w-4 text-muted-foreground" />
-          </button>
-          {sidebarOpen && <span className="text-sm font-semibold text-foreground truncate">Mindful Mind</span>}
+        {/* Header */}
+        <div className="h-14 flex items-center justify-between px-4 border-b border-border shrink-0">
+          <span className="text-sm font-bold text-foreground tracking-tight">Mindful Mind</span>
+          {isMobile && (
+            <button onClick={() => setSidebarOpen(false)} className="p-1 rounded-md hover:bg-muted transition-colors">
+              <X className="h-4 w-4 text-muted-foreground" />
+            </button>
+          )}
         </div>
 
         {/* Nav */}
-        <nav className="flex-1 py-3 space-y-0.5 px-2 overflow-y-auto">
-          {navItems.map((item) => (
-            <button
-              key={item.id}
-              onClick={() => setActiveSection(item.id)}
-              className={cn(
-                "w-full flex items-center gap-2.5 px-2.5 py-2 rounded-md text-sm transition-colors",
-                activeSection === item.id
-                  ? "bg-primary/10 text-primary font-medium"
-                  : "text-muted-foreground hover:bg-muted hover:text-foreground"
-              )}
-              title={item.label}
-            >
-              <item.icon className="h-4 w-4 shrink-0" />
-              {sidebarOpen && <span className="truncate">{item.label}</span>}
-            </button>
-          ))}
+        <nav className="flex-1 py-3 px-2.5 overflow-y-auto space-y-0.5">
+          {navItems.map((item) => {
+            const active = activeSection === item.id;
+            return (
+              <button
+                key={item.id}
+                onClick={() => handleNav(item.id)}
+                className={cn(
+                  "w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-[13px] transition-all duration-150",
+                  active
+                    ? "bg-primary/10 text-primary font-semibold shadow-sm"
+                    : "text-muted-foreground hover:bg-muted/60 hover:text-foreground"
+                )}
+              >
+                <item.icon className={cn("h-4 w-4 shrink-0", active && "text-primary")} />
+                <span className="truncate">{item.label}</span>
+                {active && <div className="ml-auto h-1.5 w-1.5 rounded-full bg-primary" />}
+              </button>
+            );
+          })}
 
-          {/* Content links divider */}
-          {sidebarOpen && (
-            <div className="pt-4 pb-1 px-2.5">
-              <p className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground/60">Trainingen</p>
-            </div>
-          )}
+          {/* Divider */}
+          <div className="pt-4 pb-1.5 px-3">
+            <p className="text-[10px] font-bold uppercase tracking-[0.15em] text-muted-foreground/50">Trainingen</p>
+          </div>
           {contentLinks.map((link) => (
             <button
               key={link.path}
-              onClick={() => navigate(link.path)}
-              className="w-full flex items-center gap-2.5 px-2.5 py-2 rounded-md text-sm text-muted-foreground hover:bg-muted hover:text-foreground transition-colors"
-              title={link.title}
+              onClick={() => { navigate(link.path); if (isMobile) setSidebarOpen(false); }}
+              className="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-[13px] text-muted-foreground hover:bg-muted/60 hover:text-foreground transition-all duration-150"
             >
               <link.icon className="h-4 w-4 shrink-0" />
-              {sidebarOpen && <span className="truncate">{link.title}</span>}
+              <span className="truncate">{link.title}</span>
             </button>
           ))}
         </nav>
 
         {/* Footer */}
-        <div className="border-t border-border p-2 shrink-0">
+        <div className="border-t border-border p-2.5 shrink-0">
           <button
             onClick={handleLogout}
-            className="w-full flex items-center gap-2.5 px-2.5 py-2 rounded-md text-sm text-muted-foreground hover:bg-destructive/10 hover:text-destructive transition-colors"
-            title="Uitloggen"
+            className="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-[13px] text-muted-foreground hover:bg-destructive/10 hover:text-destructive transition-colors"
           >
             <LogOut className="h-4 w-4 shrink-0" />
-            {sidebarOpen && <span>Uitloggen</span>}
+            <span>Uitloggen</span>
           </button>
         </div>
       </aside>
 
       {/* ─── Main content ─── */}
       <main className="flex-1 min-w-0 overflow-y-auto">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 py-6">
+        {/* Top bar (mobile) */}
+        <div className="sticky top-0 z-20 bg-background/80 backdrop-blur-md border-b border-border md:hidden">
+          <div className="flex items-center gap-3 px-4 h-12">
+            <button onClick={() => setSidebarOpen(true)} className="p-1.5 -ml-1.5 rounded-lg hover:bg-muted transition-colors">
+              <Menu className="h-5 w-5 text-foreground" />
+            </button>
+            {activeMeta && (
+              <div className="flex items-center gap-2 text-sm font-medium text-foreground">
+                <activeMeta.icon className="h-4 w-4 text-primary" />
+                <span>{activeMeta.label}</span>
+              </div>
+            )}
+          </div>
+        </div>
+
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 py-6 space-y-0">
 
           {/* ─── Overview ─── */}
           {activeSection === "overview" && (
             <div className="space-y-6">
               <div>
-                <h1 className="text-2xl font-semibold text-foreground">Dashboard</h1>
+                <h1 className="text-2xl font-bold text-foreground tracking-tight">Dashboard</h1>
                 <p className="text-sm text-muted-foreground mt-0.5">Welkom terug. Hier is je overzicht.</p>
               </div>
 
@@ -195,20 +249,20 @@ export default function AdminDashboard() {
 
               {/* Quick links */}
               <div>
-                <h2 className="text-sm font-semibold text-muted-foreground uppercase tracking-wider mb-3">Snelkoppelingen</h2>
+                <h2 className="text-xs font-bold uppercase tracking-[0.15em] text-muted-foreground/60 mb-3">Snelkoppelingen</h2>
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
                   {contentLinks.map((link) => (
                     <Card
                       key={link.path}
-                      className="cursor-pointer hover:shadow-md transition-all group"
+                      className="cursor-pointer hover:shadow-lg transition-all duration-200 group bg-card/80 backdrop-blur-sm"
                       onClick={() => navigate(link.path)}
                     >
                       <CardContent className="p-4 flex items-center gap-3">
-                        <div className={cn("h-9 w-9 rounded-lg flex items-center justify-center shrink-0", link.color)}>
+                        <div className={cn("h-9 w-9 rounded-xl flex items-center justify-center shrink-0 transition-transform group-hover:scale-110", link.color)}>
                           <link.icon className="h-4 w-4" />
                         </div>
                         <span className="text-sm font-medium text-foreground">{link.title}</span>
-                        <ChevronRight className="h-4 w-4 text-muted-foreground ml-auto opacity-0 group-hover:opacity-100 transition-opacity" />
+                        <ChevronRight className="h-4 w-4 text-muted-foreground ml-auto opacity-0 group-hover:opacity-100 group-hover:translate-x-0.5 transition-all" />
                       </CardContent>
                     </Card>
                   ))}
@@ -220,7 +274,7 @@ export default function AdminDashboard() {
           {/* ─── Clients ─── */}
           {activeSection === "clients" && (
             <div className="space-y-4">
-              <h1 className="text-2xl font-semibold text-foreground">Klanten & Trainingen</h1>
+              <h1 className="text-2xl font-bold text-foreground tracking-tight">Klanten & Trainingen</h1>
               <AdminCustomersSection initialTab="customers" />
             </div>
           )}
@@ -228,7 +282,7 @@ export default function AdminDashboard() {
           {/* ─── CRM / Leads ─── */}
           {activeSection === "crm" && (
             <div className="space-y-4">
-              <h1 className="text-2xl font-semibold text-foreground">Leads & CRM</h1>
+              <h1 className="text-2xl font-bold text-foreground tracking-tight">Leads & CRM</h1>
               <AdminCustomersSection initialTab="leads" />
             </div>
           )}
@@ -236,7 +290,7 @@ export default function AdminDashboard() {
           {/* ─── Registrations ─── */}
           {activeSection === "registrations" && (
             <div className="space-y-4">
-              <h1 className="text-2xl font-semibold text-foreground">Aanmeldingen & Betaling</h1>
+              <h1 className="text-2xl font-bold text-foreground tracking-tight">Aanmeldingen & Betaling</h1>
               <AdminRegistrationsSection />
             </div>
           )}
@@ -244,7 +298,7 @@ export default function AdminDashboard() {
           {/* ─── Finance ─── */}
           {activeSection === "finance" && (
             <div className="space-y-4">
-              <h1 className="text-2xl font-semibold text-foreground">Financiën</h1>
+              <h1 className="text-2xl font-bold text-foreground tracking-tight">Financiën</h1>
               <AdminFinanceSection />
             </div>
           )}
@@ -252,7 +306,7 @@ export default function AdminDashboard() {
           {/* ─── SCS Scores ─── */}
           {activeSection === "scs" && (
             <div className="space-y-4">
-              <h1 className="text-2xl font-semibold text-foreground">Zelfcompassie Scores (SCS)</h1>
+              <h1 className="text-2xl font-bold text-foreground tracking-tight">Zelfcompassie Scores (SCS)</h1>
               <AdminScsOverview />
             </div>
           )}
@@ -260,7 +314,7 @@ export default function AdminDashboard() {
           {/* ─── Newsletter ─── */}
           {activeSection === "newsletter" && (
             <div className="space-y-4">
-              <h1 className="text-2xl font-semibold text-foreground">Nieuwsbrief</h1>
+              <h1 className="text-2xl font-bold text-foreground tracking-tight">Nieuwsbrief</h1>
               <AdminNewsletterSection />
             </div>
           )}
