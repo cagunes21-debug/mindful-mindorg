@@ -26,8 +26,8 @@ const PROCESS_STEPS = [
     title: "Contact opnemen",
     status: "contact_attempt",
     icon: Phone,
-    color: "bg-amber-50 text-amber-700 border-amber-200",
-    dotColor: "bg-amber-400",
+    color: "bg-[#e6f1fb] text-[#0c447c] border-[#c8dff4]",
+    dotColor: "bg-[#0c447c]",
     description: "Eerste contactpoging met de lead via telefoon, e-mail of WhatsApp.",
     actions: [
       "Bel of app de lead om jezelf voor te stellen",
