@@ -133,8 +133,8 @@ export default function AdminCustomersSection({ initialTab = "customers" }: { in
   return (
     <div>
       {/* Stats */}
-      <div className="grid grid-cols-2 md:grid-cols-3 gap-4 mb-6">
-        <Card>
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
+        <Card className="cursor-pointer hover:shadow-md transition-shadow" onClick={() => setActiveTab("customers")}>
           <CardContent className="pt-6">
             <div className="flex items-center gap-3">
               <div className="p-2 bg-sage-100 rounded-lg"><Users className="h-5 w-5 text-sage-700" /></div>
@@ -159,6 +159,17 @@ export default function AdminCustomersSection({ initialTab = "customers" }: { in
         <Card>
           <CardContent className="pt-6">
             <div className="flex items-center gap-3">
+              <div className="p-2 bg-teal-100 rounded-lg"><Calendar className="h-5 w-5 text-teal-700" /></div>
+              <div>
+                <p className="text-2xl font-semibold">{stats.totalRegistrations}</p>
+                <p className="text-sm text-muted-foreground">Aanmeldingen</p>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+        <Card className="cursor-pointer hover:shadow-md transition-shadow" onClick={() => setActiveTab("leads")}>
+          <CardContent className="pt-6">
+            <div className="flex items-center gap-3">
               <div className="p-2 bg-orange-100 rounded-lg"><MessageCircle className="h-5 w-5 text-orange-700" /></div>
               <div>
                 <p className="text-2xl font-semibold">
@@ -167,7 +178,7 @@ export default function AdminCustomersSection({ initialTab = "customers" }: { in
                     <span className="text-sm font-normal text-terracotta-600 ml-1">nieuw</span>
                   )}
                 </p>
-                <p className="text-sm text-muted-foreground">Leads in pipeline</p>
+                <p className="text-sm text-muted-foreground">Website leads</p>
               </div>
             </div>
           </CardContent>
@@ -180,7 +191,7 @@ export default function AdminCustomersSection({ initialTab = "customers" }: { in
             <Users className="h-4 w-4" /> Klanten ({customers.length})
           </TabsTrigger>
           <TabsTrigger value="leads" className="gap-2">
-            <MessageCircle className="h-4 w-4" /> Pipeline
+            <MessageCircle className="h-4 w-4" /> Website Leads
             {newLeadCount > 0 && (
               <Badge className="bg-terracotta-500 text-white text-[10px] ml-1 px-1.5 py-0">
                 {newLeadCount}
