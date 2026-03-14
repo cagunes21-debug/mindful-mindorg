@@ -16,13 +16,14 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Textarea } from "@/components/ui/textarea";
 import {
   Loader2, Users, Search, Euro, Mail, Phone,
-  Calendar, Plus, MessageCircle, TrendingUp, UserPlus,
+  Calendar, Plus, MessageCircle, TrendingUp, UserPlus, ClipboardList,
 } from "lucide-react";
 import { format } from "date-fns";
 import { nl } from "date-fns/locale";
 import { toast } from "sonner";
 import CustomerProfile from "@/components/admin/CustomerProfile";
 import CrmPipelineSection from "@/components/admin/CrmPipelineSection";
+import LeadProcesTab from "@/components/admin/LeadProcesTab";
 
 interface Customer {
   email: string;
@@ -251,6 +252,9 @@ export default function AdminCustomersSection({ initialTab = "customers" }: { in
               {customers.length}
             </Badge>
           </TabsTrigger>
+          <TabsTrigger value="proces" className="gap-1.5 text-xs">
+            <ClipboardList className="h-3.5 w-3.5" /> Lead Proces
+          </TabsTrigger>
         </TabsList>
 
         {/* ── CUSTOMERS TAB ── */}
@@ -363,6 +367,11 @@ export default function AdminCustomersSection({ initialTab = "customers" }: { in
         {/* ── LEADS & PIPELINE TAB ── */}
         <TabsContent value="leads" className="mt-4">
           <CrmPipelineSection onLeadsChange={fetchAllLeads} />
+        </TabsContent>
+
+        {/* ── LEAD PROCES TAB ── */}
+        <TabsContent value="proces" className="mt-4">
+          <LeadProcesTab />
         </TabsContent>
       </Tabs>
 
