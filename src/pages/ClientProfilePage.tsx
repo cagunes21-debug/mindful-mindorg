@@ -47,7 +47,6 @@ export default function ClientProfilePage() {
   const [structuredNotes, setStructuredNotes] = useState<TrainerNote[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [openCards, setOpenCards] = useState<Record<string, boolean>>({});
-  const [activeTab, setActiveTab] = useState("overview");
   const registrationRefs = useRef<Record<string, HTMLDivElement | null>>({});
 
   const [showExtraTraining, setShowExtraTraining] = useState(false);
