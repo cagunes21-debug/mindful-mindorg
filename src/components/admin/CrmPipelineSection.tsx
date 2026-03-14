@@ -478,14 +478,7 @@ export default function CrmPipelineSection({ onLeadsChange }: { onLeadsChange?: 
 
   return (
     <div className="space-y-4">
-      {/* Visual pipeline progress */}
-      <PipelineProgress
-        stageCounts={stageCounts}
-        activeFilter={statusFilter}
-        onFilter={setStatusFilter}
-      />
-
-      {/* Toolbar */}
+      {/* Toolbar with process dropdown filter */}
       <div className="flex items-center gap-3 flex-wrap">
         <div className="relative flex-1 max-w-sm">
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
@@ -496,6 +489,25 @@ export default function CrmPipelineSection({ onLeadsChange }: { onLeadsChange?: 
             className="pl-10 h-9"
           />
         </div>
+        <Select value={statusFilter || "all"} onValueChange={v => setStatusFilter(v === "all" ? null : v)}>
+          <SelectTrigger className="w-[180px] h-9">
+            <SelectValue placeholder="Alle fases" />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value="all">Alle fases ({leads.length})</SelectItem>
+            {STAGES.map(s => {
+              const count = stageCounts[s.key] || 0;
+              return (
+                <SelectItem key={s.key} value={s.key}>
+                  <span className="flex items-center gap-2">
+                    <span className={cn("w-2 h-2 rounded-full", s.dotClass)} />
+                    {s.label} ({count})
+                  </span>
+                </SelectItem>
+              );
+            })}
+          </SelectContent>
+        </Select>
         <span className="text-xs text-muted-foreground">{filteredLeads.length} resultaten</span>
         <Button
           size="sm"
