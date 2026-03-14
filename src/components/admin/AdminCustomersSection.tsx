@@ -1,4 +1,4 @@
-å// src/components/admin/AdminCustomersSection.tsx
+// src/components/admin/AdminCustomersSection.tsx
 // The leads tab now uses the CrmPipelineSection Kanban board.
 // All other functionality (customers tab, new client dialog, convert lead, etc.) is unchanged.
 
