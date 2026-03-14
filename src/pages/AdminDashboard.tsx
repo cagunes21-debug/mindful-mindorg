@@ -394,8 +394,8 @@ function DeelnemersSection() {
   };
 
   const updateStatus = async (id: string, status: string) => {
-    await supabase.from("enrollments").update({ status: status as any }).eq("id", id);
-    const patch = (e: Enrollment) => e.id === id ? { ...e, status: status as any } : e;
+    await supabase.from("enrollments").update({ status }).eq("id", id);
+    const patch = (e: Enrollment) => e.id === id ? { ...e, status } : e;
     setEnrollments(p => p.map(patch));
     setSelected(p => p ? patch(p) : null);
     toast.success("Status bijgewerkt");
