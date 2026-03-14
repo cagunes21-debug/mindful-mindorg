@@ -1,11 +1,10 @@
 // src/components/admin/CrmPipelineSection.tsx
-// Clean horizontal Kanban pipeline with native drag-and-drop
-import { useState, useEffect, useRef, DragEvent } from "react";
-import { supabase } from "@/integrations/supabase/client";
-import { Button } from "@/components/ui/button";
+// Simple CRM pipeline with drag-and-drop, mock data, ready for Supabase later
+import { useState, useRef, DragEvent } from "react";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import {
   Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter,
@@ -14,121 +13,122 @@ import {
   Select, SelectContent, SelectItem, SelectTrigger, SelectValue,
 } from "@/components/ui/select";
 import {
-  ChevronRight, Plus, Loader2, Mail, Phone, MessageSquare,
-  Calendar, UserCheck, ArrowRight, StickyNote, Search,
-  GripVertical,
+  Plus, Mail, Phone, Search, GripVertical, StickyNote, Calendar, X,
 } from "lucide-react";
 import { toast } from "sonner";
-import { format } from "date-fns";
-import { nl } from "date-fns/locale";
 import { cn } from "@/lib/utils";
 
-// ─── Types ────────────────────────────────────────────────────────────────────
+// ─── Types (ready for DB migration) ──────────────────────────────────────────
 
-interface Lead {
-  id: string;
-  first_name: string;
-  last_name: string;
-  email: string;
-  phone_number: string | null;
-  message: string | null;
-  interest: string | null;
-  status: string;
-  submission_date: string;
-  notes: string | null;
-  updated_at?: string;
-}
+type Stage = "lead" | "contacted" | "enrolled" | "in_training" | "completed";
 
-interface Client {
-  id: string;
-  first_name: string;
-  last_name: string;
+interface Participant {
+  id: number;
+  name: string;
   email: string;
+  phone: string;
+  stage: Stage;
+  cohort: string;
+  enrolledDate: string | null;
+  nextSession: string | null;
+  notes: string;
 }
 
 // ─── Pipeline stages ─────────────────────────────────────────────────────────
 
-const STAGES = [
-  { key: "new",                 label: "Nieuw",           subtitle: "Nog geen contact",        color: "#64748B", emoji: "🔵" },
-  { key: "contact_attempt",     label: "Contact gelegd",  subtitle: "Bericht of mail gestuurd", color: "#F59E0B", emoji: "🟡" },
-  { key: "in_conversation",     label: "Gesprek gepland", subtitle: "Kennismaking ingepland",   color: "#8B5CF6", emoji: "🟣" },
-  { key: "intake_scheduled",    label: "Kennismaking",    subtitle: "Gesprek heeft plaatsgevonden", color: "#3B82F6", emoji: "🔷" },
-  { key: "registered",          label: "Aangemeld",       subtitle: "Ingeschreven voor programma",  color: "#10B981", emoji: "🟢" },
-  { key: "converted_to_client", label: "Deelnemer",       subtitle: "Programma gestart",        color: "#059669", emoji: "🎉" },
-  { key: "not_interested",      label: "Niet geïnteresseerd", subtitle: "",                     color: "#94A3B8", emoji: "" },
+const STAGES: { key: Stage; label: string; subtitle: string; emoji: string; color: string }[] = [
+  { key: "lead",        label: "Nieuw",           subtitle: "Nog geen contact gelegd",       emoji: "🔵", color: "#3B82F6" },
+  { key: "contacted",   label: "Contact gelegd",  subtitle: "Bericht of mail gestuurd",      emoji: "🟡", color: "#F59E0B" },
+  { key: "enrolled",    label: "Aangemeld",       subtitle: "Ingeschreven voor programma",   emoji: "🟣", color: "#8B5CF6" },
+  { key: "in_training", label: "In training",     subtitle: "Programma is gestart",          emoji: "🟢", color: "#10B981" },
+  { key: "completed",   label: "Afgerond",        subtitle: "Programma voltooid",            emoji: "✅", color: "#059669" },
 ];
 
-const ACTIVE_STAGES = STAGES.filter(s => s.key !== "not_interested");
-
-// Next stage mapping for action buttons
-const NEXT_STAGE: Record<string, string | null> = {
-  new: "contact_attempt",
-  contact_attempt: "in_conversation",
-  in_conversation: "intake_scheduled",
-  intake_scheduled: "registered",
-  registered: "converted_to_client",
-  converted_to_client: null,
+const NEXT_STAGE: Record<Stage, Stage | null> = {
+  lead: "contacted",
+  contacted: "enrolled",
+  enrolled: "in_training",
+  in_training: "completed",
+  completed: null,
 };
 
 const ACTION_LABELS: Record<string, string> = {
-  new: "Contact leggen",
-  contact_attempt: "Gesprek plannen",
-  in_conversation: "Kennismaking",
-  intake_scheduled: "Aanmelden",
-  registered: "Omzetten",
+  lead: "Contact leggen",
+  contacted: "Aanmelden",
+  enrolled: "Start training",
+  in_training: "Afronden",
 };
 
-// ─── Draggable Lead Card ──────────────────────────────────────────────────────
+// ─── Mock data ───────────────────────────────────────────────────────────────
 
-function LeadCard({
-  lead,
-  stageColor,
-  onMoveNext,
-  onOpenDetail,
-  onDragStart,
+const MOCK_PARTICIPANTS: Participant[] = [
+  { id: 1,  name: "Sanne de Vries",      email: "sanne@email.nl",     phone: "+31 6 12345678", stage: "lead",        cohort: "",              enrolledDate: null,         nextSession: null,         notes: "Via website formulier binnengekomen" },
+  { id: 2,  name: "Pieter Bakker",        email: "pieter.b@gmail.com", phone: "+31 6 23456789", stage: "lead",        cohort: "",              enrolledDate: null,         nextSession: null,         notes: "" },
+  { id: 3,  name: "Marieke Jansen",       email: "marieke.j@live.nl",  phone: "+31 6 34567890", stage: "lead",        cohort: "",              enrolledDate: null,         nextSession: null,         notes: "Interesse in individueel traject" },
+  { id: 4,  name: "Bas van Dijk",         email: "bas.vd@outlook.com", phone: "+31 6 45678901", stage: "contacted",   cohort: "",              enrolledDate: null,         nextSession: null,         notes: "Eerste mail gestuurd op 10 maart" },
+  { id: 5,  name: "Floor Willems",        email: "floor.w@gmail.com",  phone: "+31 6 56789012", stage: "contacted",   cohort: "",              enrolledDate: null,         nextSession: null,         notes: "Terugbelverzoek voor volgende week" },
+  { id: 6,  name: "Joost van den Berg",   email: "joost@email.nl",     phone: "+31 6 67890123", stage: "contacted",   cohort: "",              enrolledDate: null,         nextSession: null,         notes: "" },
+  { id: 7,  name: "Lotte Mulder",         email: "lotte.m@hotmail.com",phone: "+31 6 78901234", stage: "enrolled",    cohort: "Voorjaar 2026", enrolledDate: "2026-03-01", nextSession: "2026-03-20", notes: "Kennismaking gehad, enthousiast" },
+  { id: 8,  name: "Thijs Vermeer",        email: "thijs.v@gmail.com",  phone: "+31 6 89012345", stage: "enrolled",    cohort: "Voorjaar 2026", enrolledDate: "2026-03-05", nextSession: "2026-03-20", notes: "Betaling ontvangen" },
+  { id: 9,  name: "Anouk Bos",            email: "anouk.bos@email.nl", phone: "+31 6 90123456", stage: "in_training", cohort: "Voorjaar 2026", enrolledDate: "2026-02-10", nextSession: "2026-03-18", notes: "Week 4 van 8, gaat goed" },
+  { id: 10, name: "Wouter Hendriks",      email: "wouter.h@live.nl",   phone: "+31 6 01234567", stage: "in_training", cohort: "Voorjaar 2026", enrolledDate: "2026-02-10", nextSession: "2026-03-18", notes: "Heeft extra aandacht nodig bij meditaties" },
+  { id: 11, name: "Eva Meijer",           email: "eva.m@gmail.com",    phone: "+31 6 11223344", stage: "in_training", cohort: "Winter 2025",   enrolledDate: "2025-11-15", nextSession: "2026-03-22", notes: "Individueel traject, sessie 5 van 6" },
+  { id: 12, name: "Stefan Kok",           email: "stefan.k@outlook.com",phone:"+31 6 22334455", stage: "completed",   cohort: "Najaar 2025",   enrolledDate: "2025-09-01", nextSession: null,         notes: "8-weekse training succesvol afgerond" },
+  { id: 13, name: "Iris de Groot",        email: "iris.dg@email.nl",   phone: "+31 6 33445566", stage: "completed",   cohort: "Najaar 2025",   enrolledDate: "2025-09-01", nextSession: null,         notes: "Overweegt vervolgtraject" },
+  { id: 14, name: "Daan Visser",          email: "daan.v@gmail.com",   phone: "+31 6 44556677", stage: "lead",        cohort: "",              enrolledDate: null,         nextSession: null,         notes: "Doorverwijzing van huisarts" },
+];
+
+// ─── Participant Card ─────────────────────────────────────────────────────────
+
+function ParticipantCard({
+  participant, stageColor, onMoveNext, onOpenDetail, onDragStart,
 }: {
-  lead: Lead;
+  participant: Participant;
   stageColor: string;
-  onMoveNext: (lead: Lead) => void;
-  onOpenDetail: (lead: Lead) => void;
-  onDragStart: (e: DragEvent, lead: Lead) => void;
+  onMoveNext: (p: Participant) => void;
+  onOpenDetail: (p: Participant) => void;
+  onDragStart: (e: DragEvent, p: Participant) => void;
 }) {
-  const daysSince = Math.floor(
-    (Date.now() - new Date(lead.submission_date).getTime()) / 86400000
-  );
-  const dateLabel = daysSince === 0 ? "Vandaag" : daysSince === 1 ? "Gisteren" : `${daysSince}d`;
-  const nextStage = NEXT_STAGE[lead.status];
-  const actionLabel = ACTION_LABELS[lead.status];
+  const nextStage = NEXT_STAGE[participant.stage];
+  const actionLabel = ACTION_LABELS[participant.stage];
 
   return (
     <div
       draggable
-      onDragStart={e => onDragStart(e, lead)}
-      className="bg-card border border-border/50 rounded-lg p-2.5 cursor-grab active:cursor-grabbing hover:shadow-md hover:border-border/80 transition-all group select-none"
-      onClick={() => onOpenDetail(lead)}
+      onDragStart={e => onDragStart(e, participant)}
+      className="bg-card border border-border/50 rounded-lg p-3 cursor-grab active:cursor-grabbing hover:shadow-md hover:border-border/80 transition-all group select-none"
+      onClick={() => onOpenDetail(participant)}
     >
       <div className="flex items-start gap-2">
         <GripVertical className="h-3.5 w-3.5 text-muted-foreground/30 mt-0.5 flex-shrink-0 group-hover:text-muted-foreground/60 transition-colors" />
         <div className="flex-1 min-w-0">
           <p className="text-sm font-medium text-foreground truncate leading-tight">
-            {lead.first_name} {lead.last_name}
+            {participant.name}
           </p>
-          {lead.interest && (
-            <p className="text-[11px] text-muted-foreground truncate mt-0.5">{lead.interest}</p>
-          )}
-          <div className="flex items-center gap-1.5 mt-1">
-            <span className="text-[10px] text-muted-foreground/50">{dateLabel}</span>
-            {lead.notes && <StickyNote className="h-2.5 w-2.5 text-amber-400" />}
-            {lead.phone_number && <Phone className="h-2.5 w-2.5 text-muted-foreground/30" />}
+          <div className="flex items-center gap-1.5 mt-1 text-muted-foreground">
+            <Mail className="h-3 w-3 flex-shrink-0" />
+            <span className="text-[11px] truncate">{participant.email}</span>
+          </div>
+          <div className="flex items-center gap-2 mt-1.5">
+            {participant.cohort && (
+              <Badge variant="secondary" className="text-[10px] px-1.5 py-0 h-4">{participant.cohort}</Badge>
+            )}
+            {participant.notes && <StickyNote className="h-2.5 w-2.5 text-amber-400" />}
+            {participant.nextSession && (
+              <span className="text-[10px] text-muted-foreground/60 flex items-center gap-0.5">
+                <Calendar className="h-2.5 w-2.5" />
+                {new Date(participant.nextSession).toLocaleDateString("nl-NL", { day: "numeric", month: "short" })}
+              </span>
+            )}
           </div>
         </div>
       </div>
 
       {nextStage && actionLabel && (
-        <div className="mt-2 pt-1.5 border-t border-border/30" onClick={e => e.stopPropagation()}>
+        <div className="mt-2 pt-2 border-t border-border/30" onClick={e => e.stopPropagation()}>
           <button
-            onClick={() => onMoveNext(lead)}
-            className="w-full py-1 rounded text-[10px] font-medium cursor-pointer transition-all text-white hover:opacity-90"
+            onClick={() => onMoveNext(participant)}
+            className="w-full py-1.5 rounded text-[11px] font-medium cursor-pointer transition-all text-white hover:opacity-90"
             style={{ backgroundColor: stageColor }}
           >
             {actionLabel} →
@@ -139,37 +139,23 @@ function LeadCard({
   );
 }
 
-// ─── Lead Detail Modal ────────────────────────────────────────────────────────
+// ─── Detail Modal ─────────────────────────────────────────────────────────────
 
-function LeadDetailModal({
-  lead, onClose, onUpdate, onConvert,
+function DetailModal({
+  participant, onClose, onUpdate,
 }: {
-  lead: Lead;
+  participant: Participant;
   onClose: () => void;
-  onUpdate: (id: string, patch: Partial<Lead>) => void;
-  onConvert: (lead: Lead) => void;
+  onUpdate: (id: number, patch: Partial<Participant>) => void;
 }) {
-  const [notes, setNotes] = useState(lead.notes || "");
-  const [saving, setSaving] = useState(false);
-  const stage = STAGES.find(s => s.key === lead.status) || STAGES[0];
+  const [notes, setNotes] = useState(participant.notes);
+  const [stage, setStage] = useState<Stage>(participant.stage);
+  const stageInfo = STAGES.find(s => s.key === participant.stage)!;
 
-  const saveNotes = async () => {
-    setSaving(true);
-    const { error } = await supabase
-      .from("leads")
-      .update({ notes, updated_at: new Date().toISOString() })
-      .eq("id", lead.id);
-    if (!error) { onUpdate(lead.id, { notes }); toast.success("Opgeslagen"); }
-    else toast.error("Fout bij opslaan");
-    setSaving(false);
-  };
-
-  const updateStatus = async (status: string) => {
-    const { error } = await supabase
-      .from("leads")
-      .update({ status, updated_at: new Date().toISOString() })
-      .eq("id", lead.id);
-    if (!error) { onUpdate(lead.id, { status }); toast.success("Status bijgewerkt"); }
+  const handleSave = () => {
+    onUpdate(participant.id, { notes, stage });
+    toast.success("Opgeslagen");
+    onClose();
   };
 
   return (
@@ -177,33 +163,34 @@ function LeadDetailModal({
       <DialogContent className="sm:max-w-md">
         <DialogHeader>
           <DialogTitle className="flex items-center gap-2">
-            <span className="w-2.5 h-2.5 rounded-full" style={{ backgroundColor: stage.color }} />
-            {lead.first_name} {lead.last_name}
+            <span className="w-2.5 h-2.5 rounded-full" style={{ backgroundColor: stageInfo.color }} />
+            {participant.name}
           </DialogTitle>
-          <DialogDescription className="flex items-center gap-3 flex-wrap">
-            <span className="flex items-center gap-1"><Mail className="h-3 w-3" /> {lead.email}</span>
-            {lead.phone_number && <span className="flex items-center gap-1"><Phone className="h-3 w-3" /> {lead.phone_number}</span>}
+          <DialogDescription className="flex items-center gap-4 flex-wrap">
+            <span className="flex items-center gap-1"><Mail className="h-3 w-3" />{participant.email}</span>
+            <span className="flex items-center gap-1"><Phone className="h-3 w-3" />{participant.phone}</span>
           </DialogDescription>
         </DialogHeader>
         <div className="space-y-4">
-          <div className="flex items-center gap-2 flex-wrap">
-            {lead.interest && <Badge variant="outline" className="text-xs">{lead.interest}</Badge>}
-            <span className="text-xs text-muted-foreground flex items-center gap-1">
-              <Calendar className="h-3 w-3" />
-              {format(new Date(lead.submission_date), "d MMMM yyyy 'om' HH:mm", { locale: nl })}
-            </span>
-          </div>
-          {lead.message && (
-            <div className="bg-muted/30 rounded-lg p-3">
-              <p className="text-xs font-medium text-muted-foreground mb-1 flex items-center gap-1.5">
-                <MessageSquare className="h-3 w-3" /> Bericht
-              </p>
-              <p className="text-sm leading-relaxed">{lead.message}</p>
+          {participant.cohort && (
+            <div className="flex items-center gap-2">
+              <Badge variant="outline">{participant.cohort}</Badge>
+              {participant.enrolledDate && (
+                <span className="text-xs text-muted-foreground">
+                  Ingeschreven: {new Date(participant.enrolledDate).toLocaleDateString("nl-NL")}
+                </span>
+              )}
+            </div>
+          )}
+          {participant.nextSession && (
+            <div className="flex items-center gap-2 text-sm text-muted-foreground">
+              <Calendar className="h-4 w-4" />
+              Volgende sessie: {new Date(participant.nextSession).toLocaleDateString("nl-NL", { weekday: "long", day: "numeric", month: "long" })}
             </div>
           )}
           <div className="space-y-1.5">
             <Label className="text-xs uppercase tracking-wide text-muted-foreground">Fase</Label>
-            <Select value={lead.status} onValueChange={updateStatus}>
+            <Select value={stage} onValueChange={v => setStage(v as Stage)}>
               <SelectTrigger className="h-9"><SelectValue /></SelectTrigger>
               <SelectContent>
                 {STAGES.map(s => (
@@ -219,182 +206,62 @@ function LeadDetailModal({
           </div>
           <div className="space-y-1.5">
             <Label className="text-xs uppercase tracking-wide text-muted-foreground">Notities</Label>
-            <Textarea value={notes} onChange={e => setNotes(e.target.value)} placeholder="Notities..." className="min-h-[80px] text-sm resize-none" />
-            <Button size="sm" variant="outline" className="w-full" onClick={saveNotes} disabled={saving}>
-              {saving && <Loader2 className="h-3 w-3 animate-spin mr-2" />} Opslaan
-            </Button>
+            <Textarea
+              value={notes}
+              onChange={e => setNotes(e.target.value)}
+              placeholder="Notities over deze deelnemer..."
+              className="min-h-[100px] text-sm resize-none"
+            />
           </div>
-          {lead.status !== "converted_to_client" && lead.status !== "not_interested" && (
-            <div className="pt-2 border-t">
-              <Button className="w-full gap-2 bg-terracotta-600 hover:bg-terracotta-700 text-white" onClick={() => { onClose(); onConvert(lead); }}>
-                <UserCheck className="h-4 w-4" /> Omzetten naar klant
-              </Button>
-            </div>
-          )}
         </div>
+        <DialogFooter>
+          <Button variant="outline" onClick={onClose}>Annuleren</Button>
+          <Button onClick={handleSave} className="bg-primary text-primary-foreground hover:bg-primary/90">Opslaan</Button>
+        </DialogFooter>
       </DialogContent>
     </Dialog>
   );
 }
 
-// ─── Convert Lead Modal ───────────────────────────────────────────────────────
+// ─── New Participant Modal ────────────────────────────────────────────────────
 
-function ConvertLeadModal({ lead, onClose, onConverted }: { lead: Lead; onClose: () => void; onConverted: (id: string) => void }) {
-  const [form, setForm] = useState({
-    first_name: lead.first_name, last_name: lead.last_name, email: lead.email,
-    training: "Individueel Traject (6 sessies)", course_type: "individueel_6",
-    start_date: "", notes: "", send_invite: true,
-  });
-  const [submitting, setSubmitting] = useState(false);
-  const [duplicate, setDuplicate] = useState<Client | null>(null);
+function NewParticipantModal({ onClose, onCreated }: { onClose: () => void; onCreated: (p: Participant) => void }) {
+  const [form, setForm] = useState({ name: "", email: "", phone: "", notes: "" });
 
-  const handleConvert = async () => {
-    if (!form.start_date) { toast.error("Vul een startdatum in"); return; }
-    setSubmitting(true);
-    try {
-      const email = form.email.trim().toLowerCase();
-      const { data: existing } = await supabase.from("clients").select("*").eq("email", email).limit(1);
-      let clientId: string, clientUserId: string | null = null;
-
-      if (existing && existing.length > 0) {
-        if (!duplicate) { setDuplicate(existing[0] as Client); setSubmitting(false); return; }
-        clientId = existing[0].id; clientUserId = existing[0].user_id || null;
-      } else {
-        const { data: nc, error: ce } = await supabase.from("clients").insert({
-          first_name: form.first_name.trim(), last_name: form.last_name.trim(), email,
-          phone: lead.phone_number || null, notes: form.notes.trim() || null,
-        }).select("id, user_id").single();
-        if (ce) throw ce;
-        clientId = nc.id; clientUserId = nc.user_id;
-      }
-
-      const { data: enr, error: ee } = await supabase.from("enrollments").insert({
-        client_id: clientId, user_id: clientUserId || null, course_type: form.course_type,
-        start_date: form.start_date, status: clientUserId ? "active" : "invited", unlocked_weeks: [1],
-      }).select("id").single();
-      if (ee) throw ee;
-
-      await supabase.from("leads").update({ status: "converted_to_client", updated_at: new Date().toISOString() }).eq("id", lead.id);
-
-      if (form.send_invite && !clientUserId) {
-        const labels: Record<string, string> = { msc_8week: "8-weekse Mindful Zelfcompassie Training", individueel_6: "Individueel Traject (6 sessies)", losse_sessie: "Losse Sessie" };
-        try { await supabase.functions.invoke("send-invitation-email", { body: { client_id: clientId, enrollment_id: enr.id, program_name: labels[form.course_type], email, first_name: form.first_name.trim() } }); } catch (e) { console.error("Invite email failed:", e); }
-      }
-      toast.success("Lead omgezet naar klant!");
-      onConverted(lead.id);
-    } catch (err: any) { toast.error("Fout: " + err.message); }
-    setSubmitting(false);
+  const handleCreate = () => {
+    if (!form.name.trim() || !form.email.trim()) { toast.error("Vul naam en e-mail in"); return; }
+    const newP: Participant = {
+      id: Date.now(),
+      name: form.name.trim(),
+      email: form.email.trim().toLowerCase(),
+      phone: form.phone.trim() || "",
+      stage: "lead",
+      cohort: "",
+      enrolledDate: null,
+      nextSession: null,
+      notes: form.notes.trim(),
+    };
+    onCreated(newP);
+    toast.success("Deelnemer toegevoegd!");
   };
 
   return (
     <Dialog open onOpenChange={onClose}>
       <DialogContent className="sm:max-w-md">
         <DialogHeader>
-          <DialogTitle className="flex items-center gap-2"><UserCheck className="h-5 w-5 text-terracotta-600" /> Omzetten naar klant</DialogTitle>
-          <DialogDescription>Klantprofiel en inschrijving aanmaken voor {lead.first_name}.</DialogDescription>
+          <DialogTitle>Nieuwe deelnemer</DialogTitle>
+          <DialogDescription>Voeg een nieuwe lead toe aan de pipeline.</DialogDescription>
         </DialogHeader>
-        {duplicate ? (
-          <div className="space-y-4">
-            <div className="rounded-lg bg-amber-50 border border-amber-200 p-4">
-              <p className="text-sm font-medium text-amber-800">Er bestaat al een klant met dit e-mailadres.</p>
-              <p className="text-sm text-amber-700 mt-1">{duplicate.first_name} {duplicate.last_name} — {duplicate.email}</p>
-            </div>
-            <DialogFooter>
-              <Button variant="outline" onClick={() => setDuplicate(null)}>Terug</Button>
-              <Button onClick={handleConvert} disabled={submitting} className="gap-1.5 bg-terracotta-600 hover:bg-terracotta-700 text-white">
-                {submitting && <Loader2 className="h-4 w-4 animate-spin" />} <ArrowRight className="h-4 w-4" /> Training toevoegen
-              </Button>
-            </DialogFooter>
-          </div>
-        ) : (
-          <div className="space-y-3">
-            <div className="grid grid-cols-2 gap-3">
-              <div><Label>Voornaam *</Label><Input value={form.first_name} onChange={e => setForm(p => ({ ...p, first_name: e.target.value }))} /></div>
-              <div><Label>Achternaam</Label><Input value={form.last_name} onChange={e => setForm(p => ({ ...p, last_name: e.target.value }))} /></div>
-            </div>
-            <div><Label>E-mail *</Label><Input type="email" value={form.email} onChange={e => setForm(p => ({ ...p, email: e.target.value }))} /></div>
-            <div>
-              <Label>Training *</Label>
-              <Select value={form.training} onValueChange={v => { let ct = "msc_8week"; if (v.includes("Individueel")) ct = "individueel_6"; else if (v.includes("Losse")) ct = "losse_sessie"; setForm(p => ({ ...p, training: v, course_type: ct })); }}>
-                <SelectTrigger><SelectValue /></SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="Individueel Traject (6 sessies)">Individueel Traject (6 sessies)</SelectItem>
-                  <SelectItem value="8-weekse Mindful Zelfcompassie Training">8-weekse Groepstraining</SelectItem>
-                  <SelectItem value="Losse Sessie / Coaching">Losse Sessie / Coaching</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
-            <div><Label>Startdatum *</Label><Input type="date" value={form.start_date} onChange={e => setForm(p => ({ ...p, start_date: e.target.value }))} /></div>
-            <div><Label>Notities</Label><Textarea value={form.notes} onChange={e => setForm(p => ({ ...p, notes: e.target.value }))} className="min-h-[60px] resize-none" /></div>
-            <div className="flex items-center gap-2">
-              <input type="checkbox" id="send-inv" checked={form.send_invite} onChange={e => setForm(p => ({ ...p, send_invite: e.target.checked }))} className="rounded" />
-              <Label htmlFor="send-inv" className="text-sm font-normal cursor-pointer">Uitnodigingsmail versturen</Label>
-            </div>
-            <DialogFooter>
-              <Button variant="outline" onClick={onClose}>Annuleren</Button>
-              <Button onClick={handleConvert} disabled={submitting} className="gap-1.5 bg-terracotta-600 hover:bg-terracotta-700 text-white">
-                {submitting && <Loader2 className="h-4 w-4 animate-spin" />} <UserCheck className="h-4 w-4" /> Omzetten
-              </Button>
-            </DialogFooter>
-          </div>
-        )}
-      </DialogContent>
-    </Dialog>
-  );
-}
-
-// ─── New Lead Modal ───────────────────────────────────────────────────────────
-
-function NewLeadModal({ onClose, onCreated }: { onClose: () => void; onCreated: (lead: Lead) => void }) {
-  const [form, setForm] = useState({ first_name: "", last_name: "", email: "", phone_number: "", interest: "", message: "" });
-  const [submitting, setSubmitting] = useState(false);
-
-  const handleCreate = async () => {
-    if (!form.first_name.trim() || !form.email.trim()) { toast.error("Vul naam en e-mail in"); return; }
-    setSubmitting(true);
-    try {
-      const { data, error } = await supabase.from("leads").insert({
-        first_name: form.first_name.trim(), last_name: form.last_name.trim(),
-        email: form.email.trim().toLowerCase(), phone_number: form.phone_number.trim() || null,
-        interest: form.interest.trim() || null, message: form.message.trim() || null,
-        status: "new", submission_date: new Date().toISOString(),
-      }).select().single();
-      if (error) throw error;
-      toast.success("Lead aangemaakt!");
-      onCreated(data as Lead);
-    } catch (err: any) { toast.error("Fout: " + err.message); }
-    setSubmitting(false);
-  };
-
-  return (
-    <Dialog open onOpenChange={onClose}>
-      <DialogContent className="sm:max-w-md">
-        <DialogHeader><DialogTitle>Nieuwe lead</DialogTitle><DialogDescription>Voeg handmatig een lead toe.</DialogDescription></DialogHeader>
         <div className="space-y-3">
-          <div className="grid grid-cols-2 gap-3">
-            <div><Label>Voornaam *</Label><Input value={form.first_name} onChange={e => setForm(p => ({ ...p, first_name: e.target.value }))} /></div>
-            <div><Label>Achternaam</Label><Input value={form.last_name} onChange={e => setForm(p => ({ ...p, last_name: e.target.value }))} /></div>
-          </div>
-          <div><Label>E-mail *</Label><Input type="email" value={form.email} onChange={e => setForm(p => ({ ...p, email: e.target.value }))} /></div>
-          <div><Label>Telefoon</Label><Input value={form.phone_number} onChange={e => setForm(p => ({ ...p, phone_number: e.target.value }))} placeholder="06-..." /></div>
-          <div>
-            <Label>Interesse</Label>
-            <Select value={form.interest} onValueChange={v => setForm(p => ({ ...p, interest: v }))}>
-              <SelectTrigger><SelectValue placeholder="Selecteer..." /></SelectTrigger>
-              <SelectContent>
-                <SelectItem value="Individueel traject">Individueel traject</SelectItem>
-                <SelectItem value="8-weekse groepstraining">8-weekse groepstraining</SelectItem>
-                <SelectItem value="Losse sessie">Losse sessie</SelectItem>
-                <SelectItem value="Coaching">Coaching</SelectItem>
-              </SelectContent>
-            </Select>
-          </div>
-          <div><Label>Bericht</Label><Textarea value={form.message} onChange={e => setForm(p => ({ ...p, message: e.target.value }))} className="min-h-[60px] resize-none" /></div>
+          <div><Label>Naam *</Label><Input value={form.name} onChange={e => setForm(p => ({ ...p, name: e.target.value }))} placeholder="Volledige naam" /></div>
+          <div><Label>E-mail *</Label><Input type="email" value={form.email} onChange={e => setForm(p => ({ ...p, email: e.target.value }))} placeholder="email@voorbeeld.nl" /></div>
+          <div><Label>Telefoon</Label><Input value={form.phone} onChange={e => setForm(p => ({ ...p, phone: e.target.value }))} placeholder="+31 6 12345678" /></div>
+          <div><Label>Notities</Label><Textarea value={form.notes} onChange={e => setForm(p => ({ ...p, notes: e.target.value }))} className="min-h-[60px] resize-none" /></div>
         </div>
         <DialogFooter>
           <Button variant="outline" onClick={onClose}>Annuleren</Button>
-          <Button onClick={handleCreate} disabled={submitting} className="gap-1.5 bg-terracotta-600 hover:bg-terracotta-700 text-white">
-            {submitting && <Loader2 className="h-4 w-4 animate-spin" />} <Plus className="h-4 w-4" /> Toevoegen
+          <Button onClick={handleCreate} className="gap-1.5 bg-primary text-primary-foreground hover:bg-primary/90">
+            <Plus className="h-4 w-4" /> Toevoegen
           </Button>
         </DialogFooter>
       </DialogContent>
@@ -402,198 +269,165 @@ function NewLeadModal({ onClose, onCreated }: { onClose: () => void; onCreated: 
   );
 }
 
+// ─── Summary Cards ────────────────────────────────────────────────────────────
+
+function SummaryCards({ participants }: { participants: Participant[] }) {
+  return (
+    <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-3">
+      {STAGES.map(stage => {
+        const count = participants.filter(p => p.stage === stage.key).length;
+        return (
+          <div key={stage.key} className="rounded-lg border bg-card p-3 flex items-center gap-3">
+            <span className="text-lg">{stage.emoji}</span>
+            <div>
+              <p className="text-xl font-bold" style={{ color: stage.color }}>{count}</p>
+              <p className="text-[11px] text-muted-foreground">{stage.label}</p>
+            </div>
+          </div>
+        );
+      })}
+    </div>
+  );
+}
+
 // ─── Main Pipeline Component ──────────────────────────────────────────────────
 
 export default function CrmPipelineSection() {
-  const [leads, setLeads] = useState<Lead[]>([]);
-  const [loading, setLoading] = useState(true);
+  const [participants, setParticipants] = useState<Participant[]>(MOCK_PARTICIPANTS);
   const [search, setSearch] = useState("");
-  const [selectedLead, setSelectedLead] = useState<Lead | null>(null);
-  const [convertingLead, setConvertingLead] = useState<Lead | null>(null);
-  const [showNewLead, setShowNewLead] = useState(false);
-  const [dragOverStage, setDragOverStage] = useState<string | null>(null);
-  const draggedLeadRef = useRef<Lead | null>(null);
-
-  useEffect(() => { fetchLeads(); }, []);
-
-  const fetchLeads = async () => {
-    setLoading(true);
-    const { data, error } = await supabase.from("leads").select("*").order("submission_date", { ascending: false });
-    if (!error) setLeads((data || []) as Lead[]);
-    setLoading(false);
-  };
+  const [selectedParticipant, setSelectedParticipant] = useState<Participant | null>(null);
+  const [showNew, setShowNew] = useState(false);
+  const [dragOverStage, setDragOverStage] = useState<Stage | null>(null);
+  const draggedRef = useRef<Participant | null>(null);
 
   // ── Drag & Drop ──
-  const handleDragStart = (e: DragEvent, lead: Lead) => {
-    draggedLeadRef.current = lead;
+  const handleDragStart = (e: DragEvent, p: Participant) => {
+    draggedRef.current = p;
     e.dataTransfer.effectAllowed = "move";
-    e.dataTransfer.setData("text/plain", lead.id);
-    // Make drag image slightly transparent
-    if (e.currentTarget instanceof HTMLElement) {
-      e.currentTarget.style.opacity = "0.5";
-    }
+    e.dataTransfer.setData("text/plain", String(p.id));
+    if (e.currentTarget instanceof HTMLElement) e.currentTarget.style.opacity = "0.4";
   };
 
   const handleDragEnd = (e: DragEvent) => {
-    if (e.currentTarget instanceof HTMLElement) {
-      e.currentTarget.style.opacity = "1";
-    }
+    if (e.currentTarget instanceof HTMLElement) e.currentTarget.style.opacity = "1";
     setDragOverStage(null);
-    draggedLeadRef.current = null;
+    draggedRef.current = null;
   };
 
-  const handleDragOver = (e: DragEvent, stageKey: string) => {
+  const handleDragOver = (e: DragEvent, stageKey: Stage) => {
     e.preventDefault();
     e.dataTransfer.dropEffect = "move";
     setDragOverStage(stageKey);
   };
 
-  const handleDragLeave = () => {
-    setDragOverStage(null);
-  };
-
-  const handleDrop = async (e: DragEvent, targetStageKey: string) => {
+  const handleDrop = (e: DragEvent, targetStage: Stage) => {
     e.preventDefault();
     setDragOverStage(null);
-    const lead = draggedLeadRef.current;
-    if (!lead || lead.status === targetStageKey) return;
-
-    // If dropping to converted_to_client, open convert modal
-    if (targetStageKey === "converted_to_client") {
-      setConvertingLead(lead);
-      return;
-    }
-
-    // Optimistic update
-    setLeads(prev => prev.map(l => l.id === lead.id ? { ...l, status: targetStageKey } : l));
-
-    const { error } = await supabase
-      .from("leads")
-      .update({ status: targetStageKey, updated_at: new Date().toISOString() })
-      .eq("id", lead.id);
-
-    if (error) {
-      // Rollback
-      setLeads(prev => prev.map(l => l.id === lead.id ? { ...l, status: lead.status } : l));
-      toast.error("Kon status niet bijwerken");
-    } else {
-      const targetLabel = STAGES.find(s => s.key === targetStageKey)?.label;
-      toast.success(`${lead.first_name} → ${targetLabel}`);
-    }
+    const p = draggedRef.current;
+    if (!p || p.stage === targetStage) return;
+    setParticipants(prev => prev.map(x => x.id === p.id ? { ...x, stage: targetStage } : x));
+    const targetLabel = STAGES.find(s => s.key === targetStage)?.label;
+    toast.success(`${p.name} → ${targetLabel}`);
   };
 
-  // ── Button-based move ──
-  const moveToNext = async (lead: Lead) => {
-    const next = NEXT_STAGE[lead.status];
+  const moveToNext = (p: Participant) => {
+    const next = NEXT_STAGE[p.stage];
     if (!next) return;
-    if (next === "converted_to_client") { setConvertingLead(lead); return; }
-
-    setLeads(prev => prev.map(l => l.id === lead.id ? { ...l, status: next } : l));
-    const { error } = await supabase.from("leads").update({ status: next, updated_at: new Date().toISOString() }).eq("id", lead.id);
-    if (error) {
-      setLeads(prev => prev.map(l => l.id === lead.id ? { ...l, status: lead.status } : l));
-    } else {
-      toast.success(`${lead.first_name} → ${STAGES.find(s => s.key === next)?.label}`);
-    }
+    setParticipants(prev => prev.map(x => x.id === p.id ? { ...x, stage: next } : x));
+    toast.success(`${p.name} → ${STAGES.find(s => s.key === next)?.label}`);
   };
 
-  const updateLead = (id: string, patch: Partial<Lead>) => {
-    setLeads(prev => prev.map(l => l.id === id ? { ...l, ...patch } : l));
-    if (selectedLead?.id === id) setSelectedLead(prev => prev ? { ...prev, ...patch } : null);
+  const updateParticipant = (id: number, patch: Partial<Participant>) => {
+    setParticipants(prev => prev.map(p => p.id === id ? { ...p, ...patch } : p));
   };
 
-  const handleConverted = (leadId: string) => {
-    updateLead(leadId, { status: "converted_to_client" });
-    setConvertingLead(null);
-  };
-
-  const filteredLeads = (stageKey: string) =>
-    leads.filter(l => {
-      if (l.status !== stageKey) return false;
+  const filteredByStage = (stageKey: Stage) =>
+    participants.filter(p => {
+      if (p.stage !== stageKey) return false;
       if (!search.trim()) return true;
       const q = search.toLowerCase();
-      return l.first_name?.toLowerCase().includes(q) || l.last_name?.toLowerCase().includes(q) || l.email?.toLowerCase().includes(q) || l.interest?.toLowerCase().includes(q);
+      return p.name.toLowerCase().includes(q) || p.email.toLowerCase().includes(q) || p.cohort.toLowerCase().includes(q);
     });
 
-  if (loading) {
-    return <div className="flex items-center justify-center py-16"><Loader2 className="h-8 w-8 animate-spin text-terracotta-400" /></div>;
-  }
-
   return (
-    <div className="space-y-4">
+    <div className="space-y-5">
+      {/* Summary */}
+      <SummaryCards participants={participants} />
+
       {/* Toolbar */}
       <div className="flex items-center gap-3 flex-wrap">
         <div className="relative flex-1 max-w-xs">
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-          <Input placeholder="Zoek lead..." value={search} onChange={e => setSearch(e.target.value)} className="pl-10 h-9" />
+          <Input placeholder="Zoek op naam, e-mail of cohort..." value={search} onChange={e => setSearch(e.target.value)} className="pl-10 h-9" />
         </div>
-        <Button size="sm" className="ml-auto gap-1.5 bg-terracotta-600 hover:bg-terracotta-700 text-white" onClick={() => setShowNewLead(true)}>
+        <span className="text-xs text-muted-foreground">{participants.length} deelnemers</span>
+        <Button size="sm" className="ml-auto gap-1.5 bg-primary text-primary-foreground hover:bg-primary/90" onClick={() => setShowNew(true)}>
           <Plus className="h-4 w-4" /> Nieuwe lead
         </Button>
       </div>
 
-      {/* Pipeline Board — horizontal columns */}
+      {/* Pipeline Board */}
       <div className="overflow-x-auto -mx-2 px-2 pb-2">
-        <div className="flex gap-2.5 min-w-[900px]">
-          {ACTIVE_STAGES.map(stage => {
-            const stageLeads = filteredLeads(stage.key);
+        <div className="flex gap-3 min-w-[820px]">
+          {STAGES.map(stage => {
+            const stageParticipants = filteredByStage(stage.key);
             const isDragOver = dragOverStage === stage.key;
 
             return (
               <div
                 key={stage.key}
                 className={cn(
-                  "flex-1 min-w-[145px] rounded-xl flex flex-col transition-all",
+                  "flex-1 min-w-[155px] rounded-xl flex flex-col transition-all",
                   isDragOver ? "ring-2 ring-offset-1" : ""
                 )}
                 style={{
-                  backgroundColor: stage.color + "08",
+                  backgroundColor: stage.color + "0A",
                   ...(isDragOver ? { ringColor: stage.color } as any : {}),
                 }}
                 onDragOver={e => handleDragOver(e, stage.key)}
-                onDragLeave={handleDragLeave}
+                onDragLeave={() => setDragOverStage(null)}
                 onDrop={e => handleDrop(e, stage.key)}
               >
-                {/* Colored top bar */}
+                {/* Color bar */}
                 <div className="h-1.5 rounded-t-xl" style={{ backgroundColor: stage.color }} />
 
                 {/* Header */}
-                <div className="px-2.5 pt-2 pb-1.5">
+                <div className="px-3 pt-2.5 pb-2">
                   <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-1.5 min-w-0">
+                    <div className="flex items-center gap-1.5">
                       <span className="text-sm">{stage.emoji}</span>
-                      <span className="text-[12px] font-semibold text-foreground truncate">{stage.label}</span>
+                      <span className="text-[13px] font-semibold text-foreground">{stage.label}</span>
                     </div>
                     <span
-                      className="min-w-[20px] h-[20px] rounded-full text-[10px] font-bold flex items-center justify-center text-white flex-shrink-0"
+                      className="min-w-[22px] h-[22px] rounded-full text-[11px] font-bold flex items-center justify-center text-white"
                       style={{ backgroundColor: stage.color }}
                     >
-                      {stageLeads.length}
+                      {stageParticipants.length}
                     </span>
                   </div>
-                  <p className="text-[9px] text-muted-foreground/50 mt-0.5 truncate">{stage.subtitle}</p>
+                  <p className="text-[10px] text-muted-foreground mt-0.5">{stage.subtitle}</p>
                 </div>
 
                 {/* Cards */}
-                <div className="flex flex-col gap-1.5 px-1.5 pb-2 flex-1 min-h-[80px] max-h-[calc(100vh-340px)] overflow-y-auto">
-                  {stageLeads.length === 0 ? (
+                <div className="flex flex-col gap-2 px-2 pb-2 flex-1 min-h-[100px] max-h-[calc(100vh-380px)] overflow-y-auto">
+                  {stageParticipants.length === 0 ? (
                     <div
                       className={cn(
-                        "border border-dashed rounded-lg py-8 text-center text-[11px] text-muted-foreground/30 flex-1 flex items-center justify-center transition-colors",
-                        isDragOver && "border-solid bg-white/50"
+                        "border border-dashed rounded-lg py-10 text-center text-[11px] text-muted-foreground/40 flex-1 flex items-center justify-center transition-colors",
+                        isDragOver && "border-solid bg-background/60"
                       )}
-                      style={{ borderColor: stage.color + "25" }}
+                      style={{ borderColor: stage.color + "30" }}
                     >
                       {isDragOver ? "Loslaten" : "Sleep hierheen"}
                     </div>
                   ) : (
-                    stageLeads.map(lead => (
-                      <div key={lead.id} onDragEnd={handleDragEnd}>
-                        <LeadCard
-                          lead={lead}
+                    stageParticipants.map(p => (
+                      <div key={p.id} onDragEnd={handleDragEnd}>
+                        <ParticipantCard
+                          participant={p}
                           stageColor={stage.color}
                           onMoveNext={moveToNext}
-                          onOpenDetail={setSelectedLead}
+                          onOpenDetail={setSelectedParticipant}
                           onDragStart={handleDragStart}
                         />
                       </div>
@@ -606,28 +440,20 @@ export default function CrmPipelineSection() {
         </div>
       </div>
 
-      {/* Archive: not interested */}
-      {leads.filter(l => l.status === "not_interested").length > 0 && (
-        <details className="group">
-          <summary className="text-xs text-muted-foreground cursor-pointer hover:text-foreground list-none flex items-center gap-1.5 py-1">
-            <ChevronRight className="h-3 w-3 group-open:rotate-90 transition-transform" />
-            {leads.filter(l => l.status === "not_interested").length} niet geïnteresseerd (archief)
-          </summary>
-          <div className="mt-2 grid grid-cols-2 md:grid-cols-4 gap-2">
-            {leads.filter(l => l.status === "not_interested").map(lead => (
-              <div key={lead.id} onClick={() => setSelectedLead(lead)} className="bg-muted/30 border border-border rounded-lg p-2.5 cursor-pointer hover:bg-muted/50 opacity-50">
-                <p className="text-xs font-medium">{lead.first_name} {lead.last_name}</p>
-                <p className="text-[10px] text-muted-foreground">{lead.interest || lead.email}</p>
-              </div>
-            ))}
-          </div>
-        </details>
-      )}
-
       {/* Modals */}
-      {selectedLead && <LeadDetailModal lead={selectedLead} onClose={() => setSelectedLead(null)} onUpdate={updateLead} onConvert={lead => { setSelectedLead(null); setConvertingLead(lead); }} />}
-      {convertingLead && <ConvertLeadModal lead={convertingLead} onClose={() => setConvertingLead(null)} onConverted={handleConverted} />}
-      {showNewLead && <NewLeadModal onClose={() => setShowNewLead(false)} onCreated={lead => { setLeads(prev => [lead, ...prev]); setShowNewLead(false); }} />}
+      {selectedParticipant && (
+        <DetailModal
+          participant={selectedParticipant}
+          onClose={() => setSelectedParticipant(null)}
+          onUpdate={updateParticipant}
+        />
+      )}
+      {showNew && (
+        <NewParticipantModal
+          onClose={() => setShowNew(false)}
+          onCreated={p => { setParticipants(prev => [p, ...prev]); setShowNew(false); }}
+        />
+      )}
     </div>
   );
 }
