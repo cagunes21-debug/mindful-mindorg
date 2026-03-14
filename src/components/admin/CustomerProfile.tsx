@@ -250,11 +250,11 @@ function EmailHistoryTab({ clientId, clientEmail }: { clientId: string; clientEm
   const fetchEmails = async () => {
     setLoading(true);
     const { data } = await supabase
-      .from("email_logs")
+      .from("email_logs" as any)
       .select("*")
       .eq("client_id", clientId)
       .order("sent_at", { ascending: false });
-    setEmails((data || []) as EmailLog[]);
+    setEmails((data || []) as unknown as EmailLog[]);
     setLoading(false);
   };
 
