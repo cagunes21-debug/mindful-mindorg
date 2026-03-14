@@ -16,7 +16,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Textarea } from "@/components/ui/textarea";
 import {
   Loader2, Users, Search, Euro, Mail, Phone,
-  Calendar, Plus, MessageCircle, TrendingUp, UserPlus,
+  Calendar, Plus, MessageCircle, TrendingUp, UserPlus, ClipboardList,
 } from "lucide-react";
 import { format } from "date-fns";
 import { nl } from "date-fns/locale";
