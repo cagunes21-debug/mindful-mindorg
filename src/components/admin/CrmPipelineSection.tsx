@@ -131,7 +131,7 @@ function LeadDetailSheet({
   // Visual stage stepper
   const StagesStepper = () => (
     <div className="flex items-center gap-0.5 py-2">
-      {ACTIVE_STAGES.map((stage, i) => {
+      {LEAD_STAGES.map((stage, i) => {
         const isCurrent = stage.key === status;
         const isPast = STAGE_ORDER.indexOf(stage.key) < currentIdx;
         return (
