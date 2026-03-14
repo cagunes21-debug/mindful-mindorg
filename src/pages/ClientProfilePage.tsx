@@ -279,6 +279,14 @@ function SessionsTimeline({ sessionAppointments, enrollments }: {
 
 // ─── Trainer Notes ────────────────────────────────────────────────────────────
 
+const NOTE_TYPES: Record<string, { label: string; color: string }> = {
+  general: { label: "Algemeen", color: "bg-muted" },
+  intake: { label: "Intake-notitie", color: "bg-blue-50 dark:bg-blue-950/30" },
+  attention: { label: "Aandachtspunt", color: "bg-amber-50 dark:bg-amber-950/30" },
+  reflection: { label: "Reflectie na sessie", color: "bg-violet-50 dark:bg-violet-950/30" },
+  evaluation: { label: "Eindevaluatie", color: "bg-green-50 dark:bg-green-950/30" },
+};
+
 function TrainerNotesSection({ enrollments, notes, onNotesChange }: {
   enrollments: Enrollment[];
   notes: TrainerNote[];
@@ -287,14 +295,6 @@ function TrainerNotesSection({ enrollments, notes, onNotesChange }: {
   const [newNote, setNewNote] = useState("");
   const [noteType, setNoteType] = useState("general");
   const [saving, setSaving] = useState(false);
-
-  const NOTE_TYPES: Record<string, string> = {
-    general: "Algemeen",
-    intake: "Intake-notitie",
-    attention: "Aandachtspunt",
-    reflection: "Reflectie na sessie",
-    evaluation: "Eindevaluatie",
-  };
 
   const handleAdd = async () => {
     if (!newNote.trim() || enrollments.length === 0) return;
@@ -315,43 +315,61 @@ function TrainerNotesSection({ enrollments, notes, onNotesChange }: {
     setSaving(false);
   };
 
+  // Group notes by type
+  const grouped = notes.reduce((acc, n) => {
+    if (!acc[n.note_type]) acc[n.note_type] = [];
+    acc[n.note_type].push(n);
+    return acc;
+  }, {} as Record<string, TrainerNote[]>);
+
   return (
-    <div className="space-y-3">
+    <div className="space-y-4">
+      {/* Add note */}
       {enrollments.length > 0 && (
-        <div className="flex gap-2">
-          <Select value={noteType} onValueChange={setNoteType}>
-            <SelectTrigger className="w-40 h-8 text-xs">
-              <SelectValue />
-            </SelectTrigger>
-            <SelectContent>
-              {Object.entries(NOTE_TYPES).map(([k, v]) => (
-                <SelectItem key={k} value={k} className="text-xs">{v}</SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
-          <Textarea
-            value={newNote}
-            onChange={e => setNewNote(e.target.value)}
-            placeholder="Schrijf een notitie..."
-            className="flex-1 min-h-[40px] resize-none text-sm"
-          />
-          <Button size="sm" onClick={handleAdd} disabled={saving || !newNote.trim()} className="shrink-0">
-            {saving ? <Loader2 className="h-3.5 w-3.5 animate-spin" /> : <Plus className="h-3.5 w-3.5" />}
-          </Button>
-        </div>
+        <Card className="border-border/60">
+          <CardContent className="p-3 space-y-2">
+            <div className="flex gap-2">
+              <Select value={noteType} onValueChange={setNoteType}>
+                <SelectTrigger className="w-44 h-8 text-xs">
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  {Object.entries(NOTE_TYPES).map(([k, v]) => (
+                    <SelectItem key={k} value={k} className="text-xs">{v.label}</SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+              <Button size="sm" onClick={handleAdd} disabled={saving || !newNote.trim()} className="shrink-0 gap-1.5 h-8">
+                {saving ? <Loader2 className="h-3.5 w-3.5 animate-spin" /> : <Plus className="h-3.5 w-3.5" />}
+                Toevoegen
+              </Button>
+            </div>
+            <Textarea
+              value={newNote}
+              onChange={e => setNewNote(e.target.value)}
+              placeholder="Schrijf een notitie..."
+              className="min-h-[60px] resize-none text-sm"
+            />
+          </CardContent>
+        </Card>
       )}
+
+      {/* Notes grid */}
       {notes.length === 0 ? (
         <p className="text-sm text-muted-foreground py-2">Nog geen notities.</p>
       ) : (
-        <div className="space-y-2">
-          {notes.map(note => (
-            <div key={note.id} className="flex gap-2 py-2 border-b border-border/40 last:border-0">
-              <Badge variant="secondary" className="text-[10px] shrink-0 h-5">
-                {NOTE_TYPES[note.note_type] || note.note_type}
-              </Badge>
-              <p className="text-sm flex-1">{note.content}</p>
-            </div>
-          ))}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+          {notes.map(note => {
+            const type = NOTE_TYPES[note.note_type] || { label: note.note_type, color: "bg-muted" };
+            return (
+              <Card key={note.id} className={`border-border/60 ${type.color}`}>
+                <CardContent className="p-3">
+                  <Badge variant="outline" className="text-[10px] mb-2">{type.label}</Badge>
+                  <p className="text-sm leading-relaxed whitespace-pre-wrap">{note.content}</p>
+                </CardContent>
+              </Card>
+            );
+          })}
         </div>
       )}
     </div>
