@@ -41,8 +41,8 @@ const PROCESS_STEPS = [
     title: "In gesprek",
     status: "in_conversation",
     icon: MessageCircle,
-    color: "bg-violet-50 text-violet-700 border-violet-200",
-    dotColor: "bg-violet-400",
+    color: "bg-[#faeeda] text-[#633806] border-[#f0dfc0]",
+    dotColor: "bg-[#633806]",
     description: "Er is contact en er wordt actief gecommuniceerd over de mogelijkheden.",
     actions: [
       "Bespreek welke training of traject het beste past",
