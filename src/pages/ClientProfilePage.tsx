@@ -186,6 +186,14 @@ export default function ClientProfilePage() {
           />
         </section>
 
+        {/* Intake */}
+        {enrollments.length > 0 && (
+          <section>
+            <h2 className="text-sm font-semibold text-muted-foreground uppercase tracking-wide mb-3">Intake</h2>
+            <IntakeFormSection enrollmentId={enrollments[0].id} />
+          </section>
+        )}
+
         {/* Trainingen */}
         <section>
           <h2 className="text-sm font-semibold text-muted-foreground uppercase tracking-wide mb-3">Trainingen</h2>
