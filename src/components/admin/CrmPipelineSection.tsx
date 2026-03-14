@@ -441,6 +441,7 @@ export default function CrmPipelineSection({ onLeadsChange }: { onLeadsChange?: 
     const { data, error } = await supabase
       .from("leads")
       .select("*")
+      .neq("status", "converted_to_client")
       .order("submission_date", { ascending: false });
     if (!error) setLeads((data || []) as Lead[]);
     setLoading(false);
