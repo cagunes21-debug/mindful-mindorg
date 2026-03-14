@@ -73,8 +73,8 @@ const PROCESS_STEPS = [
     title: "Aangemeld",
     status: "registered",
     icon: ClipboardCheck,
-    color: "bg-emerald-50 text-emerald-700 border-emerald-200",
-    dotColor: "bg-emerald-400",
+    color: "bg-[#e1f5ee] text-[#085041] border-[#c3e8db]",
+    dotColor: "bg-[#085041]",
     description: "De lead heeft zich aangemeld voor een training of traject.",
     actions: [
       "Stuur een bevestigingsmail met praktische informatie",
