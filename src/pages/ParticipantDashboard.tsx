@@ -148,34 +148,12 @@ const ParticipantDashboard = () => {
   useEffect(() => {
     let cancelled = false;
 
-    const init = async () => {
+    const fetchEnrollments = async (sessionUser: User) => {
       try {
-        // 1. Get session
-        const { data: sessionData, error: sessionError } = await supabase.auth.getSession();
-        if (cancelled) return;
-
-        if (sessionError) {
-          console.error("[Dashboard] Session error:", sessionError.message);
-          setError("Sessie kon niet worden geladen: " + sessionError.message);
-          setLoading(false);
-          return;
-        }
-
-        const session = sessionData?.session;
-        if (!session?.user) {
-          console.warn("[Dashboard] No active session, redirecting to login");
-          navigate("/login");
-          return;
-        }
-
-        setUser(session.user);
-        console.log("[Dashboard] Session OK, user:", session.user.email);
-
-        // 2. Fetch enrollments
         const { data, error: fetchError } = await supabase
           .from("enrollments")
           .select("*")
-          .eq("user_id", session.user.id)
+          .eq("user_id", sessionUser.id)
           .order("start_date", { ascending: false });
 
         if (cancelled) return;
@@ -189,7 +167,6 @@ const ParticipantDashboard = () => {
 
         console.log("[Dashboard] Enrollments fetched:", data?.length ?? 0, data);
         setEnrollments((data ?? []) as Enrollment[]);
-
       } catch (err) {
         console.error("[Dashboard] Caught error:", err);
         if (!cancelled) {
@@ -200,8 +177,37 @@ const ParticipantDashboard = () => {
       }
     };
 
-    init();
-    return () => { cancelled = true; };
+    // 1. Listen for auth changes (handles post-login redirect)
+    const { data: { subscription } } = supabase.auth.onAuthStateChange(
+      (event, session) => {
+        if (cancelled) return;
+        console.log("[Dashboard] onAuthStateChange:", event);
+        if (session?.user) {
+          setUser(session.user);
+          // Fire-and-forget to avoid blocking auth event processing
+          setTimeout(() => fetchEnrollments(session.user), 0);
+        }
+      }
+    );
+
+    // 2. Then check persisted session
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      if (cancelled) return;
+      if (session?.user) {
+        setUser(session.user);
+        console.log("[Dashboard] Session OK, user:", session.user.email);
+        fetchEnrollments(session.user);
+      } else if (!cancelled) {
+        console.warn("[Dashboard] No active session, redirecting to login");
+        setLoading(false);
+        navigate("/login");
+      }
+    });
+
+    return () => {
+      cancelled = true;
+      subscription.unsubscribe();
+    };
   }, [navigate]);
 
   const firstName = user?.user_metadata?.full_name
