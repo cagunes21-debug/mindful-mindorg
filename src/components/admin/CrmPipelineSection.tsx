@@ -795,7 +795,7 @@ export default function CrmPipelineSection() {
       <div
         style={{
           display: "grid",
-          gridTemplateColumns: "repeat(4, 1fr)",
+          gridTemplateColumns: "repeat(5, 1fr)",
           gap: 10,
           alignItems: "start",
           overflowX: "auto",
