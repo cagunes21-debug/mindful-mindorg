@@ -17,6 +17,7 @@ import SessionsTab from "@/components/admin/customer-profile/SessionsTab";
 import QuestionnairesTab from "@/components/admin/customer-profile/QuestionnairesTab";
 import NotesTab from "@/components/admin/customer-profile/NotesTab";
 import PaymentsTab from "@/components/admin/customer-profile/PaymentsTab";
+import IntakeFormSection from "@/components/admin/customer-profile/IntakeFormSection";
 import {
   type CustomerData, type Registration, type Enrollment, type TrainerNote,
   type CourseWeek, type SessionAppointment,
