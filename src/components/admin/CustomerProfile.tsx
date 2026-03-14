@@ -113,7 +113,7 @@ function DocumentsTab({ clientId, clientName }: { clientId: string; clientName: 
   const handleDelete = async (doc: ClientDocument) => {
     if (!confirm(`Verwijder "${doc.name}"?`)) return;
     await supabase.storage.from("client-documents").remove([doc.file_path]);
-    await supabase.from("client_documents").delete().eq("id", doc.id);
+    await supabase.from("client_documents" as any).delete().eq("id", doc.id);
     setDocuments(prev => prev.filter(d => d.id !== doc.id));
     toast.success("Document verwijderd");
   };
