@@ -73,11 +73,11 @@ function DocumentsTab({ clientId, clientName }: { clientId: string; clientName: 
   const fetchDocs = async () => {
     setLoading(true);
     const { data } = await supabase
-      .from("client_documents" as any)
+      .from("client_documents")
       .select("*")
       .eq("client_id", clientId)
       .order("uploaded_at", { ascending: false });
-    setDocuments((data || []) as unknown as ClientDocument[]);
+    setDocuments((data || []) as ClientDocument[]);
     setLoading(false);
   };
 
@@ -92,7 +92,7 @@ function DocumentsTab({ clientId, clientName }: { clientId: string; clientName: 
         .upload(path, file);
       if (uploadError) throw uploadError;
 
-      const { error: dbError } = await supabase.from("client_documents" as any).insert({
+      const { error: dbError } = await supabase.from("client_documents").insert({
         client_id: clientId,
         name: file.name,
         file_path: path,
@@ -113,7 +113,7 @@ function DocumentsTab({ clientId, clientName }: { clientId: string; clientName: 
   const handleDelete = async (doc: ClientDocument) => {
     if (!confirm(`Verwijder "${doc.name}"?`)) return;
     await supabase.storage.from("client-documents").remove([doc.file_path]);
-    await supabase.from("client_documents" as any).delete().eq("id", doc.id);
+    await supabase.from("client_documents").delete().eq("id", doc.id);
     setDocuments(prev => prev.filter(d => d.id !== doc.id));
     toast.success("Document verwijderd");
   };
@@ -250,11 +250,11 @@ function EmailHistoryTab({ clientId, clientEmail }: { clientId: string; clientEm
   const fetchEmails = async () => {
     setLoading(true);
     const { data } = await supabase
-      .from("email_logs" as any)
+      .from("email_logs")
       .select("*")
       .eq("client_id", clientId)
       .order("sent_at", { ascending: false });
-    setEmails((data || []) as unknown as EmailLog[]);
+    setEmails((data || []) as EmailLog[]);
     setLoading(false);
   };
 
