@@ -191,7 +191,7 @@ export default function AdminCustomersSection({ initialTab = "customers" }: { in
             <Users className="h-4 w-4" /> Klanten ({customers.length})
           </TabsTrigger>
           <TabsTrigger value="leads" className="gap-2">
-            <MessageCircle className="h-4 w-4" /> Pipeline
+            <MessageCircle className="h-4 w-4" /> Website Leads
             {newLeadCount > 0 && (
               <Badge className="bg-terracotta-500 text-white text-[10px] ml-1 px-1.5 py-0">
                 {newLeadCount}
