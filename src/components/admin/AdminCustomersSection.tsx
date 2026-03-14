@@ -74,6 +74,7 @@ function PipelineFunnel({ stageCounts, totalLeads }: { stageCounts: Record<strin
 // ─── Main Component ───────────────────────────────────────────────────────────
 
 export default function AdminCustomersSection({ initialTab = "customers" }: { initialTab?: string }) {
+  const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(true);
   const [customers, setCustomers] = useState<Customer[]>([]);
   const [allLeads, setAllLeads] = useState<any[]>([]);
