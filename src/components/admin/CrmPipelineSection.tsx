@@ -52,19 +52,21 @@ const STAGES = [
   {
     key: "new",
     label: "Nieuw",
+    subtitle: "Nog geen contact",
     icon: Plus,
-    color: "#64748B",       // slate
+    color: "#64748B",
     bgClass: "bg-slate-50",
     textClass: "text-slate-700",
     borderClass: "border-slate-200",
-    actionLabel: "Contact opnemen →",
+    actionLabel: "Contact leggen →",
     nextStage: "contact_attempt",
   },
   {
     key: "contact_attempt",
-    label: "Contactpoging",
+    label: "Contact",
+    subtitle: "Eerste contact gelegd",
     icon: PhoneCall,
-    color: "#F59E0B",       // amber
+    color: "#F59E0B",
     bgClass: "bg-amber-50",
     textClass: "text-amber-700",
     borderClass: "border-amber-200",
@@ -73,20 +75,22 @@ const STAGES = [
   },
   {
     key: "in_conversation",
-    label: "In gesprek",
+    label: "Gesprek",
+    subtitle: "In gesprek",
     icon: MessagesSquare,
-    color: "#8B5CF6",       // violet
+    color: "#8B5CF6",
     bgClass: "bg-violet-50",
     textClass: "text-violet-700",
     borderClass: "border-violet-200",
-    actionLabel: "Kennismaking plannen →",
+    actionLabel: "Kennismaking →",
     nextStage: "intake_scheduled",
   },
   {
     key: "intake_scheduled",
     label: "Kennismaking",
+    subtitle: "Kennismaking gepland",
     icon: CalendarCheck,
-    color: "#3B82F6",       // blue
+    color: "#3B82F6",
     bgClass: "bg-blue-50",
     textClass: "text-blue-700",
     borderClass: "border-blue-200",
@@ -96,19 +100,21 @@ const STAGES = [
   {
     key: "registered",
     label: "Aangemeld",
+    subtitle: "Ingeschreven",
     icon: ClipboardCheck,
-    color: "#10B981",       // emerald
+    color: "#10B981",
     bgClass: "bg-emerald-50",
     textClass: "text-emerald-700",
     borderClass: "border-emerald-200",
-    actionLabel: "Omzetten naar klant →",
+    actionLabel: "Omzetten →",
     nextStage: "converted_to_client",
   },
   {
     key: "converted_to_client",
     label: "Deelnemer",
+    subtitle: "Programma gestart",
     icon: PartyPopper,
-    color: "#059669",       // green-dark
+    color: "#059669",
     bgClass: "bg-green-50",
     textClass: "text-green-700",
     borderClass: "border-green-200",
@@ -118,6 +124,7 @@ const STAGES = [
   {
     key: "not_interested",
     label: "Niet geïnteresseerd",
+    subtitle: "",
     icon: null,
     color: "#94A3B8",
     bgClass: "bg-muted/30",
@@ -837,9 +844,16 @@ export default function CrmPipelineSection() {
                   {Icon && (
                     <Icon className="h-3.5 w-3.5 flex-shrink-0" style={{ color: stage.color }} />
                   )}
-                  <span className="text-[11px] font-semibold text-foreground truncate">
-                    {stage.label}
-                  </span>
+                  <div className="flex flex-col min-w-0">
+                    <span className="text-[11px] font-semibold text-foreground truncate">
+                      {stage.label}
+                    </span>
+                    {stage.subtitle && (
+                      <span className="text-[9px] text-muted-foreground/60 truncate leading-tight">
+                        {stage.subtitle}
+                      </span>
+                    )}
+                  </div>
                   <span
                     className="ml-auto min-w-[20px] h-[20px] px-1.5 rounded-full text-[10px] font-bold flex items-center justify-center text-white"
                     style={{ backgroundColor: stage.color }}
