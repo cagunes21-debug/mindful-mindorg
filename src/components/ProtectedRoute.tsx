@@ -19,7 +19,7 @@ interface ProtectedRouteProps {
   requireAdmin?: boolean;
 }
 
-const AUTH_TIMEOUT_MS = 6_000;
+const AUTH_TIMEOUT_MS = 12_000;
 const ADMIN_CHECK_TIMEOUT_MS = 8_000;
 const ADMIN_RETRY_DELAY_MS = 1_500;
 const LOG_PREFIX = "[ProtectedRoute]";
