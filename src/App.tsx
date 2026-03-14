@@ -45,6 +45,7 @@ const IntakeForm = lazy(() => import("./pages/IntakeForm"));
 const SelfCompassionQuestionnaire = lazy(() => import("./pages/SelfCompassionQuestionnaire"));
 const MscMaterialsLibrary = lazy(() => import("./pages/MscMaterialsLibrary"));
 const MscSessionBuilder = lazy(() => import("./pages/MscSessionBuilder"));
+const AdminCMS = lazy(() => import("./pages/AdminCMS"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 
 const queryClient = new QueryClient();
@@ -105,6 +106,8 @@ const App = () => (
               <Route path="/intake/:enrollmentId" element={<IntakeForm />} />
               <Route path="/vragenlijst/:enrollmentId" element={<SelfCompassionQuestionnaire />} />
               
+              
+              <Route path="/admin-cms" element={<ProtectedRoute requireAdmin><AdminCMS /></ProtectedRoute>} />
               
               {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
               <Route path="*" element={<NotFound />} />
