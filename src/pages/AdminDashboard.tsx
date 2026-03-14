@@ -13,7 +13,8 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 import {
   Home, Users, ChevronRight, BookOpen, LogOut, Menu, X,
   ChevronLeft, Lock, Unlock, Loader2, Search, Plus, Send,
-  ExternalLink, Calendar, TrendingUp, GitBranch,
+  ExternalLink, Calendar, TrendingUp, GitBranch, Euro,
+  ArrowUpRight,
 } from "lucide-react";
 import SEO from "@/components/SEO";
 import AdminCustomersSection from "@/components/admin/AdminCustomersSection";
@@ -92,7 +93,7 @@ const NAV = [
     ],
   },
   {
-    group: "People",
+    group: "Relatiebeheer",
     items: [
       { id: "pipeline", label: "Pipeline",  icon: GitBranch },
       { id: "clients",  label: "Klanten",   icon: Users },
@@ -115,6 +116,15 @@ const SECTION_TITLES: Record<string, string> = {
   trainingen: "Lopende trainingen",
   deelnemers: "Deelnemers",
   agenda:     "Agenda",
+};
+
+const SECTION_DESCRIPTIONS: Record<string, string> = {
+  overview:   "Overzicht van je praktijk",
+  pipeline:   "Beheer je leads van eerste contact tot klant",
+  clients:    "Al je klanten en hun gegevens",
+  trainingen: "Bekijk wie in welke week zit",
+  deelnemers: "Alle inschrijvingen beheren",
+  agenda:     "Trainingsdata en planning",
 };
 
 // ─── Quick stats ──────────────────────────────────────────────────────────────
@@ -148,28 +158,31 @@ function useQuickStats() {
 
 // ─── Stat card ────────────────────────────────────────────────────────────────
 
-function StatCard({ icon: Icon, label, value, accent, badge, onClick }: {
+function StatCard({ icon: Icon, label, value, color, onClick }: {
   icon: React.ElementType; label: string; value: string | number;
-  accent: string; badge?: number; onClick?: () => void;
+  color: string; onClick?: () => void;
 }) {
   return (
     <Card
-      className={cn("border-l-4 cursor-pointer hover:shadow-md transition-all duration-200 group", accent)}
+      className={cn(
+        "cursor-pointer hover:shadow-md transition-all duration-200 group border-border/60 overflow-hidden relative",
+      )}
       onClick={onClick}
     >
-      <CardContent className="p-4 flex items-center gap-3">
-        <div className="h-10 w-10 rounded-xl bg-muted/50 flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform">
-          <Icon className="h-5 w-5 text-muted-foreground" />
+      <CardContent className="p-5">
+        <div className="flex items-start justify-between">
+          <div>
+            <p className="text-xs font-medium text-muted-foreground uppercase tracking-wide mb-1">{label}</p>
+            <p className="text-3xl font-bold text-foreground">{value}</p>
+          </div>
+          <div className={cn("h-10 w-10 rounded-xl flex items-center justify-center shrink-0 transition-transform group-hover:scale-110", color)}>
+            <Icon className="h-5 w-5" />
+          </div>
         </div>
-        <div className="flex-1 min-w-0">
-          <p className="text-2xl font-bold text-foreground leading-tight">{value}</p>
-          <p className="text-xs text-muted-foreground">{label}</p>
+        <div className="mt-3 flex items-center gap-1 text-xs text-muted-foreground group-hover:text-terracotta-600 transition-colors">
+          <span>Bekijken</span>
+          <ArrowUpRight className="h-3 w-3" />
         </div>
-        {badge ? (
-          <span className="h-5 min-w-5 px-1.5 rounded-full bg-terracotta-500 text-white text-[10px] font-bold flex items-center justify-center">
-            {badge}
-          </span>
-        ) : null}
       </CardContent>
     </Card>
   );
@@ -199,7 +212,6 @@ function LopendeTrainingenSection({ onViewDeelnemer }: { onViewDeelnemer: (id: s
       return { ...e, client_name: c ? `${c.first_name} ${c.last_name}`.trim() : "—", client_email: c?.email || "" };
     }) as Enrollment[];
 
-    // Group by course_type + start_date + trainer
     const map = new Map<string, TrainingGroup>();
     enrollments.forEach(e => {
       const key = `${e.course_type}__${e.start_date}__${e.trainer_name || ""}`;
@@ -217,7 +229,13 @@ function LopendeTrainingenSection({ onViewDeelnemer }: { onViewDeelnemer: (id: s
   );
 
   if (groups.length === 0) return (
-    <div className="text-center py-16 text-sm text-muted-foreground">Geen lopende trainingen</div>
+    <Card className="border-dashed">
+      <CardContent className="py-16 text-center">
+        <BookOpen className="h-10 w-10 text-muted-foreground/30 mx-auto mb-3" />
+        <p className="text-sm text-muted-foreground">Geen lopende trainingen</p>
+        <p className="text-xs text-muted-foreground/60 mt-1">Trainingen verschijnen hier zodra deelnemers zijn ingeschreven.</p>
+      </CardContent>
+    </Card>
   );
 
   return (
@@ -231,13 +249,12 @@ function LopendeTrainingenSection({ onViewDeelnemer }: { onViewDeelnemer: (id: s
         );
 
         return (
-          <Card key={idx} className="border-warm-200 overflow-hidden">
+          <Card key={idx} className="overflow-hidden border-border/60 hover:border-border transition-colors">
             <button
               className="w-full text-left"
               onClick={() => setExpanded(isOpen ? null : key)}
             >
               <CardContent className="p-5 flex items-center gap-4">
-                {/* Course type indicator */}
                 <div className="h-11 w-11 rounded-xl bg-terracotta-50 border border-terracotta-100 flex items-center justify-center shrink-0">
                   <BookOpen className="h-5 w-5 text-terracotta-600" />
                 </div>
@@ -259,20 +276,18 @@ function LopendeTrainingenSection({ onViewDeelnemer }: { onViewDeelnemer: (id: s
                   </div>
                 </div>
 
-                {/* Week progress */}
                 <div className="hidden sm:flex flex-col items-end gap-1 shrink-0">
                   <div className="flex gap-0.5">
                     {Array.from({ length: max }, (_, i) => i + 1).map(w => (
                       <div
                         key={w}
-                        className={cn("h-2 w-2 rounded-sm", w <= avgUnlocked ? "bg-terracotta-500" : "bg-warm-200")}
+                        className={cn("h-2 w-2 rounded-sm", w <= avgUnlocked ? "bg-terracotta-500" : "bg-muted")}
                       />
                     ))}
                   </div>
                   <span className="text-xs text-muted-foreground">gem. week {avgUnlocked}/{max}</span>
                 </div>
 
-                {/* Participants count */}
                 <div className="text-right shrink-0">
                   <p className="text-xl font-bold text-foreground">{group.enrollments.length}</p>
                   <p className="text-xs text-muted-foreground">
@@ -284,9 +299,8 @@ function LopendeTrainingenSection({ onViewDeelnemer }: { onViewDeelnemer: (id: s
               </CardContent>
             </button>
 
-            {/* Expanded deelnemers */}
             {isOpen && (
-              <div className="border-t border-warm-100">
+              <div className="border-t">
                 <Table>
                   <TableHeader>
                     <TableRow>
@@ -309,7 +323,7 @@ function LopendeTrainingenSection({ onViewDeelnemer }: { onViewDeelnemer: (id: s
                             <div className="flex items-center gap-2">
                               <div className="flex gap-0.5">
                                 {Array.from({ length: max }, (_, i) => i + 1).map(w => (
-                                  <div key={w} className={cn("h-2 w-2 rounded-sm", (e.unlocked_weeks || []).includes(w) ? "bg-terracotta-500" : "bg-warm-200")} />
+                                  <div key={w} className={cn("h-2 w-2 rounded-sm", (e.unlocked_weeks || []).includes(w) ? "bg-terracotta-500" : "bg-muted")} />
                                 ))}
                               </div>
                               <span className="text-xs text-muted-foreground">{unlocked}/{max}</span>
@@ -434,11 +448,11 @@ function DeelnemersSection() {
   });
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-5">
       {/* Stats */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
         {(["active", "invited", "completed", "all"] as const).map(s => (
-          <Card key={s} className="border-warm-200">
+          <Card key={s} className="border-border/60">
             <CardContent className="p-4">
               <p className="text-2xl font-semibold">
                 {s === "all" ? enrollments.length : enrollments.filter(e => e.status === s).length}
@@ -474,7 +488,7 @@ function DeelnemersSection() {
       </div>
 
       {/* Table */}
-      <Card className="border-warm-200">
+      <Card className="border-border/60">
         <CardContent className="p-0">
           {loading ? (
             <div className="flex justify-center py-16"><Loader2 className="h-8 w-8 animate-spin text-terracotta-400" /></div>
@@ -510,7 +524,7 @@ function DeelnemersSection() {
                         <div className="flex items-center gap-2">
                           <div className="flex gap-0.5">
                             {Array.from({ length: max }, (_, i) => i + 1).map(w => (
-                              <div key={w} className={cn("h-2 w-2 rounded-sm", (e.unlocked_weeks || []).includes(w) ? "bg-terracotta-500" : "bg-warm-200")} />
+                              <div key={w} className={cn("h-2 w-2 rounded-sm", (e.unlocked_weeks || []).includes(w) ? "bg-terracotta-500" : "bg-muted")} />
                             ))}
                           </div>
                           <span className="text-xs text-muted-foreground">{unlocked}/{max}</span>
@@ -567,7 +581,7 @@ function DeelnemersSection() {
                         className={cn(
                           "flex items-center justify-between px-3 py-2 rounded-lg border text-sm font-medium transition-all",
                           on ? "bg-terracotta-50 border-terracotta-200 text-terracotta-700 hover:bg-terracotta-100"
-                             : "bg-warm-50 border-warm-200 text-muted-foreground hover:bg-warm-100"
+                             : "bg-muted/30 border-border text-muted-foreground hover:bg-muted/60"
                         )}
                       >
                         <span>{w}</span>
@@ -681,6 +695,10 @@ export default function AdminDashboard() {
     navigate("/login");
   };
 
+  // Time-based greeting
+  const hour = new Date().getHours();
+  const greeting = hour < 12 ? "Goedemorgen" : hour < 18 ? "Goedemiddag" : "Goedenavond";
+
   return (
     <div className="min-h-screen bg-background flex">
       <SEO title="Admin | Mindful Mind" description="Beheer dashboard" />
@@ -692,7 +710,7 @@ export default function AdminDashboard() {
       {/* ── Sidebar ── */}
       <aside className={cn(
         "bg-card border-r border-border flex flex-col shrink-0 transition-all duration-300 z-50",
-        "md:sticky md:top-0 md:h-screen md:w-52",
+        "md:sticky md:top-0 md:h-screen md:w-56",
         isMobile && "fixed top-0 left-0 h-full w-64 shadow-xl",
         isMobile && !sidebarOpen && "-translate-x-full",
         isMobile && sidebarOpen && "translate-x-0",
@@ -700,10 +718,13 @@ export default function AdminDashboard() {
         {/* Logo */}
         <div className="h-14 flex items-center justify-between px-5 border-b border-border shrink-0">
           <div className="flex items-center gap-2.5">
-            <div className="h-6 w-6 rounded-full bg-terracotta-100 flex items-center justify-center">
-              <div className="h-2.5 w-2.5 rounded-full bg-terracotta-500" />
+            <div className="h-7 w-7 rounded-lg bg-terracotta-100 flex items-center justify-center">
+              <div className="h-3 w-3 rounded-full bg-terracotta-500" />
             </div>
-            <span className="text-sm font-semibold text-foreground">Mindful Mind</span>
+            <div>
+              <span className="text-sm font-semibold text-foreground block leading-tight">Mindful Mind</span>
+              <span className="text-[10px] text-muted-foreground leading-tight">Beheerportaal</span>
+            </div>
           </div>
           {isMobile && (
             <button onClick={() => setSidebarOpen(false)} className="p-1 rounded-md hover:bg-muted">
@@ -716,7 +737,7 @@ export default function AdminDashboard() {
         <nav className="flex-1 py-4 px-3 overflow-y-auto space-y-5">
           {NAV.map(group => (
             <div key={group.group}>
-              <p className="text-[10px] font-bold uppercase tracking-[0.15em] text-muted-foreground/50 px-3 mb-1.5">
+              <p className="text-[10px] font-bold uppercase tracking-[0.15em] text-muted-foreground/50 px-3 mb-2">
                 {group.group}
               </p>
               <div className="space-y-0.5">
@@ -727,13 +748,13 @@ export default function AdminDashboard() {
                     <button key={item.id} onClick={() => handleNav(item.id)}
                       className={cn(
                         "w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-[13px] transition-all duration-150",
-                        active ? "bg-terracotta-50 text-terracotta-700 font-medium" : "text-muted-foreground hover:bg-muted/60 hover:text-foreground"
+                        active ? "bg-terracotta-50 text-terracotta-700 font-medium shadow-sm" : "text-muted-foreground hover:bg-muted/60 hover:text-foreground"
                       )}
                     >
                       <item.icon className={cn("h-4 w-4 shrink-0", active && "text-terracotta-600")} />
                       <span className="flex-1 truncate text-left">{item.label}</span>
                       {badge ? (
-                        <span className="h-5 min-w-5 px-1.5 rounded-full bg-terracotta-500 text-white text-[10px] font-bold flex items-center justify-center">
+                        <span className="h-5 min-w-5 px-1.5 rounded-full bg-terracotta-500 text-white text-[10px] font-bold flex items-center justify-center animate-pulse">
                           {badge}
                         </span>
                       ) : active ? (
@@ -748,19 +769,19 @@ export default function AdminDashboard() {
 
           {/* External links */}
           <div>
-            <p className="text-[10px] font-bold uppercase tracking-[0.15em] text-muted-foreground/50 px-3 mb-1.5">
-              Portalen
+            <p className="text-[10px] font-bold uppercase tracking-[0.15em] text-muted-foreground/50 px-3 mb-2">
+              Extra
             </p>
             <div className="space-y-0.5">
               {[
-                { label: "Financiën →",     path: "/admin/financien" },
-                { label: "Content →",       path: "/admin-cms" },
+                { label: "Content beheer", path: "/admin-cms", icon: BookOpen },
               ].map(link => (
                 <button key={link.path} onClick={() => navigate(link.path)}
                   className="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-[13px] text-muted-foreground hover:bg-muted/60 hover:text-foreground transition-all"
                 >
-                  <ExternalLink className="h-4 w-4 shrink-0" />
-                  <span className="text-left">{link.label}</span>
+                  <link.icon className="h-4 w-4 shrink-0" />
+                  <span className="text-left flex-1">{link.label}</span>
+                  <ExternalLink className="h-3 w-3 opacity-40" />
                 </button>
               ))}
             </div>
@@ -770,7 +791,7 @@ export default function AdminDashboard() {
         {/* Footer */}
         <div className="border-t border-border p-3 shrink-0">
           <button onClick={handleLogout}
-            className="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-[13px] text-muted-foreground hover:bg-red-50 hover:text-red-600 transition-colors"
+            className="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-[13px] text-muted-foreground hover:bg-destructive/10 hover:text-destructive transition-colors"
           >
             <LogOut className="h-4 w-4 shrink-0" />
             <span>Uitloggen</span>
@@ -792,53 +813,72 @@ export default function AdminDashboard() {
 
         <div className="max-w-6xl mx-auto px-4 sm:px-6 py-6 space-y-6">
 
-          {/* Breadcrumb */}
-          {activeSection !== "overview" && (
-            <div className="flex items-center gap-2">
+          {/* Header with breadcrumb */}
+          <div className="space-y-1">
+            {activeSection !== "overview" && (
               <button onClick={() => setActiveSection("overview")}
-                className="inline-flex items-center gap-1.5 text-sm text-terracotta-600 hover:text-terracotta-800 font-medium transition-colors group"
+                className="inline-flex items-center gap-1.5 text-xs text-terracotta-600 hover:text-terracotta-800 font-medium transition-colors group mb-1"
               >
-                <ChevronLeft className="h-4 w-4 group-hover:-translate-x-0.5 transition-transform" />
-                Dashboard
+                <ChevronLeft className="h-3.5 w-3.5 group-hover:-translate-x-0.5 transition-transform" />
+                Terug naar dashboard
               </button>
-              <span className="text-muted-foreground/40">/</span>
-              <span className="text-sm text-muted-foreground">{SECTION_TITLES[activeSection]}</span>
-            </div>
-          )}
-
-          {/* Title */}
-          <div>
-            <h1 className="text-2xl font-light text-foreground">
-              {SECTION_TITLES[activeSection] || "Admin"}
-            </h1>
-            {activeSection === "overview" && (
-              <p className="text-sm text-muted-foreground mt-0.5">Welkom terug.</p>
             )}
+            <h1 className="text-2xl font-semibold text-foreground">
+              {activeSection === "overview" ? `${greeting} 👋` : SECTION_TITLES[activeSection]}
+            </h1>
+            <p className="text-sm text-muted-foreground">
+              {SECTION_DESCRIPTIONS[activeSection]}
+            </p>
           </div>
 
           {/* ── OVERVIEW ── */}
           {activeSection === "overview" && (
-            <div className="space-y-6">
-              <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
-                <StatCard icon={Users}     label="Klanten"            value={statsLoading ? "…" : stats.clients}     accent="border-l-sage-500"       onClick={() => handleNav("clients")} />
-                <StatCard icon={BookOpen}  label="Actieve trainingen" value={statsLoading ? "…" : stats.enrollments} accent="border-l-terracotta-500" onClick={() => handleNav("trainingen")} />
-                <StatCard icon={GitBranch} label="Nieuwe leads"       value={statsLoading ? "…" : stats.leads}       accent="border-l-amber-500"      badge={stats.leads > 0 ? stats.leads : undefined} onClick={() => handleNav("pipeline")} />
-                <StatCard icon={ChevronRight} label="Omzet"           value={statsLoading ? "…" : `€${stats.revenue.toLocaleString("nl-NL")}`} accent="border-l-emerald-500" onClick={() => navigate("/admin/financien")} />
+            <div className="space-y-8">
+              {/* Stat cards */}
+              <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+                <StatCard
+                  icon={Users}
+                  label="Klanten"
+                  value={statsLoading ? "…" : stats.clients}
+                  color="bg-sage-50 text-sage-700"
+                  onClick={() => handleNav("clients")}
+                />
+                <StatCard
+                  icon={BookOpen}
+                  label="Actieve trainingen"
+                  value={statsLoading ? "…" : stats.enrollments}
+                  color="bg-terracotta-50 text-terracotta-700"
+                  onClick={() => handleNav("trainingen")}
+                />
+                <StatCard
+                  icon={GitBranch}
+                  label="Nieuwe leads"
+                  value={statsLoading ? "…" : stats.leads}
+                  color="bg-amber-50 text-amber-700"
+                  onClick={() => handleNav("pipeline")}
+                />
+                <StatCard
+                  icon={Euro}
+                  label="Totale omzet"
+                  value={statsLoading ? "…" : `€${stats.revenue.toLocaleString("nl-NL")}`}
+                  color="bg-emerald-50 text-emerald-700"
+                  onClick={() => navigate("/admin/financien")}
+                />
               </div>
 
+              {/* Upcoming sessions */}
               <UpcomingSessionsWidget />
 
+              {/* Quick actions */}
               <div>
-                <p className="text-xs font-bold uppercase tracking-[0.15em] text-muted-foreground/60 mb-3">
-                  Snelle acties
-                </p>
+                <h2 className="text-sm font-semibold text-foreground mb-3">Snel navigeren</h2>
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
                   {[
-                    { label: "Pipeline",           desc: `${stats.leads} nieuwe leads`,          icon: GitBranch, section: "pipeline",   color: "bg-amber-50 text-amber-700"           },
-                    { label: "Lopende trainingen", desc: "Bekijk wie in welke week zit",          icon: BookOpen,  section: "trainingen", color: "bg-terracotta-50 text-terracotta-700" },
-                    { label: "Klanten",            desc: "Profielen, sessies, documenten",        icon: Users,     section: "clients",    color: "bg-sage-50 text-sage-700"             },
+                    { label: "Pipeline",           desc: stats.leads > 0 ? `${stats.leads} nieuwe leads wachten` : "Geen nieuwe leads", icon: GitBranch, section: "pipeline",   color: "bg-amber-50 text-amber-700" },
+                    { label: "Lopende trainingen", desc: "Bekijk wie in welke week zit",   icon: BookOpen,  section: "trainingen", color: "bg-terracotta-50 text-terracotta-700" },
+                    { label: "Klanten",            desc: "Profielen & sessies beheren",    icon: Users,     section: "clients",    color: "bg-sage-50 text-sage-700" },
                   ].map(a => (
-                    <Card key={a.section} className="cursor-pointer hover:shadow-md transition-all group border-warm-200" onClick={() => handleNav(a.section)}>
+                    <Card key={a.section} className="cursor-pointer hover:shadow-md transition-all group border-border/60 hover:border-border" onClick={() => handleNav(a.section)}>
                       <CardContent className="p-4 flex items-center gap-3">
                         <div className={cn("h-10 w-10 rounded-xl flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform", a.color)}>
                           <a.icon className="h-5 w-5" />
@@ -847,7 +887,7 @@ export default function AdminDashboard() {
                           <p className="text-sm font-medium">{a.label}</p>
                           <p className="text-xs text-muted-foreground">{a.desc}</p>
                         </div>
-                        <ChevronRight className="h-4 w-4 text-muted-foreground opacity-0 group-hover:opacity-100 transition-all" />
+                        <ArrowUpRight className="h-4 w-4 text-muted-foreground opacity-0 group-hover:opacity-100 transition-all" />
                       </CardContent>
                     </Card>
                   ))}
