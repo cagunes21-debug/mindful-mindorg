@@ -308,7 +308,7 @@ export default function AdminCustomersSection({ initialTab = "customers" }: { in
                       <TableRow
                         key={customer.email}
                         className="cursor-pointer hover:bg-accent/30"
-                        onClick={() => setSelectedCustomerEmail(customer.email)}
+                        onClick={() => navigate(`/admin/klant/${encodeURIComponent(customer.email)}`)}
                       >
                         <TableCell className="py-2.5">
                           <span className="font-medium text-sm">{customer.name}</span>
