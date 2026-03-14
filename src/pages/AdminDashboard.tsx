@@ -896,7 +896,7 @@ export default function AdminDashboard() {
           )}
 
           {/* ── Sections ── */}
-          {activeSection === "pipeline"   && <CrmPipelineSection />}
+          {/* pipeline is now inside clients tab */}
           {activeSection === "clients"    && <AdminCustomersSection initialTab="customers" />}
           {activeSection === "trainingen" && <LopendeTrainingenSection onViewDeelnemer={() => handleNav("deelnemers")} />}
           {activeSection === "deelnemers" && <DeelnemersSection />}
