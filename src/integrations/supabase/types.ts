@@ -103,6 +103,47 @@ export type Database = {
         }
         Relationships: []
       }
+      client_documents: {
+        Row: {
+          client_id: string
+          file_path: string
+          file_size: number | null
+          file_type: string
+          id: string
+          name: string
+          notes: string | null
+          uploaded_at: string
+        }
+        Insert: {
+          client_id: string
+          file_path: string
+          file_size?: number | null
+          file_type?: string
+          id?: string
+          name: string
+          notes?: string | null
+          uploaded_at?: string
+        }
+        Update: {
+          client_id?: string
+          file_path?: string
+          file_size?: number | null
+          file_type?: string
+          id?: string
+          name?: string
+          notes?: string | null
+          uploaded_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "client_documents_client_id_fkey"
+            columns: ["client_id"]
+            isOneToOne: false
+            referencedRelation: "clients"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       client_sessions: {
         Row: {
           client_id: string
@@ -230,6 +271,44 @@ export type Database = {
           week_number?: number
         }
         Relationships: []
+      }
+      email_logs: {
+        Row: {
+          body_preview: string | null
+          client_id: string
+          email_type: string
+          id: string
+          sent_at: string
+          status: string
+          subject: string
+        }
+        Insert: {
+          body_preview?: string | null
+          client_id: string
+          email_type?: string
+          id?: string
+          sent_at?: string
+          status?: string
+          subject: string
+        }
+        Update: {
+          body_preview?: string | null
+          client_id?: string
+          email_type?: string
+          id?: string
+          sent_at?: string
+          status?: string
+          subject?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "email_logs_client_id_fkey"
+            columns: ["client_id"]
+            isOneToOne: false
+            referencedRelation: "clients"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       enrollments: {
         Row: {
