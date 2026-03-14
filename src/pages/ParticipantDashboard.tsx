@@ -236,15 +236,28 @@ const ParticipantDashboard = () => {
 
     const init = async () => {
       try {
-        const { data: { session }, error: sessionError } = await supabase.auth.getSession();
+        // 1. Get session
+        const { data: sessionData, error: sessionError } = await supabase.auth.getSession();
         if (cancelled) return;
-        if (sessionError || !session?.user) {
-          setError(sessionError?.message ?? "Niet ingelogd.");
+
+        if (sessionError) {
+          console.error("[Dashboard] Session error:", sessionError.message);
+          setError("Sessie kon niet worden geladen: " + sessionError.message);
           setLoading(false);
           return;
         }
-        setUser(session.user);
 
+        const session = sessionData?.session;
+        if (!session?.user) {
+          console.warn("[Dashboard] No active session, redirecting to login");
+          navigate("/login");
+          return;
+        }
+
+        setUser(session.user);
+        console.log("[Dashboard] Session OK, user:", session.user.email);
+
+        // 2. Fetch enrollments
         const { data, error: fetchError } = await supabase
           .from("enrollments")
           .select("*")
@@ -252,22 +265,30 @@ const ParticipantDashboard = () => {
           .order("start_date", { ascending: false });
 
         if (cancelled) return;
-        if (fetchError) { setError(fetchError.message); setLoading(false); return; }
+
+        if (fetchError) {
+          console.error("[Dashboard] Enrollments error:", fetchError.message, fetchError.details);
+          setError("Kon trainingen niet ophalen: " + fetchError.message);
+          setLoading(false);
+          return;
+        }
+
+        console.log("[Dashboard] Enrollments fetched:", data?.length ?? 0, data);
         setEnrollments((data ?? []) as Enrollment[]);
+
       } catch (err) {
-        if (!cancelled) setError("Er ging iets mis. Ververs de pagina.");
+        console.error("[Dashboard] Caught error:", err);
+        if (!cancelled) {
+          setError("Onverwachte fout: " + (err instanceof Error ? err.message : String(err)));
+        }
       } finally {
         if (!cancelled) setLoading(false);
       }
     };
 
-    const timeout = setTimeout(() => {
-      if (!cancelled) { setLoading(false); setError("Laden duurde te lang. Ververs de pagina."); }
-    }, 15000);
-
     init();
-    return () => { cancelled = true; clearTimeout(timeout); };
-  }, []);
+    return () => { cancelled = true; };
+  }, [navigate]);
 
   const firstName = user?.user_metadata?.full_name
     ? user.user_metadata.full_name.split(" ")[0]
