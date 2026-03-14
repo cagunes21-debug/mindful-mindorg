@@ -73,11 +73,11 @@ function DocumentsTab({ clientId, clientName }: { clientId: string; clientName: 
   const fetchDocs = async () => {
     setLoading(true);
     const { data } = await supabase
-      .from("client_documents")
+      .from("client_documents" as any)
       .select("*")
       .eq("client_id", clientId)
       .order("uploaded_at", { ascending: false });
-    setDocuments((data || []) as ClientDocument[]);
+    setDocuments((data || []) as unknown as ClientDocument[]);
     setLoading(false);
   };
 
