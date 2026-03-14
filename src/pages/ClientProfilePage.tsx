@@ -815,8 +815,12 @@ function ScsResultsSection({ enrollmentIds }: { enrollmentIds: string[] }) {
     })();
   }, [enrollmentIds.join(",")]);
 
+  const copyLink = (url: string, label: string) => {
+    navigator.clipboard.writeText(url);
+    toast.success(`${label} gekopieerd!`);
+  };
+
   if (loading) return <div className="flex justify-center py-4"><Loader2 className="h-5 w-5 animate-spin text-muted-foreground" /></div>;
-  if (submissions.length === 0) return <p className="text-sm text-muted-foreground py-2">Nog geen vragenlijsten ingevuld.</p>;
 
   const subscales = [
     { key: "self_kindness", label: "Zelfvriendelijkheid", positive: true },
@@ -832,6 +836,27 @@ function ScsResultsSection({ enrollmentIds }: { enrollmentIds: string[] }) {
 
   return (
     <div className="space-y-3">
+      {/* Links */}
+      <div className="flex flex-wrap gap-1.5">
+        {enrollmentIds.map((id, i) => {
+          const preUrl = `${window.location.origin}/vragenlijst/${id}`;
+          const postUrl = `${window.location.origin}/vragenlijst/${id}?type=post`;
+          return (
+            <div key={id} className="flex gap-1.5">
+              <Button size="sm" variant="outline" className="h-7 text-xs gap-1" onClick={() => copyLink(preUrl, "0-meting link")}>
+                <BarChart3 className="h-3 w-3" /> 0-meting link
+              </Button>
+              <Button size="sm" variant="outline" className="h-7 text-xs gap-1" onClick={() => copyLink(postUrl, "Nameting link")}>
+                <BarChart3 className="h-3 w-3" /> Nameting link
+              </Button>
+            </div>
+          );
+        })}
+      </div>
+
+      {submissions.length === 0 && <p className="text-sm text-muted-foreground py-2">Nog geen vragenlijsten ingevuld.</p>}
+
+      {submissions.length > 0 && <>
       {/* Comparison view if both exist */}
       {pre && post ? (
         <div className="space-y-3">
