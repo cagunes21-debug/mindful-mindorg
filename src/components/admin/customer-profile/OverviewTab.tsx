@@ -6,7 +6,8 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 import {
   Mail, Phone, Calendar, Euro, ShoppingBag, Clock, AlertCircle, CheckCircle2,
-  Copy, FileText, BarChart3, ClipboardList, Brain, MessageSquare, Heart, Target,
+  FileText, BarChart3, ClipboardList, Brain, MessageSquare, Heart, Target,
+  AlertTriangle, Plus, Loader2,
 } from "lucide-react";
 import { format } from "date-fns";
 import { nl } from "date-fns/locale";
@@ -21,6 +22,8 @@ interface OverviewTabProps {
   structuredNotes: TrainerNote[];
   onTrainingClick: (training: string) => void;
   onTabChange: (tab: string) => void;
+  clientId?: string | null;
+  onRefresh?: () => void;
 }
 
 interface IntakeSummary {
@@ -43,11 +46,13 @@ interface TherapyCount {
 
 export default function OverviewTab({
   customer, enrollments, registrations, sessionAppointments, structuredNotes, onTrainingClick, onTabChange,
+  clientId, onRefresh,
 }: OverviewTabProps) {
   const [intakeSummaries, setIntakeSummaries] = useState<IntakeSummary[]>([]);
   const [scsSummaries, setScsSummaries] = useState<ScsSummary[]>([]);
   const [therapyCounts, setTherapyCounts] = useState<TherapyCount[]>([]);
   const [loadingExtra, setLoadingExtra] = useState(true);
+  const [creatingEnrollment, setCreatingEnrollment] = useState<string | null>(null);
 
   useEffect(() => {
     if (enrollments.length === 0) { setLoadingExtra(false); return; }
@@ -59,7 +64,6 @@ export default function OverviewTab({
     ]).then(([intakeRes, scsRes, therapyRes]) => {
       setIntakeSummaries((intakeRes.data || []) as IntakeSummary[]);
       setScsSummaries((scsRes.data || []) as ScsSummary[]);
-      // Count therapy sessions per enrollment
       const counts: Record<string, number> = {};
       (therapyRes.data || []).forEach((t: any) => { counts[t.enrollment_id] = (counts[t.enrollment_id] || 0) + 1; });
       setTherapyCounts(Object.entries(counts).map(([enrollment_id, count]) => ({ enrollment_id, count })));
@@ -89,6 +93,54 @@ export default function OverviewTab({
   const scsCount = scsSummaries.length;
   const therapyCount = therapyCounts.reduce((s, t) => s + t.count, 0);
   const trainerNoteCount = structuredNotes.filter(n => n.content.trim()).length;
+
+  // Find registrations without linked enrollments
+  const linkedRegIds = new Set(enrollments.map(e => e.registration_id).filter(Boolean));
+  const unlinkedRegistrations = registrations.filter(r => !linkedRegIds.has(r.id));
+
+  const trainingToCourseType = (name: string): string => {
+    if (name.toLowerCase().includes("8-weeks") || name.toLowerCase().includes("groep") || name.toLowerCase().includes("msc")) return "msc_8week";
+    if (name.toLowerCase().includes("individueel") || name.toLowerCase().includes("6 sessies")) return "individueel_6";
+    if (name.toLowerCase().includes("los") || name.toLowerCase().includes("coaching")) return "losse_sessie";
+    return "individueel_6";
+  };
+
+  const handleCreateEnrollment = async (reg: Registration) => {
+    if (!clientId) {
+      toast.error("Geen klantprofiel gevonden. Maak eerst een klant aan.");
+      return;
+    }
+    setCreatingEnrollment(reg.id);
+    try {
+      const courseType = trainingToCourseType(reg.training_name);
+      const { error } = await supabase.from("enrollments").insert({
+        client_id: clientId,
+        registration_id: reg.id,
+        course_type: courseType,
+        start_date: reg.training_date || new Date().toISOString().split("T")[0],
+        status: "active",
+        unlocked_weeks: [1],
+      });
+      if (error) throw error;
+      toast.success(`Traject aangemaakt voor "${reg.training_name}"`);
+      onRefresh?.();
+    } catch (err: any) {
+      toast.error("Fout: " + err.message);
+    }
+    setCreatingEnrollment(null);
+  };
+
+  const getPaymentBadge = (status: string | null) => {
+    if (status === "paid") return <Badge className="bg-emerald-100 text-emerald-700 border-emerald-200 text-[10px]">Betaald</Badge>;
+    if (status === "awaiting_payment") return <Badge className="bg-amber-100 text-amber-700 border-amber-200 text-[10px]">Wacht op betaling</Badge>;
+    return <Badge variant="outline" className="text-[10px]">Open</Badge>;
+  };
+
+  const getStatusBadge = (status: string) => {
+    if (status === "confirmed") return <Badge className="bg-emerald-100 text-emerald-700 border-emerald-200 text-[10px]">Bevestigd</Badge>;
+    if (status === "cancelled") return <Badge className="bg-red-100 text-red-600 border-red-200 text-[10px]">Geannuleerd</Badge>;
+    return <Badge variant="outline" className="text-[10px]">Aangemeld</Badge>;
+  };
 
   return (
     <div className="space-y-4">
@@ -152,6 +204,60 @@ export default function OverviewTab({
         </div>
       )}
 
+      {/* Unlinked registrations — show registration details with option to create enrollment */}
+      {unlinkedRegistrations.length > 0 && (
+        <div>
+          <p className="text-xs text-muted-foreground font-medium mb-2 flex items-center gap-1.5">
+            <ClipboardList className="h-3.5 w-3.5" /> Aanmeldingen
+            {enrollments.length === 0 && (
+              <span className="text-amber-600 flex items-center gap-1 ml-1">
+                <AlertTriangle className="h-3 w-3" /> Nog geen traject gestart
+              </span>
+            )}
+          </p>
+          <div className="space-y-2">
+            {unlinkedRegistrations.map(reg => (
+              <Card key={reg.id} className="border-border/60">
+                <CardContent className="p-3">
+                  <div className="flex items-start justify-between gap-3">
+                    <div className="flex-1 min-w-0 space-y-1">
+                      <p className="text-sm font-medium">{reg.training_name}</p>
+                      <div className="flex flex-wrap items-center gap-2">
+                        {getStatusBadge(reg.status)}
+                        {getPaymentBadge(reg.payment_status)}
+                        {reg.price && (
+                          <span className="text-xs text-muted-foreground">€{reg.price}</span>
+                        )}
+                        <span className="text-xs text-muted-foreground">
+                          {format(new Date(reg.created_at), "d MMM yyyy", { locale: nl })}
+                        </span>
+                      </div>
+                      {reg.admin_notes && (
+                        <p className="text-xs text-muted-foreground italic mt-1">{reg.admin_notes}</p>
+                      )}
+                    </div>
+                    <Button
+                      size="sm"
+                      variant="outline"
+                      className="gap-1.5 shrink-0 text-xs"
+                      disabled={creatingEnrollment === reg.id || !clientId}
+                      onClick={() => handleCreateEnrollment(reg)}
+                    >
+                      {creatingEnrollment === reg.id ? (
+                        <Loader2 className="h-3 w-3 animate-spin" />
+                      ) : (
+                        <Plus className="h-3 w-3" />
+                      )}
+                      Traject starten
+                    </Button>
+                  </div>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        </div>
+      )}
+
       {/* Session progress for individual */}
       {hasIndividual && (
         <Card className="border-primary/20 bg-primary/5">
@@ -185,6 +291,55 @@ export default function OverviewTab({
             </div>
           </CardContent>
         </Card>
+      )}
+
+      {/* Active enrollments summary */}
+      {enrollments.length > 0 && (
+        <div>
+          <p className="text-xs text-muted-foreground font-medium mb-2 flex items-center gap-1.5">
+            <Target className="h-3.5 w-3.5" /> Lopende trajecten
+          </p>
+          <div className="space-y-2">
+            {enrollments.map(e => {
+              const courseLabels: Record<string, string> = {
+                msc_8week: "8-weekse Groepstraining",
+                individueel_6: "Individueel (6 sessies)",
+                losse_sessie: "Losse Sessie",
+              };
+              const statusLabels: Record<string, { label: string; className: string }> = {
+                active: { label: "Actief", className: "bg-emerald-100 text-emerald-700 border-emerald-200" },
+                invited: { label: "Uitgenodigd", className: "bg-blue-100 text-blue-700 border-blue-200" },
+                paused: { label: "Gepauzeerd", className: "bg-amber-100 text-amber-700 border-amber-200" },
+                completed: { label: "Afgerond", className: "bg-muted text-muted-foreground" },
+                cancelled: { label: "Geannuleerd", className: "bg-red-100 text-red-600 border-red-200" },
+              };
+              const st = statusLabels[e.status] || statusLabels.active;
+              return (
+                <Card key={e.id} className="border-border/60">
+                  <CardContent className="p-3">
+                    <div className="flex items-center justify-between">
+                      <div className="space-y-1">
+                        <p className="text-sm font-medium">{courseLabels[e.course_type] || e.course_type}</p>
+                        <div className="flex items-center gap-2">
+                          <Badge className={`${st.className} text-[10px]`}>{st.label}</Badge>
+                          <span className="text-xs text-muted-foreground">
+                            Start: {format(new Date(e.start_date), "d MMM yyyy", { locale: nl })}
+                          </span>
+                          {e.trainer_name && (
+                            <span className="text-xs text-muted-foreground">• {e.trainer_name}</span>
+                          )}
+                        </div>
+                      </div>
+                      <Button size="sm" variant="ghost" className="text-xs" onClick={() => onTabChange("trainings")}>
+                        Bekijken
+                      </Button>
+                    </div>
+                  </CardContent>
+                </Card>
+              );
+            })}
+          </div>
+        </div>
       )}
 
       {/* Data completeness overview */}
