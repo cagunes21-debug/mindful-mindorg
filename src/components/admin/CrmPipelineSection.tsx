@@ -8,7 +8,7 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter } from "@/components/ui/dialog";
-import { Loader2, Search, Phone, Mail, MessageCircle, ChevronRight, UserPlus, Clock } from "lucide-react";
+import { Loader2, Search, Phone, Mail, Clock, Sparkles, MessageCircle, ArrowRight } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { toast } from "sonner";
 import { format, formatDistanceToNow } from "date-fns";
@@ -29,10 +29,10 @@ interface Lead {
 }
 
 const COLUMNS = [
-  { id: "new",                label: "Nieuw",        color: "bg-blue-500" },
-  { id: "contacted",          label: "Gecontacteerd", color: "bg-amber-500" },
-  { id: "in_conversation",    label: "In gesprek",    color: "bg-purple-500" },
-  { id: "converted_to_client",label: "Klant ✓",       color: "bg-green-500" },
+  { id: "new",                 label: "Nieuw",         emoji: "✨", bg: "bg-blue-50",    border: "border-blue-200",   dot: "bg-blue-500",   text: "text-blue-700" },
+  { id: "contacted",           label: "Gecontacteerd", emoji: "📞", bg: "bg-amber-50",   border: "border-amber-200",  dot: "bg-amber-500",  text: "text-amber-700" },
+  { id: "in_conversation",     label: "In gesprek",    emoji: "💬", bg: "bg-purple-50",  border: "border-purple-200", dot: "bg-purple-500", text: "text-purple-700" },
+  { id: "converted_to_client", label: "Klant",         emoji: "✅", bg: "bg-emerald-50", border: "border-emerald-200",dot: "bg-emerald-500",text: "text-emerald-700" },
 ];
 
 export default function CrmPipelineSection() {
@@ -66,6 +66,13 @@ export default function CrmPipelineSection() {
     setSaving(false);
   };
 
+  const moveToNext = async (lead: Lead) => {
+    const currentIdx = COLUMNS.findIndex(c => c.id === lead.status);
+    if (currentIdx < COLUMNS.length - 1) {
+      await updateStatus(lead.id, COLUMNS[currentIdx + 1].id);
+    }
+  };
+
   const saveNotes = async () => {
     if (!selected) return;
     setSaving(true);
@@ -92,12 +99,31 @@ export default function CrmPipelineSection() {
     return <div className="flex justify-center py-16"><Loader2 className="h-8 w-8 animate-spin text-muted-foreground" /></div>;
   }
 
+  // Summary stats
+  const totalLeads = leads.length;
+  const newCount = leads.filter(l => l.status === "new").length;
+
   return (
-    <div className="space-y-4">
-      {/* Search */}
-      <div className="relative max-w-sm">
-        <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-        <Input placeholder="Zoek lead..." value={search} onChange={e => setSearch(e.target.value)} className="pl-10" />
+    <div className="space-y-5">
+      {/* Header bar */}
+      <div className="flex flex-col sm:flex-row sm:items-center gap-3">
+        <div className="relative flex-1 max-w-sm">
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+          <Input
+            placeholder="Zoek op naam of e-mail..."
+            value={search}
+            onChange={e => setSearch(e.target.value)}
+            className="pl-10 bg-card"
+          />
+        </div>
+        <div className="flex items-center gap-3 text-xs text-muted-foreground">
+          <span>{totalLeads} leads totaal</span>
+          {newCount > 0 && (
+            <Badge className="bg-blue-100 text-blue-700 hover:bg-blue-100 border-0 text-[10px]">
+              {newCount} nieuw
+            </Badge>
+          )}
+        </div>
       </div>
 
       {/* Pipeline columns */}
@@ -105,39 +131,95 @@ export default function CrmPipelineSection() {
         {COLUMNS.map(col => {
           const colLeads = filtered.filter(l => l.status === col.id);
           return (
-            <div key={col.id} className="space-y-2">
-              <div className="flex items-center gap-2 px-1">
-                <div className={cn("h-2 w-2 rounded-full", col.color)} />
-                <span className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">{col.label}</span>
-                <Badge variant="secondary" className="text-[10px] ml-auto">{colLeads.length}</Badge>
+            <div key={col.id} className="space-y-2.5">
+              {/* Column header */}
+              <div className={cn(
+                "flex items-center gap-2 px-3 py-2 rounded-xl border",
+                col.bg, col.border
+              )}>
+                <span className="text-sm">{col.emoji}</span>
+                <span className={cn("text-xs font-semibold", col.text)}>{col.label}</span>
+                <span className={cn(
+                  "ml-auto text-[10px] font-bold h-5 min-w-5 px-1.5 rounded-full flex items-center justify-center",
+                  colLeads.length > 0 ? `${col.bg} ${col.text}` : "bg-muted/50 text-muted-foreground"
+                )}>
+                  {colLeads.length}
+                </span>
               </div>
-              <div className="space-y-2 min-h-[120px]">
-                {colLeads.map(lead => (
-                  <Card
-                    key={lead.id}
-                    className="cursor-pointer hover:shadow-md transition-all border-border/60"
-                    onClick={() => openLead(lead)}
-                  >
-                    <CardContent className="p-3 space-y-2">
-                      <div className="flex items-start justify-between">
-                        <div>
-                          <p className="text-sm font-medium">{lead.first_name} {lead.last_name}</p>
-                          <p className="text-xs text-muted-foreground">{lead.email}</p>
+
+              {/* Cards */}
+              <div className="space-y-2 min-h-[100px]">
+                {colLeads.map(lead => {
+                  const currentIdx = COLUMNS.findIndex(c => c.id === lead.status);
+                  const nextCol = currentIdx < COLUMNS.length - 1 ? COLUMNS[currentIdx + 1] : null;
+
+                  return (
+                    <Card
+                      key={lead.id}
+                      className="cursor-pointer hover:shadow-md hover:-translate-y-0.5 transition-all duration-200 border-border/50 group"
+                      onClick={() => openLead(lead)}
+                    >
+                      <CardContent className="p-3.5 space-y-2.5">
+                        {/* Name + initials */}
+                        <div className="flex items-start gap-2.5">
+                          <div className={cn(
+                            "h-8 w-8 rounded-full flex items-center justify-center text-[10px] font-bold shrink-0",
+                            col.bg, col.text
+                          )}>
+                            {lead.first_name[0]}{lead.last_name?.[0] || ""}
+                          </div>
+                          <div className="flex-1 min-w-0">
+                            <p className="text-sm font-medium text-foreground truncate">
+                              {lead.first_name} {lead.last_name}
+                            </p>
+                            <p className="text-[11px] text-muted-foreground truncate">{lead.email}</p>
+                          </div>
                         </div>
-                        <ChevronRight className="h-4 w-4 text-muted-foreground shrink-0 mt-0.5" />
-                      </div>
-                      {lead.interest && (
-                        <Badge variant="outline" className="text-[10px]">{lead.interest}</Badge>
-                      )}
-                      <div className="flex items-center gap-1 text-[10px] text-muted-foreground">
-                        <Clock className="h-3 w-3" />
-                        {formatDistanceToNow(new Date(lead.created_at), { addSuffix: true, locale: nl })}
-                      </div>
-                    </CardContent>
-                  </Card>
-                ))}
+
+                        {/* Interest tag */}
+                        {lead.interest && (
+                          <Badge variant="outline" className="text-[10px] font-normal border-border/60">
+                            {lead.interest}
+                          </Badge>
+                        )}
+
+                        {/* Footer: time + quick action */}
+                        <div className="flex items-center justify-between pt-0.5">
+                          <div className="flex items-center gap-1 text-[10px] text-muted-foreground">
+                            <Clock className="h-3 w-3" />
+                            {formatDistanceToNow(new Date(lead.created_at), { addSuffix: true, locale: nl })}
+                          </div>
+                          {nextCol && (
+                            <button
+                              onClick={(e) => { e.stopPropagation(); moveToNext(lead); }}
+                              className={cn(
+                                "opacity-0 group-hover:opacity-100 transition-opacity text-[10px] font-medium flex items-center gap-0.5 px-1.5 py-0.5 rounded-md",
+                                nextCol.bg, nextCol.text
+                              )}
+                              title={`Verplaats naar ${nextCol.label}`}
+                            >
+                              <ArrowRight className="h-3 w-3" />
+                            </button>
+                          )}
+                        </div>
+
+                        {/* Notes indicator */}
+                        {lead.notes && (
+                          <div className="flex items-center gap-1 text-[10px] text-muted-foreground/60">
+                            <MessageCircle className="h-3 w-3" />
+                            <span className="truncate">{lead.notes.slice(0, 40)}{lead.notes.length > 40 ? "…" : ""}</span>
+                          </div>
+                        )}
+                      </CardContent>
+                    </Card>
+                  );
+                })}
+
                 {colLeads.length === 0 && (
-                  <div className="text-center py-8 text-xs text-muted-foreground/50">Geen leads</div>
+                  <div className="flex flex-col items-center justify-center py-8 text-muted-foreground/30">
+                    <div className="text-2xl mb-1">{col.emoji}</div>
+                    <span className="text-[11px]">Geen leads</span>
+                  </div>
                 )}
               </div>
             </div>
@@ -146,75 +228,113 @@ export default function CrmPipelineSection() {
       </div>
 
       {/* Lead detail dialog */}
-      {selected && (
-        <Dialog open onOpenChange={() => setSelected(null)}>
-          <DialogContent className="sm:max-w-lg">
-            <DialogHeader>
-              <DialogTitle>{selected.first_name} {selected.last_name}</DialogTitle>
-              <DialogDescription>
-                Ontvangen {format(new Date(selected.created_at), "d MMMM yyyy", { locale: nl })}
-              </DialogDescription>
-            </DialogHeader>
-            <div className="space-y-4">
-              {/* Contact info */}
-              <div className="flex flex-wrap gap-2">
-                <a href={`mailto:${selected.email}`} className="inline-flex items-center gap-1.5 text-xs bg-muted px-2.5 py-1.5 rounded-lg hover:bg-muted/80">
-                  <Mail className="h-3 w-3" /> {selected.email}
-                </a>
-                {selected.phone_number && (
-                  <a href={`tel:${selected.phone_number}`} className="inline-flex items-center gap-1.5 text-xs bg-muted px-2.5 py-1.5 rounded-lg hover:bg-muted/80">
-                    <Phone className="h-3 w-3" /> {selected.phone_number}
+      {selected && (() => {
+        const col = COLUMNS.find(c => c.id === selected.status) || COLUMNS[0];
+        const currentIdx = COLUMNS.findIndex(c => c.id === selected.status);
+        const nextCol = currentIdx < COLUMNS.length - 1 ? COLUMNS[currentIdx + 1] : null;
+
+        return (
+          <Dialog open onOpenChange={() => setSelected(null)}>
+            <DialogContent className="sm:max-w-lg">
+              <DialogHeader>
+                <div className="flex items-center gap-3">
+                  <div className={cn("h-10 w-10 rounded-full flex items-center justify-center text-sm font-bold", col.bg, col.text)}>
+                    {selected.first_name[0]}{selected.last_name?.[0] || ""}
+                  </div>
+                  <div>
+                    <DialogTitle className="text-lg">{selected.first_name} {selected.last_name}</DialogTitle>
+                    <DialogDescription>
+                      Ontvangen {format(new Date(selected.created_at), "d MMMM yyyy", { locale: nl })}
+                    </DialogDescription>
+                  </div>
+                </div>
+              </DialogHeader>
+
+              <div className="space-y-4 pt-2">
+                {/* Contact chips */}
+                <div className="flex flex-wrap gap-2">
+                  <a href={`mailto:${selected.email}`} className="inline-flex items-center gap-1.5 text-xs bg-muted/70 px-3 py-2 rounded-lg hover:bg-muted transition-colors">
+                    <Mail className="h-3.5 w-3.5 text-muted-foreground" /> {selected.email}
                   </a>
+                  {selected.phone_number && (
+                    <a href={`tel:${selected.phone_number}`} className="inline-flex items-center gap-1.5 text-xs bg-muted/70 px-3 py-2 rounded-lg hover:bg-muted transition-colors">
+                      <Phone className="h-3.5 w-3.5 text-muted-foreground" /> {selected.phone_number}
+                    </a>
+                  )}
+                </div>
+
+                {/* Message */}
+                {selected.message && (
+                  <div className="space-y-1.5">
+                    <Label className="text-[10px] uppercase tracking-widest text-muted-foreground font-semibold">Bericht</Label>
+                    <div className="text-sm bg-muted/30 rounded-xl p-3.5 border border-border/50 leading-relaxed">
+                      {selected.message}
+                    </div>
+                  </div>
                 )}
-              </div>
 
-              {/* Message */}
-              {selected.message && (
-                <div>
-                  <Label className="text-xs uppercase tracking-wide text-muted-foreground">Bericht</Label>
-                  <p className="text-sm mt-1 bg-muted/50 rounded-lg p-3">{selected.message}</p>
+                {/* Interest */}
+                {selected.interest && (
+                  <div className="space-y-1.5">
+                    <Label className="text-[10px] uppercase tracking-widest text-muted-foreground font-semibold">Interesse</Label>
+                    <Badge variant="outline" className="text-xs">{selected.interest}</Badge>
+                  </div>
+                )}
+
+                {/* Status with visual pipeline */}
+                <div className="space-y-2">
+                  <Label className="text-[10px] uppercase tracking-widest text-muted-foreground font-semibold">Status</Label>
+                  <div className="flex items-center gap-1 mb-2">
+                    {COLUMNS.map((c, i) => (
+                      <button
+                        key={c.id}
+                        onClick={() => updateStatus(selected.id, c.id)}
+                        className={cn(
+                          "flex-1 py-1.5 px-2 rounded-lg text-[10px] font-medium transition-all text-center border",
+                          selected.status === c.id
+                            ? `${c.bg} ${c.text} ${c.border} shadow-sm`
+                            : "bg-muted/30 text-muted-foreground border-transparent hover:bg-muted/60"
+                        )}
+                      >
+                        {c.emoji} {c.label}
+                      </button>
+                    ))}
+                  </div>
                 </div>
-              )}
 
-              {/* Interest */}
-              {selected.interest && (
-                <div>
-                  <Label className="text-xs uppercase tracking-wide text-muted-foreground">Interesse</Label>
-                  <p className="text-sm mt-1">{selected.interest}</p>
+                {/* Notes */}
+                <div className="space-y-1.5">
+                  <Label className="text-[10px] uppercase tracking-widest text-muted-foreground font-semibold">Notities</Label>
+                  <Textarea
+                    value={noteText}
+                    onChange={e => setNoteText(e.target.value)}
+                    placeholder="Notities over deze lead..."
+                    className="min-h-[80px] bg-card"
+                  />
                 </div>
-              )}
-
-              {/* Status */}
-              <div>
-                <Label className="text-xs uppercase tracking-wide text-muted-foreground">Status</Label>
-                <Select value={selected.status} onValueChange={v => updateStatus(selected.id, v)}>
-                  <SelectTrigger className="mt-1"><SelectValue /></SelectTrigger>
-                  <SelectContent>
-                    {COLUMNS.map(c => <SelectItem key={c.id} value={c.id}>{c.label}</SelectItem>)}
-                  </SelectContent>
-                </Select>
               </div>
 
-              {/* Notes */}
-              <div>
-                <Label className="text-xs uppercase tracking-wide text-muted-foreground">Notities</Label>
-                <Textarea
-                  value={noteText}
-                  onChange={e => setNoteText(e.target.value)}
-                  placeholder="Notities over deze lead..."
-                  className="mt-1 min-h-[80px]"
-                />
-              </div>
-            </div>
-            <DialogFooter>
-              <Button variant="outline" onClick={() => setSelected(null)}>Sluiten</Button>
-              <Button onClick={saveNotes} disabled={saving}>
-                {saving ? <Loader2 className="h-4 w-4 animate-spin" /> : "Opslaan"}
-              </Button>
-            </DialogFooter>
-          </DialogContent>
-        </Dialog>
-      )}
+              <DialogFooter className="gap-2 sm:gap-0">
+                {nextCol && (
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    className={cn("gap-1.5 mr-auto", nextCol.text)}
+                    onClick={() => moveToNext(selected)}
+                  >
+                    <ArrowRight className="h-3.5 w-3.5" />
+                    Verplaats naar {nextCol.label}
+                  </Button>
+                )}
+                <Button variant="outline" onClick={() => setSelected(null)}>Sluiten</Button>
+                <Button onClick={saveNotes} disabled={saving} className="bg-primary hover:bg-primary/90">
+                  {saving ? <Loader2 className="h-4 w-4 animate-spin" /> : "Opslaan"}
+                </Button>
+              </DialogFooter>
+            </DialogContent>
+          </Dialog>
+        );
+      })()}
     </div>
   );
 }
