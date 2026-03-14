@@ -95,7 +95,6 @@ const NAV = [
   {
     group: "Relatiebeheer",
     items: [
-      { id: "pipeline", label: "Pipeline",  icon: GitBranch },
       { id: "clients",  label: "Klanten",   icon: Users },
     ],
   },
@@ -111,8 +110,7 @@ const NAV = [
 
 const SECTION_TITLES: Record<string, string> = {
   overview:   "Dashboard",
-  pipeline:   "Pipeline",
-  clients:    "Klanten",
+  clients:    "Klanten & Leads",
   trainingen: "Lopende trainingen",
   deelnemers: "Deelnemers",
   agenda:     "Agenda",
@@ -120,8 +118,7 @@ const SECTION_TITLES: Record<string, string> = {
 
 const SECTION_DESCRIPTIONS: Record<string, string> = {
   overview:   "Overzicht van je praktijk",
-  pipeline:   "Beheer je leads van eerste contact tot klant",
-  clients:    "Al je klanten en hun gegevens",
+  clients:    "Al je klanten, leads en pipeline",
   trainingen: "Bekijk wie in welke week zit",
   deelnemers: "Alle inschrijvingen beheren",
   agenda:     "Trainingsdata en planning",
@@ -743,7 +740,7 @@ export default function AdminDashboard() {
               <div className="space-y-0.5">
                 {group.items.map(item => {
                   const active = activeSection === item.id;
-                  const badge = item.id === "pipeline" && stats.leads > 0 ? stats.leads : undefined;
+                  const badge = item.id === "clients" && stats.leads > 0 ? stats.leads : undefined;
                   return (
                     <button key={item.id} onClick={() => handleNav(item.id)}
                       className={cn(
@@ -855,7 +852,7 @@ export default function AdminDashboard() {
                   label="Nieuwe leads"
                   value={statsLoading ? "…" : stats.leads}
                   color="bg-amber-50 text-amber-700"
-                  onClick={() => handleNav("pipeline")}
+                  onClick={() => { handleNav("clients"); }}
                 />
                 <StatCard
                   icon={Euro}
@@ -874,7 +871,7 @@ export default function AdminDashboard() {
                 <h2 className="text-sm font-semibold text-foreground mb-3">Snel navigeren</h2>
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
                   {[
-                    { label: "Pipeline",           desc: stats.leads > 0 ? `${stats.leads} nieuwe leads wachten` : "Geen nieuwe leads", icon: GitBranch, section: "pipeline",   color: "bg-amber-50 text-amber-700" },
+                    { label: "Leads & Pipeline",    desc: stats.leads > 0 ? `${stats.leads} nieuwe leads wachten` : "Geen nieuwe leads", icon: GitBranch, section: "clients",    color: "bg-amber-50 text-amber-700" },
                     { label: "Lopende trainingen", desc: "Bekijk wie in welke week zit",   icon: BookOpen,  section: "trainingen", color: "bg-terracotta-50 text-terracotta-700" },
                     { label: "Klanten",            desc: "Profielen & sessies beheren",    icon: Users,     section: "clients",    color: "bg-sage-50 text-sage-700" },
                   ].map(a => (
@@ -897,7 +894,7 @@ export default function AdminDashboard() {
           )}
 
           {/* ── Sections ── */}
-          {activeSection === "pipeline"   && <CrmPipelineSection />}
+          {/* pipeline is now inside clients tab */}
           {activeSection === "clients"    && <AdminCustomersSection initialTab="customers" />}
           {activeSection === "trainingen" && <LopendeTrainingenSection onViewDeelnemer={() => handleNav("deelnemers")} />}
           {activeSection === "deelnemers" && <DeelnemersSection />}
