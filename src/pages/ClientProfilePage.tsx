@@ -15,7 +15,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import {
   ArrowLeft, Loader2, Plus, Mail, Phone, Calendar, Euro, ChevronDown,
   Sparkles, Save, CheckCircle2, AlertCircle, Clock, Target, Heart, Brain,
-  FileText, RefreshCw, Trash2, Pencil, X, Download,
+  FileText, RefreshCw, Trash2, Pencil, X, Download, BarChart3,
 } from "lucide-react";
 import { format } from "date-fns";
 import { nl } from "date-fns/locale";
