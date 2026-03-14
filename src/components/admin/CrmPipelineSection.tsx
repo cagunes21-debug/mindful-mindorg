@@ -68,19 +68,12 @@ const STAGES = [
     label: "Kennismaking gepland",
     color: { bg: "#EEEDFE", text: "#534AB7", border: "#CECBF6", dot: "#7F77DD" },
     actionLabel: "Aanmelding maken →",
-    nextStage: "registration",
-  },
-  {
-    key: "registration",
-    label: "Aanmelding",
-    color: { bg: "#E8F2FD", text: "#1A5FAA", border: "#A8CFF0", dot: "#378ADD" },
-    actionLabel: "Omzetten naar cliënt →",
     nextStage: "converted_to_client",
   },
   {
     key: "converted_to_client",
     label: "Deelnemer / cliënt",
-    color: { bg: "#E2F5EE", text: "#0E6B4A", border: "#8FD9BA", dot: "#1D9E75" },
+    color: { bg: "#EAF3DE", text: "#3B6D11", border: "#C0DD97", dot: "#639922" },
     actionLabel: "Klantprofiel →",
     nextStage: null,
   },
@@ -795,7 +788,7 @@ export default function CrmPipelineSection() {
       <div
         style={{
           display: "grid",
-          gridTemplateColumns: "repeat(5, 1fr)",
+          gridTemplateColumns: "repeat(4, 1fr)",
           gap: 10,
           alignItems: "start",
           overflowX: "auto",
