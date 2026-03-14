@@ -47,6 +47,7 @@ const MscMaterialsLibrary = lazy(() => import("./pages/MscMaterialsLibrary"));
 const MscSessionBuilder = lazy(() => import("./pages/MscSessionBuilder"));
 const AdminCMS = lazy(() => import("./pages/AdminCMS"));
 const TrainingPage = lazy(() => import("./pages/TrainingPage"));
+const ClientProfilePage = lazy(() => import("./pages/ClientProfilePage"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 
 const queryClient = new QueryClient();
@@ -85,6 +86,7 @@ const App = () => (
               <Route path="/login" element={<Auth />} />
               <Route path="/admin" element={<ProtectedRoute requireAdmin><AdminDashboard /></ProtectedRoute>} />
               <Route path="/admin/klanten" element={<ProtectedRoute requireAdmin><AdminDashboard /></ProtectedRoute>} />
+              <Route path="/admin/klant/:email" element={<ProtectedRoute requireAdmin><ClientProfilePage /></ProtectedRoute>} />
               <Route path="/admin/blog" element={<ProtectedRoute requireAdmin><AdminBlog /></ProtectedRoute>} />
               <Route path="/mijn-trainingen" element={<ProtectedRoute><ParticipantDashboard /></ProtectedRoute>} />
               <Route path="/training/:id" element={<ProtectedRoute><TrainingPage /></ProtectedRoute>} />

@@ -2,6 +2,7 @@
 // Unified CRM hub: metrics, pipeline overview, clients & leads in one polished view
 
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -21,7 +22,7 @@ import {
 import { format } from "date-fns";
 import { nl } from "date-fns/locale";
 import { toast } from "sonner";
-import CustomerProfile from "@/components/admin/CustomerProfile";
+
 import CrmPipelineSection from "@/components/admin/CrmPipelineSection";
 import LeadProcesTab from "@/components/admin/LeadProcesTab";
 
@@ -73,11 +74,11 @@ function PipelineFunnel({ stageCounts, totalLeads }: { stageCounts: Record<strin
 // ─── Main Component ───────────────────────────────────────────────────────────
 
 export default function AdminCustomersSection({ initialTab = "customers" }: { initialTab?: string }) {
+  const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(true);
   const [customers, setCustomers] = useState<Customer[]>([]);
   const [allLeads, setAllLeads] = useState<any[]>([]);
   const [searchQuery, setSearchQuery] = useState("");
-  const [selectedCustomerEmail, setSelectedCustomerEmail] = useState<string | null>(null);
   const [showNewClient, setShowNewClient] = useState(false);
   const [newClient, setNewClient] = useState({ first_name: "", last_name: "", email: "", phone: "", notes: "" });
   const [submitting, setSubmitting] = useState(false);
@@ -307,7 +308,7 @@ export default function AdminCustomersSection({ initialTab = "customers" }: { in
                       <TableRow
                         key={customer.email}
                         className="cursor-pointer hover:bg-accent/30"
-                        onClick={() => setSelectedCustomerEmail(customer.email)}
+                        onClick={() => navigate(`/admin/klant/${encodeURIComponent(customer.email)}`)}
                       >
                         <TableCell className="py-2.5">
                           <span className="font-medium text-sm">{customer.name}</span>
@@ -375,13 +376,6 @@ export default function AdminCustomersSection({ initialTab = "customers" }: { in
         </TabsContent>
       </Tabs>
 
-      {/* Customer Profile Modal */}
-      {selectedCustomerEmail && (
-        <CustomerProfile
-          email={selectedCustomerEmail}
-          onClose={() => setSelectedCustomerEmail(null)}
-        />
-      )}
 
       {/* New Client Dialog */}
       <Dialog open={showNewClient} onOpenChange={setShowNewClient}>
