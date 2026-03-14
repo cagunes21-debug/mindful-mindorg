@@ -92,7 +92,7 @@ function DocumentsTab({ clientId, clientName }: { clientId: string; clientName: 
         .upload(path, file);
       if (uploadError) throw uploadError;
 
-      const { error: dbError } = await supabase.from("client_documents").insert({
+      const { error: dbError } = await supabase.from("client_documents" as any).insert({
         client_id: clientId,
         name: file.name,
         file_path: path,
