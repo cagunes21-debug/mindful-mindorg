@@ -57,8 +57,8 @@ const PROCESS_STEPS = [
     title: "Kennismakingsgesprek",
     status: "intake_scheduled",
     icon: CalendarCheck,
-    color: "bg-blue-50 text-blue-700 border-blue-200",
-    dotColor: "bg-blue-400",
+    color: "bg-[#faeeda] text-[#633806] border-[#f0dfc0]",
+    dotColor: "bg-[#633806]",
     description: "Een kennismakings- of intakegesprek is ingepland (online of fysiek).",
     actions: [
       "Bevestig datum, tijd en locatie per e-mail/WhatsApp",
