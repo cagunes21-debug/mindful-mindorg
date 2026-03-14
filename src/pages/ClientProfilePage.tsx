@@ -930,6 +930,7 @@ function ScsResultsSection({ enrollmentIds }: { enrollmentIds: string[] }) {
           </div>
         ))
       )}
+      </>}
     </div>
   );
 }
