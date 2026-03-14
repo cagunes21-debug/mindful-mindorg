@@ -47,11 +47,11 @@ interface Lead {
 // ─── Pipeline stages (leads only) ────────────────────────────────────────────
 
 const STAGES = [
-  { key: "new",             label: "Nieuw",              tagClass: "bg-slate-100 text-slate-700 border-slate-200",     dotClass: "bg-slate-400" },
-  { key: "contact_attempt", label: "Contact opnemen",    tagClass: "bg-amber-50 text-amber-700 border-amber-200",     dotClass: "bg-amber-400" },
-  { key: "in_conversation", label: "In gesprek",         tagClass: "bg-violet-50 text-violet-700 border-violet-200",  dotClass: "bg-violet-400" },
-  { key: "intake_scheduled",label: "Kennismakingsgesprek",tagClass: "bg-blue-50 text-blue-700 border-blue-200",       dotClass: "bg-blue-400" },
-  { key: "registered",      label: "Aangemeld",          tagClass: "bg-emerald-50 text-emerald-700 border-emerald-200", dotClass: "bg-emerald-400" },
+  { key: "new",             label: "Nieuw",              tagClass: "bg-[#f1efe8] text-[#5f5e5a] border-[#e0ded6]",     dotClass: "bg-[#5f5e5a]" },
+  { key: "contact_attempt", label: "Gecontacteerd",      tagClass: "bg-[#e6f1fb] text-[#0c447c] border-[#c8dff4]",    dotClass: "bg-[#0c447c]" },
+  { key: "in_conversation", label: "Geïnteresseerd",     tagClass: "bg-[#faeeda] text-[#633806] border-[#f0dfc0]",    dotClass: "bg-[#633806]" },
+  { key: "intake_scheduled",label: "Kennismakingsgesprek",tagClass: "bg-[#faeeda] text-[#633806] border-[#f0dfc0]",   dotClass: "bg-[#633806]" },
+  { key: "registered",      label: "Aangemeld",          tagClass: "bg-[#e1f5ee] text-[#085041] border-[#c3e8db]",    dotClass: "bg-[#085041]" },
   { key: "not_interested",  label: "Niet geïnteresseerd",tagClass: "bg-red-50 text-red-600 border-red-200",           dotClass: "bg-red-400" },
 ];
 
