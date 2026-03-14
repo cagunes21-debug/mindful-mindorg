@@ -1,6 +1,5 @@
 // src/components/admin/AdminCustomersSection.tsx
-// The leads tab now uses the CrmPipelineSection Kanban board.
-// All other functionality (customers tab, new client dialog, convert lead, etc.) is unchanged.
+// Unified CRM hub: metrics, pipeline overview, clients & leads in one polished view
 
 import { useState, useEffect } from "react";
 import { supabase } from "@/integrations/supabase/client";
@@ -16,8 +15,8 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, Di
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Textarea } from "@/components/ui/textarea";
 import {
-  Loader2, Users, Search, Euro, Mail, Phone, ShoppingBag,
-  Calendar, Plus, MessageCircle,
+  Loader2, Users, Search, Euro, Mail, Phone,
+  Calendar, Plus, MessageCircle, TrendingUp, UserPlus,
 } from "lucide-react";
 import { format } from "date-fns";
 import { nl } from "date-fns/locale";
@@ -37,21 +36,45 @@ interface Customer {
   trainings: string[];
 }
 
-interface Client {
-  id: string;
-  first_name: string;
-  last_name: string;
-  email: string;
-  phone: string | null;
-  notes: string | null;
-  user_id: string | null;
-  created_at: string;
+// ─── Pipeline mini-bar (visual funnel) ────────────────────────────────────────
+
+const PIPELINE_STAGES = [
+  { key: "new", label: "Nieuw", colorClass: "bg-stone-400" },
+  { key: "contact_attempt", label: "Contact", colorClass: "bg-sky-400" },
+  { key: "in_conversation", label: "Gesprek", colorClass: "bg-amber-400" },
+  { key: "intake_scheduled", label: "Kennis.", colorClass: "bg-violet-400" },
+  { key: "registered", label: "Aangemeld", colorClass: "bg-emerald-400" },
+  { key: "converted_to_client", label: "Klant", colorClass: "bg-green-600" },
+];
+
+function PipelineFunnel({ stageCounts, totalLeads }: { stageCounts: Record<string, number>; totalLeads: number }) {
+  if (totalLeads === 0) return null;
+  return (
+    <div className="flex items-end gap-0.5 h-8">
+      {PIPELINE_STAGES.map(stage => {
+        const count = stageCounts[stage.key] || 0;
+        const pct = Math.max(count / totalLeads * 100, 8);
+        return (
+          <div key={stage.key} className="flex flex-col items-center gap-0.5 flex-1">
+            <span className="text-[9px] font-semibold text-foreground">{count}</span>
+            <div
+              className={`w-full rounded-sm ${stage.colorClass} transition-all`}
+              style={{ height: `${pct * 0.28}px`, minHeight: "3px" }}
+            />
+            <span className="text-[8px] text-muted-foreground truncate w-full text-center">{stage.label}</span>
+          </div>
+        );
+      })}
+    </div>
+  );
 }
+
+// ─── Main Component ───────────────────────────────────────────────────────────
 
 export default function AdminCustomersSection({ initialTab = "customers" }: { initialTab?: string }) {
   const [isLoading, setIsLoading] = useState(true);
   const [customers, setCustomers] = useState<Customer[]>([]);
-  const [leads, setLeads] = useState<any[]>([]);
+  const [allLeads, setAllLeads] = useState<any[]>([]);
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedCustomerEmail, setSelectedCustomerEmail] = useState<string | null>(null);
   const [showNewClient, setShowNewClient] = useState(false);
@@ -61,7 +84,7 @@ export default function AdminCustomersSection({ initialTab = "customers" }: { in
 
   useEffect(() => {
     fetchCustomers();
-    fetchLeadCount();
+    fetchAllLeads();
   }, []);
 
   const fetchCustomers = async () => {
@@ -80,12 +103,9 @@ export default function AdminCustomersSection({ initialTab = "customers" }: { in
     }
   };
 
-  const fetchLeadCount = async () => {
-    const { data } = await supabase
-      .from("leads")
-      .select("id, status")
-      .eq("status", "new");
-    setLeads(data || []);
+  const fetchAllLeads = async () => {
+    const { data } = await supabase.from("leads").select("id, status");
+    setAllLeads(data || []);
   };
 
   const submitNewClient = async () => {
@@ -94,7 +114,7 @@ export default function AdminCustomersSection({ initialTab = "customers" }: { in
     }
     setSubmitting(true);
     try {
-      const { data, error } = await supabase.from("clients").insert({
+      const { error } = await supabase.from("clients").insert({
         first_name: newClient.first_name.trim(),
         last_name: newClient.last_name.trim(),
         email: newClient.email.trim().toLowerCase(),
@@ -122,7 +142,13 @@ export default function AdminCustomersSection({ initialTab = "customers" }: { in
     );
   });
 
-  const newLeadCount = leads.length;
+  const newLeadCount = allLeads.filter(l => l.status === "new").length;
+  const totalLeads = allLeads.length;
+
+  const stageCounts = allLeads.reduce((acc, l) => {
+    acc[l.status] = (acc[l.status] || 0) + 1;
+    return acc;
+  }, {} as Record<string, number>);
 
   const stats = {
     totalCustomers: customers.length,
@@ -131,69 +157,96 @@ export default function AdminCustomersSection({ initialTab = "customers" }: { in
   };
 
   return (
-    <div>
-      {/* Stats */}
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
-        <Card className="cursor-pointer hover:shadow-md transition-shadow" onClick={() => setActiveTab("customers")}>
-          <CardContent className="pt-6">
+    <div className="space-y-5">
+      {/* ── Metric Cards ── */}
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
+        <Card
+          className="cursor-pointer hover:shadow-md transition-all border-border/60"
+          onClick={() => setActiveTab("customers")}
+        >
+          <CardContent className="p-4">
             <div className="flex items-center gap-3">
-              <div className="p-2 bg-sage-100 rounded-lg"><Users className="h-5 w-5 text-sage-700" /></div>
+              <div className="p-2 rounded-lg bg-[hsl(var(--sage-100))]">
+                <Users className="h-4 w-4 text-[hsl(var(--sage-700))]" />
+              </div>
               <div>
-                <p className="text-2xl font-semibold">{stats.totalCustomers}</p>
-                <p className="text-sm text-muted-foreground">Klanten</p>
+                <p className="text-xl font-bold">{stats.totalCustomers}</p>
+                <p className="text-[11px] text-muted-foreground">Klanten</p>
               </div>
             </div>
           </CardContent>
         </Card>
-        <Card>
-          <CardContent className="pt-6">
+
+        <Card className="border-border/60">
+          <CardContent className="p-4">
             <div className="flex items-center gap-3">
-              <div className="p-2 bg-terracotta-100 rounded-lg"><Euro className="h-5 w-5 text-terracotta-700" /></div>
+              <div className="p-2 rounded-lg bg-[hsl(var(--terracotta-100))]">
+                <Euro className="h-4 w-4 text-[hsl(var(--terracotta-700))]" />
+              </div>
               <div>
-                <p className="text-2xl font-semibold">€{stats.totalRevenue.toLocaleString('nl-NL')}</p>
-                <p className="text-sm text-muted-foreground">Totale omzet</p>
+                <p className="text-xl font-bold">€{stats.totalRevenue.toLocaleString('nl-NL')}</p>
+                <p className="text-[11px] text-muted-foreground">Totale omzet</p>
               </div>
             </div>
           </CardContent>
         </Card>
-        <Card>
-          <CardContent className="pt-6">
+
+        <Card className="border-border/60">
+          <CardContent className="p-4">
             <div className="flex items-center gap-3">
-              <div className="p-2 bg-teal-100 rounded-lg"><Calendar className="h-5 w-5 text-teal-700" /></div>
+              <div className="p-2 rounded-lg bg-[hsl(var(--sage-100))]">
+                <Calendar className="h-4 w-4 text-[hsl(var(--sage-700))]" />
+              </div>
               <div>
-                <p className="text-2xl font-semibold">{stats.totalRegistrations}</p>
-                <p className="text-sm text-muted-foreground">Aanmeldingen</p>
+                <p className="text-xl font-bold">{stats.totalRegistrations}</p>
+                <p className="text-[11px] text-muted-foreground">Aanmeldingen</p>
               </div>
             </div>
           </CardContent>
         </Card>
-        <Card className="cursor-pointer hover:shadow-md transition-shadow" onClick={() => setActiveTab("leads")}>
-          <CardContent className="pt-6">
+
+        <Card
+          className="cursor-pointer hover:shadow-md transition-all border-border/60"
+          onClick={() => setActiveTab("leads")}
+        >
+          <CardContent className="p-4">
             <div className="flex items-center gap-3">
-              <div className="p-2 bg-orange-100 rounded-lg"><MessageCircle className="h-5 w-5 text-orange-700" /></div>
-              <div>
-                <p className="text-2xl font-semibold">
-                  {newLeadCount}
+              <div className="p-2 rounded-lg bg-[hsl(var(--terracotta-50))]">
+                <UserPlus className="h-4 w-4 text-[hsl(var(--terracotta-600))]" />
+              </div>
+              <div className="flex-1 min-w-0">
+                <div className="flex items-baseline gap-1.5">
+                  <p className="text-xl font-bold">{totalLeads}</p>
                   {newLeadCount > 0 && (
-                    <span className="text-sm font-normal text-terracotta-600 ml-1">nieuw</span>
+                    <span className="text-[10px] font-medium text-[hsl(var(--terracotta-600))]">
+                      ({newLeadCount} nieuw)
+                    </span>
                   )}
-                </p>
-                <p className="text-sm text-muted-foreground">Website leads</p>
+                </div>
+                <p className="text-[11px] text-muted-foreground">Leads</p>
               </div>
+            </div>
+            {/* Mini pipeline funnel */}
+            <div className="mt-3 pt-2 border-t border-border/40">
+              <PipelineFunnel stageCounts={stageCounts} totalLeads={totalLeads} />
             </div>
           </CardContent>
         </Card>
       </div>
 
+      {/* ── Tabs ── */}
       <Tabs value={activeTab} onValueChange={setActiveTab}>
-        <TabsList className="mb-4">
-          <TabsTrigger value="customers" className="gap-2">
-            <Users className="h-4 w-4" /> Klanten ({customers.length})
+        <TabsList className="h-9">
+          <TabsTrigger value="customers" className="gap-1.5 text-xs">
+            <Users className="h-3.5 w-3.5" /> Klanten
+            <Badge variant="secondary" className="text-[10px] px-1.5 py-0 h-4 ml-0.5">
+              {customers.length}
+            </Badge>
           </TabsTrigger>
-          <TabsTrigger value="leads" className="gap-2">
-            <MessageCircle className="h-4 w-4" /> Website Leads
+          <TabsTrigger value="leads" className="gap-1.5 text-xs">
+            <TrendingUp className="h-3.5 w-3.5" /> Leads & Pipeline
             {newLeadCount > 0 && (
-              <Badge className="bg-terracotta-500 text-white text-[10px] ml-1 px-1.5 py-0">
+              <Badge className="bg-[hsl(var(--terracotta-500))] text-white text-[10px] px-1.5 py-0 h-4 ml-0.5">
                 {newLeadCount}
               </Badge>
             )}
@@ -201,112 +254,115 @@ export default function AdminCustomersSection({ initialTab = "customers" }: { in
         </TabsList>
 
         {/* ── CUSTOMERS TAB ── */}
-        <TabsContent value="customers">
-          <div className="flex flex-wrap items-center gap-3 mb-4">
+        <TabsContent value="customers" className="mt-4">
+          <div className="flex flex-wrap items-center gap-3 mb-3">
             <div className="relative flex-1 max-w-sm">
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
               <Input
                 placeholder="Zoek op naam, e-mail of training..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="pl-10"
+                className="pl-10 h-9"
               />
             </div>
-            <p className="text-sm text-muted-foreground">{filteredCustomers.length} resultaten</p>
-            <Button size="sm" className="gap-2 ml-auto bg-terracotta-600 hover:bg-terracotta-700 text-white" onClick={() => setShowNewClient(true)}>
-              <Plus className="h-4 w-4" /> Nieuwe klant
+            <span className="text-xs text-muted-foreground">{filteredCustomers.length} resultaten</span>
+            <Button
+              size="sm"
+              className="ml-auto gap-1.5 bg-[hsl(var(--terracotta-600))] hover:bg-[hsl(var(--terracotta-700))] text-white"
+              onClick={() => setShowNewClient(true)}
+            >
+              <Plus className="h-3.5 w-3.5" /> Nieuwe klant
             </Button>
           </div>
 
-          <Card>
-            <CardContent className="pt-4">
-              {isLoading ? (
-                <div className="flex items-center justify-center py-12">
-                  <Loader2 className="h-8 w-8 animate-spin text-terracotta-400" />
-                </div>
-              ) : filteredCustomers.length === 0 ? (
-                <div className="text-center py-12 text-muted-foreground">
-                  {searchQuery ? "Geen klanten gevonden" : "Nog geen klanten"}
-                </div>
-              ) : (
-                <div className="overflow-x-auto">
-                  <Table>
-                    <TableHeader>
-                      <TableRow>
-                        <TableHead>Klant</TableHead>
-                        <TableHead>Contact</TableHead>
-                        <TableHead className="text-center">Aanmeldingen</TableHead>
-                        <TableHead className="text-right">Totaal betaald</TableHead>
-                        <TableHead>Trainingen</TableHead>
-                        <TableHead>Laatste activiteit</TableHead>
-                      </TableRow>
-                    </TableHeader>
-                    <TableBody>
-                      {filteredCustomers.map((customer) => (
-                        <TableRow
-                          key={customer.email}
-                          className="cursor-pointer hover:bg-muted/50"
-                          onClick={() => setSelectedCustomerEmail(customer.email)}
-                        >
-                          <TableCell>
-                            <span className="font-medium">{customer.name}</span>
-                          </TableCell>
-                          <TableCell>
-                            <div className="flex flex-col gap-1">
-                              <div className="flex items-center gap-1 text-sm text-muted-foreground">
-                                <Mail className="h-3 w-3" />{customer.email}
-                              </div>
-                              {customer.phone && (
-                                <div className="flex items-center gap-1 text-sm text-muted-foreground">
-                                  <Phone className="h-3 w-3" />{customer.phone}
-                                </div>
-                              )}
-                            </div>
-                          </TableCell>
-                          <TableCell className="text-center">
-                            <div className="flex flex-col items-center">
-                              <span className="font-semibold">{customer.total_registrations}</span>
-                              <span className="text-xs text-muted-foreground">({customer.paid_registrations} betaald)</span>
-                            </div>
-                          </TableCell>
-                          <TableCell className="text-right">
-                            <span className="font-semibold text-terracotta-600">
-                              €{customer.total_spent?.toLocaleString('nl-NL') || 0}
+          <div className="rounded-lg border border-border/60 bg-card overflow-hidden">
+            {isLoading ? (
+              <div className="flex items-center justify-center py-12">
+                <Loader2 className="h-6 w-6 animate-spin text-muted-foreground" />
+              </div>
+            ) : filteredCustomers.length === 0 ? (
+              <div className="text-center py-12 text-muted-foreground">
+                <Users className="h-8 w-8 mx-auto mb-2 opacity-30" />
+                <p className="text-sm">{searchQuery ? "Geen klanten gevonden" : "Nog geen klanten"}</p>
+              </div>
+            ) : (
+              <div className="overflow-x-auto">
+                <Table>
+                  <TableHeader>
+                    <TableRow className="hover:bg-transparent">
+                      <TableHead className="text-xs">Klant</TableHead>
+                      <TableHead className="text-xs">Contact</TableHead>
+                      <TableHead className="text-xs text-center">Boekingen</TableHead>
+                      <TableHead className="text-xs text-right">Omzet</TableHead>
+                      <TableHead className="text-xs">Trainingen</TableHead>
+                      <TableHead className="text-xs">Laatst actief</TableHead>
+                    </TableRow>
+                  </TableHeader>
+                  <TableBody>
+                    {filteredCustomers.map((customer) => (
+                      <TableRow
+                        key={customer.email}
+                        className="cursor-pointer hover:bg-accent/30"
+                        onClick={() => setSelectedCustomerEmail(customer.email)}
+                      >
+                        <TableCell className="py-2.5">
+                          <span className="font-medium text-sm">{customer.name}</span>
+                        </TableCell>
+                        <TableCell className="py-2.5">
+                          <div className="flex flex-col gap-0.5">
+                            <span className="text-xs text-muted-foreground flex items-center gap-1">
+                              <Mail className="h-3 w-3" />{customer.email}
                             </span>
-                          </TableCell>
-                          <TableCell>
-                            <div className="flex flex-wrap gap-1 max-w-[200px]">
-                              {customer.trainings?.slice(0, 2).map((training, idx) => (
-                                <Badge key={idx} variant="secondary" className="bg-sage-100 text-sage-800 text-xs">
-                                  {training.length > 20 ? training.substring(0, 20) + '...' : training}
-                                </Badge>
-                              ))}
-                              {customer.trainings && customer.trainings.length > 2 && (
-                                <Badge variant="outline" className="text-xs">+{customer.trainings.length - 2}</Badge>
-                              )}
-                            </div>
-                          </TableCell>
-                          <TableCell>
-                            <div className="text-sm text-muted-foreground">
-                              {customer.last_registration && format(
-                                new Date(customer.last_registration),
-                                "d MMM yyyy", { locale: nl }
-                              )}
-                            </div>
-                          </TableCell>
-                        </TableRow>
-                      ))}
-                    </TableBody>
-                  </Table>
-                </div>
-              )}
-            </CardContent>
-          </Card>
+                            {customer.phone && (
+                              <span className="text-xs text-muted-foreground flex items-center gap-1">
+                                <Phone className="h-3 w-3" />{customer.phone}
+                              </span>
+                            )}
+                          </div>
+                        </TableCell>
+                        <TableCell className="py-2.5 text-center">
+                          <span className="font-semibold text-sm">{customer.total_registrations}</span>
+                          <span className="text-[10px] text-muted-foreground ml-1">
+                            ({customer.paid_registrations} betaald)
+                          </span>
+                        </TableCell>
+                        <TableCell className="py-2.5 text-right">
+                          <span className="font-semibold text-sm text-[hsl(var(--terracotta-600))]">
+                            €{customer.total_spent?.toLocaleString('nl-NL') || 0}
+                          </span>
+                        </TableCell>
+                        <TableCell className="py-2.5">
+                          <div className="flex flex-wrap gap-1 max-w-[180px]">
+                            {customer.trainings?.slice(0, 2).map((training, idx) => (
+                              <Badge key={idx} variant="secondary" className="bg-[hsl(var(--sage-100))] text-[hsl(var(--sage-800))] text-[10px] px-1.5 py-0">
+                                {training.length > 18 ? training.substring(0, 18) + '…' : training}
+                              </Badge>
+                            ))}
+                            {customer.trainings && customer.trainings.length > 2 && (
+                              <Badge variant="outline" className="text-[10px] px-1.5 py-0">+{customer.trainings.length - 2}</Badge>
+                            )}
+                          </div>
+                        </TableCell>
+                        <TableCell className="py-2.5">
+                          <span className="text-xs text-muted-foreground">
+                            {customer.last_registration && format(
+                              new Date(customer.last_registration),
+                              "d MMM yyyy", { locale: nl }
+                            )}
+                          </span>
+                        </TableCell>
+                      </TableRow>
+                    ))}
+                  </TableBody>
+                </Table>
+              </div>
+            )}
+          </div>
         </TabsContent>
 
-        {/* ── PIPELINE TAB ── */}
-        <TabsContent value="leads">
-          <CrmPipelineSection />
+        {/* ── LEADS & PIPELINE TAB ── */}
+        <TabsContent value="leads" className="mt-4">
+          <CrmPipelineSection onLeadsChange={fetchAllLeads} />
         </TabsContent>
       </Tabs>
 
@@ -325,60 +381,65 @@ export default function AdminCustomersSection({ initialTab = "customers" }: { in
             <DialogTitle>Nieuwe klant aanmaken</DialogTitle>
             <DialogDescription>Maak een klantprofiel aan zonder account.</DialogDescription>
           </DialogHeader>
-          <div className="space-y-4">
+          <div className="space-y-3">
             <div className="grid grid-cols-2 gap-3">
               <div>
-                <Label>Voornaam *</Label>
+                <Label className="text-xs">Voornaam *</Label>
                 <Input
                   value={newClient.first_name}
                   onChange={e => setNewClient(p => ({ ...p, first_name: e.target.value }))}
                   placeholder="Voornaam"
+                  className="h-9"
                 />
               </div>
               <div>
-                <Label>Achternaam</Label>
+                <Label className="text-xs">Achternaam</Label>
                 <Input
                   value={newClient.last_name}
                   onChange={e => setNewClient(p => ({ ...p, last_name: e.target.value }))}
                   placeholder="Achternaam"
+                  className="h-9"
                 />
               </div>
             </div>
             <div>
-              <Label>E-mail *</Label>
+              <Label className="text-xs">E-mail *</Label>
               <Input
                 type="email"
                 value={newClient.email}
                 onChange={e => setNewClient(p => ({ ...p, email: e.target.value }))}
                 placeholder="email@voorbeeld.nl"
+                className="h-9"
               />
             </div>
             <div>
-              <Label>Telefoon</Label>
+              <Label className="text-xs">Telefoon</Label>
               <Input
                 value={newClient.phone}
                 onChange={e => setNewClient(p => ({ ...p, phone: e.target.value }))}
                 placeholder="06-12345678"
+                className="h-9"
               />
             </div>
             <div>
-              <Label>Notities</Label>
+              <Label className="text-xs">Notities</Label>
               <Textarea
                 value={newClient.notes}
                 onChange={e => setNewClient(p => ({ ...p, notes: e.target.value }))}
-                placeholder="Interne notities over deze klant..."
-                className="min-h-[60px]"
+                placeholder="Interne notities..."
+                className="min-h-[60px] resize-none"
               />
             </div>
           </div>
           <DialogFooter>
-            <Button variant="outline" onClick={() => setShowNewClient(false)}>Annuleren</Button>
+            <Button variant="outline" size="sm" onClick={() => setShowNewClient(false)}>Annuleren</Button>
             <Button
+              size="sm"
               onClick={submitNewClient}
               disabled={submitting}
-              className="bg-terracotta-600 hover:bg-terracotta-700 text-white"
+              className="bg-[hsl(var(--terracotta-600))] hover:bg-[hsl(var(--terracotta-700))] text-white"
             >
-              {submitting && <Loader2 className="h-4 w-4 animate-spin mr-2" />}
+              {submitting && <Loader2 className="h-3.5 w-3.5 animate-spin mr-1.5" />}
               Aanmaken
             </Button>
           </DialogFooter>
