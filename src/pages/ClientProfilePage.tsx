@@ -8,18 +8,20 @@ import { Textarea } from "@/components/ui/textarea";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Progress } from "@/components/ui/progress";
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter } from "@/components/ui/dialog";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import {
   ArrowLeft, Loader2, Plus, Mail, Phone, Calendar, Euro, ChevronDown,
   Sparkles, Save, CheckCircle2, AlertCircle, Clock, Target, Heart, Brain,
-  FileText, RefreshCw,
+  FileText, RefreshCw, Trash2, Pencil, X, Download,
 } from "lucide-react";
 import { format } from "date-fns";
 import { nl } from "date-fns/locale";
 import { toast } from "sonner";
 import type { CustomerData, Registration, Enrollment, TrainerNote, SessionAppointment } from "@/components/admin/customer-profile/types";
+import TherapySessionSection from "@/components/admin/customer-profile/TherapySessionSection";
 
 // ─── Intake Form ──────────────────────────────────────────────────────────────
 
@@ -92,8 +94,6 @@ function IntakeSection({ enrollmentId }: { enrollmentId: string }) {
 
   if (loading) return <div className="flex justify-center py-6"><Loader2 className="h-5 w-5 animate-spin text-muted-foreground" /></div>;
 
-  const hasContent = Object.values(formData).some(v => v.trim());
-
   return (
     <div className="space-y-3">
       {INTAKE_QUESTIONS.map(q => (
@@ -151,25 +151,15 @@ function AiSummaryCard({ email }: { email: string }) {
             <Sparkles className="h-4 w-4 text-amber-500" />
             <span className="text-sm font-semibold">AI Samenvatting</span>
           </div>
-          <Button
-            size="sm"
-            variant="ghost"
-            onClick={generateSummary}
-            disabled={loading}
-            className="gap-1.5 text-xs h-7"
-          >
+          <Button size="sm" variant="ghost" onClick={generateSummary} disabled={loading} className="gap-1.5 text-xs h-7">
             {loading ? <Loader2 className="h-3.5 w-3.5 animate-spin" /> : hasGenerated ? <RefreshCw className="h-3.5 w-3.5" /> : <Sparkles className="h-3.5 w-3.5" />}
             {loading ? "Genereren..." : hasGenerated ? "Vernieuwen" : "Genereer"}
           </Button>
         </div>
         {summary ? (
-          <div className="prose prose-sm max-w-none text-sm text-foreground/90 leading-relaxed whitespace-pre-wrap">
-            {summary}
-          </div>
+          <div className="prose prose-sm max-w-none text-sm text-foreground/90 leading-relaxed whitespace-pre-wrap">{summary}</div>
         ) : (
-          <p className="text-xs text-muted-foreground italic">
-            Klik op "Genereer" voor een AI-samenvatting op basis van alle beschikbare cliëntgegevens.
-          </p>
+          <p className="text-xs text-muted-foreground italic">Klik op "Genereer" voor een AI-samenvatting.</p>
         )}
       </CardContent>
     </Card>
@@ -179,9 +169,7 @@ function AiSummaryCard({ email }: { email: string }) {
 // ─── Quick Stats ──────────────────────────────────────────────────────────────
 
 function QuickStats({ customer, enrollments, sessionAppointments }: {
-  customer: CustomerData;
-  enrollments: Enrollment[];
-  sessionAppointments: SessionAppointment[];
+  customer: CustomerData; enrollments: Enrollment[]; sessionAppointments: SessionAppointment[];
 }) {
   const activeEnrollment = enrollments.find(e => e.status === "active");
   const nextSession = sessionAppointments.find(a => a.status === "gepland" && a.session_date);
@@ -189,95 +177,260 @@ function QuickStats({ customer, enrollments, sessionAppointments }: {
 
   return (
     <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-      <Card className="border-border/60">
-        <CardContent className="p-3">
-          <div className="flex items-center gap-2 mb-1">
-            <Calendar className="h-3.5 w-3.5 text-muted-foreground" />
-            <span className="text-[10px] text-muted-foreground uppercase tracking-wide">Aanmeldingen</span>
+      <Card className="border-border/60"><CardContent className="p-3">
+        <div className="flex items-center gap-2 mb-1"><Calendar className="h-3.5 w-3.5 text-muted-foreground" /><span className="text-[10px] text-muted-foreground uppercase tracking-wide">Aanmeldingen</span></div>
+        <p className="text-lg font-bold">{customer.total_registrations}</p>
+      </CardContent></Card>
+      <Card className="border-border/60"><CardContent className="p-3">
+        <div className="flex items-center gap-2 mb-1"><Euro className="h-3.5 w-3.5 text-muted-foreground" /><span className="text-[10px] text-muted-foreground uppercase tracking-wide">Omzet</span></div>
+        <p className="text-lg font-bold">€{customer.total_spent?.toLocaleString("nl-NL") || 0}</p>
+      </CardContent></Card>
+      <Card className="border-border/60"><CardContent className="p-3">
+        <div className="flex items-center gap-2 mb-1"><CheckCircle2 className="h-3.5 w-3.5 text-muted-foreground" /><span className="text-[10px] text-muted-foreground uppercase tracking-wide">Sessies</span></div>
+        {activeEnrollment?.sessions_total ? (
+          <div>
+            <p className="text-lg font-bold">{activeEnrollment.sessions_used}/{activeEnrollment.sessions_total}</p>
+            <Progress value={(activeEnrollment.sessions_used / activeEnrollment.sessions_total) * 100} className="h-1 mt-1" />
           </div>
-          <p className="text-lg font-bold">{customer.total_registrations}</p>
-        </CardContent>
-      </Card>
-      <Card className="border-border/60">
-        <CardContent className="p-3">
-          <div className="flex items-center gap-2 mb-1">
-            <Euro className="h-3.5 w-3.5 text-muted-foreground" />
-            <span className="text-[10px] text-muted-foreground uppercase tracking-wide">Omzet</span>
-          </div>
-          <p className="text-lg font-bold">€{customer.total_spent?.toLocaleString("nl-NL") || 0}</p>
-        </CardContent>
-      </Card>
-      <Card className="border-border/60">
-        <CardContent className="p-3">
-          <div className="flex items-center gap-2 mb-1">
-            <CheckCircle2 className="h-3.5 w-3.5 text-muted-foreground" />
-            <span className="text-[10px] text-muted-foreground uppercase tracking-wide">Sessies</span>
-          </div>
-          {activeEnrollment?.sessions_total ? (
-            <div>
-              <p className="text-lg font-bold">{activeEnrollment.sessions_used}/{activeEnrollment.sessions_total}</p>
-              <Progress value={(activeEnrollment.sessions_used / activeEnrollment.sessions_total) * 100} className="h-1 mt-1" />
-            </div>
-          ) : (
-            <p className="text-lg font-bold">{completedSessions}</p>
-          )}
-        </CardContent>
-      </Card>
-      <Card className="border-border/60">
-        <CardContent className="p-3">
-          <div className="flex items-center gap-2 mb-1">
-            <Clock className="h-3.5 w-3.5 text-muted-foreground" />
-            <span className="text-[10px] text-muted-foreground uppercase tracking-wide">Volgende sessie</span>
-          </div>
-          {nextSession?.session_date ? (
-            <p className="text-sm font-semibold">
-              {format(new Date(nextSession.session_date), "d MMM", { locale: nl })}
-              {nextSession.session_time && <span className="text-muted-foreground ml-1">{nextSession.session_time.slice(0, 5)}</span>}
-            </p>
-          ) : (
-            <p className="text-sm text-muted-foreground">—</p>
-          )}
-        </CardContent>
-      </Card>
+        ) : <p className="text-lg font-bold">{completedSessions}</p>}
+      </CardContent></Card>
+      <Card className="border-border/60"><CardContent className="p-3">
+        <div className="flex items-center gap-2 mb-1"><Clock className="h-3.5 w-3.5 text-muted-foreground" /><span className="text-[10px] text-muted-foreground uppercase tracking-wide">Volgende sessie</span></div>
+        {nextSession?.session_date ? (
+          <p className="text-sm font-semibold">
+            {format(new Date(nextSession.session_date), "d MMM", { locale: nl })}
+            {nextSession.session_time && <span className="text-muted-foreground ml-1">{nextSession.session_time.slice(0, 5)}</span>}
+          </p>
+        ) : <p className="text-sm text-muted-foreground">—</p>}
+      </CardContent></Card>
     </div>
   );
 }
 
-// ─── Sessions Timeline ────────────────────────────────────────────────────────
+// ─── Sessions Section (with scheduling, status, notes) ───────────────────────
 
-function SessionsTimeline({ sessionAppointments, enrollments }: {
+function SessionsSection({ sessionAppointments, enrollments, onUpdate }: {
   sessionAppointments: SessionAppointment[];
   enrollments: Enrollment[];
+  onUpdate: () => void;
 }) {
-  if (sessionAppointments.length === 0) {
-    return <p className="text-sm text-muted-foreground py-4">Nog geen sessies ingepland.</p>;
-  }
+  const [showAdd, setShowAdd] = useState(false);
+  const [addDate, setAddDate] = useState("");
+  const [addTime, setAddTime] = useState("");
+  const [addNotes, setAddNotes] = useState("");
+  const [saving, setSaving] = useState(false);
+  const [editingId, setEditingId] = useState<string | null>(null);
+  const [editStatus, setEditStatus] = useState("");
+  const [editNotes, setEditNotes] = useState("");
+  const [editDate, setEditDate] = useState("");
+  const [editTime, setEditTime] = useState("");
+  const [updatingId, setUpdatingId] = useState<string | null>(null);
+
+  const indivEnrollments = enrollments.filter(e => e.course_type === "individueel_6" || e.course_type === "losse_sessie");
+  const activeEnrollment = indivEnrollments.find(e => e.status === "active") || indivEnrollments[0];
+
+  const handleAdd = async () => {
+    if (!activeEnrollment || !addDate) { toast.error("Selecteer een datum"); return; }
+    setSaving(true);
+    try {
+      const nextWeek = sessionAppointments.filter(a => a.enrollment_id === activeEnrollment.id).length + 1;
+      const { error } = await supabase.from("session_appointments").insert({
+        enrollment_id: activeEnrollment.id,
+        week_number: nextWeek,
+        session_date: addDate,
+        session_time: addTime || null,
+        notes: addNotes.trim() || null,
+        status: "gepland",
+      });
+      if (error) throw error;
+      toast.success("Sessie ingepland");
+      setShowAdd(false);
+      setAddDate("");
+      setAddTime("");
+      setAddNotes("");
+      onUpdate();
+    } catch (err: any) {
+      toast.error("Fout: " + err.message);
+    }
+    setSaving(false);
+  };
+
+  const startEdit = (appt: SessionAppointment) => {
+    setEditingId(appt.id);
+    setEditStatus(appt.status);
+    setEditNotes(appt.notes || "");
+    setEditDate(appt.session_date || "");
+    setEditTime(appt.session_time || "");
+  };
+
+  const saveEdit = async () => {
+    if (!editingId) return;
+    setUpdatingId(editingId);
+    try {
+      const { error } = await supabase.from("session_appointments").update({
+        status: editStatus,
+        notes: editNotes.trim() || null,
+        session_date: editDate || null,
+        session_time: editTime || null,
+      }).eq("id", editingId);
+      if (error) throw error;
+      
+      // If marking as completed, also increment sessions_used
+      if (editStatus === "afgerond") {
+        const appt = sessionAppointments.find(a => a.id === editingId);
+        if (appt) {
+          const enrollment = enrollments.find(e => e.id === appt.enrollment_id);
+          if (enrollment) {
+            const completedCount = sessionAppointments.filter(
+              a => a.enrollment_id === enrollment.id && a.status === "afgerond"
+            ).length + 1; // +1 for current
+            await supabase.from("enrollments").update({ sessions_used: completedCount }).eq("id", enrollment.id);
+          }
+        }
+      }
+      
+      toast.success("Sessie bijgewerkt");
+      setEditingId(null);
+      onUpdate();
+    } catch (err: any) {
+      toast.error("Fout: " + err.message);
+    }
+    setUpdatingId(null);
+  };
+
+  const deleteAppt = async (id: string) => {
+    if (!confirm("Sessie verwijderen?")) return;
+    const { error } = await supabase.from("session_appointments").delete().eq("id", id);
+    if (!error) { toast.success("Sessie verwijderd"); onUpdate(); }
+    else toast.error("Kon niet verwijderen");
+  };
 
   return (
-    <div className="space-y-2">
-      {sessionAppointments.map(appt => (
-        <div key={appt.id} className="flex items-center gap-3 py-2 border-b border-border/40 last:border-0">
-          <div className={`h-2.5 w-2.5 rounded-full shrink-0 ${
-            appt.status === "afgerond" ? "bg-green-500" : appt.status === "geannuleerd" ? "bg-red-400" : "bg-amber-400"
-          }`} />
-          <div className="flex-1 min-w-0">
-            <span className="text-sm font-medium">Sessie {appt.week_number}</span>
-            {appt.notes && <span className="text-xs text-muted-foreground ml-2">— {appt.notes}</span>}
-          </div>
-          <div className="text-xs text-muted-foreground shrink-0">
-            {appt.session_date ? format(new Date(appt.session_date), "d MMM yyyy", { locale: nl }) : "Niet gepland"}
-            {appt.session_time && <span className="ml-1">{appt.session_time.slice(0, 5)}</span>}
-          </div>
-          <Badge variant="outline" className="text-[10px] shrink-0">
-            {appt.status === "afgerond" ? "✓ Afgerond" : appt.status === "geannuleerd" ? "Geannuleerd" : "Gepland"}
-          </Badge>
+    <div className="space-y-3">
+      {/* Add button */}
+      {activeEnrollment && (
+        <div className="flex justify-end">
+          <Button size="sm" variant="outline" onClick={() => setShowAdd(!showAdd)} className="gap-1.5 text-xs">
+            <Plus className="h-3.5 w-3.5" /> Sessie inplannen
+          </Button>
         </div>
-      ))}
+      )}
+
+      {/* Add form */}
+      {showAdd && (
+        <Card className="border-primary/20 bg-primary/5">
+          <CardContent className="p-3 space-y-3">
+            <p className="text-sm font-medium">Nieuwe sessie inplannen</p>
+            <div className="grid grid-cols-2 gap-3">
+              <div>
+                <Label className="text-xs">Datum *</Label>
+                <Input type="date" value={addDate} onChange={e => setAddDate(e.target.value)} className="h-8 text-xs mt-1" />
+              </div>
+              <div>
+                <Label className="text-xs">Tijd</Label>
+                <Input type="time" value={addTime} onChange={e => setAddTime(e.target.value)} className="h-8 text-xs mt-1" />
+              </div>
+            </div>
+            <div>
+              <Label className="text-xs">Notitie</Label>
+              <Textarea value={addNotes} onChange={e => setAddNotes(e.target.value)} placeholder="Optionele notitie..." className="min-h-[40px] resize-none text-sm mt-1" />
+            </div>
+            <div className="flex gap-2 justify-end">
+              <Button size="sm" variant="ghost" onClick={() => setShowAdd(false)} className="text-xs h-7">Annuleren</Button>
+              <Button size="sm" onClick={handleAdd} disabled={saving} className="gap-1.5 text-xs h-7">
+                {saving ? <Loader2 className="h-3.5 w-3.5 animate-spin" /> : <Plus className="h-3.5 w-3.5" />}
+                Inplannen
+              </Button>
+            </div>
+          </CardContent>
+        </Card>
+      )}
+
+      {/* Sessions list */}
+      {sessionAppointments.length === 0 ? (
+        <p className="text-sm text-muted-foreground py-4">Nog geen sessies ingepland.</p>
+      ) : (
+        <div className="space-y-2">
+          {sessionAppointments.map(appt => {
+            const isEditing = editingId === appt.id;
+            return (
+              <Card key={appt.id} className="border-border/60">
+                <CardContent className="p-3">
+                  {isEditing ? (
+                    <div className="space-y-3">
+                      <div className="grid grid-cols-3 gap-2">
+                        <div>
+                          <Label className="text-[10px]">Datum</Label>
+                          <Input type="date" value={editDate} onChange={e => setEditDate(e.target.value)} className="h-7 text-xs mt-0.5" />
+                        </div>
+                        <div>
+                          <Label className="text-[10px]">Tijd</Label>
+                          <Input type="time" value={editTime} onChange={e => setEditTime(e.target.value)} className="h-7 text-xs mt-0.5" />
+                        </div>
+                        <div>
+                          <Label className="text-[10px]">Status</Label>
+                          <Select value={editStatus} onValueChange={setEditStatus}>
+                            <SelectTrigger className="h-7 text-xs mt-0.5"><SelectValue /></SelectTrigger>
+                            <SelectContent>
+                              <SelectItem value="gepland" className="text-xs">Gepland</SelectItem>
+                              <SelectItem value="afgerond" className="text-xs">Afgerond</SelectItem>
+                              <SelectItem value="geannuleerd" className="text-xs">Geannuleerd</SelectItem>
+                            </SelectContent>
+                          </Select>
+                        </div>
+                      </div>
+                      <div>
+                        <Label className="text-[10px]">Notitie</Label>
+                        <Textarea value={editNotes} onChange={e => setEditNotes(e.target.value)} className="min-h-[40px] resize-none text-xs mt-0.5" placeholder="Sessienotitie..." />
+                      </div>
+                      <div className="flex gap-1.5 justify-end">
+                        <Button size="sm" variant="ghost" onClick={() => setEditingId(null)} className="text-xs h-6 gap-1"><X className="h-3 w-3" /> Annuleren</Button>
+                        <Button size="sm" onClick={saveEdit} disabled={updatingId === appt.id} className="text-xs h-6 gap-1">
+                          {updatingId === appt.id ? <Loader2 className="h-3 w-3 animate-spin" /> : <Save className="h-3 w-3" />} Opslaan
+                        </Button>
+                      </div>
+                    </div>
+                  ) : (
+                    <div className="flex items-start gap-3">
+                      <div className={`h-2.5 w-2.5 rounded-full shrink-0 mt-1.5 ${
+                        appt.status === "afgerond" ? "bg-green-500" : appt.status === "geannuleerd" ? "bg-red-400" : "bg-amber-400"
+                      }`} />
+                      <div className="flex-1 min-w-0">
+                        <div className="flex items-center gap-2">
+                          <span className="text-sm font-medium">Sessie {appt.week_number}</span>
+                          <Badge variant="outline" className="text-[10px]">
+                            {appt.status === "afgerond" ? "✓ Afgerond" : appt.status === "geannuleerd" ? "Geannuleerd" : "Gepland"}
+                          </Badge>
+                        </div>
+                        <div className="text-xs text-muted-foreground mt-0.5">
+                          {appt.session_date ? format(new Date(appt.session_date), "d MMM yyyy", { locale: nl }) : "Niet gepland"}
+                          {appt.session_time && <span className="ml-1">{appt.session_time.slice(0, 5)}</span>}
+                        </div>
+                        {appt.notes && (
+                          <p className="text-xs text-muted-foreground mt-1 bg-muted/50 rounded px-2 py-1">{appt.notes}</p>
+                        )}
+                      </div>
+                      <div className="flex gap-1 shrink-0">
+                        <Button size="sm" variant="ghost" onClick={() => startEdit(appt)} className="h-6 w-6 p-0">
+                          <Pencil className="h-3 w-3" />
+                        </Button>
+                        <Button size="sm" variant="ghost" onClick={() => deleteAppt(appt.id)} className="h-6 w-6 p-0 text-destructive">
+                          <Trash2 className="h-3 w-3" />
+                        </Button>
+                      </div>
+                    </div>
+                  )}
+                </CardContent>
+              </Card>
+            );
+          })}
+        </div>
+      )}
     </div>
   );
 }
 
-// ─── Trainer Notes ────────────────────────────────────────────────────────────
+// ─── Trainer Notes (with edit, delete, timestamps) ────────────────────────────
 
 const NOTE_TYPES: Record<string, { label: string; color: string }> = {
   general: { label: "Algemeen", color: "bg-muted" },
@@ -288,13 +441,14 @@ const NOTE_TYPES: Record<string, { label: string; color: string }> = {
 };
 
 function TrainerNotesSection({ enrollments, notes, onNotesChange }: {
-  enrollments: Enrollment[];
-  notes: TrainerNote[];
-  onNotesChange: (notes: TrainerNote[]) => void;
+  enrollments: Enrollment[]; notes: TrainerNote[]; onNotesChange: (notes: TrainerNote[]) => void;
 }) {
   const [newNote, setNewNote] = useState("");
   const [noteType, setNoteType] = useState("general");
   const [saving, setSaving] = useState(false);
+  const [editingId, setEditingId] = useState<string | null>(null);
+  const [editContent, setEditContent] = useState("");
+  const [editType, setEditType] = useState("general");
 
   const handleAdd = async () => {
     if (!newNote.trim() || enrollments.length === 0) return;
@@ -304,9 +458,9 @@ function TrainerNotesSection({ enrollments, notes, onNotesChange }: {
         enrollment_id: enrollments[0].id,
         note_type: noteType,
         content: newNote.trim(),
-      }).select("id, enrollment_id, note_type, content").single();
+      }).select("id, enrollment_id, note_type, content, created_at").single();
       if (error) throw error;
-      onNotesChange([data as TrainerNote, ...notes]);
+      onNotesChange([data as any, ...notes]);
       setNewNote("");
       toast.success("Notitie opgeslagen");
     } catch (err: any) {
@@ -315,12 +469,36 @@ function TrainerNotesSection({ enrollments, notes, onNotesChange }: {
     setSaving(false);
   };
 
-  // Group notes by type
-  const grouped = notes.reduce((acc, n) => {
-    if (!acc[n.note_type]) acc[n.note_type] = [];
-    acc[n.note_type].push(n);
-    return acc;
-  }, {} as Record<string, TrainerNote[]>);
+  const handleDelete = async (id: string) => {
+    if (!confirm("Notitie verwijderen?")) return;
+    const { error } = await supabase.from("trainer_notes").delete().eq("id", id);
+    if (!error) {
+      onNotesChange(notes.filter(n => n.id !== id));
+      toast.success("Notitie verwijderd");
+    } else toast.error("Kon niet verwijderen");
+  };
+
+  const startEdit = (note: TrainerNote) => {
+    setEditingId(note.id);
+    setEditContent(note.content);
+    setEditType(note.note_type);
+  };
+
+  const saveEdit = async () => {
+    if (!editingId) return;
+    try {
+      const { error } = await supabase.from("trainer_notes").update({
+        content: editContent.trim(),
+        note_type: editType,
+      }).eq("id", editingId);
+      if (error) throw error;
+      onNotesChange(notes.map(n => n.id === editingId ? { ...n, content: editContent.trim(), note_type: editType } : n));
+      setEditingId(null);
+      toast.success("Notitie bijgewerkt");
+    } catch (err: any) {
+      toast.error("Fout: " + err.message);
+    }
+  };
 
   return (
     <div className="space-y-4">
@@ -330,9 +508,7 @@ function TrainerNotesSection({ enrollments, notes, onNotesChange }: {
           <CardContent className="p-3 space-y-2">
             <div className="flex gap-2">
               <Select value={noteType} onValueChange={setNoteType}>
-                <SelectTrigger className="w-44 h-8 text-xs">
-                  <SelectValue />
-                </SelectTrigger>
+                <SelectTrigger className="w-44 h-8 text-xs"><SelectValue /></SelectTrigger>
                 <SelectContent>
                   {Object.entries(NOTE_TYPES).map(([k, v]) => (
                     <SelectItem key={k} value={k} className="text-xs">{v.label}</SelectItem>
@@ -361,11 +537,53 @@ function TrainerNotesSection({ enrollments, notes, onNotesChange }: {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
           {notes.map(note => {
             const type = NOTE_TYPES[note.note_type] || { label: note.note_type, color: "bg-muted" };
+            const isEditing = editingId === note.id;
+            const createdAt = (note as any).created_at;
+
             return (
-              <Card key={note.id} className={`border-border/60 ${type.color}`}>
+              <Card key={note.id} className={`border-border/60 ${isEditing ? "" : type.color}`}>
                 <CardContent className="p-3">
-                  <Badge variant="outline" className="text-[10px] mb-2">{type.label}</Badge>
-                  <p className="text-sm leading-relaxed whitespace-pre-wrap">{note.content}</p>
+                  {isEditing ? (
+                    <div className="space-y-2">
+                      <Select value={editType} onValueChange={setEditType}>
+                        <SelectTrigger className="h-7 text-xs w-36"><SelectValue /></SelectTrigger>
+                        <SelectContent>
+                          {Object.entries(NOTE_TYPES).map(([k, v]) => (
+                            <SelectItem key={k} value={k} className="text-xs">{v.label}</SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
+                      <Textarea
+                        value={editContent}
+                        onChange={e => setEditContent(e.target.value)}
+                        className="min-h-[60px] resize-none text-sm"
+                      />
+                      <div className="flex gap-1.5 justify-end">
+                        <Button size="sm" variant="ghost" onClick={() => setEditingId(null)} className="text-xs h-6 gap-1"><X className="h-3 w-3" /> Annuleren</Button>
+                        <Button size="sm" onClick={saveEdit} className="text-xs h-6 gap-1"><Save className="h-3 w-3" /> Opslaan</Button>
+                      </div>
+                    </div>
+                  ) : (
+                    <>
+                      <div className="flex items-start justify-between gap-2 mb-1">
+                        <Badge variant="outline" className="text-[10px]">{type.label}</Badge>
+                        <div className="flex gap-0.5 shrink-0">
+                          <Button size="sm" variant="ghost" onClick={() => startEdit(note)} className="h-5 w-5 p-0">
+                            <Pencil className="h-2.5 w-2.5" />
+                          </Button>
+                          <Button size="sm" variant="ghost" onClick={() => handleDelete(note.id)} className="h-5 w-5 p-0 text-destructive">
+                            <Trash2 className="h-2.5 w-2.5" />
+                          </Button>
+                        </div>
+                      </div>
+                      <p className="text-sm leading-relaxed whitespace-pre-wrap">{note.content}</p>
+                      {createdAt && (
+                        <p className="text-[10px] text-muted-foreground mt-2">
+                          {format(new Date(createdAt), "d MMM yyyy 'om' HH:mm", { locale: nl })}
+                        </p>
+                      )}
+                    </>
+                  )}
                 </CardContent>
               </Card>
             );
@@ -380,7 +598,6 @@ function TrainerNotesSection({ enrollments, notes, onNotesChange }: {
 
 function RegistrationsList({ registrations }: { registrations: Registration[] }) {
   if (registrations.length === 0) return <p className="text-sm text-muted-foreground py-2">Geen aanmeldingen.</p>;
-
   const statusLabel: Record<string, string> = { pending: "In afwachting", confirmed: "Bevestigd", cancelled: "Geannuleerd" };
   const payLabel: Record<string, string> = { pending: "Openstaand", paid: "Betaald", awaiting_payment: "Wacht op betaling" };
 
@@ -395,14 +612,8 @@ function RegistrationsList({ registrations }: { registrations: Registration[] })
               {reg.training_date && ` · ${reg.training_date}`}
             </p>
           </div>
-          <Badge variant="outline" className="text-[10px]">
-            {statusLabel[reg.status] || reg.status}
-          </Badge>
-          <Badge
-            className={`text-[10px] ${
-              reg.payment_status === "paid" ? "bg-green-100 text-green-800" : "bg-amber-100 text-amber-800"
-            }`}
-          >
+          <Badge variant="outline" className="text-[10px]">{statusLabel[reg.status] || reg.status}</Badge>
+          <Badge className={`text-[10px] ${reg.payment_status === "paid" ? "bg-green-100 text-green-800" : "bg-amber-100 text-amber-800"}`}>
             {payLabel[reg.payment_status || "pending"] || reg.payment_status}
           </Badge>
           {reg.price && <span className="text-xs font-medium">€{reg.price}</span>}
@@ -415,10 +626,7 @@ function RegistrationsList({ registrations }: { registrations: Registration[] })
 // ─── Collapsible Section ──────────────────────────────────────────────────────
 
 function Section({ title, icon: Icon, defaultOpen = false, children }: {
-  title: string;
-  icon: React.ComponentType<any>;
-  defaultOpen?: boolean;
-  children: React.ReactNode;
+  title: string; icon: React.ComponentType<any>; defaultOpen?: boolean; children: React.ReactNode;
 }) {
   const [open, setOpen] = useState(defaultOpen);
   return (
@@ -492,7 +700,7 @@ export default function ClientProfilePage() {
       if (enrIds.length > 0) {
         const indivIds = allEnrollments.filter(e => e.course_type === "individueel_6" || e.course_type === "losse_sessie").map(e => e.id);
         const [notesRes, apptsRes] = await Promise.all([
-          supabase.from("trainer_notes").select("id, enrollment_id, note_type, content").in("enrollment_id", enrIds),
+          supabase.from("trainer_notes").select("id, enrollment_id, note_type, content, created_at").in("enrollment_id", enrIds).order("created_at", { ascending: false }),
           indivIds.length > 0
             ? supabase.from("session_appointments").select("*").in("enrollment_id", indivIds).order("week_number")
             : Promise.resolve({ data: [] }),
@@ -527,25 +735,20 @@ export default function ClientProfilePage() {
   };
 
   if (isLoading) {
-    return (
-      <div className="min-h-screen bg-background flex items-center justify-center">
-        <Loader2 className="h-8 w-8 animate-spin text-muted-foreground" />
-      </div>
-    );
+    return <div className="min-h-screen bg-background flex items-center justify-center"><Loader2 className="h-8 w-8 animate-spin text-muted-foreground" /></div>;
   }
 
   if (!customer) {
     return (
       <div className="min-h-screen bg-background flex flex-col items-center justify-center gap-4">
         <p className="text-muted-foreground">Klant niet gevonden</p>
-        <Button variant="outline" onClick={() => navigate("/admin")}>
-          <ArrowLeft className="h-4 w-4 mr-2" /> Terug
-        </Button>
+        <Button variant="outline" onClick={() => navigate("/admin")}><ArrowLeft className="h-4 w-4 mr-2" /> Terug</Button>
       </div>
     );
   }
 
   const activeEnrollment = enrollments.find(e => e.status === "active");
+  const hasIndividual = enrollments.some(e => e.course_type === "individueel_6" || e.course_type === "losse_sessie");
 
   return (
     <div className="min-h-screen bg-background">
@@ -579,26 +782,58 @@ export default function ClientProfilePage() {
         {/* ── AI Summary ── */}
         <AiSummaryCard email={customer.email} />
 
-        {/* ── Sections ── */}
-        <div className="divide-y divide-border/60">
-          {enrollments.length > 0 && (
-            <Section title="Intake" icon={Heart} defaultOpen>
-              <IntakeSection enrollmentId={enrollments[0].id} />
-            </Section>
-          )}
+        {/* ── Tabs for main sections ── */}
+        <Tabs defaultValue="dossier" className="w-full">
+          <TabsList className="h-9 w-full justify-start">
+            <TabsTrigger value="dossier" className="gap-1.5 text-xs"><FileText className="h-3.5 w-3.5" /> Dossier</TabsTrigger>
+            <TabsTrigger value="sessies" className="gap-1.5 text-xs">
+              <Calendar className="h-3.5 w-3.5" /> Sessies
+              {sessionAppointments.length > 0 && <Badge variant="secondary" className="text-[10px] px-1.5 py-0 h-4 ml-0.5">{sessionAppointments.length}</Badge>}
+            </TabsTrigger>
+            <TabsTrigger value="notities" className="gap-1.5 text-xs">
+              <FileText className="h-3.5 w-3.5" /> Notities
+              {structuredNotes.length > 0 && <Badge variant="secondary" className="text-[10px] px-1.5 py-0 h-4 ml-0.5">{structuredNotes.length}</Badge>}
+            </TabsTrigger>
+            <TabsTrigger value="financieel" className="gap-1.5 text-xs"><Euro className="h-3.5 w-3.5" /> Financieel</TabsTrigger>
+          </TabsList>
 
-          <Section title="Sessies" icon={Calendar} defaultOpen>
-            <SessionsTimeline sessionAppointments={sessionAppointments} enrollments={enrollments} />
-          </Section>
+          {/* ── DOSSIER TAB ── */}
+          <TabsContent value="dossier" className="mt-4 space-y-1">
+            <div className="divide-y divide-border/60">
+              {enrollments.length > 0 && (
+                <Section title="Intake" icon={Heart} defaultOpen>
+                  <IntakeSection enrollmentId={enrollments[0].id} />
+                </Section>
+              )}
 
-          <Section title="Notities" icon={FileText}>
+              {/* Therapy sessions (AI session notes) */}
+              {hasIndividual && enrollments.filter(e => e.course_type === "individueel_6" || e.course_type === "losse_sessie").map(enr => (
+                <Section key={enr.id} title="Sessieverslagen (AI)" icon={Brain} defaultOpen>
+                  <TherapySessionSection enrollmentId={enr.id} clientName={customer.name || undefined} />
+                </Section>
+              ))}
+            </div>
+          </TabsContent>
+
+          {/* ── SESSIES TAB ── */}
+          <TabsContent value="sessies" className="mt-4">
+            <SessionsSection
+              sessionAppointments={sessionAppointments}
+              enrollments={enrollments}
+              onUpdate={fetchData}
+            />
+          </TabsContent>
+
+          {/* ── NOTITIES TAB ── */}
+          <TabsContent value="notities" className="mt-4">
             <TrainerNotesSection enrollments={enrollments} notes={structuredNotes} onNotesChange={setStructuredNotes} />
-          </Section>
+          </TabsContent>
 
-          <Section title="Aanmeldingen & Betalingen" icon={Euro}>
+          {/* ── FINANCIEEL TAB ── */}
+          <TabsContent value="financieel" className="mt-4">
             <RegistrationsList registrations={registrations} />
-          </Section>
-        </div>
+          </TabsContent>
+        </Tabs>
       </div>
 
       {/* Extra Training Dialog */}
@@ -631,13 +866,13 @@ export default function ClientProfilePage() {
                 <Input value={extraRemarks} onChange={e => setExtraRemarks(e.target.value)} placeholder="Eventuele opmerkingen" />
               </div>
             </div>
-            <div className="flex justify-end gap-2 mt-4">
+            <DialogFooter>
               <Button variant="outline" onClick={() => setShowExtraTraining(false)}>Annuleren</Button>
               <Button onClick={submitExtraTraining} disabled={submittingExtra}>
                 {submittingExtra && <Loader2 className="h-4 w-4 animate-spin mr-2" />}
                 Inschrijven
               </Button>
-            </div>
+            </DialogFooter>
           </DialogContent>
         </Dialog>
       )}
