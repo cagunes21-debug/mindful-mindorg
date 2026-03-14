@@ -2,6 +2,7 @@
 // Unified CRM hub: metrics, pipeline overview, clients & leads in one polished view
 
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";

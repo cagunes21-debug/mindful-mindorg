@@ -86,6 +86,7 @@ const App = () => (
               <Route path="/login" element={<Auth />} />
               <Route path="/admin" element={<ProtectedRoute requireAdmin><AdminDashboard /></ProtectedRoute>} />
               <Route path="/admin/klanten" element={<ProtectedRoute requireAdmin><AdminDashboard /></ProtectedRoute>} />
+              <Route path="/admin/klant/:email" element={<ProtectedRoute requireAdmin><ClientProfilePage /></ProtectedRoute>} />
               <Route path="/admin/blog" element={<ProtectedRoute requireAdmin><AdminBlog /></ProtectedRoute>} />
               <Route path="/mijn-trainingen" element={<ProtectedRoute><ParticipantDashboard /></ProtectedRoute>} />
               <Route path="/training/:id" element={<ProtectedRoute><TrainingPage /></ProtectedRoute>} />
