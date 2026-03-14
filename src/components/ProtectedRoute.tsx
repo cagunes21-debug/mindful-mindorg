@@ -116,6 +116,13 @@ export default function ProtectedRoute({ children, requireAdmin = false }: Prote
     authResolvedRef.current = false;
     adminCheckedRef.current = false;
 
+    // Check if session was passed via navigation state (post-login redirect)
+    const locationState = window.history.state?.usr;
+    if (locationState?.userId && locationState?.accessToken) {
+      console.log(LOG_PREFIX, "Session from navigation state — resolving immediately");
+      resolveAuthenticated(locationState.userId, locationState.accessToken);
+    }
+
     console.log(LOG_PREFIX, "Initializing…");
 
     // Listener first (Supabase best practice)
