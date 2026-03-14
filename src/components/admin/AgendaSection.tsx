@@ -684,3 +684,15 @@ export default function AgendaSection() {
           ))}
         </div>
       )}
+
+      {/* Edit / create modal */}
+      {editing !== null && (
+        <EditModal
+          training={editing === "new" ? null : editing}
+          onClose={() => setEditing(null)}
+          onSaved={() => { setEditing(null); load(); }}
+        />
+      )}
+    </div>
+  );
+}
