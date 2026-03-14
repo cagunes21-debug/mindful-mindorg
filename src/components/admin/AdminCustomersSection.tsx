@@ -252,6 +252,9 @@ export default function AdminCustomersSection({ initialTab = "customers" }: { in
               {customers.length}
             </Badge>
           </TabsTrigger>
+          <TabsTrigger value="proces" className="gap-1.5 text-xs">
+            <ClipboardList className="h-3.5 w-3.5" /> Lead Proces
+          </TabsTrigger>
         </TabsList>
 
         {/* ── CUSTOMERS TAB ── */}
