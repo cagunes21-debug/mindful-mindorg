@@ -128,14 +128,11 @@ export default function ClientProfilePage() {
   };
 
   const handleTrainingClick = (training: string) => {
-    setActiveTab("trainings");
-    setTimeout(() => {
-      const reg = registrations.find(r => r.training_name === training);
-      if (reg) {
-        setOpenCards(prev => ({ ...prev, [reg.id]: true }));
-        setTimeout(() => registrationRefs.current[reg.id]?.scrollIntoView({ behavior: "smooth", block: "center" }), 100);
-      }
-    }, 100);
+    const reg = registrations.find(r => r.training_name === training);
+    if (reg) {
+      setOpenCards(prev => ({ ...prev, [reg.id]: true }));
+      setTimeout(() => registrationRefs.current[reg.id]?.scrollIntoView({ behavior: "smooth", block: "center" }), 100);
+    }
   };
 
   if (isLoading) {
