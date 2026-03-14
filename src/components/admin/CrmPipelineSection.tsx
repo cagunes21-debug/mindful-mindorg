@@ -823,78 +823,76 @@ export default function CrmPipelineSection() {
         })}
       </div>
 
-      {/* Pipeline board — 6 columns, horizontal scroll on mobile */}
-      <div className="overflow-x-auto -mx-4 sm:-mx-6 px-4 sm:px-6 pb-2">
-        <div className="grid grid-cols-6 gap-2.5 min-w-[960px]">
-          {ACTIVE_STAGES.map(stage => {
-            const stageLeads = filteredLeads(stage.key);
-            const Icon = stage.icon;
-            return (
+      {/* Pipeline board — 3x2 grid for better space usage */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
+        {ACTIVE_STAGES.map(stage => {
+          const stageLeads = filteredLeads(stage.key);
+          const Icon = stage.icon;
+          return (
+            <div
+              key={stage.key}
+              className="rounded-xl min-h-[120px] flex flex-col border border-border/40"
+              style={{ backgroundColor: stage.color + "06" }}
+            >
+              {/* Column header with colored top bar */}
               <div
-                key={stage.key}
-                className="rounded-xl min-h-[140px] flex flex-col"
-                style={{ backgroundColor: stage.color + "08" }}
-              >
-                {/* Column header with colored top bar */}
-                <div
-                  className="h-1 rounded-t-xl"
-                  style={{ backgroundColor: stage.color }}
-                />
-                <div className="flex items-center gap-1.5 px-2.5 pt-2.5 pb-2">
-                  {Icon && (
-                    <Icon className="h-3.5 w-3.5 flex-shrink-0" style={{ color: stage.color }} />
-                  )}
-                  <div className="flex flex-col min-w-0">
-                    <span className="text-[11px] font-semibold text-foreground truncate">
-                      {stage.label}
-                    </span>
-                    {stage.subtitle && (
-                      <span className="text-[9px] text-muted-foreground/60 truncate leading-tight">
-                        {stage.subtitle}
-                      </span>
-                    )}
-                  </div>
-                  <span
-                    className="ml-auto min-w-[20px] h-[20px] px-1.5 rounded-full text-[10px] font-bold flex items-center justify-center text-white"
-                    style={{ backgroundColor: stage.color }}
-                  >
-                    {stageLeads.length}
+                className="h-1 rounded-t-xl"
+                style={{ backgroundColor: stage.color }}
+              />
+              <div className="flex items-center gap-2 px-3 pt-3 pb-2">
+                {Icon && (
+                  <Icon className="h-4 w-4 flex-shrink-0" style={{ color: stage.color }} />
+                )}
+                <div className="flex flex-col min-w-0">
+                  <span className="text-xs font-semibold text-foreground">
+                    {stage.label}
                   </span>
-                </div>
-
-                {/* Cards */}
-                <div className="flex flex-col gap-2 px-2 pb-2 flex-1">
-                  {stageLeads.length === 0 ? (
-                    <div className="border border-dashed rounded-lg py-6 px-2 text-center text-[11px] text-muted-foreground/40 flex-1 flex items-center justify-center" style={{ borderColor: stage.color + "30" }}>
-                      Geen leads
-                    </div>
-                  ) : (
-                    stageLeads.map(lead => (
-                      <LeadCard
-                        key={lead.id}
-                        lead={lead}
-                        stage={stage}
-                        onMoveNext={moveToNext}
-                        onOpenDetail={setSelectedLead}
-                      />
-                    ))
+                  {stage.subtitle && (
+                    <span className="text-[10px] text-muted-foreground/60 leading-tight">
+                      {stage.subtitle}
+                    </span>
                   )}
                 </div>
+                <span
+                  className="ml-auto min-w-[22px] h-[22px] px-1.5 rounded-full text-[11px] font-bold flex items-center justify-center text-white"
+                  style={{ backgroundColor: stage.color }}
+                >
+                  {stageLeads.length}
+                </span>
+              </div>
 
-                {/* Add button at bottom */}
-                {stage.key !== "converted_to_client" && (
-                  <button
-                    onClick={() => setShowNewLead(true)}
-                    className="flex items-center justify-center gap-1 py-2 mx-2 mb-2 border border-dashed rounded-lg text-[11px] text-muted-foreground/40 bg-transparent cursor-pointer hover:text-muted-foreground transition-colors"
-                    style={{ borderColor: stage.color + "30" }}
-                  >
-                    <Plus className="h-3 w-3" /> Toevoegen
-                  </button>
+              {/* Cards — scrollable when many */}
+              <div className="flex flex-col gap-2 px-2.5 pb-2 flex-1 max-h-[320px] overflow-y-auto">
+                {stageLeads.length === 0 ? (
+                  <div className="border border-dashed rounded-lg py-5 px-2 text-center text-xs text-muted-foreground/40 flex-1 flex items-center justify-center" style={{ borderColor: stage.color + "30" }}>
+                    Geen leads in deze fase
+                  </div>
+                ) : (
+                  stageLeads.map(lead => (
+                    <LeadCard
+                      key={lead.id}
+                      lead={lead}
+                      stage={stage}
+                      onMoveNext={moveToNext}
+                      onOpenDetail={setSelectedLead}
+                    />
+                  ))
                 )}
               </div>
-            );
-          })}
-        </div>
+
+              {/* Add button at bottom */}
+              {stage.key !== "converted_to_client" && (
+                <button
+                  onClick={() => setShowNewLead(true)}
+                  className="flex items-center justify-center gap-1 py-2 mx-2.5 mb-2.5 border border-dashed rounded-lg text-[11px] text-muted-foreground/40 bg-transparent cursor-pointer hover:text-muted-foreground transition-colors"
+                  style={{ borderColor: stage.color + "30" }}
+                >
+                  <Plus className="h-3 w-3" /> Toevoegen
+                </button>
+              )}
+            </div>
+          );
+        })}
       </div>
 
       {/* Not interested — collapsed archive */}
