@@ -536,8 +536,9 @@ export default function AgendaSection() {
   const now = new Date();
   const filtered = trainings.filter(t => {
     const d = new Date(t.start_date);
-    if (filter === "upcoming") return d >= now;
-    if (filter === "past")     return d < now;
+    if (filter === "upcoming" && d < now) return false;
+    if (filter === "past" && d >= now) return false;
+    if (typeFilter !== "all" && t.type !== typeFilter) return false;
     return true;
   });
 
