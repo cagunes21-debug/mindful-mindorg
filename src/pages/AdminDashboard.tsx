@@ -873,7 +873,7 @@ export default function AdminDashboard() {
                 <h2 className="text-sm font-semibold text-foreground mb-3">Snel navigeren</h2>
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
                   {[
-                    { label: "Pipeline",           desc: stats.leads > 0 ? `${stats.leads} nieuwe leads wachten` : "Geen nieuwe leads", icon: GitBranch, section: "pipeline",   color: "bg-amber-50 text-amber-700" },
+                    { label: "Leads & Pipeline",    desc: stats.leads > 0 ? `${stats.leads} nieuwe leads wachten` : "Geen nieuwe leads", icon: GitBranch, section: "clients",    color: "bg-amber-50 text-amber-700" },
                     { label: "Lopende trainingen", desc: "Bekijk wie in welke week zit",   icon: BookOpen,  section: "trainingen", color: "bg-terracotta-50 text-terracotta-700" },
                     { label: "Klanten",            desc: "Profielen & sessies beheren",    icon: Users,     section: "clients",    color: "bg-sage-50 text-sage-700" },
                   ].map(a => (
