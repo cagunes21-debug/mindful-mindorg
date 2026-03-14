@@ -68,6 +68,13 @@ const STAGES = [
     label: "Kennismaking gepland",
     color: { bg: "#EEEDFE", text: "#534AB7", border: "#CECBF6", dot: "#7F77DD" },
     actionLabel: "Aanmelding maken →",
+    nextStage: "registration",
+  },
+  {
+    key: "registration",
+    label: "Aanmelding",
+    color: { bg: "#FEF3E2", text: "#92400E", border: "#FCD9A8", dot: "#D97706" },
+    actionLabel: "Omzetten naar cliënt →",
     nextStage: "converted_to_client",
   },
   {
