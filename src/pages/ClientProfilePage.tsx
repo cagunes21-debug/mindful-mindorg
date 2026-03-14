@@ -781,6 +781,134 @@ function Section({ title, icon: Icon, defaultOpen = false, children }: {
   );
 }
 
+// ─── SCS Results Section ──────────────────────────────────────────────────────
+
+interface ScsSubmissionRow {
+  id: string;
+  overall_score: number | null;
+  self_kindness: number | null;
+  self_judgment: number | null;
+  common_humanity: number | null;
+  isolation: number | null;
+  mindfulness: number | null;
+  over_identification: number | null;
+  measurement_type: string;
+  submitted_at: string;
+  enrollment_id: string;
+}
+
+function ScsResultsSection({ enrollmentIds }: { enrollmentIds: string[] }) {
+  const [submissions, setSubmissions] = useState<ScsSubmissionRow[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    if (enrollmentIds.length === 0) { setLoading(false); return; }
+    (async () => {
+      setLoading(true);
+      const { data } = await supabase
+        .from("scs_submissions")
+        .select("id, overall_score, self_kindness, self_judgment, common_humanity, isolation, mindfulness, over_identification, measurement_type, submitted_at, enrollment_id")
+        .in("enrollment_id", enrollmentIds)
+        .order("submitted_at", { ascending: true });
+      setSubmissions((data || []) as ScsSubmissionRow[]);
+      setLoading(false);
+    })();
+  }, [enrollmentIds.join(",")]);
+
+  if (loading) return <div className="flex justify-center py-4"><Loader2 className="h-5 w-5 animate-spin text-muted-foreground" /></div>;
+  if (submissions.length === 0) return <p className="text-sm text-muted-foreground py-2">Nog geen vragenlijsten ingevuld.</p>;
+
+  const subscales = [
+    { key: "self_kindness", label: "Zelfvriendelijkheid", positive: true },
+    { key: "common_humanity", label: "Gedeelde menselijkheid", positive: true },
+    { key: "mindfulness", label: "Mindfulness", positive: true },
+    { key: "self_judgment", label: "Zelfoordeel", positive: false },
+    { key: "isolation", label: "Isolatie", positive: false },
+    { key: "over_identification", label: "Over-identificatie", positive: false },
+  ] as const;
+
+  const pre = submissions.find(s => s.measurement_type === "pre");
+  const post = submissions.find(s => s.measurement_type === "post");
+
+  return (
+    <div className="space-y-3">
+      {/* Comparison view if both exist */}
+      {pre && post ? (
+        <div className="space-y-3">
+          <div className="flex items-center gap-3 text-center">
+            <div className="flex-1">
+              <p className="text-[10px] text-muted-foreground mb-1">0-meting</p>
+              <p className="text-2xl font-light text-primary">{pre.overall_score?.toFixed(2)}</p>
+              <p className="text-[10px] text-muted-foreground">{format(new Date(pre.submitted_at), "d MMM yyyy", { locale: nl })}</p>
+            </div>
+            <div className="text-muted-foreground text-xs">→</div>
+            <div className="flex-1">
+              <p className="text-[10px] text-muted-foreground mb-1">Nameting</p>
+              <p className="text-2xl font-light text-primary">{post.overall_score?.toFixed(2)}</p>
+              <p className="text-[10px] text-muted-foreground">{format(new Date(post.submitted_at), "d MMM yyyy", { locale: nl })}</p>
+            </div>
+            <div className="flex-1">
+              <p className="text-[10px] text-muted-foreground mb-1">Verschil</p>
+              {(() => {
+                const diff = (post.overall_score || 0) - (pre.overall_score || 0);
+                return (
+                  <p className={`text-2xl font-light ${diff > 0 ? "text-green-600" : diff < 0 ? "text-red-600" : "text-muted-foreground"}`}>
+                    {diff > 0 ? "+" : ""}{diff.toFixed(2)}
+                  </p>
+                );
+              })()}
+            </div>
+          </div>
+          <div className="space-y-1.5">
+            {subscales.map(({ key, label, positive }) => {
+              const preVal = (pre as any)[key] as number | null;
+              const postVal = (post as any)[key] as number | null;
+              const diff = (postVal || 0) - (preVal || 0);
+              const improved = positive ? diff > 0 : diff < 0;
+              return (
+                <div key={key} className="flex items-center gap-1.5 text-[10px]">
+                  <span className="w-32 text-muted-foreground truncate">{label}</span>
+                  <Progress value={((preVal || 0) / 5) * 100} className="h-1.5 flex-1" />
+                  <span className="w-8 text-right">{preVal?.toFixed(1)}</span>
+                  <span className="text-muted-foreground">→</span>
+                  <span className={`w-8 text-right font-medium ${improved ? "text-green-600" : ""}`}>{postVal?.toFixed(1)}</span>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      ) : (
+        /* Single measurement */
+        submissions.map(s => (
+          <div key={s.id} className="bg-muted/20 rounded-lg p-3 space-y-2">
+            <div className="flex items-center justify-between">
+              <Badge variant="outline" className="text-[10px] px-1.5 py-0">
+                {s.measurement_type === "pre" ? "0-meting" : s.measurement_type === "post" ? "Nameting" : s.measurement_type}
+              </Badge>
+              <span className="text-[10px] text-muted-foreground">{format(new Date(s.submitted_at), "d MMM yyyy", { locale: nl })}</span>
+            </div>
+            <div className="flex items-center gap-3">
+              <div className="text-center">
+                <p className="text-2xl font-light text-primary">{s.overall_score?.toFixed(2)}</p>
+                <p className="text-[10px] text-muted-foreground">Totaal</p>
+              </div>
+              <div className="flex-1 space-y-1">
+                {subscales.map(({ key, label }) => (
+                  <div key={key} className="flex items-center gap-1.5 text-[10px]">
+                    <span className="w-32 text-muted-foreground truncate">{label}</span>
+                    <Progress value={(((s as any)[key] || 0) / 5) * 100} className="h-1.5 flex-1" />
+                    <span className="w-6 text-right font-medium">{((s as any)[key] as number)?.toFixed(1)}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        ))
+      )}
+    </div>
+  );
+}
+
 // ─── Main Page ────────────────────────────────────────────────────────────────
 
 export default function ClientProfilePage() {
