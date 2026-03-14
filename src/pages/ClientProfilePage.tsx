@@ -176,14 +176,10 @@ function QuickStats({ customer, enrollments, sessionAppointments }: {
   const completedSessions = sessionAppointments.filter(a => a.status === "afgerond").length;
 
   return (
-    <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+    <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
       <Card className="border-border/60"><CardContent className="p-3">
         <div className="flex items-center gap-2 mb-1"><Calendar className="h-3.5 w-3.5 text-muted-foreground" /><span className="text-[10px] text-muted-foreground uppercase tracking-wide">Aanmeldingen</span></div>
         <p className="text-lg font-bold">{customer.total_registrations}</p>
-      </CardContent></Card>
-      <Card className="border-border/60"><CardContent className="p-3">
-        <div className="flex items-center gap-2 mb-1"><Euro className="h-3.5 w-3.5 text-muted-foreground" /><span className="text-[10px] text-muted-foreground uppercase tracking-wide">Omzet</span></div>
-        <p className="text-lg font-bold">€{customer.total_spent?.toLocaleString("nl-NL") || 0}</p>
       </CardContent></Card>
       <Card className="border-border/60"><CardContent className="p-3">
         <div className="flex items-center gap-2 mb-1"><CheckCircle2 className="h-3.5 w-3.5 text-muted-foreground" /><span className="text-[10px] text-muted-foreground uppercase tracking-wide">Sessies</span></div>
