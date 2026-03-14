@@ -4,14 +4,10 @@ import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Badge } from "@/components/ui/badge";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Card, CardContent } from "@/components/ui/card";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import {
-  ArrowLeft, Plus, Loader2, BookOpen, LayoutDashboard, Calendar,
-  ClipboardList, MessageSquare, Euro, FileText, Mail,
+  ArrowLeft, Plus, Loader2,
 } from "lucide-react";
 import { toast } from "sonner";
 
@@ -51,7 +47,6 @@ export default function ClientProfilePage() {
   const [structuredNotes, setStructuredNotes] = useState<TrainerNote[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [openCards, setOpenCards] = useState<Record<string, boolean>>({});
-  const [activeTab, setActiveTab] = useState("overview");
   const registrationRefs = useRef<Record<string, HTMLDivElement | null>>({});
 
   const [showExtraTraining, setShowExtraTraining] = useState(false);
@@ -133,14 +128,11 @@ export default function ClientProfilePage() {
   };
 
   const handleTrainingClick = (training: string) => {
-    setActiveTab("trainings");
-    setTimeout(() => {
-      const reg = registrations.find(r => r.training_name === training);
-      if (reg) {
-        setOpenCards(prev => ({ ...prev, [reg.id]: true }));
-        setTimeout(() => registrationRefs.current[reg.id]?.scrollIntoView({ behavior: "smooth", block: "center" }), 100);
-      }
-    }, 100);
+    const reg = registrations.find(r => r.training_name === training);
+    if (reg) {
+      setOpenCards(prev => ({ ...prev, [reg.id]: true }));
+      setTimeout(() => registrationRefs.current[reg.id]?.scrollIntoView({ behavior: "smooth", block: "center" }), 100);
+    }
   };
 
   if (isLoading) {
@@ -162,22 +154,11 @@ export default function ClientProfilePage() {
     );
   }
 
-  const tabs = [
-    { value: "overview",       icon: LayoutDashboard, label: "Overzicht" },
-    { value: "trainings",      icon: BookOpen,        label: "Trainingen" },
-    { value: "sessions",       icon: Calendar,        label: "Sessies" },
-    { value: "questionnaires", icon: ClipboardList,   label: "Vragenlijsten" },
-    { value: "notes",          icon: MessageSquare,   label: "Notities" },
-    { value: "documents",      icon: FileText,        label: "Documenten" },
-    { value: "emails",         icon: Mail,            label: "E-mails" },
-    { value: "payments",       icon: Euro,            label: "Betalingen" },
-  ];
-
   return (
     <div className="min-h-screen bg-background">
-      <div className="max-w-5xl mx-auto px-4 py-6">
+      <div className="max-w-5xl mx-auto px-4 py-6 space-y-8">
         {/* Header */}
-        <div className="flex items-center gap-3 mb-6">
+        <div className="flex items-center gap-3">
           <Button variant="ghost" size="sm" onClick={() => navigate("/admin")} className="gap-1.5">
             <ArrowLeft className="h-4 w-4" /> Terug
           </Button>
@@ -193,78 +174,58 @@ export default function ClientProfilePage() {
           </Button>
         </div>
 
-        {/* Tabs */}
-        <Tabs value={activeTab} onValueChange={setActiveTab}>
-          <div className="overflow-x-auto -mx-1 px-1">
-            <TabsList className="inline-flex h-9 w-auto min-w-full">
-              {tabs.map(t => (
-                <TabsTrigger key={t.value} value={t.value} className="text-xs gap-1 whitespace-nowrap px-3">
-                  <t.icon className="h-3 w-3" />
-                  <span className="hidden sm:inline">{t.label}</span>
-                </TabsTrigger>
-              ))}
-            </TabsList>
-          </div>
+        {/* Overzicht */}
+        <section>
+          <h2 className="text-sm font-semibold text-muted-foreground uppercase tracking-wide mb-3">Overzicht</h2>
+          <OverviewTab
+            customer={customer} enrollments={enrollments} registrations={registrations}
+            sessionAppointments={sessionAppointments} structuredNotes={structuredNotes}
+            onTrainingClick={handleTrainingClick} onTabChange={() => {}}
+            clientId={clientId} onRefresh={fetchCustomerData}
+          />
+        </section>
 
-          <TabsContent value="overview" className="mt-4">
-            <OverviewTab
-              customer={customer} enrollments={enrollments} registrations={registrations}
-              sessionAppointments={sessionAppointments} structuredNotes={structuredNotes}
-              onTrainingClick={handleTrainingClick} onTabChange={setActiveTab}
-              clientId={clientId} onRefresh={fetchCustomerData}
-            />
-          </TabsContent>
+        {/* Trainingen */}
+        <section>
+          <h2 className="text-sm font-semibold text-muted-foreground uppercase tracking-wide mb-3">Trainingen</h2>
+          <TrainingsTab
+            customer={{ name: customer.name, email: customer.email, phone: customer.phone }}
+            registrations={registrations} enrollments={enrollments} courseWeeks={courseWeeks}
+            sessionAppointments={sessionAppointments} structuredNotes={structuredNotes}
+            onEnrollmentsChange={setEnrollments} onSessionAppointmentsChange={setSessionAppointments}
+            onStructuredNotesChange={setStructuredNotes} onRefresh={fetchCustomerData}
+            registrationRefs={registrationRefs} openCards={openCards}
+            onToggleCard={(id) => setOpenCards(prev => ({ ...prev, [id]: !prev[id] }))}
+          />
+        </section>
 
-          <TabsContent value="trainings" className="mt-4">
-            <TrainingsTab
-              customer={{ name: customer.name, email: customer.email, phone: customer.phone }}
-              registrations={registrations} enrollments={enrollments} courseWeeks={courseWeeks}
-              sessionAppointments={sessionAppointments} structuredNotes={structuredNotes}
-              onEnrollmentsChange={setEnrollments} onSessionAppointmentsChange={setSessionAppointments}
-              onStructuredNotesChange={setStructuredNotes} onRefresh={fetchCustomerData}
-              registrationRefs={registrationRefs} openCards={openCards}
-              onToggleCard={(id) => setOpenCards(prev => ({ ...prev, [id]: !prev[id] }))}
-            />
-          </TabsContent>
+        {/* Sessies */}
+        <section>
+          <h2 className="text-sm font-semibold text-muted-foreground uppercase tracking-wide mb-3">Sessies</h2>
+          <SessionsTab enrollments={enrollments} sessionAppointments={sessionAppointments} onEnrollmentsChange={setEnrollments} />
+        </section>
 
-          <TabsContent value="sessions" className="mt-4">
-            <SessionsTab enrollments={enrollments} sessionAppointments={sessionAppointments} onEnrollmentsChange={setEnrollments} />
-          </TabsContent>
+        {/* Vragenlijsten */}
+        <section>
+          <h2 className="text-sm font-semibold text-muted-foreground uppercase tracking-wide mb-3">Vragenlijsten</h2>
+          <QuestionnairesTab enrollments={enrollments} />
+        </section>
 
-          <TabsContent value="questionnaires" className="mt-4">
-            <QuestionnairesTab enrollments={enrollments} />
-          </TabsContent>
+        {/* Notities */}
+        <section>
+          <h2 className="text-sm font-semibold text-muted-foreground uppercase tracking-wide mb-3">Notities</h2>
+          <NotesTab
+            customer={{ name: customer.name }} registrations={registrations}
+            enrollments={enrollments} structuredNotes={structuredNotes}
+            onStructuredNotesChange={setStructuredNotes}
+          />
+        </section>
 
-          <TabsContent value="notes" className="mt-4">
-            <NotesTab
-              customer={{ name: customer.name }} registrations={registrations}
-              enrollments={enrollments} structuredNotes={structuredNotes}
-              onStructuredNotesChange={setStructuredNotes}
-            />
-          </TabsContent>
-
-          <TabsContent value="documents" className="mt-4">
-            {clientId ? (
-              <div className="text-center py-10 text-sm text-muted-foreground">
-                Documenten zijn beschikbaar in het klantprofiel.
-              </div>
-            ) : (
-              <div className="text-center py-10 text-sm text-muted-foreground">
-                Klant heeft nog geen client-record.
-              </div>
-            )}
-          </TabsContent>
-
-          <TabsContent value="emails" className="mt-4">
-            <div className="text-center py-10 text-sm text-muted-foreground">
-              E-mailgeschiedenis is beschikbaar in het klantprofiel.
-            </div>
-          </TabsContent>
-
-          <TabsContent value="payments" className="mt-4">
-            <PaymentsTab customerEmail={customer.email} />
-          </TabsContent>
-        </Tabs>
+        {/* Betalingen */}
+        <section>
+          <h2 className="text-sm font-semibold text-muted-foreground uppercase tracking-wide mb-3">Betalingen</h2>
+          <PaymentsTab customerEmail={customer.email} />
+        </section>
       </div>
 
       {/* Extra Training Dialog */}
