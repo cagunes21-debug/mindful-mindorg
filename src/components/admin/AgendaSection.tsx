@@ -475,6 +475,7 @@ export default function AgendaSection() {
   const [trainings, setTrainings] = useState<TrainingWithCount[]>([]);
   const [loading, setLoading]     = useState(true);
   const [filter, setFilter]       = useState<"upcoming" | "past" | "all">("upcoming");
+  const [typeFilter, setTypeFilter] = useState<"all" | "msc_8week" | "individueel" | "workshop" | "retreat">("all");
   const [editing, setEditing]     = useState<TrainingWithCount | null | "new">(null);
 
   useEffect(() => { load(); }, []);
