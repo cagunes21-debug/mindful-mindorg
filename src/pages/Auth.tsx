@@ -84,7 +84,7 @@ const Auth = () => {
     }
 
     console.log("[Auth] Redirecting to /mijn-trainingen");
-    navigate("/mijn-trainingen", { replace: true });
+    navigate("/mijn-trainingen");
   };
 
   useEffect(() => {
