@@ -20,6 +20,7 @@ import AgendaSection from "@/components/admin/AgendaSection";
 /* ─── Nav config ─── */
 const navItems = [
   { id: "overview", label: "Overzicht", icon: Home },
+  { id: "agenda", label: "Agenda", icon: CalendarDays },
   { id: "clients", label: "Klanten", icon: Users },
   { id: "crm", label: "Leads & CRM", icon: MessageCircle },
   { id: "registrations", label: "Aanmeldingen", icon: ClipboardList },
