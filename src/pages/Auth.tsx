@@ -76,7 +76,7 @@ const Auth = () => {
       console.log("[Auth] has_role result:", res);
       if (res === true) {
         console.log("[Auth] Admin detected, redirecting to /admin");
-        navigate("/admin", { replace: true });
+        navigate("/admin");
         return;
       }
     } catch (err) {
