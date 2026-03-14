@@ -46,6 +46,7 @@ const SelfCompassionQuestionnaire = lazy(() => import("./pages/SelfCompassionQue
 const MscMaterialsLibrary = lazy(() => import("./pages/MscMaterialsLibrary"));
 const MscSessionBuilder = lazy(() => import("./pages/MscSessionBuilder"));
 const AdminCMS = lazy(() => import("./pages/AdminCMS"));
+const TrainingPage = lazy(() => import("./pages/TrainingPage"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 
 const queryClient = new QueryClient();
