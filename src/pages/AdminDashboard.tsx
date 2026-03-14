@@ -291,6 +291,7 @@ export default function AdminDashboard() {
 
               <h1 className="text-2xl font-bold text-foreground tracking-tight">{activeMeta.label}</h1>
 
+              {activeSection === "agenda" && <AgendaSection />}
               {activeSection === "clients" && <AdminCustomersSection initialTab="customers" />}
               {activeSection === "crm" && <AdminCustomersSection initialTab="leads" />}
               {activeSection === "registrations" && <AdminRegistrationsSection />}
