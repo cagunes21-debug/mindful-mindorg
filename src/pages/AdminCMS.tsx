@@ -35,8 +35,8 @@ const CONTENT_TYPES = [
 ];
 
 const TRAINING_TYPES = [
-  { value: "msc_8week", label: "8-Weekse Groepstraining" },
-  { value: "individueel_6", label: "Individueel Traject (6 sessies)" },
+  { value: "msc_8_week", label: "8-Weekse Groepstraining" },
+  { value: "individual_6_sessions", label: "Individueel Traject (6 sessies)" },
 ];
 
 const TYPE_ICON_MAP: Record<string, typeof FileText> = {
