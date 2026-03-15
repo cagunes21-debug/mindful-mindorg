@@ -65,63 +65,65 @@ const AutoLinker = () => { useAutoLinkClient(); return null; };
 const App = () => (
   <HelmetProvider>
     <QueryClientProvider client={queryClient}>
-      <TooltipProvider>
-        <Toaster />
-        <Sonner />
-        <BrowserRouter>
-          <AutoLinker />
-          <StickyCTA />
-          <Suspense fallback={<PageLoader />}>
-            <Routes>
-              <Route path="/" element={<IndividueelHome />} />
-              <Route path="/msc-training" element={<MindfulZelfcompassie />} />
-              <Route path="/programmas" element={<Index />} />
-              
-              <Route path="/mindful-self-compassion" element={<MindfulSelfCompassion />} />
-              <Route path="/ons-aanbod" element={<Services />} />
-              <Route path="/over-ons" element={<About />} />
-              <Route path="/over-cagla" element={<OverCagla />} />
-              <Route path="/trainers" element={<Trainers />} />
-              <Route path="/agenda" element={<Agenda />} />
-              <Route path="/contact" element={<Contact />} />
-              <Route path="/coaching" element={<Coaching />} />
-              <Route path="/barcelona-retreat" element={<BewegingMildheidRetreat />} />
-              <Route path="/bedrijven" element={<Bedrijven />} />
-              <Route path="/login" element={<Auth />} />
-              <Route path="/admin" element={<ProtectedRoute requireAdmin><AdminDashboard /></ProtectedRoute>} />
-              <Route path="/admin/klanten" element={<ProtectedRoute requireAdmin><AdminDashboard /></ProtectedRoute>} />
-              <Route path="/admin/klant/:email" element={<ProtectedRoute requireAdmin><ClientProfilePage /></ProtectedRoute>} />
-              <Route path="/admin/blog" element={<ProtectedRoute requireAdmin><AdminBlog /></ProtectedRoute>} />
-              <Route path="/mijn-trainingen" element={<ProtectedRoute><ParticipantDashboard /></ProtectedRoute>} />
-              <Route path="/training/:id" element={<ProtectedRoute><TrainingPage /></ProtectedRoute>} />
-              <Route path="/betaling-succes" element={<BetalingSucces />} />
-              <Route path="/betaling-geannuleerd" element={<BetalingGeannuleerd />} />
-              <Route path="/privacy" element={<Privacy />} />
-              <Route path="/faq" element={<FAQ />} />
-              <Route path="/ervaringen" element={<Ervaringen />} />
-              <Route path="/zelfcompassie-training/:stad" element={<StadLanding />} />
-              <Route path="/blog" element={<Blog />} />
-              <Route path="/blog/:slug" element={<BlogPost />} />
-              <Route path="/algemene-voorwaarden" element={<AlgemeneVoorwaarden />} />
-              <Route path="/admin/msc-builder" element={<ProtectedRoute requireAdmin><MscSessionBuilder /></ProtectedRoute>} />
-              <Route path="/admin/cursusmateriaal" element={<ProtectedRoute requireAdmin><CourseMaterial /></ProtectedRoute>} />
-              <Route path="/admin/deelnemers" element={<ProtectedRoute requireAdmin><AdminDashboard /></ProtectedRoute>} />
-              <Route path="/admin/msc-materials" element={<ProtectedRoute requireAdmin><MscMaterialsLibrary /></ProtectedRoute>} />
-              <Route path="/admin/presentatie/zelfcompassie" element={<ProtectedRoute requireAdmin><SelfCompassionPresentation /></ProtectedRoute>} />
-              <Route path="/admin/presentatie/:sessionNumber" element={<ProtectedRoute requireAdmin><SessionPresentation /></ProtectedRoute>} />
-              <Route path="/reset-password" element={<ResetPassword />} />
-              <Route path="/intake/:enrollmentId" element={<IntakeForm />} />
-              <Route path="/vragenlijst/:enrollmentId" element={<SelfCompassionQuestionnaire />} />
-              
-              
-              <Route path="/admin-cms" element={<ProtectedRoute requireAdmin><AdminCMS /></ProtectedRoute>} />
-              
-              {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-              <Route path="*" element={<NotFound />} />
-            </Routes>
-          </Suspense>
-        </BrowserRouter>
-      </TooltipProvider>
+      <LanguageProvider>
+        <TooltipProvider>
+          <Toaster />
+          <Sonner />
+          <BrowserRouter>
+            <AutoLinker />
+            <StickyCTA />
+            <Suspense fallback={<PageLoader />}>
+              <Routes>
+                <Route path="/" element={<IndividueelHome />} />
+                <Route path="/msc-training" element={<MindfulZelfcompassie />} />
+                <Route path="/programmas" element={<Index />} />
+                
+                <Route path="/mindful-self-compassion" element={<MindfulSelfCompassion />} />
+                <Route path="/ons-aanbod" element={<Services />} />
+                <Route path="/over-ons" element={<About />} />
+                <Route path="/over-cagla" element={<OverCagla />} />
+                <Route path="/trainers" element={<Trainers />} />
+                <Route path="/agenda" element={<Agenda />} />
+                <Route path="/contact" element={<Contact />} />
+                <Route path="/coaching" element={<Coaching />} />
+                <Route path="/barcelona-retreat" element={<BewegingMildheidRetreat />} />
+                <Route path="/bedrijven" element={<Bedrijven />} />
+                <Route path="/login" element={<Auth />} />
+                <Route path="/admin" element={<ProtectedRoute requireAdmin><AdminDashboard /></ProtectedRoute>} />
+                <Route path="/admin/klanten" element={<ProtectedRoute requireAdmin><AdminDashboard /></ProtectedRoute>} />
+                <Route path="/admin/klant/:email" element={<ProtectedRoute requireAdmin><ClientProfilePage /></ProtectedRoute>} />
+                <Route path="/admin/blog" element={<ProtectedRoute requireAdmin><AdminBlog /></ProtectedRoute>} />
+                <Route path="/mijn-trainingen" element={<ProtectedRoute><ParticipantDashboard /></ProtectedRoute>} />
+                <Route path="/training/:id" element={<ProtectedRoute><TrainingPage /></ProtectedRoute>} />
+                <Route path="/betaling-succes" element={<BetalingSucces />} />
+                <Route path="/betaling-geannuleerd" element={<BetalingGeannuleerd />} />
+                <Route path="/privacy" element={<Privacy />} />
+                <Route path="/faq" element={<FAQ />} />
+                <Route path="/ervaringen" element={<Ervaringen />} />
+                <Route path="/zelfcompassie-training/:stad" element={<StadLanding />} />
+                <Route path="/blog" element={<Blog />} />
+                <Route path="/blog/:slug" element={<BlogPost />} />
+                <Route path="/algemene-voorwaarden" element={<AlgemeneVoorwaarden />} />
+                <Route path="/admin/msc-builder" element={<ProtectedRoute requireAdmin><MscSessionBuilder /></ProtectedRoute>} />
+                <Route path="/admin/cursusmateriaal" element={<ProtectedRoute requireAdmin><CourseMaterial /></ProtectedRoute>} />
+                <Route path="/admin/deelnemers" element={<ProtectedRoute requireAdmin><AdminDashboard /></ProtectedRoute>} />
+                <Route path="/admin/msc-materials" element={<ProtectedRoute requireAdmin><MscMaterialsLibrary /></ProtectedRoute>} />
+                <Route path="/admin/presentatie/zelfcompassie" element={<ProtectedRoute requireAdmin><SelfCompassionPresentation /></ProtectedRoute>} />
+                <Route path="/admin/presentatie/:sessionNumber" element={<ProtectedRoute requireAdmin><SessionPresentation /></ProtectedRoute>} />
+                <Route path="/reset-password" element={<ResetPassword />} />
+                <Route path="/intake/:enrollmentId" element={<IntakeForm />} />
+                <Route path="/vragenlijst/:enrollmentId" element={<SelfCompassionQuestionnaire />} />
+                
+                
+                <Route path="/admin-cms" element={<ProtectedRoute requireAdmin><AdminCMS /></ProtectedRoute>} />
+                
+                {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+                <Route path="*" element={<NotFound />} />
+              </Routes>
+            </Suspense>
+          </BrowserRouter>
+        </TooltipProvider>
+      </LanguageProvider>
     </QueryClientProvider>
   </HelmetProvider>
 );
