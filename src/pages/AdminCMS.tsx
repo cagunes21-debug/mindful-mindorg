@@ -139,8 +139,8 @@ function ContentLibraryTab() {
     setLoading(false);
   };
 
-  const maxUnit = activeTraining === "msc_8week" ? 8 : 6;
-  const unitLabel = activeTraining === "msc_8week" ? "Week" : "Sessie";
+  const maxUnit = activeTraining === "msc_8_week" ? 8 : 6;
+  const unitLabel = activeTraining === "msc_8_week" ? "Week" : "Sessie";
 
   const openCreate = (unitNumber?: number) => {
     setEditingItem(null);
