@@ -1,12 +1,5 @@
 import { Link } from "react-router-dom";
 
-const trainers = [
-  {
-    name: "Çağla Güneş",
-    role: "Traumatherapeut en Mindful Zelfcompassie-trainer",
-  },
-];
-
 const TrainersSection = () => {
   return (
     <section className="py-20 md:py-28 bg-card">
@@ -17,18 +10,20 @@ const TrainersSection = () => {
           </h2>
           <div className="w-16 h-0.5 bg-primary mx-auto" />
         </div>
-        <div className="max-w-sm mx-auto">
-          {trainers.map((trainer) => (
-            <div key={trainer.name} className="text-center">
-              <div className="w-20 h-20 rounded-full bg-secondary mx-auto mb-4 flex items-center justify-center">
-                <span className="font-serif text-2xl text-primary">
-                  {trainer.name.charAt(0)}
-                </span>
-              </div>
-              <h3 className="font-serif text-xl text-foreground mb-1">{trainer.name}</h3>
-              <p className="text-muted-foreground text-sm">{trainer.role}</p>
-            </div>
-          ))}
+        <div className="max-w-sm mx-auto text-center">
+          <div className="w-20 h-20 rounded-full bg-secondary mx-auto mb-4 flex items-center justify-center">
+            <span className="font-serif text-2xl text-primary">Ç</span>
+          </div>
+          <h3 className="font-serif text-xl text-foreground mb-1">Çağla Güneş</h3>
+          <p className="text-muted-foreground text-sm mb-4">
+            Lichaamsgerichte Psychotherapeut · Mindful Zelfcompassie Trainer
+          </p>
+          <p className="font-serif italic text-foreground text-base mb-4">
+            "Echte verandering begint bij hoe je met jezelf omgaat."
+          </p>
+          <p className="text-muted-foreground text-sm leading-relaxed">
+            Ik help je om met meer mildheid, veerkracht en zelfcompassie in het leven te staan.
+          </p>
         </div>
         <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mt-12">
           <Link
