@@ -336,15 +336,13 @@ const Navigation = () => {
                 <Link to="/contact" onClick={() => setIsOpen(false)}>{t("nav.contact")}</Link>
               </Button>
 
-              {user && (
-                <>
-                  <Button asChild variant="ghost" className="w-fit rounded-full text-muted-foreground hover:text-primary">
-                    <Link to="/mijn-trainingen" onClick={() => setIsOpen(false)} className="flex items-center gap-2">
-                      <BookOpen className="h-4 w-4" />
-                      {t("nav.myTrainings")}
-                    </Link>
-                  </Button>
-                </>
+              {user && isAdmin && (
+                <Button asChild variant="ghost" className="w-fit rounded-full text-muted-foreground hover:text-primary">
+                  <Link to="/mijn-trainingen" onClick={() => setIsOpen(false)} className="flex items-center gap-2">
+                    <BookOpen className="h-4 w-4" />
+                    {t("nav.myTrainings")}
+                  </Link>
+                </Button>
               )}
 
               {user ? (
