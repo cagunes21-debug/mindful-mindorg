@@ -185,30 +185,30 @@ const Navigation = () => {
               </DropdownMenuContent>
             </DropdownMenu>
 
+            <LanguageToggle />
+
             <Button asChild className="bg-terracotta-600 hover:bg-terracotta-700 text-white rounded-full">
               <Link to="/contact">{t("nav.contact")}</Link>
             </Button>
 
             {user && (
               <>
-                <Button asChild variant="ghost" className="rounded-full text-muted-foreground hover:text-primary">
-                  <Link to="/mijn-trainingen" className="flex items-center gap-2">
+                <Button asChild variant="ghost" className="rounded-full text-muted-foreground hover:text-primary px-2">
+                  <Link to="/mijn-trainingen" className="flex items-center gap-1.5">
                     <BookOpen className="h-4 w-4" />
-                    {t("nav.myTrainings")}
+                    <span className="hidden lg:inline">{t("nav.myTrainings")}</span>
                   </Link>
                 </Button>
                 {isAdmin && (
-                  <Button asChild variant="ghost" className="rounded-full text-muted-foreground hover:text-primary">
-                    <Link to="/admin" className="flex items-center gap-2">
+                  <Button asChild variant="ghost" className="rounded-full text-muted-foreground hover:text-primary px-2">
+                    <Link to="/admin" className="flex items-center gap-1.5">
                       <LayoutDashboard className="h-4 w-4" />
-                      {t("nav.admin")}
+                      <span className="hidden lg:inline">{t("nav.admin")}</span>
                     </Link>
                   </Button>
                 )}
               </>
             )}
-
-            <LanguageToggle />
 
             {user ? (
               <Button
