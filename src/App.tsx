@@ -49,6 +49,7 @@ const AdminCMS = lazy(() => import("./pages/AdminCMS"));
 const TrainingPage = lazy(() => import("./pages/TrainingPage"));
 const ClientProfilePage = lazy(() => import("./pages/ClientProfilePage"));
 const MindfulSelfCompassion = lazy(() => import("./pages/MindfulSelfCompassion"));
+const OverCagla = lazy(() => import("./pages/OverCagla"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 
 const queryClient = new QueryClient();
@@ -79,6 +80,7 @@ const App = () => (
               <Route path="/mindful-self-compassion" element={<MindfulSelfCompassion />} />
               <Route path="/ons-aanbod" element={<Services />} />
               <Route path="/over-ons" element={<About />} />
+              <Route path="/over-cagla" element={<OverCagla />} />
               <Route path="/trainers" element={<Trainers />} />
               <Route path="/agenda" element={<Agenda />} />
               <Route path="/contact" element={<Contact />} />

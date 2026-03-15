@@ -240,7 +240,7 @@ const About = () => {
         </div>
       </section>
 
-      {/* Over Çağla */}
+      {/* Over Çağla - Compact met link naar aparte pagina */}
       <section className="py-12 lg:py-16 bg-warm-50">
         <div className="container mx-auto px-4">
           <div className="mx-auto max-w-3xl">
@@ -258,64 +258,21 @@ const About = () => {
                 <p>
                   Çağla wordt al lang geleid door een diepe oriëntatie op innerlijke verbinding en bewustzijn. Meditatie werd al op jonge leeftijd een natuurlijk onderdeel van haar leven — vanaf haar achtste — en verdiepte zich door haar studies, jarenlange beoefening en langere Vipassana-retraites.
                 </p>
-
                 <p>
-                  Haar pad heeft zich ontvouwd door geleefde ervaring. Jaren van reizen en wonen in het buitenland — in Nederland, Duitsland, Spanje en Mexico — boden niet alleen culturele verkenning, maar ook een voortdurend onderzoek naar identiteit, verbondenheid en wat het betekent om je thuis te voelen. In plaats van weg te bewegen van zichzelf, brachten deze reizen haar dichter bij haar essentie.
-                </p>
-
-                <p>
-                  Een sterke verbinding met haar wortels, Cappadocië, en haar voorouders vormt een belangrijk fundament in haar leven en werk. Dit voorouderlijk bewustzijn brengt een gevoel van continuïteit, diepte en respect voor de lagen die de menselijke ervaring vormen — persoonlijk, collectief en transgenerationeel.
+                  Haar pad heeft zich ontvouwd door geleefde ervaring. Jaren van reizen en wonen in het buitenland — in Nederland, Duitsland, Spanje en Mexico — boden niet alleen culturele verkenning, maar ook een voortdurend onderzoek naar identiteit, verbondenheid en wat het betekent om je thuis te voelen.
                 </p>
               </div>
             </ScrollReveal>
 
-            {/* Two pathways */}
             <ScrollReveal delay={0.2}>
-              <div className="mt-8 mb-6">
-                <p className="text-center text-foreground text-lg font-medium mb-6">
-                  In de loop van de tijd zijn twee heldere paden ontstaan in haar werk:
-                </p>
-                <StaggerContainer className="grid gap-4 md:grid-cols-2">
-                  <StaggerItem>
-                    <div className="bg-white rounded-2xl p-6 border border-terracotta-100 h-full">
-                      <div className="h-10 w-10 rounded-xl bg-terracotta-100 flex items-center justify-center mb-4">
-                        <Sparkles className="h-5 w-5 text-terracotta-600" />
-                      </div>
-                      <h3 className="text-lg font-semibold text-foreground mb-2">Mindful Mind</h3>
-                      <p className="text-sm text-muted-foreground leading-relaxed">
-                        Een plek voor mindfulness-gebaseerde trainingen en educatie. Hier ligt de focus op het ontwikkelen van bewustzijn, zelfcompassie en belichaamde aanwezigheid, aangeboden in groepsprogramma's en individuele begeleiding.
-                      </p>
-                    </div>
-                  </StaggerItem>
-                  <StaggerItem>
-                    <div className="bg-white rounded-2xl p-6 border border-sage-200 h-full">
-                      <div className="h-10 w-10 rounded-xl bg-sage-100 flex items-center justify-center mb-4">
-                        <Leaf className="h-5 w-5 text-sage-600" />
-                      </div>
-                      <h3 className="text-lg font-semibold text-foreground mb-2">In Harmonia</h3>
-                      <p className="text-sm text-muted-foreground leading-relaxed mb-3">
-                        Een ruimte voor therapeutisch werk, waar mensen worden begeleid in individuele sessies bij het verkennen van diepere emotionele lagen, patronen en levensovergangen.
-                      </p>
-                      <a 
-                        href="https://www.in-harmonia.com" 
-                        target="_blank" 
-                        rel="noopener noreferrer"
-                        className="inline-flex items-center text-sm font-medium text-sage-700 hover:text-sage-900 transition-colors"
-                      >
-                        Bezoek In Harmonia
-                        <ArrowRight className="ml-1 h-3.5 w-3.5" />
-                      </a>
-                    </div>
-                  </StaggerItem>
-                </StaggerContainer>
-              </div>
-            </ScrollReveal>
-
-            <ScrollReveal delay={0.3}>
-              <div className="bg-gradient-to-r from-terracotta-50 to-warm-50 rounded-2xl p-5 lg:p-6 border border-terracotta-200 text-center">
-                <p className="text-foreground leading-relaxed font-medium">
-                  Beide paden komen voort uit dezelfde bron: een toewijding aan aanwezigheid, eerlijkheid en zorgvuldige aandacht. Samen weerspiegelen zij één intentie — <span className="text-terracotta-600">het ondersteunen van mensen in het opnieuw verbinden met zichzelf</span>.
-                </p>
+              <div className="text-center mt-8">
+                <Link
+                  to="/over-cagla"
+                  className="inline-flex items-center gap-2 text-terracotta-600 hover:text-terracotta-700 font-medium transition-colors"
+                >
+                  Lees meer over Çağla
+                  <ArrowRight className="h-4 w-4" />
+                </Link>
               </div>
             </ScrollReveal>
           </div>
