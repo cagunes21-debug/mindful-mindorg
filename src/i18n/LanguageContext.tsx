@@ -4,15 +4,13 @@ import { en } from "./en";
 
 export type Language = "nl" | "en";
 
-type Translations = typeof nl;
-
 interface LanguageContextType {
   language: Language;
   setLanguage: (lang: Language) => void;
   t: (key: string) => string;
 }
 
-const translations: Record<Language, Translations> = { nl, en };
+const translations: Record<Language, Record<string, any>> = { nl, en };
 
 const LanguageContext = createContext<LanguageContextType | undefined>(undefined);
 
