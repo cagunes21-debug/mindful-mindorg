@@ -80,6 +80,7 @@ const App = () => (
               <Route path="/mindful-self-compassion" element={<MindfulSelfCompassion />} />
               <Route path="/ons-aanbod" element={<Services />} />
               <Route path="/over-ons" element={<About />} />
+              <Route path="/over-cagla" element={<OverCagla />} />
               <Route path="/trainers" element={<Trainers />} />
               <Route path="/agenda" element={<Agenda />} />
               <Route path="/contact" element={<Contact />} />
