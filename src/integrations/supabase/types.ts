@@ -575,6 +575,7 @@ export type Database = {
       }
       msc_items: {
         Row: {
+          available_for: string
           created_at: string
           duration_minutes: number
           id: string
@@ -590,6 +591,7 @@ export type Database = {
           updated_at: string
         }
         Insert: {
+          available_for?: string
           created_at?: string
           duration_minutes?: number
           id?: string
@@ -605,6 +607,7 @@ export type Database = {
           updated_at?: string
         }
         Update: {
+          available_for?: string
           created_at?: string
           duration_minutes?: number
           id?: string
