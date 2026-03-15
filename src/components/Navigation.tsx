@@ -103,7 +103,7 @@ const Navigation = () => {
           </NavLink>
 
           {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center gap-8">
+          <div className="hidden md:flex items-center gap-5 lg:gap-8">
             <NavLink
               to="/"
               className="text-sm font-medium text-muted-foreground transition-colors hover:text-primary"
