@@ -187,6 +187,15 @@ export default function AdminCMS() {
     await loadData();
   };
 
+  const toggleIndividual = async (item: MscItem) => {
+    const isIndividual = item.available_for === "individual" || item.available_for === "both";
+    const next = isIndividual
+      ? (item.available_for === "both" ? "group" : "group")
+      : (item.available_for === "group" ? "both" : "individual");
+    const { error } = await supabase.from("msc_items").update({ available_for: next }).eq("id", item.id);
+    if (!error) setItems(prev => prev.map(i => i.id === item.id ? { ...i, available_for: next } : i));
+  };
+
   // ── Filtering ───────────────────────────────────────────────────────
 
   const filteredItems = items
@@ -196,6 +205,14 @@ export default function AdminCMS() {
 
   const filteredItemsBySession = (sessionId: string) =>
     filteredItems.filter(i => i.session_id === sessionId).sort((a, b) => a.sort_order - b.sort_order);
+
+  const individualFilteredItems = items
+    .filter(i => i.available_for === "individual" || i.available_for === "both")
+    .filter(i => filterType === "all" || i.type === filterType)
+    .filter(i => i.title.toLowerCase().includes(search.toLowerCase()));
+
+  const individualItemsBySession = (sessionId: string) =>
+    individualFilteredItems.filter(i => i.session_id === sessionId).sort((a, b) => a.sort_order - b.sort_order);
 
   // ── Stats ───────────────────────────────────────────────────────────
 
