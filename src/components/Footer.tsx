@@ -1,25 +1,28 @@
 import { Link } from "react-router-dom";
 import { Mail, Phone, MessageCircle } from "lucide-react";
 import NewsletterForm from "@/components/NewsletterForm";
-
-const serviceLinks = [
-  { to: "/", label: "8-weekse MSC Training" },
-  { to: "/barcelona-retreat", label: "Barcelona Retreat" },
-  { to: "/coaching", label: "Individuele Begeleiding" },
-  { to: "/bedrijven", label: "Voor Bedrijven" },
-];
-
-const quickLinks = [
-  { to: "/", label: "Home" },
-  { to: "/agenda", label: "Agenda" },
-  { to: "/over-ons", label: "Over Ons" },
-  { to: "/trainers", label: "Trainers" },
-  { to: "/ervaringen", label: "Ervaringen" },
-  { to: "/faq", label: "Veelgestelde Vragen" },
-  { to: "/contact", label: "Contact" },
-];
+import { useLanguage } from "@/i18n/LanguageContext";
 
 const Footer = () => {
+  const { t } = useLanguage();
+
+  const serviceLinks = [
+    { to: "/", label: t("footer.mscTraining") },
+    { to: "/barcelona-retreat", label: t("footer.barcelonaRetreat") },
+    { to: "/coaching", label: t("footer.individualCoaching") },
+    { to: "/bedrijven", label: t("footer.forCompanies") },
+  ];
+
+  const quickLinks = [
+    { to: "/", label: t("footer.home") },
+    { to: "/agenda", label: t("footer.agenda") },
+    { to: "/over-ons", label: t("footer.aboutUs") },
+    { to: "/trainers", label: t("footer.trainers") },
+    { to: "/ervaringen", label: t("footer.experiences") },
+    { to: "/faq", label: t("footer.faq") },
+    { to: "/contact", label: t("footer.contact") },
+  ];
+
   return (
     <footer className="border-t border-warm-200 bg-warm-100 py-16">
       <div className="container mx-auto px-4">
@@ -31,16 +34,16 @@ const Footer = () => {
                 <p className="font-serif italic text-2xl text-terracotta-600 mb-3">Mindful Mind</p>
               </Link>
               <p className="text-muted-foreground text-sm">
-                Begeleiding in Mindfulness en Zelfcompassie
+                {t("footer.tagline")}
               </p>
             </div>
 
             {/* Ons Aanbod */}
             <div>
-              <h3 className="font-semibold text-foreground mb-4">Ons Aanbod</h3>
+              <h3 className="font-semibold text-foreground mb-4">{t("footer.ourServices")}</h3>
               <ul className="space-y-2">
                 {serviceLinks.map((link) => (
-                  <li key={link.to}>
+                  <li key={link.to + link.label}>
                     <Link 
                       to={link.to} 
                       className="text-sm text-muted-foreground hover:text-terracotta-600 transition-colors"
@@ -54,10 +57,10 @@ const Footer = () => {
 
             {/* Quick Links */}
             <div>
-              <h3 className="font-semibold text-foreground mb-4">Snelle Links</h3>
+              <h3 className="font-semibold text-foreground mb-4">{t("footer.quickLinks")}</h3>
               <ul className="space-y-2">
                 {quickLinks.map((link) => (
-                  <li key={link.to}>
+                  <li key={link.to + link.label}>
                     <Link 
                       to={link.to} 
                       className="text-sm text-muted-foreground hover:text-terracotta-600 transition-colors"
@@ -71,7 +74,7 @@ const Footer = () => {
 
             {/* Contact & Newsletter */}
             <div>
-              <h3 className="font-semibold text-foreground mb-4">Contact</h3>
+              <h3 className="font-semibold text-foreground mb-4">{t("footer.contactTitle")}</h3>
               <div className="space-y-3 mb-6">
                 <a 
                   href="mailto:mindful-mind@outlook.com" 
@@ -101,22 +104,22 @@ const Footer = () => {
                   WhatsApp
                 </a>
               </div>
-              <h4 className="text-sm font-semibold text-foreground mb-2">Nieuwsbrief</h4>
+              <h4 className="text-sm font-semibold text-foreground mb-2">{t("footer.newsletter")}</h4>
               <NewsletterForm variant="inline" />
             </div>
           </div>
 
           <div className="border-t border-warm-200 pt-8 flex flex-col sm:flex-row items-center justify-between gap-4">
             <div className="text-sm text-muted-foreground">
-              <p>© {new Date().getFullYear()} Mindful Mind. Alle rechten voorbehouden.</p>
+              <p>© {new Date().getFullYear()} Mindful Mind. {t("footer.rights")}</p>
               <p className="mt-1">KvK: 91593700</p>
             </div>
             <div className="flex gap-4">
               <Link to="/privacy" className="text-sm text-muted-foreground hover:text-terracotta-600 transition-colors">
-                Privacyverklaring
+                {t("footer.privacy")}
               </Link>
               <Link to="/algemene-voorwaarden" className="text-sm text-muted-foreground hover:text-terracotta-600 transition-colors">
-                Algemene Voorwaarden
+                {t("footer.terms")}
               </Link>
             </div>
           </div>
