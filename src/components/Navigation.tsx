@@ -199,14 +199,6 @@ const Navigation = () => {
                     <span className="hidden lg:inline">{t("nav.myTrainings")}</span>
                   </Link>
                 </Button>
-                {isAdmin && (
-                  <Button asChild variant="ghost" className="rounded-full text-muted-foreground hover:text-primary px-2">
-                    <Link to="/admin" className="flex items-center gap-1.5">
-                      <LayoutDashboard className="h-4 w-4" />
-                      <span className="hidden lg:inline">{t("nav.admin")}</span>
-                    </Link>
-                  </Button>
-                )}
               </>
             )}
 
