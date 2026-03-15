@@ -49,6 +49,7 @@ const AdminCMS = lazy(() => import("./pages/AdminCMS"));
 const TrainingPage = lazy(() => import("./pages/TrainingPage"));
 const ClientProfilePage = lazy(() => import("./pages/ClientProfilePage"));
 const MindfulSelfCompassion = lazy(() => import("./pages/MindfulSelfCompassion"));
+const OverCagla = lazy(() => import("./pages/OverCagla"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 
 const queryClient = new QueryClient();
