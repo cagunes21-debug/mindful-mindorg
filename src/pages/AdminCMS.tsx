@@ -18,8 +18,9 @@ import { Switch } from "@/components/ui/switch";
 import { useToast } from "@/hooks/use-toast";
 import {
   ArrowLeft, Plus, Pencil, Trash2, Search, Clock, Filter,
-  ChevronRight, BookOpen, Library, Layers, Users, User
+  ChevronRight, BookOpen, Library, Layers, Users, User, Check
 } from "lucide-react";
+import { Checkbox } from "@/components/ui/checkbox";
 import { cn } from "@/lib/utils";
 
 // ── Constants ─────────────────────────────────────────────────────────────
