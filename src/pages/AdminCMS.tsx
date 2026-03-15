@@ -92,6 +92,7 @@ export default function AdminCMS() {
   const [search, setSearch] = useState("");
   const [filterType, setFilterType] = useState("all");
   const [filterAvailable, setFilterAvailable] = useState("all");
+  const [activeTab, setActiveTab] = useState("all");
 
   // Form
   const [form, setForm] = useState({
