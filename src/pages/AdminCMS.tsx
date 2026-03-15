@@ -167,7 +167,7 @@ export default function AdminCMS() {
           {/* Tabs */}
           <Tabs value={activeTab} onValueChange={setActiveTab} className="mb-6">
             <TabsList className="grid w-full max-w-md grid-cols-2">
-              <TabsTrigger value="all" className="gap-2 text-sm"><Library className="h-4 w-4" /> Alle Content</TabsTrigger>
+              <TabsTrigger value="all" className="gap-2 text-sm"><Users className="h-4 w-4" /> Groepstraject <Badge variant="secondary" className="text-[10px] ml-1">{groupCount}</Badge></TabsTrigger>
               <TabsTrigger value="individual" className="gap-2 text-sm"><User className="h-4 w-4" /> Individuele Sessies <Badge variant="secondary" className="text-[10px] ml-1">{individualCount}</Badge></TabsTrigger>
             </TabsList>
           </Tabs>
