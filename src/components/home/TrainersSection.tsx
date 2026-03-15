@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import caglaBio from "@/assets/cagla-bio.png";
 
 const TrainersSection = () => {
   return (
