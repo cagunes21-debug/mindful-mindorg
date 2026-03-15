@@ -113,7 +113,7 @@ interface MscItem {
 
 function ContentLibraryTab() {
   const { toast } = useToast();
-  const [activeTraining, setActiveTraining] = useState("msc_8week");
+  const [activeTraining, setActiveTraining] = useState("msc_8_week");
   const [items, setItems] = useState<ContentItem[]>([]);
   const [loading, setLoading] = useState(true);
   const [dialogOpen, setDialogOpen] = useState(false);
