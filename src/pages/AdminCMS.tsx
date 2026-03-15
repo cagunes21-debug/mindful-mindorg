@@ -35,8 +35,8 @@ const CONTENT_TYPES = [
 ];
 
 const TRAINING_TYPES = [
-  { value: "msc_8week", label: "8-Weekse Groepstraining" },
-  { value: "individueel_6", label: "Individueel Traject (6 sessies)" },
+  { value: "msc_8_week", label: "8-Weekse Groepstraining" },
+  { value: "individual_6_sessions", label: "Individueel Traject (6 sessies)" },
 ];
 
 const TYPE_ICON_MAP: Record<string, typeof FileText> = {
@@ -113,7 +113,7 @@ interface MscItem {
 
 function ContentLibraryTab() {
   const { toast } = useToast();
-  const [activeTraining, setActiveTraining] = useState("msc_8week");
+  const [activeTraining, setActiveTraining] = useState("msc_8_week");
   const [items, setItems] = useState<ContentItem[]>([]);
   const [loading, setLoading] = useState(true);
   const [dialogOpen, setDialogOpen] = useState(false);
@@ -139,8 +139,8 @@ function ContentLibraryTab() {
     setLoading(false);
   };
 
-  const maxUnit = activeTraining === "msc_8week" ? 8 : 6;
-  const unitLabel = activeTraining === "msc_8week" ? "Week" : "Sessie";
+  const maxUnit = activeTraining === "msc_8_week" ? 8 : 6;
+  const unitLabel = activeTraining === "msc_8_week" ? "Week" : "Sessie";
 
   const openCreate = (unitNumber?: number) => {
     setEditingItem(null);
