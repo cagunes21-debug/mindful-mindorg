@@ -293,9 +293,18 @@ const About = () => {
                         <Leaf className="h-5 w-5 text-sage-600" />
                       </div>
                       <h3 className="text-lg font-semibold text-foreground mb-2">In Harmonia</h3>
-                      <p className="text-sm text-muted-foreground leading-relaxed">
+                      <p className="text-sm text-muted-foreground leading-relaxed mb-3">
                         Een ruimte voor therapeutisch werk, waar mensen worden begeleid in individuele sessies bij het verkennen van diepere emotionele lagen, patronen en levensovergangen.
                       </p>
+                      <a 
+                        href="https://www.in-harmonia.com" 
+                        target="_blank" 
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center text-sm font-medium text-sage-700 hover:text-sage-900 transition-colors"
+                      >
+                        Bezoek In Harmonia
+                        <ArrowRight className="ml-1 h-3.5 w-3.5" />
+                      </a>
                     </div>
                   </StaggerItem>
                 </StaggerContainer>
