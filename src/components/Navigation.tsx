@@ -346,14 +346,6 @@ const Navigation = () => {
                       {t("nav.myTrainings")}
                     </Link>
                   </Button>
-                  {isAdmin && (
-                    <Button asChild variant="ghost" className="w-fit rounded-full text-muted-foreground hover:text-primary">
-                      <Link to="/admin" onClick={() => setIsOpen(false)} className="flex items-center gap-2">
-                        <LayoutDashboard className="h-4 w-4" />
-                        {t("nav.admin")}
-                      </Link>
-                    </Button>
-                  )}
                 </>
               )}
 
