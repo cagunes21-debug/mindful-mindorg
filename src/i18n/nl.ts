@@ -6,6 +6,7 @@ export const nl = {
     agenda: "Agenda",
     about: "Over",
     aboutUs: "Over Ons",
+    aboutCagla: "Over Çağla",
     trainers: "Trainers",
     more: "Meer",
     experiences: "Ervaringen",
