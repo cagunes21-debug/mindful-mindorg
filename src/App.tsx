@@ -48,6 +48,7 @@ const MscSessionBuilder = lazy(() => import("./pages/MscSessionBuilder"));
 const AdminCMS = lazy(() => import("./pages/AdminCMS"));
 const TrainingPage = lazy(() => import("./pages/TrainingPage"));
 const ClientProfilePage = lazy(() => import("./pages/ClientProfilePage"));
+const MindfulSelfCompassion = lazy(() => import("./pages/MindfulSelfCompassion"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 
 const queryClient = new QueryClient();
@@ -75,6 +76,7 @@ const App = () => (
               <Route path="/msc-training" element={<MindfulZelfcompassie />} />
               <Route path="/programmas" element={<Index />} />
               
+              <Route path="/mindful-self-compassion" element={<MindfulSelfCompassion />} />
               <Route path="/ons-aanbod" element={<Services />} />
               <Route path="/over-ons" element={<About />} />
               <Route path="/trainers" element={<Trainers />} />
