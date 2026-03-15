@@ -81,6 +81,7 @@ const Navigation = () => {
 
   const aboutLinks = [
     { to: "/over-ons", label: t("nav.aboutUs") },
+    { to: "/over-cagla", label: t("nav.aboutCagla") },
     { to: "/trainers", label: t("nav.trainers") },
   ];
 
