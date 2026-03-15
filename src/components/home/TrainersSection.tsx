@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import caglaBio from "@/assets/cagla-bio.png";
 
 const TrainersSection = () => {
   return (
@@ -11,8 +12,8 @@ const TrainersSection = () => {
           <div className="w-16 h-0.5 bg-primary mx-auto" />
         </div>
         <div className="max-w-sm mx-auto text-center">
-          <div className="w-20 h-20 rounded-full bg-secondary mx-auto mb-4 flex items-center justify-center">
-            <span className="font-serif text-2xl text-primary">Ç</span>
+          <div className="w-28 h-28 rounded-full mx-auto mb-4 overflow-hidden">
+            <img src={caglaBio} alt="Çağla Güneş" className="w-full h-full object-cover" />
           </div>
           <h3 className="font-serif text-xl text-foreground mb-1">Çağla Güneş</h3>
           <p className="text-muted-foreground text-sm mb-4">
