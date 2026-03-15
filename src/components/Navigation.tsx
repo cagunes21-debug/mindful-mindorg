@@ -1,6 +1,6 @@
 import { NavLink } from "@/components/NavLink";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { Menu, X, ChevronDown, User, LogIn, LogOut, LayoutDashboard, BookOpen, MoreHorizontal } from "lucide-react";
+import { Menu, X, ChevronDown, LogIn, LogOut, LayoutDashboard, BookOpen } from "lucide-react";
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { supabase } from "@/integrations/supabase/client";
@@ -12,6 +12,8 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import LanguageToggle from "@/components/LanguageToggle";
+import { useLanguage } from "@/i18n/LanguageContext";
 
 const Navigation = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -23,6 +25,7 @@ const Navigation = () => {
   const [authReady, setAuthReady] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
+  const { t } = useLanguage();
 
   const handleLogout = async () => {
     const { error } = await supabase.auth.signOut();
@@ -45,7 +48,6 @@ const Navigation = () => {
   };
 
   useEffect(() => {
-    // Restore session first, then mark ready
     supabase.auth.getSession().then(async ({ data: { session } }) => {
       const currentUser = session?.user ?? null;
       setUser(currentUser);
@@ -55,13 +57,11 @@ const Navigation = () => {
       setAuthReady(true);
     });
 
-    // Handle subsequent auth changes (login/logout)
     const { data: { subscription } } = supabase.auth.onAuthStateChange(
       (event, session) => {
         const currentUser = session?.user ?? null;
         setUser(currentUser);
         if (currentUser) {
-          // Use setTimeout to avoid calling Supabase inside the callback synchronously
           setTimeout(() => checkAdminRole(currentUser.id), 0);
         } else {
           setIsAdmin(false);
@@ -73,21 +73,21 @@ const Navigation = () => {
   }, []);
 
   const serviceLinks = [
-    { to: "/mindful-self-compassion", label: "Mindful Self-Compassion" },
-    { to: "/msc-training", label: "Groepstraject" },
-    { to: "/coaching", label: "Individuele Begeleiding" },
-    { to: "/barcelona-retreat", label: "Retreat" },
+    { to: "/mindful-self-compassion", label: t("nav.msc") },
+    { to: "/msc-training", label: t("nav.groupTraining") },
+    { to: "/coaching", label: t("nav.coaching") },
+    { to: "/barcelona-retreat", label: t("nav.retreat") },
   ];
 
   const aboutLinks = [
-    { to: "/over-ons", label: "Over Ons" },
-    { to: "/trainers", label: "Trainers" },
+    { to: "/over-ons", label: t("nav.aboutUs") },
+    { to: "/trainers", label: t("nav.trainers") },
   ];
 
   const moreLinks = [
-    { to: "/ervaringen", label: "Ervaringen" },
-    { to: "/faq", label: "Veelgestelde Vragen" },
-    { to: "/blog", label: "Blog" },
+    { to: "/ervaringen", label: t("nav.experiences") },
+    { to: "/faq", label: t("nav.faq") },
+    { to: "/blog", label: t("nav.blog") },
   ];
 
   const isServicesActive = serviceLinks.some(link => location.pathname === link.to) || location.pathname === "/ons-aanbod";
@@ -109,31 +109,25 @@ const Navigation = () => {
               className="text-sm font-medium text-muted-foreground transition-colors hover:text-primary"
               activeClassName="text-primary"
             >
-              Home
+              {t("nav.home")}
             </NavLink>
 
             {/* Services Dropdown */}
             <DropdownMenu>
               <DropdownMenuTrigger className={`flex items-center gap-1 text-sm font-medium transition-colors hover:text-primary ${isServicesActive ? 'text-primary' : 'text-muted-foreground'}`}>
-                Aanbod
+                {t("nav.services")}
                 <ChevronDown className="h-4 w-4" />
               </DropdownMenuTrigger>
               <DropdownMenuContent align="center" className="bg-background border-border w-56">
                 <DropdownMenuItem asChild>
-                  <Link 
-                    to="/ons-aanbod" 
-                    className={`w-full cursor-pointer font-medium ${location.pathname === '/ons-aanbod' ? 'text-primary' : ''}`}
-                  >
-                    Overzicht
+                  <Link to="/ons-aanbod" className={`w-full cursor-pointer font-medium ${location.pathname === '/ons-aanbod' ? 'text-primary' : ''}`}>
+                    {t("nav.servicesOverview")}
                   </Link>
                 </DropdownMenuItem>
                 <div className="h-px bg-border my-1" />
                 {serviceLinks.slice(0, 2).map((link) => (
                   <DropdownMenuItem key={link.to} asChild>
-                    <Link 
-                      to={link.to} 
-                      className={`w-full cursor-pointer ${location.pathname === link.to ? 'text-primary font-medium' : ''}`}
-                    >
+                    <Link to={link.to} className={`w-full cursor-pointer ${location.pathname === link.to ? 'text-primary font-medium' : ''}`}>
                       {link.label}
                     </Link>
                   </DropdownMenuItem>
@@ -141,39 +135,32 @@ const Navigation = () => {
                 <div className="h-px bg-border my-1" />
                 {serviceLinks.slice(2).map((link) => (
                   <DropdownMenuItem key={link.to} asChild>
-                    <Link 
-                      to={link.to} 
-                      className={`w-full cursor-pointer ${location.pathname === link.to ? 'text-primary font-medium' : ''}`}
-                    >
+                    <Link to={link.to} className={`w-full cursor-pointer ${location.pathname === link.to ? 'text-primary font-medium' : ''}`}>
                       {link.label}
                     </Link>
                   </DropdownMenuItem>
                 ))}
               </DropdownMenuContent>
             </DropdownMenu>
-
 
             <NavLink
               to="/agenda"
               className="text-sm font-medium text-muted-foreground transition-colors hover:text-primary"
               activeClassName="text-primary"
             >
-              Agenda
+              {t("nav.agenda")}
             </NavLink>
 
             {/* About Dropdown */}
             <DropdownMenu>
               <DropdownMenuTrigger className={`flex items-center gap-1 text-sm font-medium transition-colors hover:text-primary ${isAboutActive ? 'text-primary' : 'text-muted-foreground'}`}>
-                Over
+                {t("nav.about")}
                 <ChevronDown className="h-4 w-4" />
               </DropdownMenuTrigger>
               <DropdownMenuContent align="center" className="bg-background border-border w-56">
                 {aboutLinks.map((link) => (
                   <DropdownMenuItem key={link.to} asChild>
-                    <Link 
-                      to={link.to} 
-                      className={`w-full cursor-pointer ${location.pathname === link.to ? 'text-primary font-medium' : ''}`}
-                    >
+                    <Link to={link.to} className={`w-full cursor-pointer ${location.pathname === link.to ? 'text-primary font-medium' : ''}`}>
                       {link.label}
                     </Link>
                   </DropdownMenuItem>
@@ -181,19 +168,16 @@ const Navigation = () => {
               </DropdownMenuContent>
             </DropdownMenu>
 
-            {/* Meer Dropdown */}
+            {/* More Dropdown */}
             <DropdownMenu>
               <DropdownMenuTrigger className={`flex items-center gap-1 text-sm font-medium transition-colors hover:text-primary ${isMoreActive ? 'text-primary' : 'text-muted-foreground'}`}>
-                Meer
+                {t("nav.more")}
                 <ChevronDown className="h-4 w-4" />
               </DropdownMenuTrigger>
               <DropdownMenuContent align="center" className="bg-background border-border w-56">
                 {moreLinks.map((link) => (
                   <DropdownMenuItem key={link.to} asChild>
-                    <Link 
-                      to={link.to} 
-                      className={`w-full cursor-pointer ${location.pathname === link.to ? 'text-primary font-medium' : ''}`}
-                    >
+                    <Link to={link.to} className={`w-full cursor-pointer ${location.pathname === link.to ? 'text-primary font-medium' : ''}`}>
                       {link.label}
                     </Link>
                   </DropdownMenuItem>
@@ -202,7 +186,7 @@ const Navigation = () => {
             </DropdownMenu>
 
             <Button asChild className="bg-terracotta-600 hover:bg-terracotta-700 text-white rounded-full">
-              <Link to="/contact">Contact</Link>
+              <Link to="/contact">{t("nav.contact")}</Link>
             </Button>
 
             {user && (
@@ -210,51 +194,56 @@ const Navigation = () => {
                 <Button asChild variant="ghost" className="rounded-full text-muted-foreground hover:text-primary">
                   <Link to="/mijn-trainingen" className="flex items-center gap-2">
                     <BookOpen className="h-4 w-4" />
-                    Mijn Trainingen
+                    {t("nav.myTrainings")}
                   </Link>
                 </Button>
                 {isAdmin && (
                   <Button asChild variant="ghost" className="rounded-full text-muted-foreground hover:text-primary">
                     <Link to="/admin" className="flex items-center gap-2">
                       <LayoutDashboard className="h-4 w-4" />
-                      Admin
+                      {t("nav.admin")}
                     </Link>
                   </Button>
                 )}
               </>
             )}
 
+            <LanguageToggle />
+
             {user ? (
-              <Button 
-                variant="outline" 
+              <Button
+                variant="outline"
                 className="rounded-full border-primary text-primary hover:bg-primary hover:text-primary-foreground"
                 onClick={handleLogout}
               >
                 <LogOut className="h-4 w-4 mr-2" />
-                Uitloggen
+                {t("nav.logout")}
               </Button>
             ) : (
               <Button asChild variant="outline" className="rounded-full border-primary text-primary hover:bg-primary hover:text-primary-foreground">
                 <Link to="/login" className="flex items-center gap-2">
                   <LogIn className="h-4 w-4" />
-                  Inloggen
+                  {t("nav.login")}
                 </Link>
               </Button>
             )}
           </div>
 
           {/* Mobile Menu Button */}
-          <button
-            className="md:hidden p-2"
-            onClick={() => setIsOpen(!isOpen)}
-            aria-label="Toggle menu"
-          >
-            {isOpen ? (
-              <X className="h-6 w-6 text-foreground" />
-            ) : (
-              <Menu className="h-6 w-6 text-foreground" />
-            )}
-          </button>
+          <div className="md:hidden flex items-center gap-3">
+            <LanguageToggle />
+            <button
+              className="p-2"
+              onClick={() => setIsOpen(!isOpen)}
+              aria-label="Toggle menu"
+            >
+              {isOpen ? (
+                <X className="h-6 w-6 text-foreground" />
+              ) : (
+                <Menu className="h-6 w-6 text-foreground" />
+              )}
+            </button>
+          </div>
         </div>
 
         {/* Mobile Navigation */}
@@ -267,7 +256,7 @@ const Navigation = () => {
                 activeClassName="text-primary"
                 onClick={() => setIsOpen(false)}
               >
-                Home
+                {t("nav.home")}
               </NavLink>
 
               {/* Mobile Services Section */}
@@ -276,7 +265,7 @@ const Navigation = () => {
                   onClick={() => setServicesOpen(!servicesOpen)}
                   className={`flex items-center justify-between text-sm font-medium transition-colors hover:text-primary ${isServicesActive ? 'text-primary' : 'text-muted-foreground'}`}
                 >
-                  Aanbod
+                  {t("nav.services")}
                   <ChevronDown className={`h-4 w-4 transition-transform ${servicesOpen ? 'rotate-180' : ''}`} />
                 </button>
                 {servicesOpen && (
@@ -287,28 +276,16 @@ const Navigation = () => {
                       activeClassName="text-primary"
                       onClick={() => setIsOpen(false)}
                     >
-                      Overzicht
+                      {t("nav.servicesOverview")}
                     </NavLink>
                     {serviceLinks.slice(0, 2).map((link) => (
-                      <NavLink
-                        key={link.to}
-                        to={link.to}
-                        className="text-sm text-muted-foreground transition-colors hover:text-primary"
-                        activeClassName="text-primary font-medium"
-                        onClick={() => setIsOpen(false)}
-                      >
+                      <NavLink key={link.to} to={link.to} className="text-sm text-muted-foreground transition-colors hover:text-primary" activeClassName="text-primary font-medium" onClick={() => setIsOpen(false)}>
                         {link.label}
                       </NavLink>
                     ))}
                     <div className="h-px bg-border my-1" />
                     {serviceLinks.slice(2).map((link) => (
-                      <NavLink
-                        key={link.to}
-                        to={link.to}
-                        className="text-sm text-muted-foreground transition-colors hover:text-primary"
-                        activeClassName="text-primary font-medium"
-                        onClick={() => setIsOpen(false)}
-                      >
+                      <NavLink key={link.to} to={link.to} className="text-sm text-muted-foreground transition-colors hover:text-primary" activeClassName="text-primary font-medium" onClick={() => setIsOpen(false)}>
                         {link.label}
                       </NavLink>
                     ))}
@@ -316,14 +293,13 @@ const Navigation = () => {
                 )}
               </div>
 
-
               <NavLink
                 to="/agenda"
                 className="text-sm font-medium text-muted-foreground transition-colors hover:text-primary"
                 activeClassName="text-primary"
                 onClick={() => setIsOpen(false)}
               >
-                Agenda
+                {t("nav.agenda")}
               </NavLink>
 
               {/* Mobile About Section */}
@@ -332,19 +308,13 @@ const Navigation = () => {
                   onClick={() => setAboutOpen(!aboutOpen)}
                   className={`flex items-center justify-between text-sm font-medium transition-colors hover:text-primary ${isAboutActive ? 'text-primary' : 'text-muted-foreground'}`}
                 >
-                   Over
+                  {t("nav.about")}
                   <ChevronDown className={`h-4 w-4 transition-transform ${aboutOpen ? 'rotate-180' : ''}`} />
                 </button>
                 {aboutOpen && (
                   <div className="flex flex-col gap-2 pl-4 border-l-2 border-terracotta-200">
                     {aboutLinks.map((link) => (
-                      <NavLink
-                        key={link.to}
-                        to={link.to}
-                        className="text-sm text-muted-foreground transition-colors hover:text-primary"
-                        activeClassName="text-primary font-medium"
-                        onClick={() => setIsOpen(false)}
-                      >
+                      <NavLink key={link.to} to={link.to} className="text-sm text-muted-foreground transition-colors hover:text-primary" activeClassName="text-primary font-medium" onClick={() => setIsOpen(false)}>
                         {link.label}
                       </NavLink>
                     ))}
@@ -352,25 +322,19 @@ const Navigation = () => {
                 )}
               </div>
 
-              {/* Mobile Meer Section */}
+              {/* Mobile More Section */}
               <div className="flex flex-col gap-2">
                 <button
                   onClick={() => setMoreOpen(!moreOpen)}
                   className={`flex items-center justify-between text-sm font-medium transition-colors hover:text-primary ${isMoreActive ? 'text-primary' : 'text-muted-foreground'}`}
                 >
-                  Meer
+                  {t("nav.more")}
                   <ChevronDown className={`h-4 w-4 transition-transform ${moreOpen ? 'rotate-180' : ''}`} />
                 </button>
                 {moreOpen && (
                   <div className="flex flex-col gap-2 pl-4 border-l-2 border-terracotta-200">
                     {moreLinks.map((link) => (
-                      <NavLink
-                        key={link.to}
-                        to={link.to}
-                        className="text-sm text-muted-foreground transition-colors hover:text-primary"
-                        activeClassName="text-primary font-medium"
-                        onClick={() => setIsOpen(false)}
-                      >
+                      <NavLink key={link.to} to={link.to} className="text-sm text-muted-foreground transition-colors hover:text-primary" activeClassName="text-primary font-medium" onClick={() => setIsOpen(false)}>
                         {link.label}
                       </NavLink>
                     ))}
@@ -379,7 +343,7 @@ const Navigation = () => {
               </div>
 
               <Button asChild className="bg-terracotta-600 hover:bg-terracotta-700 text-white w-fit rounded-full">
-                <Link to="/contact" onClick={() => setIsOpen(false)}>Contact</Link>
+                <Link to="/contact" onClick={() => setIsOpen(false)}>{t("nav.contact")}</Link>
               </Button>
 
               {user && (
@@ -387,14 +351,14 @@ const Navigation = () => {
                   <Button asChild variant="ghost" className="w-fit rounded-full text-muted-foreground hover:text-primary">
                     <Link to="/mijn-trainingen" onClick={() => setIsOpen(false)} className="flex items-center gap-2">
                       <BookOpen className="h-4 w-4" />
-                      Mijn Trainingen
+                      {t("nav.myTrainings")}
                     </Link>
                   </Button>
                   {isAdmin && (
                     <Button asChild variant="ghost" className="w-fit rounded-full text-muted-foreground hover:text-primary">
                       <Link to="/admin" onClick={() => setIsOpen(false)} className="flex items-center gap-2">
                         <LayoutDashboard className="h-4 w-4" />
-                        Admin Dashboard
+                        {t("nav.admin")}
                       </Link>
                     </Button>
                   )}
@@ -402,22 +366,19 @@ const Navigation = () => {
               )}
 
               {user ? (
-                <Button 
-                  variant="outline" 
+                <Button
+                  variant="outline"
                   className="w-fit rounded-full border-primary text-primary hover:bg-primary hover:text-primary-foreground"
-                  onClick={() => {
-                    setIsOpen(false);
-                    handleLogout();
-                  }}
+                  onClick={() => { setIsOpen(false); handleLogout(); }}
                 >
                   <LogOut className="h-4 w-4 mr-2" />
-                  Uitloggen
+                  {t("nav.logout")}
                 </Button>
               ) : (
                 <Button asChild variant="outline" className="w-fit rounded-full border-primary text-primary hover:bg-primary hover:text-primary-foreground">
                   <Link to="/login" onClick={() => setIsOpen(false)} className="flex items-center gap-2">
                     <LogIn className="h-4 w-4" />
-                    Inloggen
+                    {t("nav.login")}
                   </Link>
                 </Button>
               )}
