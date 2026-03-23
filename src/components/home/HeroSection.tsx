@@ -22,7 +22,7 @@ const HeroSection = () => {
             Je bent niet te veel. Je bent niet te weinig. Maar dat stemmetje in je hoofd zegt iets anders — en je bent het moe.
           </p>
           <p className="text-base text-secondary/80 font-light leading-relaxed mb-10 max-w-lg animate-fade-in-up" style={{ animationDelay: "0.4s" }}>
-            Mindful Self-Compassion (MSC) is een bewezen methode uit de psychologie die je leert om milder met jezelf om te gaan. In 6 persoonlijke sessies leer je je innerlijke criticus kalmeren, grenzen stellen zonder schuldgevoel en bouwen aan zelfvertrouwen dat blijft.
+            Mindful Self-Compassion (MSC) is een bewezen methode uit de psychologie die je helpt om milder met jezelf om te gaan — zodat je meer rust, veerkracht en vertrouwen ervaart in je dagelijks leven.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 animate-fade-in-up" style={{ animationDelay: "0.5s" }}>
             <Link
