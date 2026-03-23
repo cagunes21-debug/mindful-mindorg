@@ -19,10 +19,12 @@ const HeroSection = () => {
             naar <em className="italic">zelfvertrouwen</em>
           </h1>
           <p className="text-lg md:text-xl text-secondary font-light leading-relaxed mb-4 max-w-lg animate-fade-in-up" style={{ animationDelay: "0.3s" }}>
-            Je bent niet te veel. Je bent niet te weinig. Maar dat stemmetje in je hoofd zegt iets anders — en je bent het moe.
+            Er is niets mis met jou.
+            <br />
+            En toch voelt het soms alsof je niet genoeg bent — door die stem van binnen.
           </p>
           <p className="text-base text-secondary/80 font-light leading-relaxed mb-10 max-w-lg animate-fade-in-up" style={{ animationDelay: "0.4s" }}>
-            Mindful Self-Compassion (MSC) is een bewezen methode uit de psychologie die je helpt om milder met jezelf om te gaan — zodat je meer rust, veerkracht en vertrouwen ervaart in je dagelijks leven.
+            Mindful Self-Compassion (MSC) is een bewezen methode uit de psychologie die je helpt om milder met jezelf om te gaan — zodat je meer rust, veerkracht en vertrouwen voelt.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 animate-fade-in-up" style={{ animationDelay: "0.5s" }}>
             <Link
