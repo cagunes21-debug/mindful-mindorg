@@ -6,16 +6,15 @@ import ScrollToTop from "@/components/ScrollToTop";
 import ScrollProgressBar from "@/components/ScrollProgressBar";
 import WhatsAppButton from "@/components/WhatsAppButton";
 import CookieConsent from "@/components/CookieConsent";
-import HeroSection from "@/components/home/HeroSection";
-import ForYouSection from "@/components/home/ForYouSection";
-import BenefitsSection from "@/components/home/BenefitsSection";
-import ApproachSection from "@/components/home/ApproachSection";
-import TrainersSection from "@/components/home/TrainersSection";
-import CTASection from "@/components/home/CTASection";
-import PackageSection from "@/components/home/PackageSection";
-import ForWhomSection from "@/components/home/ForWhomSection";
+import HeroSectionV2 from "@/components/home/HeroSectionV2";
+import QuoteSection from "@/components/home/QuoteSection";
+import WhatIsMscSection from "@/components/home/WhatIsMscSection";
+import ThreeElementsSection from "@/components/home/ThreeElementsSection";
+import WhyItWorksSection from "@/components/home/WhyItWorksSection";
+import MscMindfulnessSection from "@/components/home/MscMindfulnessSection";
 import GroupTrainingTeaser from "@/components/home/GroupTrainingTeaser";
-
+import CTASection from "@/components/home/CTASection";
+import TrainersSection from "@/components/home/TrainersSection";
 
 const IndividueelHome = () => {
   return (
@@ -25,17 +24,17 @@ const IndividueelHome = () => {
       <WhatsAppButton />
       <CookieConsent />
       <SEO
-        title="Individuele Sessies Mindful Zelfcompassie | Mindful Mind"
-        description="Individuele sessies Mindful Zelfcompassie — op jouw tempo, afgestemd op jouw behoeften. Ontdek je innerlijke kracht met persoonlijke begeleiding."
+        title="Mindful Zelfcompassie | Mindful Mind"
+        description="Van zelfkritiek naar meer rust en vertrouwen. Mindful Self-Compassion helpt je om jezelf te ondersteunen op moeilijke momenten. Plan een gratis kennismaking."
       />
       <OrganizationSchema />
       <Navigation />
-      <HeroSection />
-      <ForYouSection />
-      <ForWhomSection />
-      <BenefitsSection />
-      <PackageSection />
-      <ApproachSection />
+      <HeroSectionV2 />
+      <QuoteSection />
+      <WhatIsMscSection />
+      <ThreeElementsSection />
+      <WhyItWorksSection />
+      <MscMindfulnessSection />
       <GroupTrainingTeaser />
       <CTASection />
       <TrainersSection />
