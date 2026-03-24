@@ -1,4 +1,6 @@
+import { Link } from "react-router-dom";
 import { ScrollReveal } from "@/components/ScrollReveal";
+import { ArrowRight, FlaskConical } from "lucide-react";
 
 const shifts = [
   { from: "Streng voor jezelf", to: "Mild en steunend" },
@@ -17,61 +19,77 @@ const stats = [
 
 const ResultsHomeSection = () => {
   return (
-    <section className="py-20 md:py-28 bg-background">
-      <div className="container mx-auto px-4 max-w-5xl">
-        <ScrollReveal>
-          <p className="text-xs tracking-[0.25em] uppercase text-terracotta-500 mb-4">
-            Wat het je oplevert
-          </p>
-          <h2 className="font-serif text-3xl md:text-4xl font-light leading-[1.2] text-foreground mb-10">
-            Van overleven
-            <br />
-            <span className="font-serif italic text-terracotta-600">naar ondersteunen</span>
-          </h2>
+    <section className="py-20 md:py-28 bg-warm-50 relative overflow-hidden">
+      <div className="absolute top-10 right-0 w-96 h-96 bg-sage-100/30 rounded-full blur-[100px]" />
+      <div className="container mx-auto px-6 md:px-10 relative">
+        <div className="max-w-3xl mx-auto space-y-16">
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-16 items-start">
-            {/* Left: shifts */}
-            <div>
-              <p className="text-muted-foreground leading-[1.85] mb-8">
-                Je leert anders omgaan met wat je voelt — zonder jezelf onder druk te zetten. In plaats van doorgaan en jezelf bekritiseren, leer je te vertragen, te voelen en jezelf te ondersteunen.
+          {/* Heading */}
+          <ScrollReveal>
+            <div className="text-center">
+              <span className="inline-block text-xs tracking-[0.3em] uppercase text-terracotta-500 font-medium mb-4">Resultaten</span>
+              <h2 className="text-3xl md:text-4xl font-serif text-foreground mb-6">
+                Van overleven naar <em className="italic text-primary">ondersteunen</em>
+              </h2>
+              <p className="text-lg text-muted-foreground font-light leading-relaxed max-w-md mx-auto">
+                Je leert anders omgaan met wat je voelt — zonder jezelf onder druk te zetten.
               </p>
-              <div className="bg-white rounded-3xl border border-warm-200 p-6 shadow-sm">
-                <div className="divide-y divide-warm-200">
-                  {shifts.map((s, i) => (
-                    <div key={i} className="grid grid-cols-[1fr_2rem_1fr] gap-3 items-center py-3.5">
-                      <span className="text-sm text-muted-foreground">{s.from}</span>
-                      <span className="text-terracotta-500 text-center">→</span>
-                      <span className="text-sm text-foreground font-medium">{s.to}</span>
-                    </div>
-                  ))}
-                </div>
-              </div>
             </div>
+          </ScrollReveal>
 
-            {/* Right: stats */}
-            <div>
-              <p className="text-xs tracking-[0.2em] uppercase text-muted-foreground mb-4">
-                Wetenschappelijk bewezen
-              </p>
-              <div className="grid grid-cols-2 gap-4">
-                {stats.map((s, i) => (
-                  <div key={i} className="bg-white rounded-2xl border border-warm-200 p-6 shadow-sm">
-                    <p className={`text-xs tracking-[0.15em] uppercase mb-1 ${s.dir === "down" ? "text-terracotta-500" : "text-sage-600"}`}>
-                      {s.dir === "down" ? "↓ Minder" : "↑ Meer"}
-                    </p>
-                    <p className="font-serif text-4xl font-light text-foreground leading-none mb-1">
-                      {s.num}
-                    </p>
-                    <p className="text-sm text-muted-foreground">{s.label}</p>
+          {/* Shift rows */}
+          <ScrollReveal>
+            <div className="bg-[#F8F5EE] rounded-3xl border border-warm-200/40 p-8 md:p-10">
+              <div className="divide-y divide-warm-200/60">
+                {shifts.map((s, i) => (
+                  <div key={i} className="grid grid-cols-[1fr_2rem_1fr] gap-3 items-center py-4">
+                    <span className="text-sm text-muted-foreground text-right">{s.from}</span>
+                    <span className="text-primary text-center font-light">→</span>
+                    <span className="text-sm text-foreground font-medium">{s.to}</span>
                   </div>
                 ))}
               </div>
-              <p className="text-xs text-muted-foreground italic mt-3">
-                * Meta-analyses MSC-onderzoek (Neff & Germer, 2013–2023)
-              </p>
             </div>
+          </ScrollReveal>
+
+          {/* Stats + Wetenschap */}
+          <div>
+            <ScrollReveal>
+              <div className="text-center mb-8">
+                <div className="inline-flex items-center gap-2 mb-3">
+                  <FlaskConical className="h-4 w-4 text-sage-600" />
+                  <span className="text-xs tracking-[0.3em] uppercase text-sage-600 font-medium">Wetenschap</span>
+                </div>
+                <h3 className="text-2xl md:text-3xl font-serif text-foreground mb-3">Wetenschappelijk onderbouwd</h3>
+                <Link to="/msc-training" className="inline-flex items-center gap-1.5 text-sm text-sage-600 hover:text-primary transition-colors group">
+                  Meer lezen
+                  <ArrowRight className="h-3.5 w-3.5 group-hover:translate-x-1 transition-transform" />
+                </Link>
+              </div>
+            </ScrollReveal>
+            <ScrollReveal delay={0.1}>
+              <div className="bg-white rounded-3xl border border-sage-200/40 p-6 md:p-8 shadow-sm">
+                <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
+                  {stats.map((s, i) => (
+                    <div key={i} className={`rounded-2xl p-5 text-center ${s.dir === "down" ? "bg-terracotta-50/60 border border-terracotta-100/40" : "bg-sage-50/60 border border-sage-200/30"}`}>
+                      <p className={`text-[0.65rem] tracking-[0.15em] uppercase mb-1 font-medium ${s.dir === "down" ? "text-terracotta-500" : "text-sage-600"}`}>
+                        {s.dir === "down" ? "↓ Minder" : "↑ Meer"}
+                      </p>
+                      <p className="font-serif text-3xl font-light text-foreground leading-none mb-1">
+                        {s.num}
+                      </p>
+                      <p className="text-xs text-muted-foreground">{s.label}</p>
+                    </div>
+                  ))}
+                </div>
+                <p className="text-xs text-muted-foreground italic mt-4 text-center">
+                  * Meta-analyses MSC-onderzoek (Neff & Germer, 2013–2023)
+                </p>
+              </div>
+            </ScrollReveal>
           </div>
-        </ScrollReveal>
+
+        </div>
       </div>
     </section>
   );

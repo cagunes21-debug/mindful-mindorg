@@ -1,64 +1,65 @@
 import { Link } from "react-router-dom";
 import { ScrollReveal } from "@/components/ScrollReveal";
+import { ArrowRight } from "lucide-react";
 import caglaBio from "@/assets/cagla-bio.png";
 
 const TrainerHomeSection = () => {
   return (
-    <section className="py-20 md:py-28 bg-warm-50">
-      <div className="container mx-auto px-4 max-w-5xl">
-        <ScrollReveal>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-16 items-center">
-            {/* Portrait */}
-            <div className="aspect-[3/4] bg-sage-50 rounded-3xl overflow-hidden shadow-lg">
+    <section className="py-20 md:py-28 bg-background">
+      <div className="container mx-auto px-6 md:px-10">
+        <div className="max-w-3xl mx-auto">
+          <ScrollReveal>
+            <div className="text-center mb-12">
+              <span className="inline-block text-xs tracking-[0.3em] uppercase text-sage-600 font-medium mb-4">Begeleiding</span>
+              <h2 className="text-3xl md:text-4xl font-serif text-foreground">
+                Ontmoet de trainers
+              </h2>
+            </div>
+          </ScrollReveal>
+
+          <ScrollReveal delay={0.1}>
+            <div className="bg-white rounded-3xl border border-warm-200/50 p-8 md:p-10 shadow-sm max-w-lg mx-auto text-center">
               <img
                 src={caglaBio}
-                alt="Çağla Güneş — begeleider bij Mindful Mind"
-                className="w-full h-full object-cover"
+                alt="Çağla Güneş"
+                className="w-28 h-28 rounded-full object-cover mx-auto mb-5 border-2 border-sage-200/60"
               />
-            </div>
-
-            {/* Info */}
-            <div>
-              <p className="text-xs tracking-[0.25em] uppercase text-terracotta-500 mb-4">
-                Begeleiding
-              </p>
-              <h2 className="font-serif text-3xl md:text-4xl font-light text-foreground mb-1">
-                Çağla Güneş
-              </h2>
-              <p className="text-xs tracking-[0.12em] uppercase text-terracotta-500 mb-6">
+              <h3 className="text-xl font-serif text-foreground mb-1">Çağla Güneş</h3>
+              <p className="text-sm text-muted-foreground mb-4">
                 Lichaamsgerichte Psychotherapeut · MSC Trainer
               </p>
-
-              <blockquote className="border-l-2 border-terracotta-400 pl-5 mb-6">
-                <p className="font-serif italic text-muted-foreground text-xl leading-relaxed">
-                  "Echte verandering begint bij hoe je met jezelf omgaat."
-                </p>
-              </blockquote>
-
-              <p className="text-muted-foreground leading-[1.85] mb-6">
-                Ik help je om met meer mildheid, veerkracht en zelfcompassie in het leven te staan. In mijn begeleiding combineer ik MSC met lichaamsgerichte therapie en trauma-sensitieve mindfulness — zodat verandering niet alleen in je hoofd, maar ook in je lijf voelbaar wordt.
+              <p className="text-foreground font-serif italic text-base mb-4">
+                "Echte verandering begint bij hoe je met jezelf omgaat."
               </p>
-
-              <div className="flex flex-wrap gap-2 mb-8">
+              <p className="text-muted-foreground text-sm leading-relaxed mb-4 max-w-sm mx-auto">
+                Ik help je om met meer mildheid, veerkracht en zelfcompassie in het leven te staan. In mijn begeleiding combineer ik MSC met lichaamsgerichte therapie en trauma-sensitieve mindfulness.
+              </p>
+              <div className="flex flex-wrap gap-2 justify-center mb-6">
                 {["MSC gecertificeerd", "Lichaamsgerichte therapie", "Trauma-sensitief", "ACT"].map((tag) => (
-                  <span
-                    key={tag}
-                    className="text-xs tracking-[0.1em] uppercase px-3 py-1.5 border border-terracotta-200 text-terracotta-600 rounded-full"
-                  >
+                  <span key={tag} className="text-[0.65rem] tracking-wider uppercase px-3 py-1 border border-warm-200 text-muted-foreground rounded-full">
                     {tag}
                   </span>
                 ))}
               </div>
-
-              <Link
-                to="/over-ons"
-                className="inline-block border border-terracotta-300 text-terracotta-700 hover:bg-terracotta-50 px-8 py-3 text-xs tracking-[0.15em] uppercase font-medium rounded-full transition-colors"
-              >
-                Meer over Mindful Mind
-              </Link>
+              <div className="flex flex-col sm:flex-row gap-3 justify-center">
+                <Link
+                  to="/over-ons"
+                  className="inline-flex items-center gap-2 text-sm font-semibold text-primary hover:text-primary/80 transition-colors"
+                >
+                  Meer over Mindful Mind
+                  <ArrowRight className="h-3.5 w-3.5" />
+                </Link>
+                <Link
+                  to="/trainers"
+                  className="inline-flex items-center gap-2 text-sm font-semibold text-sage-700 hover:text-sage-600 transition-colors"
+                >
+                  Over de trainers
+                  <ArrowRight className="h-3.5 w-3.5" />
+                </Link>
+              </div>
             </div>
-          </div>
-        </ScrollReveal>
+          </ScrollReveal>
+        </div>
       </div>
     </section>
   );

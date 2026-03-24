@@ -1,43 +1,54 @@
 import { Link } from "react-router-dom";
 import { ScrollReveal } from "@/components/ScrollReveal";
-import { ArrowRight } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { ArrowRight, Calendar, Sparkles, Users } from "lucide-react";
 
 const GroupCtaSection = () => {
   return (
-    <section className="py-20 md:py-28 bg-terracotta-600">
-      <div className="container mx-auto px-4 max-w-5xl">
-        <ScrollReveal>
-          <div className="grid grid-cols-1 md:grid-cols-[1fr_auto] gap-8 md:gap-16 items-center">
-            <div>
-              <p className="text-xs tracking-[0.25em] uppercase text-white/60 mb-4">
-                Liever samen groeien?
-              </p>
-              <h2 className="font-serif text-3xl md:text-4xl font-light text-white mb-4">
-                Groepstraining
-              </h2>
-              <p className="text-white/80 leading-[1.8] max-w-xl mb-4">
-                De 8-weekse MSC groepstraining biedt dezelfde wetenschappelijk onderbouwde basis — in de kracht van een groep.
-              </p>
-              <div className="flex flex-wrap gap-3 mb-4">
-                {["8 weken", "Start september 2026", "Early bird t/m 1 augustus"].map((badge) => (
-                  <span key={badge} className="bg-white/15 border border-white/20 px-4 py-1.5 text-xs tracking-[0.08em] text-white/90 rounded-full">
-                    {badge}
+    <section className="py-20 md:py-28 bg-gradient-to-br from-sage-50 via-warm-50 to-terracotta-50/20 relative overflow-hidden">
+      <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(circle_at_80%_20%,hsl(var(--sage-100)/0.4)_0%,transparent_50%)]" />
+      <div className="container mx-auto px-6 md:px-10 relative">
+        <div className="max-w-4xl mx-auto">
+          <ScrollReveal>
+            <div className="bg-white/70 backdrop-blur-sm rounded-3xl border border-sage-200/50 p-8 md:p-10 shadow-sm">
+              <div className="flex flex-col md:flex-row md:items-center gap-8 md:gap-12">
+                <div className="flex-1">
+                  <span className="inline-flex items-center gap-2 mb-5 rounded-full bg-sage-100 border border-sage-200 px-4 py-1.5 text-xs font-medium text-sage-700 tracking-wider uppercase">
+                    <Users className="h-3.5 w-3.5" />
+                    Groepstraining
                   </span>
-                ))}
+                  <h2 className="text-2xl md:text-3xl font-serif text-foreground mb-3 leading-tight">
+                    Liever samen groeien?
+                  </h2>
+                  <p className="text-muted-foreground leading-relaxed mb-5 max-w-md">
+                    De 8-weekse MSC groepstraining biedt dezelfde wetenschappelijk onderbouwde basis — in de kracht van een groep.
+                  </p>
+                  <div className="flex flex-wrap gap-4 text-sm text-muted-foreground mb-6">
+                    <span className="flex items-center gap-1.5">
+                      <Calendar className="h-4 w-4 text-sage-500" />
+                      8 weken · september 2026
+                    </span>
+                    <span className="flex items-center gap-1.5">
+                      <Sparkles className="h-4 w-4 text-terracotta-500" />
+                      Early bird t/m 1 aug
+                    </span>
+                  </div>
+                  <Link
+                    to="/msc-training"
+                    className="inline-flex items-center gap-2 bg-sage-600 text-white h-10 px-6 rounded-full text-sm font-semibold hover:bg-sage-700 transition-colors shadow-sm group"
+                  >
+                    Bekijk de groepstraining
+                    <ArrowRight className="h-3.5 w-3.5 group-hover:translate-x-0.5 transition-transform" />
+                  </Link>
+                </div>
+                <div className="hidden md:flex flex-col items-center justify-center w-40 h-40 rounded-2xl bg-gradient-to-br from-sage-50 to-warm-50 border border-sage-200/60">
+                  <p className="text-xs text-muted-foreground mb-1 uppercase tracking-wider">Vanaf</p>
+                  <p className="text-3xl font-serif font-light text-terracotta-600">€495</p>
+                  <p className="text-xs text-muted-foreground mt-1">early bird</p>
+                </div>
               </div>
-              <p className="font-serif text-white/60">
-                Vanaf <strong className="text-white text-2xl font-light mr-1">€495</strong> early bird
-              </p>
             </div>
-            <Button asChild size="lg" className="bg-white text-terracotta-700 hover:bg-warm-50 rounded-full px-10 py-7 text-base font-medium shadow-lg">
-              <Link to="/msc-training">
-                Bekijk de groepstraining
-                <ArrowRight className="ml-2 h-4 w-4" />
-              </Link>
-            </Button>
-          </div>
-        </ScrollReveal>
+          </ScrollReveal>
+        </div>
       </div>
     </section>
   );

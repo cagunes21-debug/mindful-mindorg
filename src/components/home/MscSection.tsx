@@ -1,96 +1,91 @@
 import { Link } from "react-router-dom";
 import { ScrollReveal } from "@/components/ScrollReveal";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, Leaf } from "lucide-react";
 
 const pillars = [
-  {
-    num: "1",
-    title: "Mindfulness",
-    desc: "Erkennen wat er is — zonder het weg te duwen of te overdrijven. Aanwezig zijn bij pijn, ook als dat oncomfortabel voelt.",
-  },
-  {
-    num: "2",
-    title: "Gemeenschappelijke menselijkheid",
-    desc: "Beseffen dat lijden en onvolmaaktheid bij het menselijk bestaan horen. Jij bent niet de enige die dit voelt.",
-  },
-  {
-    num: "3",
-    title: "Vriendelijkheid naar jezelf",
-    desc: "Jezelf met warmte benaderen in moeilijke momenten — dezelfde zorg die je voor anderen voelt, ook op jezelf richten.",
-  },
+  { num: "1", title: "Mindfulness", desc: "Erkennen wat er is — zonder het weg te duwen of te overdrijven. Aanwezig zijn bij pijn, ook als dat oncomfortabel voelt." },
+  { num: "2", title: "Gemeenschappelijke menselijkheid", desc: "Beseffen dat lijden en onvolmaaktheid bij het menselijk bestaan horen. Jij bent niet de enige die dit voelt." },
+  { num: "3", title: "Vriendelijkheid naar jezelf", desc: "Jezelf met warmte benaderen in moeilijke momenten — dezelfde zorg die je voor anderen voelt, ook op jezelf richten." },
 ];
 
 const MscSection = () => {
   return (
-    <section id="wat-is-msc" className="py-20 md:py-28 bg-foreground">
-      <div className="container mx-auto px-4 max-w-5xl">
-        <ScrollReveal>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-16 items-start">
-            {/* Left */}
-            <div>
-              <p className="text-xs tracking-[0.25em] uppercase text-terracotta-300 mb-4">
-                Het basisprincipe
+    <>
+      {/* MSC Kern — floating statement */}
+      <section className="py-16 md:py-20 bg-background">
+        <div className="container mx-auto px-6 md:px-10">
+          <ScrollReveal>
+            <div className="max-w-3xl mx-auto bg-gradient-to-br from-sage-50 via-sage-50/50 to-warm-50 rounded-3xl border border-sage-200/50 p-8 md:p-12 text-center shadow-sm">
+              <div className="inline-flex items-center justify-center h-12 w-12 rounded-full bg-sage-100 mb-6">
+                <Leaf className="h-5 w-5 text-sage-600" />
+              </div>
+              <p className="text-xl md:text-2xl text-foreground leading-[1.6] font-serif mb-3">
+                Mindful Self-Compassion helpt je om
+                <br className="hidden md:block" />
+                <em className="italic text-primary">milder met jezelf om te gaan.</em>
               </p>
-              <h2 className="font-serif text-3xl md:text-4xl lg:text-5xl font-light leading-[1.2] text-white mb-6">
-                Mindful
-                <br />
-                Self-Compassion
-              </h2>
-              <p className="font-serif italic text-terracotta-300 text-xl md:text-2xl leading-relaxed mb-6">
+              <p className="text-muted-foreground leading-relaxed max-w-md mx-auto mb-3">
                 Niet door jezelf te veranderen, maar door jezelf te ondersteunen — juist wanneer het moeilijk is.
               </p>
-              <p className="text-white/60 leading-[1.85] mb-3">
-                MSC helpt je om milder met jezelf om te gaan. Niet als verwennerij, maar als een vaardigheid die je traint — net zoals je een spier traint.
+              <p className="text-muted-foreground leading-relaxed max-w-lg mx-auto mb-6 text-sm">
+                MSC helpt je om milder met jezelf om te gaan. Niet als verwennerij, maar als een vaardigheid die je traint — net zoals je een spier traint. Wetenschappelijk onderbouwd, ontwikkeld door dr. Kristin Neff en dr. Christopher Germer.
               </p>
-              <p className="text-white/60 leading-[1.85] mb-8">
-                Wetenschappelijk onderbouwd, ontwikkeld door dr. Kristin Neff en dr. Christopher Germer. Wereldwijd toegepast bij duizenden mensen.
-              </p>
-
-              {/* Founder cards */}
-              <div className="grid grid-cols-2 gap-4">
-                <div className="bg-white/5 border border-white/10 rounded-2xl p-4">
-                  <p className="font-serif text-terracotta-300 text-lg">Kristin Neff</p>
-                  <p className="text-xs text-white/40 mt-1">Ph.D. · Pionier zelfcompassie-onderzoek</p>
-                </div>
-                <div className="bg-white/5 border border-white/10 rounded-2xl p-4">
-                  <p className="font-serif text-terracotta-300 text-lg">Christopher Germer</p>
-                  <p className="text-xs text-white/40 mt-1">Ph.D. · Klinisch psycholoog Harvard</p>
-                </div>
-              </div>
+              <Link
+                to="/msc-training#wat-is-msc"
+                className="inline-flex items-center gap-2 text-sm font-semibold text-primary hover:text-primary/80 transition-colors"
+              >
+                Meer over MSC
+                <ArrowRight className="h-4 w-4" />
+              </Link>
             </div>
+          </ScrollReveal>
+        </div>
+      </section>
 
-            {/* Right: pillars */}
-            <div>
-              <p className="text-xs tracking-[0.2em] uppercase text-terracotta-400/60 mb-6">
-                De drie pijlers
-              </p>
-              <div className="space-y-4">
-                {pillars.map((p) => (
-                  <div key={p.num} className="grid grid-cols-[48px_1fr] gap-4 items-start bg-white/[0.04] border-l-2 border-terracotta-400 rounded-r-2xl p-5">
-                    <span className="font-serif text-3xl text-terracotta-400/40 leading-none">{p.num}</span>
-                    <div>
-                      <p className="font-serif italic text-white text-lg mb-1">{p.title}</p>
-                      <p className="text-sm text-white/50 leading-relaxed">{p.desc}</p>
-                    </div>
+      {/* Three pillars */}
+      <section className="py-16 md:py-20 bg-[#F8F5EE]">
+        <div className="container mx-auto px-6 md:px-10">
+          <div className="max-w-3xl mx-auto">
+            <ScrollReveal>
+              <div className="text-center mb-12">
+                <span className="inline-block text-xs tracking-[0.3em] uppercase text-sage-600 font-medium mb-4">De drie pijlers</span>
+                <h2 className="text-3xl md:text-4xl font-serif text-foreground">
+                  De basis van <em className="italic text-primary">zelfcompassie</em>
+                </h2>
+              </div>
+            </ScrollReveal>
+
+            <div className="grid md:grid-cols-3 gap-4">
+              {pillars.map((p, i) => (
+                <ScrollReveal key={p.num} delay={i * 0.08}>
+                  <div className="bg-white rounded-3xl border border-sage-200/40 p-7 shadow-sm text-center h-full">
+                    <span className="inline-flex items-center justify-center h-10 w-10 rounded-full bg-sage-100 text-sage-700 font-semibold text-sm mb-4">
+                      {p.num}
+                    </span>
+                    <h3 className="font-serif italic text-foreground text-lg mb-3">{p.title}</h3>
+                    <p className="text-sm text-muted-foreground leading-relaxed">{p.desc}</p>
                   </div>
-                ))}
-              </div>
-
-              {/* Note */}
-              <div className="mt-4 p-5 bg-terracotta-500/10 border border-terracotta-500/25 rounded-2xl">
-                <p className="text-sm text-terracotta-300 leading-relaxed">
-                  <strong className="text-white">Meer lezen?</strong>{" "}
-                  Op de groepstraining pagina vind je uitgebreide uitleg over de methode.{" "}
-                  <Link to="/msc-training#wat-is-msc" className="text-terracotta-300 inline-flex items-center gap-1 hover:underline">
-                    Lees meer <ArrowRight className="h-3 w-3" />
-                  </Link>
-                </p>
-              </div>
+                </ScrollReveal>
+              ))}
             </div>
+
+            {/* Founders */}
+            <ScrollReveal delay={0.15}>
+              <div className="grid grid-cols-2 gap-4 mt-6">
+                <div className="bg-white rounded-2xl border border-warm-200/50 p-5 text-center shadow-sm">
+                  <p className="font-serif text-foreground text-base">Kristin Neff</p>
+                  <p className="text-xs text-muted-foreground mt-1">Ph.D. · Pionier zelfcompassie-onderzoek</p>
+                </div>
+                <div className="bg-white rounded-2xl border border-warm-200/50 p-5 text-center shadow-sm">
+                  <p className="font-serif text-foreground text-base">Christopher Germer</p>
+                  <p className="text-xs text-muted-foreground mt-1">Ph.D. · Klinisch psycholoog Harvard</p>
+                </div>
+              </div>
+            </ScrollReveal>
           </div>
-        </ScrollReveal>
-      </div>
-    </section>
+        </div>
+      </section>
+    </>
   );
 };
 

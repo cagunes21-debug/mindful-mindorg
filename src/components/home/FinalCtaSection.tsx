@@ -1,38 +1,36 @@
 import { Link } from "react-router-dom";
 import { ScrollReveal } from "@/components/ScrollReveal";
-import { ArrowRight } from "lucide-react";
-import { Button } from "@/components/ui/button";
 
 const FinalCtaSection = () => {
   return (
-    <section className="py-24 md:py-32 bg-warm-50 text-center">
-      <div className="max-w-xl mx-auto px-6">
-        <ScrollReveal>
-          <h2 className="font-serif text-4xl md:text-5xl font-light text-foreground leading-[1.15] mb-4">
-            Je bent welkom
-            <br />
-            <span className="font-serif italic text-terracotta-600">zoals je bent</span>
-          </h2>
-          <p className="text-muted-foreground leading-[1.8] mb-8">
-            Begin vandaag met jouw persoonlijke traject. Het kennismakingsgesprek is altijd gratis en vrijblijvend.
-          </p>
-          <div className="flex flex-wrap justify-center gap-4 mb-4">
-            <Button asChild size="lg" className="bg-terracotta-600 hover:bg-terracotta-700 text-white rounded-full px-10 py-7 text-lg shadow-lg">
-              <Link to="/contact">
+    <section className="py-20 md:py-28 bg-primary text-primary-foreground relative overflow-hidden">
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_70%,rgba(255,255,255,0.08)_0%,transparent_50%)]" />
+      <div className="container mx-auto px-6 md:px-10 relative">
+        <div className="max-w-2xl mx-auto text-center">
+          <ScrollReveal>
+            <span className="inline-block text-xs tracking-[0.3em] uppercase text-primary-foreground/50 font-medium mb-4">Meld je nu aan</span>
+            <h2 className="text-3xl md:text-4xl font-serif mb-3 leading-tight">
+              Je bent welkom zoals je bent
+            </h2>
+            <p className="text-primary-foreground/75 text-lg mb-10 leading-relaxed max-w-md mx-auto">
+              Begin vandaag met jouw persoonlijke traject. Het kennismakingsgesprek is altijd gratis en vrijblijvend.
+            </p>
+            <div className="flex flex-col sm:flex-row gap-3 justify-center">
+              <Link
+                to="/contact"
+                className="inline-flex items-center justify-center bg-primary-foreground text-primary h-12 px-10 rounded-full font-semibold text-sm tracking-wide uppercase hover:opacity-90 transition-opacity shadow-lg"
+              >
                 Plan een kennismaking
-                <ArrowRight className="ml-3 h-5 w-5" />
               </Link>
-            </Button>
-            <Button asChild variant="outline" size="lg" className="border-terracotta-300 text-terracotta-700 hover:bg-terracotta-50 rounded-full px-10 py-7 text-lg">
-              <Link to="/msc-training">
+              <Link
+                to="/msc-training"
+                className="inline-flex items-center justify-center border border-primary-foreground/30 text-primary-foreground h-12 px-8 rounded-full font-semibold text-sm tracking-wide uppercase hover:bg-primary-foreground/10 transition-colors"
+              >
                 Ontdek de groepstraining
               </Link>
-            </Button>
-          </div>
-          <p className="font-serif italic text-sm text-muted-foreground">
-            Het kennismakingsgesprek is gratis en vrijblijvend.
-          </p>
-        </ScrollReveal>
+            </div>
+          </ScrollReveal>
+        </div>
       </div>
     </section>
   );
