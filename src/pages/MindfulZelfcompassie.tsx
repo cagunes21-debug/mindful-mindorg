@@ -497,13 +497,20 @@ const MindfulZelfcompassie = () => {
                   ))}
                 </div>
               </div>
-              <div className="text-center">
+              <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
                 <Button asChild className="bg-terracotta-600 hover:bg-terracotta-700 text-white rounded-full px-8 py-6 text-base shadow-md">
                   <a href="#programma">
                     Reserveer hier je plek
                     <ArrowRight className="ml-2 h-5 w-5" />
                   </a>
                 </Button>
+                <Link
+                  to="/mindful-self-compassion"
+                  className="inline-flex items-center gap-2 text-sage-600 text-sm hover:text-sage-700 transition-colors"
+                >
+                  Meer over de methodiek
+                  <ArrowRight className="h-3.5 w-3.5" />
+                </Link>
               </div>
             </ScrollReveal>
           </div>

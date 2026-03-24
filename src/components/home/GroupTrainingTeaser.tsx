@@ -32,13 +32,22 @@ const GroupTrainingTeaser = () => {
                     Early bird t/m 1 augustus
                   </span>
                 </div>
-                <Link
-                  to="/msc-training"
-                  className="inline-flex items-center gap-2 text-terracotta-600 font-semibold text-sm hover:text-terracotta-700 transition-colors group"
-                >
-                  Bekijk de groepstraining
-                  <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
-                </Link>
+                <div className="flex flex-wrap items-center gap-x-6 gap-y-2">
+                  <Link
+                    to="/msc-training"
+                    className="inline-flex items-center gap-2 text-terracotta-600 font-semibold text-sm hover:text-terracotta-700 transition-colors group"
+                  >
+                    Bekijk de groepstraining
+                    <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
+                  </Link>
+                  <Link
+                    to="/mindful-self-compassion"
+                    className="inline-flex items-center gap-2 text-sage-600 text-sm hover:text-sage-700 transition-colors"
+                  >
+                    Wat is MSC?
+                    <ArrowRight className="h-3.5 w-3.5" />
+                  </Link>
+                </div>
               </div>
               <div className="hidden md:flex flex-col items-center justify-center w-48 h-48 rounded-2xl bg-white/80 border border-sage-200 shadow-sm">
                 <p className="text-sm text-muted-foreground mb-1">Vanaf</p>
