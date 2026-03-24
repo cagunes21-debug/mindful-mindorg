@@ -33,10 +33,14 @@ const OverCagla = () => {
   const places = [
     { name: t("overCagla.places.netherlands"), label: t("overCagla.places.netherlandsLabel") },
     { name: t("overCagla.places.germany"), label: t("overCagla.places.germanyLabel") },
-    { name: t("overCagla.places.spain"), label: t("overCagla.places.spainLabel") },
-    { name: t("overCagla.places.mexico"), label: t("overCagla.places.mexicoLabel") },
     { name: t("overCagla.places.turkey"), label: t("overCagla.places.turkeyLabel") },
+    { name: t("overCagla.places.mexico"), label: t("overCagla.places.mexicoLabel") },
+    { name: t("overCagla.places.spain"), label: t("overCagla.places.spainLabel") },
   ];
+
+  // Access credentials array safely
+  const credentials = (t as any)("overCagla.chapter4Credentials") as string[] | string;
+  const credentialsList = Array.isArray(credentials) ? credentials : [];
 
   return (
     <div className="min-h-screen bg-warm-50">
@@ -134,7 +138,7 @@ const OverCagla = () => {
 
       <Divider />
 
-      {/* ═══════ CHAPTER III ═══════ */}
+      {/* ═══════ CHAPTER III — Wortels in Cappadocië ═══════ */}
       <div className="py-28 lg:py-32 px-6 max-w-[720px] mx-auto">
         <ScrollReveal>
           <div className="flex items-center gap-2.5 mb-6">
@@ -148,20 +152,11 @@ const OverCagla = () => {
           </h2>
         </ScrollReveal>
         <ScrollReveal delay={0.1}><HtmlText html={t("overCagla.chapter3P1")} className="text-xl font-light text-muted-foreground leading-[2] mb-7" /></ScrollReveal>
-        <ScrollReveal delay={0.15}><HtmlText html={t("overCagla.chapter3P2")} className="text-xl font-light text-muted-foreground leading-[2]" /></ScrollReveal>
+        <ScrollReveal delay={0.15}><HtmlText html={t("overCagla.chapter3P2")} className="text-xl font-light text-muted-foreground leading-[2] mb-7" /></ScrollReveal>
+        <ScrollReveal delay={0.2}><p className="text-xl font-light text-muted-foreground leading-[2]">{t("overCagla.chapter3P3")}</p></ScrollReveal>
       </div>
 
-      {/* ═══════ QUOTE ═══════ */}
-      <div className="py-24 px-6 text-center">
-        <ScrollReveal>
-          <blockquote className="relative text-2xl md:text-3xl lg:text-4xl font-light italic leading-[1.6] text-foreground max-w-[680px] mx-auto">
-            <span className="absolute -top-10 -left-2 text-[6rem] font-light text-warm-300/25 leading-none select-none">"</span>
-            {t("overCagla.quote")}
-          </blockquote>
-        </ScrollReveal>
-      </div>
-
-      {/* ═══════ CHAPTER IV ═══════ */}
+      {/* ═══════ CHAPTER IV — Het werk ═══════ */}
       <section className="py-28 lg:py-32 px-6 bg-foreground relative overflow-hidden">
         <div className="absolute -top-1/2 -right-[20%] w-[80vw] h-[80vw] rounded-full pointer-events-none" style={{ background: "radial-gradient(ellipse at center, hsl(var(--terracotta-300) / 0.08) 0%, transparent 60%)" }} />
         <div className="max-w-[720px] mx-auto relative z-10">
@@ -176,9 +171,38 @@ const OverCagla = () => {
               {t("overCagla.chapter4Title")} <span className="font-serif italic text-terracotta-400">{t("overCagla.chapter4TitleAccent")}</span>
             </h2>
           </ScrollReveal>
-          <ScrollReveal delay={0.1}><HtmlTextLight html={t("overCagla.chapter4P1")} className="text-xl font-light text-warm-300/70 leading-[2] mb-7" /></ScrollReveal>
-          <ScrollReveal delay={0.15}><HtmlTextLight html={t("overCagla.chapter4P2")} className="text-xl font-light text-warm-300/70 leading-[2] mb-7" /></ScrollReveal>
-          <ScrollReveal delay={0.2}><HtmlTextLight html={t("overCagla.chapter4P3")} className="text-xl font-light text-warm-300/70 leading-[2]" /></ScrollReveal>
+          <ScrollReveal delay={0.1}>
+            <p className="text-xl font-light text-warm-300/70 leading-[2] mb-10">{t("overCagla.chapter4P1")}</p>
+          </ScrollReveal>
+
+          {/* Practice cards */}
+          <ScrollReveal delay={0.15}>
+            <div className="space-y-8 mb-12">
+              <div className="border-l-2 border-terracotta-400/40 pl-6">
+                <h3 className="text-lg font-medium text-warm-100 mb-2">{t("overCagla.chapter4Practice1Title")}</h3>
+                <p className="text-base font-light text-warm-300/70 leading-relaxed">{t("overCagla.chapter4Practice1Desc")}</p>
+              </div>
+              <div className="border-l-2 border-terracotta-400/40 pl-6">
+                <h3 className="text-lg font-medium text-warm-100 mb-2">{t("overCagla.chapter4Practice2Title")}</h3>
+                <p className="text-base font-light text-warm-300/70 leading-relaxed">{t("overCagla.chapter4Practice2Desc")}</p>
+              </div>
+            </div>
+          </ScrollReveal>
+
+          {/* Credentials */}
+          <ScrollReveal delay={0.2}>
+            <div className="pt-8 border-t border-warm-300/10">
+              <h3 className="text-[0.65rem] font-medium tracking-[0.2em] uppercase text-terracotta-400 mb-5">{t("overCagla.chapter4CredentialsTitle")}</h3>
+              <ul className="space-y-2.5">
+                {credentialsList.map((item, i) => (
+                  <li key={i} className="flex items-start gap-3 text-base font-light text-warm-300/70">
+                    <span className="text-terracotta-400/60 mt-1.5 text-[0.5rem]">●</span>
+                    {item}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </ScrollReveal>
         </div>
       </section>
 
@@ -186,18 +210,16 @@ const OverCagla = () => {
       <section className="py-32 px-6 text-center">
         <div className="max-w-[600px] mx-auto">
           <ScrollReveal>
-            <h2 className="text-3xl md:text-4xl lg:text-[2.8rem] font-light leading-[1.3] text-foreground mb-8">
-              {t("overCagla.closingTitle")} <span className="font-serif italic text-terracotta-600">{t("overCagla.closingTitleAccent")}</span>
-            </h2>
-          </ScrollReveal>
-          <ScrollReveal delay={0.05}>
             <p className="text-lg font-light text-muted-foreground leading-relaxed mb-10">{t("overCagla.closingP")}</p>
           </ScrollReveal>
-          <ScrollReveal delay={0.1}>
+          <ScrollReveal delay={0.05}>
             <Link to="/contact" className="inline-flex items-center gap-2.5 px-9 py-4 rounded-full border border-warm-300 text-sm tracking-wide text-foreground hover:bg-foreground hover:text-warm-50 hover:border-foreground hover:-translate-y-0.5 transition-all">
               {t("overCagla.contactCta")}
               <ArrowRight className="h-4 w-4" />
             </Link>
+          </ScrollReveal>
+          <ScrollReveal delay={0.1}>
+            <p className="mt-8 text-sm tracking-[0.1em] text-warm-400">{t("overCagla.closingLocation")}</p>
           </ScrollReveal>
         </div>
       </section>
