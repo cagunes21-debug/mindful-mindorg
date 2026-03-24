@@ -166,14 +166,13 @@ const IndividueelHome = () => {
       </section>
 
       {/* ════════════════════════════════════════════════════════════
-          VOOR WIE — 2-column grid cards
+          VOOR WIE — soft stacked blocks
       ════════════════════════════════════════════════════════════ */}
-      <section className="py-20 md:py-28 bg-white relative overflow-hidden">
-        <div className="absolute -bottom-20 -left-20 w-80 h-80 bg-sage-100/30 rounded-full blur-[100px]" />
-        <div className="container mx-auto px-6 md:px-10 relative">
-          <div className="max-w-4xl mx-auto">
+      <section className="py-20 md:py-28 bg-[#F8F5EE] relative overflow-hidden">
+        <div className="container mx-auto px-6 md:px-10">
+          <div className="max-w-2xl mx-auto">
             <ScrollReveal>
-              <div className="text-center mb-12">
+              <div className="text-center mb-14">
                 <span className="inline-block text-xs tracking-[0.3em] uppercase text-sage-600 font-medium mb-4">Voor wie</span>
                 <h2 className="text-3xl md:text-4xl font-serif text-foreground">
                   Dit traject is voor jou als…
@@ -181,21 +180,30 @@ const IndividueelHome = () => {
               </div>
             </ScrollReveal>
 
-            <div className="grid sm:grid-cols-2 gap-4">
-              {forWhom.map((item, i) => (
-                <ScrollReveal key={i} delay={i * 0.06}>
-                  <div className="group flex items-start gap-4 bg-gradient-to-br from-warm-50 to-background rounded-2xl px-6 py-5 border border-warm-200/50 h-full hover:shadow-md hover:border-warm-300/60 transition-all duration-300">
-                    <div className={`h-10 w-10 rounded-xl flex items-center justify-center flex-shrink-0 ${item.color} group-hover:scale-105 transition-transform`}>
-                      <item.icon className="h-4.5 w-4.5" />
+            <div className="flex flex-col gap-3.5">
+              {forWhom.map((item, i) => {
+                const bgColors = [
+                  "bg-white",
+                  "bg-sage-50/70",
+                  "bg-warm-50",
+                  "bg-white",
+                  "bg-sage-50/70",
+                ];
+                return (
+                  <ScrollReveal key={i} delay={i * 0.07}>
+                    <div className={`${bgColors[i]} rounded-2xl px-7 py-5 border border-sage-200/40 text-center`}>
+                      <p className="text-foreground text-base md:text-[1.05rem] leading-relaxed font-light">
+                        {item.text}
+                      </p>
                     </div>
-                    <p className="text-foreground text-[0.95rem] leading-snug pt-1.5">{item.text}</p>
-                  </div>
-                </ScrollReveal>
-              ))}
+                  </ScrollReveal>
+                );
+              })}
             </div>
           </div>
         </div>
       </section>
+
 
       {/* ════════════════════════════════════════════════════════════
           WAT HET OPLEVERT — benefit cards
