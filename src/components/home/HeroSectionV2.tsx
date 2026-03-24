@@ -3,10 +3,10 @@ import heroImage from "@/assets/hero-mindful.jpg";
 
 const HeroSectionV2 = () => {
   return (
-    <section className="relative min-h-[70vh] flex items-center overflow-hidden">
+    <section className="relative min-h-[65vh] flex items-center overflow-hidden">
       <div className="absolute inset-0">
         <img src={heroImage} alt="Vrouw mediteert in de natuur" className="w-full h-full object-cover" />
-        <div className="absolute inset-0 bg-gradient-to-r from-foreground/75 to-foreground/30" />
+        <div className="absolute inset-0 bg-gradient-to-r from-foreground/80 to-foreground/30" />
       </div>
       <div className="relative z-10 container mx-auto px-6 py-16 md:py-20">
         <div className="max-w-xl">
@@ -14,20 +14,26 @@ const HeroSectionV2 = () => {
             Mindful Mind · Zelfcompassie
           </p>
           <h1
-            className="text-4xl md:text-5xl lg:text-6xl font-serif text-primary-foreground leading-[1.05] mb-6 animate-fade-in-up"
+            className="text-4xl md:text-5xl lg:text-6xl font-serif text-primary-foreground leading-[1.05] mb-5 animate-fade-in-up"
             style={{ animationDelay: "0.15s" }}
           >
-            Van zelfkritiek
+            Leer milder zijn
             <br />
-            naar meer <em className="italic">rust en vertrouwen</em>
+            <em className="italic">voor jezelf</em>
           </h1>
           <p
-            className="text-lg text-secondary/90 font-light leading-relaxed mb-8 max-w-md animate-fade-in-up"
+            className="text-base md:text-lg text-secondary/90 font-light leading-relaxed mb-3 max-w-md animate-fade-in-up"
             style={{ animationDelay: "0.3s" }}
           >
-            Mindful Self-Compassion helpt je om jezelf te ondersteunen — juist op de momenten dat het moeilijk is.
+            Heb je last van dat stemmetje dat zegt dat je niet goed genoeg bent?
           </p>
-          <div className="flex flex-col sm:flex-row gap-3 animate-fade-in-up" style={{ animationDelay: "0.45s" }}>
+          <p
+            className="text-base text-secondary/70 font-light leading-relaxed mb-8 max-w-md animate-fade-in-up"
+            style={{ animationDelay: "0.4s" }}
+          >
+            Met Mindful Self-Compassion leer je jezelf ondersteunen in plaats van bekritiseren — voor meer rust, ruimte en vertrouwen.
+          </p>
+          <div className="flex flex-col sm:flex-row gap-3 animate-fade-in-up" style={{ animationDelay: "0.5s" }}>
             <Link
               to="/contact"
               className="inline-block bg-primary text-primary-foreground px-7 py-3.5 rounded-lg font-sans font-semibold text-sm tracking-wide uppercase hover:opacity-90 transition-opacity"
