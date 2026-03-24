@@ -1,38 +1,45 @@
 import { Link } from "react-router-dom";
 import heroImage from "@/assets/hero-mindful.jpg";
+import { Leaf } from "lucide-react";
 
 const HeroSectionV2 = () => {
   return (
-    <section className="relative min-h-[65vh] flex items-center overflow-hidden">
+    <section className="relative min-h-[85vh] flex items-center overflow-hidden">
       <div className="absolute inset-0">
         <img src={heroImage} alt="Vrouw mediteert in de natuur" className="w-full h-full object-cover" />
-        <div className="absolute inset-0 bg-gradient-to-r from-foreground/80 to-foreground/30" />
+        <div className="absolute inset-0 bg-gradient-to-r from-foreground/80 via-foreground/60 to-foreground/20" />
       </div>
       <div className="relative z-10 container mx-auto px-6 py-16 md:py-20">
-        <div className="max-w-xl">
+        <div className="max-w-lg">
           <p className="text-secondary font-sans text-sm tracking-[0.2em] uppercase mb-4 animate-fade-in-up">
             Mindful Mind · Zelfcompassie
           </p>
           <h1
-            className="text-4xl md:text-5xl lg:text-6xl font-serif text-primary-foreground leading-[1.05] mb-5 animate-fade-in-up"
+            className="text-4xl md:text-5xl lg:text-6xl font-serif text-primary-foreground leading-[1.1] mb-8 animate-fade-in-up"
             style={{ animationDelay: "0.15s" }}
           >
             Leer milder zijn
             <br />
             <em className="italic">voor jezelf</em>
           </h1>
-          <p
-            className="text-base md:text-lg text-secondary/90 font-light leading-relaxed mb-3 max-w-md animate-fade-in-up"
-            style={{ animationDelay: "0.3s" }}
-          >
-            Heb je last van dat stemmetje dat zegt dat je niet goed genoeg bent?
-          </p>
-          <p
-            className="text-base text-secondary/70 font-light leading-relaxed mb-8 max-w-md animate-fade-in-up"
-            style={{ animationDelay: "0.4s" }}
-          >
-            Met Mindful Self-Compassion leer je jezelf ondersteunen in plaats van bekritiseren — voor meer rust, ruimte en vertrouwen.
-          </p>
+
+          {/* Poetic intro */}
+          <div className="space-y-5 mb-10 animate-fade-in-up" style={{ animationDelay: "0.3s" }}>
+            <p className="text-secondary/90 text-lg font-light leading-relaxed">
+              Misschien herken je het.
+            </p>
+            <div className="text-secondary/75 font-light leading-[2]">
+              <p>Je gaat maar door.</p>
+              <p>Probeert het goed te doen.</p>
+              <p>Voor anderen, voor jezelf.</p>
+            </div>
+            <div className="text-secondary/75 font-light leading-[2] italic">
+              <p>En toch is daar die stem van binnen…</p>
+              <p>die zegt dat het niet genoeg is.</p>
+              <p>Dat jij niet genoeg bent.</p>
+            </div>
+          </div>
+
           <div className="flex flex-col sm:flex-row gap-3 animate-fade-in-up" style={{ animationDelay: "0.5s" }}>
             <Link
               to="/contact"
