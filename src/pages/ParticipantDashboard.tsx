@@ -195,8 +195,11 @@ const ParticipantDashboard = () => {
         console.log("[Dashboard] onAuthStateChange:", event);
         if (session?.user) {
           setUser(session.user);
-          // Fire-and-forget to avoid blocking auth event processing
-          setTimeout(() => fetchEnrollments(session.user), 0);
+          // Check admin first, then fetch enrollments
+          setTimeout(async () => {
+            const isAdmin = await checkAdminAndRedirect(session.user);
+            if (!isAdmin) fetchEnrollments(session.user);
+          }, 0);
         }
       }
     );
