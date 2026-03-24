@@ -13,6 +13,7 @@ import ProtectedRoute from "./components/ProtectedRoute";
 import { useAutoLinkClient } from "./hooks/useAutoLinkClient";
 
 const IndividueelHome = lazy(() => import("./pages/IndividueelHome"));
+const IndividueelHomeV1 = lazy(() => import("./pages/IndividueelHomeV1"));
 
 // Lazy-loaded routes for better Core Web Vitals
 const Index = lazy(() => import("./pages/Index"));
@@ -77,6 +78,7 @@ const App = () => (
               <Routes>
                 <Route path="/" element={<IndividueelHome />} />
                 <Route path="/msc-training" element={<MindfulZelfcompassie />} />
+                <Route path="/home-v1" element={<IndividueelHomeV1 />} />
                 <Route path="/programmas" element={<Index />} />
                 
                 <Route path="/mindful-self-compassion" element={<MindfulSelfCompassion />} />
