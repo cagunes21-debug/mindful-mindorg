@@ -26,25 +26,25 @@ const steps = [
 const StepsSection = () => {
   return (
     <section className="py-20 md:py-28 bg-foreground">
-      <div className="max-w-[1100px] mx-auto px-6">
+      <div className="container mx-auto px-4 max-w-5xl">
         <ScrollReveal>
-          <p className="text-xs tracking-[0.25em] uppercase text-sage-300 mb-4">
+          <p className="text-xs tracking-[0.25em] uppercase text-terracotta-300 mb-4">
             Het traject
           </p>
-          <h2 className="font-serif text-3xl md:text-4xl font-light text-background mb-10">
+          <h2 className="font-serif text-3xl md:text-4xl font-light text-white mb-10">
             Hoe werkt het?
           </h2>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-px bg-white/5">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
             {steps.map((step) => (
-              <div key={step.num} className="bg-foreground p-8">
-                <span className="font-serif text-5xl font-light text-sage-500/15 leading-none block mb-4">
+              <div key={step.num} className="bg-white/[0.04] rounded-3xl p-8 border border-white/10">
+                <span className="font-serif text-5xl font-light text-terracotta-400/20 leading-none block mb-4">
                   {step.num}
                 </span>
-                <h3 className="font-serif text-xl text-background font-light mb-2">
+                <h3 className="font-serif text-xl text-white font-light mb-2">
                   {step.title}
                 </h3>
-                <p className="text-sm text-background/50 leading-relaxed">
+                <p className="text-sm text-white/50 leading-relaxed">
                   {step.desc}
                 </p>
               </div>
