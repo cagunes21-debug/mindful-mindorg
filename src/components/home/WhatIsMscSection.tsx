@@ -8,15 +8,16 @@ const WhatIsMscSection = () => {
     <section className="py-14 md:py-20 bg-background">
       <div className="container mx-auto px-6 max-w-2xl">
         <ScrollReveal>
-          <div className="text-center mb-8">
-            <p className="text-sm uppercase tracking-[0.2em] text-muted-foreground mb-2">De methode</p>
+          <div className="text-center mb-10">
+            <p className="text-xs uppercase tracking-[0.25em] text-terracotta-500 font-medium mb-3">De methode</p>
             <h2 className="text-2xl md:text-3xl font-serif text-foreground">
               Wat is Mindful <em className="italic text-primary">Self-Compassion?</em>
             </h2>
+            <div className="w-12 h-0.5 bg-primary/40 mx-auto mt-4" />
           </div>
         </ScrollReveal>
 
-        <div className="space-y-4 text-base leading-relaxed">
+        <div className="space-y-6 text-base md:text-lg leading-[1.8]">
           <ScrollReveal delay={0.05}>
             <p className="text-foreground">
               Mindful Self-Compassion is een methode die je helpt om op een andere manier met jezelf om te gaan.
@@ -28,7 +29,7 @@ const WhatIsMscSection = () => {
             </p>
           </ScrollReveal>
           <ScrollReveal delay={0.15}>
-            <p className="text-foreground font-medium">
+            <p className="text-foreground font-medium bg-terracotta-50/50 border-l-2 border-terracotta-300 pl-5 py-3 rounded-r-lg">
               Maar wat als je in moeilijke momenten niet harder hoeft te worden — maar juist zachter?
             </p>
           </ScrollReveal>
@@ -38,7 +39,7 @@ const WhatIsMscSection = () => {
             </p>
           </ScrollReveal>
           <ScrollReveal delay={0.25}>
-            <p className="text-foreground font-medium mt-6 mb-3">Juist wanneer je:</p>
+            <p className="text-foreground font-medium mt-2 mb-3">Juist wanneer je:</p>
             <div className="flex flex-wrap gap-2">
               {struggles.map((item, i) => (
                 <motion.span
@@ -47,9 +48,9 @@ const WhatIsMscSection = () => {
                   whileInView={{ opacity: 1, scale: 1 }}
                   viewport={{ once: true }}
                   transition={{ delay: i * 0.08 }}
-                  className="inline-flex items-center gap-2 rounded-full bg-card border border-border/50 px-4 py-2 text-sm text-foreground"
+                  className="inline-flex items-center gap-2 rounded-full bg-card border border-border/50 px-4 py-2.5 text-sm text-foreground shadow-sm"
                 >
-                  <span className="w-1.5 h-1.5 rounded-full bg-primary flex-shrink-0" />
+                  <span className="w-1.5 h-1.5 rounded-full bg-terracotta-400 flex-shrink-0" />
                   {item}
                 </motion.span>
               ))}

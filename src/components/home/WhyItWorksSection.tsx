@@ -13,20 +13,21 @@ const WhyItWorksSection = () => {
   return (
     <section className="py-14 md:py-20 bg-background">
       <div className="container mx-auto px-6 max-w-3xl">
-        <div className="flex flex-col md:flex-row md:items-start gap-8 md:gap-12">
+        <div className="flex flex-col md:flex-row md:items-start gap-8 md:gap-14">
           <div className="flex-1">
             <ScrollReveal>
-              <p className="text-sm uppercase tracking-[0.2em] text-muted-foreground mb-2">Wetenschappelijk onderbouwd</p>
-              <h2 className="text-2xl md:text-3xl font-serif text-foreground mb-4">
+              <p className="text-xs uppercase tracking-[0.25em] text-terracotta-500 font-medium mb-3">Wetenschappelijk onderbouwd</p>
+              <h2 className="text-2xl md:text-3xl font-serif text-foreground mb-3">
                 Waarom dit <em className="italic text-primary">werkt</em>
               </h2>
-              <p className="text-muted-foreground leading-relaxed">
+              <div className="w-12 h-0.5 bg-primary/40 mb-5" />
+              <p className="text-muted-foreground leading-[1.8]">
                 Onderzoek laat zien dat zelfcompassie helpt bij:
               </p>
             </ScrollReveal>
           </div>
 
-          <div className="flex-1 space-y-3">
+          <div className="flex-1 space-y-2.5">
             {benefits.map((item, i) => (
               <motion.div
                 key={i}
@@ -34,12 +35,12 @@ const WhyItWorksSection = () => {
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: 0.1 + i * 0.08 }}
-                className="flex items-center gap-3 bg-card rounded-xl px-4 py-3 border border-border/50"
+                className="flex items-center gap-3 bg-card rounded-xl px-4 py-3.5 border border-border/40 shadow-sm"
               >
-                <div className="h-6 w-6 rounded-full bg-terracotta-100 flex items-center justify-center flex-shrink-0">
-                  <Check className="h-3 w-3 text-terracotta-600" />
+                <div className="h-6 w-6 rounded-full bg-sage-100 flex items-center justify-center flex-shrink-0">
+                  <Check className="h-3 w-3 text-sage-700" />
                 </div>
-                <span className="text-foreground text-sm">{item}</span>
+                <span className="text-foreground text-[0.95rem]">{item}</span>
               </motion.div>
             ))}
           </div>
