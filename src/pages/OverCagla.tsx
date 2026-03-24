@@ -38,9 +38,13 @@ const OverCagla = () => {
     { name: t("overCagla.places.spain"), label: t("overCagla.places.spainLabel") },
   ];
 
-  // Access credentials array safely
-  const credentials = (t as any)("overCagla.chapter4Credentials") as string[] | string;
-  const credentialsList = Array.isArray(credentials) ? credentials : [];
+  const credentials = [
+    t("overCagla.chapter4Cred1"),
+    t("overCagla.chapter4Cred2"),
+    t("overCagla.chapter4Cred3"),
+    t("overCagla.chapter4Cred4"),
+    t("overCagla.chapter4Cred5"),
+  ];
 
   return (
     <div className="min-h-screen bg-warm-50">
