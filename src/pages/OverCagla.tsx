@@ -179,7 +179,16 @@ const OverCagla = () => {
             </h2>
           </ScrollReveal>
           <ScrollReveal delay={0.1}>
-            <p className="text-xl font-light text-warm-300/70 leading-[2] mb-10">{t("overCagla.chapter4P1")}</p>
+            <HtmlTextLight html={t("overCagla.chapter4P1")} className="text-xl font-light text-warm-300/70 leading-[2] mb-7" />
+          </ScrollReveal>
+          <ScrollReveal delay={0.13}>
+            <HtmlTextLight html={t("overCagla.chapter4P2")} className="text-xl font-light text-warm-300/70 leading-[2] mb-7" />
+          </ScrollReveal>
+          <ScrollReveal delay={0.16}>
+            <HtmlTextLight html={t("overCagla.chapter4P3")} className="text-xl font-light text-warm-300/70 leading-[2] mb-7" />
+          </ScrollReveal>
+          <ScrollReveal delay={0.19}>
+            <p className="text-xl font-light text-warm-300/70 leading-[2] mb-10">{t("overCagla.chapter4P4")}</p>
           </ScrollReveal>
 
           {/* Practice cards */}
