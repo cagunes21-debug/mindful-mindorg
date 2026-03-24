@@ -76,7 +76,7 @@ const App = () => (
             <StickyCTA />
             <Suspense fallback={<PageLoader />}>
               <Routes>
-                <Route path="/" element={<IndividueelHome />} />
+                <Route path="/" element={<Index />} />
                 <Route path="/msc-training" element={<MindfulZelfcompassie />} />
                 <Route path="/home-v1" element={<IndividueelHomeV1 />} />
                 <Route path="/programmas" element={<Index />} />
