@@ -122,7 +122,8 @@ const OverCagla = () => {
           </h2>
         </ScrollReveal>
         <ScrollReveal delay={0.1}><HtmlText html={t("overCagla.chapter2P1")} className="text-xl font-light text-muted-foreground leading-[2] mb-7" /></ScrollReveal>
-        <ScrollReveal delay={0.15}><p className="text-xl font-light text-muted-foreground leading-[2]">{t("overCagla.chapter2P2")}</p></ScrollReveal>
+        <ScrollReveal delay={0.15}><p className="text-xl font-light text-muted-foreground leading-[2] mb-7">{t("overCagla.chapter2P2")}</p></ScrollReveal>
+        <ScrollReveal delay={0.2}><p className="text-xl font-light text-muted-foreground leading-[2]">{t("overCagla.chapter2P3")}</p></ScrollReveal>
       </div>
 
       {/* ═══════ PLACES RIBBON ═══════ */}

@@ -58,8 +58,9 @@ export const en = {
     chapter2Label: "Chapter II",
     chapter2Title: "The world as",
     chapter2TitleAccent: "mirror",
-    chapter2P1: "Çağla's path led her far from home — and at the same time, ever closer to herself. She lived in five countries. Not to escape, but to discover who she is when everything around her changes.",
-    chapter2P2: "Each country offered a different light, a different language, a different way of being. But the common thread was always the same: how do you come home to yourself, even when everything around you is moving?",
+    chapter2P1: "Çağla's path led her far from home — and at the same time, ever closer to herself. She lived in five countries. Not to escape. But to remember who she already was.",
+    chapter2P2: "Each country became an exploration — of identity, of belonging, of what it means to feel at home somewhere. A different light, a different language, a different way of being.",
+    chapter2P3: "And each time, the same recognition: that coming home is more than a place. It is the connection with who you always were.",
     places: {
       netherlands: "Netherlands",
       netherlandsLabel: "Study & growth",
