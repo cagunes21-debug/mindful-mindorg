@@ -13,11 +13,11 @@ import { ScrollReveal } from "@/components/ScrollReveal";
 import heroImage from "@/assets/hero-mindful.jpg";
 
 const forWhom = [
-  { text: "Je bent vaak streng of kritisch naar jezelf", icon: "💭" },
-  { text: "Je voelt je snel verantwoordelijk voor alles", icon: "🏋️" },
-  { text: "Je hebt moeite met grenzen stellen", icon: "🚧" },
-  { text: "Je ervaart stress, onrust of emotionele uitputting", icon: "🌊" },
-  { text: "Je wilt leren om beter voor jezelf te zorgen", icon: "🌱" },
+  { text: "Je bent vaak streng of kritisch naar jezelf", icon: Heart, color: "bg-terracotta-100 text-terracotta-600" },
+  { text: "Je voelt je snel verantwoordelijk voor alles", icon: Shield, color: "bg-sage-100 text-sage-700" },
+  { text: "Je hebt moeite met grenzen stellen", icon: Leaf, color: "bg-terracotta-100 text-terracotta-600" },
+  { text: "Je ervaart stress, onrust of emotionele uitputting", icon: Brain, color: "bg-sage-100 text-sage-700" },
+  { text: "Je wilt leren om beter voor jezelf te zorgen", icon: Sparkles, color: "bg-terracotta-100 text-terracotta-600" },
 ];
 
 const benefits = [
@@ -157,7 +157,9 @@ const IndividueelHome = () => {
             {forWhom.map((item, i) => (
               <ScrollReveal key={i} delay={i * 0.06}>
                 <div className="flex items-center gap-4 bg-warm-50 rounded-xl px-5 py-4 border border-warm-200/60">
-                  <span className="text-xl flex-shrink-0">{item.icon}</span>
+                  <div className={`h-9 w-9 rounded-lg flex items-center justify-center flex-shrink-0 ${item.color}`}>
+                    <item.icon className="h-4 w-4" />
+                  </div>
                   <p className="text-foreground text-[0.95rem]">{item.text}</p>
                 </div>
               </ScrollReveal>
