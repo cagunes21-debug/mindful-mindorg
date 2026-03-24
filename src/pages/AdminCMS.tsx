@@ -1,4 +1,5 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
+import ReactMarkdown from "react-markdown";
 import { useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import Navigation from "@/components/Navigation";
@@ -224,41 +225,71 @@ export default function AdminCMS() {
                         {sItems.map(item => {
                           const isIndiv = item.available_for === "individual" || item.available_for === "both";
                           return (
-                            <Card key={item.id} className="transition-all">
-                              <CardContent className="p-3">
-                                <div className="flex items-center gap-3">
-                                  <Checkbox checked={isIndiv} onCheckedChange={() => toggleIndividual(item)} className="shrink-0" title="Beschikbaar voor individueel" />
-                                  <div className="flex-1 min-w-0">
-                                    <div className="flex items-center gap-2 flex-wrap">
-                                      <span className={cn("text-sm", item.is_optional && "text-muted-foreground")}>{item.title}</span>
-                                      <Badge variant="secondary" className={cn("text-[10px]", MSC_TYPE_COLORS[item.type])}>{MSC_ITEM_TYPES[item.type] || item.type}</Badge>
-                                      {availableForBadge(item.available_for)}
-                                      {item.is_optional && <Badge variant="outline" className="text-[10px]">Optioneel</Badge>}
+                            <div key={item.id} className="transition-all">
+                              <Card className={cn("transition-all", expandedItems.has(item.id) && "ring-1 ring-primary/20")}>
+                                <CardContent className="p-3">
+                                  <div className="flex items-center gap-3">
+                                    <Checkbox checked={isIndiv} onCheckedChange={() => toggleIndividual(item)} className="shrink-0" title="Beschikbaar voor individueel" />
+                                    <div className="flex-1 min-w-0">
+                                      <div className="flex items-center gap-2 flex-wrap">
+                                        <span className={cn("text-sm", item.is_optional && "text-muted-foreground")}>{item.title}</span>
+                                        <Badge variant="secondary" className={cn("text-[10px]", MSC_TYPE_COLORS[item.type])}>{MSC_ITEM_TYPES[item.type] || item.type}</Badge>
+                                        {availableForBadge(item.available_for)}
+                                        {item.is_optional && <Badge variant="outline" className="text-[10px]">Optioneel</Badge>}
+                                      </div>
                                     </div>
+                                    <span className="text-xs text-muted-foreground flex items-center gap-0.5 shrink-0"><Clock className="h-3 w-3" /> {item.duration_minutes}m</span>
+                                    {item.instructions_markdown && (
+                                      <Button
+                                        variant={expandedItems.has(item.id) ? "secondary" : "ghost"}
+                                        size="sm"
+                                        className="h-7 px-2 gap-1.5 text-xs"
+                                        onClick={e => { e.stopPropagation(); toggleItemExpand(item.id); }}
+                                      >
+                                        <FileText className="h-3.5 w-3.5" />
+                                        <span className="hidden sm:inline">Script</span>
+                                        <ChevronDown className={cn("h-3 w-3 transition-transform", expandedItems.has(item.id) && "rotate-180")} />
+                                      </Button>
+                                    )}
+                                    <Button variant="ghost" size="icon" className="h-7 w-7" onClick={e => { e.stopPropagation(); openEdit(item); }}><Pencil className="h-3.5 w-3.5" /></Button>
+                                    <Button variant="ghost" size="icon" className="h-7 w-7" onClick={e => { e.stopPropagation(); deleteItem(item.id); }}><Trash2 className="h-3.5 w-3.5 text-destructive" /></Button>
                                   </div>
-                                  <span className="text-xs text-muted-foreground flex items-center gap-0.5 shrink-0"><Clock className="h-3 w-3" /> {item.duration_minutes}</span>
-                                  {item.instructions_markdown && (
-                                    <Button variant="ghost" size="icon" className="h-8 w-8" onClick={e => { e.stopPropagation(); toggleItemExpand(item.id); }} title="Script bekijken">
-                                      <FileText className={cn("h-3.5 w-3.5 transition-colors", expandedItems.has(item.id) ? "text-primary" : "text-muted-foreground")} />
-                                    </Button>
-                                  )}
-                                  <Button variant="ghost" size="icon" className="h-8 w-8" onClick={e => { e.stopPropagation(); openEdit(item); }}><Pencil className="h-3.5 w-3.5" /></Button>
-                                  <Button variant="ghost" size="icon" className="h-8 w-8" onClick={e => { e.stopPropagation(); deleteItem(item.id); }}><Trash2 className="h-3.5 w-3.5 text-destructive" /></Button>
-                                </div>
-                                {expandedItems.has(item.id) && item.instructions_markdown && (
-                                  <div className="mt-3 ml-8 p-4 rounded-lg bg-muted/50 border border-border">
-                                    <p className="text-xs font-medium text-muted-foreground uppercase tracking-wider mb-2">Script / Instructies</p>
-                                    <div className="text-sm leading-relaxed whitespace-pre-line text-foreground">{item.instructions_markdown}</div>
+                                </CardContent>
+                              </Card>
+                              {expandedItems.has(item.id) && item.instructions_markdown && (
+                                <div className="ml-6 mr-2 -mt-1 relative">
+                                  <div className="absolute left-0 top-0 bottom-4 w-px bg-primary/20" />
+                                  <div className="ml-5 rounded-b-xl border border-t-0 border-border bg-background p-5 shadow-sm">
+                                    <div className="flex items-center justify-between mb-4">
+                                      <h4 className="text-xs font-semibold text-primary uppercase tracking-wider flex items-center gap-2">
+                                        <FileText className="h-3.5 w-3.5" /> Script / Instructies
+                                      </h4>
+                                      <Button variant="ghost" size="sm" className="h-6 px-2 text-[10px] text-muted-foreground" onClick={() => toggleItemExpand(item.id)}>
+                                        Sluiten ✕
+                                      </Button>
+                                    </div>
+                                    <div className="prose prose-sm prose-slate max-w-none
+                                      [&_h2]:text-base [&_h2]:font-semibold [&_h2]:text-foreground [&_h2]:mt-0 [&_h2]:mb-3
+                                      [&_h3]:text-sm [&_h3]:font-semibold [&_h3]:text-primary [&_h3]:mt-5 [&_h3]:mb-2
+                                      [&_p]:text-sm [&_p]:leading-relaxed [&_p]:text-foreground/80 [&_p]:mb-2
+                                      [&_em]:text-primary/70 [&_em]:not-italic [&_em]:bg-primary/5 [&_em]:px-1 [&_em]:rounded
+                                      [&_strong]:text-foreground [&_strong]:font-medium
+                                      [&_ul]:space-y-1 [&_ul]:my-2 [&_li]:text-sm [&_li]:text-foreground/80
+                                      [&_hr]:my-4 [&_hr]:border-border">
+                                      <ReactMarkdown>{item.instructions_markdown}</ReactMarkdown>
+                                    </div>
                                     {item.notes_for_therapist && (
-                                      <div className="mt-3 pt-3 border-t border-border">
-                                        <p className="text-xs font-medium text-muted-foreground uppercase tracking-wider mb-1">Notities therapeut</p>
-                                        <div className="text-sm leading-relaxed whitespace-pre-line text-muted-foreground">{item.notes_for_therapist}</div>
+                                      <div className="mt-4 pt-4 border-t border-dashed border-border">
+                                        <h4 className="text-xs font-semibold text-amber-600 uppercase tracking-wider mb-2 flex items-center gap-2">
+                                          💡 Notities therapeut
+                                        </h4>
+                                        <div className="text-sm leading-relaxed text-muted-foreground italic">{item.notes_for_therapist}</div>
                                       </div>
                                     )}
                                   </div>
-                                )}
-                              </CardContent>
-                            </Card>
+                                </div>
+                              )}
+                            </div>
                           );
                         })}
                         <Button variant="ghost" size="sm" className="w-full text-muted-foreground hover:text-foreground gap-2 mt-1" onClick={() => openCreate(session.id)}>
