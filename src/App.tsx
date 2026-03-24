@@ -78,6 +78,7 @@ const App = () => (
               <Routes>
                 <Route path="/" element={<IndividueelHome />} />
                 <Route path="/msc-training" element={<MindfulZelfcompassie />} />
+                <Route path="/home-v1" element={<IndividueelHomeV1 />} />
                 <Route path="/programmas" element={<Index />} />
                 
                 <Route path="/mindful-self-compassion" element={<MindfulSelfCompassion />} />
