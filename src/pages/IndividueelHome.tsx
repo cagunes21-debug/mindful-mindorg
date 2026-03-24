@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import { ArrowRight, Heart, Brain, Shield, Users, Sparkles, Check, Calendar, Leaf } from "lucide-react";
+import { ArrowRight, Heart, Brain, Shield, Users, Sparkles, Check, Calendar, Leaf, FlaskConical } from "lucide-react";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import SEO from "@/components/SEO";
