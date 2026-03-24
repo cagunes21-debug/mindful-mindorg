@@ -277,7 +277,14 @@ const Auth = () => {
           toast({ title: "Welkom terug!", description: "Je bent succesvol ingelogd." });
           // Redirect happens via onAuthStateChange listener
           // Safety fallback if event doesn't fire within 8s
-          setTimeout(() => {
+          setTimeout(async () => {
+            const { data: { session } } = await supabase.auth.getSession();
+            if (session?.user) {
+              try {
+                const res = await supabase.rpc("has_role", { _user_id: session.user.id, _role: "admin" });
+                if (res.data === true) { navigate("/admin", { replace: true }); return; }
+              } catch {}
+            }
             navigate("/mijn-trainingen", { replace: true });
           }, 8000);
         }

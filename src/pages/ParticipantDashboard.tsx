@@ -210,7 +210,8 @@ const ParticipantDashboard = () => {
       if (session?.user) {
         setUser(session.user);
         console.log("[Dashboard] Session OK, user:", session.user.email);
-        fetchEnrollments(session.user);
+        const isAdmin = await checkAdminAndRedirect(session.user);
+        if (!isAdmin) fetchEnrollments(session.user);
       } else if (!cancelled) {
         console.warn("[Dashboard] No active session, redirecting to login");
         setLoading(false);
