@@ -257,10 +257,12 @@ const IndividueelHome = () => {
                     <FlaskConical className="h-4 w-4 text-sage-600" />
                     <span className="text-xs tracking-[0.3em] uppercase text-sage-600 font-medium">Wetenschap</span>
                   </div>
-                  <Link to="/msc-training" className="group">
-                    <h3 className="text-2xl md:text-3xl font-serif text-foreground mb-3 group-hover:text-primary transition-colors">Wetenschappelijk onderbouwd</h3>
+                  <h3 className="text-2xl md:text-3xl font-serif text-foreground mb-3">Wetenschappelijk onderbouwd</h3>
+                  <p className="text-muted-foreground font-light mb-3">MSC is een <span className="text-foreground font-medium">evidence-based</span> training.</p>
+                  <Link to="/msc-training" className="inline-flex items-center gap-1.5 text-sm text-sage-600 hover:text-primary transition-colors group">
+                    Meer lezen
+                    <ArrowRight className="h-3.5 w-3.5 group-hover:translate-x-1 transition-transform" />
                   </Link>
-                  <p className="text-muted-foreground font-light">MSC is een <span className="text-foreground font-medium">evidence-based</span> training.</p>
                 </div>
               </ScrollReveal>
               <ScrollReveal delay={0.1}>
