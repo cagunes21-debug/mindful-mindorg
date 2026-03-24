@@ -198,7 +198,7 @@ const OverCagla = () => {
             <div className="pt-8 border-t border-warm-300/10">
               <h3 className="text-[0.65rem] font-medium tracking-[0.2em] uppercase text-terracotta-400 mb-5">{t("overCagla.chapter4CredentialsTitle")}</h3>
               <ul className="space-y-2.5">
-                {credentialsList.map((item, i) => (
+                {credentials.map((item, i) => (
                   <li key={i} className="flex items-start gap-3 text-base font-light text-warm-300/70">
                     <span className="text-terracotta-400/60 mt-1.5 text-[0.5rem]">●</span>
                     {item}
