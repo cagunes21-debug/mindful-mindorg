@@ -143,7 +143,7 @@ const IndividueelHome = () => {
           VOOR WIE — visuele checklist
       ═══════════════════════════════════════════ */}
       <section className="py-16 md:py-24 bg-white">
-        <div className="container mx-auto px-6 max-w-3xl">
+        <div className="container mx-auto px-6 max-w-4xl">
           <ScrollReveal>
             <div className="text-center mb-10">
               <p className="text-xs uppercase tracking-[0.25em] text-sage-600 font-medium mb-3">Voor wie</p>
@@ -153,14 +153,14 @@ const IndividueelHome = () => {
             </div>
           </ScrollReveal>
 
-          <div className="space-y-3">
+          <div className="grid sm:grid-cols-2 gap-3">
             {forWhom.map((item, i) => (
               <ScrollReveal key={i} delay={i * 0.06}>
-                <div className="flex items-center gap-4 bg-warm-50 rounded-xl px-5 py-4 border border-warm-200/60">
-                  <div className={`h-9 w-9 rounded-lg flex items-center justify-center flex-shrink-0 ${item.color}`}>
+                <div className="flex items-start gap-3.5 bg-warm-50 rounded-xl px-5 py-4 border border-warm-200/60 h-full">
+                  <div className={`h-9 w-9 rounded-lg flex items-center justify-center flex-shrink-0 mt-0.5 ${item.color}`}>
                     <item.icon className="h-4 w-4" />
                   </div>
-                  <p className="text-foreground text-[0.95rem]">{item.text}</p>
+                  <p className="text-foreground text-[0.95rem] leading-snug">{item.text}</p>
                 </div>
               </ScrollReveal>
             ))}
