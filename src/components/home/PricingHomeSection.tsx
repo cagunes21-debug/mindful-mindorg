@@ -60,37 +60,6 @@ const PricingHomeSection = () => {
             </div>
           </ScrollReveal>
 
-          {/* Losse sessie */}
-          <ScrollReveal delay={0.1}>
-            <div className="bg-warm-50 rounded-3xl border border-warm-200/40 p-8 shadow-sm max-w-xl mx-auto text-center">
-              <h3 className="text-lg font-serif text-foreground mb-1">Losse sessie</h3>
-              <p className="font-serif italic text-sm text-muted-foreground mb-4">Kennismaking of verdieping</p>
-              <p className="text-2xl font-light text-foreground mb-1">€110</p>
-              <p className="text-xs text-muted-foreground mb-4">60 minuten · direct inplanbaar</p>
-              <ul className="space-y-2 text-left max-w-xs mx-auto mb-6">
-                {[
-                  "Eenmalige sessie rond een specifiek thema",
-                  "Geen verplichtingen",
-                  "Ook geschikt als eerste kennismaking",
-                ].map((item, i) => (
-                  <li key={i} className="flex items-start gap-3 text-sm text-muted-foreground">
-                    <div className="h-5 w-5 rounded-full bg-sage-100 flex items-center justify-center flex-shrink-0 mt-0.5">
-                      <Check className="h-3 w-3 text-sage-600" />
-                    </div>
-                    {item}
-                  </li>
-                ))}
-              </ul>
-              <Link
-                to="/coaching"
-                className="inline-flex items-center gap-2 text-sm font-semibold text-primary hover:text-primary/80 transition-colors"
-              >
-                Meer over individuele begeleiding
-                <ArrowRight className="h-3.5 w-3.5" />
-              </Link>
-            </div>
-          </ScrollReveal>
-
         </div>
       </div>
     </section>
