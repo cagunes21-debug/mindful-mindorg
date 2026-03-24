@@ -257,7 +257,9 @@ const IndividueelHome = () => {
                     <FlaskConical className="h-4 w-4 text-sage-600" />
                     <span className="text-xs tracking-[0.3em] uppercase text-sage-600 font-medium">Wetenschap</span>
                   </div>
-                  <h3 className="text-2xl md:text-3xl font-serif text-foreground mb-3">Wetenschappelijk onderbouwd</h3>
+                  <Link to="/msc-training" className="group">
+                    <h3 className="text-2xl md:text-3xl font-serif text-foreground mb-3 group-hover:text-primary transition-colors">Wetenschappelijk onderbouwd</h3>
+                  </Link>
                   <p className="text-muted-foreground font-light">MSC is een <span className="text-foreground font-medium">evidence-based</span> training.</p>
                 </div>
               </ScrollReveal>
