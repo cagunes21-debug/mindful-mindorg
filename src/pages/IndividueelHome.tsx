@@ -11,6 +11,7 @@ import WhatsAppButton from "@/components/WhatsAppButton";
 import CookieConsent from "@/components/CookieConsent";
 import { ScrollReveal } from "@/components/ScrollReveal";
 import heroImage from "@/assets/hero-mindful.jpg";
+import caglaBio from "@/assets/cagla-bio.png";
 
 const forWhom = [
   { text: "Je bent vaak streng of kritisch naar jezelf", icon: Heart, color: "bg-terracotta-100 text-terracotta-600" },
