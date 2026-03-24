@@ -60,12 +60,17 @@ const IndividueelHome = () => {
               Mindful Mind · Individuele begeleiding
             </p>
             <h1 className="text-4xl md:text-5xl lg:text-[3.5rem] font-serif text-primary-foreground leading-[1.08] mb-6">
-              Minder streng voor jezelf.
+              Leer jezelf ondersteunen
               <br />
-              <em className="italic font-light">Meer rust van binnen.</em>
+              <em className="italic font-light">zoals je een goede vriendin zou ondersteunen</em>
+              <br />
+              <span className="text-secondary/70 text-2xl md:text-3xl">— juist wanneer het moeilijk is.</span>
             </h1>
-            <p className="text-secondary/80 text-base md:text-lg leading-relaxed mb-10 max-w-sm">
-              Persoonlijke begeleiding in Mindful Self-Compassion — afgestemd op jou, op jouw tempo.
+            <p className="text-secondary/80 text-base md:text-lg leading-relaxed mb-4 max-w-md">
+              Voor momenten waarop je vastloopt, streng bent voor jezelf of het even niet meer weet.
+            </p>
+            <p className="text-secondary/60 text-sm md:text-base leading-relaxed mb-10 max-w-md">
+              Persoonlijke begeleiding in zelfcompassie — afgestemd op jouw tempo en jouw proces.
             </p>
             <div className="flex flex-col sm:flex-row gap-3">
               <Link
