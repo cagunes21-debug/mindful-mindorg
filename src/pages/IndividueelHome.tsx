@@ -216,44 +216,24 @@ const IndividueelHome = () => {
                 <h2 className="text-3xl md:text-4xl font-serif text-foreground mb-6">
                   Wat het je <em className="italic text-primary">oplevert</em>
                 </h2>
-                <p className="text-lg text-muted-foreground font-light leading-relaxed max-w-md mx-auto mb-4">
-                  Misschien verlang je naar meer <span className="text-foreground font-medium">rust</span> van binnen.<br />
-                  Dat die kritische stem <span className="text-foreground font-medium">zachter</span> wordt.
+                <p className="text-lg text-muted-foreground font-light leading-relaxed max-w-md mx-auto">
+                  Meer rust van binnen.<br />
+                  Een zachtere, minder kritische stem.<br />
+                  Meer vertrouwen in jezelf.
                 </p>
-                <div className="bg-white/80 backdrop-blur-sm rounded-2xl border border-sage-200/40 px-8 py-5 inline-block shadow-sm">
-                  <p className="text-lg font-serif text-foreground">Dat is waar deze training op gericht is.</p>
-                </div>
               </div>
             </ScrollReveal>
 
             {/* ── Wat verandert er ── */}
-            <div>
-              <ScrollReveal>
-                <div className="text-center mb-8">
-                  <h3 className="text-2xl md:text-3xl font-serif text-foreground mb-3">Wat verandert er</h3>
-                  <p className="text-muted-foreground font-light max-w-md mx-auto">
-                    Je leert niet alleen anders denken —<br />maar vooral anders omgaan met wat je voelt.
-                  </p>
-                </div>
-              </ScrollReveal>
-              <div className="grid sm:grid-cols-2 gap-3">
-                {[
-                  { text: "Minder streng voor jezelf", icon: Heart },
-                  { text: "Beter omgaan met stress en emoties", icon: Shield },
-                  { text: "Meer rust en stabiliteit", icon: Leaf },
-                  { text: "Meer vertrouwen in jezelf", icon: Sparkles },
-                ].map((item, i) => (
-                  <ScrollReveal key={i} delay={i * 0.06}>
-                    <div className="bg-white rounded-2xl border border-sage-200/40 p-5 flex items-center gap-4 shadow-sm">
-                      <div className="h-9 w-9 rounded-xl bg-sage-50 flex items-center justify-center flex-shrink-0">
-                        <item.icon className="h-4 w-4 text-sage-600" />
-                      </div>
-                      <p className="text-foreground text-sm font-light">{item.text}</p>
-                    </div>
-                  </ScrollReveal>
-                ))}
+            <ScrollReveal>
+              <div className="text-center">
+                <h3 className="text-2xl md:text-3xl font-serif text-foreground mb-4">Wat verandert er</h3>
+                <p className="text-muted-foreground font-light leading-relaxed max-w-md mx-auto">
+                  Je leert anders omgaan met wat je voelt —<br />
+                  zonder jezelf onder druk te zetten.
+                </p>
               </div>
-            </div>
+            </ScrollReveal>
 
             {/* ── Van overleven naar ondersteunen ── */}
             <ScrollReveal>
@@ -262,8 +242,8 @@ const IndividueelHome = () => {
                   Van overleven naar <em className="italic text-primary">ondersteunen</em>
                 </h3>
                 <p className="text-muted-foreground font-light leading-relaxed max-w-md mx-auto">
-                  In plaats van jezelf onder druk zetten en doorgaan,<br />
-                  ontstaat er ruimte om te vertragen, te voelen<br />
+                  In plaats van doorgaan en jezelf bekritiseren,<br />
+                  leer je te vertragen, te voelen<br />
                   en jezelf te ondersteunen.
                 </p>
               </div>
@@ -298,38 +278,6 @@ const IndividueelHome = () => {
                 </div>
               </ScrollReveal>
             </div>
-
-            {/* ── Wat je meeneemt ── */}
-            <div>
-              <ScrollReveal>
-                <div className="text-center mb-8">
-                  <h3 className="text-2xl md:text-3xl font-serif text-foreground mb-3">Wat je meeneemt</h3>
-                  <p className="text-muted-foreground font-light">Je ontwikkelt een <span className="text-foreground font-medium">andere relatie</span> met jezelf.</p>
-                </div>
-              </ScrollReveal>
-              <div className="flex flex-col gap-3 max-w-sm mx-auto">
-                {[
-                  "Zachter omgaan met jezelf",
-                  "Bij jezelf blijven, ook als het moeilijk is",
-                  "Steviger in jezelf staan",
-                ].map((item, i) => (
-                  <ScrollReveal key={i} delay={i * 0.07}>
-                    <div className="bg-white rounded-2xl border border-sage-200/40 px-6 py-4 text-center shadow-sm">
-                      <p className="text-foreground text-sm font-light">{item}</p>
-                    </div>
-                  </ScrollReveal>
-                ))}
-              </div>
-            </div>
-
-            {/* ── Samengevat ── */}
-            <ScrollReveal>
-              <div className="text-center">
-                <p className="text-2xl md:text-3xl font-serif text-foreground leading-[1.4]">
-                  Meer rust. Meer ruimte. Meer vertrouwen.
-                </p>
-              </div>
-            </ScrollReveal>
 
           </div>
         </div>
