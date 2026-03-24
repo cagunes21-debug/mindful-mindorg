@@ -375,7 +375,7 @@ const IndividueelHome = () => {
                       <p className="text-3xl font-light text-terracotta-600">€550</p>
                     </div>
                     <span className="inline-block bg-terracotta-50 text-terracotta-600 text-xs font-medium px-3 py-1 rounded-full">
-                      Introductiekorting
+                      Tijdelijke aanbieding
                     </span>
                   </div>
 
