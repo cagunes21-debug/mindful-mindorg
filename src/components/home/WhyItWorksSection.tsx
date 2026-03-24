@@ -11,7 +11,7 @@ const benefits = [
 
 const WhyItWorksSection = () => {
   return (
-    <section className="py-14 md:py-20 bg-background">
+    <section className="py-14 md:py-20 bg-white">
       <div className="container mx-auto px-6 max-w-3xl">
         <div className="flex flex-col md:flex-row md:items-start gap-8 md:gap-14">
           <div className="flex-1">
@@ -20,7 +20,7 @@ const WhyItWorksSection = () => {
               <h2 className="text-2xl md:text-3xl font-serif text-foreground mb-3">
                 Waarom dit <em className="italic text-primary">werkt</em>
               </h2>
-              <div className="w-12 h-0.5 bg-primary/40 mb-5" />
+              <div className="w-12 h-0.5 bg-terracotta-300/60 mb-5" />
               <p className="text-muted-foreground leading-[1.8]">
                 Onderzoek laat zien dat zelfcompassie helpt bij:
               </p>
@@ -35,7 +35,7 @@ const WhyItWorksSection = () => {
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: 0.1 + i * 0.08 }}
-                className="flex items-center gap-3 bg-card rounded-xl px-4 py-3.5 border border-border/40 shadow-sm"
+                className="flex items-center gap-3 bg-gradient-to-r from-sage-50/80 to-warm-50/50 rounded-xl px-4 py-3.5 border border-sage-200/50 shadow-sm"
               >
                 <div className="h-6 w-6 rounded-full bg-sage-100 flex items-center justify-center flex-shrink-0">
                   <Check className="h-3 w-3 text-sage-700" />
