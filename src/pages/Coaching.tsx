@@ -111,7 +111,7 @@ const Coaching = () => {
               className="inline-flex items-center gap-2 mb-8 rounded-full bg-terracotta-100 border border-terracotta-200 px-5 py-2.5 text-sm font-medium text-terracotta-700"
             >
               <Heart className="h-4 w-4" />
-              Persoonlijke begeleiding
+              Mindful Mind · Individuele begeleiding
             </motion.span>
             
             <motion.h1 
@@ -120,18 +120,25 @@ const Coaching = () => {
               transition={{ duration: 0.7, delay: 0.1 }}
               className="mb-8 text-4xl font-light tracking-tight text-foreground md:text-5xl lg:text-6xl leading-[1.1]"
             >
-              Individuele
-              <span className="block font-serif italic text-terracotta-600 mt-2">Begeleiding</span>
+              Persoonlijke begeleiding,
+              <span className="block font-serif italic text-terracotta-600 mt-2">afgestemd op jou</span>
             </motion.h1>
             
             <motion.p 
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.2 }}
+              className="text-muted-foreground text-lg max-w-2xl mx-auto leading-relaxed mb-3"
+            >
+              Werk in je eigen tempo aan zelfcompassie, met aandacht voor wat er bij jou speelt.
+            </motion.p>
+            <motion.p
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.25 }}
               className="text-muted-foreground text-lg max-w-2xl mx-auto leading-relaxed mb-8"
             >
-              Persoonlijke begeleiding die helemaal op jou is afgestemd. 
-              Werk in je eigen tempo aan zelfcompassie, met volledige aandacht voor jouw thema's.
+              Geen groep, geen vast ritme — maar ruimte om echt stil te staan bij jouw proces.
             </motion.p>
 
             <motion.div
@@ -156,14 +163,14 @@ const Coaching = () => {
         </div>
       </section>
 
-      {/* ═══════ 2. VOOR WIE (herkenning) ═══════ */}
+      {/* ═══════ 2. VOOR WIE ═══════ */}
       <section className="py-20 lg:py-24 bg-white">
         <div className="container mx-auto px-4">
           <div className="mx-auto max-w-4xl">
             <ScrollReveal>
               <div className="text-center mb-14">
                 <h2 className="mb-6 text-3xl font-light text-foreground md:text-4xl leading-tight">
-                  Individuele begeleiding is voor jou als je <span className="font-serif italic text-terracotta-600">herkenning vindt in:</span>
+                  Individuele begeleiding is voor jou <span className="font-serif italic text-terracotta-600">als je:</span>
                 </h2>
               </div>
             </ScrollReveal>
@@ -171,42 +178,40 @@ const Coaching = () => {
             <StaggerContainer className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
               {[
                 {
-                  icon: Target,
-                  title: "Perfectionisme",
-                  description: "Je legt de lat hoog en bent streng voor jezelf als je niet aan je eigen verwachtingen voldoet.",
+                  emoji: "📏",
+                  title: "Vaak streng bent voor jezelf",
+                  description: "Je legt de lat hoog en bent kritisch als je daar niet aan voldoet — ook als anderen dat niet van je vragen.",
                 },
                 {
-                  icon: Shield,
-                  title: "Grenzen stellen",
-                  description: "Je vindt het moeilijk om 'nee' te zeggen en gaat vaak over je eigen grenzen heen.",
+                  emoji: "🌿",
+                  title: "Moeite hebt met grenzen stellen",
+                  description: "Je vindt het lastig om 'nee' te zeggen en gaat regelmatig over je eigen grenzen heen.",
                 },
                 {
-                  icon: Heart,
-                  title: "Zelfkritiek",
-                  description: "Je innerlijke criticus is luid aanwezig en je bent hard voor jezelf bij fouten of tegenslagen.",
+                  emoji: "💬",
+                  title: "Een sterke innerlijke criticus hebt",
+                  description: "Die stem die je bij fouten of tegenslagen direct beoordeelt — ook al weet je dat het niet helpt.",
                 },
                 {
-                  icon: Users,
-                  title: "Prioriteit bij anderen",
-                  description: "De behoeften van anderen gaan vaak voor, waardoor je eigen zelfzorg in het gedrang komt.",
+                  emoji: "🤲",
+                  title: "Anderen vaak voorop zet",
+                  description: "Je zorgt goed voor anderen, maar je eigen behoeften raken naar de achtergrond.",
                 },
                 {
-                  icon: Sparkles,
-                  title: "Rust zoeken",
-                  description: "Je verlangt naar meer rust en balans, maar weet niet goed hoe je dit kunt bereiken.",
+                  emoji: "🌊",
+                  title: "Verlangt naar meer rust",
+                  description: "Je voelt dat je doorgaat terwijl het eigenlijk te veel is — en zoekt naar een manier om dit te doorbreken.",
                 },
                 {
-                  icon: Video,
-                  title: "Flexibiliteit nodig",
-                  description: "Een groepstraining past niet in je agenda of je geeft de voorkeur aan individuele begeleiding.",
+                  emoji: "🕐",
+                  title: "Flexibiliteit nodig hebt",
+                  description: "Een groep past niet, of je wilt liever individueel en op jouw tempo werken.",
                 },
               ].map((item, index) => (
                 <StaggerItem key={index}>
                   <Card className="border-warm-200 bg-gradient-to-br from-warm-50 to-white rounded-2xl h-full hover:shadow-lg transition-shadow">
                     <CardContent className="p-6">
-                      <div className="h-12 w-12 rounded-xl bg-gradient-to-br from-terracotta-100 to-terracotta-200 flex items-center justify-center mb-4">
-                        <item.icon className="h-6 w-6 text-terracotta-600" />
-                      </div>
+                      <span className="text-2xl mb-3 block">{item.emoji}</span>
                       <h3 className="text-lg font-semibold text-foreground mb-2">{item.title}</h3>
                       <p className="text-muted-foreground text-sm">{item.description}</p>
                     </CardContent>
@@ -257,32 +262,19 @@ const Coaching = () => {
             <div className="grid gap-10 lg:grid-cols-2 items-center">
               <ScrollReveal animation="fade-right">
                 <div>
+                  <p className="text-xs font-medium tracking-[0.22em] uppercase text-sage-600 mb-4">Onze benadering</p>
                   <h2 className="mb-6 text-3xl font-light text-foreground md:text-4xl leading-tight">
-                    Onze <span className="font-serif italic text-terracotta-600">benadering</span>
+                    Geworteld in wetenschap,{" "}
+                    <span className="font-serif italic text-terracotta-600">afgestemd op jou</span>
                   </h2>
                   <p className="text-muted-foreground text-lg leading-relaxed mb-6">
-                    Onze begeleiding is geworteld in Mindful Self-Compassion (MSC) en aangevuld met 
+                    De begeleiding is gebaseerd op Mindful Self-Compassion (MSC) en aangevuld met 
                     inzichten uit ACT, somatische therapie en trauma-sensitieve mindfulness.
                   </p>
                   <p className="text-muted-foreground text-lg leading-relaxed mb-8">
-                    We werken vanuit de overtuiging dat iedereen de capaciteit heeft om 
-                    vriendelijker naar zichzelf te leren kijken — en dat dit geen luxe is, 
-                    maar een fundamentele vaardigheid voor welzijn.
+                    We werken vanuit het uitgangspunt dat je niet hoeft te veranderen om goed genoeg te zijn — 
+                    maar dat je kunt leren om anders met jezelf om te gaan.
                   </p>
-                  
-                  <ul className="space-y-4">
-                    {[
-                      "Veilige, warme en trauma-sensitieve aanpak",
-                      "Praktische oefeningen voor het dagelijks leven",
-                      "Wetenschappelijk onderbouwde methoden",
-                      "Volledig afgestemd op jouw tempo en behoeften",
-                    ].map((item, index) => (
-                      <li key={index} className="flex items-start gap-3">
-                        <Check className="h-5 w-5 flex-shrink-0 text-sage-600 mt-0.5" />
-                        <span className="text-foreground">{item}</span>
-                      </li>
-                    ))}
-                  </ul>
                 </div>
               </ScrollReveal>
               
@@ -291,15 +283,25 @@ const Coaching = () => {
                   <div className="absolute inset-0 bg-gradient-to-br from-terracotta-100 to-sage-100 rounded-3xl transform rotate-3" />
                   <Card className="relative border-0 bg-white rounded-3xl shadow-lg overflow-hidden">
                     <CardContent className="p-8">
-                      <h3 className="text-xl font-semibold text-foreground mb-6">Sessies zijn beschikbaar:</h3>
-                      <div className="space-y-4">
-                        <div className="flex items-center gap-4 p-4 rounded-xl bg-warm-50">
-                          <Video className="h-6 w-6 text-terracotta-500" />
-                          <div>
-                            <p className="font-medium text-foreground">Online via Zoom</p>
-                            <p className="text-sm text-muted-foreground">Flexibel en vanuit je eigen vertrouwde omgeving</p>
-                          </div>
-                        </div>
+                      <h3 className="text-xl font-semibold text-foreground mb-6">Wat je kunt verwachten</h3>
+                      <ul className="space-y-4">
+                        {[
+                          "Een veilige, warme en trauma-sensitieve aanpak",
+                          "Praktische oefeningen voor het dagelijks leven",
+                          "Begeleiding afgestemd op jouw tempo en behoeften",
+                          "Meditaties en handvatten voor thuis",
+                          "Ondersteuning tussen sessies",
+                        ].map((item, index) => (
+                          <li key={index} className="flex items-start gap-3">
+                            <Check className="h-5 w-5 flex-shrink-0 text-sage-600 mt-0.5" />
+                            <span className="text-foreground">{item}</span>
+                          </li>
+                        ))}
+                      </ul>
+                      <div className="flex items-center gap-3 mt-6 pt-5 border-t border-warm-200">
+                        <Video className="h-5 w-5 text-terracotta-500" />
+                        <span className="text-foreground font-medium">Online via Zoom</span>
+                        <span className="text-sm text-muted-foreground">— vanuit je eigen vertrouwde omgeving</span>
                       </div>
                     </CardContent>
                   </Card>
