@@ -58,8 +58,9 @@ export const nl = {
     chapter2Label: "Hoofdstuk II",
     chapter2Title: "De wereld als",
     chapter2TitleAccent: "spiegel",
-    chapter2P1: "Çağla's pad leidde haar ver van huis — en tegelijkertijd steeds dichter bij zichzelf. Ze woonde in vijf landen. Niet om te vluchten, maar om te ontdekken wie ze is als alles om haar heen verandert.",
-    chapter2P2: "Elk land bood een ander licht, een andere taal, een andere manier van zijn. Maar de rode draad was steeds hetzelfde: hoe kom je thuis in jezelf, ook als alles om je heen beweegt?",
+    chapter2P1: "Çağla's pad leidde haar ver van huis — en tegelijkertijd steeds dichter bij zichzelf. Ze woonde in vijf landen. Niet om te vluchten. Maar om te herinneren wie ze al was.",
+    chapter2P2: "Elk land werd een onderzoek — naar identiteit, naar verbondenheid, naar wat het betekent om je ergens thuis te voelen. Een ander licht, een andere taal, een andere manier van zijn.",
+    chapter2P3: "En elke keer opnieuw dezelfde herkenning: dat thuiskomen meer is dan een plek. Het is de verbinding met wie je altijd al was.",
     places: {
       netherlands: "Nederland",
       netherlandsLabel: "Studie & groei",
