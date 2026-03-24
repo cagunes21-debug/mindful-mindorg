@@ -19,7 +19,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { useToast } from "@/hooks/use-toast";
 import {
   ArrowLeft, Plus, Pencil, Trash2, Search, Clock, Filter,
-  ChevronRight, Library, Layers, Users, User
+  ChevronRight, Library, Layers, Users, User, FileText, ChevronDown
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
