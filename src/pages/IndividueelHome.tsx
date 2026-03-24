@@ -473,8 +473,6 @@ const IndividueelHome = () => {
                     <span className="inline-block bg-terracotta-50 text-terracotta-600 text-xs font-medium px-3 py-1 rounded-full">
                       Introductiekorting
                     </span>
-                    <p className="text-xs text-muted-foreground mt-1">termijnbetaling mogelijk</p>
-                  </div>
                   </div>
 
                   <Link
