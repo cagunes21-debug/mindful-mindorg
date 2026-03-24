@@ -60,15 +60,14 @@ const IndividueelHome = () => {
             <p className="text-secondary/70 text-xs tracking-[0.3em] uppercase mb-5 font-medium">
               Mindful Mind · Individuele begeleiding
             </p>
-            <h1 className="text-3xl md:text-4xl lg:text-5xl font-serif text-primary-foreground leading-[1.15] mb-8">
-              Leer jezelf ondersteunen zoals je een goede vriendin zou ondersteunen
-              <span className="text-secondary/70"> — juist wanneer het moeilijk is</span>
-            </h1>
-            <div className="text-secondary/80 text-lg md:text-xl font-light leading-[2] mb-10">
+            <div className="text-primary-foreground text-2xl md:text-3xl font-serif leading-[1.8] mb-6">
               <p>Meer rust.</p>
               <p>Meer zachtheid.</p>
               <p>Meer stevigheid in jezelf.</p>
             </div>
+            <h1 className="text-xl md:text-2xl lg:text-3xl font-light text-secondary/80 leading-relaxed mb-10 max-w-lg">
+              Leer jezelf ondersteunen zoals je een goede vriendin zou ondersteunen — juist wanneer het moeilijk is
+            </h1>
             <div className="flex flex-col sm:flex-row gap-3">
               <Link
                 to="/contact"
