@@ -7,7 +7,7 @@ import ScrollProgressBar from "@/components/ScrollProgressBar";
 import WhatsAppButton from "@/components/WhatsAppButton";
 import CookieConsent from "@/components/CookieConsent";
 import HeroSectionV2 from "@/components/home/HeroSectionV2";
-import QuoteSection from "@/components/home/QuoteSection";
+import IntroSection from "@/components/home/IntroSection";
 import WhatIsMscSection from "@/components/home/WhatIsMscSection";
 import ThreeElementsSection from "@/components/home/ThreeElementsSection";
 import WhyItWorksSection from "@/components/home/WhyItWorksSection";
@@ -30,7 +30,7 @@ const IndividueelHome = () => {
       <OrganizationSchema />
       <Navigation />
       <HeroSectionV2 />
-      <QuoteSection />
+      <IntroSection />
       <WhatIsMscSection />
       <ThreeElementsSection />
       <WhyItWorksSection />
