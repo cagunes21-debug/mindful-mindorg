@@ -9,9 +9,7 @@ import CookieConsent from "@/components/CookieConsent";
 import HeroSectionV2 from "@/components/home/HeroSectionV2";
 import IntroSection from "@/components/home/IntroSection";
 import WhatIsMscSection from "@/components/home/WhatIsMscSection";
-import ThreeElementsSection from "@/components/home/ThreeElementsSection";
 import WhyItWorksSection from "@/components/home/WhyItWorksSection";
-import MscMindfulnessSection from "@/components/home/MscMindfulnessSection";
 import GroupTrainingTeaser from "@/components/home/GroupTrainingTeaser";
 import CTASection from "@/components/home/CTASection";
 import TrainersSection from "@/components/home/TrainersSection";
@@ -25,16 +23,14 @@ const IndividueelHome = () => {
       <CookieConsent />
       <SEO
         title="Mindful Zelfcompassie | Mindful Mind"
-        description="Van zelfkritiek naar meer rust en vertrouwen. Mindful Self-Compassion helpt je om jezelf te ondersteunen op moeilijke momenten. Plan een gratis kennismaking."
+        description="Leer milder zijn voor jezelf. Mindful Self-Compassion helpt je om jezelf te ondersteunen op moeilijke momenten. Plan een gratis kennismaking."
       />
       <OrganizationSchema />
       <Navigation />
       <HeroSectionV2 />
       <IntroSection />
       <WhatIsMscSection />
-      <ThreeElementsSection />
       <WhyItWorksSection />
-      <MscMindfulnessSection />
       <GroupTrainingTeaser />
       <CTASection />
       <TrainersSection />
