@@ -11,43 +11,38 @@ const benefits = [
 
 const WhyItWorksSection = () => {
   return (
-    <section className="py-20 md:py-28 bg-background relative overflow-hidden">
-      <div className="absolute top-10 -left-20 w-72 h-72 bg-terracotta-200/15 rounded-full blur-3xl" />
-      <div className="absolute bottom-10 -right-20 w-72 h-72 bg-sage-200/15 rounded-full blur-3xl" />
-
-      <div className="container mx-auto px-6 max-w-3xl relative">
-        <ScrollReveal>
-          <div className="text-center mb-10">
-            <p className="text-sm uppercase tracking-[0.2em] text-muted-foreground mb-3">Wetenschappelijk onderbouwd</p>
-            <h2 className="text-3xl md:text-4xl font-serif text-foreground mb-4">
-              Waarom dit <em className="italic text-primary">werkt</em>
-            </h2>
-            <div className="w-16 h-0.5 bg-primary mx-auto" />
+    <section className="py-14 md:py-20 bg-background">
+      <div className="container mx-auto px-6 max-w-3xl">
+        <div className="flex flex-col md:flex-row md:items-start gap-8 md:gap-12">
+          <div className="flex-1">
+            <ScrollReveal>
+              <p className="text-sm uppercase tracking-[0.2em] text-muted-foreground mb-2">Wetenschappelijk onderbouwd</p>
+              <h2 className="text-2xl md:text-3xl font-serif text-foreground mb-4">
+                Waarom dit <em className="italic text-primary">werkt</em>
+              </h2>
+              <p className="text-muted-foreground leading-relaxed">
+                Onderzoek laat zien dat zelfcompassie helpt bij:
+              </p>
+            </ScrollReveal>
           </div>
-        </ScrollReveal>
 
-        <ScrollReveal delay={0.1}>
-          <p className="text-lg text-foreground mb-8 text-center leading-relaxed">
-            Onderzoek laat zien dat zelfcompassie helpt bij:
-          </p>
-        </ScrollReveal>
-
-        <div className="max-w-md mx-auto space-y-4">
-          {benefits.map((item, i) => (
-            <motion.div
-              key={i}
-              initial={{ opacity: 0, x: -20 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.15 + i * 0.1 }}
-              className="flex items-center gap-3 bg-card rounded-xl px-5 py-4 border border-border/50"
-            >
-              <div className="h-7 w-7 rounded-full bg-terracotta-100 flex items-center justify-center flex-shrink-0">
-                <Check className="h-3.5 w-3.5 text-terracotta-600" />
-              </div>
-              <span className="text-foreground">{item}</span>
-            </motion.div>
-          ))}
+          <div className="flex-1 space-y-3">
+            {benefits.map((item, i) => (
+              <motion.div
+                key={i}
+                initial={{ opacity: 0, x: 10 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: 0.1 + i * 0.08 }}
+                className="flex items-center gap-3 bg-card rounded-xl px-4 py-3 border border-border/50"
+              >
+                <div className="h-6 w-6 rounded-full bg-terracotta-100 flex items-center justify-center flex-shrink-0">
+                  <Check className="h-3 w-3 text-terracotta-600" />
+                </div>
+                <span className="text-foreground text-sm">{item}</span>
+              </motion.div>
+            ))}
+          </div>
         </div>
       </div>
     </section>

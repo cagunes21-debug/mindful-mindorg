@@ -7,54 +7,54 @@ const elements = [
     number: "1",
     title: "Mindfulness",
     description: "Opmerken wat je voelt, zonder het weg te duwen of te overspoelen. Aanwezig zijn bij wat er is — ook als dat ongemakkelijk is.",
-    accent: "terracotta",
+    bg: "bg-terracotta-50/50",
+    border: "border-terracotta-200/60",
+    iconBg: "bg-terracotta-100",
+    iconColor: "text-terracotta-600",
   },
   {
     icon: Users,
     number: "2",
     title: "Gedeelde menselijkheid",
     description: "Herkennen dat je niet de enige bent. Dat worstelen, falen en onzekerheid onderdeel zijn van mens-zijn.",
-    accent: "sage",
+    bg: "bg-sage-50",
+    border: "border-sage-200",
+    iconBg: "bg-sage-100",
+    iconColor: "text-sage-700",
   },
   {
     icon: Heart,
     number: "3",
     title: "Vriendelijkheid naar jezelf",
     description: "Leren om jezelf te ondersteunen in plaats van te veroordelen. Zodat je niet tegen jezelf werkt — maar met jezelf.",
-    accent: "terracotta",
+    bg: "bg-terracotta-50/50",
+    border: "border-terracotta-200/60",
+    iconBg: "bg-terracotta-100",
+    iconColor: "text-terracotta-600",
   },
 ];
 
 const ThreeElementsSection = () => {
   return (
-    <section className="py-20 md:py-28 bg-card">
+    <section className="py-14 md:py-20 bg-card">
       <div className="container mx-auto px-6 max-w-4xl">
         <ScrollReveal>
-          <div className="text-center mb-14">
-            <p className="text-sm uppercase tracking-[0.2em] text-muted-foreground mb-3">De basis</p>
-            <h2 className="text-3xl md:text-4xl font-serif text-foreground">
+          <div className="text-center mb-10">
+            <p className="text-sm uppercase tracking-[0.2em] text-muted-foreground mb-2">De basis</p>
+            <h2 className="text-2xl md:text-3xl font-serif text-foreground">
               De drie elementen van <em className="italic text-primary">zelfcompassie</em>
             </h2>
           </div>
         </ScrollReveal>
 
-        <StaggerContainer className="grid md:grid-cols-3 gap-6">
+        <StaggerContainer className="grid md:grid-cols-3 gap-4">
           {elements.map((el) => (
             <StaggerItem key={el.number}>
-              <div className={`rounded-2xl p-6 h-full border ${
-                el.accent === "sage"
-                  ? "bg-sage-50 border-sage-200"
-                  : "bg-terracotta-50/50 border-terracotta-200/60"
-              }`}>
-                <div className={`h-10 w-10 rounded-xl flex items-center justify-center mb-4 ${
-                  el.accent === "sage" ? "bg-sage-100" : "bg-terracotta-100"
-                }`}>
-                  <el.icon className={`h-5 w-5 ${
-                    el.accent === "sage" ? "text-sage-700" : "text-terracotta-600"
-                  }`} />
+              <div className={`rounded-2xl p-5 h-full border ${el.bg} ${el.border}`}>
+                <div className={`h-9 w-9 rounded-lg flex items-center justify-center mb-3 ${el.iconBg}`}>
+                  <el.icon className={`h-4 w-4 ${el.iconColor}`} />
                 </div>
-                <p className="text-xs font-medium text-muted-foreground uppercase tracking-wider mb-1">{el.number}.</p>
-                <h3 className="text-lg font-semibold text-foreground mb-2">{el.title}</h3>
+                <h3 className="text-base font-semibold text-foreground mb-1.5">{el.title}</h3>
                 <p className="text-muted-foreground text-sm leading-relaxed">{el.description}</p>
               </div>
             </StaggerItem>
