@@ -13,11 +13,11 @@ import { ScrollReveal } from "@/components/ScrollReveal";
 import heroImage from "@/assets/hero-mindful.jpg";
 
 const forWhom = [
-  { text: "Je bent vaak streng of kritisch naar jezelf", icon: "💭" },
-  { text: "Je voelt je snel verantwoordelijk voor alles", icon: "🏋️" },
-  { text: "Je hebt moeite met grenzen stellen", icon: "🚧" },
-  { text: "Je ervaart stress, onrust of emotionele uitputting", icon: "🌊" },
-  { text: "Je wilt leren om beter voor jezelf te zorgen", icon: "🌱" },
+  { text: "Je bent vaak streng of kritisch naar jezelf", icon: Heart, color: "bg-terracotta-100 text-terracotta-600" },
+  { text: "Je voelt je snel verantwoordelijk voor alles", icon: Shield, color: "bg-sage-100 text-sage-700" },
+  { text: "Je hebt moeite met grenzen stellen", icon: Leaf, color: "bg-terracotta-100 text-terracotta-600" },
+  { text: "Je ervaart stress, onrust of emotionele uitputting", icon: Brain, color: "bg-sage-100 text-sage-700" },
+  { text: "Je wilt leren om beter voor jezelf te zorgen", icon: Sparkles, color: "bg-terracotta-100 text-terracotta-600" },
 ];
 
 const benefits = [
