@@ -218,6 +218,15 @@ const IndividueelHome = () => {
                 </ScrollReveal>
               ))}
             </div>
+
+            <ScrollReveal delay={0.4}>
+              <div className="mt-10 flex items-center justify-center gap-2.5 bg-sage-50 border border-sage-200/60 rounded-full px-5 py-2.5 mx-auto w-fit">
+                <FlaskConical className="h-4 w-4 text-sage-500 flex-shrink-0" />
+                <span className="text-xs md:text-sm text-muted-foreground">
+                  Wetenschappelijk onderbouwd — gebaseerd op 3.500+ peer-reviewed studies
+                </span>
+              </div>
+            </ScrollReveal>
           </div>
         </div>
       </section>
