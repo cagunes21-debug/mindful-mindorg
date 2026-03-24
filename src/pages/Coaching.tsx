@@ -156,6 +156,65 @@ const Coaching = () => {
         </div>
       </section>
 
+      {/* Wat is MSC */}
+      <section className="py-20 lg:py-24 bg-background">
+        <div className="container mx-auto px-4">
+          <div className="mx-auto max-w-3xl">
+            <ScrollReveal>
+              <div className="text-center mb-12">
+                <div className="flex items-center justify-center gap-2.5 mb-4">
+                  <div className="w-5 h-px bg-sage-500" />
+                  <span className="text-xs font-medium tracking-[0.22em] uppercase text-sage-600">
+                    De methodiek
+                  </span>
+                  <div className="w-5 h-px bg-sage-500" />
+                </div>
+                <h2 className="text-3xl font-light text-foreground md:text-4xl leading-tight mb-4">
+                  Wat is Mindful{" "}
+                  <span className="font-serif italic text-sage-600">Self-Compassion?</span>
+                </h2>
+              </div>
+            </ScrollReveal>
+
+            <ScrollReveal delay={0.05}>
+              <p className="text-muted-foreground text-lg leading-relaxed mb-6 text-center">
+                De meesten van ons hebben geleerd om door te duwen bij tegenslag — streng te zijn voor onszelf als we worstelen. We bieden geduld aan anderen, maar keren diezelfde warmte zelden naar binnen.
+              </p>
+            </ScrollReveal>
+
+            <ScrollReveal delay={0.1}>
+              <p className="text-muted-foreground text-lg leading-relaxed mb-10 text-center">
+                <span className="text-foreground font-medium">Mindful Self-Compassion</span> verandert die relatie. Niet door te repareren wat gebroken is, maar door te erkennen dat de worsteling zelf tederheid verdient. Het is iets wat je kunt leren, oefenen en in je lichaam voelen.
+              </p>
+            </ScrollReveal>
+
+            <ScrollReveal delay={0.15}>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                {[
+                  { title: "Mindfulness", description: "Aanwezig zijn bij wat er is, zonder je te vereenzelvigen met de pijn of het weg te duwen" },
+                  { title: "Gedeelde menselijkheid", description: "Erkennen dat lijden deel uitmaakt van de menselijke ervaring — je bent hier niet alleen in" },
+                  { title: "Zelfvriendelijkheid", description: "Reageren op jezelf met warmte en begrip, in plaats van met oordeel" },
+                ].map((item, i) => (
+                  <div key={i} className="text-center p-6 rounded-2xl bg-secondary border border-border/50">
+                    <p className="text-lg font-normal italic text-foreground mb-1.5">{item.title}</p>
+                    <p className="text-xs leading-relaxed text-muted-foreground font-light">{item.description}</p>
+                  </div>
+                ))}
+              </div>
+            </ScrollReveal>
+
+            <ScrollReveal delay={0.2}>
+              <div className="text-center mt-8">
+                <Link to="/mindful-self-compassion" className="inline-flex items-center gap-1.5 text-sm text-sage-600 hover:text-primary transition-colors group">
+                  Meer over de methodiek
+                  <ArrowRight className="h-3.5 w-3.5 group-hover:translate-x-1 transition-transform" />
+                </Link>
+              </div>
+            </ScrollReveal>
+          </div>
+        </div>
+      </section>
+
       {/* For You If */}
       <section className="py-20 lg:py-24 bg-white">
         <div className="container mx-auto px-4">
