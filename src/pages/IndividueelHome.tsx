@@ -248,13 +248,13 @@ const IndividueelHome = () => {
       </section>
 
       {/* ════════════════════════════════════════════════════════════
-          HET TRAJECT — pricing cards
+          HET TRAJECT — proces stappen
       ════════════════════════════════════════════════════════════ */}
       <section className="py-20 md:py-28 bg-background">
         <div className="container mx-auto px-6 md:px-10">
-          <div className="max-w-4xl mx-auto">
+          <div className="max-w-3xl mx-auto">
             <ScrollReveal>
-              <div className="text-center mb-12">
+              <div className="text-center mb-14">
                 <span className="inline-block text-xs tracking-[0.3em] uppercase text-terracotta-500 font-medium mb-4">Het traject</span>
                 <h2 className="text-3xl md:text-4xl font-serif text-foreground">
                   Hoe werkt <em className="italic text-primary">het?</em>
@@ -262,88 +262,69 @@ const IndividueelHome = () => {
               </div>
             </ScrollReveal>
 
-            <div className="grid md:grid-cols-2 gap-6">
-              {/* Package — 6 sessies */}
-              <ScrollReveal delay={0.05}>
-                <div className="relative bg-white rounded-3xl border border-terracotta-200/40 p-7 shadow-sm hover:shadow-lg transition-shadow duration-300 h-full flex flex-col">
-                  <div className="absolute -top-3 left-7">
-                    <span className="inline-block bg-terracotta-500 text-white text-[0.65rem] tracking-widest uppercase font-semibold px-3 py-1 rounded-full">
-                      Aanbevolen
-                    </span>
-                  </div>
-                  <p className="text-xs uppercase tracking-[0.2em] text-terracotta-500 font-medium mb-2 mt-2">6 sessies · online via Zoom</p>
-                  <h3 className="text-xl font-serif text-foreground mb-4">Individueel traject</h3>
-                  <ul className="space-y-3 flex-1">
-                    {[
-                      "Gratis kennismakingsgesprek",
-                      "6 sessies afgestemd op jou",
-                      "Oefeningen & meditaties voor thuis",
-                      "Persoonlijke begeleiding en reflectie",
-                    ].map((item, i) => (
-                      <li key={i} className="flex items-start gap-3 text-sm text-foreground">
-                        <div className="h-5 w-5 rounded-full bg-terracotta-100 flex items-center justify-center flex-shrink-0 mt-0.5">
-                          <Check className="h-3 w-3 text-terracotta-600" />
-                        </div>
-                        {item}
-                      </li>
-                    ))}
-                  </ul>
-                  <div className="mt-6 pt-5 border-t border-terracotta-100 flex items-center justify-between">
-                    <div>
-                      <p className="text-3xl font-light text-terracotta-600">€550</p>
-                      <p className="text-xs text-muted-foreground mt-0.5">termijnbetaling mogelijk</p>
-                    </div>
-                    <Link
-                      to="/contact"
-                      className="inline-flex items-center gap-1.5 bg-terracotta-600 text-white h-10 px-5 rounded-full text-sm font-semibold hover:bg-terracotta-700 transition-colors shadow-sm"
-                    >
-                      Start nu
-                      <ArrowRight className="h-3.5 w-3.5" />
-                    </Link>
-                  </div>
-                </div>
-              </ScrollReveal>
+            <div className="relative">
+              {/* Vertical connector line */}
+              <div className="absolute left-6 md:left-8 top-8 bottom-8 w-px bg-gradient-to-b from-terracotta-200 via-sage-200 to-terracotta-200 hidden md:block" />
 
-              {/* Losse sessie */}
-              <ScrollReveal delay={0.15}>
-                <div className="bg-white rounded-3xl border border-warm-200 p-7 shadow-sm hover:shadow-lg transition-shadow duration-300 h-full flex flex-col">
-                  <p className="text-xs uppercase tracking-[0.2em] text-muted-foreground font-medium mb-2">Flexibel</p>
-                  <h3 className="text-xl font-serif text-foreground mb-3">Losse sessie</h3>
-                  <p className="text-muted-foreground text-sm leading-relaxed mb-5">
-                    Wil je eerst ervaren wat MSC je brengt? Boek een enkele sessie — zonder verplichtingen.
-                  </p>
-                  <ul className="space-y-3 flex-1">
-                    {[
-                      "60 minuten online sessie",
-                      "Direct toepasbare oefeningen",
-                      "Vrijblijvend en op jouw tempo",
-                    ].map((item, i) => (
-                      <li key={i} className="flex items-start gap-3 text-sm text-foreground">
-                        <div className="h-5 w-5 rounded-full bg-sage-100 flex items-center justify-center flex-shrink-0 mt-0.5">
-                          <Check className="h-3 w-3 text-sage-700" />
-                        </div>
-                        {item}
-                      </li>
-                    ))}
-                  </ul>
-                  <div className="mt-6 pt-5 border-t border-warm-200 flex items-center justify-between">
-                    <p className="text-3xl font-light text-foreground">€110</p>
-                    <Link
-                      to="/contact"
-                      className="inline-flex items-center gap-1.5 border border-foreground/20 text-foreground h-10 px-5 rounded-full text-sm font-semibold hover:bg-warm-50 transition-colors"
-                    >
-                      Boek een sessie
-                      <ArrowRight className="h-3.5 w-3.5" />
-                    </Link>
-                  </div>
-                </div>
-              </ScrollReveal>
+              <div className="flex flex-col gap-6">
+                {[
+                  {
+                    step: "01",
+                    title: "Gratis kennismaking",
+                    desc: "We maken kennis en bespreken wat je bezighoudt. Geen verplichtingen — gewoon een open gesprek om te kijken of het past.",
+                    accent: "terracotta",
+                  },
+                  {
+                    step: "02",
+                    title: "Persoonlijk plan",
+                    desc: "Op basis van jouw situatie stellen we samen een traject samen. Afgestemd op jouw tempo, jouw thema's en wat jij nodig hebt.",
+                    accent: "sage",
+                  },
+                  {
+                    step: "03",
+                    title: "Sessies & oefeningen",
+                    desc: "Tijdens de sessies werk je met meditaties, reflecties en zelfcompassie-oefeningen. Tussendoor oefen je op jouw eigen tempo.",
+                    accent: "terracotta",
+                  },
+                  {
+                    step: "04",
+                    title: "Integratie & groei",
+                    desc: "Stap voor stap leer je een nieuwe manier van omgaan met jezelf. Milder, steviger en meer verbonden met wat je nodig hebt.",
+                    accent: "sage",
+                  },
+                ].map((item, i) => (
+                  <ScrollReveal key={i} delay={i * 0.08}>
+                    <div className="flex items-start gap-5 md:gap-7">
+                      <div className={`relative z-10 h-12 w-12 md:h-16 md:w-16 rounded-2xl flex items-center justify-center flex-shrink-0 ${
+                        item.accent === "terracotta" 
+                          ? "bg-terracotta-100 text-terracotta-600" 
+                          : "bg-sage-100 text-sage-700"
+                      }`}>
+                        <span className="text-sm md:text-base font-semibold">{item.step}</span>
+                      </div>
+                      <div className="pt-1 md:pt-3">
+                        <h3 className="text-lg md:text-xl font-serif text-foreground mb-1.5">{item.title}</h3>
+                        <p className="text-muted-foreground text-sm md:text-base leading-relaxed max-w-md">{item.desc}</p>
+                      </div>
+                    </div>
+                  </ScrollReveal>
+                ))}
+              </div>
             </div>
 
-            <ScrollReveal delay={0.2}>
-              <p className="text-center text-sm text-muted-foreground mt-8">
-                De kennismaking is altijd gratis en vrijblijvend.
-              </p>
+            <ScrollReveal delay={0.35}>
+              <div className="text-center mt-12">
+                <Link
+                  to="/contact"
+                  className="inline-flex items-center gap-2 bg-primary text-primary-foreground h-12 px-8 rounded-full font-semibold text-sm tracking-wide uppercase hover:opacity-90 transition-opacity shadow-lg shadow-primary/20"
+                >
+                  Plan een gratis kennismaking
+                  <ArrowRight className="h-4 w-4" />
+                </Link>
+                <p className="text-sm text-muted-foreground mt-4">
+                  De kennismaking is altijd gratis en vrijblijvend.
+                </p>
+              </div>
             </ScrollReveal>
           </div>
         </div>
