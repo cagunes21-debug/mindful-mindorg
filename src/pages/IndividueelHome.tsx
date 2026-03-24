@@ -140,6 +140,25 @@ const IndividueelHome = () => {
       </section>
 
       {/* ═══════════════════════════════════════════
+          MSC KERN — wat het is
+      ═══════════════════════════════════════════ */}
+      <section className="py-12 md:py-16 bg-sage-50/50">
+        <div className="container mx-auto px-6 max-w-2xl text-center">
+          <ScrollReveal>
+            <Leaf className="h-5 w-5 text-sage-400 mx-auto mb-5" />
+            <p className="text-lg md:text-xl text-foreground leading-[1.8] font-medium mb-3">
+              Mindful Self-Compassion helpt je om milder met jezelf om te gaan.
+            </p>
+            <p className="text-muted-foreground leading-[1.8] text-base md:text-lg">
+              Niet door jezelf te veranderen,
+              <br />
+              maar door jezelf te ondersteunen — juist wanneer het moeilijk is.
+            </p>
+          </ScrollReveal>
+        </div>
+      </section>
+
+      {/* ═══════════════════════════════════════════
           VOOR WIE — visuele checklist
       ═══════════════════════════════════════════ */}
       <section className="py-16 md:py-24 bg-white">
