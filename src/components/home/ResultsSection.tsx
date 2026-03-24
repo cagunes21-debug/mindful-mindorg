@@ -1,4 +1,4 @@
-import { Check } from "lucide-react";
+import { Check, FlaskConical } from "lucide-react";
 import { motion } from "framer-motion";
 
 const results = [
@@ -65,6 +65,19 @@ const ResultsSection = () => {
             </motion.li>
           ))}
         </motion.ul>
+
+        <motion.div
+          initial={{ opacity: 0, y: 15 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ delay: 0.6 }}
+          className="mt-10 flex items-center justify-center gap-2.5 bg-sage-50 border border-sage-200/60 rounded-full px-5 py-2.5 mx-auto w-fit"
+        >
+          <FlaskConical className="h-4 w-4 text-sage-500" />
+          <span className="text-xs md:text-sm text-muted-foreground">
+            Wetenschappelijk onderbouwd — gebaseerd op 3.500+ peer-reviewed studies
+          </span>
+        </motion.div>
       </div>
     </section>
   );
