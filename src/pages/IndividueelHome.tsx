@@ -465,11 +465,14 @@ const IndividueelHome = () => {
                     ))}
                   </ul>
 
-                  <div className="flex items-center justify-center gap-4 mb-6">
-                    <div>
+                  <div className="flex flex-col items-center gap-1 mb-6">
+                    <div className="flex items-center gap-3">
+                      <p className="text-lg text-muted-foreground line-through">€650</p>
                       <p className="text-3xl font-light text-terracotta-600">€550</p>
-                      <p className="text-xs text-muted-foreground mt-0.5">termijnbetaling mogelijk</p>
                     </div>
+                    <span className="inline-block bg-terracotta-50 text-terracotta-600 text-xs font-medium px-3 py-1 rounded-full">
+                      Introductiekorting
+                    </span>
                   </div>
 
                   <Link
