@@ -148,6 +148,17 @@ const ParticipantDashboard = () => {
   useEffect(() => {
     let cancelled = false;
 
+    const checkAdminAndRedirect = async (sessionUser: User) => {
+      try {
+        const { data } = await supabase.rpc("has_role", { _user_id: sessionUser.id, _role: "admin" });
+        if (data === true && !cancelled) {
+          navigate("/admin", { replace: true });
+          return true;
+        }
+      } catch {}
+      return false;
+    };
+
     const fetchEnrollments = async (sessionUser: User) => {
       try {
         const { data, error: fetchError } = await supabase
@@ -184,19 +195,23 @@ const ParticipantDashboard = () => {
         console.log("[Dashboard] onAuthStateChange:", event);
         if (session?.user) {
           setUser(session.user);
-          // Fire-and-forget to avoid blocking auth event processing
-          setTimeout(() => fetchEnrollments(session.user), 0);
+          // Check admin first, then fetch enrollments
+          setTimeout(async () => {
+            const isAdmin = await checkAdminAndRedirect(session.user);
+            if (!isAdmin) fetchEnrollments(session.user);
+          }, 0);
         }
       }
     );
 
     // 2. Then check persisted session
-    supabase.auth.getSession().then(({ data: { session } }) => {
+    supabase.auth.getSession().then(async ({ data: { session } }) => {
       if (cancelled) return;
       if (session?.user) {
         setUser(session.user);
         console.log("[Dashboard] Session OK, user:", session.user.email);
-        fetchEnrollments(session.user);
+        const isAdmin = await checkAdminAndRedirect(session.user);
+        if (!isAdmin) fetchEnrollments(session.user);
       } else if (!cancelled) {
         console.warn("[Dashboard] No active session, redirecting to login");
         setLoading(false);
