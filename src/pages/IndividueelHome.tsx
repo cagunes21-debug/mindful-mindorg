@@ -11,6 +11,7 @@ import WhatsAppButton from "@/components/WhatsAppButton";
 import CookieConsent from "@/components/CookieConsent";
 import { ScrollReveal } from "@/components/ScrollReveal";
 import heroImage from "@/assets/hero-mindful.jpg";
+import caglaBio from "@/assets/cagla-bio.png";
 
 const forWhom = [
   { text: "Je bent vaak streng of kritisch naar jezelf", icon: Heart, color: "bg-terracotta-100 text-terracotta-600" },
@@ -582,6 +583,60 @@ const IndividueelHome = () => {
       </section>
 
       {/* ════════════════════════════════════════════════════════════
+          TRAINERS
+      ════════════════════════════════════════════════════════════ */}
+      <section className="py-20 md:py-28 bg-background">
+        <div className="container mx-auto px-6 md:px-10">
+          <div className="max-w-3xl mx-auto">
+            <ScrollReveal>
+              <div className="text-center mb-12">
+                <span className="inline-block text-xs tracking-[0.3em] uppercase text-sage-600 font-medium mb-4">Begeleiding</span>
+                <h2 className="text-3xl md:text-4xl font-serif text-foreground">
+                  Ontmoet de trainers
+                </h2>
+              </div>
+            </ScrollReveal>
+
+            <ScrollReveal delay={0.1}>
+              <div className="bg-white rounded-3xl border border-warm-200/50 p-8 md:p-10 shadow-sm max-w-lg mx-auto text-center">
+                <img
+                  src={caglaBio}
+                  alt="Çağla Güneş"
+                  className="w-28 h-28 rounded-full object-cover mx-auto mb-5 border-2 border-sage-200/60"
+                />
+                <h3 className="text-xl font-serif text-foreground mb-1">Çağla Güneş</h3>
+                <p className="text-sm text-muted-foreground mb-4">
+                  Lichaamsgerichte Psychotherapeut · Mindful Zelfcompassie Trainer
+                </p>
+                <p className="text-foreground font-serif italic text-base mb-4">
+                  "Echte verandering begint bij hoe je met jezelf omgaat."
+                </p>
+                <p className="text-muted-foreground text-sm leading-relaxed mb-6 max-w-sm mx-auto">
+                  Ik help je om met meer mildheid, veerkracht en zelfcompassie in het leven te staan.
+                </p>
+                <div className="flex flex-col sm:flex-row gap-3 justify-center">
+                  <Link
+                    to="/mindful-self-compassion"
+                    className="inline-flex items-center gap-2 text-sm font-semibold text-primary hover:text-primary/80 transition-colors"
+                  >
+                    Meer over Mindful Mind
+                    <ArrowRight className="h-3.5 w-3.5" />
+                  </Link>
+                  <Link
+                    to="/trainers"
+                    className="inline-flex items-center gap-2 text-sm font-semibold text-sage-700 hover:text-sage-600 transition-colors"
+                  >
+                    Over de trainers
+                    <ArrowRight className="h-3.5 w-3.5" />
+                  </Link>
+                </div>
+              </div>
+            </ScrollReveal>
+          </div>
+        </div>
+      </section>
+
+      {/* ════════════════════════════════════════════════════════════
           CTA
       ════════════════════════════════════════════════════════════ */}
       <section className="py-20 md:py-28 bg-primary text-primary-foreground relative overflow-hidden">
@@ -589,19 +644,27 @@ const IndividueelHome = () => {
         <div className="container mx-auto px-6 md:px-10 relative">
           <div className="max-w-2xl mx-auto text-center">
             <ScrollReveal>
-              <Leaf className="h-6 w-6 text-primary-foreground/40 mx-auto mb-6" />
-              <h2 className="text-3xl md:text-4xl font-serif mb-4 leading-tight">
-                Klaar voor meer rust?
+              <span className="inline-block text-xs tracking-[0.3em] uppercase text-primary-foreground/50 font-medium mb-4">Meld je nu aan</span>
+              <h2 className="text-3xl md:text-4xl font-serif mb-3 leading-tight">
+                Je bent welkom zoals je bent
               </h2>
               <p className="text-primary-foreground/75 text-lg mb-10 leading-relaxed max-w-md mx-auto">
-                Plan een gratis en vrijblijvend kennismakingsgesprek. We verkennen samen wat bij jou past.
+                Begin vandaag met jouw persoonlijke traject.
               </p>
-              <Link
-                to="/contact"
-                className="inline-flex items-center justify-center bg-primary-foreground text-primary h-12 px-10 rounded-full font-semibold text-sm tracking-wide uppercase hover:opacity-90 transition-opacity shadow-lg"
-              >
-                Plan een kennismaking
-              </Link>
+              <div className="flex flex-col sm:flex-row gap-3 justify-center">
+                <Link
+                  to="/contact"
+                  className="inline-flex items-center justify-center bg-primary-foreground text-primary h-12 px-10 rounded-full font-semibold text-sm tracking-wide uppercase hover:opacity-90 transition-opacity shadow-lg"
+                >
+                  Plan een kennismaking
+                </Link>
+                <Link
+                  to="/msc-training"
+                  className="inline-flex items-center justify-center border border-primary-foreground/30 text-primary-foreground h-12 px-8 rounded-full font-semibold text-sm tracking-wide uppercase hover:bg-primary-foreground/10 transition-colors"
+                >
+                  Ontdek de groepstraining
+                </Link>
+              </div>
             </ScrollReveal>
           </div>
         </div>
