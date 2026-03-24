@@ -1,78 +1,48 @@
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import heroMindfulness from "@/assets/hero-mindfulness.jpg";
+import heroImage from "@/assets/hero-mindful.jpg";
 
 const HeroHome = () => {
   return (
-    <section className="relative overflow-hidden pt-24 pb-20 lg:pt-32 lg:pb-28 bg-warm-50">
+    <section className="relative min-h-[75vh] flex items-center overflow-hidden">
       <div className="absolute inset-0">
-        <img
-          src={heroMindfulness}
-          alt="Mindfulness begeleiding"
-          className="w-full h-full object-cover"
-          fetchPriority="high"
-        />
-        <div className="absolute inset-0 bg-gradient-to-b from-warm-50/92 via-warm-50/85 to-warm-50/98" />
+        <img src={heroImage} alt="Vrouw mediteert in de natuur" className="w-full h-full object-cover" />
+        <div className="absolute inset-0 bg-gradient-to-r from-foreground/85 via-foreground/50 to-transparent" />
       </div>
-
-      <div className="absolute top-20 left-10 w-64 h-64 bg-terracotta-200/20 rounded-full blur-3xl" />
-      <div className="absolute bottom-20 right-10 w-80 h-80 bg-sage-200/20 rounded-full blur-3xl" />
-
-      <div className="container relative mx-auto px-4">
-        <div className="mx-auto max-w-3xl text-center">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-            className="mb-6"
-          >
-            <span className="inline-block rounded-full bg-terracotta-100/80 px-5 py-2 text-sm font-medium tracking-wide text-terracotta-700">
-              Mindful Mind · Individuele begeleiding
-            </span>
-          </motion.div>
-
-          <motion.h1
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: 0.1 }}
-            className="mb-6 text-4xl font-light tracking-tight text-foreground md:text-5xl lg:text-6xl leading-[1.15]"
-          >
-            Meer rust. Meer zachtheid.
-            <span className="block font-serif italic text-terracotta-600 mt-2 text-[1.1em]">
-              Meer stevigheid in jezelf.
-            </span>
-          </motion.h1>
-
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-            className="text-muted-foreground text-lg md:text-xl max-w-2xl mx-auto leading-relaxed mb-10"
-          >
-            Leer jezelf ondersteunen zoals je een goede vriendin zou ondersteunen — juist wanneer het moeilijk is.
-          </motion.p>
-
-          <motion.div
-            initial={{ opacity: 0, y: 14 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.35 }}
-            className="flex flex-wrap justify-center gap-4"
-          >
-            <Button asChild size="lg" className="bg-terracotta-600 hover:bg-terracotta-700 text-white rounded-full px-10 py-7 text-lg shadow-lg">
-              <Link to="/contact">
-                Gratis kennismaking
-                <ArrowRight className="ml-3 h-5 w-5" />
-              </Link>
-            </Button>
-            <Button asChild variant="outline" size="lg" className="border-terracotta-300 text-terracotta-700 hover:bg-terracotta-50 rounded-full px-10 py-7 text-lg">
-              <Link to="/msc-training">
-                Groepstraining
-              </Link>
-            </Button>
-          </motion.div>
-        </div>
+      <div className="relative z-10 container mx-auto px-6 md:px-10 py-20 md:py-28">
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8 }}
+          className="max-w-lg"
+        >
+          <p className="text-secondary/70 text-xs tracking-[0.3em] uppercase mb-5 font-medium">
+            Mindful Mind · Individuele begeleiding
+          </p>
+          <div className="text-primary-foreground text-2xl md:text-3xl font-serif leading-[1.8] mb-6">
+            <p>Meer rust.</p>
+            <p>Meer zachtheid.</p>
+            <p>Meer stevigheid in jezelf.</p>
+          </div>
+          <h1 className="text-xl md:text-2xl lg:text-3xl font-light text-secondary/80 leading-relaxed mb-10 max-w-lg">
+            Leer jezelf ondersteunen zoals je een goede vriendin zou ondersteunen — juist wanneer het moeilijk is
+          </h1>
+          <div className="flex flex-col sm:flex-row gap-3">
+            <Link
+              to="/contact"
+              className="inline-flex items-center justify-center bg-primary text-primary-foreground h-12 px-8 rounded-full font-semibold text-sm tracking-wide uppercase hover:opacity-90 transition-opacity shadow-lg shadow-primary/20"
+            >
+              Gratis kennismaking
+            </Link>
+            <Link
+              to="/msc-training"
+              className="inline-flex items-center justify-center border border-primary-foreground/30 text-primary-foreground h-12 px-8 rounded-full font-semibold text-sm tracking-wide uppercase hover:bg-primary-foreground/10 transition-colors backdrop-blur-sm"
+            >
+              Groepstraining
+            </Link>
+          </div>
+        </motion.div>
       </div>
     </section>
   );
