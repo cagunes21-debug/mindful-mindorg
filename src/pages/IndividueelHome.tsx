@@ -207,42 +207,169 @@ const IndividueelHome = () => {
       <section className="py-20 md:py-28 bg-warm-50 relative overflow-hidden">
         <div className="absolute top-10 right-0 w-96 h-96 bg-sage-100/30 rounded-full blur-[100px]" />
         <div className="container mx-auto px-6 md:px-10 relative">
-          <div className="max-w-4xl mx-auto">
+          <div className="max-w-3xl mx-auto">
+
+            {/* ── Intro ── */}
             <ScrollReveal>
-              <div className="text-center mb-12">
+              <div className="text-center mb-14">
                 <span className="inline-block text-xs tracking-[0.3em] uppercase text-terracotta-500 font-medium mb-4">Resultaten</span>
-                <h2 className="text-3xl md:text-4xl font-serif text-foreground">
+                <h2 className="text-3xl md:text-4xl font-serif text-foreground mb-6">
                   Wat het je <em className="italic text-primary">oplevert</em>
                 </h2>
+                <div className="text-muted-foreground leading-relaxed max-w-xl mx-auto space-y-3">
+                  <p>Misschien hoop je dat het rustiger wordt van binnen.<br />Dat die kritische stem zachter wordt.<br />Dat je niet meer zo hard hoeft te werken om "goed genoeg" te zijn.</p>
+                  <p className="font-medium text-foreground">Dat is precies waar deze training op gericht is.</p>
+                </div>
               </div>
             </ScrollReveal>
 
-            <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
-              {benefits.map((b, i) => (
-                <ScrollReveal key={i} delay={i * 0.08}>
-                  <div className="bg-white rounded-2xl p-6 border border-warm-200/50 shadow-sm hover:shadow-md transition-shadow duration-300 h-full text-center">
-                    <div className={`h-12 w-12 rounded-2xl flex items-center justify-center mx-auto mb-4 ${
-                      b.accent === "sage" ? "bg-sage-100" : "bg-terracotta-100"
-                    }`}>
-                      <b.icon className={`h-5 w-5 ${
-                        b.accent === "sage" ? "text-sage-700" : "text-terracotta-600"
-                      }`} />
-                    </div>
-                    <h3 className="font-semibold text-foreground mb-1.5">{b.title}</h3>
-                    <p className="text-muted-foreground text-sm leading-relaxed">{b.desc}</p>
+            {/* ── Wat verandert er ── */}
+            <ScrollReveal delay={0.1}>
+              <div className="bg-white rounded-3xl border border-sage-200/50 p-8 md:p-10 mb-6 shadow-sm">
+                <div className="flex items-center gap-2.5 mb-5">
+                  <Leaf className="h-5 w-5 text-sage-600" />
+                  <h3 className="text-xl md:text-2xl font-serif text-foreground">Wat verandert er</h3>
+                </div>
+                <p className="text-muted-foreground leading-relaxed mb-6">
+                  Tijdens de training leer je niet alleen anders denken — maar vooral anders omgaan met wat je voelt.
+                </p>
+                <p className="text-sm text-muted-foreground mb-4">Veel deelnemers merken dat ze:</p>
+                <ul className="space-y-3">
+                  {[
+                    "Minder streng en kritisch zijn naar zichzelf",
+                    "Beter kunnen omgaan met stress en moeilijke emoties",
+                    "Meer rust en stabiliteit ervaren in hun lichaam",
+                    "Sneller herstellen na moeilijke momenten",
+                    "Meer vertrouwen voelen in zichzelf en hun keuzes",
+                  ].map((item, i) => (
+                    <li key={i} className="flex items-start gap-3 text-sm md:text-base text-foreground">
+                      <div className="h-5 w-5 rounded-full bg-sage-100 flex items-center justify-center flex-shrink-0 mt-0.5">
+                        <Check className="h-3 w-3 text-sage-700" />
+                      </div>
+                      {item}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </ScrollReveal>
+
+            {/* ── Van overleven naar ondersteunen ── */}
+            <ScrollReveal delay={0.15}>
+              <div className="bg-[#F8F5EE] rounded-3xl border border-warm-200/50 p-8 md:p-10 mb-6">
+                <div className="flex items-center gap-2.5 mb-6">
+                  <Leaf className="h-5 w-5 text-sage-600" />
+                  <h3 className="text-xl md:text-2xl font-serif text-foreground">Van overleven naar ondersteunen</h3>
+                </div>
+                <div className="grid md:grid-cols-2 gap-6">
+                  <div>
+                    <p className="text-sm font-medium text-muted-foreground mb-3 uppercase tracking-wider">In plaats van:</p>
+                    <ul className="space-y-2.5">
+                      {["Jezelf onder druk zetten", "Blijven doorgaan", "Jezelf bekritiseren"].map((item, i) => (
+                        <li key={i} className="flex items-center gap-2.5 text-sm text-foreground/70">
+                          <span className="h-1.5 w-1.5 rounded-full bg-terracotta-400 flex-shrink-0" />
+                          {item}
+                        </li>
+                      ))}
+                    </ul>
                   </div>
-                </ScrollReveal>
-              ))}
-            </div>
-
-            <ScrollReveal delay={0.4}>
-              <div className="mt-10 flex items-center justify-center gap-2.5 bg-sage-50 border border-sage-200/60 rounded-full px-5 py-2.5 mx-auto w-fit">
-                <FlaskConical className="h-4 w-4 text-sage-500 flex-shrink-0" />
-                <span className="text-xs md:text-sm text-muted-foreground">
-                  Wetenschappelijk onderbouwd — gebaseerd op 3.500+ peer-reviewed studies
-                </span>
+                  <div>
+                    <p className="text-sm font-medium text-sage-700 mb-3 uppercase tracking-wider">Ontstaat er ruimte om:</p>
+                    <ul className="space-y-2.5">
+                      {["Te vertragen", "Te voelen wat er speelt", "Jezelf te ondersteunen in plaats van tegen te werken"].map((item, i) => (
+                        <li key={i} className="flex items-start gap-2.5 text-sm text-foreground">
+                          <div className="h-5 w-5 rounded-full bg-sage-100 flex items-center justify-center flex-shrink-0 mt-0.5">
+                            <Check className="h-3 w-3 text-sage-700" />
+                          </div>
+                          {item}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </div>
               </div>
             </ScrollReveal>
+
+            {/* ── Wetenschappelijk onderbouwd ── */}
+            <ScrollReveal delay={0.2}>
+              <div className="bg-white rounded-3xl border border-sage-200/50 p-8 md:p-10 mb-6 shadow-sm">
+                <div className="flex items-center gap-2.5 mb-5">
+                  <FlaskConical className="h-5 w-5 text-sage-600" />
+                  <h3 className="text-xl md:text-2xl font-serif text-foreground">Wetenschappelijk onderbouwd</h3>
+                </div>
+                <p className="text-muted-foreground leading-relaxed mb-6">
+                  Mindful Self-Compassion (MSC) is een evidence-based training, ontwikkeld door onderzoekers en klinisch psychologen.
+                </p>
+                <p className="text-sm text-muted-foreground mb-4">Onderzoek laat zien dat MSC:</p>
+                <ul className="space-y-3">
+                  {[
+                    "Leidt tot meer zelfcompassie, mindfulness en algemeen welzijn",
+                    "Helpt bij het verminderen van stress, angst en depressieve klachten",
+                    "Bijdraagt aan meer emotionele veerkracht en betere zelfregulatie",
+                    "Zelfs invloed heeft op het lichaam, zoals meer ontspanning en een kalmer zenuwstelsel",
+                  ].map((item, i) => (
+                    <li key={i} className="flex items-start gap-3 text-sm md:text-base text-foreground">
+                      <div className="h-5 w-5 rounded-full bg-sage-100 flex items-center justify-center flex-shrink-0 mt-0.5">
+                        <Check className="h-3 w-3 text-sage-700" />
+                      </div>
+                      {item}
+                    </li>
+                  ))}
+                </ul>
+                <p className="text-sm text-muted-foreground mt-5 italic">
+                  Deze veranderingen blijven vaak ook op langere termijn aanwezig na de training.
+                </p>
+              </div>
+            </ScrollReveal>
+
+            {/* ── Wat je meeneemt ── */}
+            <ScrollReveal delay={0.25}>
+              <div className="bg-gradient-to-br from-sage-50 via-sage-50/50 to-warm-50 rounded-3xl border border-sage-200/50 p-8 md:p-10 mb-6">
+                <div className="flex items-center gap-2.5 mb-5">
+                  <Leaf className="h-5 w-5 text-sage-600" />
+                  <h3 className="text-xl md:text-2xl font-serif text-foreground">Wat je meeneemt</h3>
+                </div>
+                <div className="text-muted-foreground leading-relaxed mb-5">
+                  <p>Je leert geen trucje.<br />Je ontwikkelt een andere relatie met jezelf.</p>
+                </div>
+                <p className="text-sm text-muted-foreground mb-4">Een manier om:</p>
+                <ul className="space-y-3">
+                  {[
+                    "Bij jezelf te blijven, ook als het moeilijk is",
+                    "Met meer zachtheid om te gaan met je eigen pijn",
+                    "Steviger in jezelf te staan — zonder jezelf te forceren",
+                  ].map((item, i) => (
+                    <li key={i} className="flex items-start gap-3 text-sm md:text-base text-foreground">
+                      <div className="h-5 w-5 rounded-full bg-sage-100 flex items-center justify-center flex-shrink-0 mt-0.5">
+                        <Check className="h-3 w-3 text-sage-700" />
+                      </div>
+                      {item}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </ScrollReveal>
+
+            {/* ── Samengevat ── */}
+            <ScrollReveal delay={0.3}>
+              <div className="text-center py-8">
+                <p className="text-xl md:text-2xl font-serif text-foreground leading-[1.6] mb-2">
+                  Meer rust. Meer ruimte. Meer vertrouwen.
+                </p>
+                <p className="text-muted-foreground text-sm leading-relaxed max-w-sm mx-auto">
+                  Niet omdat je "beter" wordt — maar omdat je leert om jezelf niet langer tegen te werken.
+                </p>
+              </div>
+            </ScrollReveal>
+
+            {/* ── Closing quote ── */}
+            <ScrollReveal delay={0.35}>
+              <div className="bg-terracotta-50/50 rounded-3xl border border-terracotta-200/40 p-8 md:p-10 text-center">
+                <p className="text-foreground font-serif text-lg md:text-xl leading-relaxed italic max-w-lg mx-auto">
+                  "Voor veel mensen is dit de eerste keer dat ze ervaren hoe het is om echt naast zichzelf te staan — in plaats van tegenover zichzelf."
+                </p>
+              </div>
+            </ScrollReveal>
+
           </div>
         </div>
       </section>
