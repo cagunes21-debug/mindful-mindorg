@@ -19,7 +19,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { useToast } from "@/hooks/use-toast";
 import {
   ArrowLeft, Plus, Pencil, Trash2, Search, Clock, Filter,
-  ChevronRight, Library, Layers, Users, User
+  ChevronRight, Library, Layers, Users, User, FileText, ChevronDown
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
@@ -65,6 +65,8 @@ export default function AdminCMS() {
   const [filterAvailable, setFilterAvailable] = useState("all");
   const [activeTab, setActiveTab] = useState("all");
   const [form, setForm] = useState({ title: "", type: "exercise", duration_minutes: 5, instructions_markdown: "", notes_for_therapist: "", is_optional: false, is_system: true, available_for: "both" });
+  const [expandedItems, setExpandedItems] = useState<Set<string>>(new Set());
+  const toggleItemExpand = (id: string) => setExpandedItems(prev => { const n = new Set(prev); n.has(id) ? n.delete(id) : n.add(id); return n; });
 
   useEffect(() => {
     supabase.auth.getSession().then(({ data: { session } }) => { if (session) loadData(); else setLoading(false); });
@@ -223,19 +225,38 @@ export default function AdminCMS() {
                           const isIndiv = item.available_for === "individual" || item.available_for === "both";
                           return (
                             <Card key={item.id} className="transition-all">
-                              <CardContent className="p-3 flex items-center gap-3">
-                                <Checkbox checked={isIndiv} onCheckedChange={() => toggleIndividual(item)} className="shrink-0" title="Beschikbaar voor individueel" />
-                                <div className="flex-1 min-w-0">
-                                  <div className="flex items-center gap-2 flex-wrap">
-                                    <span className={cn("text-sm", item.is_optional && "text-muted-foreground")}>{item.title}</span>
-                                    <Badge variant="secondary" className={cn("text-[10px]", MSC_TYPE_COLORS[item.type])}>{MSC_ITEM_TYPES[item.type] || item.type}</Badge>
-                                    {availableForBadge(item.available_for)}
-                                    {item.is_optional && <Badge variant="outline" className="text-[10px]">Optioneel</Badge>}
+                              <CardContent className="p-3">
+                                <div className="flex items-center gap-3">
+                                  <Checkbox checked={isIndiv} onCheckedChange={() => toggleIndividual(item)} className="shrink-0" title="Beschikbaar voor individueel" />
+                                  <div className="flex-1 min-w-0">
+                                    <div className="flex items-center gap-2 flex-wrap">
+                                      <span className={cn("text-sm", item.is_optional && "text-muted-foreground")}>{item.title}</span>
+                                      <Badge variant="secondary" className={cn("text-[10px]", MSC_TYPE_COLORS[item.type])}>{MSC_ITEM_TYPES[item.type] || item.type}</Badge>
+                                      {availableForBadge(item.available_for)}
+                                      {item.is_optional && <Badge variant="outline" className="text-[10px]">Optioneel</Badge>}
+                                    </div>
                                   </div>
+                                  <span className="text-xs text-muted-foreground flex items-center gap-0.5 shrink-0"><Clock className="h-3 w-3" /> {item.duration_minutes}</span>
+                                  {item.instructions_markdown && (
+                                    <Button variant="ghost" size="icon" className="h-8 w-8" onClick={e => { e.stopPropagation(); toggleItemExpand(item.id); }} title="Script bekijken">
+                                      <FileText className={cn("h-3.5 w-3.5 transition-colors", expandedItems.has(item.id) ? "text-primary" : "text-muted-foreground")} />
+                                    </Button>
+                                  )}
+                                  <Button variant="ghost" size="icon" className="h-8 w-8" onClick={e => { e.stopPropagation(); openEdit(item); }}><Pencil className="h-3.5 w-3.5" /></Button>
+                                  <Button variant="ghost" size="icon" className="h-8 w-8" onClick={e => { e.stopPropagation(); deleteItem(item.id); }}><Trash2 className="h-3.5 w-3.5 text-destructive" /></Button>
                                 </div>
-                                <span className="text-xs text-muted-foreground flex items-center gap-0.5 shrink-0"><Clock className="h-3 w-3" /> {item.duration_minutes}</span>
-                                <Button variant="ghost" size="icon" className="h-8 w-8" onClick={e => { e.stopPropagation(); openEdit(item); }}><Pencil className="h-3.5 w-3.5" /></Button>
-                                <Button variant="ghost" size="icon" className="h-8 w-8" onClick={e => { e.stopPropagation(); deleteItem(item.id); }}><Trash2 className="h-3.5 w-3.5 text-destructive" /></Button>
+                                {expandedItems.has(item.id) && item.instructions_markdown && (
+                                  <div className="mt-3 ml-8 p-4 rounded-lg bg-muted/50 border border-border">
+                                    <p className="text-xs font-medium text-muted-foreground uppercase tracking-wider mb-2">Script / Instructies</p>
+                                    <div className="text-sm leading-relaxed whitespace-pre-line text-foreground">{item.instructions_markdown}</div>
+                                    {item.notes_for_therapist && (
+                                      <div className="mt-3 pt-3 border-t border-border">
+                                        <p className="text-xs font-medium text-muted-foreground uppercase tracking-wider mb-1">Notities therapeut</p>
+                                        <div className="text-sm leading-relaxed whitespace-pre-line text-muted-foreground">{item.notes_for_therapist}</div>
+                                      </div>
+                                    )}
+                                  </div>
+                                )}
                               </CardContent>
                             </Card>
                           );
