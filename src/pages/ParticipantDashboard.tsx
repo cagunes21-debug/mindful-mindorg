@@ -205,7 +205,7 @@ const ParticipantDashboard = () => {
     );
 
     // 2. Then check persisted session
-    supabase.auth.getSession().then(({ data: { session } }) => {
+    supabase.auth.getSession().then(async ({ data: { session } }) => {
       if (cancelled) return;
       if (session?.user) {
         setUser(session.user);
