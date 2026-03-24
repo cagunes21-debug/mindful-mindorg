@@ -44,6 +44,7 @@ const OverCagla = () => {
     t("overCagla.chapter4Cred3"),
     t("overCagla.chapter4Cred4"),
     t("overCagla.chapter4Cred5"),
+    t("overCagla.chapter4Cred6"),
   ];
 
   return (
