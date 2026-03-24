@@ -150,9 +150,16 @@ const IndividueelHome = () => {
                 <br className="hidden md:block" />
                 <em className="italic text-primary">milder met jezelf om te gaan.</em>
               </p>
-              <p className="text-muted-foreground leading-relaxed max-w-md mx-auto">
+              <p className="text-muted-foreground leading-relaxed max-w-md mx-auto mb-6">
                 Niet door jezelf te veranderen, maar door jezelf te ondersteunen — juist wanneer het moeilijk is.
               </p>
+              <Link
+                to="/mindful-self-compassion"
+                className="inline-flex items-center gap-2 text-sm font-semibold text-primary hover:text-primary/80 transition-colors"
+              >
+                Meer over MSC
+                <ArrowRight className="h-4 w-4" />
+              </Link>
             </div>
           </ScrollReveal>
         </div>
