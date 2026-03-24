@@ -148,6 +148,17 @@ const ParticipantDashboard = () => {
   useEffect(() => {
     let cancelled = false;
 
+    const checkAdminAndRedirect = async (sessionUser: User) => {
+      try {
+        const { data } = await supabase.rpc("has_role", { _user_id: sessionUser.id, _role: "admin" });
+        if (data === true && !cancelled) {
+          navigate("/admin", { replace: true });
+          return true;
+        }
+      } catch {}
+      return false;
+    };
+
     const fetchEnrollments = async (sessionUser: User) => {
       try {
         const { data, error: fetchError } = await supabase
