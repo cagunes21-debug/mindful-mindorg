@@ -48,7 +48,14 @@ const AVAILABLE_FOR_OPTIONS = [
 ];
 
 interface MscSession { id: string; week_number: number; title: string; description: string | null; default_duration_minutes: number; }
-interface MscItem { id: string; session_id: string; title: string; type: string; duration_minutes: number; is_optional: boolean; is_system: boolean; sort_order: number; instructions_markdown: string | null; notes_for_therapist: string | null; tags: string[] | null; available_for: string; }
+interface MscItem { id: string; session_id: string; title: string; type: string; duration_minutes: number; is_optional: boolean; is_system: boolean; sort_order: number; instructions_markdown: string | null; notes_for_therapist: string | null; tags: string[] | null; available_for: string; instructions_translations: Record<string, string> | null; }
+
+const SCRIPT_LANGUAGES = [
+  { code: "en", label: "🇬🇧 EN", flag: "🇬🇧" },
+  { code: "nl", label: "🇳🇱 NL", flag: "🇳🇱" },
+  { code: "es", label: "🇪🇸 ES", flag: "🇪🇸" },
+  { code: "tr", label: "🇹🇷 TR", flag: "🇹🇷" },
+];
 
 export default function AdminCMS() {
   const navigate = useNavigate();
