@@ -20,8 +20,9 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { useToast } from "@/hooks/use-toast";
 import {
   ArrowLeft, Plus, Pencil, Trash2, Search, Clock, Filter,
-  ChevronRight, Library, Layers, Users, User, FileText, ChevronDown
+  ChevronRight, Library, Layers, Users, User, FileText, ChevronDown, Presentation
 } from "lucide-react";
+import SlideViewer from "@/components/admin/SlideViewer";
 import { cn } from "@/lib/utils";
 
 const MSC_ITEM_TYPES: Record<string, string> = {
