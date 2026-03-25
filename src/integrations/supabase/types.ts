@@ -580,6 +580,7 @@ export type Database = {
           duration_minutes: number
           id: string
           instructions_markdown: string | null
+          instructions_translations: Json | null
           is_optional: boolean
           is_system: boolean
           notes_for_therapist: string | null
@@ -596,6 +597,7 @@ export type Database = {
           duration_minutes?: number
           id?: string
           instructions_markdown?: string | null
+          instructions_translations?: Json | null
           is_optional?: boolean
           is_system?: boolean
           notes_for_therapist?: string | null
@@ -612,6 +614,7 @@ export type Database = {
           duration_minutes?: number
           id?: string
           instructions_markdown?: string | null
+          instructions_translations?: Json | null
           is_optional?: boolean
           is_system?: boolean
           notes_for_therapist?: string | null

@@ -1,0 +1,1 @@
+ALTER TABLE msc_items ADD COLUMN instructions_translations jsonb DEFAULT '{}'::jsonb;

@@ -48,7 +48,14 @@ const AVAILABLE_FOR_OPTIONS = [
 ];
 
 interface MscSession { id: string; week_number: number; title: string; description: string | null; default_duration_minutes: number; }
-interface MscItem { id: string; session_id: string; title: string; type: string; duration_minutes: number; is_optional: boolean; is_system: boolean; sort_order: number; instructions_markdown: string | null; notes_for_therapist: string | null; tags: string[] | null; available_for: string; }
+interface MscItem { id: string; session_id: string; title: string; type: string; duration_minutes: number; is_optional: boolean; is_system: boolean; sort_order: number; instructions_markdown: string | null; notes_for_therapist: string | null; tags: string[] | null; available_for: string; instructions_translations: Record<string, string> | null; }
+
+const SCRIPT_LANGUAGES = [
+  { code: "en", label: "🇬🇧 EN", flag: "🇬🇧" },
+  { code: "nl", label: "🇳🇱 NL", flag: "🇳🇱" },
+  { code: "es", label: "🇪🇸 ES", flag: "🇪🇸" },
+  { code: "tr", label: "🇹🇷 TR", flag: "🇹🇷" },
+];
 
 export default function AdminCMS() {
   const navigate = useNavigate();
@@ -65,9 +72,11 @@ export default function AdminCMS() {
   const [filterType, setFilterType] = useState("all");
   const [filterAvailable, setFilterAvailable] = useState("all");
   const [activeTab, setActiveTab] = useState("all");
-  const [form, setForm] = useState({ title: "", type: "exercise", duration_minutes: 5, instructions_markdown: "", notes_for_therapist: "", is_optional: false, is_system: true, available_for: "both" });
+  const [form, setForm] = useState({ title: "", type: "exercise", duration_minutes: 5, instructions_markdown: "", notes_for_therapist: "", is_optional: false, is_system: true, available_for: "both", instructions_translations: {} as Record<string, string> });
   const [expandedItems, setExpandedItems] = useState<Set<string>>(new Set());
   const toggleItemExpand = (id: string) => setExpandedItems(prev => { const n = new Set(prev); n.has(id) ? n.delete(id) : n.add(id); return n; });
+  const [scriptLang, setScriptLang] = useState<Record<string, string>>({});
+  const [editLang, setEditLang] = useState("en");
 
   useEffect(() => {
     supabase.auth.getSession().then(({ data: { session } }) => { if (session) loadData(); else setLoading(false); });
@@ -90,19 +99,19 @@ export default function AdminCMS() {
   const toggleSession = (id: string) => setOpenSessions(prev => { const n = new Set(prev); if (n.has(id)) n.delete(id); else n.add(id); return n; });
   const getSessionItems = (sid: string) => items.filter(i => i.session_id === sid).sort((a, b) => a.sort_order - b.sort_order);
 
-  const openCreate = (sessionId: string) => { setEditingItem(null); setSelectedSessionId(sessionId); setForm({ title: "", type: "exercise", duration_minutes: 5, instructions_markdown: "", notes_for_therapist: "", is_optional: false, is_system: true, available_for: "both" }); setDialogOpen(true); };
-  const openEdit = (item: MscItem) => { setEditingItem(item); setSelectedSessionId(item.session_id); setForm({ title: item.title, type: item.type, duration_minutes: item.duration_minutes, instructions_markdown: item.instructions_markdown || "", notes_for_therapist: item.notes_for_therapist || "", is_optional: item.is_optional, is_system: item.is_system, available_for: item.available_for || "both" }); setDialogOpen(true); };
+  const openCreate = (sessionId: string) => { setEditingItem(null); setSelectedSessionId(sessionId); setForm({ title: "", type: "exercise", duration_minutes: 5, instructions_markdown: "", notes_for_therapist: "", is_optional: false, is_system: true, available_for: "both", instructions_translations: {} }); setEditLang("en"); setDialogOpen(true); };
+  const openEdit = (item: MscItem) => { setEditingItem(item); setSelectedSessionId(item.session_id); setForm({ title: item.title, type: item.type, duration_minutes: item.duration_minutes, instructions_markdown: item.instructions_markdown || "", notes_for_therapist: item.notes_for_therapist || "", is_optional: item.is_optional, is_system: item.is_system, available_for: item.available_for || "both", instructions_translations: (item.instructions_translations as Record<string, string>) || {} }); setEditLang("en"); setDialogOpen(true); };
 
   const saveItem = async () => {
     if (!form.title.trim() || !selectedSessionId) return;
     if (editingItem) {
-      const { error } = await supabase.from("msc_items").update({ title: form.title, type: form.type, duration_minutes: form.duration_minutes, instructions_markdown: form.instructions_markdown || null, notes_for_therapist: form.notes_for_therapist || null, is_optional: form.is_optional, is_system: form.is_system, available_for: form.available_for }).eq("id", editingItem.id);
+      const { error } = await supabase.from("msc_items").update({ title: form.title, type: form.type, duration_minutes: form.duration_minutes, instructions_markdown: form.instructions_markdown || null, notes_for_therapist: form.notes_for_therapist || null, is_optional: form.is_optional, is_system: form.is_system, available_for: form.available_for, instructions_translations: form.instructions_translations }).eq("id", editingItem.id);
       if (error) { toast({ title: "Fout", description: error.message, variant: "destructive" }); return; }
       toast({ title: "Item bijgewerkt" });
     } else {
       const si = getSessionItems(selectedSessionId);
       const maxSort = si.length > 0 ? Math.max(...si.map(i => i.sort_order)) + 1 : 0;
-      const { error } = await supabase.from("msc_items").insert({ session_id: selectedSessionId, title: form.title, type: form.type, duration_minutes: form.duration_minutes, instructions_markdown: form.instructions_markdown || null, notes_for_therapist: form.notes_for_therapist || null, is_optional: form.is_optional, is_system: form.is_system, available_for: form.available_for, sort_order: maxSort });
+      const { error } = await supabase.from("msc_items").insert({ session_id: selectedSessionId, title: form.title, type: form.type, duration_minutes: form.duration_minutes, instructions_markdown: form.instructions_markdown || null, notes_for_therapist: form.notes_for_therapist || null, is_optional: form.is_optional, is_system: form.is_system, available_for: form.available_for, sort_order: maxSort, instructions_translations: form.instructions_translations });
       if (error) { toast({ title: "Fout", description: error.message, variant: "destructive" }); return; }
       toast({ title: "Item toegevoegd" });
     }
@@ -239,7 +248,10 @@ export default function AdminCMS() {
                                       </div>
                                     </div>
                                     <span className="text-xs text-muted-foreground flex items-center gap-0.5 shrink-0"><Clock className="h-3 w-3" /> {item.duration_minutes}m</span>
-                                    {item.instructions_markdown && (
+                                    {item.instructions_markdown && (() => {
+                                      const trans = (item.instructions_translations as Record<string, string>) || {};
+                                      const langFlags = SCRIPT_LANGUAGES.filter(l => l.code === "en" || trans[l.code]).map(l => l.flag);
+                                      return (
                                       <Button
                                         variant={expandedItems.has(item.id) ? "secondary" : "ghost"}
                                         size="sm"
@@ -248,15 +260,23 @@ export default function AdminCMS() {
                                       >
                                         <FileText className="h-3.5 w-3.5" />
                                         <span className="hidden sm:inline">Script</span>
+                                        {langFlags.length > 1 && <span className="text-[10px] opacity-70">{langFlags.join("")}</span>}
                                         <ChevronDown className={cn("h-3 w-3 transition-transform", expandedItems.has(item.id) && "rotate-180")} />
                                       </Button>
-                                    )}
+                                      );
+                                    })()}
                                     <Button variant="ghost" size="icon" className="h-7 w-7" onClick={e => { e.stopPropagation(); openEdit(item); }}><Pencil className="h-3.5 w-3.5" /></Button>
                                     <Button variant="ghost" size="icon" className="h-7 w-7" onClick={e => { e.stopPropagation(); deleteItem(item.id); }}><Trash2 className="h-3.5 w-3.5 text-destructive" /></Button>
                                   </div>
                                 </CardContent>
                               </Card>
-                              {expandedItems.has(item.id) && item.instructions_markdown && (
+                              {expandedItems.has(item.id) && item.instructions_markdown && (() => {
+                                const translations = (item.instructions_translations as Record<string, string>) || {};
+                                const activeLang = scriptLang[item.id] || "en";
+                                const hasTranslations = Object.keys(translations).length > 0;
+                                const scriptContent = activeLang === "en" ? item.instructions_markdown : (translations[activeLang] || "");
+                                const availableLangs = SCRIPT_LANGUAGES.filter(l => l.code === "en" || translations[l.code]);
+                                return (
                                 <div className="ml-6 mr-2 -mt-1 relative">
                                   <div className="absolute left-0 top-0 bottom-4 w-px bg-primary/20" />
                                   <div className="ml-5 rounded-b-xl border border-t-0 border-border bg-background p-5 shadow-sm">
@@ -264,20 +284,44 @@ export default function AdminCMS() {
                                       <h4 className="text-xs font-semibold text-primary uppercase tracking-wider flex items-center gap-2">
                                         <FileText className="h-3.5 w-3.5" /> Script / Instructies
                                       </h4>
-                                      <Button variant="ghost" size="sm" className="h-6 px-2 text-[10px] text-muted-foreground" onClick={() => toggleItemExpand(item.id)}>
-                                        Sluiten ✕
-                                      </Button>
+                                      <div className="flex items-center gap-2">
+                                        {hasTranslations && (
+                                          <div className="flex gap-1 bg-muted/50 rounded-lg p-0.5">
+                                            {availableLangs.map(lang => (
+                                              <button
+                                                key={lang.code}
+                                                onClick={() => setScriptLang(prev => ({ ...prev, [item.id]: lang.code }))}
+                                                className={cn(
+                                                  "px-2 py-0.5 text-[11px] font-medium rounded-md transition-all",
+                                                  activeLang === lang.code
+                                                    ? "bg-background text-foreground shadow-sm"
+                                                    : "text-muted-foreground hover:text-foreground"
+                                                )}
+                                              >
+                                                {lang.label}
+                                              </button>
+                                            ))}
+                                          </div>
+                                        )}
+                                        <Button variant="ghost" size="sm" className="h-6 px-2 text-[10px] text-muted-foreground" onClick={() => toggleItemExpand(item.id)}>
+                                          Sluiten ✕
+                                        </Button>
+                                      </div>
                                     </div>
-                                    <div className="prose prose-sm prose-slate max-w-none
-                                      [&_h2]:text-base [&_h2]:font-semibold [&_h2]:text-foreground [&_h2]:mt-0 [&_h2]:mb-3
-                                      [&_h3]:text-sm [&_h3]:font-semibold [&_h3]:text-primary [&_h3]:mt-5 [&_h3]:mb-2
-                                      [&_p]:text-sm [&_p]:leading-relaxed [&_p]:text-foreground/80 [&_p]:mb-2
-                                      [&_em]:text-primary/70 [&_em]:not-italic [&_em]:bg-primary/5 [&_em]:px-1 [&_em]:rounded
-                                      [&_strong]:text-foreground [&_strong]:font-medium
-                                      [&_ul]:space-y-1 [&_ul]:my-2 [&_li]:text-sm [&_li]:text-foreground/80
-                                      [&_hr]:my-4 [&_hr]:border-border">
-                                      <ReactMarkdown>{item.instructions_markdown}</ReactMarkdown>
-                                    </div>
+                                    {scriptContent ? (
+                                      <div className="prose prose-sm prose-slate max-w-none
+                                        [&_h2]:text-base [&_h2]:font-semibold [&_h2]:text-foreground [&_h2]:mt-0 [&_h2]:mb-3
+                                        [&_h3]:text-sm [&_h3]:font-semibold [&_h3]:text-primary [&_h3]:mt-5 [&_h3]:mb-2
+                                        [&_p]:text-sm [&_p]:leading-relaxed [&_p]:text-foreground/80 [&_p]:mb-2
+                                        [&_em]:text-primary/70 [&_em]:not-italic [&_em]:bg-primary/5 [&_em]:px-1 [&_em]:rounded
+                                        [&_strong]:text-foreground [&_strong]:font-medium
+                                        [&_ul]:space-y-1 [&_ul]:my-2 [&_li]:text-sm [&_li]:text-foreground/80
+                                        [&_hr]:my-4 [&_hr]:border-border">
+                                        <ReactMarkdown>{scriptContent}</ReactMarkdown>
+                                      </div>
+                                    ) : (
+                                      <p className="text-sm text-muted-foreground italic">Nog geen vertaling beschikbaar voor deze taal.</p>
+                                    )}
                                     {item.notes_for_therapist && (
                                       <div className="mt-4 pt-4 border-t border-dashed border-border">
                                         <h4 className="text-xs font-semibold text-amber-600 uppercase tracking-wider mb-2 flex items-center gap-2">
@@ -288,7 +332,8 @@ export default function AdminCMS() {
                                     )}
                                   </div>
                                 </div>
-                              )}
+                                );
+                              })()}
                             </div>
                           );
                         })}
@@ -370,7 +415,41 @@ export default function AdminCMS() {
               <div><Label>Duur (min)</Label><Input type="number" min={1} value={form.duration_minutes} onChange={e => setForm(f => ({ ...f, duration_minutes: parseInt(e.target.value) || 1 }))} /></div>
               <div><Label>Beschikbaar voor</Label><Select value={form.available_for} onValueChange={v => setForm(f => ({ ...f, available_for: v }))}><SelectTrigger><SelectValue /></SelectTrigger><SelectContent>{AVAILABLE_FOR_OPTIONS.map(o => <SelectItem key={o.value} value={o.value}>{o.label}</SelectItem>)}</SelectContent></Select></div>
             </div>
-            <div><Label>Instructies (markdown)</Label><Textarea rows={4} value={form.instructions_markdown} onChange={e => setForm(f => ({ ...f, instructions_markdown: e.target.value }))} placeholder="Gedetailleerde instructies..." /></div>
+            <div>
+              <Label>Instructies (markdown)</Label>
+              <div className="flex gap-1 bg-muted/50 rounded-lg p-0.5 mt-1 mb-2 w-fit">
+                {SCRIPT_LANGUAGES.map(lang => (
+                  <button
+                    key={lang.code}
+                    type="button"
+                    onClick={() => setEditLang(lang.code)}
+                    className={cn(
+                      "px-2.5 py-1 text-xs font-medium rounded-md transition-all",
+                      editLang === lang.code
+                        ? "bg-background text-foreground shadow-sm"
+                        : "text-muted-foreground hover:text-foreground"
+                    )}
+                  >
+                    {lang.label}
+                  </button>
+                ))}
+              </div>
+              <Textarea
+                rows={6}
+                value={editLang === "en" ? form.instructions_markdown : (form.instructions_translations[editLang] || "")}
+                onChange={e => {
+                  if (editLang === "en") {
+                    setForm(f => ({ ...f, instructions_markdown: e.target.value }));
+                  } else {
+                    setForm(f => ({ ...f, instructions_translations: { ...f.instructions_translations, [editLang]: e.target.value } }));
+                  }
+                }}
+                placeholder={editLang === "en" ? "English instructions (base language)..." : `Vertaling ${SCRIPT_LANGUAGES.find(l => l.code === editLang)?.label || editLang}...`}
+              />
+              <p className="text-[10px] text-muted-foreground mt-1">
+                {editLang === "en" ? "🇬🇧 Engels is de basistaal" : `Vertaling voor ${SCRIPT_LANGUAGES.find(l => l.code === editLang)?.flag || ""} ${editLang.toUpperCase()}`}
+              </p>
+            </div>
             <div><Label>Notities voor therapeut</Label><Textarea rows={2} value={form.notes_for_therapist} onChange={e => setForm(f => ({ ...f, notes_for_therapist: e.target.value }))} placeholder="Interne notities..." /></div>
             <div className="flex items-center gap-6">
               <div className="flex items-center gap-2"><Switch checked={form.is_optional} onCheckedChange={c => setForm(f => ({ ...f, is_optional: c }))} id="optional" /><Label htmlFor="optional">Optioneel</Label></div>
