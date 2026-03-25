@@ -99,8 +99,8 @@ export default function AdminCMS() {
   const toggleSession = (id: string) => setOpenSessions(prev => { const n = new Set(prev); if (n.has(id)) n.delete(id); else n.add(id); return n; });
   const getSessionItems = (sid: string) => items.filter(i => i.session_id === sid).sort((a, b) => a.sort_order - b.sort_order);
 
-  const openCreate = (sessionId: string) => { setEditingItem(null); setSelectedSessionId(sessionId); setForm({ title: "", type: "exercise", duration_minutes: 5, instructions_markdown: "", notes_for_therapist: "", is_optional: false, is_system: true, available_for: "both" }); setDialogOpen(true); };
-  const openEdit = (item: MscItem) => { setEditingItem(item); setSelectedSessionId(item.session_id); setForm({ title: item.title, type: item.type, duration_minutes: item.duration_minutes, instructions_markdown: item.instructions_markdown || "", notes_for_therapist: item.notes_for_therapist || "", is_optional: item.is_optional, is_system: item.is_system, available_for: item.available_for || "both" }); setDialogOpen(true); };
+  const openCreate = (sessionId: string) => { setEditingItem(null); setSelectedSessionId(sessionId); setForm({ title: "", type: "exercise", duration_minutes: 5, instructions_markdown: "", notes_for_therapist: "", is_optional: false, is_system: true, available_for: "both", instructions_translations: {} }); setEditLang("en"); setDialogOpen(true); };
+  const openEdit = (item: MscItem) => { setEditingItem(item); setSelectedSessionId(item.session_id); setForm({ title: item.title, type: item.type, duration_minutes: item.duration_minutes, instructions_markdown: item.instructions_markdown || "", notes_for_therapist: item.notes_for_therapist || "", is_optional: item.is_optional, is_system: item.is_system, available_for: item.available_for || "both", instructions_translations: (item.instructions_translations as Record<string, string>) || {} }); setEditLang("en"); setDialogOpen(true); };
 
   const saveItem = async () => {
     if (!form.title.trim() || !selectedSessionId) return;
