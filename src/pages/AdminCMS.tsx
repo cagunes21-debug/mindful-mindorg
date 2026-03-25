@@ -105,7 +105,7 @@ export default function AdminCMS() {
   const saveItem = async () => {
     if (!form.title.trim() || !selectedSessionId) return;
     if (editingItem) {
-      const { error } = await supabase.from("msc_items").update({ title: form.title, type: form.type, duration_minutes: form.duration_minutes, instructions_markdown: form.instructions_markdown || null, notes_for_therapist: form.notes_for_therapist || null, is_optional: form.is_optional, is_system: form.is_system, available_for: form.available_for }).eq("id", editingItem.id);
+      const { error } = await supabase.from("msc_items").update({ title: form.title, type: form.type, duration_minutes: form.duration_minutes, instructions_markdown: form.instructions_markdown || null, notes_for_therapist: form.notes_for_therapist || null, is_optional: form.is_optional, is_system: form.is_system, available_for: form.available_for, instructions_translations: form.instructions_translations }).eq("id", editingItem.id);
       if (error) { toast({ title: "Fout", description: error.message, variant: "destructive" }); return; }
       toast({ title: "Item bijgewerkt" });
     } else {
