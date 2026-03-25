@@ -249,21 +249,41 @@ export default function AdminCMS() {
                                       </div>
                                     </div>
                                     <span className="text-xs text-muted-foreground flex items-center gap-0.5 shrink-0"><Clock className="h-3 w-3" /> {item.duration_minutes}m</span>
-                                    {item.instructions_markdown && (() => {
-                                      const trans = (item.instructions_translations as Record<string, string>) || {};
+                                    {(() => {
+                                      const trans = (item.instructions_translations as Record<string, any>) || {};
+                                      const slidesData = trans._slides as { folder: string; count: number; title?: string } | undefined;
                                       const langFlags = SCRIPT_LANGUAGES.filter(l => l.code === "en" || trans[l.code]).map(l => l.flag);
+                                      const hasScript = !!item.instructions_markdown;
+                                      const hasSlides = !!slidesData;
+                                      if (!hasScript && !hasSlides) return null;
                                       return (
-                                      <Button
-                                        variant={expandedItems.has(item.id) ? "secondary" : "ghost"}
-                                        size="sm"
-                                        className="h-7 px-2 gap-1.5 text-xs"
-                                        onClick={e => { e.stopPropagation(); toggleItemExpand(item.id); }}
-                                      >
-                                        <FileText className="h-3.5 w-3.5" />
-                                        <span className="hidden sm:inline">Script</span>
-                                        {langFlags.length > 1 && <span className="text-[10px] opacity-70">{langFlags.join("")}</span>}
-                                        <ChevronDown className={cn("h-3 w-3 transition-transform", expandedItems.has(item.id) && "rotate-180")} />
-                                      </Button>
+                                        <>
+                                          {hasScript && (
+                                            <Button
+                                              variant={expandedItems.has(item.id) ? "secondary" : "ghost"}
+                                              size="sm"
+                                              className="h-7 px-2 gap-1.5 text-xs"
+                                              onClick={e => { e.stopPropagation(); toggleItemExpand(item.id); }}
+                                            >
+                                              <FileText className="h-3.5 w-3.5" />
+                                              <span className="hidden sm:inline">Script</span>
+                                              {langFlags.length > 1 && <span className="text-[10px] opacity-70">{langFlags.join("")}</span>}
+                                              <ChevronDown className={cn("h-3 w-3 transition-transform", expandedItems.has(item.id) && "rotate-180")} />
+                                            </Button>
+                                          )}
+                                          {hasSlides && (
+                                            <Button
+                                              variant={expandedItems.has(`slides-${item.id}`) ? "secondary" : "ghost"}
+                                              size="sm"
+                                              className="h-7 px-2 gap-1.5 text-xs"
+                                              onClick={e => { e.stopPropagation(); toggleItemExpand(`slides-${item.id}`); }}
+                                            >
+                                              <Presentation className="h-3.5 w-3.5" />
+                                              <span className="hidden sm:inline">Presentatie</span>
+                                              <ChevronDown className={cn("h-3 w-3 transition-transform", expandedItems.has(`slides-${item.id}`) && "rotate-180")} />
+                                            </Button>
+                                          )}
+                                        </>
                                       );
                                     })()}
                                     <Button variant="ghost" size="icon" className="h-7 w-7" onClick={e => { e.stopPropagation(); openEdit(item); }}><Pencil className="h-3.5 w-3.5" /></Button>
