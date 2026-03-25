@@ -294,10 +294,10 @@ export default function AdminCMS() {
                               {expandedItems.has(item.id) && item.instructions_markdown && (() => {
                                 const rawTranslations = (item.instructions_translations as Record<string, any>) || {};
                                 const translations = Object.fromEntries(Object.entries(rawTranslations).filter(([k]) => !k.startsWith("_"))) as Record<string, string>;
-                                const activeLang = scriptLang[item.id] || "en";
+                                const activeLang = scriptLang[item.id] || "nl";
                                 const hasTranslations = Object.keys(translations).length > 0;
-                                const scriptContent = activeLang === "en" ? item.instructions_markdown : (translations[activeLang] || "");
-                                const availableLangs = SCRIPT_LANGUAGES.filter(l => l.code === "en" || translations[l.code]);
+                                const scriptContent = activeLang === "nl" ? item.instructions_markdown : (translations[activeLang] || "");
+                                const availableLangs = SCRIPT_LANGUAGES.filter(l => l.code === "nl" || translations[l.code]);
                                 return (
                                 <div className="ml-6 mr-2 -mt-1 relative">
                                   <div className="absolute left-0 top-0 bottom-4 w-px bg-primary/20" />
