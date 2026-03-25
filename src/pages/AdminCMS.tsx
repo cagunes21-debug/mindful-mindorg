@@ -411,22 +411,20 @@ export default function AdminCMS() {
             </div>
             <div>
               <Label>Instructies (markdown)</Label>
-              <div className="flex gap-1 bg-muted/50 rounded-lg p-0.5 mt-1 mb-2 w-fit">
-                {SCRIPT_LANGUAGES.map(lang => (
-                  <button
-                    key={lang.code}
-                    type="button"
-                    onClick={() => setEditLang(lang.code)}
-                    className={cn(
-                      "px-2.5 py-1 text-xs font-medium rounded-md transition-all",
-                      editLang === lang.code
-                        ? "bg-background text-foreground shadow-sm"
-                        : "text-muted-foreground hover:text-foreground"
-                    )}
-                  >
-                    {lang.label}
-                  </button>
-                ))}
+              <div className="flex items-center gap-3 mt-1 mb-2">
+                <Select value={editLang} onValueChange={setEditLang}>
+                  <SelectTrigger className="w-[140px] h-8 text-xs">
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {SCRIPT_LANGUAGES.map(lang => (
+                      <SelectItem key={lang.code} value={lang.code}>{lang.label}</SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+                <span className="text-[10px] text-muted-foreground">
+                  {editLang === "en" ? "Basistaal" : "Vertaling"}
+                </span>
               </div>
               <Textarea
                 rows={6}
@@ -440,9 +438,6 @@ export default function AdminCMS() {
                 }}
                 placeholder={editLang === "en" ? "English instructions (base language)..." : `Vertaling ${SCRIPT_LANGUAGES.find(l => l.code === editLang)?.label || editLang}...`}
               />
-              <p className="text-[10px] text-muted-foreground mt-1">
-                {editLang === "en" ? "🇬🇧 Engels is de basistaal" : `Vertaling voor ${SCRIPT_LANGUAGES.find(l => l.code === editLang)?.flag || ""} ${editLang.toUpperCase()}`}
-              </p>
             </div>
             <div><Label>Notities voor therapeut</Label><Textarea rows={2} value={form.notes_for_therapist} onChange={e => setForm(f => ({ ...f, notes_for_therapist: e.target.value }))} placeholder="Interne notities..." /></div>
             <div className="flex items-center gap-6">
