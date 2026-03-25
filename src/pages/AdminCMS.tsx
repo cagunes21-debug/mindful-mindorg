@@ -286,22 +286,16 @@ export default function AdminCMS() {
                                       </h4>
                                       <div className="flex items-center gap-2">
                                         {hasTranslations && (
-                                          <div className="flex gap-1 bg-muted/50 rounded-lg p-0.5">
-                                            {availableLangs.map(lang => (
-                                              <button
-                                                key={lang.code}
-                                                onClick={() => setScriptLang(prev => ({ ...prev, [item.id]: lang.code }))}
-                                                className={cn(
-                                                  "px-2 py-0.5 text-[11px] font-medium rounded-md transition-all",
-                                                  activeLang === lang.code
-                                                    ? "bg-background text-foreground shadow-sm"
-                                                    : "text-muted-foreground hover:text-foreground"
-                                                )}
-                                              >
-                                                {lang.label}
-                                              </button>
-                                            ))}
-                                          </div>
+                                          <Select value={activeLang} onValueChange={v => setScriptLang(prev => ({ ...prev, [item.id]: v }))}>
+                                            <SelectTrigger className="h-7 w-[120px] text-xs">
+                                              <SelectValue />
+                                            </SelectTrigger>
+                                            <SelectContent>
+                                              {availableLangs.map(lang => (
+                                                <SelectItem key={lang.code} value={lang.code}>{lang.label}</SelectItem>
+                                              ))}
+                                            </SelectContent>
+                                          </Select>
                                         )}
                                         <Button variant="ghost" size="sm" className="h-6 px-2 text-[10px] text-muted-foreground" onClick={() => toggleItemExpand(item.id)}>
                                           Sluiten ✕
