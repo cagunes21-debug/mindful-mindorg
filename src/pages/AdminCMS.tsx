@@ -410,7 +410,41 @@ export default function AdminCMS() {
               <div><Label>Duur (min)</Label><Input type="number" min={1} value={form.duration_minutes} onChange={e => setForm(f => ({ ...f, duration_minutes: parseInt(e.target.value) || 1 }))} /></div>
               <div><Label>Beschikbaar voor</Label><Select value={form.available_for} onValueChange={v => setForm(f => ({ ...f, available_for: v }))}><SelectTrigger><SelectValue /></SelectTrigger><SelectContent>{AVAILABLE_FOR_OPTIONS.map(o => <SelectItem key={o.value} value={o.value}>{o.label}</SelectItem>)}</SelectContent></Select></div>
             </div>
-            <div><Label>Instructies (markdown)</Label><Textarea rows={4} value={form.instructions_markdown} onChange={e => setForm(f => ({ ...f, instructions_markdown: e.target.value }))} placeholder="Gedetailleerde instructies..." /></div>
+            <div>
+              <Label>Instructies (markdown)</Label>
+              <div className="flex gap-1 bg-muted/50 rounded-lg p-0.5 mt-1 mb-2 w-fit">
+                {SCRIPT_LANGUAGES.map(lang => (
+                  <button
+                    key={lang.code}
+                    type="button"
+                    onClick={() => setEditLang(lang.code)}
+                    className={cn(
+                      "px-2.5 py-1 text-xs font-medium rounded-md transition-all",
+                      editLang === lang.code
+                        ? "bg-background text-foreground shadow-sm"
+                        : "text-muted-foreground hover:text-foreground"
+                    )}
+                  >
+                    {lang.label}
+                  </button>
+                ))}
+              </div>
+              <Textarea
+                rows={6}
+                value={editLang === "en" ? form.instructions_markdown : (form.instructions_translations[editLang] || "")}
+                onChange={e => {
+                  if (editLang === "en") {
+                    setForm(f => ({ ...f, instructions_markdown: e.target.value }));
+                  } else {
+                    setForm(f => ({ ...f, instructions_translations: { ...f.instructions_translations, [editLang]: e.target.value } }));
+                  }
+                }}
+                placeholder={editLang === "en" ? "English instructions (base language)..." : `Vertaling ${SCRIPT_LANGUAGES.find(l => l.code === editLang)?.label || editLang}...`}
+              />
+              <p className="text-[10px] text-muted-foreground mt-1">
+                {editLang === "en" ? "🇬🇧 Engels is de basistaal" : `Vertaling voor ${SCRIPT_LANGUAGES.find(l => l.code === editLang)?.flag || ""} ${editLang.toUpperCase()}`}
+              </p>
+            </div>
             <div><Label>Notities voor therapeut</Label><Textarea rows={2} value={form.notes_for_therapist} onChange={e => setForm(f => ({ ...f, notes_for_therapist: e.target.value }))} placeholder="Interne notities..." /></div>
             <div className="flex items-center gap-6">
               <div className="flex items-center gap-2"><Switch checked={form.is_optional} onCheckedChange={c => setForm(f => ({ ...f, is_optional: c }))} id="optional" /><Label htmlFor="optional">Optioneel</Label></div>
