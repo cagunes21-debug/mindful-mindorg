@@ -75,6 +75,8 @@ export default function AdminCMS() {
   const [form, setForm] = useState({ title: "", type: "exercise", duration_minutes: 5, instructions_markdown: "", notes_for_therapist: "", is_optional: false, is_system: true, available_for: "both" });
   const [expandedItems, setExpandedItems] = useState<Set<string>>(new Set());
   const toggleItemExpand = (id: string) => setExpandedItems(prev => { const n = new Set(prev); n.has(id) ? n.delete(id) : n.add(id); return n; });
+  const [scriptLang, setScriptLang] = useState<Record<string, string>>({});
+  const [editLang, setEditLang] = useState("en");
 
   useEffect(() => {
     supabase.auth.getSession().then(({ data: { session } }) => { if (session) loadData(); else setLoading(false); });
