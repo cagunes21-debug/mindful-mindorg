@@ -1,0 +1,1 @@
+UPDATE msc_items SET instructions_translations = jsonb_set(COALESCE(instructions_translations, '{}'::jsonb), '{_slides,count}', '9') WHERE id = '5b1a47ab-11e0-4653-b937-95950bf46bcd';
