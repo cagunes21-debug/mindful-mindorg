@@ -325,14 +325,15 @@ export default function AdminCMS() {
                                       </div>
                                     </div>
                                     {scriptContent ? (
-                                      <div className="prose prose-sm prose-slate max-w-none
-                                        [&_h2]:text-base [&_h2]:font-semibold [&_h2]:text-foreground [&_h2]:mt-0 [&_h2]:mb-3
-                                        [&_h3]:text-sm [&_h3]:font-semibold [&_h3]:text-primary [&_h3]:mt-5 [&_h3]:mb-2
-                                        [&_p]:text-sm [&_p]:leading-relaxed [&_p]:text-foreground/80 [&_p]:mb-2
-                                        [&_em]:text-primary/70 [&_em]:not-italic [&_em]:bg-primary/5 [&_em]:px-1 [&_em]:rounded
-                                        [&_strong]:text-foreground [&_strong]:font-medium
-                                        [&_ul]:space-y-1 [&_ul]:my-2 [&_li]:text-sm [&_li]:text-foreground/80
-                                        [&_hr]:my-4 [&_hr]:border-border">
+                                      <div className="prose prose-slate max-w-none
+                                        [&_h2]:text-lg [&_h2]:font-bold [&_h2]:text-foreground [&_h2]:mt-0 [&_h2]:mb-4 [&_h2]:pb-2 [&_h2]:border-b [&_h2]:border-primary/20
+                                        [&_h3]:text-base [&_h3]:font-semibold [&_h3]:text-primary [&_h3]:mt-8 [&_h3]:mb-3 [&_h3]:flex [&_h3]:items-center [&_h3]:gap-2
+                                        [&_p]:text-[15px] [&_p]:leading-[1.85] [&_p]:text-foreground/85 [&_p]:mb-3
+                                        [&_em]:text-primary [&_em]:not-italic [&_em]:bg-primary/8 [&_em]:px-2 [&_em]:py-0.5 [&_em]:rounded-md [&_em]:text-[15px] [&_em]:leading-[1.85] [&_em]:inline
+                                        [&_strong]:text-foreground [&_strong]:font-semibold
+                                        [&_ul]:space-y-2.5 [&_ul]:my-4 [&_ul]:pl-1
+                                        [&_li]:text-[15px] [&_li]:leading-[1.85] [&_li]:text-foreground/85 [&_li]:pl-2 [&_li]:border-l-2 [&_li]:border-primary/20 [&_li]:ml-2
+                                        [&_hr]:my-6 [&_hr]:border-primary/10">
                                         <ReactMarkdown>{scriptContent}</ReactMarkdown>
                                       </div>
                                     ) : (
