@@ -352,27 +352,37 @@ export default function AdminCMS() {
                                 </div>
                                 );
                               })()}
-                              {expandedItems.has(`slides-${item.id}`) && (() => {
-                                const rawTrans = (item.instructions_translations as Record<string, any>) || {};
-                                const slidesData = rawTrans._slides as { folder: string; count: number; title?: string } | undefined;
-                                if (!slidesData) return null;
-                                return (
-                                  <div className="ml-6 mr-2 -mt-1 relative">
-                                    <div className="absolute left-0 top-0 bottom-4 w-px bg-primary/20" />
-                                    <div className="ml-5 rounded-b-xl border border-t-0 border-border bg-background p-5 shadow-sm">
-                                      <div className="flex items-center justify-between mb-4">
-                                        <h4 className="text-xs font-semibold text-primary uppercase tracking-wider flex items-center gap-2">
-                                          <Presentation className="h-3.5 w-3.5" /> {slidesData.title || "Presentatie"}
-                                        </h4>
-                                        <Button variant="ghost" size="sm" className="h-6 px-2 text-[10px] text-muted-foreground" onClick={() => toggleItemExpand(`slides-${item.id}`)}>
-                                          Sluiten ✕
-                                        </Button>
-                                      </div>
-                                      <SlideViewer folder={slidesData.folder} count={slidesData.count} title={slidesData.title} />
-                                    </div>
-                                  </div>
-                                );
-                              })()}
+                               {expandedItems.has(`slides-${item.id}`) && (() => {
+                                 const rawTrans = (item.instructions_translations as Record<string, any>) || {};
+                                 const rawSlides = rawTrans._slides;
+                                 const slidesArray: { folder: string; count: number; title?: string }[] = Array.isArray(rawSlides) ? rawSlides : rawSlides ? [rawSlides] : [];
+                                 if (slidesArray.length === 0) return null;
+                                 return (
+                                   <div className="ml-6 mr-2 -mt-1 relative">
+                                     <div className="absolute left-0 top-0 bottom-4 w-px bg-primary/20" />
+                                     <div className="ml-5 rounded-b-xl border border-t-0 border-border bg-background p-5 shadow-sm">
+                                       <div className="flex items-center justify-between mb-4">
+                                         <h4 className="text-xs font-semibold text-primary uppercase tracking-wider flex items-center gap-2">
+                                           <Presentation className="h-3.5 w-3.5" /> Presentaties ({slidesArray.length})
+                                         </h4>
+                                         <Button variant="ghost" size="sm" className="h-6 px-2 text-[10px] text-muted-foreground" onClick={() => toggleItemExpand(`slides-${item.id}`)}>
+                                           Sluiten ✕
+                                         </Button>
+                                       </div>
+                                       <div className="space-y-6">
+                                         {slidesArray.map((sd, idx) => (
+                                           <div key={idx}>
+                                             {slidesArray.length > 1 && (
+                                               <p className="text-xs font-medium text-muted-foreground mb-2">{sd.title || `Presentatie ${idx + 1}`}</p>
+                                             )}
+                                             <SlideViewer folder={sd.folder} count={sd.count} title={sd.title} />
+                                           </div>
+                                         ))}
+                                       </div>
+                                     </div>
+                                   </div>
+                                 );
+                               })()}
                             </div>
                           );
                         })}
