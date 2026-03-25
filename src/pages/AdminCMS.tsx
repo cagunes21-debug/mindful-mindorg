@@ -251,10 +251,11 @@ export default function AdminCMS() {
                                     <span className="text-xs text-muted-foreground flex items-center gap-0.5 shrink-0"><Clock className="h-3 w-3" /> {item.duration_minutes}m</span>
                                     {(() => {
                                       const trans = (item.instructions_translations as Record<string, any>) || {};
-                                      const slidesData = trans._slides as { folder: string; count: number; title?: string } | undefined;
-                                      const langFlags = SCRIPT_LANGUAGES.filter(l => l.code === "en" || trans[l.code]).map(l => l.flag);
-                                      const hasScript = !!item.instructions_markdown;
-                                      const hasSlides = !!slidesData;
+                                       const rawSlides = trans._slides;
+                                       const slidesArray: { folder: string; count: number; title?: string }[] = Array.isArray(rawSlides) ? rawSlides : rawSlides ? [rawSlides] : [];
+                                       const langFlags = SCRIPT_LANGUAGES.filter(l => l.code === "en" || trans[l.code]).map(l => l.flag);
+                                       const hasScript = !!item.instructions_markdown;
+                                       const hasSlides = slidesArray.length > 0;
                                       if (!hasScript && !hasSlides) return null;
                                       return (
                                         <>
