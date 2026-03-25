@@ -72,7 +72,7 @@ export default function AdminCMS() {
   const [filterType, setFilterType] = useState("all");
   const [filterAvailable, setFilterAvailable] = useState("all");
   const [activeTab, setActiveTab] = useState("all");
-  const [form, setForm] = useState({ title: "", type: "exercise", duration_minutes: 5, instructions_markdown: "", notes_for_therapist: "", is_optional: false, is_system: true, available_for: "both" });
+  const [form, setForm] = useState({ title: "", type: "exercise", duration_minutes: 5, instructions_markdown: "", notes_for_therapist: "", is_optional: false, is_system: true, available_for: "both", instructions_translations: {} as Record<string, string> });
   const [expandedItems, setExpandedItems] = useState<Set<string>>(new Set());
   const toggleItemExpand = (id: string) => setExpandedItems(prev => { const n = new Set(prev); n.has(id) ? n.delete(id) : n.add(id); return n; });
   const [scriptLang, setScriptLang] = useState<Record<string, string>>({});
