@@ -37,6 +37,7 @@ export default function ClientProfilePage() {
   const [sessionAppointments, setSessionAppointments] = useState<SessionAppointment[]>([]);
   const [structuredNotes, setStructuredNotes] = useState<TrainerNote[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [activeTab, setActiveTab] = useState("intake");
 
   const [showExtraTraining, setShowExtraTraining] = useState(false);
   const [extraTrainingName, setExtraTrainingName] = useState("8-weekse Mindful Zelfcompassie Training");
