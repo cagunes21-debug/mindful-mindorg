@@ -536,7 +536,7 @@ export default function CrmPipelineSection({ onLeadsChange }: { onLeadsChange?: 
           </p>
         </div>
       ) : (
-        <div className="overflow-x-auto rounded-lg border border-border/60 bg-card">
+        <div className="overflow-x-auto rounded-2xl border border-border/40 bg-card shadow-sm">
           <Table>
             <TableHeader>
               <TableRow className="hover:bg-transparent">

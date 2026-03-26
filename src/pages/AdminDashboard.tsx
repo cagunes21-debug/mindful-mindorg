@@ -839,10 +839,10 @@ export default function AdminDashboard() {
           </div>
         </div>
 
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 py-6 space-y-6">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 py-8 space-y-8">
 
           {/* Header with breadcrumb */}
-          <div className="space-y-1">
+          <div className="space-y-1.5">
             {activeSection !== "overview" && (
               <button onClick={() => setActiveSection("overview")}
                 className="inline-flex items-center gap-1.5 text-xs text-terracotta-600 hover:text-terracotta-800 font-medium transition-colors group mb-1"
@@ -851,7 +851,7 @@ export default function AdminDashboard() {
                 Terug naar dashboard
               </button>
             )}
-            <h1 className="text-2xl font-semibold text-foreground">
+            <h1 className="text-2xl font-bold text-foreground">
               {activeSection === "overview" ? `${greeting} 👋` : SECTION_TITLES[activeSection]}
             </h1>
             <p className="text-sm text-muted-foreground">
@@ -868,28 +868,32 @@ export default function AdminDashboard() {
                   icon={Users}
                   label="Klanten"
                   value={statsLoading ? "…" : stats.clients}
-                  color="bg-sage-50 text-sage-700"
+                  gradient="from-sage-500 to-sage-600"
+                  iconColor="text-white"
                   onClick={() => handleNav("clients")}
                 />
                 <StatCard
                   icon={BookOpen}
                   label="Actieve trainingen"
                   value={statsLoading ? "…" : stats.enrollments}
-                  color="bg-terracotta-50 text-terracotta-700"
+                  gradient="from-terracotta-500 to-terracotta-600"
+                  iconColor="text-white"
                   onClick={() => handleNav("trainingen")}
                 />
                 <StatCard
                   icon={GitBranch}
                   label="Nieuwe leads"
                   value={statsLoading ? "…" : stats.leads}
-                  color="bg-amber-50 text-amber-700"
+                  gradient="from-amber-500 to-amber-600"
+                  iconColor="text-white"
                   onClick={() => { handleNav("clients"); }}
                 />
                 <StatCard
                   icon={Euro}
                   label="Totale omzet"
                   value={statsLoading ? "…" : `€${stats.revenue.toLocaleString("nl-NL")}`}
-                  color="bg-emerald-50 text-emerald-700"
+                  gradient="from-emerald-500 to-emerald-600"
+                  iconColor="text-white"
                   onClick={() => navigate("/admin/financien")}
                 />
               </div>
@@ -899,23 +903,25 @@ export default function AdminDashboard() {
 
               {/* Quick actions */}
               <div>
-                <h2 className="text-sm font-semibold text-foreground mb-3">Snel navigeren</h2>
+                <h2 className="text-sm font-bold text-foreground mb-3">Snel navigeren</h2>
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
                   {[
-                    { label: "Leads & Pipeline",    desc: stats.leads > 0 ? `${stats.leads} nieuwe leads wachten` : "Geen nieuwe leads", icon: GitBranch, section: "clients",    color: "bg-amber-50 text-amber-700" },
-                    { label: "Lopende trainingen", desc: "Bekijk wie in welke week zit",   icon: BookOpen,  section: "trainingen", color: "bg-terracotta-50 text-terracotta-700" },
-                    { label: "Klanten",            desc: "Profielen & sessies beheren",    icon: Users,     section: "clients",    color: "bg-sage-50 text-sage-700" },
+                    { label: "Leads & Pipeline",  desc: stats.leads > 0 ? `${stats.leads} nieuwe leads wachten` : "Geen nieuwe leads", icon: GitBranch, section: "clients",    gradient: "from-amber-50 to-amber-100", iconBg: "bg-gradient-to-br from-amber-400 to-amber-500 text-white" },
+                    { label: "Lopende trainingen", desc: "Bekijk wie in welke week zit",   icon: BookOpen,  section: "trainingen", gradient: "from-terracotta-50 to-warm-50",     iconBg: "bg-gradient-to-br from-terracotta-400 to-terracotta-500 text-white" },
+                    { label: "Klanten",            desc: "Profielen & sessies beheren",    icon: Users,     section: "clients",    gradient: "from-sage-50 to-sage-100",           iconBg: "bg-gradient-to-br from-sage-400 to-sage-500 text-white" },
                   ].map(a => (
-                    <Card key={a.section} className="cursor-pointer hover:shadow-md transition-all group border-border/60 hover:border-border" onClick={() => handleNav(a.section)}>
-                      <CardContent className="p-4 flex items-center gap-3">
-                        <div className={cn("h-10 w-10 rounded-xl flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform", a.color)}>
-                          <a.icon className="h-5 w-5" />
+                    <Card key={a.label} className={cn("cursor-pointer hover:shadow-lg transition-all duration-300 group border-0 overflow-hidden")} onClick={() => handleNav(a.section)}>
+                      <CardContent className={cn("p-5 bg-gradient-to-br", a.gradient)}>
+                        <div className="flex items-center gap-3">
+                          <div className={cn("h-11 w-11 rounded-2xl flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform shadow-sm", a.iconBg)}>
+                            <a.icon className="h-5 w-5" />
+                          </div>
+                          <div className="flex-1 min-w-0">
+                            <p className="text-sm font-semibold text-foreground">{a.label}</p>
+                            <p className="text-xs text-muted-foreground">{a.desc}</p>
+                          </div>
+                          <ArrowUpRight className="h-4 w-4 text-muted-foreground opacity-0 group-hover:opacity-100 transition-all" />
                         </div>
-                        <div className="flex-1 min-w-0">
-                          <p className="text-sm font-medium">{a.label}</p>
-                          <p className="text-xs text-muted-foreground">{a.desc}</p>
-                        </div>
-                        <ArrowUpRight className="h-4 w-4 text-muted-foreground opacity-0 group-hover:opacity-100 transition-all" />
                       </CardContent>
                     </Card>
                   ))}

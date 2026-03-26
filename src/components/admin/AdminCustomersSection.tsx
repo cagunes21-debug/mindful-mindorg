@@ -374,7 +374,7 @@ export default function AdminCustomersSection({ initialTab = "customers" }: { in
         </TabsContent>
 
         {/* ── LEADS & PIPELINE TAB ── */}
-        <TabsContent value="leads" className="mt-4">
+        <TabsContent value="leads" className="mt-5">
           <CrmPipelineSection onLeadsChange={fetchAllLeads} />
         </TabsContent>
 
