@@ -455,6 +455,9 @@ export default function AdminCMS() {
               {individualCount === 0 && <Card><CardContent className="py-12 text-center text-muted-foreground">Nog geen items geselecteerd. Ga naar "Alle Content" en vink items aan.</CardContent></Card>}
             </div>
           )}
+
+          {/* ═══ ACCESS TAB ═══ */}
+          {activeTab === "access" && <EnrollmentContentManager />}
         </div>
       </main>
       <Footer />
