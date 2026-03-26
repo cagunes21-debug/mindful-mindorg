@@ -11,12 +11,6 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-} from "@/components/ui/dialog";
 import Autoplay from "embla-carousel-autoplay";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
