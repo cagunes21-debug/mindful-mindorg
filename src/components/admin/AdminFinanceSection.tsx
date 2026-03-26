@@ -16,7 +16,7 @@ import {
   Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter,
 } from "@/components/ui/dialog";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Loader2, Plus, Euro, CreditCard, Receipt, Search, FileText } from "lucide-react";
+import { Loader2, Plus, Euro, CreditCard, Receipt, Search, FileText, ArrowDown, ArrowRight, Mail, Globe, Webhook, Database, CheckCircle2, XCircle, Info } from "lucide-react";
 import { format } from "date-fns";
 import { nl } from "date-fns/locale";
 import { toast } from "sonner";
