@@ -760,31 +760,33 @@ export default function AdminDashboard() {
         </div>
 
         {/* Nav */}
-        <nav className="flex-1 py-4 px-3 overflow-y-auto space-y-5">
+        <nav className="flex-1 py-5 px-3 overflow-y-auto space-y-6">
           {NAV.map(group => (
             <div key={group.group}>
-              <p className="text-[10px] font-bold uppercase tracking-[0.15em] text-muted-foreground/50 px-3 mb-2">
+              <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-muted-foreground/40 px-3 mb-2.5">
                 {group.group}
               </p>
-              <div className="space-y-0.5">
+              <div className="space-y-1">
                 {group.items.map(item => {
                   const active = activeSection === item.id;
                   const badge = item.id === "clients" && stats.leads > 0 ? stats.leads : undefined;
                   return (
                     <button key={item.id} onClick={() => handleNav(item.id)}
                       className={cn(
-                        "w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-[13px] transition-all duration-150",
-                        active ? "bg-terracotta-50 text-terracotta-700 font-medium shadow-sm" : "text-muted-foreground hover:bg-muted/60 hover:text-foreground"
+                        "w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-[13px] transition-all duration-200",
+                        active
+                          ? "bg-gradient-to-r from-terracotta-50 to-terracotta-100/60 text-terracotta-700 font-semibold shadow-sm border border-terracotta-100/60"
+                          : "text-muted-foreground hover:bg-muted/60 hover:text-foreground"
                       )}
                     >
                       <item.icon className={cn("h-4 w-4 shrink-0", active && "text-terracotta-600")} />
                       <span className="flex-1 truncate text-left">{item.label}</span>
                       {badge ? (
-                        <span className="h-5 min-w-5 px-1.5 rounded-full bg-terracotta-500 text-white text-[10px] font-bold flex items-center justify-center animate-pulse">
+                        <span className="h-5 min-w-5 px-1.5 rounded-full bg-gradient-to-r from-terracotta-500 to-terracotta-600 text-white text-[10px] font-bold flex items-center justify-center shadow-sm">
                           {badge}
                         </span>
                       ) : active ? (
-                        <div className="h-1.5 w-1.5 rounded-full bg-terracotta-500" />
+                        <div className="h-2 w-2 rounded-full bg-terracotta-500" />
                       ) : null}
                     </button>
                   );
