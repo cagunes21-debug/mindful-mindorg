@@ -1,8 +1,8 @@
-import { useState } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { Heart, Brain, Sparkles, ArrowRight, Check, Mail, Phone, MessageCircle, Clock, Users, Globe, Calendar, Quote, Star, Leaf, HelpCircle, Award, TrendingUp, FlaskConical } from "lucide-react";
+import { Heart, Brain, Sparkles, ArrowRight, Check, Mail, Phone, MessageCircle, Clock, Users, Globe, Quote, Star, Leaf, HelpCircle, Award, TrendingUp, FlaskConical } from "lucide-react";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import {
   Carousel,
@@ -11,12 +11,6 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-} from "@/components/ui/dialog";
 import Autoplay from "embla-carousel-autoplay";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
@@ -29,38 +23,8 @@ import ScrollProgressBar from "@/components/ScrollProgressBar";
 import WhatsAppButton from "@/components/WhatsAppButton";
 import CookieConsent from "@/components/CookieConsent";
 import { ContactForm } from "@/components/ContactForm";
-import UrgencyBadge from "@/components/UrgencyBadge";
-import { RegistrationForm } from "@/components/RegistrationForm";
-
-const trainingDates = [
-  {
-    language: "English",
-    day: "Wednesday (evening)",
-    startDate: "22 April 2026",
-    time: "19:00 – 21:00",
-    dates: "Follow-up: 29 Apr, 6, 13, 20, 27 May, 3, 10 Jun",
-    price: "€550",
-  },
-  {
-    language: "Nederlands",
-    day: "Maandag (avond)",
-    startDate: "28 september 2026",
-    time: "19:00 – 21:00",
-    dates: "Vervolgdata: 5, 12, 26 okt, 2, 9, 16, 23, 30 nov",
-    price: "€550",
-    earlyBirdPrice: "€495",
-    earlyBirdDeadline: "1 augustus 2026",
-  },
-];
 
 const MindfulZelfcompassie = () => {
-  const [isRegistrationOpen, setIsRegistrationOpen] = useState(false);
-  const [selectedTraining, setSelectedTraining] = useState<typeof trainingDates[0] | null>(null);
-
-  const openRegistration = (training: typeof trainingDates[0]) => {
-    setSelectedTraining(training);
-    setIsRegistrationOpen(true);
-  };
 
   return (
     <div className="min-h-screen bg-background">
@@ -126,10 +90,10 @@ const MindfulZelfcompassie = () => {
               className="flex flex-col sm:flex-row items-center justify-center gap-4"
             >
               <Button asChild size="lg" className="bg-terracotta-600 hover:bg-terracotta-700 text-white rounded-full px-10 py-7 text-lg shadow-lg">
-                <a href="#data">
+                <Link to="/agenda">
                   Bekijk de startdata
                   <ArrowRight className="ml-3 h-5 w-5" />
-                </a>
+                </Link>
               </Button>
             </motion.div>
 
@@ -256,11 +220,11 @@ const MindfulZelfcompassie = () => {
 
             <ScrollReveal delay={0.2}>
               <div className="text-center">
-                <Button asChild className="bg-terracotta-600 hover:bg-terracotta-700 text-white rounded-full px-8 py-6 text-base shadow-md">
-                  <a href="#data">
+              <Button asChild className="bg-terracotta-600 hover:bg-terracotta-700 text-white rounded-full px-8 py-6 text-base shadow-md">
+                  <Link to="/agenda">
                     Bekijk de startdata
                     <ArrowRight className="ml-2 h-5 w-5" />
-                  </a>
+                  </Link>
                 </Button>
               </div>
             </ScrollReveal>
@@ -470,79 +434,29 @@ const MindfulZelfcompassie = () => {
         </div>
       </section>
 
-      {/* Startdata */}
-      <section id="data" className="py-20 lg:py-28 bg-white scroll-mt-20">
+      {/* CTA naar agenda */}
+      <section className="py-16 lg:py-20 bg-white">
         <div className="container mx-auto px-4">
-          <div className="mx-auto max-w-4xl">
+          <div className="mx-auto max-w-2xl text-center">
             <ScrollReveal>
-              <div className="text-center mb-12">
-                <span className="inline-flex items-center gap-2 rounded-full bg-sage-100 border border-sage-200 px-5 py-2 text-xs font-semibold tracking-wider text-sage-700 mb-6 uppercase">
-                  <Calendar className="h-3.5 w-3.5" />
-                  Data & Prijzen
-                </span>
-                <h2 className="mb-4 text-3xl font-light text-foreground md:text-4xl leading-tight">
-                  Startdata <span className="font-serif italic text-terracotta-600">groepstraining</span>
-                </h2>
-              </div>
-            </ScrollReveal>
-
-            <StaggerContainer className="grid gap-6 md:grid-cols-2">
-              {trainingDates.map((training, index) => (
-                <StaggerItem key={index}>
-                  <Card className="border-warm-200 overflow-hidden hover:shadow-lg transition-shadow h-full">
-                    <div className={`px-6 py-3 ${training.language === "Nederlands" ? "bg-terracotta-500" : "bg-sage-600"}`}>
-                      <div className="flex items-center justify-between">
-                        <span className="text-white font-medium">{training.language}</span>
-                        {training.earlyBirdPrice && (
-                          <span className="inline-flex items-center gap-1 rounded-full bg-white/20 px-3 py-1 text-xs font-semibold text-white">
-                            ✨ Early bird
-                          </span>
-                        )}
-                      </div>
-                    </div>
-                    <CardContent className="p-6">
-                      <p className="text-sm text-muted-foreground mb-2">{training.day}</p>
-                      <p className="font-semibold text-foreground text-lg mb-1">Start: {training.startDate}</p>
-                      <p className="text-foreground mb-3">Tijd: {training.time}</p>
-                      <p className="text-sm text-muted-foreground mb-4">{training.dates}</p>
-                      <UrgencyBadge className="mb-4" />
-                      <div className="pt-3 border-t border-warm-200 flex items-center justify-between">
-                        <div>
-                          {training.earlyBirdPrice ? (
-                            <>
-                              <p className="text-xs text-muted-foreground line-through">{training.price}</p>
-                              <p className="text-2xl font-light text-terracotta-600">{training.earlyBirdPrice}</p>
-                              <p className="text-xs text-sage-700 font-medium">Early bird t/m {training.earlyBirdDeadline}</p>
-                            </>
-                          ) : (
-                            <p className="text-2xl font-light text-terracotta-600">{training.price}</p>
-                          )}
-                        </div>
-                        <Button
-                          className="bg-terracotta-600 hover:bg-terracotta-700 text-white rounded-full"
-                          onClick={() => openRegistration(training)}
-                        >
-                          Reserveer
-                        </Button>
-                      </div>
-                    </CardContent>
-                  </Card>
-                </StaggerItem>
-              ))}
-            </StaggerContainer>
-
-            {/* Individueel alternatief */}
-            <ScrollReveal delay={0.2}>
-              <div className="mt-10 text-center">
-                <p className="text-muted-foreground text-sm mb-2">Liever individuele begeleiding?</p>
-                <Link
-                  to="/"
-                  className="inline-flex items-center gap-2 text-terracotta-600 text-sm font-medium hover:text-terracotta-700 transition-colors"
-                >
-                  Bekijk het individueel traject
-                  <ArrowRight className="h-3.5 w-3.5" />
+              <h2 className="text-2xl font-light text-foreground md:text-3xl leading-tight mb-4">
+                Klaar om te <span className="font-serif italic text-terracotta-600">beginnen?</span>
+              </h2>
+              <p className="text-muted-foreground mb-8 leading-relaxed">
+                Bekijk de beschikbare startdata en meld je aan voor de groepstraining.
+              </p>
+              <Button asChild size="lg" className="bg-terracotta-600 hover:bg-terracotta-700 text-white rounded-full px-10 py-7 text-lg shadow-lg">
+                <Link to="/agenda">
+                  Bekijk startdata & aanmelden
+                  <ArrowRight className="ml-3 h-5 w-5" />
                 </Link>
-              </div>
+              </Button>
+              <p className="text-muted-foreground text-sm mt-6">
+                Liever individuele begeleiding?{" "}
+                <Link to="/" className="text-terracotta-600 hover:text-terracotta-700 font-medium">
+                  Bekijk het individueel traject →
+                </Link>
+              </p>
             </ScrollReveal>
           </div>
         </div>
@@ -639,27 +553,6 @@ const MindfulZelfcompassie = () => {
 
       <Footer />
 
-      {/* Registration Modal */}
-      <Dialog open={isRegistrationOpen} onOpenChange={setIsRegistrationOpen}>
-        <DialogContent className="sm:max-w-md max-h-[90vh] overflow-y-auto">
-          <DialogHeader>
-            <DialogTitle className="text-xl font-light">
-              Aanmelden voor de groepstraining
-            </DialogTitle>
-          </DialogHeader>
-          {selectedTraining && (
-            <RegistrationForm
-              trainingName={`8-weekse MSC Groepstraining (${selectedTraining.language})`}
-              trainingDate={selectedTraining.startDate}
-              trainingTime={selectedTraining.time}
-              price={selectedTraining.price}
-              onSuccess={() => {
-                setTimeout(() => setIsRegistrationOpen(false), 2000);
-              }}
-            />
-          )}
-        </DialogContent>
-      </Dialog>
     </div>
   );
 };
