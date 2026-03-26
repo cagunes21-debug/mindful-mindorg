@@ -561,27 +561,6 @@ const MindfulZelfcompassie = () => {
 
       <Footer />
 
-      {/* Registration Modal */}
-      <Dialog open={isRegistrationOpen} onOpenChange={setIsRegistrationOpen}>
-        <DialogContent className="sm:max-w-md max-h-[90vh] overflow-y-auto">
-          <DialogHeader>
-            <DialogTitle className="text-xl font-light">
-              Aanmelden voor de groepstraining
-            </DialogTitle>
-          </DialogHeader>
-          {selectedTraining && (
-            <RegistrationForm
-              trainingName={`8-weekse MSC Groepstraining (${selectedTraining.language})`}
-              trainingDate={selectedTraining.startDate}
-              trainingTime={selectedTraining.time}
-              price={selectedTraining.price}
-              onSuccess={() => {
-                setTimeout(() => setIsRegistrationOpen(false), 2000);
-              }}
-            />
-          )}
-        </DialogContent>
-      </Dialog>
     </div>
   );
 };
