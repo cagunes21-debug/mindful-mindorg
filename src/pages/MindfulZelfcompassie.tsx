@@ -157,17 +157,9 @@ const MindfulZelfcompassie = () => {
               <h2 className="text-2xl font-light text-foreground md:text-3xl leading-tight mb-6">
                 Waarom <span className="font-serif italic text-terracotta-600">Mindful Zelfcompassie?</span>
               </h2>
-              <div className="space-y-4 text-muted-foreground text-base leading-relaxed">
-                <p>
-                  De meeste mensen zijn strenger voor zichzelf dan voor wie dan ook. Zelfkritiek voelt misschien als motivatie, maar onderzoek laat het tegenovergestelde zien: het vergroot stress, ondermijnt veerkracht en put je uit.
-                </p>
-                <p>
-                  Mindful Self-Compassion (MSC) biedt een bewezen alternatief. Ontwikkeld door dr. Kristin Neff en dr. Christopher Germer, leer je om met vriendelijkheid en begrip op jezelf te reageren — juist wanneer het moeilijk is. Niet als luxe, maar als fundament voor je welzijn.
-                </p>
-                <p>
-                  In deze 8-weekse groepstraining oefen je dat samen: in een kleine, veilige groep waar je leert van elkaars ervaringen en ontdekt hoe je jezelf kunt ondersteunen zoals je een goede vriend(in) zou ondersteunen.
-                </p>
-              </div>
+              <p className="text-muted-foreground text-base leading-relaxed">
+                De meeste mensen zijn strenger voor zichzelf dan voor wie dan ook — terwijl zelfkritiek je juist uitput. Mindful Self-Compassion leert je om met vriendelijkheid op jezelf te reageren, juist wanneer het moeilijk is. In deze groepstraining oefen je dat samen.
+              </p>
               <div className="mt-6">
                 <Link
                   to="/mindful-self-compassion"
