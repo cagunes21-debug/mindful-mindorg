@@ -37,6 +37,7 @@ const Index = () => {
       <ResultsHomeSection />
       <PricingHomeSection />
       <StepsSection />
+      <TestimonialsHomeSection />
       <TrainerHomeSection />
       <GroupCtaSection />
       <FinalCtaSection />
