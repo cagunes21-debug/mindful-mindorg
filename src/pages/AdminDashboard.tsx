@@ -726,34 +726,34 @@ export default function AdminDashboard() {
   const greeting = hour < 12 ? "Goedemorgen" : hour < 18 ? "Goedemiddag" : "Goedenavond";
 
   return (
-    <div className="min-h-screen bg-background flex">
+    <div className="min-h-screen bg-gradient-to-br from-warm-50/50 via-background to-background flex">
       <SEO title="Admin | Mindful Mind" description="Beheer dashboard" />
 
       {isMobile && sidebarOpen && (
-        <div className="fixed inset-0 bg-black/20 backdrop-blur-sm z-40" onClick={() => setSidebarOpen(false)} />
+        <div className="fixed inset-0 bg-black/30 backdrop-blur-sm z-40" onClick={() => setSidebarOpen(false)} />
       )}
 
       {/* ── Sidebar ── */}
       <aside className={cn(
-        "bg-card border-r border-border flex flex-col shrink-0 transition-all duration-300 z-50",
-        "md:sticky md:top-0 md:h-screen md:w-56",
-        isMobile && "fixed top-0 left-0 h-full w-64 shadow-xl",
+        "bg-gradient-to-b from-card to-card/95 border-r border-border/60 flex flex-col shrink-0 transition-all duration-300 z-50",
+        "md:sticky md:top-0 md:h-screen md:w-60",
+        isMobile && "fixed top-0 left-0 h-full w-64 shadow-2xl",
         isMobile && !sidebarOpen && "-translate-x-full",
         isMobile && sidebarOpen && "translate-x-0",
       )}>
         {/* Logo */}
-        <div className="h-14 flex items-center justify-between px-5 border-b border-border shrink-0">
-          <div className="flex items-center gap-2.5">
-            <div className="h-7 w-7 rounded-lg bg-terracotta-100 flex items-center justify-center">
-              <div className="h-3 w-3 rounded-full bg-terracotta-500" />
+        <div className="h-16 flex items-center justify-between px-5 border-b border-border/40 shrink-0">
+          <div className="flex items-center gap-3">
+            <div className="h-9 w-9 rounded-xl bg-gradient-to-br from-terracotta-400 to-terracotta-600 flex items-center justify-center shadow-sm">
+              <div className="h-3.5 w-3.5 rounded-full bg-white/90" />
             </div>
             <div>
-              <span className="text-sm font-semibold text-foreground block leading-tight">Mindful Mind</span>
-              <span className="text-[10px] text-muted-foreground leading-tight">Beheerportaal</span>
+              <span className="text-sm font-bold text-foreground block leading-tight">Mindful Mind</span>
+              <span className="text-[10px] text-muted-foreground/70 leading-tight">Beheerportaal</span>
             </div>
           </div>
           {isMobile && (
-            <button onClick={() => setSidebarOpen(false)} className="p-1 rounded-md hover:bg-muted">
+            <button onClick={() => setSidebarOpen(false)} className="p-1.5 rounded-lg hover:bg-muted">
               <X className="h-4 w-4 text-muted-foreground" />
             </button>
           )}
