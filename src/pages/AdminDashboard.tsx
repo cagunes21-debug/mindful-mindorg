@@ -155,30 +155,30 @@ function useQuickStats() {
 
 // ─── Stat card ────────────────────────────────────────────────────────────────
 
-function StatCard({ icon: Icon, label, value, color, onClick }: {
+function StatCard({ icon: Icon, label, value, gradient, iconColor, onClick }: {
   icon: React.ElementType; label: string; value: string | number;
-  color: string; onClick?: () => void;
+  gradient: string; iconColor: string; onClick?: () => void;
 }) {
   return (
     <Card
-      className={cn(
-        "cursor-pointer hover:shadow-md transition-all duration-200 group border-border/60 overflow-hidden relative",
-      )}
+      className="cursor-pointer hover:shadow-lg transition-all duration-300 group border-0 overflow-hidden"
       onClick={onClick}
     >
-      <CardContent className="p-5">
-        <div className="flex items-start justify-between">
-          <div>
-            <p className="text-xs font-medium text-muted-foreground uppercase tracking-wide mb-1">{label}</p>
-            <p className="text-3xl font-bold text-foreground">{value}</p>
+      <CardContent className={cn("p-0")}>
+        <div className={cn("p-5 bg-gradient-to-br", gradient)}>
+          <div className="flex items-start justify-between">
+            <div>
+              <p className="text-[10px] font-semibold uppercase tracking-widest text-white/70 mb-1.5">{label}</p>
+              <p className="text-3xl font-bold text-white">{value}</p>
+            </div>
+            <div className="h-11 w-11 rounded-2xl bg-white/20 backdrop-blur-sm flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform shadow-sm">
+              <Icon className={cn("h-5 w-5 text-white")} />
+            </div>
           </div>
-          <div className={cn("h-10 w-10 rounded-xl flex items-center justify-center shrink-0 transition-transform group-hover:scale-110", color)}>
-            <Icon className="h-5 w-5" />
+          <div className="mt-3 flex items-center gap-1 text-xs text-white/60 group-hover:text-white/90 transition-colors">
+            <span>Bekijken</span>
+            <ArrowUpRight className="h-3 w-3" />
           </div>
-        </div>
-        <div className="mt-3 flex items-center gap-1 text-xs text-muted-foreground group-hover:text-terracotta-600 transition-colors">
-          <span>Bekijken</span>
-          <ArrowUpRight className="h-3 w-3" />
         </div>
       </CardContent>
     </Card>
