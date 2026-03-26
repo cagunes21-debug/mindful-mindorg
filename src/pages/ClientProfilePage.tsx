@@ -7,7 +7,6 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter } from "@/components/ui/dialog";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { ArrowLeft, Loader2, FileText, Heart } from "lucide-react";
 import { toast } from "sonner";
 import type { CustomerData, Registration, Enrollment, TrainerNote, SessionAppointment } from "@/components/admin/customer-profile/types";
@@ -38,6 +37,7 @@ export default function ClientProfilePage() {
   const [sessionAppointments, setSessionAppointments] = useState<SessionAppointment[]>([]);
   const [structuredNotes, setStructuredNotes] = useState<TrainerNote[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [activeTab, setActiveTab] = useState("intake");
 
   const [showExtraTraining, setShowExtraTraining] = useState(false);
   const [extraTrainingName, setExtraTrainingName] = useState("8-weekse Mindful Zelfcompassie Training");
@@ -139,30 +139,46 @@ export default function ClientProfilePage() {
           onAddTraining={() => setShowExtraTraining(true)}
         />
 
-        {/* Tabs — only Intake & Notities */}
-        <Tabs defaultValue="intake" className="w-full">
-          <TabsList className="h-9 w-full justify-start rounded-xl bg-secondary/60 p-1">
-            <TabsTrigger value="intake" className="gap-1.5 text-xs rounded-lg data-[state=active]:bg-card data-[state=active]:shadow-sm">
-              <Heart className="h-3.5 w-3.5" /> Intake
-            </TabsTrigger>
-            <TabsTrigger value="notities" className="gap-1.5 text-xs rounded-lg data-[state=active]:bg-card data-[state=active]:shadow-sm">
-              <FileText className="h-3.5 w-3.5" /> Notities
-              {structuredNotes.length > 0 && <Badge variant="secondary" className="text-[10px] px-1.5 py-0 h-4 ml-0.5">{structuredNotes.length}</Badge>}
-            </TabsTrigger>
-          </TabsList>
+        {/* Tabs — large, visual */}
+        <div className="flex gap-3">
+          {[
+            { key: "intake", label: "Intake", icon: Heart, color: "from-terracotta-50 to-terracotta-100 border-terracotta-200 text-terracotta-700", activeColor: "from-terracotta-100 to-terracotta-200 border-terracotta-300 ring-2 ring-terracotta-200/50 shadow-md" },
+            { key: "notities", label: "Notities", icon: FileText, color: "from-sage-50 to-sage-100 border-sage-200 text-sage-700", activeColor: "from-sage-100 to-sage-200 border-sage-300 ring-2 ring-sage-200/50 shadow-md", badge: structuredNotes.length },
+          ].map(tab => {
+            const Icon = tab.icon;
+            const isActive = activeTab === tab.key;
+            return (
+              <button
+                key={tab.key}
+                onClick={() => setActiveTab(tab.key)}
+                className={`flex-1 flex items-center justify-center gap-2.5 p-4 rounded-2xl border-2 transition-all duration-200 ${
+                  isActive ? `bg-gradient-to-br ${tab.activeColor}` : `bg-gradient-to-br ${tab.color} opacity-70 hover:opacity-100`
+                }`}
+              >
+                <Icon className="h-5 w-5" />
+                <span className="text-sm font-semibold">{tab.label}</span>
+                {tab.badge !== undefined && tab.badge > 0 && (
+                  <Badge variant="secondary" className="text-[10px] px-1.5 py-0 h-5 rounded-full">{tab.badge}</Badge>
+                )}
+              </button>
+            );
+          })}
+        </div>
 
-          <TabsContent value="intake" className="mt-4">
-            {enrollments.length > 0 ? (
+        {/* Tab content */}
+        <div className="mt-1">
+          {activeTab === "intake" && (
+            enrollments.length > 0 ? (
               <IntakeSection enrollmentId={enrollments[0].id} />
             ) : (
               <p className="text-sm text-muted-foreground py-4">Geen traject gevonden om intake voor in te vullen.</p>
-            )}
-          </TabsContent>
+            )
+          )}
 
-          <TabsContent value="notities" className="mt-4">
+          {activeTab === "notities" && (
             <TrainerNotesSection enrollments={enrollments} notes={structuredNotes} onNotesChange={setStructuredNotes} />
-          </TabsContent>
-        </Tabs>
+          )}
+        </div>
       </div>
 
       {/* Extra Training Dialog */}
