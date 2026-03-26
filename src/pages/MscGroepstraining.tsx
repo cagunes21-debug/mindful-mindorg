@@ -143,8 +143,8 @@ const MscGroepstraining = () => {
               transition={{ duration: 0.7, delay: 0.1 }}
               className="mb-8 text-5xl font-light tracking-tight text-foreground md:text-6xl lg:text-7xl leading-[1.15]"
             >
-              Kom thuis
-              <span className="block font-serif italic text-terracotta-600 mt-3 text-[1.1em]">bij jezelf!</span>
+              Jouw welzijn begint
+              <span className="block font-serif italic text-terracotta-600 mt-3 text-[1.1em]">bij hoe je met jezelf omgaat</span>
             </motion.h1>
             
             {/* Subtitle - training name */}
