@@ -267,15 +267,15 @@ export default function AdminCustomersSection({ initialTab = "customers" }: { in
         </TabsList>
 
         {/* ── CUSTOMERS TAB ── */}
-        <TabsContent value="customers" className="mt-4">
-          <div className="flex flex-wrap items-center gap-3 mb-3">
+        <TabsContent value="customers" className="mt-5">
+          <div className="flex flex-wrap items-center gap-3 mb-4">
             <div className="relative flex-1 max-w-sm">
               <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
               <Input
                 placeholder="Zoek op naam, e-mail of training..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="pl-10 h-9"
+                className="pl-10 h-10 rounded-xl bg-muted/30 border-border/40"
               />
             </div>
             <span className="text-xs text-muted-foreground">{filteredCustomers.length} resultaten</span>
