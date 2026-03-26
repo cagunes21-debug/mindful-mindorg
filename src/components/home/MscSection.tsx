@@ -19,16 +19,11 @@ const MscSection = () => {
               <div className="inline-flex items-center justify-center h-12 w-12 rounded-full bg-sage-100 mb-6">
                 <Leaf className="h-5 w-5 text-sage-600" />
               </div>
-              <p className="text-xl md:text-2xl text-foreground leading-[1.6] font-serif mb-3">
-                Mindful Self-Compassion helpt je om
-                <br className="hidden md:block" />
-                <em className="italic text-primary">milder met jezelf om te gaan.</em>
+              <p className="text-xl md:text-2xl text-foreground leading-[1.6] font-serif mb-4">
+                Mindful Self-Compassion (MSC) is een wetenschappelijk onderbouwde methode, ontwikkeld door dr. Kristin Neff en dr. Christopher Germer.
               </p>
-              <p className="text-muted-foreground leading-relaxed max-w-md mx-auto mb-3">
-                Niet door jezelf te veranderen, maar door jezelf te ondersteunen — juist wanneer het moeilijk is.
-              </p>
-              <p className="text-muted-foreground leading-relaxed max-w-lg mx-auto mb-6 text-sm">
-                MSC helpt je om milder met jezelf om te gaan. Niet als verwennerij, maar als een vaardigheid die je traint — net zoals je een spier traint. Wetenschappelijk onderbouwd, ontwikkeld door dr. Kristin Neff en dr. Christopher Germer.
+              <p className="text-muted-foreground leading-relaxed max-w-md mx-auto mb-6">
+                Niet door jezelf te veranderen, maar door jezelf te ondersteunen — juist wanneer het moeilijk is. Zelfcompassie leer je. Stap voor stap.
               </p>
               <Link
                 to="/msc-training#wat-is-msc"
