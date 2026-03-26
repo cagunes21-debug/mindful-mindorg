@@ -1325,4 +1325,4 @@ const MscGroepstraining = () => {
   );
 };
 
-export default MindfulZelfcompassie;
+export default MscGroepstraining;
