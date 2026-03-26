@@ -63,7 +63,7 @@ const workshopDates = [
 
 
 
-const MindfulZelfcompassie = () => {
+const MscGroepstraining = () => {
   const [isRegistrationOpen, setIsRegistrationOpen] = useState(false);
   const [selectedTraining, setSelectedTraining] = useState<typeof trainingDates[0] | null>(null);
   const [isWorkshopRegistrationOpen, setIsWorkshopRegistrationOpen] = useState(false);
