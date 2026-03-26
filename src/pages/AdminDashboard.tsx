@@ -18,6 +18,7 @@ import {
 } from "lucide-react";
 import SEO from "@/components/SEO";
 import AdminCustomersSection from "@/components/admin/AdminCustomersSection";
+import AdminFinanceSection from "@/components/admin/AdminFinanceSection";
 import UpcomingSessionsWidget from "@/components/admin/UpcomingSessionsWidget";
 import CrmPipelineSection from "@/components/admin/CrmPipelineSection";
 import AgendaSection from "@/components/admin/AgendaSection";
@@ -96,6 +97,7 @@ const NAV = [
     group: "Relatiebeheer",
     items: [
       { id: "clients",  label: "Klanten",   icon: Users },
+      { id: "financien", label: "Financiën", icon: Euro },
     ],
   },
   {
@@ -111,6 +113,7 @@ const NAV = [
 const SECTION_TITLES: Record<string, string> = {
   overview:   "Dashboard",
   clients:    "Klanten & Leads",
+  financien:  "Financiën",
   trainingen: "Lopende trainingen",
   deelnemers: "Deelnemers",
   agenda:     "Agenda",
@@ -119,6 +122,7 @@ const SECTION_TITLES: Record<string, string> = {
 const SECTION_DESCRIPTIONS: Record<string, string> = {
   overview:   "Overzicht van je praktijk",
   clients:    "Al je klanten, leads en pipeline",
+  financien:  "Bestellingen, betalingen en omzet",
   trainingen: "Bekijk wie in welke week zit",
   deelnemers: "Alle inschrijvingen beheren",
   agenda:     "Trainingsdata en planning",
@@ -894,7 +898,7 @@ export default function AdminDashboard() {
                   value={statsLoading ? "…" : `€${stats.revenue.toLocaleString("nl-NL")}`}
                   gradient="from-emerald-500 to-emerald-600"
                   iconColor="text-white"
-                  onClick={() => navigate("/admin/financien")}
+                  onClick={() => handleNav("financien")}
                 />
               </div>
 
@@ -936,6 +940,7 @@ export default function AdminDashboard() {
           {activeSection === "trainingen" && <LopendeTrainingenSection onViewDeelnemer={() => handleNav("deelnemers")} />}
           {activeSection === "deelnemers" && <DeelnemersSection />}
           {activeSection === "agenda"     && <AgendaSection />}
+          {activeSection === "financien"  && <AdminFinanceSection />}
 
         </div>
       </main>
