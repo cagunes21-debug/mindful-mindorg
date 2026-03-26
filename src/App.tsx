@@ -79,6 +79,7 @@ const App = () => (
               <Routes>
                 <Route path="/" element={<Index />} />
                 <Route path="/msc-training" element={<MindfulZelfcompassie />} />
+                <Route path="/msc-groepstraining" element={<MscGroepstraining />} />
                 <Route path="/home-v1" element={<IndividueelHomeV1 />} />
                 <Route path="/programmas" element={<Index />} />
                 
