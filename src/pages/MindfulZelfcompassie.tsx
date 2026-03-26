@@ -126,10 +126,10 @@ const MindfulZelfcompassie = () => {
               className="flex flex-col sm:flex-row items-center justify-center gap-4"
             >
               <Button asChild size="lg" className="bg-terracotta-600 hover:bg-terracotta-700 text-white rounded-full px-10 py-7 text-lg shadow-lg">
-                <a href="#data">
+                <Link to="/agenda">
                   Bekijk de startdata
                   <ArrowRight className="ml-3 h-5 w-5" />
-                </a>
+                </Link>
               </Button>
             </motion.div>
 
