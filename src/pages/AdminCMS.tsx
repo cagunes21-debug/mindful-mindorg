@@ -321,6 +321,9 @@ export default function AdminCMS() {
                                             </SelectContent>
                                           </Select>
                                         )}
+                                        <Button variant="ghost" size="sm" className="h-7 px-2 gap-1 text-xs text-muted-foreground" onClick={() => exportScriptPdf(item.title, scriptContent, activeLang)} title="Download als PDF">
+                                          <Download className="h-3.5 w-3.5" /> PDF
+                                        </Button>
                                         <Button variant="ghost" size="sm" className="h-6 px-2 text-[10px] text-muted-foreground" onClick={() => toggleItemExpand(item.id)}>
                                           Sluiten ✕
                                         </Button>
