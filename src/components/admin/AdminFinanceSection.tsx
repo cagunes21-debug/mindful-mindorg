@@ -355,7 +355,15 @@ export default function AdminFinanceSection() {
           <TabsTrigger value="payments" className="gap-2">
             <CreditCard className="h-4 w-4" /> Betalingen ({payments.length})
           </TabsTrigger>
+          <TabsTrigger value="flow" className="gap-2">
+            <Info className="h-4 w-4" /> Betalingsproces
+          </TabsTrigger>
         </TabsList>
+
+        {/* PAYMENT FLOW TAB */}
+        <TabsContent value="flow">
+          <PaymentFlowDiagram />
+        </TabsContent>
 
         {/* ORDERS TAB */}
         <TabsContent value="orders">
