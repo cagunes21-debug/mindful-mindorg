@@ -817,7 +817,7 @@ export default function AdminDashboard() {
         </nav>
 
         {/* Footer */}
-        <div className="border-t border-border p-3 shrink-0">
+        <div className="border-t border-border/40 p-3 shrink-0">
           <button onClick={handleLogout}
             className="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-[13px] text-muted-foreground hover:bg-destructive/10 hover:text-destructive transition-colors"
           >
