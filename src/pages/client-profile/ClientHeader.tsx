@@ -6,7 +6,7 @@ import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Card, CardContent } from "@/components/ui/card";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { ArrowLeft, Mail, Phone, Globe, Save, X, Plus, Calendar, Hash, Clock } from "lucide-react";
+import { ArrowLeft, Mail, Phone, Globe, Save, X, Plus, Calendar, Hash, Clock, Wallet } from "lucide-react";
 import { toast } from "sonner";
 import { format } from "date-fns";
 import { nl } from "date-fns/locale";
