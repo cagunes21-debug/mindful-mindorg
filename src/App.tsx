@@ -7,6 +7,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { HelmetProvider } from "react-helmet-async";
 import { LanguageProvider } from "@/i18n/LanguageContext";
 import MindfulZelfcompassie from "./pages/MindfulZelfcompassie";
+import MscGroepstraining from "./pages/MscGroepstraining";
 
 import StickyCTA from "./components/StickyCTA";
 import ProtectedRoute from "./components/ProtectedRoute";
@@ -78,6 +79,7 @@ const App = () => (
               <Routes>
                 <Route path="/" element={<Index />} />
                 <Route path="/msc-training" element={<MindfulZelfcompassie />} />
+                <Route path="/msc-groepstraining" element={<MscGroepstraining />} />
                 <Route path="/home-v1" element={<IndividueelHomeV1 />} />
                 <Route path="/programmas" element={<Index />} />
                 
