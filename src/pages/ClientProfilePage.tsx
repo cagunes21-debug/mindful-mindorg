@@ -156,107 +156,28 @@ export default function ClientProfilePage() {
           onAddTraining={() => setShowExtraTraining(true)}
         />
 
-        {/* Phase stepper */}
-        <PhaseStepperBar enrollments={enrollments} />
-
-        {/* Quick stats — compact row */}
-        <div className="grid grid-cols-3 gap-2">
-          <Card className="border-border/40">
-            <CardContent className="p-3 text-center">
-              <CheckCircle2 className="h-3.5 w-3.5 text-muted-foreground mx-auto mb-1" />
-              <p className="text-lg font-bold">
-                {activeEnrollment ? `${activeEnrollment.sessions_used}/${activeEnrollment.sessions_total || 6}` : completedSessions}
-              </p>
-              <p className="text-[10px] text-muted-foreground">Sessies</p>
-              {activeEnrollment?.sessions_total && (
-                <Progress value={(activeEnrollment.sessions_used / activeEnrollment.sessions_total) * 100} className="h-1 mt-1.5" />
-              )}
-            </CardContent>
-          </Card>
-          <Card className="border-border/40">
-            <CardContent className="p-3 text-center">
-              <Clock className="h-3.5 w-3.5 text-muted-foreground mx-auto mb-1" />
-              {nextSession?.session_date ? (
-                <>
-                  <p className="text-sm font-semibold">{format(new Date(nextSession.session_date), "d MMM", { locale: nl })}</p>
-                  {nextSession.session_time && <p className="text-[10px] text-muted-foreground">{nextSession.session_time.slice(0, 5)}</p>}
-                </>
-              ) : (
-                <p className="text-sm text-muted-foreground">—</p>
-              )}
-              <p className="text-[10px] text-muted-foreground mt-0.5">Volgende sessie</p>
-            </CardContent>
-          </Card>
-          <Card className="border-border/40">
-            <CardContent className="p-3 text-center">
-              <FileText className="h-3.5 w-3.5 text-muted-foreground mx-auto mb-1" />
-              <p className="text-lg font-bold">{structuredNotes.length}</p>
-              <p className="text-[10px] text-muted-foreground">Notities</p>
-            </CardContent>
-          </Card>
-        </div>
-
-        {/* AI Summary */}
-        <AiSummaryCard email={customer.email} />
-
-        {/* Tabs */}
-        <Tabs defaultValue="dossier" className="w-full">
+        {/* Tabs — only Intake & Notities */}
+        <Tabs defaultValue="intake" className="w-full">
           <TabsList className="h-9 w-full justify-start rounded-xl bg-secondary/60 p-1">
-            <TabsTrigger value="dossier" className="gap-1.5 text-xs rounded-lg data-[state=active]:bg-card data-[state=active]:shadow-sm">
-              <FileText className="h-3.5 w-3.5" /> Dossier
-            </TabsTrigger>
-            <TabsTrigger value="sessies" className="gap-1.5 text-xs rounded-lg data-[state=active]:bg-card data-[state=active]:shadow-sm">
-              <Calendar className="h-3.5 w-3.5" /> Sessies
-              {sessionAppointments.length > 0 && <Badge variant="secondary" className="text-[10px] px-1.5 py-0 h-4 ml-0.5">{sessionAppointments.length}</Badge>}
+            <TabsTrigger value="intake" className="gap-1.5 text-xs rounded-lg data-[state=active]:bg-card data-[state=active]:shadow-sm">
+              <Heart className="h-3.5 w-3.5" /> Intake
             </TabsTrigger>
             <TabsTrigger value="notities" className="gap-1.5 text-xs rounded-lg data-[state=active]:bg-card data-[state=active]:shadow-sm">
               <FileText className="h-3.5 w-3.5" /> Notities
               {structuredNotes.length > 0 && <Badge variant="secondary" className="text-[10px] px-1.5 py-0 h-4 ml-0.5">{structuredNotes.length}</Badge>}
             </TabsTrigger>
-            <TabsTrigger value="financieel" className="gap-1.5 text-xs rounded-lg data-[state=active]:bg-card data-[state=active]:shadow-sm">
-              <Euro className="h-3.5 w-3.5" /> Financieel
-            </TabsTrigger>
           </TabsList>
 
-          <TabsContent value="dossier" className="mt-4 space-y-5">
-            {enrollments.length > 0 && (
-              <div>
-                <h3 className="text-xs font-semibold flex items-center gap-1.5 mb-2 text-muted-foreground uppercase tracking-wider">
-                  <Heart className="h-3.5 w-3.5 text-primary" /> Intake
-                </h3>
-                <IntakeSection enrollmentId={enrollments[0].id} />
-              </div>
+          <TabsContent value="intake" className="mt-4">
+            {enrollments.length > 0 ? (
+              <IntakeSection enrollmentId={enrollments[0].id} />
+            ) : (
+              <p className="text-sm text-muted-foreground py-4">Geen traject gevonden om intake voor in te vullen.</p>
             )}
-
-            {hasIndividual && enrollments.filter(e => e.course_type === "individueel_6" || e.course_type === "losse_sessie").map(enr => (
-              <div key={enr.id}>
-                <h3 className="text-xs font-semibold flex items-center gap-1.5 mb-2 text-muted-foreground uppercase tracking-wider">
-                  <Brain className="h-3.5 w-3.5 text-primary" /> Sessieverslagen (AI)
-                </h3>
-                <TherapySessionSection enrollmentId={enr.id} clientName={customer.name || undefined} />
-              </div>
-            ))}
-
-            {enrollments.length > 0 && (
-              <div>
-                <h3 className="text-xs font-semibold flex items-center gap-1.5 mb-2 text-muted-foreground uppercase tracking-wider">
-                  <BarChart3 className="h-3.5 w-3.5 text-primary" /> SCS Vragenlijst
-                </h3>
-                <ScsResultsSection enrollmentIds={enrollments.map(e => e.id)} />
-              </div>
-            )}
-          </TabsContent>
-
-          <TabsContent value="sessies" className="mt-4">
-            <SessionsSection sessionAppointments={sessionAppointments} enrollments={enrollments} onUpdate={fetchData} />
           </TabsContent>
 
           <TabsContent value="notities" className="mt-4">
             <TrainerNotesSection enrollments={enrollments} notes={structuredNotes} onNotesChange={setStructuredNotes} />
-          </TabsContent>
-
-          <TabsContent value="financieel" className="mt-4">
-            <RegistrationsList registrations={registrations} />
           </TabsContent>
         </Tabs>
       </div>
