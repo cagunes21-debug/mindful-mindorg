@@ -898,7 +898,7 @@ export default function AdminDashboard() {
                   value={statsLoading ? "…" : `€${stats.revenue.toLocaleString("nl-NL")}`}
                   gradient="from-emerald-500 to-emerald-600"
                   iconColor="text-white"
-                  onClick={() => navigate("/admin/financien")}
+                  onClick={() => handleNav("financien")}
                 />
               </div>
 
