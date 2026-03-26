@@ -2,32 +2,19 @@ import { useParams, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Progress } from "@/components/ui/progress";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter } from "@/components/ui/dialog";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import {
-  ArrowLeft, Loader2, CheckCircle2, Clock, FileText, Euro, Heart,
-  Brain, BarChart3, Calendar,
-} from "lucide-react";
-import { format } from "date-fns";
-import { nl } from "date-fns/locale";
+import { ArrowLeft, Loader2, FileText, Heart } from "lucide-react";
 import { toast } from "sonner";
 import type { CustomerData, Registration, Enrollment, TrainerNote, SessionAppointment } from "@/components/admin/customer-profile/types";
-import TherapySessionSection from "@/components/admin/customer-profile/TherapySessionSection";
 
 import ClientHeader from "./client-profile/ClientHeader";
-import PhaseStepperBar from "./client-profile/PhaseStepperBar";
-import AiSummaryCard from "./client-profile/AiSummaryCard";
 import IntakeSection from "./client-profile/IntakeSection";
-import SessionsSection from "./client-profile/SessionsSection";
 import TrainerNotesSection from "./client-profile/TrainerNotesSection";
-import ScsResultsSection from "./client-profile/ScsResultsSection";
-import RegistrationsList from "./client-profile/RegistrationsList";
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
@@ -139,10 +126,6 @@ export default function ClientProfilePage() {
     );
   }
 
-  const activeEnrollment = enrollments.find(e => e.status === "active");
-  const completedSessions = sessionAppointments.filter(a => a.status === "afgerond").length;
-  const nextSession = sessionAppointments.find(a => a.status === "gepland" && a.session_date);
-  const hasIndividual = enrollments.some(e => e.course_type === "individueel_6" || e.course_type === "losse_sessie");
 
   return (
     <div className="min-h-screen bg-background">
@@ -156,107 +139,28 @@ export default function ClientProfilePage() {
           onAddTraining={() => setShowExtraTraining(true)}
         />
 
-        {/* Phase stepper */}
-        <PhaseStepperBar enrollments={enrollments} />
-
-        {/* Quick stats — compact row */}
-        <div className="grid grid-cols-3 gap-2">
-          <Card className="border-border/40">
-            <CardContent className="p-3 text-center">
-              <CheckCircle2 className="h-3.5 w-3.5 text-muted-foreground mx-auto mb-1" />
-              <p className="text-lg font-bold">
-                {activeEnrollment ? `${activeEnrollment.sessions_used}/${activeEnrollment.sessions_total || 6}` : completedSessions}
-              </p>
-              <p className="text-[10px] text-muted-foreground">Sessies</p>
-              {activeEnrollment?.sessions_total && (
-                <Progress value={(activeEnrollment.sessions_used / activeEnrollment.sessions_total) * 100} className="h-1 mt-1.5" />
-              )}
-            </CardContent>
-          </Card>
-          <Card className="border-border/40">
-            <CardContent className="p-3 text-center">
-              <Clock className="h-3.5 w-3.5 text-muted-foreground mx-auto mb-1" />
-              {nextSession?.session_date ? (
-                <>
-                  <p className="text-sm font-semibold">{format(new Date(nextSession.session_date), "d MMM", { locale: nl })}</p>
-                  {nextSession.session_time && <p className="text-[10px] text-muted-foreground">{nextSession.session_time.slice(0, 5)}</p>}
-                </>
-              ) : (
-                <p className="text-sm text-muted-foreground">—</p>
-              )}
-              <p className="text-[10px] text-muted-foreground mt-0.5">Volgende sessie</p>
-            </CardContent>
-          </Card>
-          <Card className="border-border/40">
-            <CardContent className="p-3 text-center">
-              <FileText className="h-3.5 w-3.5 text-muted-foreground mx-auto mb-1" />
-              <p className="text-lg font-bold">{structuredNotes.length}</p>
-              <p className="text-[10px] text-muted-foreground">Notities</p>
-            </CardContent>
-          </Card>
-        </div>
-
-        {/* AI Summary */}
-        <AiSummaryCard email={customer.email} />
-
-        {/* Tabs */}
-        <Tabs defaultValue="dossier" className="w-full">
+        {/* Tabs — only Intake & Notities */}
+        <Tabs defaultValue="intake" className="w-full">
           <TabsList className="h-9 w-full justify-start rounded-xl bg-secondary/60 p-1">
-            <TabsTrigger value="dossier" className="gap-1.5 text-xs rounded-lg data-[state=active]:bg-card data-[state=active]:shadow-sm">
-              <FileText className="h-3.5 w-3.5" /> Dossier
-            </TabsTrigger>
-            <TabsTrigger value="sessies" className="gap-1.5 text-xs rounded-lg data-[state=active]:bg-card data-[state=active]:shadow-sm">
-              <Calendar className="h-3.5 w-3.5" /> Sessies
-              {sessionAppointments.length > 0 && <Badge variant="secondary" className="text-[10px] px-1.5 py-0 h-4 ml-0.5">{sessionAppointments.length}</Badge>}
+            <TabsTrigger value="intake" className="gap-1.5 text-xs rounded-lg data-[state=active]:bg-card data-[state=active]:shadow-sm">
+              <Heart className="h-3.5 w-3.5" /> Intake
             </TabsTrigger>
             <TabsTrigger value="notities" className="gap-1.5 text-xs rounded-lg data-[state=active]:bg-card data-[state=active]:shadow-sm">
               <FileText className="h-3.5 w-3.5" /> Notities
               {structuredNotes.length > 0 && <Badge variant="secondary" className="text-[10px] px-1.5 py-0 h-4 ml-0.5">{structuredNotes.length}</Badge>}
             </TabsTrigger>
-            <TabsTrigger value="financieel" className="gap-1.5 text-xs rounded-lg data-[state=active]:bg-card data-[state=active]:shadow-sm">
-              <Euro className="h-3.5 w-3.5" /> Financieel
-            </TabsTrigger>
           </TabsList>
 
-          <TabsContent value="dossier" className="mt-4 space-y-5">
-            {enrollments.length > 0 && (
-              <div>
-                <h3 className="text-xs font-semibold flex items-center gap-1.5 mb-2 text-muted-foreground uppercase tracking-wider">
-                  <Heart className="h-3.5 w-3.5 text-primary" /> Intake
-                </h3>
-                <IntakeSection enrollmentId={enrollments[0].id} />
-              </div>
+          <TabsContent value="intake" className="mt-4">
+            {enrollments.length > 0 ? (
+              <IntakeSection enrollmentId={enrollments[0].id} />
+            ) : (
+              <p className="text-sm text-muted-foreground py-4">Geen traject gevonden om intake voor in te vullen.</p>
             )}
-
-            {hasIndividual && enrollments.filter(e => e.course_type === "individueel_6" || e.course_type === "losse_sessie").map(enr => (
-              <div key={enr.id}>
-                <h3 className="text-xs font-semibold flex items-center gap-1.5 mb-2 text-muted-foreground uppercase tracking-wider">
-                  <Brain className="h-3.5 w-3.5 text-primary" /> Sessieverslagen (AI)
-                </h3>
-                <TherapySessionSection enrollmentId={enr.id} clientName={customer.name || undefined} />
-              </div>
-            ))}
-
-            {enrollments.length > 0 && (
-              <div>
-                <h3 className="text-xs font-semibold flex items-center gap-1.5 mb-2 text-muted-foreground uppercase tracking-wider">
-                  <BarChart3 className="h-3.5 w-3.5 text-primary" /> SCS Vragenlijst
-                </h3>
-                <ScsResultsSection enrollmentIds={enrollments.map(e => e.id)} />
-              </div>
-            )}
-          </TabsContent>
-
-          <TabsContent value="sessies" className="mt-4">
-            <SessionsSection sessionAppointments={sessionAppointments} enrollments={enrollments} onUpdate={fetchData} />
           </TabsContent>
 
           <TabsContent value="notities" className="mt-4">
             <TrainerNotesSection enrollments={enrollments} notes={structuredNotes} onNotesChange={setStructuredNotes} />
-          </TabsContent>
-
-          <TabsContent value="financieel" className="mt-4">
-            <RegistrationsList registrations={registrations} />
           </TabsContent>
         </Tabs>
       </div>
