@@ -793,51 +793,15 @@ const MindfulZelfcompassie = () => {
                   </div>
                 </div>
                 
-                {/* Training Dates Grid */}
-                <StaggerContainer className="grid gap-6 md:grid-cols-2">
-                  {trainingDates.map((training, index) => (
-                    <StaggerItem key={index}>
-                      <Card className="border-warm-200 overflow-hidden hover:shadow-lg transition-shadow h-full">
-                        <div className={`px-6 py-3 ${training.language === "Nederlands" ? "bg-terracotta-500" : "bg-sage-600"}`}>
-                          <div className="flex items-center justify-between">
-                            <span className="text-white font-medium">{training.language}</span>
-                            {training.earlyBirdPrice && (
-                              <span className="inline-flex items-center gap-1 rounded-full bg-white/20 px-3 py-1 text-xs font-semibold text-white">
-                                ✨ Early bird
-                              </span>
-                            )}
-                          </div>
-                        </div>
-                        <CardContent className="p-6">
-                          <p className="text-sm text-muted-foreground mb-2">{training.day}</p>
-                          <p className="font-semibold text-foreground text-lg mb-1">Start: {training.startDate}</p>
-                          <p className="text-foreground mb-3">Tijd: {training.time}</p>
-                          <p className="text-sm text-muted-foreground mb-4">{training.dates}</p>
-                          <UrgencyBadge className="mb-4" />
-                          <div className="pt-3 border-t border-warm-200 flex items-center justify-between">
-                            <div>
-                              {training.earlyBirdPrice ? (
-                                <>
-                                  <p className="text-xs text-muted-foreground line-through">{training.price}</p>
-                                  <p className="text-2xl font-light text-terracotta-600">{training.earlyBirdPrice}</p>
-                                  <p className="text-xs text-sage-700 font-medium">Early bird t/m {training.earlyBirdDeadline}</p>
-                                </>
-                              ) : (
-                                <p className="text-2xl font-light text-terracotta-600">{training.price}</p>
-                              )}
-                            </div>
-                            <Button 
-                              className="bg-terracotta-600 hover:bg-terracotta-700 text-white rounded-full"
-                              onClick={() => openRegistration(training)}
-                            >
-                              Reserveer
-                            </Button>
-                          </div>
-                        </CardContent>
-                      </Card>
-                    </StaggerItem>
-                  ))}
-                </StaggerContainer>
+                {/* CTA to view dates */}
+                <div className="text-center">
+                  <Button asChild className="bg-terracotta-600 hover:bg-terracotta-700 text-white rounded-full px-8">
+                    <a href="#data">
+                      Bekijk de data
+                      <ArrowRight className="ml-2 h-4 w-4" />
+                    </a>
+                  </Button>
+                </div>
               </div>
             </ScrollReveal>
 
