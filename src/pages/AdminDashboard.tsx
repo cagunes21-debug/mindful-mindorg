@@ -113,6 +113,7 @@ const NAV = [
 const SECTION_TITLES: Record<string, string> = {
   overview:   "Dashboard",
   clients:    "Klanten & Leads",
+  financien:  "Financiën",
   trainingen: "Lopende trainingen",
   deelnemers: "Deelnemers",
   agenda:     "Agenda",
@@ -121,6 +122,7 @@ const SECTION_TITLES: Record<string, string> = {
 const SECTION_DESCRIPTIONS: Record<string, string> = {
   overview:   "Overzicht van je praktijk",
   clients:    "Al je klanten, leads en pipeline",
+  financien:  "Bestellingen, betalingen en omzet",
   trainingen: "Bekijk wie in welke week zit",
   deelnemers: "Alle inschrijvingen beheren",
   agenda:     "Trainingsdata en planning",
