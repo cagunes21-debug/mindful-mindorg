@@ -25,6 +25,7 @@ import {
 import { exportScriptPdf } from "@/components/admin/exportScriptPdf";
 import SlideViewer from "@/components/admin/SlideViewer";
 import { cn } from "@/lib/utils";
+import EnrollmentContentManager from "@/components/admin/EnrollmentContentManager";
 
 const MSC_ITEM_TYPES: Record<string, string> = {
   topic: "Onderwerp", exercise: "Oefening", meditation: "Meditatie",
