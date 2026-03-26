@@ -185,66 +185,26 @@ const MindfulZelfcompassie = () => {
         </div>
       </section>
 
-      {/* Wat is MSC — kort */}
-      <section className="py-20 lg:py-28 bg-white">
+      {/* Waarom Mindful Zelfcompassie */}
+      <section className="py-16 lg:py-24 bg-white">
         <div className="container mx-auto px-4">
-          <div className="mx-auto max-w-3xl">
+          <div className="mx-auto max-w-2xl">
             <ScrollReveal>
-              <div className="text-center mb-10">
-                <span className="inline-block rounded-full bg-sage-100 px-5 py-2 text-xs font-semibold tracking-wider text-sage-700 mb-6 uppercase">
-                  De Methode
-                </span>
-                <h2 className="mb-6 text-3xl font-light text-foreground md:text-4xl leading-tight">
-                  Mindful Self-Compassion
-                  <span className="block font-serif italic text-terracotta-600 mt-1">(MSC)</span>
-                </h2>
-                <p className="text-muted-foreground text-lg max-w-2xl mx-auto leading-relaxed">
-                  Een wetenschappelijk onderbouwd 8-weeks programma, ontwikkeld door dr. Kristin Neff en dr. Christopher Germer. 
-                  Je leert jezelf te behandelen zoals je een goede vriend(in) zou behandelen.
+              <h2 className="text-2xl font-light text-foreground md:text-3xl leading-tight mb-6">
+                Waarom <span className="font-serif italic text-terracotta-600">Mindful Zelfcompassie?</span>
+              </h2>
+              <div className="space-y-4 text-muted-foreground text-base leading-relaxed">
+                <p>
+                  De meeste mensen zijn strenger voor zichzelf dan voor wie dan ook. Zelfkritiek voelt misschien als motivatie, maar onderzoek laat het tegenovergestelde zien: het vergroot stress, ondermijnt veerkracht en put je uit.
+                </p>
+                <p>
+                  Mindful Self-Compassion (MSC) biedt een bewezen alternatief. Ontwikkeld door dr. Kristin Neff en dr. Christopher Germer, leer je om met vriendelijkheid en begrip op jezelf te reageren — juist wanneer het moeilijk is. Niet als luxe, maar als fundament voor je welzijn.
+                </p>
+                <p>
+                  In deze 8-weekse groepstraining oefen je dat samen: in een kleine, veilige groep waar je leert van elkaars ervaringen en ontdekt hoe je jezelf kunt ondersteunen zoals je een goede vriend(in) zou ondersteunen.
                 </p>
               </div>
-            </ScrollReveal>
-
-            <ScrollReveal delay={0.1}>
-              <div className="grid md:grid-cols-2 gap-4 mb-8">
-                <Card className="border-0 bg-warm-50 rounded-2xl shadow-sm">
-                  <CardContent className="p-5 flex items-center gap-4">
-                    <div className="flex-shrink-0 h-12 w-12 rounded-xl bg-gradient-to-br from-terracotta-100 to-terracotta-200 flex items-center justify-center">
-                      <Brain className="h-6 w-6 text-terracotta-600" />
-                    </div>
-                    <div>
-                      <span className="text-xs font-semibold text-terracotta-600 uppercase tracking-wide">Pijler 1</span>
-                      <h3 className="text-lg font-semibold text-foreground">Mindfulness</h3>
-                      <p className="text-muted-foreground text-sm">Bewust aanwezig zijn bij wat je ervaart.</p>
-                    </div>
-                  </CardContent>
-                </Card>
-                <Card className="border-0 bg-warm-50 rounded-2xl shadow-sm">
-                  <CardContent className="p-5 flex items-center gap-4">
-                    <div className="flex-shrink-0 h-12 w-12 rounded-xl bg-gradient-to-br from-rose-100 to-rose-200 flex items-center justify-center">
-                      <Heart className="h-6 w-6 text-rose-600" />
-                    </div>
-                    <div>
-                      <span className="text-xs font-semibold text-rose-600 uppercase tracking-wide">Pijler 2</span>
-                      <h3 className="text-lg font-semibold text-foreground">Zelfcompassie</h3>
-                      <p className="text-muted-foreground text-sm">Met vriendelijkheid op jezelf reageren.</p>
-                    </div>
-                  </CardContent>
-                </Card>
-              </div>
-            </ScrollReveal>
-
-            <ScrollReveal delay={0.15}>
-              <div className="relative mt-8">
-                <Quote className="absolute -top-3 -left-2 h-7 w-7 text-terracotta-200" />
-                <blockquote className="bg-warm-50 border border-warm-200 rounded-2xl p-6 pl-10 italic text-lg text-muted-foreground leading-relaxed">
-                  "Met dezelfde vriendelijkheid naar jezelf kijken als naar een goede vriend — dat is de kern."
-                  <footer className="mt-3 not-italic text-sm font-medium text-terracotta-600">
-                    — Dr. Kristin Neff
-                  </footer>
-                </blockquote>
-              </div>
-              <div className="text-center mt-8">
+              <div className="mt-6">
                 <Link
                   to="/mindful-self-compassion"
                   className="inline-flex items-center gap-2 text-sage-600 text-sm hover:text-sage-700 transition-colors"
