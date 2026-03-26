@@ -67,9 +67,14 @@ export default function ClientHeader({ customer, enrollments, clientRecord, onCl
         <Button variant="ghost" size="sm" onClick={() => navigate("/admin")} className="gap-1.5 text-muted-foreground hover:text-foreground -ml-2">
           <ArrowLeft className="h-4 w-4" /> Terug
         </Button>
-        <Button size="sm" variant="outline" className="gap-1.5 rounded-xl border-primary/20 hover:bg-primary/5" onClick={onAddTraining}>
-          <Plus className="h-3.5 w-3.5" /> Training toevoegen
-        </Button>
+        <div className="flex items-center gap-2">
+          <Button size="sm" variant="outline" className="gap-1.5 rounded-xl border-sage-200 hover:bg-sage-50 text-sage-700" onClick={() => navigate("/admin?tab=financien")}>
+            <Wallet className="h-3.5 w-3.5" /> Financiën
+          </Button>
+          <Button size="sm" variant="outline" className="gap-1.5 rounded-xl border-primary/20 hover:bg-primary/5" onClick={onAddTraining}>
+            <Plus className="h-3.5 w-3.5" /> Training toevoegen
+          </Button>
+        </div>
       </div>
 
       {/* Hero card */}
