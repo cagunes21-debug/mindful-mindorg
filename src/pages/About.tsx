@@ -74,7 +74,7 @@ const About = () => {
       </section>
 
       {/* Onze aanpak — donker accent */}
-      <section className="py-20 lg:py-28 bg-[hsl(25,20%,12%)] text-white">
+      <section className="py-20 lg:py-28 bg-terracotta-800 text-white">
         <div className="container mx-auto px-4">
           <div className="mx-auto max-w-4xl">
             <ScrollReveal>
