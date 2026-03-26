@@ -23,8 +23,6 @@ import ScrollProgressBar from "@/components/ScrollProgressBar";
 import WhatsAppButton from "@/components/WhatsAppButton";
 import CookieConsent from "@/components/CookieConsent";
 import { ContactForm } from "@/components/ContactForm";
-import UrgencyBadge from "@/components/UrgencyBadge";
-import { RegistrationForm } from "@/components/RegistrationForm";
 
 const MindfulZelfcompassie = () => {
 
