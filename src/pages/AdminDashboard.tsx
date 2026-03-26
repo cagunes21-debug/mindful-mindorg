@@ -940,6 +940,7 @@ export default function AdminDashboard() {
           {activeSection === "trainingen" && <LopendeTrainingenSection onViewDeelnemer={() => handleNav("deelnemers")} />}
           {activeSection === "deelnemers" && <DeelnemersSection />}
           {activeSection === "agenda"     && <AgendaSection />}
+          {activeSection === "financien"  && <AdminFinanceSection />}
 
         </div>
       </main>
