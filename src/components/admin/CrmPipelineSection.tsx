@@ -478,8 +478,31 @@ export default function CrmPipelineSection({ onLeadsChange }: { onLeadsChange?: 
   }, {} as Record<string, number>);
 
   return (
-    <div className="space-y-4">
-      {/* Toolbar with process dropdown filter */}
+    <div className="space-y-5">
+      {/* Pipeline stage cards */}
+      <div className="grid grid-cols-3 sm:grid-cols-5 gap-2">
+        {LEAD_STAGES.map(stage => {
+          const count = stageCounts[stage.key] || 0;
+          const isFiltered = statusFilter === stage.key;
+          return (
+            <button
+              key={stage.key}
+              onClick={() => setStatusFilter(isFiltered ? null : stage.key)}
+              className={cn(
+                "rounded-xl p-3 text-center transition-all duration-200 border",
+                isFiltered
+                  ? `${stage.tagClass} ring-2 ring-offset-1 shadow-sm`
+                  : "bg-card border-border/40 hover:border-border hover:shadow-sm"
+              )}
+            >
+              <p className="text-xl font-bold text-foreground">{count}</p>
+              <p className="text-[10px] font-medium text-muted-foreground mt-0.5 truncate">{stage.label}</p>
+            </button>
+          );
+        })}
+      </div>
+
+      {/* Toolbar */}
       <div className="flex items-center gap-3 flex-wrap">
         <div className="relative flex-1 max-w-sm">
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
@@ -487,32 +510,13 @@ export default function CrmPipelineSection({ onLeadsChange }: { onLeadsChange?: 
             placeholder="Zoek op naam, e-mail of interesse..."
             value={search}
             onChange={e => setSearch(e.target.value)}
-            className="pl-10 h-9"
+            className="pl-10 h-10 rounded-xl bg-muted/30 border-border/40"
           />
         </div>
-        <Select value={statusFilter || "all"} onValueChange={v => setStatusFilter(v === "all" ? null : v)}>
-          <SelectTrigger className="w-[180px] h-9">
-            <SelectValue placeholder="Alle fases" />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem value="all">Alle fases ({leads.length})</SelectItem>
-            {STAGES.map(s => {
-              const count = stageCounts[s.key] || 0;
-              return (
-                <SelectItem key={s.key} value={s.key}>
-                  <span className="flex items-center gap-2">
-                    <span className={cn("w-2 h-2 rounded-full", s.dotClass)} />
-                    {s.label} ({count})
-                  </span>
-                </SelectItem>
-              );
-            })}
-          </SelectContent>
-        </Select>
         <span className="text-xs text-muted-foreground">{filteredLeads.length} resultaten</span>
         <Button
           size="sm"
-          className="ml-auto gap-1.5 bg-[hsl(var(--terracotta-600))] hover:bg-[hsl(var(--terracotta-700))] text-white"
+          className="ml-auto gap-1.5 rounded-xl bg-gradient-to-r from-terracotta-500 to-terracotta-600 hover:from-terracotta-600 hover:to-terracotta-700 text-white shadow-sm"
           onClick={() => setShowNewLead(true)}
         >
           <Plus className="h-3.5 w-3.5" /> Nieuwe lead
