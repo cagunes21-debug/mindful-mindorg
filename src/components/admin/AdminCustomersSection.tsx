@@ -281,7 +281,7 @@ export default function AdminCustomersSection({ initialTab = "customers" }: { in
             <span className="text-xs text-muted-foreground">{filteredCustomers.length} resultaten</span>
             <Button
               size="sm"
-              className="ml-auto gap-1.5 bg-[hsl(var(--terracotta-600))] hover:bg-[hsl(var(--terracotta-700))] text-white"
+              className="ml-auto gap-1.5 rounded-xl bg-gradient-to-r from-terracotta-500 to-terracotta-600 hover:from-terracotta-600 hover:to-terracotta-700 text-white shadow-sm"
               onClick={() => setShowNewClient(true)}
             >
               <Plus className="h-3.5 w-3.5" /> Nieuwe klant
