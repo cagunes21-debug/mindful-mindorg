@@ -18,6 +18,7 @@ import {
 } from "lucide-react";
 import SEO from "@/components/SEO";
 import AdminCustomersSection from "@/components/admin/AdminCustomersSection";
+import AdminFinanceSection from "@/components/admin/AdminFinanceSection";
 import UpcomingSessionsWidget from "@/components/admin/UpcomingSessionsWidget";
 import CrmPipelineSection from "@/components/admin/CrmPipelineSection";
 import AgendaSection from "@/components/admin/AgendaSection";
