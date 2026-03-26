@@ -43,7 +43,7 @@ interface Customer {
 const PIPELINE_STAGES = [
   { key: "new", label: "Nieuw", colorClass: "bg-stone-400" },
   { key: "contact_attempt", label: "Contact", colorClass: "bg-sky-400" },
-  { key: "in_conversation", label: "Gesprek", colorClass: "bg-amber-400" },
+  { key: "in_conversation", label: "In gesprek", colorClass: "bg-amber-400" },
   { key: "intake_scheduled", label: "Kennis.", colorClass: "bg-violet-400" },
   { key: "registered", label: "Aangemeld", colorClass: "bg-emerald-400" },
   { key: "converted_to_client", label: "Klant", colorClass: "bg-green-600" },
