@@ -97,6 +97,7 @@ const NAV = [
     group: "Relatiebeheer",
     items: [
       { id: "clients",  label: "Klanten",   icon: Users },
+      { id: "financien", label: "Financiën", icon: Euro },
     ],
   },
   {
