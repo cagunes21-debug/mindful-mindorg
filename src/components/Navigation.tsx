@@ -73,7 +73,6 @@ const Navigation = () => {
   }, []);
 
   const serviceLinks = [
-    { to: "/mindful-self-compassion", label: t("nav.msc") },
     { to: "/msc-training", label: t("nav.groupTraining") },
     { to: "/coaching", label: t("nav.coaching") },
     { to: "/barcelona-retreat", label: t("nav.retreat") },
