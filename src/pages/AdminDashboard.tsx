@@ -155,30 +155,30 @@ function useQuickStats() {
 
 // ─── Stat card ────────────────────────────────────────────────────────────────
 
-function StatCard({ icon: Icon, label, value, color, onClick }: {
+function StatCard({ icon: Icon, label, value, gradient, iconColor, onClick }: {
   icon: React.ElementType; label: string; value: string | number;
-  color: string; onClick?: () => void;
+  gradient: string; iconColor: string; onClick?: () => void;
 }) {
   return (
     <Card
-      className={cn(
-        "cursor-pointer hover:shadow-md transition-all duration-200 group border-border/60 overflow-hidden relative",
-      )}
+      className="cursor-pointer hover:shadow-lg transition-all duration-300 group border-0 overflow-hidden"
       onClick={onClick}
     >
-      <CardContent className="p-5">
-        <div className="flex items-start justify-between">
-          <div>
-            <p className="text-xs font-medium text-muted-foreground uppercase tracking-wide mb-1">{label}</p>
-            <p className="text-3xl font-bold text-foreground">{value}</p>
+      <CardContent className={cn("p-0")}>
+        <div className={cn("p-5 bg-gradient-to-br", gradient)}>
+          <div className="flex items-start justify-between">
+            <div>
+              <p className="text-[10px] font-semibold uppercase tracking-widest text-white/70 mb-1.5">{label}</p>
+              <p className="text-3xl font-bold text-white">{value}</p>
+            </div>
+            <div className="h-11 w-11 rounded-2xl bg-white/20 backdrop-blur-sm flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform shadow-sm">
+              <Icon className={cn("h-5 w-5 text-white")} />
+            </div>
           </div>
-          <div className={cn("h-10 w-10 rounded-xl flex items-center justify-center shrink-0 transition-transform group-hover:scale-110", color)}>
-            <Icon className="h-5 w-5" />
+          <div className="mt-3 flex items-center gap-1 text-xs text-white/60 group-hover:text-white/90 transition-colors">
+            <span>Bekijken</span>
+            <ArrowUpRight className="h-3 w-3" />
           </div>
-        </div>
-        <div className="mt-3 flex items-center gap-1 text-xs text-muted-foreground group-hover:text-terracotta-600 transition-colors">
-          <span>Bekijken</span>
-          <ArrowUpRight className="h-3 w-3" />
         </div>
       </CardContent>
     </Card>
@@ -726,65 +726,67 @@ export default function AdminDashboard() {
   const greeting = hour < 12 ? "Goedemorgen" : hour < 18 ? "Goedemiddag" : "Goedenavond";
 
   return (
-    <div className="min-h-screen bg-background flex">
+    <div className="min-h-screen bg-gradient-to-br from-warm-50/50 via-background to-background flex">
       <SEO title="Admin | Mindful Mind" description="Beheer dashboard" />
 
       {isMobile && sidebarOpen && (
-        <div className="fixed inset-0 bg-black/20 backdrop-blur-sm z-40" onClick={() => setSidebarOpen(false)} />
+        <div className="fixed inset-0 bg-black/30 backdrop-blur-sm z-40" onClick={() => setSidebarOpen(false)} />
       )}
 
       {/* ── Sidebar ── */}
       <aside className={cn(
-        "bg-card border-r border-border flex flex-col shrink-0 transition-all duration-300 z-50",
-        "md:sticky md:top-0 md:h-screen md:w-56",
-        isMobile && "fixed top-0 left-0 h-full w-64 shadow-xl",
+        "bg-gradient-to-b from-card to-card/95 border-r border-border/60 flex flex-col shrink-0 transition-all duration-300 z-50",
+        "md:sticky md:top-0 md:h-screen md:w-60",
+        isMobile && "fixed top-0 left-0 h-full w-64 shadow-2xl",
         isMobile && !sidebarOpen && "-translate-x-full",
         isMobile && sidebarOpen && "translate-x-0",
       )}>
         {/* Logo */}
-        <div className="h-14 flex items-center justify-between px-5 border-b border-border shrink-0">
-          <div className="flex items-center gap-2.5">
-            <div className="h-7 w-7 rounded-lg bg-terracotta-100 flex items-center justify-center">
-              <div className="h-3 w-3 rounded-full bg-terracotta-500" />
+        <div className="h-16 flex items-center justify-between px-5 border-b border-border/40 shrink-0">
+          <div className="flex items-center gap-3">
+            <div className="h-9 w-9 rounded-xl bg-gradient-to-br from-terracotta-400 to-terracotta-600 flex items-center justify-center shadow-sm">
+              <div className="h-3.5 w-3.5 rounded-full bg-white/90" />
             </div>
             <div>
-              <span className="text-sm font-semibold text-foreground block leading-tight">Mindful Mind</span>
-              <span className="text-[10px] text-muted-foreground leading-tight">Beheerportaal</span>
+              <span className="text-sm font-bold text-foreground block leading-tight">Mindful Mind</span>
+              <span className="text-[10px] text-muted-foreground/70 leading-tight">Beheerportaal</span>
             </div>
           </div>
           {isMobile && (
-            <button onClick={() => setSidebarOpen(false)} className="p-1 rounded-md hover:bg-muted">
+            <button onClick={() => setSidebarOpen(false)} className="p-1.5 rounded-lg hover:bg-muted">
               <X className="h-4 w-4 text-muted-foreground" />
             </button>
           )}
         </div>
 
         {/* Nav */}
-        <nav className="flex-1 py-4 px-3 overflow-y-auto space-y-5">
+        <nav className="flex-1 py-5 px-3 overflow-y-auto space-y-6">
           {NAV.map(group => (
             <div key={group.group}>
-              <p className="text-[10px] font-bold uppercase tracking-[0.15em] text-muted-foreground/50 px-3 mb-2">
+              <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-muted-foreground/40 px-3 mb-2.5">
                 {group.group}
               </p>
-              <div className="space-y-0.5">
+              <div className="space-y-1">
                 {group.items.map(item => {
                   const active = activeSection === item.id;
                   const badge = item.id === "clients" && stats.leads > 0 ? stats.leads : undefined;
                   return (
                     <button key={item.id} onClick={() => handleNav(item.id)}
                       className={cn(
-                        "w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-[13px] transition-all duration-150",
-                        active ? "bg-terracotta-50 text-terracotta-700 font-medium shadow-sm" : "text-muted-foreground hover:bg-muted/60 hover:text-foreground"
+                        "w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-[13px] transition-all duration-200",
+                        active
+                          ? "bg-gradient-to-r from-terracotta-50 to-terracotta-100/60 text-terracotta-700 font-semibold shadow-sm border border-terracotta-100/60"
+                          : "text-muted-foreground hover:bg-muted/60 hover:text-foreground"
                       )}
                     >
                       <item.icon className={cn("h-4 w-4 shrink-0", active && "text-terracotta-600")} />
                       <span className="flex-1 truncate text-left">{item.label}</span>
                       {badge ? (
-                        <span className="h-5 min-w-5 px-1.5 rounded-full bg-terracotta-500 text-white text-[10px] font-bold flex items-center justify-center animate-pulse">
+                        <span className="h-5 min-w-5 px-1.5 rounded-full bg-gradient-to-r from-terracotta-500 to-terracotta-600 text-white text-[10px] font-bold flex items-center justify-center shadow-sm">
                           {badge}
                         </span>
                       ) : active ? (
-                        <div className="h-1.5 w-1.5 rounded-full bg-terracotta-500" />
+                        <div className="h-2 w-2 rounded-full bg-terracotta-500" />
                       ) : null}
                     </button>
                   );
@@ -815,7 +817,7 @@ export default function AdminDashboard() {
         </nav>
 
         {/* Footer */}
-        <div className="border-t border-border p-3 shrink-0">
+        <div className="border-t border-border/40 p-3 shrink-0">
           <button onClick={handleLogout}
             className="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-[13px] text-muted-foreground hover:bg-destructive/10 hover:text-destructive transition-colors"
           >
@@ -837,10 +839,10 @@ export default function AdminDashboard() {
           </div>
         </div>
 
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 py-6 space-y-6">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 py-8 space-y-8">
 
           {/* Header with breadcrumb */}
-          <div className="space-y-1">
+          <div className="space-y-1.5">
             {activeSection !== "overview" && (
               <button onClick={() => setActiveSection("overview")}
                 className="inline-flex items-center gap-1.5 text-xs text-terracotta-600 hover:text-terracotta-800 font-medium transition-colors group mb-1"
@@ -849,7 +851,7 @@ export default function AdminDashboard() {
                 Terug naar dashboard
               </button>
             )}
-            <h1 className="text-2xl font-semibold text-foreground">
+            <h1 className="text-2xl font-bold text-foreground">
               {activeSection === "overview" ? `${greeting} 👋` : SECTION_TITLES[activeSection]}
             </h1>
             <p className="text-sm text-muted-foreground">
@@ -866,28 +868,32 @@ export default function AdminDashboard() {
                   icon={Users}
                   label="Klanten"
                   value={statsLoading ? "…" : stats.clients}
-                  color="bg-sage-50 text-sage-700"
+                  gradient="from-sage-500 to-sage-600"
+                  iconColor="text-white"
                   onClick={() => handleNav("clients")}
                 />
                 <StatCard
                   icon={BookOpen}
                   label="Actieve trainingen"
                   value={statsLoading ? "…" : stats.enrollments}
-                  color="bg-terracotta-50 text-terracotta-700"
+                  gradient="from-terracotta-500 to-terracotta-600"
+                  iconColor="text-white"
                   onClick={() => handleNav("trainingen")}
                 />
                 <StatCard
                   icon={GitBranch}
                   label="Nieuwe leads"
                   value={statsLoading ? "…" : stats.leads}
-                  color="bg-amber-50 text-amber-700"
+                  gradient="from-amber-500 to-amber-600"
+                  iconColor="text-white"
                   onClick={() => { handleNav("clients"); }}
                 />
                 <StatCard
                   icon={Euro}
                   label="Totale omzet"
                   value={statsLoading ? "…" : `€${stats.revenue.toLocaleString("nl-NL")}`}
-                  color="bg-emerald-50 text-emerald-700"
+                  gradient="from-emerald-500 to-emerald-600"
+                  iconColor="text-white"
                   onClick={() => navigate("/admin/financien")}
                 />
               </div>
@@ -897,23 +903,25 @@ export default function AdminDashboard() {
 
               {/* Quick actions */}
               <div>
-                <h2 className="text-sm font-semibold text-foreground mb-3">Snel navigeren</h2>
+                <h2 className="text-sm font-bold text-foreground mb-3">Snel navigeren</h2>
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
                   {[
-                    { label: "Leads & Pipeline",    desc: stats.leads > 0 ? `${stats.leads} nieuwe leads wachten` : "Geen nieuwe leads", icon: GitBranch, section: "clients",    color: "bg-amber-50 text-amber-700" },
-                    { label: "Lopende trainingen", desc: "Bekijk wie in welke week zit",   icon: BookOpen,  section: "trainingen", color: "bg-terracotta-50 text-terracotta-700" },
-                    { label: "Klanten",            desc: "Profielen & sessies beheren",    icon: Users,     section: "clients",    color: "bg-sage-50 text-sage-700" },
+                    { label: "Leads & Pipeline",  desc: stats.leads > 0 ? `${stats.leads} nieuwe leads wachten` : "Geen nieuwe leads", icon: GitBranch, section: "clients",    gradient: "from-amber-50 to-amber-100", iconBg: "bg-gradient-to-br from-amber-400 to-amber-500 text-white" },
+                    { label: "Lopende trainingen", desc: "Bekijk wie in welke week zit",   icon: BookOpen,  section: "trainingen", gradient: "from-terracotta-50 to-warm-50",     iconBg: "bg-gradient-to-br from-terracotta-400 to-terracotta-500 text-white" },
+                    { label: "Klanten",            desc: "Profielen & sessies beheren",    icon: Users,     section: "clients",    gradient: "from-sage-50 to-sage-100",           iconBg: "bg-gradient-to-br from-sage-400 to-sage-500 text-white" },
                   ].map(a => (
-                    <Card key={a.section} className="cursor-pointer hover:shadow-md transition-all group border-border/60 hover:border-border" onClick={() => handleNav(a.section)}>
-                      <CardContent className="p-4 flex items-center gap-3">
-                        <div className={cn("h-10 w-10 rounded-xl flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform", a.color)}>
-                          <a.icon className="h-5 w-5" />
+                    <Card key={a.label} className={cn("cursor-pointer hover:shadow-lg transition-all duration-300 group border-0 overflow-hidden")} onClick={() => handleNav(a.section)}>
+                      <CardContent className={cn("p-5 bg-gradient-to-br", a.gradient)}>
+                        <div className="flex items-center gap-3">
+                          <div className={cn("h-11 w-11 rounded-2xl flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform shadow-sm", a.iconBg)}>
+                            <a.icon className="h-5 w-5" />
+                          </div>
+                          <div className="flex-1 min-w-0">
+                            <p className="text-sm font-semibold text-foreground">{a.label}</p>
+                            <p className="text-xs text-muted-foreground">{a.desc}</p>
+                          </div>
+                          <ArrowUpRight className="h-4 w-4 text-muted-foreground opacity-0 group-hover:opacity-100 transition-all" />
                         </div>
-                        <div className="flex-1 min-w-0">
-                          <p className="text-sm font-medium">{a.label}</p>
-                          <p className="text-xs text-muted-foreground">{a.desc}</p>
-                        </div>
-                        <ArrowUpRight className="h-4 w-4 text-muted-foreground opacity-0 group-hover:opacity-100 transition-all" />
                       </CardContent>
                     </Card>
                   ))}

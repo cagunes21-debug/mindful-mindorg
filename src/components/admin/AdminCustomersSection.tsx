@@ -159,78 +159,86 @@ export default function AdminCustomersSection({ initialTab = "customers" }: { in
   };
 
   return (
-    <div className="space-y-5">
+    <div className="space-y-6">
       {/* ── Metric Cards ── */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
         <Card
-          className="cursor-pointer hover:shadow-md transition-all border-border/60"
+          className="cursor-pointer hover:shadow-lg transition-all duration-300 border-0 overflow-hidden group"
           onClick={() => setActiveTab("customers")}
         >
-          <CardContent className="p-4">
-            <div className="flex items-center gap-3">
-              <div className="p-2 rounded-lg bg-[hsl(var(--sage-100))]">
-                <Users className="h-4 w-4 text-[hsl(var(--sage-700))]" />
-              </div>
-              <div>
-                <p className="text-xl font-bold">{stats.totalCustomers}</p>
-                <p className="text-[11px] text-muted-foreground">Klanten</p>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-
-        <Card className="border-border/60">
-          <CardContent className="p-4">
-            <div className="flex items-center gap-3">
-              <div className="p-2 rounded-lg bg-[hsl(var(--terracotta-100))]">
-                <Euro className="h-4 w-4 text-[hsl(var(--terracotta-700))]" />
-              </div>
-              <div>
-                <p className="text-xl font-bold">€{stats.totalRevenue.toLocaleString('nl-NL')}</p>
-                <p className="text-[11px] text-muted-foreground">Totale omzet</p>
+          <CardContent className="p-0">
+            <div className="p-4 bg-gradient-to-br from-sage-50 to-sage-100">
+              <div className="flex items-center gap-3">
+                <div className="p-2.5 rounded-xl bg-gradient-to-br from-sage-400 to-sage-500 shadow-sm group-hover:scale-110 transition-transform">
+                  <Users className="h-4 w-4 text-white" />
+                </div>
+                <div>
+                  <p className="text-2xl font-bold text-foreground">{stats.totalCustomers}</p>
+                  <p className="text-[11px] text-muted-foreground font-medium">Klanten</p>
+                </div>
               </div>
             </div>
           </CardContent>
         </Card>
 
-        <Card className="border-border/60">
-          <CardContent className="p-4">
-            <div className="flex items-center gap-3">
-              <div className="p-2 rounded-lg bg-[hsl(var(--sage-100))]">
-                <Calendar className="h-4 w-4 text-[hsl(var(--sage-700))]" />
+        <Card className="border-0 overflow-hidden">
+          <CardContent className="p-0">
+            <div className="p-4 bg-gradient-to-br from-terracotta-50 to-warm-50">
+              <div className="flex items-center gap-3">
+                <div className="p-2.5 rounded-xl bg-gradient-to-br from-terracotta-400 to-terracotta-500 shadow-sm">
+                  <Euro className="h-4 w-4 text-white" />
+                </div>
+                <div>
+                  <p className="text-2xl font-bold text-foreground">€{stats.totalRevenue.toLocaleString('nl-NL')}</p>
+                  <p className="text-[11px] text-muted-foreground font-medium">Totale omzet</p>
+                </div>
               </div>
-              <div>
-                <p className="text-xl font-bold">{stats.totalRegistrations}</p>
-                <p className="text-[11px] text-muted-foreground">Aanmeldingen</p>
+            </div>
+          </CardContent>
+        </Card>
+
+        <Card className="border-0 overflow-hidden">
+          <CardContent className="p-0">
+            <div className="p-4 bg-gradient-to-br from-warm-50 to-warm-100">
+              <div className="flex items-center gap-3">
+                <div className="p-2.5 rounded-xl bg-gradient-to-br from-warm-400 to-warm-500 shadow-sm">
+                  <Calendar className="h-4 w-4 text-white" />
+                </div>
+                <div>
+                  <p className="text-2xl font-bold text-foreground">{stats.totalRegistrations}</p>
+                  <p className="text-[11px] text-muted-foreground font-medium">Aanmeldingen</p>
+                </div>
               </div>
             </div>
           </CardContent>
         </Card>
 
         <Card
-          className="cursor-pointer hover:shadow-md transition-all border-border/60"
+          className="cursor-pointer hover:shadow-lg transition-all duration-300 border-0 overflow-hidden group"
           onClick={() => setActiveTab("leads")}
         >
-          <CardContent className="p-4">
-            <div className="flex items-center gap-3">
-              <div className="p-2 rounded-lg bg-[hsl(var(--terracotta-50))]">
-                <UserPlus className="h-4 w-4 text-[hsl(var(--terracotta-600))]" />
-              </div>
-              <div className="flex-1 min-w-0">
-                <div className="flex items-baseline gap-1.5">
-                  <p className="text-xl font-bold">{totalLeads}</p>
-                  {newLeadCount > 0 && (
-                    <span className="text-[10px] font-medium text-[hsl(var(--terracotta-600))]">
-                      ({newLeadCount} nieuw)
-                    </span>
-                  )}
+          <CardContent className="p-0">
+            <div className="p-4 bg-gradient-to-br from-amber-50 to-amber-100">
+              <div className="flex items-center gap-3">
+                <div className="p-2.5 rounded-xl bg-gradient-to-br from-amber-400 to-amber-500 shadow-sm group-hover:scale-110 transition-transform">
+                  <UserPlus className="h-4 w-4 text-white" />
                 </div>
-                <p className="text-[11px] text-muted-foreground">Leads</p>
+                <div className="flex-1 min-w-0">
+                  <div className="flex items-baseline gap-1.5">
+                    <p className="text-2xl font-bold text-foreground">{totalLeads}</p>
+                    {newLeadCount > 0 && (
+                      <span className="text-[10px] font-semibold text-amber-600">
+                        ({newLeadCount} nieuw)
+                      </span>
+                    )}
+                  </div>
+                  <p className="text-[11px] text-muted-foreground font-medium">Leads</p>
+                </div>
               </div>
-            </div>
-            {/* Mini pipeline funnel */}
-            <div className="mt-3 pt-2 border-t border-border/40">
-              <PipelineFunnel stageCounts={stageCounts} totalLeads={totalLeads} />
+              {/* Mini pipeline funnel */}
+              <div className="mt-3 pt-2.5 border-t border-amber-200/50">
+                <PipelineFunnel stageCounts={stageCounts} totalLeads={totalLeads} />
+              </div>
             </div>
           </CardContent>
         </Card>
@@ -238,49 +246,49 @@ export default function AdminCustomersSection({ initialTab = "customers" }: { in
 
       {/* ── Tabs ── */}
       <Tabs value={activeTab} onValueChange={setActiveTab}>
-        <TabsList className="h-9">
-          <TabsTrigger value="leads" className="gap-1.5 text-xs">
+        <TabsList className="h-10 bg-muted/50 p-1 rounded-xl">
+          <TabsTrigger value="leads" className="gap-1.5 text-xs rounded-lg data-[state=active]:shadow-sm">
             <TrendingUp className="h-3.5 w-3.5" /> Leads & Pipeline
             {newLeadCount > 0 && (
-              <Badge className="bg-[hsl(var(--terracotta-500))] text-white text-[10px] px-1.5 py-0 h-4 ml-0.5">
+              <Badge className="bg-gradient-to-r from-terracotta-500 to-terracotta-600 text-white text-[10px] px-1.5 py-0 h-4 ml-0.5 border-0">
                 {newLeadCount}
               </Badge>
             )}
           </TabsTrigger>
-          <TabsTrigger value="customers" className="gap-1.5 text-xs">
+          <TabsTrigger value="customers" className="gap-1.5 text-xs rounded-lg data-[state=active]:shadow-sm">
             <Users className="h-3.5 w-3.5" /> Klanten
             <Badge variant="secondary" className="text-[10px] px-1.5 py-0 h-4 ml-0.5">
               {customers.length}
             </Badge>
           </TabsTrigger>
-          <TabsTrigger value="proces" className="gap-1.5 text-xs">
+          <TabsTrigger value="proces" className="gap-1.5 text-xs rounded-lg data-[state=active]:shadow-sm">
             <ClipboardList className="h-3.5 w-3.5" /> Lead Proces
           </TabsTrigger>
         </TabsList>
 
         {/* ── CUSTOMERS TAB ── */}
-        <TabsContent value="customers" className="mt-4">
-          <div className="flex flex-wrap items-center gap-3 mb-3">
+        <TabsContent value="customers" className="mt-5">
+          <div className="flex flex-wrap items-center gap-3 mb-4">
             <div className="relative flex-1 max-w-sm">
               <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
               <Input
                 placeholder="Zoek op naam, e-mail of training..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="pl-10 h-9"
+                className="pl-10 h-10 rounded-xl bg-muted/30 border-border/40"
               />
             </div>
             <span className="text-xs text-muted-foreground">{filteredCustomers.length} resultaten</span>
             <Button
               size="sm"
-              className="ml-auto gap-1.5 bg-[hsl(var(--terracotta-600))] hover:bg-[hsl(var(--terracotta-700))] text-white"
+              className="ml-auto gap-1.5 rounded-xl bg-gradient-to-r from-terracotta-500 to-terracotta-600 hover:from-terracotta-600 hover:to-terracotta-700 text-white shadow-sm"
               onClick={() => setShowNewClient(true)}
             >
               <Plus className="h-3.5 w-3.5" /> Nieuwe klant
             </Button>
           </div>
 
-          <div className="rounded-lg border border-border/60 bg-card overflow-hidden">
+          <div className="rounded-2xl border border-border/40 bg-card overflow-hidden shadow-sm">
             {isLoading ? (
               <div className="flex items-center justify-center py-12">
                 <Loader2 className="h-6 w-6 animate-spin text-muted-foreground" />
@@ -366,7 +374,7 @@ export default function AdminCustomersSection({ initialTab = "customers" }: { in
         </TabsContent>
 
         {/* ── LEADS & PIPELINE TAB ── */}
-        <TabsContent value="leads" className="mt-4">
+        <TabsContent value="leads" className="mt-5">
           <CrmPipelineSection onLeadsChange={fetchAllLeads} />
         </TabsContent>
 
