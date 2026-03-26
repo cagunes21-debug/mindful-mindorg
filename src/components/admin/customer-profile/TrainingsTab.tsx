@@ -14,7 +14,7 @@ import {
 } from "@/components/ui/select";
 import {
   ChevronDown, Unlock, Eye, Plus, Lock, Loader2, Headphones,
-  ClipboardList, Presentation, FileText,
+  ClipboardList, Presentation, FileText, Settings2,
 } from "lucide-react";
 import { format } from "date-fns";
 import { nl } from "date-fns/locale";
@@ -26,18 +26,18 @@ import IntakeSection from "./IntakeSection";
 import TrainerNotesSection from "./TrainerNotesSection";
 import TherapySessionSection from "./TherapySessionSection";
 
-const SECTION_ICONS: Record<string, typeof Headphones> = {
-  meditations: Headphones,
-  assignments: ClipboardList,
-  presentations: Presentation,
-  notebooks: FileText,
-};
-
 const SECTION_LABELS_MAP: Record<string, string> = {
   meditations: "Meditaties",
   assignments: "Opdrachten",
   presentations: "Presentaties",
   notebooks: "Werkboek",
+};
+
+const SECTION_ICONS_MAP: Record<string, typeof Headphones> = {
+  meditations: Headphones,
+  assignments: ClipboardList,
+  presentations: Presentation,
+  notebooks: FileText,
 };
 
 interface TrainingsTabProps {
@@ -67,6 +67,7 @@ export default function TrainingsTab({
   const [newStartDate, setNewStartDate] = useState("");
   const [newTrainerName, setNewTrainerName] = useState("");
   const [creating, setCreating] = useState(false);
+  const [showAdvanced, setShowAdvanced] = useState<Record<string, boolean>>({});
 
   const toggleWeek = async (enrollment: Enrollment, weekNumber: number) => {
     const current = enrollment.unlocked_weeks || [1];
@@ -133,6 +134,8 @@ export default function TrainingsTab({
         const label = enrollment?.course_type === "msc_8week" ? "Week" : "Sessie";
         const isOpen = openCards[reg.id] ?? false;
         const isIndividual = enrollment && (enrollment.course_type === "individueel_6" || enrollment.course_type === "losse_sessie");
+        const unlockedCount = enrollment ? (enrollment.unlocked_weeks || [1]).length : 0;
+        const advancedOpen = showAdvanced[reg.id] ?? false;
 
         return (
           <div key={reg.id} ref={(el) => { registrationRefs.current[reg.id] = el; }}>
@@ -141,108 +144,122 @@ export default function TrainingsTab({
                 <CollapsibleTrigger className="w-full text-left">
                   <CardContent className="p-3 flex items-center gap-2">
                     <ChevronDown className={`h-4 w-4 text-muted-foreground transition-transform ${isOpen ? "rotate-0" : "-rotate-90"}`} />
-                    <span className="font-medium text-sm flex-1">{reg.training_name}</span>
+                    <span className="font-medium text-sm flex-1 truncate">{reg.training_name}</span>
                     <Badge className={`${statusColors[reg.status]} text-[10px] px-1.5 py-0`}>{reg.status}</Badge>
                     <Badge className={`${paymentStatusColors[reg.payment_status || 'pending']} text-[10px] px-1.5 py-0`}>{reg.payment_status || 'pending'}</Badge>
-                    <span className="text-xs text-muted-foreground">
+                    <span className="text-xs text-muted-foreground whitespace-nowrap">
                       {reg.training_date || format(new Date(reg.created_at), "d MMM yyyy", { locale: nl })}
                     </span>
                   </CardContent>
                 </CollapsibleTrigger>
 
                 <CollapsibleContent>
-                  <CardContent className="px-4 pb-4 pt-0 space-y-4">
+                  <CardContent className="px-4 pb-4 pt-0 space-y-3">
                     {enrollment ? (
                       <>
-                        {/* Enrollment info */}
-                        <div className="flex items-center gap-2 text-xs text-muted-foreground">
+                        {/* Compact summary row */}
+                        <div className="flex items-center gap-2 flex-wrap text-xs text-muted-foreground">
                           <Badge variant="outline" className="text-[10px]">{COURSE_TYPES[enrollment.course_type]}</Badge>
-                          <Badge className={enrollment.status === "active" ? "bg-green-100 text-green-800 text-[10px]" : "bg-muted text-muted-foreground text-[10px]"}>{enrollment.status}</Badge>
-                          <span>Start: {new Date(enrollment.start_date).toLocaleDateString("nl-NL")}</span>
+                          <span>•</span>
+                          <span>{unlockedCount}/{weeks.length} {label.toLowerCase()}s vrijgegeven</span>
+                          <span>•</span>
+                          <span>Start {new Date(enrollment.start_date).toLocaleDateString("nl-NL")}</span>
                         </div>
 
-                        {/* Session toggles */}
-                        <div className="space-y-2">
-                          <p className="text-xs text-muted-foreground flex items-center gap-1 font-medium"><Unlock className="h-3 w-3" /> {label}s vrijgeven</p>
-                          <div className="flex flex-wrap gap-1">
-                            {weeks.map(week => {
-                              const isUnlocked = (enrollment.unlocked_weeks || [1]).includes(week.week_number);
-                              return (
-                                <button key={week.id} onClick={() => toggleWeek(enrollment, week.week_number)} disabled={saving}
-                                  className={`px-2 py-0.5 rounded-full text-[11px] font-medium transition-colors ${
-                                    isUnlocked ? "bg-primary/10 text-primary border border-primary/30" : "bg-muted text-muted-foreground border border-border"
-                                  }`} title={week.title}
-                                >
-                                  {label} {week.week_number}
-                                </button>
-                              );
-                            })}
-                          </div>
+                        {/* Compact week toggles — single row of small pills */}
+                        <div className="flex items-center gap-1.5 flex-wrap">
+                          <Unlock className="h-3 w-3 text-muted-foreground shrink-0" />
+                          {weeks.map(week => {
+                            const isUnlocked = (enrollment.unlocked_weeks || [1]).includes(week.week_number);
+                            return (
+                              <button key={week.id} onClick={() => toggleWeek(enrollment, week.week_number)} disabled={saving}
+                                className={`w-7 h-7 rounded-md text-[10px] font-medium transition-colors ${
+                                  isUnlocked ? "bg-primary/10 text-primary border border-primary/30" : "bg-muted text-muted-foreground border border-border"
+                                }`} title={`${label} ${week.week_number}: ${week.title}`}
+                              >
+                                {week.week_number}
+                              </button>
+                            );
+                          })}
                         </div>
 
-                        {/* Content visibility */}
-                        <div className="space-y-2">
-                          <p className="text-xs text-muted-foreground flex items-center gap-1 font-medium"><Eye className="h-3 w-3" /> Zichtbare inhoud</p>
-                          <div className="flex flex-wrap gap-3">
-                            {Object.entries(SECTION_ICONS).map(([key, Icon]) => {
-                              const isVisible = (enrollment.visible_sections || ['meditations', 'assignments', 'presentations', 'notebooks']).includes(key);
-                              return (
-                                <label key={key} className="flex items-center gap-1.5 cursor-pointer">
-                                  <Checkbox checked={isVisible} disabled={saving} onCheckedChange={() => toggleSection(enrollment, key)} />
-                                  <Icon className="h-3 w-3 text-muted-foreground" />
-                                  <span className="text-xs">{SECTION_LABELS_MAP[key]}</span>
-                                </label>
-                              );
-                            })}
-                          </div>
-                        </div>
+                        {/* Advanced settings toggle */}
+                        <button
+                          onClick={() => setShowAdvanced(prev => ({ ...prev, [reg.id]: !prev[reg.id] }))}
+                          className="flex items-center gap-1.5 text-xs text-muted-foreground hover:text-foreground transition-colors"
+                        >
+                          <Settings2 className="h-3 w-3" />
+                          <span>{advancedOpen ? "Minder tonen" : "Meer opties"}</span>
+                          <ChevronDown className={`h-3 w-3 transition-transform ${advancedOpen ? "rotate-180" : ""}`} />
+                        </button>
 
-                        {/* Session Planning */}
-                        {isIndividual && (
-                          <div className="border-t pt-3">
-                            <SessionPlanningSection
-                              enrollmentId={enrollment.id}
-                              courseType={enrollment.course_type}
-                              weeks={weeks}
-                              appointments={sessionAppointments.filter(a => a.enrollment_id === enrollment.id)}
-                              onAppointmentsChange={(updated) => {
-                                onSessionAppointmentsChange([
-                                  ...sessionAppointments.filter(a => a.enrollment_id !== enrollment.id),
-                                  ...updated,
-                                ]);
-                              }}
-                            />
-                          </div>
-                        )}
+                        {advancedOpen && (
+                          <div className="space-y-3 pl-1 border-l-2 border-muted ml-1">
+                            {/* Content visibility */}
+                            <div className="pl-3 space-y-1.5">
+                              <p className="text-xs text-muted-foreground flex items-center gap-1 font-medium"><Eye className="h-3 w-3" /> Zichtbare inhoud</p>
+                              <div className="flex flex-wrap gap-3">
+                                {Object.entries(SECTION_ICONS_MAP).map(([key, Icon]) => {
+                                  const isVisible = (enrollment.visible_sections || ['meditations', 'assignments', 'presentations', 'notebooks']).includes(key);
+                                  return (
+                                    <label key={key} className="flex items-center gap-1.5 cursor-pointer">
+                                      <Checkbox checked={isVisible} disabled={saving} onCheckedChange={() => toggleSection(enrollment, key)} />
+                                      <Icon className="h-3 w-3 text-muted-foreground" />
+                                      <span className="text-xs">{SECTION_LABELS_MAP[key]}</span>
+                                    </label>
+                                  );
+                                })}
+                              </div>
+                            </div>
 
-                        {/* Intake */}
-                        {isIndividual && (
-                          <div className="border-t pt-3">
-                            <IntakeSection
-                              enrollment={enrollment}
-                              onUpdate={(updated) => onEnrollmentsChange(enrollments.map(e => e.id === updated.id ? updated : e))}
-                            />
-                          </div>
-                        )}
+                            {/* Session Planning */}
+                            {isIndividual && (
+                              <div className="pl-3">
+                                <SessionPlanningSection
+                                  enrollmentId={enrollment.id}
+                                  courseType={enrollment.course_type}
+                                  weeks={weeks}
+                                  appointments={sessionAppointments.filter(a => a.enrollment_id === enrollment.id)}
+                                  onAppointmentsChange={(updated) => {
+                                    onSessionAppointmentsChange([
+                                      ...sessionAppointments.filter(a => a.enrollment_id !== enrollment.id),
+                                      ...updated,
+                                    ]);
+                                  }}
+                                />
+                              </div>
+                            )}
 
-                        {/* Trainer Notes */}
-                        <div className="border-t pt-3">
-                          <TrainerNotesSection
-                            enrollmentId={enrollment.id}
-                            existingNotes={structuredNotes.filter(n => n.enrollment_id === enrollment.id)}
-                            onNotesUpdated={(updated) => {
-                              onStructuredNotesChange([
-                                ...structuredNotes.filter(n => n.enrollment_id !== enrollment.id),
-                                ...updated,
-                              ]);
-                            }}
-                          />
-                        </div>
+                            {/* Intake */}
+                            {isIndividual && (
+                              <div className="pl-3">
+                                <IntakeSection
+                                  enrollment={enrollment}
+                                  onUpdate={(updated) => onEnrollmentsChange(enrollments.map(e => e.id === updated.id ? updated : e))}
+                                />
+                              </div>
+                            )}
 
-                        {/* AI Therapy Session Notes */}
-                        {isIndividual && (
-                          <div className="border-t pt-3">
-                            <TherapySessionSection enrollmentId={enrollment.id} clientName={customer.name || undefined} />
+                            {/* Trainer Notes */}
+                            <div className="pl-3">
+                              <TrainerNotesSection
+                                enrollmentId={enrollment.id}
+                                existingNotes={structuredNotes.filter(n => n.enrollment_id === enrollment.id)}
+                                onNotesUpdated={(updated) => {
+                                  onStructuredNotesChange([
+                                    ...structuredNotes.filter(n => n.enrollment_id !== enrollment.id),
+                                    ...updated,
+                                  ]);
+                                }}
+                              />
+                            </div>
+
+                            {/* AI Therapy Session Notes */}
+                            {isIndividual && (
+                              <div className="pl-3">
+                                <TherapySessionSection enrollmentId={enrollment.id} clientName={customer.name || undefined} />
+                              </div>
+                            )}
                           </div>
                         )}
                       </>
