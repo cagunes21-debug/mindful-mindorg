@@ -256,11 +256,11 @@ const MindfulZelfcompassie = () => {
 
             <ScrollReveal delay={0.2}>
               <div className="text-center">
-                <Button asChild className="bg-terracotta-600 hover:bg-terracotta-700 text-white rounded-full px-8 py-6 text-base shadow-md">
-                  <a href="#data">
+              <Button asChild className="bg-terracotta-600 hover:bg-terracotta-700 text-white rounded-full px-8 py-6 text-base shadow-md">
+                  <Link to="/agenda">
                     Bekijk de startdata
                     <ArrowRight className="ml-2 h-5 w-5" />
-                  </a>
+                  </Link>
                 </Button>
               </div>
             </ScrollReveal>
