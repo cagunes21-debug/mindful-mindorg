@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { Heart, Brain, Sparkles, ArrowRight, Check, Mail, Phone, MessageCircle, Clock, Users, Globe, Calendar, Quote, Star, Leaf, HelpCircle, Award, TrendingUp, FlaskConical, Play } from "lucide-react";
+import { Heart, Brain, Sparkles, ArrowRight, Check, Mail, Phone, MessageCircle, Clock, Users, Globe, Calendar, Quote, Star, Leaf, HelpCircle, Award, TrendingUp, FlaskConical } from "lucide-react";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import {
   Carousel,
@@ -19,11 +19,11 @@ import {
 } from "@/components/ui/dialog";
 import Autoplay from "embla-carousel-autoplay";
 import Navigation from "@/components/Navigation";
+import Footer from "@/components/Footer";
 import { ScrollReveal, StaggerContainer, StaggerItem } from "@/components/ScrollReveal";
 import { motion } from "framer-motion";
 import SEO from "@/components/SEO";
-import { FAQSchema, CourseSchema, OrganizationSchema } from "@/components/StructuredData";
-import AccessibilityToolbar from "@/components/AccessibilityToolbar";
+import { CourseSchema, OrganizationSchema } from "@/components/StructuredData";
 import ScrollToTop from "@/components/ScrollToTop";
 import ScrollProgressBar from "@/components/ScrollProgressBar";
 import WhatsAppButton from "@/components/WhatsAppButton";
@@ -31,9 +31,6 @@ import CookieConsent from "@/components/CookieConsent";
 import { ContactForm } from "@/components/ContactForm";
 import UrgencyBadge from "@/components/UrgencyBadge";
 import { RegistrationForm } from "@/components/RegistrationForm";
-import heroMindfulness from "@/assets/hero-mindfulness.jpg";
-import meditationPractice from "@/assets/meditation-practice.jpg";
-import natureCalm from "@/assets/nature-calm.jpg";
 
 const trainingDates = [
   {
@@ -56,31 +53,14 @@ const trainingDates = [
   },
 ];
 
-const workshopDates = [
-  { lang: "Workshop 1", date: "Maandag 1 juni 2026", time: "19:30 – 20:30", price: "€55" },
-  { lang: "Workshop 2", date: "Zaterdag 5 september 2026", time: "10:00 – 11:00", price: "€55" },
-];
-
-
-
 const MindfulZelfcompassie = () => {
   const [isRegistrationOpen, setIsRegistrationOpen] = useState(false);
   const [selectedTraining, setSelectedTraining] = useState<typeof trainingDates[0] | null>(null);
-  const [isWorkshopRegistrationOpen, setIsWorkshopRegistrationOpen] = useState(false);
-  const [selectedWorkshop, setSelectedWorkshop] = useState<typeof workshopDates[0] | null>(null);
-
 
   const openRegistration = (training: typeof trainingDates[0]) => {
     setSelectedTraining(training);
     setIsRegistrationOpen(true);
   };
-
-  const openWorkshopRegistration = (workshop: typeof workshopDates[0]) => {
-    setSelectedWorkshop(workshop);
-    setIsWorkshopRegistrationOpen(true);
-  };
-
-
 
   return (
     <div className="min-h-screen bg-background">
@@ -88,363 +68,146 @@ const MindfulZelfcompassie = () => {
       <ScrollToTop />
       <WhatsAppButton />
       <CookieConsent />
-      <SEO 
-        title="Mindful Mind | 8-weekse Training in Mindful Zelfcompassie"
-        description="Leer jezelf te steunen, vooral in moeilijke tijden. 8-weekse training in Mindful Zelfcompassie ontwikkeld door dr. Kristin Neff en dr. Christopher Germer."
+      <SEO
+        title="8-weekse MSC Groepstraining | Mindful Mind"
+        description="Leer jezelf ondersteunen in een kleine groep. 8-weekse Mindful Self-Compassion training, wetenschappelijk onderbouwd. Start september 2026."
       />
       <OrganizationSchema />
-      <CourseSchema 
-        name="8-weekse Mindful Self-Compassion (MSC) Training"
-        description="Een wetenschappelijk onderbouwd programma waarin je leert omgaan met stress, emoties en zelfkritiek met meer vriendelijkheid en veerkracht."
+      <CourseSchema
+        name="8-weekse Mindful Self-Compassion (MSC) Groepstraining"
+        description="Leer in 8 weken omgaan met stress, emoties en zelfkritiek in een veilige groepssetting."
         duration="8 weeks"
         price="550"
       />
       <Navigation />
-      
-      {/* Accessibility Toolbar */}
-      <AccessibilityToolbar />
-      
-      {/* Hero Section */}
-      <section className="relative overflow-hidden pt-24 pb-32 lg:pt-32 lg:pb-44 bg-warm-50">
-        {/* Background image with overlay */}
-        <div className="absolute inset-0">
-          <img 
-            src={heroMindfulness} 
-            alt="Mindfulness meditatie in de natuur" 
-            width={1920}
-            height={1080}
-            className="w-full h-full object-cover"
-            fetchPriority="high"
-          />
-          <div className="absolute inset-0 bg-gradient-to-b from-warm-50/90 via-warm-50/80 to-warm-50/95" />
-        </div>
-        
-        {/* Decorative elements */}
-        <div className="absolute top-20 left-10 w-64 h-64 bg-rose-200/25 rounded-full blur-3xl" />
-        <div className="absolute bottom-20 right-10 w-80 h-80 bg-lavender-200/20 rounded-full blur-3xl" />
-        
+
+      {/* Hero — compact, product-focused */}
+      <section className="relative pt-28 pb-20 lg:pt-36 lg:pb-28 bg-warm-50 overflow-hidden">
+        <div className="absolute top-20 left-10 w-64 h-64 bg-rose-200/20 rounded-full blur-3xl" />
+        <div className="absolute bottom-10 right-10 w-80 h-80 bg-sage-200/20 rounded-full blur-3xl" />
+
         <div className="container relative mx-auto px-4">
-          <div className="mx-auto max-w-4xl text-center">
-            {/* Tagline badge */}
-            <motion.div 
-              initial={{ opacity: 0, y: 20 }}
+          <div className="mx-auto max-w-3xl text-center">
+            <motion.span
+              initial={{ opacity: 0, y: 16 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5 }}
+              className="inline-flex items-center gap-2 mb-6 rounded-full bg-sage-100 border border-sage-200 px-5 py-2 text-xs font-semibold text-sage-700 tracking-wider uppercase"
+            >
+              <Users className="h-3.5 w-3.5" />
+              8-weekse Groepstraining
+            </motion.span>
+
+            <motion.h1
+              initial={{ opacity: 0, y: 24 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.05 }}
-              className="inline-flex items-center gap-2 mb-8 rounded-full bg-warm-100 border border-warm-200 px-6 py-3.5 text-sm font-medium text-terracotta-700 shadow-sm"
+              className="mb-6 text-4xl font-light tracking-tight text-foreground md:text-5xl lg:text-6xl leading-[1.15]"
             >
-              <Sparkles className="h-4 w-4" />
-              Jouw welzijn begint bij hoe je met jezelf omgaat
-            </motion.div>
-
-            {/* Main heading */}
-            <motion.h1 
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.7, delay: 0.1 }}
-              className="mb-8 text-5xl font-light tracking-tight text-foreground md:text-6xl lg:text-7xl leading-[1.15]"
-            >
-              Kom thuis
-              <span className="block font-serif italic text-terracotta-600 mt-3 text-[1.1em]">bij jezelf!</span>
+              Jouw welzijn begint
+              <span className="block font-serif italic text-terracotta-600 mt-2 text-[1.05em]">
+                bij hoe je met jezelf omgaat
+              </span>
             </motion.h1>
-            
-            {/* Subtitle - training name */}
-            <motion.p 
-              initial={{ opacity: 0, y: 20 }}
+
+            <motion.p
+              initial={{ opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.15 }}
-              className="text-terracotta-600 text-xl md:text-2xl font-medium mb-4"
+              transition={{ duration: 0.5, delay: 0.12 }}
+              className="text-muted-foreground text-lg md:text-xl max-w-xl mx-auto leading-relaxed mb-10"
             >
-              8-weekse training in Mindful Zelfcompassie
-            </motion.p>
-            
-            {/* Description */}
-            <motion.p 
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.22 }}
-              className="text-muted-foreground text-lg md:text-xl max-w-xl mx-auto leading-relaxed mb-12"
-            >
-              Leer jezelf te steunen, vooral in moeilijke tijden.
+              Leer jezelf ondersteunen — juist wanneer het moeilijk is — samen met anderen in een veilige, kleine groep.
             </motion.p>
 
-            {/* CTA Buttons */}
             <motion.div
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.3 }}
+              transition={{ duration: 0.5, delay: 0.2 }}
               className="flex flex-col sm:flex-row items-center justify-center gap-4"
             >
-              <Button asChild size="lg" className="bg-terracotta-600 hover:bg-terracotta-700 text-white rounded-full px-10 py-7 text-lg shadow-lg hover:shadow-xl transition-all">
-                <a href="#programma">
-                  Neem deel aan het programma
+              <Button asChild size="lg" className="bg-terracotta-600 hover:bg-terracotta-700 text-white rounded-full px-10 py-7 text-lg shadow-lg">
+                <a href="#data">
+                  Bekijk de startdata
                   <ArrowRight className="ml-3 h-5 w-5" />
                 </a>
               </Button>
             </motion.div>
 
-            {/* Individual sessions mention */}
-            <motion.p
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 0.6, delay: 0.4 }}
-              className="mt-6 text-sm text-muted-foreground"
-            >
-              Liever individuele begeleiding?{" "}
-              <Link to="/ons-aanbod" className="text-terracotta-600 hover:text-terracotta-700 underline underline-offset-2">
-                Bekijk onze individuele trajecten
-              </Link>
-            </motion.p>
-
-            {/* Quick info badges */}
+            {/* Quick specs */}
             <motion.div
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.4 }}
-              className="flex flex-wrap justify-center gap-4 mt-14"
+              transition={{ duration: 0.5, delay: 0.3 }}
+              className="flex flex-wrap justify-center gap-3 mt-10"
             >
-              <div className="flex items-center gap-2 text-muted-foreground text-sm bg-white/80 backdrop-blur-sm rounded-full px-4 py-2 shadow-sm">
-                <Clock className="h-4 w-4 text-terracotta-500" />
-                8 weken
-              </div>
-              <div className="flex items-center gap-2 text-muted-foreground text-sm bg-white/80 backdrop-blur-sm rounded-full px-4 py-2 shadow-sm">
-                <Globe className="h-4 w-4 text-terracotta-500" />
-                100% online
-              </div>
-              <div className="flex items-center gap-2 text-muted-foreground text-sm bg-white/80 backdrop-blur-sm rounded-full px-4 py-2 shadow-sm">
-                <Users className="h-4 w-4 text-terracotta-500" />
-                Kleine groepen
-              </div>
+              {[
+                { icon: Clock, label: "8 weken · 2 uur/sessie" },
+                { icon: Globe, label: "100% live online" },
+                { icon: Users, label: "Max 12 deelnemers" },
+                { icon: Sparkles, label: "Vanaf €495 early bird" },
+              ].map((item, i) => (
+                <div key={i} className="flex items-center gap-2 text-muted-foreground text-sm bg-white/80 backdrop-blur-sm rounded-full px-4 py-2 shadow-sm">
+                  <item.icon className="h-4 w-4 text-terracotta-500" />
+                  {item.label}
+                </div>
+              ))}
             </motion.div>
           </div>
         </div>
       </section>
 
-      {/* Social Proof Section */}
-      <section className="py-12 bg-white border-b border-warm-100">
+      {/* Social proof bar */}
+      <section className="py-8 bg-white border-b border-warm-100">
         <div className="container mx-auto px-4">
-          <div className="max-w-4xl mx-auto">
-            <div className="grid grid-cols-3 gap-8 text-center">
-              <div>
-                <div className="flex items-center justify-center gap-2 mb-2">
-                  <Users className="h-5 w-5 text-terracotta-500" />
-                  <span className="text-3xl lg:text-4xl font-light text-foreground">200+</span>
-                </div>
-                <p className="text-sm text-muted-foreground">deelnemers begeleid</p>
+          <div className="max-w-3xl mx-auto grid grid-cols-3 gap-6 text-center">
+            <div>
+              <div className="flex items-center justify-center gap-2 mb-1">
+                <Users className="h-4 w-4 text-terracotta-500" />
+                <span className="text-2xl lg:text-3xl font-light text-foreground">200+</span>
               </div>
-              <div>
-                <div className="flex items-center justify-center gap-2 mb-2">
-                  <Star className="h-5 w-5 text-terracotta-500 fill-terracotta-500" />
-                  <span className="text-3xl lg:text-4xl font-light text-foreground">4.9/5</span>
-                </div>
-                <p className="text-sm text-muted-foreground">gemiddelde beoordeling</p>
+              <p className="text-xs text-muted-foreground">deelnemers begeleid</p>
+            </div>
+            <div>
+              <div className="flex items-center justify-center gap-2 mb-1">
+                <Star className="h-4 w-4 text-terracotta-500 fill-terracotta-500" />
+                <span className="text-2xl lg:text-3xl font-light text-foreground">4.9/5</span>
               </div>
-              <div>
-                <div className="flex items-center justify-center gap-2 mb-2">
-                  <Award className="h-5 w-5 text-terracotta-500" />
-                  <span className="text-3xl lg:text-4xl font-light text-foreground">MSC</span>
-                </div>
-                <p className="text-sm text-muted-foreground">gecertificeerde trainer</p>
+              <p className="text-xs text-muted-foreground">gemiddelde beoordeling</p>
+            </div>
+            <div>
+              <div className="flex items-center justify-center gap-2 mb-1">
+                <Award className="h-4 w-4 text-terracotta-500" />
+                <span className="text-2xl lg:text-3xl font-light text-foreground">MSC</span>
               </div>
+              <p className="text-xs text-muted-foreground">gecertificeerde trainer</p>
             </div>
           </div>
         </div>
       </section>
 
-
-      {/* Waarom Mindful Zelfcompassie */}
-      <section className="py-24 lg:py-32 bg-white relative overflow-hidden">
-        {/* Decorative line */}
-        <div className="absolute left-1/2 top-0 w-px h-20 bg-gradient-to-b from-transparent to-terracotta-200" />
-        
+      {/* Wat is MSC — kort */}
+      <section className="py-20 lg:py-28 bg-white">
         <div className="container mx-auto px-4">
           <div className="mx-auto max-w-3xl">
             <ScrollReveal>
               <div className="text-center mb-10">
-                <span className="inline-block rounded-full bg-sage-100 px-5 py-2 text-xs font-semibold tracking-wider text-sage-700 mb-8 uppercase">
-                  Ontdek
+                <span className="inline-block rounded-full bg-sage-100 px-5 py-2 text-xs font-semibold tracking-wider text-sage-700 mb-6 uppercase">
+                  De Methode
                 </span>
-                <h2 className="mb-10 text-3xl font-light text-foreground md:text-4xl lg:text-5xl leading-tight">
-                  Waarom <span className="font-serif italic text-terracotta-600">Mindful Zelfcompassie?</span>
-                </h2>
-              </div>
-              
-              {/* Three pillars without numbers */}
-              <div className="space-y-6">
-                <div className="bg-warm-50 rounded-2xl p-6 lg:p-8 border-l-4 border-terracotta-300">
-                  <span className="inline-block rounded-full bg-terracotta-100 px-3 py-1 text-xs font-semibold text-terracotta-700 mb-3">
-                    Mythe
-                  </span>
-                  <p className="text-muted-foreground text-lg lg:text-xl leading-relaxed">
-                    Veel mensen denken dat streng zijn voor jezelf helpt om gemotiveerd of succesvol te blijven.
-                  </p>
-                </div>
-                
-                <div className="bg-sage-50 rounded-2xl p-6 lg:p-8 border-l-4 border-sage-300">
-                  <span className="inline-block rounded-full bg-sage-100 px-3 py-1 text-xs font-semibold text-sage-700 mb-3">
-                    Wetenschap
-                  </span>
-                  <p className="text-muted-foreground text-lg lg:text-xl leading-relaxed">
-                    Onderzoek laat zien dat zelfkritiek juist <mark className="bg-sage-200 text-sage-800 px-1 rounded">stress vergroot</mark>, <mark className="bg-sage-200 text-sage-800 px-1 rounded">veerkracht ondermijnt</mark> en op termijn <mark className="bg-sage-200 text-sage-800 px-1 rounded">uitput</mark>.
-                  </p>
-                </div>
-                
-                <div className="bg-gradient-to-r from-terracotta-50 to-warm-50 rounded-2xl p-6 lg:p-8 border border-terracotta-200 shadow-sm">
-                  <span className="inline-block rounded-full bg-terracotta-500 px-3 py-1 text-xs font-semibold text-white mb-3">
-                    Het Alternatief
-                  </span>
-                  <p className="text-xl lg:text-2xl font-light text-foreground leading-relaxed">
-                    Mindful Zelfcompassie leert je met <span className="underline decoration-terracotta-300 decoration-2 underline-offset-4">vriendelijkheid en begrip</span> op jezelf te reageren — <span className="font-medium text-terracotta-600">juist wanneer het moeilijk is.</span>
-                  </p>
-                </div>
-              </div>
-              
-              
-              {/* Inspirational quote */}
-              <div className="mt-8 relative">
-                <Quote className="absolute -top-3 -left-2 h-8 w-8 text-terracotta-200" />
-                <blockquote className="bg-white border border-warm-200 rounded-2xl p-6 lg:p-8 pl-10 italic text-lg lg:text-xl text-muted-foreground leading-relaxed shadow-sm">
-                  "Met dezelfde vriendelijkheid naar jezelf kijken als naar een goede vriend — dat is de kern van zelfcompassie."
-                  <footer className="mt-4 not-italic text-base font-medium text-terracotta-600">
-                    — Dr. Kristin Neff, grondlegger van zelfcompassie-onderzoek
-                  </footer>
-                </blockquote>
-              </div>
-              
-              <div className="text-center mt-12">
-                <Button asChild className="bg-terracotta-600 hover:bg-terracotta-700 text-white rounded-full px-8 py-6 text-base shadow-md">
-                  <a href="#programma">
-                    Reserveer hier je plek
-                    <ArrowRight className="ml-2 h-5 w-5" />
-                  </a>
-                </Button>
-              </div>
-            </ScrollReveal>
-          </div>
-        </div>
-      </section>
-
-
-      <section className="py-20 lg:py-28 bg-gradient-to-b from-warm-50 to-white relative overflow-hidden">
-        <div className="absolute top-0 left-1/4 w-64 h-64 bg-rose-100/30 rounded-full blur-3xl" />
-        <div className="absolute bottom-0 right-1/4 w-80 h-80 bg-lavender-100/30 rounded-full blur-3xl" />
-        
-        <div className="container relative mx-auto px-4">
-          <div className="mx-auto max-w-5xl">
-            <ScrollReveal>
-              <div className="text-center mb-12">
-                <span className="inline-flex items-center gap-2 rounded-full bg-terracotta-100 border border-terracotta-200 px-5 py-2 text-xs font-semibold tracking-wider text-terracotta-700 mb-6 uppercase">
-                  <Play className="h-3.5 w-3.5" />
-                  Kennismaken
-                </span>
-                <h2 className="mb-6 text-3xl font-light text-foreground md:text-4xl lg:text-5xl leading-tight">
-                  Ontdek wat zelfcompassie <span className="font-serif italic text-terracotta-600">voor jou kan betekenen</span>
+                <h2 className="mb-6 text-3xl font-light text-foreground md:text-4xl leading-tight">
+                  Mindful Self-Compassion
+                  <span className="block font-serif italic text-terracotta-600 mt-1">(MSC)</span>
                 </h2>
                 <p className="text-muted-foreground text-lg max-w-2xl mx-auto leading-relaxed">
-                  In deze korte video leg ik uit wat Mindful Zelfcompassie is en hoe de training je kan helpen om milder met jezelf om te gaan.
+                  Een wetenschappelijk onderbouwd 8-weeks programma, ontwikkeld door dr. Kristin Neff en dr. Christopher Germer. 
+                  Je leert jezelf te behandelen zoals je een goede vriend(in) zou behandelen.
                 </p>
               </div>
             </ScrollReveal>
-            
-            <ScrollReveal delay={0.1}>
-              <div className="relative max-w-4xl mx-auto">
-                {/* Video Container with image background */}
-                <div className="relative aspect-video rounded-3xl overflow-hidden shadow-2xl border border-warm-200">
-                  {/* Background image */}
-                  <img 
-                    src={meditationPractice} 
-                    alt="Meditatie praktijk" 
-                    width={1280}
-                    height={720}
-                    className="absolute inset-0 w-full h-full object-cover"
-                    loading="lazy"
-                  />
-                  <div className="absolute inset-0 bg-black/30" />
-                  
-                  {/* Play button overlay */}
-                  <div className="absolute inset-0 flex flex-col items-center justify-center">
-                    <div className="relative group cursor-pointer">
-                      {/* Play button */}
-                      <div className="h-24 w-24 rounded-full bg-white/90 shadow-xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300 backdrop-blur-sm">
-                        <div className="h-20 w-20 rounded-full bg-gradient-to-br from-terracotta-500 to-terracotta-600 flex items-center justify-center">
-                          <Play className="h-10 w-10 text-white fill-white ml-1" />
-                        </div>
-                      </div>
-                      {/* Pulse animation */}
-                      <div className="absolute inset-0 rounded-full bg-white/30 animate-ping" />
-                    </div>
-                    <p className="mt-8 text-white font-medium drop-shadow-lg">Klik om de video af te spelen</p>
-                    <p className="mt-2 text-sm text-white/80 drop-shadow-lg">Duur: 3 minuten</p>
-                  </div>
-                  
-                  {/* Uncomment en vervang VIDEO_ID met je YouTube video ID:
-                  <iframe
-                    className="absolute inset-0 w-full h-full"
-                    src="https://www.youtube.com/embed/VIDEO_ID"
-                    title="Introductie Mindful Zelfcompassie"
-                    frameBorder="0"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                    allowFullScreen
-                  />
-                  */}
-                </div>
-                
-                {/* Decorative elements */}
-                <div className="absolute -bottom-4 -left-4 w-24 h-24 bg-rose-100 rounded-2xl -z-10" />
-                <div className="absolute -top-4 -right-4 w-16 h-16 bg-lavender-100 rounded-xl -z-10" />
-              </div>
-            </ScrollReveal>
-            
-            {/* Video highlights */}
-            <ScrollReveal delay={0.2}>
-              <div className="flex flex-wrap justify-center gap-4 mt-10 max-w-2xl mx-auto">
-                <span className="inline-flex items-center gap-2 rounded-full bg-white border border-warm-200 px-4 py-2 text-sm text-muted-foreground">
-                  <Heart className="h-4 w-4 text-terracotta-500" />
-                  Over de trainer
-                </span>
-                <span className="inline-flex items-center gap-2 rounded-full bg-white border border-warm-200 px-4 py-2 text-sm text-muted-foreground">
-                  <Brain className="h-4 w-4 text-sage-600" />
-                  Wat is zelfcompassie?
-                </span>
-                <span className="inline-flex items-center gap-2 rounded-full bg-white border border-warm-200 px-4 py-2 text-sm text-muted-foreground">
-                  <Sparkles className="h-4 w-4 text-terracotta-500" />
-                  Wat kun je verwachten?
-                </span>
-              </div>
-            </ScrollReveal>
-          </div>
-        </div>
-      </section>
 
-      {/* Wat is MSC */}
-      <section className="py-24 lg:py-32 bg-warm-50 relative">
-        <div className="container mx-auto px-4">
-          <div className="mx-auto max-w-4xl">
-            <ScrollReveal>
-              <div className="text-center mb-12">
-                <span className="inline-block rounded-full bg-terracotta-100 px-5 py-2 text-xs font-semibold tracking-wider text-terracotta-700 mb-8 uppercase">
-                  Het Programma
-                </span>
-                <h2 className="mb-8 text-3xl font-light text-foreground md:text-4xl lg:text-5xl leading-tight">
-                  Wat is Mindful Zelfcompassie
-                  <span className="block font-serif italic text-terracotta-600 mt-2">(MSC)?</span>
-                </h2>
-                <p className="text-muted-foreground text-lg lg:text-xl max-w-2xl mx-auto leading-relaxed">
-                  Mindful Zelfcompassie (MSC) is een wetenschappelijk onderbouwd 8-weeks programma, ontwikkeld door dr. Kristin Neff en dr. Christopher Germer.
-                </p>
-              </div>
-            </ScrollReveal>
-            
             <ScrollReveal delay={0.1}>
-              <div className="flex items-center justify-center gap-2 mb-10">
-                <div className="h-px w-12 bg-terracotta-300" />
-                <p className="text-foreground text-lg font-medium">Wat leer je in 8 weken?</p>
-                <div className="h-px w-12 bg-terracotta-300" />
-              </div>
-            </ScrollReveal>
-            
-            <StaggerContainer className="grid gap-4 md:grid-cols-2 mb-10 max-w-2xl mx-auto">
-              <StaggerItem>
-                <Card className="border-0 bg-white rounded-2xl hover:shadow-lg transition-all duration-300 shadow-sm">
+              <div className="grid md:grid-cols-2 gap-4 mb-8">
+                <Card className="border-0 bg-warm-50 rounded-2xl shadow-sm">
                   <CardContent className="p-5 flex items-center gap-4">
                     <div className="flex-shrink-0 h-12 w-12 rounded-xl bg-gradient-to-br from-terracotta-100 to-terracotta-200 flex items-center justify-center">
                       <Brain className="h-6 w-6 text-terracotta-600" />
@@ -456,10 +219,7 @@ const MindfulZelfcompassie = () => {
                     </div>
                   </CardContent>
                 </Card>
-              </StaggerItem>
-              
-              <StaggerItem>
-                <Card className="border-0 bg-white rounded-2xl hover:shadow-lg transition-all duration-300 shadow-sm">
+                <Card className="border-0 bg-warm-50 rounded-2xl shadow-sm">
                   <CardContent className="p-5 flex items-center gap-4">
                     <div className="flex-shrink-0 h-12 w-12 rounded-xl bg-gradient-to-br from-rose-100 to-rose-200 flex items-center justify-center">
                       <Heart className="h-6 w-6 text-rose-600" />
@@ -467,48 +227,29 @@ const MindfulZelfcompassie = () => {
                     <div>
                       <span className="text-xs font-semibold text-rose-600 uppercase tracking-wide">Pijler 2</span>
                       <h3 className="text-lg font-semibold text-foreground">Zelfcompassie</h3>
-                      <p className="text-muted-foreground text-sm">Met vriendelijkheid en begrip op jezelf reageren.</p>
+                      <p className="text-muted-foreground text-sm">Met vriendelijkheid op jezelf reageren.</p>
                     </div>
                   </CardContent>
                 </Card>
-              </StaggerItem>
-            </StaggerContainer>
-            
-            <ScrollReveal delay={0.2}>
-              <div className="max-w-2xl mx-auto mb-10">
-                <p className="text-center text-muted-foreground text-lg leading-relaxed mb-6">
-                  Ontwikkel praktische vaardigheden om jezelf te ondersteunen — zoals je dat bij een goede vriend(in) zou doen.
-                </p>
-
-                <h3 className="text-center text-base font-medium text-foreground mb-4">Een greep uit de thema's:</h3>
-                
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                  {[
-                    { emoji: "🌿", title: "Basis van zelfcompassie" },
-                    { emoji: "💛", title: "Vriendelijkheid voor jezelf" },
-                    { emoji: "🎭", title: "Omgaan met moeilijke emoties" },
-                    { emoji: "🌊", title: "Leven vanuit je waarden" },
-                    { emoji: "✨", title: "Dankbaarheid & zelfwaardering" },
-                  ].map((theme, i) => (
-                    <div key={i} className="flex items-center gap-3 bg-white rounded-xl px-4 py-3 border border-warm-100 shadow-sm">
-                      <span className="text-lg flex-shrink-0">{theme.emoji}</span>
-                      <span className="text-foreground text-sm font-medium">{theme.title}</span>
-                    </div>
-                  ))}
-                </div>
               </div>
-              <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-                <Button asChild className="bg-terracotta-600 hover:bg-terracotta-700 text-white rounded-full px-8 py-6 text-base shadow-md">
-                  <a href="#programma">
-                    Reserveer hier je plek
-                    <ArrowRight className="ml-2 h-5 w-5" />
-                  </a>
-                </Button>
+            </ScrollReveal>
+
+            <ScrollReveal delay={0.15}>
+              <div className="relative mt-8">
+                <Quote className="absolute -top-3 -left-2 h-7 w-7 text-terracotta-200" />
+                <blockquote className="bg-warm-50 border border-warm-200 rounded-2xl p-6 pl-10 italic text-lg text-muted-foreground leading-relaxed">
+                  "Met dezelfde vriendelijkheid naar jezelf kijken als naar een goede vriend — dat is de kern."
+                  <footer className="mt-3 not-italic text-sm font-medium text-terracotta-600">
+                    — Dr. Kristin Neff
+                  </footer>
+                </blockquote>
+              </div>
+              <div className="text-center mt-8">
                 <Link
                   to="/mindful-self-compassion"
                   className="inline-flex items-center gap-2 text-sage-600 text-sm hover:text-sage-700 transition-colors"
                 >
-                  Meer over de methodiek
+                  Meer over de MSC-methodiek
                   <ArrowRight className="h-3.5 w-3.5" />
                 </Link>
               </div>
@@ -517,40 +258,47 @@ const MindfulZelfcompassie = () => {
         </div>
       </section>
 
-      {/* Is deze training iets voor jou */}
-      <section className="py-24 lg:py-32 bg-white relative">
+      {/* Wat je leert in 8 weken */}
+      <section className="py-20 lg:py-28 bg-warm-50">
         <div className="container mx-auto px-4">
           <div className="mx-auto max-w-4xl">
             <ScrollReveal>
-              <div className="text-center mb-10">
-                <span className="inline-block rounded-full bg-sage-100 px-5 py-2 text-xs font-semibold tracking-wider text-sage-700 mb-8 uppercase">
-                  Voor Jou
+              <div className="text-center mb-12">
+                <span className="inline-block rounded-full bg-terracotta-100 px-5 py-2 text-xs font-semibold tracking-wider text-terracotta-700 mb-6 uppercase">
+                  Het Programma
                 </span>
-                <h2 className="mb-8 text-3xl font-light text-foreground md:text-4xl lg:text-5xl leading-tight">
-                  Voor wie is deze training?
-                  <span className="block font-serif italic text-terracotta-600 mt-2">Herken je jezelf hierin?</span>
+                <h2 className="mb-6 text-3xl font-light text-foreground md:text-4xl leading-tight">
+                  Wat je leert in <span className="font-serif italic text-terracotta-600">8 weken</span>
                 </h2>
               </div>
             </ScrollReveal>
-            
-            <ScrollReveal delay={0.2}>
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-3 max-w-3xl mx-auto mb-10">
-                {[
-                  { text: "Streng voor jezelf", icon: "🌿" },
-                  { text: "Perfectionistisch", icon: "📏" },
-                  { text: "Moeilijke emoties", icon: "💭" },
-                  { text: "Zoekt meer balans", icon: "🪞" },
-                ].map((item, index) => (
-                  <div key={index} className="flex flex-col items-center gap-2 p-4 rounded-xl bg-warm-50 border border-warm-200 text-center">
-                    <span className="text-xl">{item.icon}</span>
-                    <span className="text-foreground text-sm font-medium">{item.text}</span>
+
+            <StaggerContainer className="grid sm:grid-cols-2 gap-4 max-w-2xl mx-auto mb-10">
+              {[
+                { emoji: "🌿", title: "Basis van zelfcompassie", desc: "Ontdek de drie kerncomponenten" },
+                { emoji: "💛", title: "Vriendelijkheid voor jezelf", desc: "Leer je innerlijke criticus kalmeren" },
+                { emoji: "🎭", title: "Omgaan met moeilijke emoties", desc: "Veerkracht opbouwen van binnenuit" },
+                { emoji: "🌊", title: "Leven vanuit je waarden", desc: "Keuzes maken die bij je passen" },
+                { emoji: "✨", title: "Dankbaarheid & zelfwaardering", desc: "Het goede in jezelf erkennen" },
+                { emoji: "🤝", title: "De kracht van de groep", desc: "Leren van elkaars ervaringen" },
+              ].map((theme, i) => (
+                <StaggerItem key={i}>
+                  <div className="flex items-start gap-3 bg-white rounded-xl px-5 py-4 border border-warm-100 shadow-sm">
+                    <span className="text-xl flex-shrink-0 mt-0.5">{theme.emoji}</span>
+                    <div>
+                      <span className="text-foreground text-sm font-medium block">{theme.title}</span>
+                      <span className="text-muted-foreground text-xs">{theme.desc}</span>
+                    </div>
                   </div>
-                ))}
-              </div>
+                </StaggerItem>
+              ))}
+            </StaggerContainer>
+
+            <ScrollReveal delay={0.2}>
               <div className="text-center">
                 <Button asChild className="bg-terracotta-600 hover:bg-terracotta-700 text-white rounded-full px-8 py-6 text-base shadow-md">
-                  <a href="#programma">
-                    Reserveer hier je plek
+                  <a href="#data">
+                    Bekijk de startdata
                     <ArrowRight className="ml-2 h-5 w-5" />
                   </a>
                 </Button>
@@ -560,106 +308,114 @@ const MindfulZelfcompassie = () => {
         </div>
       </section>
 
-
-      {/* Wat je kunt verwachten */}
-      <section className="py-24 lg:py-32 bg-sage-50 relative overflow-hidden">
-        {/* Background image with overlay */}
-        <div className="absolute inset-0 opacity-20">
-          <img 
-            src={natureCalm} 
-            alt="Rustige natuur" 
-            width={1920}
-            height={1080}
-            className="w-full h-full object-cover"
-            loading="lazy"
-          />
-        </div>
-        <div className="absolute inset-0 bg-gradient-to-b from-sage-50/95 via-sage-50/90 to-sage-50/95" />
-        
-        <div className="container relative mx-auto px-4">
-          <div className="mx-auto max-w-3xl text-center">
+      {/* Voor wie */}
+      <section className="py-20 lg:py-28 bg-white">
+        <div className="container mx-auto px-4">
+          <div className="mx-auto max-w-3xl">
             <ScrollReveal>
-              <span className="inline-block rounded-full bg-sage-100 px-5 py-2 text-xs font-semibold tracking-wider text-sage-700 mb-8 uppercase">
-                De Ervaring
-              </span>
-              <h2 className="mb-10 text-3xl font-light text-foreground md:text-4xl lg:text-5xl leading-tight">
-                Wat je kunt <span className="font-serif italic text-terracotta-600">verwachten</span>
-              </h2>
-              
-              <div className="bg-white rounded-3xl p-8 lg:p-10 shadow-md mb-8">
-                {/* Visual timeline/process */}
-                <div className="flex items-center justify-center gap-2 mb-8">
-                  <div className="flex items-center gap-2">
-                    <div className="w-10 h-10 rounded-full bg-terracotta-100 flex items-center justify-center">
-                      <span className="text-terracotta-700 font-semibold">1</span>
-                    </div>
-                    <span className="text-sm font-medium text-terracotta-700">Theorie</span>
-                  </div>
-                  <div className="w-8 h-px bg-warm-300" />
-                  <div className="flex items-center gap-2">
-                    <div className="w-10 h-10 rounded-full bg-sage-100 flex items-center justify-center">
-                      <span className="text-sage-700 font-semibold">2</span>
-                    </div>
-                    <span className="text-sm font-medium text-sage-700">Praktijk</span>
-                  </div>
-                  <div className="w-8 h-px bg-warm-300" />
-                  <div className="flex items-center gap-2">
-                    <div className="w-10 h-10 rounded-full bg-warm-200 flex items-center justify-center">
-                      <span className="text-warm-700 font-semibold">3</span>
-                    </div>
-                    <span className="text-sm font-medium text-warm-700">Integratie</span>
-                  </div>
-                </div>
-                
-                {/* Decorative divider with icon */}
-                <div className="flex items-center justify-center gap-4 my-6">
-                  <div className="h-px w-16 bg-gradient-to-r from-transparent to-terracotta-300" />
-                  <Leaf className="h-5 w-5 text-terracotta-400" />
-                  <div className="h-px w-16 bg-gradient-to-l from-transparent to-terracotta-300" />
-                </div>
-                
-                <p className="text-muted-foreground text-lg leading-relaxed text-center">
-                  Elke sessie voelt als thuiskomen: een veilige en vertrouwde ruimte waarin je kunt ontdekken, oefenen en verbinden. Onze ervaren trainers werken met een <span className="inline-flex items-center gap-1.5 rounded-full bg-sage-100 px-3 py-1 text-sage-700 font-medium text-sm"><Star className="h-3 w-3" />trauma-sensitieve aanpak</span>, zodat jij je op je gemak voelt terwijl je nieuwe inzichten en vaardigheden ontwikkelt.
+              <div className="text-center mb-10">
+                <span className="inline-block rounded-full bg-sage-100 px-5 py-2 text-xs font-semibold tracking-wider text-sage-700 mb-6 uppercase">
+                  Voor Jou
+                </span>
+                <h2 className="mb-4 text-3xl font-light text-foreground md:text-4xl leading-tight">
+                  Herken je jezelf <span className="font-serif italic text-terracotta-600">hierin?</span>
+                </h2>
+                <p className="text-muted-foreground text-lg max-w-xl mx-auto">
+                  Deze groepstraining is voor jou als je merkt dat je:
                 </p>
+              </div>
+            </ScrollReveal>
+
+            <ScrollReveal delay={0.1}>
+              <div className="grid grid-cols-2 gap-3 max-w-lg mx-auto mb-10">
+                {[
+                  { text: "Streng bent voor jezelf", icon: "🌿" },
+                  { text: "Perfectionistisch bent", icon: "📏" },
+                  { text: "Moeite hebt met emoties", icon: "💭" },
+                  { text: "Meer balans zoekt", icon: "🪞" },
+                ].map((item, index) => (
+                  <div key={index} className="flex flex-col items-center gap-2 p-4 rounded-xl bg-warm-50 border border-warm-200 text-center">
+                    <span className="text-xl">{item.icon}</span>
+                    <span className="text-foreground text-sm font-medium">{item.text}</span>
+                  </div>
+                ))}
               </div>
             </ScrollReveal>
           </div>
         </div>
       </section>
 
-      {/* Kernpunten - Wat brengt MSC je */}
-      <section className="py-24 lg:py-32 bg-gradient-to-b from-white via-warm-50/30 to-white relative overflow-hidden">
-        {/* Decorative elements */}
-        <div className="absolute top-20 left-10 w-32 h-32 bg-coral-100/40 rounded-full blur-3xl" />
-        <div className="absolute bottom-20 right-10 w-48 h-48 bg-lavender-100/40 rounded-full blur-3xl" />
-        
-        <div className="container relative mx-auto px-4">
-          <div className="mx-auto max-w-5xl">
+      {/* Praktische info */}
+      <section className="py-20 lg:py-28 bg-sage-50">
+        <div className="container mx-auto px-4">
+          <div className="mx-auto max-w-4xl">
             <ScrollReveal>
-              <div className="text-center mb-16">
-                <span className="inline-flex items-center gap-2 rounded-full bg-terracotta-100 border border-terracotta-200 px-5 py-2 text-xs font-semibold tracking-wider text-terracotta-700 mb-8 uppercase">
-                  <Sparkles className="h-3.5 w-3.5" />
-                  Kernpunten
+              <div className="text-center mb-12">
+                <span className="inline-block rounded-full bg-sage-100 px-5 py-2 text-xs font-semibold tracking-wider text-sage-700 mb-6 uppercase">
+                  Praktisch
                 </span>
-                <h2 className="mb-6 text-3xl font-light text-foreground md:text-4xl lg:text-5xl leading-tight">
-                  Wat brengt MSC <span className="font-serif italic text-terracotta-600">je?</span>
+                <h2 className="mb-6 text-3xl font-light text-foreground md:text-4xl leading-tight">
+                  Wat je kunt <span className="font-serif italic text-terracotta-600">verwachten</span>
                 </h2>
-                <div className="flex flex-wrap justify-center gap-3 mb-6">
-                  <span className="inline-flex items-center gap-1.5 rounded-full bg-sage-100 border border-sage-200 px-4 py-1.5 text-xs font-medium text-sage-700">
-                    <FlaskConical className="h-3 w-3" />
-                    Wetenschappelijk bewezen
-                  </span>
-                  <span className="inline-flex items-center gap-1.5 rounded-full bg-terracotta-100 border border-terracotta-200 px-4 py-1.5 text-xs font-medium text-terracotta-700">
-                    <TrendingUp className="h-3 w-3" />
-                    Duurzame resultaten
-                  </span>
-                </div>
-                <p className="text-muted-foreground text-lg lg:text-xl max-w-2xl mx-auto leading-relaxed">
-                  Onderzoek laat zien dat MSC leidt tot duurzame, positieve veranderingen — wereldwijd bevestigd bij duizenden deelnemers.
-                </p>
               </div>
             </ScrollReveal>
-            
+
+            <ScrollReveal delay={0.1}>
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-10">
+                {[
+                  { label: "Format", value: "100% live online" },
+                  { label: "Duur", value: "8 weken + retreat" },
+                  { label: "Per sessie", value: "2 uur" },
+                  { label: "Taal", value: "NL / EN" },
+                ].map((item, i) => (
+                  <div key={i} className="text-center p-5 rounded-xl bg-white border border-sage-200 shadow-sm">
+                    <p className="text-xs text-muted-foreground mb-1 uppercase tracking-wider">{item.label}</p>
+                    <p className="font-medium text-foreground">{item.value}</p>
+                  </div>
+                ))}
+              </div>
+            </ScrollReveal>
+
+            <ScrollReveal delay={0.15}>
+              <div className="bg-white rounded-2xl p-6 lg:p-8 shadow-sm border border-sage-200">
+                <h3 className="text-lg font-medium text-foreground mb-4">Elke sessie bevat:</h3>
+                <div className="grid sm:grid-cols-2 gap-3">
+                  {[
+                    "Korte theorie over het thema",
+                    "Geleide meditaties en oefeningen",
+                    "Uitwisseling in de groep",
+                    "Thuisopdrachten en audiomeditaties",
+                    "Halve-dagretraite (dag 5)",
+                    "Trauma-sensitieve begeleiding",
+                  ].map((item, i) => (
+                    <div key={i} className="flex items-center gap-3 text-sm text-foreground">
+                      <Check className="h-4 w-4 text-sage-500 flex-shrink-0" />
+                      {item}
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </ScrollReveal>
+          </div>
+        </div>
+      </section>
+
+      {/* Resultaten */}
+      <section className="py-20 lg:py-28 bg-white overflow-hidden">
+        <div className="container mx-auto px-4">
+          <div className="mx-auto max-w-5xl">
+            <ScrollReveal>
+              <div className="text-center mb-12">
+                <span className="inline-flex items-center gap-2 rounded-full bg-terracotta-100 border border-terracotta-200 px-5 py-2 text-xs font-semibold tracking-wider text-terracotta-700 mb-6 uppercase">
+                  <FlaskConical className="h-3.5 w-3.5" />
+                  Wetenschappelijk bewezen
+                </span>
+                <h2 className="mb-4 text-3xl font-light text-foreground md:text-4xl leading-tight">
+                  Wat MSC deelnemers <span className="font-serif italic text-terracotta-600">ervaren</span>
+                </h2>
+              </div>
+            </ScrollReveal>
+
             <StaggerContainer className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
               {[
                 { text: "Meer rust", icon: Brain, stat: "↓ 36%", statLabel: "stress", color: "terracotta" },
@@ -672,13 +428,11 @@ const MindfulZelfcompassie = () => {
                 const IconComponent = item.icon;
                 return (
                   <StaggerItem key={index}>
-                    <div className={`group text-center p-4 rounded-2xl bg-white border border-warm-200 shadow-sm hover:shadow-md transition-all duration-300`}>
+                    <div className="text-center p-4 rounded-2xl bg-warm-50 border border-warm-200 shadow-sm hover:shadow-md transition-shadow">
                       <div className={`h-10 w-10 mx-auto rounded-xl ${item.color === 'terracotta' ? 'bg-terracotta-100' : 'bg-sage-100'} flex items-center justify-center mb-3`}>
                         <IconComponent className={`h-5 w-5 ${item.color === 'terracotta' ? 'text-terracotta-600' : 'text-sage-600'}`} />
                       </div>
-                      <h3 className="text-sm font-medium text-foreground mb-1">
-                        {item.text}
-                      </h3>
+                      <h3 className="text-sm font-medium text-foreground mb-1">{item.text}</h3>
                       <div className={`text-lg font-bold ${item.color === 'terracotta' ? 'text-terracotta-600' : 'text-sage-600'}`}>
                         {item.stat}
                       </div>
@@ -688,425 +442,57 @@ const MindfulZelfcompassie = () => {
                 );
               })}
             </StaggerContainer>
-            
-            <ScrollReveal delay={0.3}>
-              <p className="text-xs text-muted-foreground text-center mt-8">
-                * Gemiddelde resultaten uit meta-analyses van MSC-onderzoek (Neff & Germer, 2013-2023)
-              </p>
-            </ScrollReveal>
           </div>
         </div>
       </section>
 
-      {/* Programma-structuur & Data */}
-      <section id="programma" className="py-20 lg:py-24 bg-warm-50 scroll-mt-20">
+      {/* Testimonials */}
+      <section className="py-20 lg:py-24 bg-warm-50">
         <div className="container mx-auto px-4">
           <div className="mx-auto max-w-5xl">
             <ScrollReveal>
               <div className="text-center mb-12">
-                <span className="inline-block rounded-full bg-sage-100 px-4 py-1.5 text-xs font-semibold text-sage-700 mb-6">
-                  PRAKTISCH
-                </span>
-                <h2 className="mb-8 text-3xl font-light text-foreground md:text-4xl leading-tight">
-                  Programma & <span className="font-serif italic text-terracotta-600">Data</span>
-                </h2>
-              </div>
-              
-              {/* Intro text */}
-              <div className="text-center mb-10">
-                <p className="text-muted-foreground text-lg max-w-2xl mx-auto leading-relaxed">
-                  Iedereen bewandelt zijn of haar eigen pad. Soms wil je groeien in een groep, soms juist met persoonlijke begeleiding. Hieronder vind je de mogelijkheden.
-                </p>
-              </div>
-
-              {/* Service Cards */}
-              <div className="grid md:grid-cols-3 gap-6 mb-16">
-                <Card className="border-warm-200 bg-white hover:shadow-lg transition-all duration-300 rounded-2xl overflow-hidden group text-center">
-                  <CardContent className="p-6">
-                    <div className="h-14 w-14 rounded-2xl bg-gradient-to-br from-terracotta-100 to-terracotta-200 flex items-center justify-center mb-4 mx-auto group-hover:scale-110 transition-transform">
-                      <Users className="h-7 w-7 text-terracotta-600" />
-                    </div>
-                    <h3 className="text-lg font-semibold text-foreground mb-1">🌿 Groepstraject</h3>
-                    <p className="text-xs text-muted-foreground mb-3">Mindful zelfcompassie · 8 weken</p>
-                    <p className="text-sm text-muted-foreground mb-4">Leer vriendelijker met jezelf omgaan, beter omgaan met stress en ervaar meer innerlijke rust.</p>
-                    <p className="text-xl font-light text-terracotta-600">€550</p>
-                  </CardContent>
-                </Card>
-                
-                <Card className="border-warm-200 bg-white hover:shadow-lg transition-all duration-300 rounded-2xl overflow-hidden group text-center">
-                  <CardContent className="p-6">
-                    <div className="h-14 w-14 rounded-2xl bg-gradient-to-br from-warm-100 to-warm-200 flex items-center justify-center mb-4 mx-auto group-hover:scale-110 transition-transform">
-                      <Heart className="h-7 w-7 text-terracotta-600" />
-                    </div>
-                    <h3 className="text-lg font-semibold text-foreground mb-1">🌿 Individueel Traject</h3>
-                    <p className="text-xs text-muted-foreground mb-3">6-sessiepakket · incl. intake & reflectie</p>
-                    <p className="text-sm text-muted-foreground mb-3">Persoonlijk, op maat begeleid worden en écht de diepte ingaan op jouw thema's.</p>
-                    <span className="inline-block rounded-full bg-terracotta-100 px-2.5 py-0.5 text-[10px] font-semibold text-terracotta-700 mb-2">✨ Aanbieding</span>
-                    <div className="flex items-center justify-center gap-2">
-                      <p className="text-base font-light text-muted-foreground line-through">€650</p>
-                      <p className="text-xl font-light text-terracotta-600">€550</p>
-                    </div>
-                  </CardContent>
-                </Card>
-
-                <Card className="border-warm-200 bg-white hover:shadow-lg transition-all duration-300 rounded-2xl overflow-hidden group text-center">
-                  <CardContent className="p-6">
-                    <div className="h-14 w-14 rounded-2xl bg-gradient-to-br from-sage-100 to-sage-200 flex items-center justify-center mb-4 mx-auto group-hover:scale-110 transition-transform">
-                      <Sparkles className="h-7 w-7 text-sage-600" />
-                    </div>
-                    <h3 className="text-lg font-semibold text-foreground mb-1">🌿 Individuele Sessie</h3>
-                    <p className="text-xs text-muted-foreground mb-3">Los · kennismaking of verdieping</p>
-                    <p className="text-sm text-muted-foreground mb-4">Boek een losse sessie rond een specifiek thema of als kennismaking.</p>
-                    <p className="text-xl font-light text-terracotta-600">€110</p>
-                  </CardContent>
-                </Card>
-              </div>
-            </ScrollReveal>
-
-            {/* 8-Weekse Training */}
-            <ScrollReveal delay={0.1}>
-              <div className="mb-16">
-                <div className="flex items-center gap-3 mb-6">
-                  <div className="h-10 w-10 rounded-xl bg-terracotta-100 flex items-center justify-center">
-                    <Calendar className="h-5 w-5 text-terracotta-600" />
-                  </div>
-                  <h3 className="text-2xl font-medium text-foreground">8-weekse MSC Training</h3>
-                </div>
-                
-                {/* Format Info */}
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
-                  <div className="text-center p-4 rounded-xl bg-white border border-warm-200">
-                    <p className="text-sm text-muted-foreground mb-1">Format</p>
-                    <p className="font-medium text-foreground">100% live online</p>
-                  </div>
-                  <div className="text-center p-4 rounded-xl bg-white border border-warm-200">
-                    <p className="text-sm text-muted-foreground mb-1">Duur</p>
-                    <p className="font-medium text-foreground">8 weken + retreat</p>
-                  </div>
-                  <div className="text-center p-4 rounded-xl bg-white border border-warm-200">
-                    <p className="text-sm text-muted-foreground mb-1">Per sessie</p>
-                    <p className="font-medium text-foreground">2 uur</p>
-                  </div>
-                  <div className="text-center p-4 rounded-xl bg-white border border-warm-200">
-                    <p className="text-sm text-muted-foreground mb-1">Taal</p>
-                    <p className="font-medium text-foreground">NL / EN</p>
-                  </div>
-                </div>
-                
-                {/* CTA to view dates */}
-                <div className="text-center">
-                  <Button asChild className="bg-terracotta-600 hover:bg-terracotta-700 text-white rounded-full px-8">
-                    <a href="#data">
-                      Bekijk de data
-                      <ArrowRight className="ml-2 h-4 w-4" />
-                    </a>
-                  </Button>
-                </div>
-              </div>
-            </ScrollReveal>
-
-            {/* Divider */}
-            <div className="flex items-center gap-4 my-12">
-              <div className="h-px flex-1 bg-warm-300" />
-              <Leaf className="h-5 w-5 text-sage-400" />
-              <div className="h-px flex-1 bg-warm-300" />
-            </div>
-
-            {/* Individueel Traject */}
-            <ScrollReveal delay={0.2}>
-              <div className="mb-16">
-                <div className="flex items-center gap-3 mb-6">
-                  <div className="h-10 w-10 rounded-xl bg-warm-100 flex items-center justify-center">
-                    <Heart className="h-5 w-5 text-terracotta-600" />
-                  </div>
-                  <h3 className="text-2xl font-medium text-foreground">Individueel Traject – 6-sessiepakket</h3>
-                </div>
-                
-                <p className="text-terracotta-600 font-medium mb-4">
-                  Wil je persoonlijk, op maat begeleid worden en écht de diepte ingaan op jouw thema's?
-                </p>
-                <p className="text-muted-foreground mb-6 max-w-2xl">
-                  Dit pakket is ideaal voor wie een duurzame stap wil zetten. Inclusief intake en reflectiesessie.
-                </p>
-
-                <div className="grid md:grid-cols-2 gap-6 mb-8">
-                  <Card className="border-warm-200 bg-white rounded-2xl">
-                    <CardContent className="p-6">
-                      <h4 className="font-medium text-foreground mb-4">Het pakket omvat:</h4>
-                      <ul className="space-y-3">
-                        {[
-                          "Intakegesprek",
-                          "6 individuele sessies",
-                          "Extra reflectiesessie (afronding en integratie)",
-                          "Persoonlijke oefeningen en handvatten",
-                          "Korte reflectie per mail tussen sessies",
-                        ].map((item, i) => (
-                          <li key={i} className="flex items-center gap-3 text-foreground text-sm">
-                            <Check className="h-4 w-4 text-sage-500 flex-shrink-0" />
-                            {item}
-                          </li>
-                        ))}
-                      </ul>
-                    </CardContent>
-                  </Card>
-                  
-                  <Card className="border-warm-200 bg-white rounded-2xl">
-                    <CardContent className="p-6 flex flex-col items-center justify-center text-center h-full">
-                      <div className="h-16 w-16 rounded-2xl bg-gradient-to-br from-warm-100 to-warm-200 flex items-center justify-center mb-4">
-                        <Heart className="h-8 w-8 text-terracotta-600" />
-                      </div>
-                      <span className="inline-block rounded-full bg-terracotta-100 px-3 py-1 text-xs font-semibold text-terracotta-700 mb-3">✨ Tijdelijke aanbieding</span>
-                      <div className="flex items-center justify-center gap-3 mb-2">
-                        <p className="text-xl font-light text-muted-foreground line-through">€650</p>
-                        <p className="text-3xl font-light text-terracotta-600">€550</p>
-                      </div>
-                      <p className="text-sm text-muted-foreground mb-6">voor het volledige traject</p>
-                      <Button asChild className="bg-terracotta-600 hover:bg-terracotta-700 text-white rounded-full px-8">
-                        <Link to="/contact">
-                          Neem contact op
-                          <ArrowRight className="ml-2 h-4 w-4" />
-                        </Link>
-                      </Button>
-                    </CardContent>
-                  </Card>
-                </div>
-              </div>
-            </ScrollReveal>
-
-            {/* Divider */}
-            <div className="flex items-center gap-4 my-12">
-              <div className="h-px flex-1 bg-warm-300" />
-              <Leaf className="h-5 w-5 text-sage-400" />
-              <div className="h-px flex-1 bg-warm-300" />
-            </div>
-
-            {/* Individuele Sessie (los) */}
-            <ScrollReveal delay={0.25}>
-              <div className="mb-16">
-                <div className="flex items-center gap-3 mb-6">
-                  <div className="h-10 w-10 rounded-xl bg-sage-100 flex items-center justify-center">
-                    <Sparkles className="h-5 w-5 text-sage-600" />
-                  </div>
-                  <h3 className="text-2xl font-medium text-foreground">Individuele Sessie (los)</h3>
-                </div>
-                
-                <p className="text-muted-foreground mb-6 max-w-2xl">
-                  Wil je eerst kennismaken of een losse sessie boeken rond een specifiek thema? 
-                  Boek een sessie — of het nu je eerste is of een vervolg.
-                </p>
-
-                <Card className="border-warm-200 bg-white hover:shadow-lg transition-all duration-300 rounded-2xl max-w-md">
-                  <CardContent className="p-6">
-                    <div className="h-12 w-12 rounded-xl bg-gradient-to-br from-terracotta-100 to-terracotta-200 flex items-center justify-center mb-4">
-                      <Sparkles className="h-6 w-6 text-terracotta-600" />
-                    </div>
-                    <h4 className="text-lg font-semibold text-foreground mb-1">Individuele sessie</h4>
-                    <p className="text-xs text-muted-foreground mb-3 font-medium">Per sessie · kennismaking, verdieping of vervolg</p>
-                    <p className="text-sm text-muted-foreground mb-4 leading-relaxed">
-                      Persoonlijke begeleiding, volledig afgestemd op jouw vraag of proces. 
-                      Ook geschikt als eerste kennismaking.
-                    </p>
-                    <div className="pt-4 border-t border-warm-200 flex items-center justify-between">
-                      <div>
-                        <p className="text-xs text-muted-foreground">60 minuten</p>
-                        <p className="text-2xl font-light text-terracotta-600">€110</p>
-                      </div>
-                      <Button asChild size="sm" className="bg-terracotta-600 hover:bg-terracotta-700 text-white rounded-full">
-                        <Link to="/contact">Boek sessie</Link>
-                      </Button>
-                    </div>
-                  </CardContent>
-                </Card>
-              </div>
-            </ScrollReveal>
-
-            <div className="text-center mt-12">
-              <Button asChild variant="outline" className="border-terracotta-300 text-terracotta-700 hover:bg-terracotta-50 rounded-full px-8">
-                <Link to="/agenda">
-                  Bekijk volledige agenda
-                  <ArrowRight className="ml-2 h-4 w-4" />
-                </Link>
-              </Button>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* FAQ Section */}
-      <section className="py-20 lg:py-24 bg-warm-50">
-        <div className="container mx-auto px-4">
-          <div className="mx-auto max-w-3xl">
-            <ScrollReveal>
-              <div className="text-center mb-14">
-                <span className="inline-flex items-center gap-2 rounded-full bg-sage-100 border border-sage-200 px-5 py-2 text-xs font-semibold tracking-wider text-sage-700 mb-6 uppercase">
-                  <HelpCircle className="h-3.5 w-3.5" />
-                  Veelgestelde vragen
-                </span>
-                <h2 className="mb-6 text-3xl font-light text-foreground md:text-4xl leading-tight">
-                  Veelgestelde <span className="font-serif italic text-terracotta-600">vragen</span>
-                </h2>
-                <p className="text-muted-foreground text-lg max-w-xl mx-auto">
-                  Heb je vragen over de training? Hier vind je antwoorden op de meest gestelde vragen.
-                </p>
-              </div>
-            </ScrollReveal>
-            
-            <ScrollReveal delay={0.1}>
-              <Accordion type="single" collapsible className="space-y-4">
-                <AccordionItem 
-                  value="item-0"
-                  className="border border-warm-200 rounded-xl px-6 bg-white shadow-sm"
-                >
-                  <AccordionTrigger className="text-left font-medium text-foreground hover:no-underline py-5">
-                    Heb ik ervaring nodig met meditatie?
-                  </AccordionTrigger>
-                  <AccordionContent className="text-muted-foreground pb-5 leading-relaxed">
-                    Nee, geen ervaring nodig. De training is geschikt voor iedereen, of je nu nog nooit hebt gemediteerd of al jaren oefent. We beginnen bij de basis en bouwen stap voor stap op.
-                  </AccordionContent>
-                </AccordionItem>
-
-                <AccordionItem 
-                  value="item-1"
-                  className="border border-warm-200 rounded-xl px-6 bg-white shadow-sm"
-                >
-                  <AccordionTrigger className="text-left font-medium text-foreground hover:no-underline py-5">
-                    Wat als ik een sessie mis?
-                  </AccordionTrigger>
-                  <AccordionContent className="text-muted-foreground pb-5 leading-relaxed">
-                    Alle sessies worden opgenomen en zijn beschikbaar in de online leeromgeving. Je kunt de inhoud op je eigen tempo terugkijken. Daarnaast krijg je toegang tot extra materialen en oefeningen.
-                  </AccordionContent>
-                </AccordionItem>
-
-                <AccordionItem 
-                  value="item-2"
-                  className="border border-warm-200 rounded-xl px-6 bg-white shadow-sm"
-                >
-                  <AccordionTrigger className="text-left font-medium text-foreground hover:no-underline py-5">
-                    Is de training ook geschikt bij trauma?
-                  </AccordionTrigger>
-                  <AccordionContent className="text-muted-foreground pb-5 leading-relaxed">
-                    De training heeft een trauma-sensitieve benadering. Bij ernstige trauma's adviseren we eerst individuele begeleiding te volgen voordat je aan de groepstraining begint. Neem gerust contact op om te bespreken wat het beste bij jou past.
-                  </AccordionContent>
-                </AccordionItem>
-
-                <AccordionItem 
-                  value="item-3"
-                  className="border border-warm-200 rounded-xl px-6 bg-white shadow-sm"
-                >
-                  <AccordionTrigger className="text-left font-medium text-foreground hover:no-underline py-5">
-                    Hoeveel tijd kost het per week?
-                  </AccordionTrigger>
-                  <AccordionContent className="text-muted-foreground pb-5 leading-relaxed">
-                    Naast de wekelijkse sessies van 2 uur, is het aan te raden om dagelijks 20-30 minuten te oefenen. Dit is flexibel en kan worden aangepast aan jouw ritme. De oefeningen zijn ook in kortere versies beschikbaar.
-                  </AccordionContent>
-                </AccordionItem>
-
-                <AccordionItem 
-                  value="item-4"
-                  className="border border-warm-200 rounded-xl px-6 bg-white shadow-sm"
-                >
-                  <AccordionTrigger className="text-left font-medium text-foreground hover:no-underline py-5">
-                    Kan ik in termijnen betalen?
-                  </AccordionTrigger>
-                  <AccordionContent className="text-muted-foreground pb-5 leading-relaxed">
-                    Ja, betalen in termijnen is mogelijk. Neem contact op om de mogelijkheden te bespreken. We kijken graag samen naar een oplossing die bij jouw situatie past.
-                  </AccordionContent>
-                </AccordionItem>
-              </Accordion>
-            </ScrollReveal>
-          </div>
-        </div>
-      </section>
-
-      {/* Testimonials Section */}
-      <section className="py-20 lg:py-24 bg-white relative overflow-hidden">
-        <div className="absolute top-0 left-0 w-72 h-72 bg-terracotta-50/50 rounded-full blur-3xl -translate-x-1/2 -translate-y-1/2" />
-        <div className="absolute bottom-0 right-0 w-96 h-96 bg-sage-50/50 rounded-full blur-3xl translate-x-1/2 translate-y-1/2" />
-        
-        <div className="container relative mx-auto px-4">
-          <div className="mx-auto max-w-5xl">
-            <ScrollReveal>
-              <div className="text-center mb-14">
                 <span className="inline-flex items-center gap-2 rounded-full bg-terracotta-100 border border-terracotta-200 px-5 py-2 text-xs font-semibold tracking-wider text-terracotta-700 mb-6 uppercase">
                   <Heart className="h-3.5 w-3.5" />
                   Ervaringen
                 </span>
-                <h2 className="mb-6 text-3xl font-light text-foreground md:text-4xl lg:text-5xl leading-tight">
+                <h2 className="mb-4 text-3xl font-light text-foreground md:text-4xl leading-tight">
                   Wat deelnemers <span className="font-serif italic text-terracotta-600">zeggen</span>
                 </h2>
-                <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
-                  Ontdek hoe de MSC-training het leven van anderen heeft veranderd.
-                </p>
               </div>
             </ScrollReveal>
-            
+
             <ScrollReveal delay={0.1}>
               <Carousel
-                opts={{
-                  align: "start",
-                  loop: true,
-                }}
-                plugins={[
-                  Autoplay({
-                    delay: 4000,
-                    stopOnInteraction: true,
-                    stopOnMouseEnter: true,
-                  }),
-                ]}
+                opts={{ align: "start", loop: true }}
+                plugins={[Autoplay({ delay: 4000, stopOnInteraction: true, stopOnMouseEnter: true })]}
                 className="w-full"
               >
                 <CarouselContent className="-ml-4">
                   {[
-                    {
-                      quote: "Deze training heeft mijn relatie met mezelf volledig veranderd. Ik ben nu veel milder voor mezelf en dat straalt uit naar alles om me heen.",
-                      name: "Marieke",
-                      role: "Deelnemer voorjaar 2025",
-                    },
-                    {
-                      quote: "Eindelijk begrijp ik dat zelfcompassie geen zwakte is, maar juist kracht geeft. De oefeningen gebruik ik nog dagelijks.",
-                      name: "Thomas",
-                      role: "Deelnemer najaar 2024",
-                    },
-                    {
-                      quote: "De veilige sfeer in de groep maakte het mogelijk om echt open te zijn. Een transformerende ervaring die ik iedereen gun.",
-                      name: "Sandra",
-                      role: "Deelnemer zomer 2025",
-                    },
-                    {
-                      quote: "Als perfectionist was zelfkritiek mijn tweede natuur. Nu heb ik tools om mezelf met meer vriendelijkheid te benaderen.",
-                      name: "Erik",
-                      role: "Deelnemer voorjaar 2024",
-                    },
-                    {
-                      quote: "De combinatie van theorie en praktijk werkt heel goed. Je begrijpt niet alleen wat zelfcompassie is, maar voelt het ook echt.",
-                      name: "Lotte",
-                      role: "Deelnemer winter 2024",
-                    },
-                    {
-                      quote: "Ik had niet verwacht dat 8 weken zo'n impact konden hebben. Dit is een cadeau aan mezelf dat blijft geven.",
-                      name: "Jasper",
-                      role: "Deelnemer najaar 2025",
-                    },
+                    { quote: "Deze training heeft mijn relatie met mezelf volledig veranderd. Ik ben nu veel milder voor mezelf.", name: "Marieke", role: "Deelnemer voorjaar 2025" },
+                    { quote: "Eindelijk begrijp ik dat zelfcompassie geen zwakte is, maar juist kracht geeft.", name: "Thomas", role: "Deelnemer najaar 2024" },
+                    { quote: "De veilige sfeer in de groep maakte het mogelijk om echt open te zijn. Transformerend.", name: "Sandra", role: "Deelnemer zomer 2025" },
+                    { quote: "De combinatie van theorie en oefening maakt het zo krachtig. Ik gebruik de meditaties nog dagelijks.", name: "Floor", role: "Deelnemer voorjaar 2025" },
                   ].map((testimonial, index) => (
-                    <CarouselItem key={index} className="pl-4 md:basis-1/2 lg:basis-1/3">
-                      <Card className="h-full border-warm-200 bg-gradient-to-br from-warm-50 to-white rounded-2xl overflow-hidden hover:shadow-lg transition-all duration-300 group">
+                    <CarouselItem key={index} className="pl-4 md:basis-1/2">
+                      <Card className="border-warm-200 bg-white rounded-2xl h-full">
                         <CardContent className="p-6 flex flex-col h-full">
                           <div className="flex gap-1 mb-4">
                             {[...Array(5)].map((_, i) => (
-                              <Star key={i} className="h-4 w-4 fill-terracotta-400 text-terracotta-400" />
+                              <Star key={i} className="h-4 w-4 text-terracotta-400 fill-terracotta-400" />
                             ))}
                           </div>
-                          <Quote className="h-8 w-8 text-terracotta-200 mb-3 group-hover:text-terracotta-300 transition-colors" />
-                          <p className="text-muted-foreground leading-relaxed flex-grow mb-6 italic">
+                          <p className="text-muted-foreground leading-relaxed flex-grow mb-5 italic">
                             "{testimonial.quote}"
                           </p>
                           <div className="flex items-center gap-3 pt-4 border-t border-warm-200">
-                            <div className="h-10 w-10 rounded-full bg-gradient-to-br from-terracotta-200 to-terracotta-300 flex items-center justify-center text-white font-semibold text-sm">
+                            <div className="h-9 w-9 rounded-full bg-gradient-to-br from-terracotta-200 to-terracotta-300 flex items-center justify-center text-white font-semibold text-sm">
                               {testimonial.name.charAt(0)}
                             </div>
                             <div>
-                              <p className="font-medium text-foreground">{testimonial.name}</p>
-                              <p className="text-sm text-muted-foreground">{testimonial.role}</p>
+                              <p className="font-medium text-foreground text-sm">{testimonial.name}</p>
+                              <p className="text-xs text-muted-foreground">{testimonial.role}</p>
                             </div>
                           </div>
                         </CardContent>
@@ -1114,9 +500,9 @@ const MindfulZelfcompassie = () => {
                     </CarouselItem>
                   ))}
                 </CarouselContent>
-                <div className="flex justify-center gap-4 mt-8">
-                  <CarouselPrevious className="relative static translate-y-0 bg-white border-warm-200 hover:bg-terracotta-50 hover:border-terracotta-200" />
-                  <CarouselNext className="relative static translate-y-0 bg-white border-warm-200 hover:bg-terracotta-50 hover:border-terracotta-200" />
+                <div className="flex justify-center gap-4 mt-6">
+                  <CarouselPrevious className="relative static translate-y-0 bg-white border-warm-200 hover:bg-terracotta-50" />
+                  <CarouselNext className="relative static translate-y-0 bg-white border-warm-200 hover:bg-terracotta-50" />
                 </div>
               </Carousel>
             </ScrollReveal>
@@ -1124,16 +510,17 @@ const MindfulZelfcompassie = () => {
         </div>
       </section>
 
-      {/* Training Data Section */}
-      <section id="data" className="py-20 lg:py-24 bg-warm-50 scroll-mt-20">
+      {/* Startdata */}
+      <section id="data" className="py-20 lg:py-28 bg-white scroll-mt-20">
         <div className="container mx-auto px-4">
           <div className="mx-auto max-w-4xl">
             <ScrollReveal>
               <div className="text-center mb-12">
-                <span className="inline-block rounded-full bg-sage-100 px-4 py-1.5 text-xs font-semibold text-sage-700 mb-6 uppercase">
-                  Data
+                <span className="inline-flex items-center gap-2 rounded-full bg-sage-100 border border-sage-200 px-5 py-2 text-xs font-semibold tracking-wider text-sage-700 mb-6 uppercase">
+                  <Calendar className="h-3.5 w-3.5" />
+                  Data & Prijzen
                 </span>
-                <h2 className="mb-6 text-3xl font-light text-foreground md:text-4xl leading-tight">
+                <h2 className="mb-4 text-3xl font-light text-foreground md:text-4xl leading-tight">
                   Startdata <span className="font-serif italic text-terracotta-600">groepstraining</span>
                 </h2>
               </div>
@@ -1171,7 +558,7 @@ const MindfulZelfcompassie = () => {
                             <p className="text-2xl font-light text-terracotta-600">{training.price}</p>
                           )}
                         </div>
-                        <Button 
+                        <Button
                           className="bg-terracotta-600 hover:bg-terracotta-700 text-white rounded-full"
                           onClick={() => openRegistration(training)}
                         >
@@ -1183,16 +570,73 @@ const MindfulZelfcompassie = () => {
                 </StaggerItem>
               ))}
             </StaggerContainer>
+
+            {/* Individueel alternatief */}
+            <ScrollReveal delay={0.2}>
+              <div className="mt-10 text-center">
+                <p className="text-muted-foreground text-sm mb-2">Liever individuele begeleiding?</p>
+                <Link
+                  to="/"
+                  className="inline-flex items-center gap-2 text-terracotta-600 text-sm font-medium hover:text-terracotta-700 transition-colors"
+                >
+                  Bekijk het individueel traject
+                  <ArrowRight className="h-3.5 w-3.5" />
+                </Link>
+              </div>
+            </ScrollReveal>
           </div>
         </div>
       </section>
 
-      {/* Contact Form Section */}
+      {/* FAQ */}
+      <section className="py-20 lg:py-24 bg-warm-50">
+        <div className="container mx-auto px-4">
+          <div className="mx-auto max-w-3xl">
+            <ScrollReveal>
+              <div className="text-center mb-12">
+                <span className="inline-flex items-center gap-2 rounded-full bg-sage-100 border border-sage-200 px-5 py-2 text-xs font-semibold tracking-wider text-sage-700 mb-6 uppercase">
+                  <HelpCircle className="h-3.5 w-3.5" />
+                  FAQ
+                </span>
+                <h2 className="mb-4 text-3xl font-light text-foreground md:text-4xl leading-tight">
+                  Veelgestelde <span className="font-serif italic text-terracotta-600">vragen</span>
+                </h2>
+              </div>
+            </ScrollReveal>
+
+            <ScrollReveal delay={0.1}>
+              <Accordion type="single" collapsible className="space-y-3">
+                {[
+                  { q: "Heb ik ervaring nodig met meditatie?", a: "Nee, geen ervaring nodig. We beginnen bij de basis en bouwen stap voor stap op." },
+                  { q: "Wat als ik een sessie mis?", a: "Alle sessies worden opgenomen en zijn beschikbaar in de online leeromgeving. Je kunt de inhoud op je eigen tempo terugkijken." },
+                  { q: "Is de training geschikt bij trauma?", a: "De training heeft een trauma-sensitieve benadering. Bij ernstige trauma's adviseren we eerst individuele begeleiding. Neem gerust contact op om te bespreken wat het beste past." },
+                  { q: "Hoeveel tijd kost het per week?", a: "Naast de wekelijkse sessie van 2 uur, is het aan te raden om dagelijks 20-30 minuten te oefenen. De oefeningen zijn ook in kortere versies beschikbaar." },
+                  { q: "Kan ik in termijnen betalen?", a: "Ja, betalen in termijnen is mogelijk. Neem contact op om de mogelijkheden te bespreken." },
+                ].map((item, i) => (
+                  <AccordionItem
+                    key={i}
+                    value={`item-${i}`}
+                    className="border border-warm-200 rounded-xl px-6 bg-white shadow-sm"
+                  >
+                    <AccordionTrigger className="text-left font-medium text-foreground hover:no-underline py-5">
+                      {item.q}
+                    </AccordionTrigger>
+                    <AccordionContent className="text-muted-foreground pb-5 leading-relaxed">
+                      {item.a}
+                    </AccordionContent>
+                  </AccordionItem>
+                ))}
+              </Accordion>
+            </ScrollReveal>
+          </div>
+        </div>
+      </section>
+
+      {/* Contact */}
       <section className="py-20 lg:py-24 bg-white">
         <div className="container mx-auto px-4">
           <div className="mx-auto max-w-4xl">
             <div className="grid gap-12 lg:grid-cols-5">
-              {/* Contact Info */}
               <div className="lg:col-span-2">
                 <ScrollReveal>
                   <span className="inline-flex items-center gap-2 rounded-full bg-terracotta-100 border border-terracotta-200 px-5 py-2 text-xs font-semibold tracking-wider text-terracotta-700 mb-6 uppercase">
@@ -1203,9 +647,8 @@ const MindfulZelfcompassie = () => {
                     Heb je een <span className="font-serif italic text-terracotta-600">vraag?</span>
                   </h2>
                   <p className="text-muted-foreground mb-8 leading-relaxed">
-                    Neem gerust contact met ons op. We reageren meestal binnen 24 uur.
+                    Neem gerust contact op. We reageren meestal binnen 24 uur.
                   </p>
-                  
                   <div className="space-y-4">
                     <a href="mailto:mindful-mind@outlook.com" className="flex items-center gap-3 text-muted-foreground hover:text-terracotta-600 transition-colors">
                       <Mail className="h-5 w-5 text-terracotta-500" />
@@ -1222,8 +665,6 @@ const MindfulZelfcompassie = () => {
                   </div>
                 </ScrollReveal>
               </div>
-              
-              {/* Form */}
               <div className="lg:col-span-3">
                 <ScrollReveal delay={0.1}>
                   <div className="bg-warm-50 rounded-3xl p-8 border border-warm-200">
@@ -1236,57 +677,19 @@ const MindfulZelfcompassie = () => {
         </div>
       </section>
 
-      <footer className="border-t border-warm-200 bg-warm-100 py-16">
-        <div className="container mx-auto px-4">
-          <div className="max-w-4xl mx-auto">
-            <div className="grid gap-10 md:grid-cols-2 mb-12">
-              <div>
-                <p className="font-serif italic text-3xl text-terracotta-600 mb-4">Mindful Mind</p>
-                <p className="text-muted-foreground text-lg">
-                  Begeleiding in Mindful Zelfcompassie
-                </p>
-              </div>
-              <div className="space-y-4">
-                <a href="mailto:mindful-mind@outlook.com" className="flex items-center gap-4 text-muted-foreground hover:text-terracotta-600 transition-colors group">
-                  <div className="h-10 w-10 rounded-full bg-white flex items-center justify-center group-hover:bg-terracotta-50 transition-colors">
-                    <Mail className="h-5 w-5" />
-                  </div>
-                  mindful-mind@outlook.com
-                </a>
-                <a href="tel:+31625633379" className="flex items-center gap-4 text-muted-foreground hover:text-terracotta-600 transition-colors group">
-                  <div className="h-10 w-10 rounded-full bg-white flex items-center justify-center group-hover:bg-terracotta-50 transition-colors">
-                    <Phone className="h-5 w-5" />
-                  </div>
-                  +31 6 25633379
-                </a>
-                <a href="https://wa.me/31625633379" className="flex items-center gap-4 text-muted-foreground hover:text-terracotta-600 transition-colors group">
-                  <div className="h-10 w-10 rounded-full bg-white flex items-center justify-center group-hover:bg-terracotta-50 transition-colors">
-                    <MessageCircle className="h-5 w-5" />
-                  </div>
-                  WhatsApp
-                </a>
-              </div>
-            </div>
-            <div className="border-t border-warm-200 pt-8 text-center">
-              <p className="text-sm text-muted-foreground">
-                © {new Date().getFullYear()} Mindful Mind. Alle rechten voorbehouden.
-              </p>
-            </div>
-          </div>
-        </div>
-      </footer>
+      <Footer />
 
       {/* Registration Modal */}
       <Dialog open={isRegistrationOpen} onOpenChange={setIsRegistrationOpen}>
         <DialogContent className="sm:max-w-md max-h-[90vh] overflow-y-auto">
           <DialogHeader>
             <DialogTitle className="text-xl font-light">
-              Aanmelden voor de training
+              Aanmelden voor de groepstraining
             </DialogTitle>
           </DialogHeader>
           {selectedTraining && (
             <RegistrationForm
-              trainingName={`8-weekse MSC Training (${selectedTraining.language})`}
+              trainingName={`8-weekse MSC Groepstraining (${selectedTraining.language})`}
               trainingDate={selectedTraining.startDate}
               trainingTime={selectedTraining.time}
               price={selectedTraining.price}
@@ -1297,30 +700,6 @@ const MindfulZelfcompassie = () => {
           )}
         </DialogContent>
       </Dialog>
-
-      {/* Workshop Registration Modal */}
-      <Dialog open={isWorkshopRegistrationOpen} onOpenChange={setIsWorkshopRegistrationOpen}>
-        <DialogContent className="sm:max-w-md max-h-[90vh] overflow-y-auto">
-          <DialogHeader>
-            <DialogTitle className="text-xl font-light">
-              Aanmelden voor de workshop
-            </DialogTitle>
-          </DialogHeader>
-          {selectedWorkshop && (
-            <RegistrationForm
-              trainingName={`Workshop Zelfcompassie (${selectedWorkshop.lang})`}
-              trainingDate={selectedWorkshop.date}
-              trainingTime={selectedWorkshop.time}
-              price={selectedWorkshop.price}
-              onSuccess={() => {
-                setTimeout(() => setIsWorkshopRegistrationOpen(false), 2000);
-              }}
-            />
-          )}
-        </DialogContent>
-      </Dialog>
-
-
     </div>
   );
 };
