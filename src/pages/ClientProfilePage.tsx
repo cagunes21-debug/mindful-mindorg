@@ -126,10 +126,6 @@ export default function ClientProfilePage() {
     );
   }
 
-  const activeEnrollment = enrollments.find(e => e.status === "active");
-  const completedSessions = sessionAppointments.filter(a => a.status === "afgerond").length;
-  const nextSession = sessionAppointments.find(a => a.status === "gepland" && a.session_date);
-  const hasIndividual = enrollments.some(e => e.course_type === "individueel_6" || e.course_type === "losse_sessie");
 
   return (
     <div className="min-h-screen bg-background">
