@@ -68,9 +68,9 @@ const MindfulZelfcompassie = () => {
               transition={{ duration: 0.6, delay: 0.05 }}
               className="mb-6 text-4xl font-light tracking-tight text-foreground md:text-5xl lg:text-6xl leading-[1.15]"
             >
-              Jouw welzijn begint
+              Acht weken.
               <span className="block font-serif italic text-terracotta-600 mt-2 text-[1.05em]">
-                bij hoe je met jezelf omgaat
+                Een nieuwe manier van naar jezelf kijken.
               </span>
             </motion.h1>
 
