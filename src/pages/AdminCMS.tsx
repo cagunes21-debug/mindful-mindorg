@@ -20,11 +20,12 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { useToast } from "@/hooks/use-toast";
 import {
   ArrowLeft, Plus, Pencil, Trash2, Search, Clock, Filter,
-  ChevronRight, Library, Layers, Users, User, FileText, ChevronDown, Presentation, Download
+  ChevronRight, Library, Layers, Users, User, FileText, ChevronDown, Presentation, Download, Lock
 } from "lucide-react";
 import { exportScriptPdf } from "@/components/admin/exportScriptPdf";
 import SlideViewer from "@/components/admin/SlideViewer";
 import { cn } from "@/lib/utils";
+import EnrollmentContentManager from "@/components/admin/EnrollmentContentManager";
 
 const MSC_ITEM_TYPES: Record<string, string> = {
   topic: "Onderwerp", exercise: "Oefening", meditation: "Meditatie",
@@ -180,9 +181,10 @@ export default function AdminCMS() {
 
           {/* Tabs */}
           <Tabs value={activeTab} onValueChange={setActiveTab} className="mb-6">
-            <TabsList className="grid w-full max-w-md grid-cols-2">
+            <TabsList className="grid w-full max-w-lg grid-cols-3">
               <TabsTrigger value="all" className="gap-2 text-sm"><Users className="h-4 w-4" /> Groepstraject <Badge variant="secondary" className="text-[10px] ml-1">{groupCount}</Badge></TabsTrigger>
-              <TabsTrigger value="individual" className="gap-2 text-sm"><User className="h-4 w-4" /> Individuele Sessies <Badge variant="secondary" className="text-[10px] ml-1">{individualCount}</Badge></TabsTrigger>
+              <TabsTrigger value="individual" className="gap-2 text-sm"><User className="h-4 w-4" /> Individueel <Badge variant="secondary" className="text-[10px] ml-1">{individualCount}</Badge></TabsTrigger>
+              <TabsTrigger value="access" className="gap-2 text-sm"><Lock className="h-4 w-4" /> Toegang</TabsTrigger>
             </TabsList>
           </Tabs>
 
@@ -453,6 +455,9 @@ export default function AdminCMS() {
               {individualCount === 0 && <Card><CardContent className="py-12 text-center text-muted-foreground">Nog geen items geselecteerd. Ga naar "Alle Content" en vink items aan.</CardContent></Card>}
             </div>
           )}
+
+          {/* ═══ ACCESS TAB ═══ */}
+          {activeTab === "access" && <EnrollmentContentManager />}
         </div>
       </main>
       <Footer />
