@@ -1,11 +1,11 @@
 import { Heart, Brain, Target, CheckCircle2 } from "lucide-react";
-import type { Enrollment, SessionAppointment } from "@/components/admin/customer-profile/types";
+import type { Enrollment } from "@/components/admin/customer-profile/types";
 
 const PHASES = [
-  { key: "intake", label: "Intake", icon: Heart },
-  { key: "in_training", label: "Training", icon: Brain },
-  { key: "afronding", label: "Afronding", icon: Target },
-  { key: "nazorg", label: "Nazorg", icon: CheckCircle2 },
+  { key: "intake", label: "Intake", icon: Heart, gradient: "from-terracotta-400 to-terracotta-500" },
+  { key: "in_training", label: "Training", icon: Brain, gradient: "from-sage-400 to-sage-500" },
+  { key: "afronding", label: "Afronding", icon: Target, gradient: "from-warm-400 to-warm-500" },
+  { key: "nazorg", label: "Nazorg", icon: CheckCircle2, gradient: "from-sage-500 to-sage-600" },
 ] as const;
 
 function getClientPhase(enrollments: Enrollment[]): string {
@@ -25,7 +25,7 @@ export default function PhaseStepperBar({ enrollments }: { enrollments: Enrollme
   const phaseIdx = PHASES.findIndex(p => p.key === currentPhase);
 
   return (
-    <div className="flex items-center gap-1">
+    <div className="flex items-center gap-0">
       {PHASES.map((phase, i) => {
         const isActive = i === phaseIdx;
         const isPast = i < phaseIdx;
@@ -33,15 +33,17 @@ export default function PhaseStepperBar({ enrollments }: { enrollments: Enrollme
         return (
           <div key={phase.key} className="flex items-center flex-1">
             <div className={`flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs font-medium transition-all w-full justify-center ${
-              isActive ? "bg-primary/10 text-primary border border-primary/20"
-              : isPast ? "bg-sage-100 text-sage-700"
-              : "bg-secondary/60 text-muted-foreground"
+              isActive
+                ? `bg-gradient-to-r ${phase.gradient} text-white shadow-sm`
+                : isPast
+                ? "bg-sage-100 text-sage-700"
+                : "bg-secondary/60 text-muted-foreground"
             }`}>
               <Icon className="h-3.5 w-3.5" />
               <span className="hidden sm:inline">{phase.label}</span>
             </div>
             {i < PHASES.length - 1 && (
-              <div className={`h-0.5 w-3 mx-0.5 rounded shrink-0 ${isPast ? "bg-sage-400" : "bg-border"}`} />
+              <div className={`h-0.5 w-4 mx-0.5 rounded shrink-0 transition-colors ${isPast ? "bg-sage-400" : "bg-border"}`} />
             )}
           </div>
         );

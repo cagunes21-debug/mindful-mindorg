@@ -7,13 +7,15 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter } from "@/components/ui/dialog";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { ArrowLeft, Loader2, FileText, Heart } from "lucide-react";
+import { ArrowLeft, Loader2, FileText, Heart, BarChart3, CalendarDays } from "lucide-react";
 import { toast } from "sonner";
 import type { CustomerData, Registration, Enrollment, TrainerNote, SessionAppointment } from "@/components/admin/customer-profile/types";
 
 import ClientHeader from "./client-profile/ClientHeader";
 import IntakeSection from "./client-profile/IntakeSection";
 import TrainerNotesSection from "./client-profile/TrainerNotesSection";
+import SessionsSection from "./client-profile/SessionsSection";
+import ScsResultsSection from "./client-profile/ScsResultsSection";
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
@@ -22,6 +24,15 @@ interface ClientRecord {
   source: string | null;
   phone: string | null;
 }
+
+// ─── Tab config ───────────────────────────────────────────────────────────────
+
+const TABS = [
+  { key: "intake", label: "Intake", icon: Heart, gradient: "from-terracotta-500 to-terracotta-600", lightBg: "bg-terracotta-50", lightBorder: "border-terracotta-200", lightText: "text-terracotta-600" },
+  { key: "sessies", label: "Sessies", icon: CalendarDays, gradient: "from-sage-500 to-sage-600", lightBg: "bg-sage-50", lightBorder: "border-sage-200", lightText: "text-sage-600" },
+  { key: "notities", label: "Notities", icon: FileText, gradient: "from-warm-500 to-warm-600", lightBg: "bg-warm-50", lightBorder: "border-warm-200", lightText: "text-warm-600" },
+  { key: "scs", label: "SCS", icon: BarChart3, gradient: "from-primary to-primary/80", lightBg: "bg-primary/5", lightBorder: "border-primary/20", lightText: "text-primary" },
+] as const;
 
 // ─── Main Page ────────────────────────────────────────────────────────────────
 
@@ -113,23 +124,29 @@ export default function ClientProfilePage() {
 
   // Loading state
   if (isLoading) {
-    return <div className="min-h-screen bg-background flex items-center justify-center"><Loader2 className="h-8 w-8 animate-spin text-muted-foreground" /></div>;
+    return (
+      <div className="min-h-screen bg-gradient-to-b from-warm-50 to-background flex items-center justify-center">
+        <div className="flex flex-col items-center gap-3">
+          <Loader2 className="h-8 w-8 animate-spin text-terracotta-400" />
+          <p className="text-sm text-muted-foreground">Profiel laden…</p>
+        </div>
+      </div>
+    );
   }
 
   // Not found
   if (!customer) {
     return (
-      <div className="min-h-screen bg-background flex flex-col items-center justify-center gap-4">
+      <div className="min-h-screen bg-gradient-to-b from-warm-50 to-background flex flex-col items-center justify-center gap-4">
         <p className="text-muted-foreground">Klant niet gevonden</p>
         <Button variant="outline" onClick={() => navigate("/admin")}><ArrowLeft className="h-4 w-4 mr-2" /> Terug</Button>
       </div>
     );
   }
 
-
   return (
-    <div className="min-h-screen bg-background">
-      <div className="max-w-3xl mx-auto px-4 py-6 space-y-5">
+    <div className="min-h-screen bg-gradient-to-b from-warm-50/80 via-background to-background">
+      <div className="max-w-3xl mx-auto px-4 py-6 space-y-6">
         {/* Header */}
         <ClientHeader
           customer={customer}
@@ -139,26 +156,30 @@ export default function ClientProfilePage() {
           onAddTraining={() => setShowExtraTraining(true)}
         />
 
-        {/* Tabs — large, visual */}
-        <div className="flex gap-3">
-          {[
-            { key: "intake", label: "Intake", icon: Heart, color: "from-terracotta-50 to-terracotta-100 border-terracotta-200 text-terracotta-700", activeColor: "from-terracotta-100 to-terracotta-200 border-terracotta-300 ring-2 ring-terracotta-200/50 shadow-md" },
-            { key: "notities", label: "Notities", icon: FileText, color: "from-sage-50 to-sage-100 border-sage-200 text-sage-700", activeColor: "from-sage-100 to-sage-200 border-sage-300 ring-2 ring-sage-200/50 shadow-md", badge: structuredNotes.length },
-          ].map(tab => {
+        {/* Tabs */}
+        <div className="grid grid-cols-4 gap-2">
+          {TABS.map(tab => {
             const Icon = tab.icon;
             const isActive = activeTab === tab.key;
+            const count = tab.key === "notities" ? structuredNotes.length : tab.key === "sessies" ? sessionAppointments.length : undefined;
             return (
               <button
                 key={tab.key}
                 onClick={() => setActiveTab(tab.key)}
-                className={`flex-1 flex items-center justify-center gap-2.5 p-4 rounded-2xl border-2 transition-all duration-200 ${
-                  isActive ? `bg-gradient-to-br ${tab.activeColor}` : `bg-gradient-to-br ${tab.color} opacity-70 hover:opacity-100`
+                className={`relative flex flex-col items-center gap-1.5 p-3.5 rounded-2xl border transition-all duration-200 ${
+                  isActive
+                    ? `bg-gradient-to-br ${tab.gradient} text-white border-transparent shadow-lg shadow-black/5`
+                    : `${tab.lightBg} ${tab.lightBorder} ${tab.lightText} border hover:shadow-sm hover:scale-[1.02]`
                 }`}
               >
                 <Icon className="h-5 w-5" />
-                <span className="text-sm font-semibold">{tab.label}</span>
-                {tab.badge !== undefined && tab.badge > 0 && (
-                  <Badge variant="secondary" className="text-[10px] px-1.5 py-0 h-5 rounded-full">{tab.badge}</Badge>
+                <span className="text-xs font-semibold">{tab.label}</span>
+                {count !== undefined && count > 0 && (
+                  <span className={`absolute -top-1 -right-1 h-5 min-w-5 rounded-full text-[10px] font-bold flex items-center justify-center px-1 ${
+                    isActive ? "bg-white text-foreground" : "bg-foreground text-background"
+                  }`}>
+                    {count}
+                  </span>
                 )}
               </button>
             );
@@ -166,17 +187,28 @@ export default function ClientProfilePage() {
         </div>
 
         {/* Tab content */}
-        <div className="mt-1">
+        <div>
           {activeTab === "intake" && (
             enrollments.length > 0 ? (
               <IntakeSection enrollmentId={enrollments[0].id} />
             ) : (
-              <p className="text-sm text-muted-foreground py-4">Geen traject gevonden om intake voor in te vullen.</p>
+              <div className="rounded-2xl border border-dashed border-border/60 p-10 text-center">
+                <Heart className="h-8 w-8 mx-auto text-muted-foreground/30 mb-3" />
+                <p className="text-sm text-muted-foreground">Geen traject gevonden om intake voor in te vullen.</p>
+              </div>
             )
+          )}
+
+          {activeTab === "sessies" && (
+            <SessionsSection sessionAppointments={sessionAppointments} enrollments={enrollments} onUpdate={fetchData} />
           )}
 
           {activeTab === "notities" && (
             <TrainerNotesSection enrollments={enrollments} notes={structuredNotes} onNotesChange={setStructuredNotes} />
+          )}
+
+          {activeTab === "scs" && (
+            <ScsResultsSection enrollmentIds={enrollments.map(e => e.id)} />
           )}
         </div>
       </div>
@@ -190,7 +222,7 @@ export default function ClientProfilePage() {
               <DialogDescription>Schrijf {customer.name} in voor een nieuwe training.</DialogDescription>
             </DialogHeader>
             <div className="space-y-4">
-              <div className="rounded-xl bg-secondary p-3 text-sm">
+              <div className="rounded-xl bg-gradient-to-r from-warm-50 to-terracotta-50 border border-warm-200 p-3 text-sm">
                 <p className="font-medium">{customer.name}</p>
                 <p className="text-muted-foreground">{customer.email}</p>
               </div>
@@ -213,7 +245,7 @@ export default function ClientProfilePage() {
             </div>
             <DialogFooter>
               <Button variant="outline" onClick={() => setShowExtraTraining(false)}>Annuleren</Button>
-              <Button onClick={submitExtraTraining} disabled={submittingExtra}>
+              <Button onClick={submitExtraTraining} disabled={submittingExtra} className="bg-gradient-to-r from-terracotta-500 to-terracotta-600 hover:from-terracotta-600 hover:to-terracotta-700 text-white">
                 {submittingExtra && <Loader2 className="h-4 w-4 animate-spin mr-2" />}
                 Inschrijven
               </Button>
