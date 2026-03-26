@@ -12,6 +12,7 @@ import MscSection from "@/components/home/MscSection";
 import ResultsHomeSection from "@/components/home/ResultsHomeSection";
 import PricingHomeSection from "@/components/home/PricingHomeSection";
 import StepsSection from "@/components/home/StepsSection";
+import TestimonialsHomeSection from "@/components/home/TestimonialsHomeSection";
 import TrainerHomeSection from "@/components/home/TrainerHomeSection";
 import GroupCtaSection from "@/components/home/GroupCtaSection";
 import FinalCtaSection from "@/components/home/FinalCtaSection";
