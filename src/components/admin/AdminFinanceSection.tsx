@@ -16,7 +16,7 @@ import {
   Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter,
 } from "@/components/ui/dialog";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Loader2, Plus, Euro, CreditCard, Receipt, Search, FileText } from "lucide-react";
+import { Loader2, Plus, Euro, CreditCard, Receipt, Search, FileText, ArrowDown, ArrowRight, Mail, Globe, Webhook, Database, CheckCircle2, XCircle, Info } from "lucide-react";
 import { format } from "date-fns";
 import { nl } from "date-fns/locale";
 import { toast } from "sonner";
@@ -106,6 +106,195 @@ const paymentMethodLabels: Record<string, string> = {
   cash: "Contant",
   other: "Anders",
 };
+
+// ─── Payment Flow Diagram ─────────────────────────────────────────────────────
+
+const FLOW_STEPS = [
+  {
+    id: 1,
+    title: "Klant meldt zich aan",
+    desc: "Via registratieformulier op de website",
+    icon: Globe,
+    bg: "bg-sage-50",
+    border: "border-sage-200",
+    iconBg: "bg-sage-100",
+    iconColor: "text-sage-700",
+  },
+  {
+    id: 2,
+    title: "Registratie opgeslagen",
+    desc: "Status: pending — zichtbaar in admin dashboard",
+    icon: Database,
+    bg: "bg-warm-50",
+    border: "border-warm-200",
+    iconBg: "bg-warm-100",
+    iconColor: "text-warm-700",
+  },
+  {
+    id: 3,
+    title: "Admin genereert betaallink",
+    desc: "Edge function: create-payment-link → Stripe Checkout sessie",
+    icon: CreditCard,
+    bg: "bg-terracotta-50",
+    border: "border-terracotta-200",
+    iconBg: "bg-terracotta-100",
+    iconColor: "text-terracotta-700",
+  },
+  {
+    id: 4,
+    title: "E-mail met betaallink",
+    desc: "Automatische bevestigingsmail via Resend met betaalknop",
+    icon: Mail,
+    bg: "bg-primary/5",
+    border: "border-primary/20",
+    iconBg: "bg-primary/10",
+    iconColor: "text-primary",
+  },
+  {
+    id: 5,
+    title: "Klant betaalt via Stripe",
+    desc: "Stripe Checkout pagina — veilig en vertrouwd",
+    icon: Euro,
+    bg: "bg-amber-50",
+    border: "border-amber-200",
+    iconBg: "bg-amber-100",
+    iconColor: "text-amber-700",
+  },
+];
+
+const FLOW_OUTCOMES = [
+  {
+    success: true,
+    title: "Betaling gelukt",
+    steps: [
+      "Stripe stuurt webhook event",
+      "Edge function: stripe-webhook verwerkt betaling",
+      "Registratie → status: paid + paid_at",
+      "Bevestigingsmail naar klant",
+      "Klant ziet /betaling-succes",
+    ],
+  },
+  {
+    success: false,
+    title: "Betaling geannuleerd",
+    steps: [
+      "Klant annuleert op Stripe pagina",
+      "Klant wordt doorgestuurd naar /betaling-geannuleerd",
+      "Registratie status blijft: awaiting_payment",
+      "Betaallink blijft geldig voor nieuwe poging",
+    ],
+  },
+];
+
+const PRICE_MAP_DISPLAY = [
+  { training: "Workshop Zelfcompassie", price: "€55" },
+  { training: "8-weekse MSC Training", price: "€550" },
+  { training: "Individueel Traject (6 sessies)", price: "€550" },
+  { training: "MBSR – 4-daags intensief", price: "Op aanvraag" },
+  { training: "MSC – 4-daags intensief", price: "Op aanvraag" },
+];
+
+function PaymentFlowDiagram() {
+  return (
+    <div className="space-y-8">
+      {/* Header */}
+      <Card className="border-0 bg-gradient-to-br from-emerald-50 via-background to-sage-50/30 shadow-sm">
+        <CardContent className="p-6">
+          <h2 className="text-lg font-bold text-foreground mb-1">Betalingsproces overzicht</h2>
+          <p className="text-sm text-muted-foreground">
+            Van aanmelding tot betalingsbevestiging — de volledige flow in beeld.
+          </p>
+        </CardContent>
+      </Card>
+
+      {/* Flow Steps */}
+      <div className="space-y-3">
+        <h3 className="text-sm font-semibold text-foreground px-1">Stappen</h3>
+        {FLOW_STEPS.map((step, i) => (
+          <div key={step.id}>
+            <Card className={`border ${step.border} ${step.bg} shadow-none`}>
+              <CardContent className="p-4 flex items-start gap-4">
+                <div className={`h-10 w-10 rounded-xl ${step.iconBg} flex items-center justify-center shrink-0`}>
+                  <step.icon className={`h-5 w-5 ${step.iconColor}`} />
+                </div>
+                <div className="flex-1 min-w-0">
+                  <div className="flex items-center gap-2 mb-0.5">
+                    <span className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">Stap {step.id}</span>
+                  </div>
+                  <p className="font-semibold text-sm text-foreground">{step.title}</p>
+                  <p className="text-xs text-muted-foreground mt-0.5">{step.desc}</p>
+                </div>
+              </CardContent>
+            </Card>
+            {i < FLOW_STEPS.length - 1 && (
+              <div className="flex justify-center py-1">
+                <ArrowDown className="h-4 w-4 text-muted-foreground/40" />
+              </div>
+            )}
+          </div>
+        ))}
+      </div>
+
+      {/* Outcomes */}
+      <div className="space-y-3">
+        <h3 className="text-sm font-semibold text-foreground px-1">Uitkomst</h3>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          {FLOW_OUTCOMES.map((outcome) => (
+            <Card key={outcome.title} className={`border shadow-none ${outcome.success ? "border-emerald-200 bg-emerald-50/50" : "border-destructive/20 bg-destructive/5"}`}>
+              <CardContent className="p-5">
+                <div className="flex items-center gap-2 mb-3">
+                  {outcome.success ? (
+                    <CheckCircle2 className="h-5 w-5 text-emerald-600" />
+                  ) : (
+                    <XCircle className="h-5 w-5 text-destructive" />
+                  )}
+                  <span className="font-semibold text-sm">{outcome.title}</span>
+                </div>
+                <ol className="space-y-2">
+                  {outcome.steps.map((s, i) => (
+                    <li key={i} className="flex items-start gap-2 text-xs text-muted-foreground">
+                      <span className={`mt-0.5 h-4 w-4 rounded-full flex items-center justify-center shrink-0 text-[9px] font-bold ${outcome.success ? "bg-emerald-100 text-emerald-700" : "bg-destructive/10 text-destructive"}`}>
+                        {i + 1}
+                      </span>
+                      {s}
+                    </li>
+                  ))}
+                </ol>
+              </CardContent>
+            </Card>
+          ))}
+        </div>
+      </div>
+
+      {/* Price mapping */}
+      <div className="space-y-3">
+        <h3 className="text-sm font-semibold text-foreground px-1">Gekoppelde Stripe-prijzen</h3>
+        <Card className="border shadow-none">
+          <CardContent className="p-0">
+            <Table>
+              <TableHeader>
+                <TableRow>
+                  <TableHead>Training</TableHead>
+                  <TableHead className="text-right">Prijs</TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                {PRICE_MAP_DISPLAY.map((p) => (
+                  <TableRow key={p.training}>
+                    <TableCell className="text-sm">{p.training}</TableCell>
+                    <TableCell className="text-right font-semibold text-sm">{p.price}</TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </CardContent>
+        </Card>
+      </div>
+    </div>
+  );
+}
+
+// ─── Main Component ───────────────────────────────────────────────────────────
 
 export default function AdminFinanceSection() {
   const [activeTab, setActiveTab] = useState("orders");
@@ -355,7 +544,15 @@ export default function AdminFinanceSection() {
           <TabsTrigger value="payments" className="gap-2">
             <CreditCard className="h-4 w-4" /> Betalingen ({payments.length})
           </TabsTrigger>
+          <TabsTrigger value="flow" className="gap-2">
+            <Info className="h-4 w-4" /> Betalingsproces
+          </TabsTrigger>
         </TabsList>
+
+        {/* PAYMENT FLOW TAB */}
+        <TabsContent value="flow">
+          <PaymentFlowDiagram />
+        </TabsContent>
 
         {/* ORDERS TAB */}
         <TabsContent value="orders">
