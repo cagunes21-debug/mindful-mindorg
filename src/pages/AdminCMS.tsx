@@ -20,8 +20,9 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { useToast } from "@/hooks/use-toast";
 import {
   ArrowLeft, Plus, Pencil, Trash2, Search, Clock, Filter,
-  ChevronRight, Library, Layers, Users, User, FileText, ChevronDown, Presentation
+  ChevronRight, Library, Layers, Users, User, FileText, ChevronDown, Presentation, Download
 } from "lucide-react";
+import { exportScriptPdf } from "@/components/admin/exportScriptPdf";
 import SlideViewer from "@/components/admin/SlideViewer";
 import { cn } from "@/lib/utils";
 
@@ -320,6 +321,9 @@ export default function AdminCMS() {
                                             </SelectContent>
                                           </Select>
                                         )}
+                                        <Button variant="ghost" size="sm" className="h-7 px-2 gap-1 text-xs text-muted-foreground" onClick={() => exportScriptPdf(item.title, scriptContent, activeLang)} title="Download als PDF">
+                                          <Download className="h-3.5 w-3.5" /> PDF
+                                        </Button>
                                         <Button variant="ghost" size="sm" className="h-6 px-2 text-[10px] text-muted-foreground" onClick={() => toggleItemExpand(item.id)}>
                                           Sluiten ✕
                                         </Button>
