@@ -288,7 +288,7 @@ export default function AdminCustomersSection({ initialTab = "customers" }: { in
             </Button>
           </div>
 
-          <div className="rounded-lg border border-border/60 bg-card overflow-hidden">
+          <div className="rounded-2xl border border-border/40 bg-card overflow-hidden shadow-sm">
             {isLoading ? (
               <div className="flex items-center justify-center py-12">
                 <Loader2 className="h-6 w-6 animate-spin text-muted-foreground" />
