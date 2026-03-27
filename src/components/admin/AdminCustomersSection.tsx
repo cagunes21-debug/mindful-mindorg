@@ -25,6 +25,7 @@ import { toast } from "sonner";
 
 import CrmPipelineSection from "@/components/admin/CrmPipelineSection";
 import LeadProcesTab from "@/components/admin/LeadProcesTab";
+import KanbanPipeline from "@/components/admin/KanbanPipeline";
 
 interface Customer {
   email: string;
@@ -243,6 +244,11 @@ export default function AdminCustomersSection({ initialTab = "customers" }: { in
           </CardContent>
         </Card>
       </div>
+
+      {/* ── Kanban Pipeline ── */}
+      <KanbanPipeline onLeadClick={(id) => {
+        setActiveTab("leads");
+      }} />
 
       {/* ── Tabs ── */}
       <Tabs value={activeTab} onValueChange={setActiveTab}>
