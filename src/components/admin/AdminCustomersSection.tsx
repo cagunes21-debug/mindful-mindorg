@@ -245,6 +245,11 @@ export default function AdminCustomersSection({ initialTab = "customers" }: { in
         </Card>
       </div>
 
+      {/* ── Kanban Pipeline ── */}
+      <KanbanPipeline onLeadClick={(id) => {
+        setActiveTab("leads");
+      }} />
+
       {/* ── Tabs ── */}
       <Tabs value={activeTab} onValueChange={setActiveTab}>
         <TabsList className="h-10 bg-muted/50 p-1 rounded-xl">
