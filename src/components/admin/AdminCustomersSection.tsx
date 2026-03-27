@@ -138,12 +138,9 @@ export default function AdminCustomersSection({ initialTab = "customers" }: { in
 
   return (
     <div className="space-y-6">
-      {/* ── Metric Cards ── */}
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
-        <Card
-          className="cursor-pointer hover:shadow-lg transition-all duration-300 border-0 overflow-hidden group"
-          onClick={() => setActiveTab("customers")}
-        >
+      {/* ── Stats + Pipeline ── */}
+      <div className="grid grid-cols-3 gap-3">
+        <Card className="cursor-pointer hover:shadow-lg transition-all duration-300 border-0 overflow-hidden group" onClick={() => setActiveTab("customers")}>
           <CardContent className="p-0">
             <div className="p-4 bg-gradient-to-br from-sage-50 to-sage-100">
               <div className="flex items-center gap-3">
@@ -190,40 +187,55 @@ export default function AdminCustomersSection({ initialTab = "customers" }: { in
             </div>
           </CardContent>
         </Card>
-
-        <Card
-          className="cursor-pointer hover:shadow-lg transition-all duration-300 border-0 overflow-hidden group"
-          onClick={() => setActiveTab("leads")}
-        >
-          <CardContent className="p-0">
-            <div className="p-4 bg-gradient-to-br from-amber-50 to-amber-100">
-              <div className="flex items-center gap-3">
-                <div className="p-2.5 rounded-xl bg-gradient-to-br from-amber-400 to-amber-500 shadow-sm group-hover:scale-110 transition-transform">
-                  <UserPlus className="h-4 w-4 text-white" />
-                </div>
-                <div className="flex-1 min-w-0">
-                  <div className="flex items-baseline gap-1.5">
-                    <p className="text-2xl font-bold text-foreground">{totalLeads}</p>
-                    {newLeadCount > 0 && (
-                      <span className="text-[10px] font-semibold text-amber-600">
-                        ({newLeadCount} nieuw)
-                      </span>
-                    )}
-                  </div>
-                  <p className="text-[11px] text-muted-foreground font-medium">Leads</p>
-                </div>
-              </div>
-              {/* Mini pipeline funnel */}
-              <div className="mt-3 pt-2.5 border-t border-amber-200/50">
-                <PipelineFunnel stageCounts={stageCounts} totalLeads={totalLeads} />
-              </div>
-            </div>
-          </CardContent>
-        </Card>
       </div>
 
-      {/* ── Kanban Pipeline ── */}
-      <KanbanPipeline onStageClick={() => setActiveTab("leads")} />
+      {/* ── Lead Pipeline Bar ── */}
+      <Card
+        className="border-0 overflow-hidden cursor-pointer hover:shadow-md transition-all duration-300"
+        onClick={() => setActiveTab("leads")}
+      >
+        <CardContent className="p-0">
+          <div className="px-5 pt-3.5 pb-1.5 flex items-center justify-between">
+            <div className="flex items-center gap-2">
+              <UserPlus className="h-4 w-4 text-muted-foreground" />
+              <span className="text-sm font-semibold text-foreground">Lead Pipeline</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <span className="text-lg font-bold text-foreground">{totalLeads}</span>
+              <span className="text-xs text-muted-foreground">leads</span>
+              {newLeadCount > 0 && (
+                <Badge className="bg-gradient-to-r from-terracotta-500 to-terracotta-600 text-white text-[10px] px-1.5 py-0 h-4 border-0">
+                  {newLeadCount} nieuw
+                </Badge>
+              )}
+            </div>
+          </div>
+          <div className="px-5 pb-4">
+            <div className="flex gap-2">
+              {PIPELINE_STAGES.map((stage) => {
+                const count = stageCounts[stage.key] || 0;
+                const hasLeads = count > 0;
+                return (
+                  <div key={stage.key} className="flex-1">
+                    <div className={cn(
+                      "rounded-xl p-3 text-center transition-all",
+                      hasLeads ? "bg-card shadow-sm border border-border/40" : "bg-muted/30"
+                    )}>
+                      <div className={cn(
+                        "w-9 h-9 rounded-lg mx-auto mb-1.5 flex items-center justify-center shadow-sm",
+                        stage.color
+                      )}>
+                        <span className="text-sm font-bold text-white">{count}</span>
+                      </div>
+                      <p className="text-[10px] font-medium text-muted-foreground">{stage.label}</p>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        </CardContent>
+      </Card>
 
       {/* ── Tabs ── */}
       <Tabs value={activeTab} onValueChange={setActiveTab}>
