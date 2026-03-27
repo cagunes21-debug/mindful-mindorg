@@ -246,9 +246,7 @@ export default function AdminCustomersSection({ initialTab = "customers" }: { in
       </div>
 
       {/* ── Kanban Pipeline ── */}
-      <KanbanPipeline onLeadClick={(id) => {
-        setActiveTab("leads");
-      }} />
+      <KanbanPipeline onStageClick={() => setActiveTab("leads")} />
 
       {/* ── Tabs ── */}
       <Tabs value={activeTab} onValueChange={setActiveTab}>
