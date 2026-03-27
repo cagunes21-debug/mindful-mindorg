@@ -26,7 +26,6 @@ import { cn } from "@/lib/utils";
 
 import CrmPipelineSection from "@/components/admin/CrmPipelineSection";
 import LeadProcesTab from "@/components/admin/LeadProcesTab";
-import KanbanPipeline from "@/components/admin/KanbanPipeline";
 
 interface Customer {
   email: string;
