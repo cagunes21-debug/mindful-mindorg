@@ -39,38 +39,15 @@ interface Customer {
   trainings: string[];
 }
 
-// ─── Pipeline mini-bar (visual funnel) ────────────────────────────────────────
+// ─── Pipeline stages ──────────────────────────────────────────────────────────
 
 const PIPELINE_STAGES = [
-  { key: "new", label: "Nieuw", colorClass: "bg-stone-400" },
-  { key: "contact_attempt", label: "Contact", colorClass: "bg-sky-400" },
-  { key: "in_conversation", label: "In gesprek", colorClass: "bg-amber-400" },
-  { key: "intake_scheduled", label: "Kennis.", colorClass: "bg-violet-400" },
-  { key: "registered", label: "Aangemeld", colorClass: "bg-emerald-400" },
-  { key: "converted_to_client", label: "Klant", colorClass: "bg-green-600" },
+  { key: "new", label: "Nieuw", color: "bg-stone-400" },
+  { key: "contact_attempt", label: "Contact", color: "bg-sky-400" },
+  { key: "in_conversation", label: "In gesprek", color: "bg-amber-400" },
+  { key: "intake_scheduled", label: "Kennis.", color: "bg-violet-400" },
+  { key: "registered", label: "Aangemeld", color: "bg-emerald-500" },
 ];
-
-function PipelineFunnel({ stageCounts, totalLeads }: { stageCounts: Record<string, number>; totalLeads: number }) {
-  if (totalLeads === 0) return null;
-  return (
-    <div className="flex items-end gap-0.5 h-8">
-      {PIPELINE_STAGES.map(stage => {
-        const count = stageCounts[stage.key] || 0;
-        const pct = Math.max(count / totalLeads * 100, 8);
-        return (
-          <div key={stage.key} className="flex flex-col items-center gap-0.5 flex-1">
-            <span className="text-[9px] font-semibold text-foreground">{count}</span>
-            <div
-              className={`w-full rounded-sm ${stage.colorClass} transition-all`}
-              style={{ height: `${pct * 0.28}px`, minHeight: "3px" }}
-            />
-            <span className="text-[8px] text-muted-foreground truncate w-full text-center">{stage.label}</span>
-          </div>
-        );
-      })}
-    </div>
-  );
-}
 
 // ─── Main Component ───────────────────────────────────────────────────────────
 
