@@ -138,7 +138,55 @@ export default function AdminCustomersSection({ initialTab = "customers" }: { in
 
   return (
     <div className="space-y-6">
-      {/* ── Stats + Pipeline ── */}
+      {/* ── Lead Pipeline Bar ── */}
+      <Card
+        className="border-0 overflow-hidden cursor-pointer hover:shadow-md transition-all duration-300"
+        onClick={() => setActiveTab("leads")}
+      >
+        <CardContent className="p-0">
+          <div className="px-5 pt-3.5 pb-1.5 flex items-center justify-between">
+            <div className="flex items-center gap-2">
+              <UserPlus className="h-4 w-4 text-muted-foreground" />
+              <span className="text-sm font-semibold text-foreground">Lead Pipeline</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <span className="text-lg font-bold text-foreground">{totalLeads}</span>
+              <span className="text-xs text-muted-foreground">leads</span>
+              {newLeadCount > 0 && (
+                <Badge className="bg-gradient-to-r from-terracotta-500 to-terracotta-600 text-white text-[10px] px-1.5 py-0 h-4 border-0">
+                  {newLeadCount} nieuw
+                </Badge>
+              )}
+            </div>
+          </div>
+          <div className="px-5 pb-4">
+            <div className="flex gap-2">
+              {PIPELINE_STAGES.map((stage) => {
+                const count = stageCounts[stage.key] || 0;
+                const hasLeads = count > 0;
+                return (
+                  <div key={stage.key} className="flex-1">
+                    <div className={cn(
+                      "rounded-xl p-3 text-center transition-all",
+                      hasLeads ? "bg-card shadow-sm border border-border/40" : "bg-muted/30"
+                    )}>
+                      <div className={cn(
+                        "w-9 h-9 rounded-lg mx-auto mb-1.5 flex items-center justify-center shadow-sm",
+                        stage.color
+                      )}>
+                        <span className="text-sm font-bold text-white">{count}</span>
+                      </div>
+                      <p className="text-[10px] font-medium text-muted-foreground">{stage.label}</p>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        </CardContent>
+      </Card>
+
+      {/* ── Stats ── */}
       <div className="grid grid-cols-3 gap-3">
         <Card className="cursor-pointer hover:shadow-lg transition-all duration-300 border-0 overflow-hidden group" onClick={() => setActiveTab("customers")}>
           <CardContent className="p-0">
@@ -188,54 +236,6 @@ export default function AdminCustomersSection({ initialTab = "customers" }: { in
           </CardContent>
         </Card>
       </div>
-
-      {/* ── Lead Pipeline Bar ── */}
-      <Card
-        className="border-0 overflow-hidden cursor-pointer hover:shadow-md transition-all duration-300"
-        onClick={() => setActiveTab("leads")}
-      >
-        <CardContent className="p-0">
-          <div className="px-5 pt-3.5 pb-1.5 flex items-center justify-between">
-            <div className="flex items-center gap-2">
-              <UserPlus className="h-4 w-4 text-muted-foreground" />
-              <span className="text-sm font-semibold text-foreground">Lead Pipeline</span>
-            </div>
-            <div className="flex items-center gap-2">
-              <span className="text-lg font-bold text-foreground">{totalLeads}</span>
-              <span className="text-xs text-muted-foreground">leads</span>
-              {newLeadCount > 0 && (
-                <Badge className="bg-gradient-to-r from-terracotta-500 to-terracotta-600 text-white text-[10px] px-1.5 py-0 h-4 border-0">
-                  {newLeadCount} nieuw
-                </Badge>
-              )}
-            </div>
-          </div>
-          <div className="px-5 pb-4">
-            <div className="flex gap-2">
-              {PIPELINE_STAGES.map((stage) => {
-                const count = stageCounts[stage.key] || 0;
-                const hasLeads = count > 0;
-                return (
-                  <div key={stage.key} className="flex-1">
-                    <div className={cn(
-                      "rounded-xl p-3 text-center transition-all",
-                      hasLeads ? "bg-card shadow-sm border border-border/40" : "bg-muted/30"
-                    )}>
-                      <div className={cn(
-                        "w-9 h-9 rounded-lg mx-auto mb-1.5 flex items-center justify-center shadow-sm",
-                        stage.color
-                      )}>
-                        <span className="text-sm font-bold text-white">{count}</span>
-                      </div>
-                      <p className="text-[10px] font-medium text-muted-foreground">{stage.label}</p>
-                    </div>
-                  </div>
-                );
-              })}
-            </div>
-          </div>
-        </CardContent>
-      </Card>
 
       {/* ── Tabs ── */}
       <Tabs value={activeTab} onValueChange={setActiveTab}>
