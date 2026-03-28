@@ -1,0 +1,1 @@
+UPDATE msc_items SET instructions_translations = instructions_translations || '{"_slides": [{"folder": "stages-of-progress", "count": 15, "title": "The Muddy Middle"}]}'::jsonb WHERE id = '820c75ca-fe87-4606-88a3-7417e7a8cd14';
