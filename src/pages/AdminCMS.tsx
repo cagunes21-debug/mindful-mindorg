@@ -457,6 +457,80 @@ export default function AdminCMS() {
             </div>
           )}
 
+          {/* ═══ WORKBOOK TAB ═══ */}
+          {activeTab === "workbook" && (
+            <div className="space-y-4">
+              <p className="text-sm text-muted-foreground mb-4 px-1">
+                Werkboeken per sessie. Deze worden aan deelnemers beschikbaar gesteld via hun dashboard.
+              </p>
+              {sessions.map(session => {
+                const weekData = session as MscSession & { notebook_url?: string };
+                const hasWorkbook = session.week_number === 1;
+                return (
+                  <Card key={session.id} className={cn("transition-all", hasWorkbook && "ring-1 ring-primary/20")}>
+                    <CardContent className="p-4">
+                      <div className="flex items-center gap-3">
+                        <BookOpen className={cn("h-5 w-5 shrink-0", hasWorkbook ? "text-primary" : "text-muted-foreground/40")} />
+                        <div className="flex-1 min-w-0">
+                          <div className="flex items-center gap-2">
+                            <span className="text-sm font-medium">Week {session.week_number}</span>
+                            <span className="text-xs text-muted-foreground">{session.title}</span>
+                          </div>
+                          {hasWorkbook ? (
+                            <p className="text-xs text-primary mt-0.5">sessie1_werkboek.pdf · 8 pagina's</p>
+                          ) : (
+                            <p className="text-xs text-muted-foreground mt-0.5">Nog geen werkboek</p>
+                          )}
+                        </div>
+                        {hasWorkbook && (
+                          <div className="flex items-center gap-2">
+                            <Button
+                              variant="ghost"
+                              size="sm"
+                              className="h-7 px-2 gap-1.5 text-xs"
+                              onClick={() => toggleItemExpand(`workbook-${session.id}`)}
+                            >
+                              <Presentation className="h-3.5 w-3.5" />
+                              Preview
+                              <ChevronDown className={cn("h-3 w-3 transition-transform", expandedItems.has(`workbook-${session.id}`) && "rotate-180")} />
+                            </Button>
+                            <Button
+                              variant="outline"
+                              size="sm"
+                              className="h-7 px-2 gap-1.5 text-xs"
+                              onClick={() => {
+                                const url = `${import.meta.env.VITE_SUPABASE_URL}/storage/v1/object/public/training-content/workbooks/sessie1_werkboek.docx`;
+                                window.open(url, "_blank");
+                              }}
+                            >
+                              <Download className="h-3.5 w-3.5" /> DOCX
+                            </Button>
+                            <Button
+                              variant="outline"
+                              size="sm"
+                              className="h-7 px-2 gap-1.5 text-xs"
+                              onClick={() => {
+                                const url = `${import.meta.env.VITE_SUPABASE_URL}/storage/v1/object/public/training-content/workbooks/sessie1_werkboek.pdf`;
+                                window.open(url, "_blank");
+                              }}
+                            >
+                              <Download className="h-3.5 w-3.5" /> PDF
+                            </Button>
+                          </div>
+                        )}
+                      </div>
+                      {expandedItems.has(`workbook-${session.id}`) && hasWorkbook && (
+                        <div className="mt-4">
+                          <SlideViewer folder="workbook-sessie1" count={8} title="Werkboek Sessie 1" />
+                        </div>
+                      )}
+                    </CardContent>
+                  </Card>
+                );
+              })}
+            </div>
+          )}
+
           {/* ═══ ACCESS TAB ═══ */}
           {activeTab === "access" && <EnrollmentContentManager />}
         </div>
