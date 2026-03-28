@@ -20,7 +20,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { useToast } from "@/hooks/use-toast";
 import {
   ArrowLeft, Plus, Pencil, Trash2, Search, Clock, Filter,
-  ChevronRight, Library, Layers, Users, User, FileText, ChevronDown, Presentation, Download, Lock
+  ChevronRight, Library, Layers, Users, User, FileText, ChevronDown, Presentation, Download, Lock, BookOpen
 } from "lucide-react";
 import { exportScriptPdf } from "@/components/admin/exportScriptPdf";
 import SlideViewer from "@/components/admin/SlideViewer";
