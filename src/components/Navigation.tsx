@@ -231,6 +231,15 @@ const Navigation = () => {
 
           {/* Mobile Menu Button */}
           <div className="md:hidden flex items-center gap-3">
+            <a
+              href="https://instagram.com/chala.gunes"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Instagram"
+              className="text-muted-foreground hover:text-primary transition-colors"
+            >
+              <Instagram className="h-5 w-5" />
+            </a>
             <LanguageToggle />
             <button
               className="p-2"
