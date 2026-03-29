@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { Mail, Phone, MessageCircle } from "lucide-react";
+import { Mail, Phone, MessageCircle, Instagram } from "lucide-react";
 import NewsletterForm from "@/components/NewsletterForm";
 import { useLanguage } from "@/i18n/LanguageContext";
 
