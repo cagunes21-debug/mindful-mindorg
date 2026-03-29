@@ -185,6 +185,16 @@ const Navigation = () => {
               </DropdownMenuContent>
             </DropdownMenu>
 
+            <a
+              href="https://instagram.com/chala.gunes"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Instagram"
+              className="text-muted-foreground hover:text-primary transition-colors"
+            >
+              <Instagram className="h-5 w-5" />
+            </a>
+
             <LanguageToggle />
 
             <Button asChild className="bg-terracotta-600 hover:bg-terracotta-700 text-white rounded-full">
