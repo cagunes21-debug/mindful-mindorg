@@ -103,6 +103,17 @@ const Footer = () => {
                   </div>
                   WhatsApp
                 </a>
+                <a 
+                  href="https://instagram.com/chala.gunes" 
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-3 text-sm text-muted-foreground hover:text-terracotta-600 transition-colors group"
+                >
+                  <div className="h-8 w-8 rounded-full bg-white flex items-center justify-center group-hover:bg-terracotta-50 transition-colors">
+                    <Instagram className="h-4 w-4" />
+                  </div>
+                  @chala.gunes
+                </a>
               </div>
               <h4 className="text-sm font-semibold text-foreground mb-2">{t("footer.newsletter")}</h4>
               <NewsletterForm variant="inline" />
