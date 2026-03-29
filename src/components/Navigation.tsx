@@ -1,6 +1,6 @@
 import { NavLink } from "@/components/NavLink";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { Menu, X, ChevronDown, LogIn, LogOut, LayoutDashboard, BookOpen } from "lucide-react";
+import { Menu, X, ChevronDown, LogIn, LogOut, LayoutDashboard, BookOpen, Instagram } from "lucide-react";
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { supabase } from "@/integrations/supabase/client";
