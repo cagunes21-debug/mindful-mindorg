@@ -1,4 +1,4 @@
-import { Mail, Phone, MessageCircle, MapPin } from "lucide-react";
+import { Mail, Phone, MessageCircle, MapPin, Instagram } from "lucide-react";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import { ContactForm } from "@/components/ContactForm";
@@ -128,6 +128,25 @@ const Contact = () => {
                     </a>
                   </StaggerItem>
                   
+                  <StaggerItem>
+                    <a 
+                      href="https://instagram.com/chala.gunes" 
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex items-start gap-4 group"
+                    >
+                      <div className="h-12 w-12 rounded-2xl bg-terracotta-50 flex items-center justify-center group-hover:bg-terracotta-100 transition-colors">
+                        <Instagram className="h-5 w-5 text-terracotta-600" />
+                      </div>
+                      <div>
+                        <p className="font-medium text-foreground">Instagram</p>
+                        <p className="text-muted-foreground group-hover:text-terracotta-600 transition-colors">
+                          @chala.gunes
+                        </p>
+                      </div>
+                    </a>
+                  </StaggerItem>
+
                   <StaggerItem>
                     <div className="flex items-start gap-4">
                       <div className="h-12 w-12 rounded-2xl bg-terracotta-50 flex items-center justify-center">
