@@ -135,12 +135,12 @@ const Contact = () => {
                       rel="noopener noreferrer"
                       className="flex items-start gap-4 group"
                     >
-                      <div className="h-12 w-12 rounded-2xl bg-pink-100 flex items-center justify-center group-hover:bg-pink-200 transition-colors">
-                        <Instagram className="h-5 w-5 text-pink-600" />
+                      <div className="h-12 w-12 rounded-2xl bg-terracotta-50 flex items-center justify-center group-hover:bg-terracotta-100 transition-colors">
+                        <Instagram className="h-5 w-5 text-terracotta-600" />
                       </div>
                       <div>
                         <p className="font-medium text-foreground">Instagram</p>
-                        <p className="text-muted-foreground group-hover:text-pink-600 transition-colors">
+                        <p className="text-muted-foreground group-hover:text-terracotta-600 transition-colors">
                           @chala.gunes
                         </p>
                       </div>
