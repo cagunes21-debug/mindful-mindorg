@@ -1,4 +1,4 @@
-import { Mail, Phone, MessageCircle, MapPin } from "lucide-react";
+import { Mail, Phone, MessageCircle, MapPin, Instagram } from "lucide-react";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import { ContactForm } from "@/components/ContactForm";
