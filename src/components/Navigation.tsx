@@ -1,6 +1,6 @@
 import { NavLink } from "@/components/NavLink";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { Menu, X, ChevronDown, LogIn, LogOut, LayoutDashboard, BookOpen } from "lucide-react";
+import { Menu, X, ChevronDown, LogIn, LogOut, LayoutDashboard, BookOpen, Instagram } from "lucide-react";
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { supabase } from "@/integrations/supabase/client";
@@ -185,6 +185,16 @@ const Navigation = () => {
               </DropdownMenuContent>
             </DropdownMenu>
 
+            <a
+              href="https://instagram.com/chala.gunes"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Instagram"
+              className="text-muted-foreground hover:text-primary transition-colors"
+            >
+              <Instagram className="h-5 w-5" />
+            </a>
+
             <LanguageToggle />
 
             <Button asChild className="bg-terracotta-600 hover:bg-terracotta-700 text-white rounded-full">
@@ -221,6 +231,15 @@ const Navigation = () => {
 
           {/* Mobile Menu Button */}
           <div className="md:hidden flex items-center gap-3">
+            <a
+              href="https://instagram.com/chala.gunes"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Instagram"
+              className="text-muted-foreground hover:text-primary transition-colors"
+            >
+              <Instagram className="h-5 w-5" />
+            </a>
             <LanguageToggle />
             <button
               className="p-2"
