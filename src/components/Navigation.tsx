@@ -193,9 +193,9 @@ const Navigation = () => {
 
             {user && isAdmin && (
               <Button asChild variant="ghost" className="rounded-full text-muted-foreground hover:text-primary px-2">
-                <Link to="/mijn-trainingen" className="flex items-center gap-1.5">
+                <Link to="/admin" className="flex items-center gap-1.5">
                   <BookOpen className="h-4 w-4" />
-                  <span className="hidden lg:inline">{t("nav.myTrainings")}</span>
+                  <span className="hidden lg:inline">Admin</span>
                 </Link>
               </Button>
             )}
@@ -338,9 +338,9 @@ const Navigation = () => {
 
               {user && isAdmin && (
                 <Button asChild variant="ghost" className="w-fit rounded-full text-muted-foreground hover:text-primary">
-                  <Link to="/mijn-trainingen" onClick={() => setIsOpen(false)} className="flex items-center gap-2">
+                  <Link to="/admin" onClick={() => setIsOpen(false)} className="flex items-center gap-2">
                     <BookOpen className="h-4 w-4" />
-                    {t("nav.myTrainings")}
+                    Admin
                   </Link>
                 </Button>
               )}
