@@ -201,14 +201,8 @@ const Navigation = () => {
               <Link to="/contact">{t("nav.contact")}</Link>
             </Button>
 
-            {user && isAdmin && (
-              <Button asChild variant="ghost" className="rounded-full text-muted-foreground hover:text-primary px-2">
-                <Link to="/admin" className="flex items-center gap-1.5">
-                  <BookOpen className="h-4 w-4" />
-                  <span className="hidden lg:inline">Admin</span>
-                </Link>
-              </Button>
-            )}
+
+
 
             {user ? (
               <Button
