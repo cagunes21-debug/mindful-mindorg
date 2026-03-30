@@ -285,11 +285,13 @@ const Agenda = () => {
                             </div>
                             <div className="flex items-center gap-3 text-xs text-muted-foreground mb-1">
                               {t.time_start && <span className="flex items-center gap-1"><Clock className="h-3 w-3" />{t.time_start}{t.time_end ? `–${t.time_end}` : ""}</span>}
-                              <span className="font-semibold text-terracotta-600 text-sm">€{t.price}</span>
+                              <span className="font-semibold text-terracotta-600 text-sm">{t.price === 0 ? "Gratis" : `€${t.price}`}</span>
                             </div>
-                            <p className="text-xs text-muted-foreground">
-                              Bij vervolginschrijving wordt dit bedrag in mindering gebracht.
-                            </p>
+                            {t.price > 0 && (
+                              <p className="text-xs text-muted-foreground">
+                                Bij vervolginschrijving wordt dit bedrag in mindering gebracht.
+                              </p>
+                            )}
                           </div>
                           <Button
                             size="sm"
