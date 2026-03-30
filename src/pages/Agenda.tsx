@@ -276,8 +276,11 @@ const Agenda = () => {
                         <CardContent className="p-5 flex items-center justify-between gap-4">
                           <div className="flex-1 min-w-0">
                             <div className="flex items-center gap-2 mb-1">
+                              <span className="text-base" aria-hidden="true">
+                                {t.language === "nl" ? "🇳🇱" : t.language === "en" ? "🇬🇧" : t.language === "tr" ? "🇹🇷" : "🌍"}
+                              </span>
                               <span className="inline-block rounded-full px-3 py-1 text-xs font-semibold bg-terracotta-100 text-terracotta-700">
-                                {t.language === "nl" ? "Workshop NL" : "Workshop EN"}
+                                {t.language === "nl" ? "Nederlands" : t.language === "en" ? "English" : t.language === "tr" ? "Türkçe" : t.language}
                               </span>
                               <span className="text-sm font-medium text-foreground">
                                 {format(parseISO(t.start_date), "d MMMM yyyy", { locale: nl })}
