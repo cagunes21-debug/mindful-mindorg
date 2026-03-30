@@ -264,7 +264,7 @@ const Agenda = () => {
                   <div className="text-center mb-8">
                     <span className="inline-block rounded-full bg-sage-100 px-4 py-1.5 text-xs font-semibold text-sage-800 mb-3">Laagdrempelig</span>
                     <h2 className="text-2xl font-light text-foreground md:text-3xl leading-tight mb-2">
-                      Workshop <span className="font-serif italic text-terracotta-600">Zelfcompassie</span>
+                      Workshop <span className="font-serif italic text-terracotta-600">Zelfcompassie</span> (gratis)
                     </h2>
                     <p className="text-sm text-muted-foreground max-w-xl mx-auto">
                       Maak kennis met de essentie van zelfcompassie — zonder langdurige verplichting.
