@@ -89,7 +89,7 @@ const Agenda = () => {
       name: t.name,
       date: format(parseISO(t.start_date), "d MMMM yyyy", { locale: nl }),
       time: t.time_start ? `${t.time_start}${t.time_end ? ` – ${t.time_end}` : ""}` : undefined,
-      price: `€${price}${isEarlyBird ? " (early bird)" : ""}`,
+      price: price === 0 ? "Gratis" : `€${price}${isEarlyBird ? " (early bird)" : ""}`,
     });
     setIsDialogOpen(true);
   };
