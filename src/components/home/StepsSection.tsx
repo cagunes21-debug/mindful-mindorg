@@ -1,22 +1,23 @@
 import { ScrollReveal } from "@/components/ScrollReveal";
-
-const steps = [
-  { step: "01", title: "Gratis kennismaking", desc: "We maken kennis en bespreken wat je bezighoudt. Geen verplichtingen — gewoon een open gesprek om te kijken of het past.", accent: "terracotta" },
-  { step: "02", title: "Persoonlijk plan", desc: "Op basis van jouw situatie stellen we samen een traject op — afgestemd op jouw tempo, jouw thema's en wat jij nodig hebt.", accent: "sage" },
-  { step: "03", title: "Sessies & oefeningen", desc: "Tijdens de sessies werk je met meditaties, reflecties en zelfcompassie-oefeningen. Tussendoor oefen je op jouw eigen tempo.", accent: "terracotta" },
-  { step: "04", title: "Integratie & groei", desc: "Stap voor stap leer je een nieuwe manier van omgaan met jezelf. Milder, steviger en meer verbonden met wat je nodig hebt.", accent: "sage" },
-];
+import { useLanguage } from "@/i18n/LanguageContext";
 
 const StepsSection = () => {
+  const { t } = useLanguage();
+  const steps = [
+    { step: "01", title: t("home.steps.s1Title"), desc: t("home.steps.s1Desc"), accent: "terracotta" },
+    { step: "02", title: t("home.steps.s2Title"), desc: t("home.steps.s2Desc"), accent: "sage" },
+    { step: "03", title: t("home.steps.s3Title"), desc: t("home.steps.s3Desc"), accent: "terracotta" },
+    { step: "04", title: t("home.steps.s4Title"), desc: t("home.steps.s4Desc"), accent: "sage" },
+  ];
   return (
     <section className="py-20 md:py-28 bg-background">
       <div className="container mx-auto px-6 md:px-10">
         <div className="max-w-3xl mx-auto">
           <ScrollReveal>
             <div className="text-center mb-14">
-              <span className="inline-block text-xs tracking-[0.3em] uppercase text-terracotta-500 font-medium mb-4">Het traject</span>
+              <span className="inline-block text-xs tracking-[0.3em] uppercase text-terracotta-500 font-medium mb-4">{t("home.steps.eyebrow")}</span>
               <h2 className="text-3xl md:text-4xl font-serif text-foreground">
-                Hoe werkt <em className="italic text-primary">het?</em>
+                {t("home.steps.titleA")} <em className="italic text-primary">{t("home.steps.titleB")}</em>
               </h2>
             </div>
           </ScrollReveal>
