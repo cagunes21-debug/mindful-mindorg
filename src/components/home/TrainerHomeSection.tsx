@@ -2,17 +2,20 @@ import { Link } from "react-router-dom";
 import { ScrollReveal } from "@/components/ScrollReveal";
 import { ArrowRight } from "lucide-react";
 import caglaBio from "@/assets/cagla-bio.png";
+import { useLanguage } from "@/i18n/LanguageContext";
 
 const TrainerHomeSection = () => {
+  const { t } = useLanguage();
+  const tags = [t("home.trainer.tag1"), t("home.trainer.tag2"), t("home.trainer.tag3"), t("home.trainer.tag4")];
   return (
     <section className="py-20 md:py-28 bg-background">
       <div className="container mx-auto px-6 md:px-10">
         <div className="max-w-3xl mx-auto">
           <ScrollReveal>
             <div className="text-center mb-12">
-              <span className="inline-block text-xs tracking-[0.3em] uppercase text-sage-600 font-medium mb-4">Begeleiding</span>
+              <span className="inline-block text-xs tracking-[0.3em] uppercase text-sage-600 font-medium mb-4">{t("home.trainer.eyebrow")}</span>
               <h2 className="text-3xl md:text-4xl font-serif text-foreground">
-                Ontmoet de trainers
+                {t("home.trainer.title")}
               </h2>
             </div>
           </ScrollReveal>
@@ -26,16 +29,16 @@ const TrainerHomeSection = () => {
               />
               <h3 className="text-xl font-serif text-foreground mb-1">Çağla Güneş</h3>
               <p className="text-sm text-muted-foreground mb-4">
-                Lichaamsgerichte Psychotherapeut · MSC Trainer
+                {t("home.trainer.role")}
               </p>
               <p className="text-foreground font-serif italic text-base mb-4">
-                "Echte verandering begint bij hoe je met jezelf omgaat."
+                {t("home.trainer.quote")}
               </p>
               <p className="text-muted-foreground text-sm leading-relaxed mb-4 max-w-sm mx-auto">
-                Ik help je om met meer mildheid, veerkracht en zelfcompassie in het leven te staan. In mijn begeleiding combineer ik MSC met lichaamsgerichte therapie en trauma-sensitieve mindfulness.
+                {t("home.trainer.bio")}
               </p>
               <div className="flex flex-wrap gap-2 justify-center mb-6">
-                {["MSC gecertificeerd", "Lichaamsgerichte therapie", "Trauma-sensitief", "ACT"].map((tag) => (
+                {tags.map((tag) => (
                   <span key={tag} className="text-[0.65rem] tracking-wider uppercase px-3 py-1 border border-warm-200 text-muted-foreground rounded-full">
                     {tag}
                   </span>
@@ -46,14 +49,14 @@ const TrainerHomeSection = () => {
                   to="/over-ons"
                   className="inline-flex items-center gap-2 text-sm font-semibold text-primary hover:text-primary/80 transition-colors"
                 >
-                  Meer over Mindful Mind
+                  {t("home.trainer.moreAbout")}
                   <ArrowRight className="h-3.5 w-3.5" />
                 </Link>
                 <Link
                   to="/trainers"
                   className="inline-flex items-center gap-2 text-sm font-semibold text-sage-700 hover:text-sage-600 transition-colors"
                 >
-                  Over de trainers
+                  {t("home.trainer.aboutTrainers")}
                   <ArrowRight className="h-3.5 w-3.5" />
                 </Link>
               </div>
