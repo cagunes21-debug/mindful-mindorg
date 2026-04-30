@@ -4,23 +4,21 @@
 
 import { useState, useEffect } from "react";
 import { supabase } from "@/integrations/supabase/client";
-import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { Calendar, Clock, Globe, MapPin, ArrowRight, Sparkles, Sun, Loader2 } from "lucide-react";
+import { Calendar, Clock, Globe, ArrowRight, Sparkles, Sun, Loader2 } from "lucide-react";
 import {
   Dialog, DialogContent, DialogHeader, DialogTitle,
 } from "@/components/ui/dialog";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
-import { ScrollReveal, StaggerContainer, StaggerItem } from "@/components/ScrollReveal";
+import { ScrollReveal } from "@/components/ScrollReveal";
 import { motion } from "framer-motion";
 import SEO from "@/components/SEO";
 import { RegistrationForm } from "@/components/RegistrationForm";
 import { format, parseISO } from "date-fns";
-import { nl } from "date-fns/locale";
-
-// ─── Types ────────────────────────────────────────────────────────────────────
+import { nl as nlLocale, enUS } from "date-fns/locale";
+import { useLanguage } from "@/i18n/LanguageContext";
 
 interface TrainingDate {
   id: string;
@@ -49,8 +47,6 @@ interface SelectedTraining {
   price?: string;
 }
 
-// ─── Helpers ──────────────────────────────────────────────────────────────────
-
 function currentPrice(t: TrainingDate): number {
   if (t.early_bird_price && t.early_bird_deadline && new Date(t.early_bird_deadline) > new Date()) {
     return t.early_bird_price;
@@ -58,17 +54,13 @@ function currentPrice(t: TrainingDate): number {
   return t.price;
 }
 
-function formatFollowUp(dates: string | null): string {
-  return dates || "";
-}
-
-// ─── Component ────────────────────────────────────────────────────────────────
-
 const Agenda = () => {
-  const [trainings, setTrainings]           = useState<TrainingDate[]>([]);
-  const [loading, setLoading]               = useState(true);
+  const { t, language } = useLanguage();
+  const dateLocale = language === "en" ? enUS : nlLocale;
+  const [trainings, setTrainings] = useState<TrainingDate[]>([]);
+  const [loading, setLoading] = useState(true);
   const [selectedTraining, setSelectedTraining] = useState<SelectedTraining | null>(null);
-  const [isDialogOpen, setIsDialogOpen]     = useState(false);
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
 
   useEffect(() => {
     supabase
@@ -82,32 +74,29 @@ const Agenda = () => {
       });
   }, []);
 
-  const openRegistration = (t: TrainingDate) => {
-    const price = currentPrice(t);
-    const isEarlyBird = t.early_bird_price && t.early_bird_deadline && new Date(t.early_bird_deadline) > new Date();
+  const openRegistration = (tr: TrainingDate) => {
+    const price = currentPrice(tr);
+    const isEarlyBird = tr.early_bird_price && tr.early_bird_deadline && new Date(tr.early_bird_deadline) > new Date();
     setSelectedTraining({
-      name: t.name,
-      date: format(parseISO(t.start_date), "d MMMM yyyy", { locale: nl }),
-      time: t.time_start ? `${t.time_start}${t.time_end ? ` – ${t.time_end}` : ""}` : undefined,
-      price: price === 0 ? "Gratis" : `€${price}${isEarlyBird ? " (early bird)" : ""}`,
+      name: tr.name,
+      date: format(parseISO(tr.start_date), "d MMMM yyyy", { locale: dateLocale }),
+      time: tr.time_start ? `${tr.time_start}${tr.time_end ? ` – ${tr.time_end}` : ""}` : undefined,
+      price: price === 0 ? t("agenda.free") : `€${price}${isEarlyBird ? ` (${t("agenda.earlyBird").toLowerCase()})` : ""}`,
     });
     setIsDialogOpen(true);
   };
 
-  // Derived lists
-  const featured    = trainings.filter(t => t.is_featured && !t.is_full);
-  const mscNL       = trainings.filter(t => t.type === "msc_8week" && t.language === "nl");
-  const mscEN       = trainings.filter(t => t.type === "msc_8week" && t.language === "en");
-  const workshops   = trainings.filter(t => t.type === "workshop");
-  const retreats    = trainings.filter(t => t.type === "retreat");
+  const featured = trainings.filter(tr => tr.is_featured && !tr.is_full);
+  const mscNL = trainings.filter(tr => tr.type === "msc_8week" && tr.language === "nl");
+  const mscEN = trainings.filter(tr => tr.type === "msc_8week" && tr.language === "en");
+  const workshops = trainings.filter(tr => tr.type === "workshop");
 
   return (
     <div className="min-h-screen bg-background">
-      {/* Registration Dialog */}
       <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
         <DialogContent className="sm:max-w-md">
           <DialogHeader>
-            <DialogTitle className="text-xl font-light">Aanmelden</DialogTitle>
+            <DialogTitle className="text-xl font-light">{t("agenda.dialogTitle")}</DialogTitle>
           </DialogHeader>
           {selectedTraining && (
             <RegistrationForm
@@ -121,10 +110,7 @@ const Agenda = () => {
         </DialogContent>
       </Dialog>
 
-      <SEO
-        title="Agenda"
-        description="Bekijk onze trainingsdata en meld je aan voor een MSC training. Nederlandse en Engelse trainingen beschikbaar, online en op locatie."
-      />
+      <SEO title={t("agenda.seoTitle")} description={t("agenda.seoDesc")} />
       <Navigation />
 
       {/* Hero */}
@@ -139,22 +125,22 @@ const Agenda = () => {
               initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}
               className="inline-flex items-center gap-2 mb-8 rounded-full bg-terracotta-100 border border-terracotta-200 px-5 py-2.5 text-sm font-medium text-terracotta-700"
             >
-              <Calendar className="h-4 w-4" /> Trainingsagenda
+              <Calendar className="h-4 w-4" /> {t("agenda.badge")}
             </motion.span>
 
             <motion.h1
               initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7, delay: 0.1 }}
               className="mb-8 text-4xl font-light tracking-tight text-foreground md:text-5xl lg:text-6xl leading-[1.1]"
             >
-              Training
-              <span className="block font-serif italic text-terracotta-600 mt-2">Agenda</span>
+              {t("agenda.titleA")}
+              <span className="block font-serif italic text-terracotta-600 mt-2">{t("agenda.titleB")}</span>
             </motion.h1>
 
             <motion.p
               initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.2 }}
               className="text-muted-foreground text-lg max-w-2xl mx-auto leading-relaxed"
             >
-              Kies de vorm die past bij jouw behoefte, beschikbare tijd en mate van verdieping.
+              {t("agenda.subtitle")}
             </motion.p>
 
             <motion.div
@@ -162,9 +148,9 @@ const Agenda = () => {
               className="flex flex-wrap justify-center gap-3 mt-8"
             >
               {[
-                { id: "groepstraining", label: "Groepstraining" },
-                { id: "workshops",      label: "Workshop" },
-                { id: "retreat",        label: "Retreat" },
+                { id: "groepstraining", label: t("agenda.filter1") },
+                { id: "workshops", label: t("agenda.filter2") },
+                { id: "retreat", label: t("agenda.filter3") },
               ].map(b => (
                 <Button key={b.id} variant="outline" size="sm"
                   onClick={() => document.getElementById(b.id)?.scrollIntoView({ behavior: "smooth" })}
@@ -178,7 +164,6 @@ const Agenda = () => {
         </div>
       </section>
 
-      {/* Loading state */}
       {loading && (
         <div className="flex justify-center py-20">
           <Loader2 className="h-8 w-8 animate-spin text-terracotta-400" />
@@ -192,58 +177,58 @@ const Agenda = () => {
             <section className="py-12 lg:py-16 bg-gradient-to-br from-terracotta-50 via-warm-50 to-sage-50">
               <div className="container mx-auto px-4">
                 <div className="mx-auto max-w-4xl">
-                  {featured.map(t => {
-                    const price = currentPrice(t);
-                    const isEarly = t.early_bird_price && t.early_bird_deadline && new Date(t.early_bird_deadline) > new Date();
+                  {featured.map(tr => {
+                    const price = currentPrice(tr);
+                    const isEarly = tr.early_bird_price && tr.early_bird_deadline && new Date(tr.early_bird_deadline) > new Date();
                     return (
-                      <motion.div key={t.id}
+                      <motion.div key={tr.id}
                         initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7, delay: 0.3 }}
                         className="relative overflow-hidden rounded-3xl bg-white border-2 border-terracotta-200 shadow-xl"
                       >
                         {isEarly && (
                           <div className="absolute top-4 right-4 z-10">
                             <span className="inline-flex items-center gap-1.5 rounded-full bg-terracotta-600 px-4 py-2 text-sm font-semibold text-white shadow-lg">
-                              <Sparkles className="h-4 w-4" /> Early bird – €{t.early_bird_price}
+                              <Sparkles className="h-4 w-4" /> {t("agenda.earlyBird")} – €{tr.early_bird_price}
                             </span>
                           </div>
                         )}
                         <div className="p-8 md:p-12">
                           <span className="inline-block rounded-full bg-sage-100 px-4 py-1.5 text-xs font-semibold text-sage-800 mb-4">
-                            Nieuw — Inschrijving geopend
+                            {t("agenda.newOpen")}
                           </span>
                           <h2 className="text-2xl md:text-3xl font-light text-foreground mb-2 leading-tight">
-                            {t.name}
-                            <span className="font-serif italic text-terracotta-600"> — {format(parseISO(t.start_date), "MMMM yyyy", { locale: nl })}</span>
+                            {tr.name}
+                            <span className="font-serif italic text-terracotta-600"> — {format(parseISO(tr.start_date), "MMMM yyyy", { locale: dateLocale })}</span>
                           </h2>
                           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8 mt-6">
                             <div className="flex items-center gap-2 text-sm text-foreground">
                               <Calendar className="h-4 w-4 text-terracotta-500" />
-                              <span>Start {format(parseISO(t.start_date), "d MMM", { locale: nl })}</span>
+                              <span>{t("agenda.start")} {format(parseISO(tr.start_date), "d MMM", { locale: dateLocale })}</span>
                             </div>
-                            {t.time_start && (
+                            {tr.time_start && (
                               <div className="flex items-center gap-2 text-sm text-foreground">
                                 <Clock className="h-4 w-4 text-terracotta-500" />
-                                <span>{t.time_start}{t.time_end ? `–${t.time_end}` : ""}</span>
+                                <span>{tr.time_start}{tr.time_end ? `–${tr.time_end}` : ""}</span>
                               </div>
                             )}
                             <div className="flex items-center gap-2 text-sm text-foreground">
                               <Globe className="h-4 w-4 text-terracotta-500" />
-                              <span>{t.location || "Online"}</span>
+                              <span>{tr.location || "Online"}</span>
                             </div>
                           </div>
                           <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
                             <Button
-                              onClick={() => openRegistration(t)}
+                              onClick={() => openRegistration(tr)}
                               size="lg"
                               className="bg-terracotta-600 hover:bg-terracotta-700 text-white rounded-full px-10 py-6 text-base shadow-lg"
                             >
-                              {isEarly ? "Schrijf je in met early bird korting" : "Schrijf je in"}
+                              {isEarly ? t("agenda.enrollEarly") : t("agenda.enroll")}
                               <ArrowRight className="ml-2 h-5 w-5" />
                             </Button>
                             {isEarly && (
                               <div className="text-sm text-muted-foreground">
-                                <p><span className="line-through">€{t.price}</span> → <span className="font-semibold text-terracotta-600">€{t.early_bird_price}</span></p>
-                                <p>Early bird t/m {format(parseISO(t.early_bird_deadline!), "d MMMM yyyy", { locale: nl })}</p>
+                                <p><span className="line-through">€{tr.price}</span> → <span className="font-semibold text-terracotta-600">€{tr.early_bird_price}</span></p>
+                                <p>{t("agenda.earlyBirdUntil")} {format(parseISO(tr.early_bird_deadline!), "d MMMM yyyy", { locale: dateLocale })}</p>
                               </div>
                             )}
                           </div>
@@ -262,47 +247,47 @@ const Agenda = () => {
               <div className="container mx-auto px-4">
                 <div className="mx-auto max-w-4xl">
                   <div className="text-center mb-8">
-                    <span className="inline-block rounded-full bg-sage-100 px-4 py-1.5 text-xs font-semibold text-sage-800 mb-3">Laagdrempelig</span>
+                    <span className="inline-block rounded-full bg-sage-100 px-4 py-1.5 text-xs font-semibold text-sage-800 mb-3">{t("agenda.workshops.tag")}</span>
                     <h2 className="text-2xl font-light text-foreground md:text-3xl leading-tight mb-2">
-                      Workshop <span className="font-serif italic text-terracotta-600">Zelfcompassie</span> (gratis)
+                      {t("agenda.workshops.titleA")} <span className="font-serif italic text-terracotta-600">{t("agenda.workshops.titleAccent")}</span> {t("agenda.workshops.titleB")}
                     </h2>
                     <p className="text-sm text-muted-foreground max-w-xl mx-auto">
-                      Maak kennis met de essentie van zelfcompassie — zonder langdurige verplichting.
+                      {t("agenda.workshops.sub")}
                     </p>
                   </div>
                   <div className="grid gap-4 md:grid-cols-2">
-                    {workshops.map(t => (
-                      <Card key={t.id} className="border-warm-200 bg-warm-50/50 rounded-2xl overflow-hidden">
+                    {workshops.map(tr => (
+                      <Card key={tr.id} className="border-warm-200 bg-warm-50/50 rounded-2xl overflow-hidden">
                         <CardContent className="p-5 flex items-center justify-between gap-4">
                           <div className="flex-1 min-w-0">
                             <div className="flex items-center gap-2 mb-1">
                               <span className="text-base" aria-hidden="true">
-                                {t.language === "nl" ? "🇳🇱" : t.language === "en" ? "🇬🇧" : t.language === "tr" ? "🇹🇷" : "🌍"}
+                                {tr.language === "nl" ? "🇳🇱" : tr.language === "en" ? "🇬🇧" : tr.language === "tr" ? "🇹🇷" : "🌍"}
                               </span>
                               <span className="inline-block rounded-full px-3 py-1 text-xs font-semibold bg-terracotta-100 text-terracotta-700">
-                                {t.language === "nl" ? "Nederlands" : t.language === "en" ? "English" : t.language === "tr" ? "Türkçe" : t.language}
+                                {tr.language === "nl" ? "Nederlands" : tr.language === "en" ? "English" : tr.language === "tr" ? "Türkçe" : tr.language}
                               </span>
                               <span className="text-sm font-medium text-foreground">
-                                {format(parseISO(t.start_date), "d MMMM yyyy", { locale: nl })}
+                                {format(parseISO(tr.start_date), "d MMMM yyyy", { locale: dateLocale })}
                               </span>
                             </div>
                             <div className="flex items-center gap-3 text-xs text-muted-foreground mb-1">
-                              {t.time_start && <span className="flex items-center gap-1"><Clock className="h-3 w-3" />{t.time_start}{t.time_end ? `–${t.time_end}` : ""}</span>}
-                              <span className="font-semibold text-terracotta-600 text-sm">{t.price === 0 ? "Gratis" : `€${t.price}`}</span>
+                              {tr.time_start && <span className="flex items-center gap-1"><Clock className="h-3 w-3" />{tr.time_start}{tr.time_end ? `–${tr.time_end}` : ""}</span>}
+                              <span className="font-semibold text-terracotta-600 text-sm">{tr.price === 0 ? t("agenda.free") : `€${tr.price}`}</span>
                             </div>
-                            {t.price > 0 && (
+                            {tr.price > 0 && (
                               <p className="text-xs text-muted-foreground">
-                                Bij vervolginschrijving wordt dit bedrag in mindering gebracht.
+                                {t("agenda.workshops.discount")}
                               </p>
                             )}
                           </div>
                           <Button
                             size="sm"
-                            disabled={t.is_full}
-                            onClick={() => openRegistration(t)}
+                            disabled={tr.is_full}
+                            onClick={() => openRegistration(tr)}
                             className="bg-terracotta-600 hover:bg-terracotta-700 text-white rounded-full shrink-0 disabled:opacity-50"
                           >
-                            {t.is_full ? "Vol" : "Aanmelden"}
+                            {tr.is_full ? t("agenda.full") : t("agenda.enrollShort")}
                           </Button>
                         </CardContent>
                       </Card>
@@ -319,9 +304,9 @@ const Agenda = () => {
               <div className="container mx-auto px-4">
                 <div className="mx-auto max-w-5xl">
                   <div className="text-center mb-12">
-                    <span className="inline-block rounded-full bg-terracotta-100 px-4 py-1.5 text-xs font-semibold text-terracotta-700 mb-4">Kernprogramma</span>
+                    <span className="inline-block rounded-full bg-terracotta-100 px-4 py-1.5 text-xs font-semibold text-terracotta-700 mb-4">{t("agenda.msc.tag")}</span>
                     <h2 className="text-3xl font-light text-foreground md:text-4xl leading-tight mb-4">
-                      8-weekse Mindful Zelfcompassie <span className="font-serif italic text-terracotta-600">(MSC)</span>
+                      {t("agenda.msc.title")} <span className="font-serif italic text-terracotta-600">{t("agenda.msc.titleAccent")}</span>
                     </h2>
                   </div>
 
@@ -330,51 +315,51 @@ const Agenda = () => {
                     <div className="mb-12">
                       <div className="flex items-center gap-3 mb-6">
                         <Globe className="h-5 w-5 text-terracotta-600" />
-                        <h3 className="text-xl font-semibold text-foreground">Online – Nederlandstalige training</h3>
+                        <h3 className="text-xl font-semibold text-foreground">{t("agenda.msc.nlHeader")}</h3>
                       </div>
                       <div className="grid gap-6 md:grid-cols-2">
-                        {mscNL.map(t => {
-                          const price = currentPrice(t);
-                          const isEarly = t.early_bird_price && t.early_bird_deadline && new Date(t.early_bird_deadline) > new Date();
-                          const isLastSpot = !t.is_full && t.notes?.toLowerCase().includes("laatste");
+                        {mscNL.map(tr => {
+                          const price = currentPrice(tr);
+                          const isEarly = tr.early_bird_price && tr.early_bird_deadline && new Date(tr.early_bird_deadline) > new Date();
+                          const isLastSpot = !tr.is_full && tr.notes?.toLowerCase().includes("laatste");
                           return (
-                            <Card key={t.id} className={`border-terracotta-200 rounded-3xl overflow-hidden transition-shadow ${t.is_full ? "bg-warm-50 opacity-75" : "bg-white hover:shadow-md"}`}>
+                            <Card key={tr.id} className={`border-terracotta-200 rounded-3xl overflow-hidden transition-shadow ${tr.is_full ? "bg-warm-50 opacity-75" : "bg-white hover:shadow-md"}`}>
                               <CardContent className="p-6">
                                 <div className="flex items-center justify-between mb-4">
-                                  <p className="font-semibold text-foreground">{t.day_label}</p>
-                                  {t.is_full && <span className="inline-block rounded-full bg-terracotta-100 px-3 py-1 text-xs font-semibold text-terracotta-700">Vol</span>}
-                                  {isLastSpot && <span className="inline-block rounded-full bg-amber-100 px-3 py-1 text-xs font-semibold text-amber-700 animate-pulse">Laatste plek!</span>}
+                                  <p className="font-semibold text-foreground">{tr.day_label}</p>
+                                  {tr.is_full && <span className="inline-block rounded-full bg-terracotta-100 px-3 py-1 text-xs font-semibold text-terracotta-700">{t("agenda.full")}</span>}
+                                  {isLastSpot && <span className="inline-block rounded-full bg-amber-100 px-3 py-1 text-xs font-semibold text-amber-700 animate-pulse">{t("agenda.lastSpot")}</span>}
                                 </div>
                                 <div className="space-y-2 text-sm mb-4">
                                   <div className="flex items-start gap-2">
                                     <Calendar className="h-4 w-4 text-terracotta-500 mt-0.5" />
-                                    <p className="font-medium text-foreground">Start: {format(parseISO(t.start_date), "d MMMM yyyy", { locale: nl })}</p>
+                                    <p className="font-medium text-foreground">{t("agenda.start")}: {format(parseISO(tr.start_date), "d MMMM yyyy", { locale: dateLocale })}</p>
                                   </div>
-                                  {t.time_start && (
+                                  {tr.time_start && (
                                     <div className="flex items-center gap-2">
                                       <Clock className="h-4 w-4 text-terracotta-500" />
-                                      <p className="text-muted-foreground">{t.time_start}{t.time_end ? ` – ${t.time_end}` : ""}</p>
+                                      <p className="text-muted-foreground">{tr.time_start}{tr.time_end ? ` – ${tr.time_end}` : ""}</p>
                                     </div>
                                   )}
                                 </div>
-                                {t.follow_up_dates && (
-                                  <p className="text-xs text-muted-foreground mb-4">Vervolgdata: {t.follow_up_dates}</p>
+                                {tr.follow_up_dates && (
+                                  <p className="text-xs text-muted-foreground mb-4">{t("agenda.msc.followUp")} {tr.follow_up_dates}</p>
                                 )}
                                 <div className="flex items-center justify-between pt-4 border-t border-warm-200">
                                   <div>
                                     {isEarly ? (
                                       <>
-                                        <p className="text-xs text-muted-foreground line-through">€{t.price}</p>
-                                        <p className="text-lg font-semibold text-terracotta-600">€{t.early_bird_price}</p>
+                                        <p className="text-xs text-muted-foreground line-through">€{tr.price}</p>
+                                        <p className="text-lg font-semibold text-terracotta-600">€{tr.early_bird_price}</p>
                                       </>
                                     ) : (
-                                      <p className="text-lg font-semibold text-terracotta-600">€{t.price}</p>
+                                      <p className="text-lg font-semibold text-terracotta-600">€{tr.price}</p>
                                     )}
                                   </div>
-                                  <Button size="sm" disabled={t.is_full} onClick={() => openRegistration(t)}
+                                  <Button size="sm" disabled={tr.is_full} onClick={() => openRegistration(tr)}
                                     className="bg-terracotta-600 hover:bg-terracotta-700 text-white rounded-full disabled:opacity-50"
                                   >
-                                    {t.is_full ? "Vol" : "Reserveer"}
+                                    {tr.is_full ? t("agenda.full") : t("agenda.reserve")}
                                   </Button>
                                 </div>
                               </CardContent>
@@ -390,37 +375,37 @@ const Agenda = () => {
                     <div>
                       <div className="flex items-center gap-3 mb-6">
                         <Globe className="h-5 w-5 text-sage-700" />
-                        <h3 className="text-xl font-semibold text-foreground">Online – English training</h3>
+                        <h3 className="text-xl font-semibold text-foreground">{t("agenda.msc.enHeader")}</h3>
                       </div>
                       <div className="grid gap-6 md:grid-cols-2">
-                        {mscEN.map(t => (
-                          <Card key={t.id} className={`border-sage-200 rounded-3xl overflow-hidden transition-shadow ${t.is_full ? "bg-warm-50 opacity-75" : "bg-white hover:shadow-md"}`}>
+                        {mscEN.map(tr => (
+                          <Card key={tr.id} className={`border-sage-200 rounded-3xl overflow-hidden transition-shadow ${tr.is_full ? "bg-warm-50 opacity-75" : "bg-white hover:shadow-md"}`}>
                             <CardContent className="p-6">
                               <div className="flex items-center justify-between mb-4">
-                                <p className="font-semibold text-foreground">{t.day_label}</p>
-                                {t.is_full && <span className="inline-block rounded-full bg-sage-200 px-3 py-1 text-xs font-semibold text-sage-800">Full</span>}
+                                <p className="font-semibold text-foreground">{tr.day_label}</p>
+                                {tr.is_full && <span className="inline-block rounded-full bg-sage-200 px-3 py-1 text-xs font-semibold text-sage-800">{t("agenda.fullEn")}</span>}
                               </div>
                               <div className="space-y-2 text-sm mb-4">
                                 <div className="flex items-start gap-2">
                                   <Calendar className="h-4 w-4 text-sage-600 mt-0.5" />
-                                  <p className="font-medium text-foreground">Start: {format(parseISO(t.start_date), "d MMMM yyyy", { locale: nl })}</p>
+                                  <p className="font-medium text-foreground">{t("agenda.start")}: {format(parseISO(tr.start_date), "d MMMM yyyy", { locale: dateLocale })}</p>
                                 </div>
-                                {t.time_start && (
+                                {tr.time_start && (
                                   <div className="flex items-center gap-2">
                                     <Clock className="h-4 w-4 text-sage-600" />
-                                    <p className="text-muted-foreground">{t.time_start}{t.time_end ? ` – ${t.time_end}` : ""}</p>
+                                    <p className="text-muted-foreground">{tr.time_start}{tr.time_end ? ` – ${tr.time_end}` : ""}</p>
                                   </div>
                                 )}
                               </div>
-                              {t.follow_up_dates && (
-                                <p className="text-xs text-muted-foreground mb-4">Follow-up: {t.follow_up_dates}</p>
+                              {tr.follow_up_dates && (
+                                <p className="text-xs text-muted-foreground mb-4">{t("agenda.msc.followUpEn")} {tr.follow_up_dates}</p>
                               )}
                               <div className="flex items-center justify-between pt-4 border-t border-warm-200">
-                                <p className="text-lg font-semibold text-sage-700">€{t.price}</p>
-                                <Button size="sm" disabled={t.is_full} onClick={() => openRegistration(t)}
+                                <p className="text-lg font-semibold text-sage-700">€{tr.price}</p>
+                                <Button size="sm" disabled={tr.is_full} onClick={() => openRegistration(tr)}
                                   className="bg-sage-600 hover:bg-sage-700 text-white rounded-full disabled:opacity-50"
                                 >
-                                  {t.is_full ? "Full" : "Reserve"}
+                                  {tr.is_full ? t("agenda.fullEn") : t("agenda.reserve")}
                                 </Button>
                               </div>
                             </CardContent>
@@ -440,18 +425,18 @@ const Agenda = () => {
             <div className="container relative mx-auto px-4">
               <div className="mx-auto max-w-3xl text-center">
                 <span className="inline-flex items-center gap-2 mb-8 rounded-full bg-white/20 px-5 py-2.5 text-sm font-medium text-white">
-                  <Sun className="h-4 w-4" /> Verdieping
+                  <Sun className="h-4 w-4" /> {t("agenda.retreat.badge")}
                 </span>
                 <h2 className="mb-6 text-3xl font-light text-white md:text-4xl leading-tight">
-                  5-daagse MSC Retreat
-                  <span className="block font-serif italic mt-2">in Barcelona</span>
+                  {t("agenda.retreat.titleA")}
+                  <span className="block font-serif italic mt-2">{t("agenda.retreat.titleB")}</span>
                 </h2>
                 <div className="inline-block bg-white/10 backdrop-blur-sm rounded-2xl px-6 py-4 border border-white/20 mb-8">
-                  <p className="text-white/90">Binnenkort meer informatie</p>
+                  <p className="text-white/90">{t("agenda.retreat.soon")}</p>
                 </div>
                 <Button asChild size="lg" className="bg-white text-terracotta-700 hover:bg-terracotta-50 px-10 py-7 text-base rounded-full shadow-lg">
                   <a href="mailto:mindful-mind@outlook.com">
-                    Meld je aan voor updates <ArrowRight className="ml-2 h-5 w-5" />
+                    {t("agenda.retreat.cta")} <ArrowRight className="ml-2 h-5 w-5" />
                   </a>
                 </Button>
               </div>
@@ -465,11 +450,11 @@ const Agenda = () => {
         <div className="container mx-auto px-4">
           <div className="mx-auto max-w-2xl text-center">
             <h2 className="mb-4 text-2xl font-light text-foreground md:text-3xl leading-tight">
-              Vragen over welke training bij jou past?
+              {t("agenda.cta.title")}
             </h2>
-            <p className="mb-8 text-muted-foreground">Neem gerust contact op — we denken graag met je mee.</p>
+            <p className="mb-8 text-muted-foreground">{t("agenda.cta.sub")}</p>
             <Button asChild variant="outline" className="border-terracotta-300 text-terracotta-600 hover:bg-terracotta-50 rounded-full px-8">
-              <a href="mailto:mindful-mind@outlook.com">Neem contact op <ArrowRight className="ml-2 h-4 w-4" /></a>
+              <a href="mailto:mindful-mind@outlook.com">{t("agenda.cta.button")} <ArrowRight className="ml-2 h-4 w-4" /></a>
             </Button>
           </div>
         </div>
