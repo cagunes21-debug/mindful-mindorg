@@ -91,8 +91,8 @@ const MscGroepstraining = () => {
       <WhatsAppButton />
       <CookieConsent />
       <SEO 
-        title="Mindful Mind | 8-weekse Training in Mindful Zelfcompassie"
-        description="Leer jezelf te steunen, vooral in moeilijke tijden. 8-weekse training in Mindful Zelfcompassie ontwikkeld door dr. Kristin Neff en dr. Christopher Germer."
+        title={t("groupTraining.seoTitle")}
+        description={t("groupTraining.seoDesc")}
       />
       <OrganizationSchema />
       <CourseSchema 
@@ -112,7 +112,7 @@ const MscGroepstraining = () => {
         <div className="absolute inset-0">
           <img 
             src={heroMindfulness} 
-            alt="Mindfulness meditatie in de natuur" 
+            alt={t("groupTraining.hero.heroAlt")} 
             width={1920}
             height={1080}
             className="w-full h-full object-cover"
@@ -135,7 +135,7 @@ const MscGroepstraining = () => {
               className="inline-flex items-center gap-2 mb-8 rounded-full bg-warm-100 border border-warm-200 px-6 py-3.5 text-sm font-medium text-terracotta-700 shadow-sm"
             >
               <Sparkles className="h-4 w-4" />
-              Jouw welzijn begint bij hoe je met jezelf omgaat
+              {t("groupTraining.hero.badge")}
             </motion.div>
 
             {/* Main heading */}
@@ -145,8 +145,8 @@ const MscGroepstraining = () => {
               transition={{ duration: 0.7, delay: 0.1 }}
               className="mb-8 text-5xl font-light tracking-tight text-foreground md:text-6xl lg:text-7xl leading-[1.15]"
             >
-              Jouw welzijn begint
-              <span className="block font-serif italic text-terracotta-600 mt-3 text-[1.1em]">bij hoe je met jezelf omgaat</span>
+              {t("groupTraining.hero.titleA")}
+              <span className="block font-serif italic text-terracotta-600 mt-3 text-[1.1em]">{t("groupTraining.hero.titleB")}</span>
             </motion.h1>
             
             {/* Subtitle - training name */}
@@ -156,7 +156,7 @@ const MscGroepstraining = () => {
               transition={{ duration: 0.6, delay: 0.15 }}
               className="text-terracotta-600 text-xl md:text-2xl font-medium mb-4"
             >
-              8-weekse training in Mindful Zelfcompassie
+              {t("groupTraining.hero.subtitle")}
             </motion.p>
             
             {/* Description */}
@@ -166,7 +166,7 @@ const MscGroepstraining = () => {
               transition={{ duration: 0.6, delay: 0.22 }}
               className="text-muted-foreground text-lg md:text-xl max-w-xl mx-auto leading-relaxed mb-12"
             >
-              Leer jezelf te steunen, vooral in moeilijke tijden.
+              {t("groupTraining.hero.desc")}
             </motion.p>
 
             {/* CTA Buttons */}
@@ -178,7 +178,7 @@ const MscGroepstraining = () => {
             >
               <Button asChild size="lg" className="bg-terracotta-600 hover:bg-terracotta-700 text-white rounded-full px-10 py-7 text-lg shadow-lg hover:shadow-xl transition-all">
                 <a href="#programma">
-                  Neem deel aan het programma
+                  {t("groupTraining.hero.cta")}
                   <ArrowRight className="ml-3 h-5 w-5" />
                 </a>
               </Button>
@@ -191,9 +191,9 @@ const MscGroepstraining = () => {
               transition={{ duration: 0.6, delay: 0.4 }}
               className="mt-6 text-sm text-muted-foreground"
             >
-              Liever individuele begeleiding?{" "}
+              {t("groupTraining.hero.individualNote")}{" "}
               <Link to="/ons-aanbod" className="text-terracotta-600 hover:text-terracotta-700 underline underline-offset-2">
-                Bekijk onze individuele trajecten
+                {t("groupTraining.hero.individualLink")}
               </Link>
             </motion.p>
 
@@ -206,15 +206,15 @@ const MscGroepstraining = () => {
             >
               <div className="flex items-center gap-2 text-muted-foreground text-sm bg-white/80 backdrop-blur-sm rounded-full px-4 py-2 shadow-sm">
                 <Clock className="h-4 w-4 text-terracotta-500" />
-                8 weken
+                {t("groupTraining.hero.badge1")}
               </div>
               <div className="flex items-center gap-2 text-muted-foreground text-sm bg-white/80 backdrop-blur-sm rounded-full px-4 py-2 shadow-sm">
                 <Globe className="h-4 w-4 text-terracotta-500" />
-                100% online
+                {t("groupTraining.hero.badge2")}
               </div>
               <div className="flex items-center gap-2 text-muted-foreground text-sm bg-white/80 backdrop-blur-sm rounded-full px-4 py-2 shadow-sm">
                 <Users className="h-4 w-4 text-terracotta-500" />
-                Kleine groepen
+                {t("groupTraining.hero.badge3")}
               </div>
             </motion.div>
           </div>
