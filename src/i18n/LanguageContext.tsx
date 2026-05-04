@@ -1,6 +1,7 @@
 import { createContext, useContext, useState, useCallback, ReactNode } from "react";
 import { nl } from "./nl";
 import { en } from "./en";
+import { groupTrainingPageDict } from "./groupTrainingPageDict";
 
 export type Language = "nl" | "en";
 
@@ -8,6 +9,7 @@ interface LanguageContextType {
   language: Language;
   setLanguage: (lang: Language) => void;
   t: (key: string) => string;
+  tx: (dutch: string) => string;
 }
 
 const translations: Record<Language, Record<string, any>> = { nl, en };
@@ -44,8 +46,16 @@ export const LanguageProvider = ({ children }: { children: ReactNode }) => {
     [language]
   );
 
+  const tx = useCallback(
+    (dutch: string): string => {
+      if (language === "nl") return dutch;
+      return groupTrainingPageDict[dutch] ?? dutch;
+    },
+    [language]
+  );
+
   return (
-    <LanguageContext.Provider value={{ language, setLanguage, t }}>
+    <LanguageContext.Provider value={{ language, setLanguage, t, tx }}>
       {children}
     </LanguageContext.Provider>
   );
@@ -64,6 +74,7 @@ const fallbackContext: LanguageContextType = {
   language: "nl",
   setLanguage: () => {},
   t: fallbackT,
+  tx: (dutch: string) => dutch,
 };
 
 export const useLanguage = () => {
