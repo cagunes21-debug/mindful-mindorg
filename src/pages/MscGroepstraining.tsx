@@ -31,6 +31,7 @@ import CookieConsent from "@/components/CookieConsent";
 import { ContactForm } from "@/components/ContactForm";
 import UrgencyBadge from "@/components/UrgencyBadge";
 import { RegistrationForm } from "@/components/RegistrationForm";
+import { useLanguage } from "@/i18n/LanguageContext";
 import heroMindfulness from "@/assets/hero-mindfulness.jpg";
 import meditationPractice from "@/assets/meditation-practice.jpg";
 import natureCalm from "@/assets/nature-calm.jpg";
@@ -64,6 +65,7 @@ const workshopDates = [
 
 
 const MscGroepstraining = () => {
+  const { t } = useLanguage();
   const [isRegistrationOpen, setIsRegistrationOpen] = useState(false);
   const [selectedTraining, setSelectedTraining] = useState<typeof trainingDates[0] | null>(null);
   const [isWorkshopRegistrationOpen, setIsWorkshopRegistrationOpen] = useState(false);
