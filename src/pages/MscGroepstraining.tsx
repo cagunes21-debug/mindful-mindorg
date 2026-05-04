@@ -1155,10 +1155,10 @@ const MscGroepstraining = () => {
                       </div>
                     </div>
                     <CardContent className="p-6">
-                      <p className="text-sm text-muted-foreground mb-2">{training.day}</p>
-                      <p className="font-semibold text-foreground text-lg mb-1">{tx("Start:")} {training.startDate}</p>
+                      <p className="text-sm text-muted-foreground mb-2">{tx(training.day)}</p>
+                      <p className="font-semibold text-foreground text-lg mb-1">{tx("Start:")} {tx(training.startDate)}</p>
                       <p className="text-foreground mb-3">{tx("Tijd:")} {training.time}</p>
-                      <p className="text-sm text-muted-foreground mb-4">{training.dates}</p>
+                      <p className="text-sm text-muted-foreground mb-4">{tx(training.dates)}</p>
                       <UrgencyBadge className="mb-4" />
                       <div className="pt-3 border-t border-warm-200 flex items-center justify-between">
                         <div>
@@ -1166,7 +1166,7 @@ const MscGroepstraining = () => {
                             <>
                               <p className="text-xs text-muted-foreground line-through">{training.price}</p>
                               <p className="text-2xl font-light text-terracotta-600">{training.earlyBirdPrice}</p>
-                              <p className="text-xs text-sage-700 font-medium">Early bird t/m {training.earlyBirdDeadline}</p>
+                              <p className="text-xs text-sage-700 font-medium">{tx("Early bird t/m")} {tx(training.earlyBirdDeadline)}</p>
                             </>
                           ) : (
                             <p className="text-2xl font-light text-terracotta-600">{training.price}</p>
