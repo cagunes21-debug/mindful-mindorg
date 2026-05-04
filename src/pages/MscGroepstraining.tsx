@@ -354,7 +354,7 @@ const MscGroepstraining = () => {
                   {/* Background image */}
                   <img 
                     src={meditationPractice} 
-                    alt="Meditatie praktijk" 
+                    alt={tx("Meditatie praktijk")} 
                     width={1280}
                     height={720}
                     className="absolute inset-0 w-full h-full object-cover"
@@ -569,7 +569,7 @@ const MscGroepstraining = () => {
         <div className="absolute inset-0 opacity-20">
           <img 
             src={natureCalm} 
-            alt="Rustige natuur" 
+            alt={tx("Rustige natuur")} 
             width={1920}
             height={1080}
             className="w-full h-full object-cover"
