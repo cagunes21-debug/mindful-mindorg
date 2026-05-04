@@ -1,6 +1,7 @@
 import { createContext, useContext, useState, useCallback, ReactNode } from "react";
 import { nl } from "./nl";
 import { en } from "./en";
+import { groupTrainingPageDict } from "./groupTrainingPageDict";
 
 export type Language = "nl" | "en";
 
@@ -8,6 +9,7 @@ interface LanguageContextType {
   language: Language;
   setLanguage: (lang: Language) => void;
   t: (key: string) => string;
+  tx: (dutch: string) => string;
 }
 
 const translations: Record<Language, Record<string, any>> = { nl, en };
