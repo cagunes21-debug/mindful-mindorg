@@ -286,7 +286,7 @@ const MscGroepstraining = () => {
                     {tx("Wetenschap")}
                   </span>
                   <p className="text-muted-foreground text-lg lg:text-xl leading-relaxed">
-                    Onderzoek laat zien dat zelfkritiek juist <mark className="bg-sage-200 text-sage-800 px-1 rounded">{tx("stress vergroot")}</mark>, <mark className="bg-sage-200 text-sage-800 px-1 rounded">{tx("veerkracht ondermijnt")}</mark> en op termijn <mark className="bg-sage-200 text-sage-800 px-1 rounded">{tx("uitput")}</mark>.
+                    {tx("Onderzoek laat zien dat zelfkritiek juist")} <mark className="bg-sage-200 text-sage-800 px-1 rounded">{tx("stress vergroot")}</mark>, <mark className="bg-sage-200 text-sage-800 px-1 rounded">{tx("veerkracht ondermijnt")}</mark> {tx("en op termijn")} <mark className="bg-sage-200 text-sage-800 px-1 rounded">{tx("uitput")}</mark>.
                   </p>
                 </div>
                 
