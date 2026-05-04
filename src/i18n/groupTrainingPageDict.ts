@@ -241,4 +241,10 @@ export const groupTrainingPageDict: Record<string, string> = {
   "Mindful Zelfcompassie leert je met": "Mindful Self-Compassion teaches you to respond to yourself with",
   "op jezelf te reageren —": "—",
   "Workshop Zelfcompassie": "Self-Compassion Workshop",
+
+  // Training-date card values (Dutch program shown in EN UI)
+  "Maandag (avond)": "Monday (evening)",
+  "28 september 2026": "28 September 2026",
+  "Vervolgdata: 5, 12, 26 okt, 2, 9, 16, 23, 30 nov": "Follow-up: 5, 12, 26 Oct, 2, 9, 16, 23, 30 Nov",
+  "1 augustus 2026": "1 August 2026",
 };
