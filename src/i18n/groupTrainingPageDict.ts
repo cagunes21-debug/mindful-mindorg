@@ -232,4 +232,14 @@ export const groupTrainingPageDict: Record<string, string> = {
     "Every session feels like coming home: a safe and trusted space to explore, practice and connect. Our experienced trainers work with a",
   ", zodat jij je op je gemak voelt terwijl je nieuwe inzichten en vaardigheden ontwikkelt.":
     ", so you feel at ease while developing new insights and skills.",
+
+  // Image alts and inline fragments added later
+  "Meditatie praktijk": "Meditation practice",
+  "Rustige natuur": "Calm nature",
+  "Onderzoek laat zien dat zelfkritiek juist": "Research shows that self-criticism actually",
+  "en op termijn": "and over time",
+  "Mindful Zelfcompassie leert je met": "Mindful Self-Compassion teaches you to respond to yourself with",
+  "op jezelf te reageren —": "—",
+  "Wil je eerst kennismaken of een losse sessie boeken rond een specifiek thema? Boek een sessie — of het nu je eerste is of een vervolg.":
+    "Want to get acquainted first or book a single session around a specific theme? Book a session — whether it's your first or a follow-up.",
 };
