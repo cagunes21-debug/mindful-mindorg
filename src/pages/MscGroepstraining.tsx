@@ -1157,8 +1157,8 @@ const MscGroepstraining = () => {
                     </div>
                     <CardContent className="p-6">
                       <p className="text-sm text-muted-foreground mb-2">{training.day}</p>
-                      <p className="font-semibold text-foreground text-lg mb-1">Start: {training.startDate}</p>
-                      <p className="text-foreground mb-3">Tijd: {training.time}</p>
+                      <p className="font-semibold text-foreground text-lg mb-1">{tx("Start:")} {training.startDate}</p>
+                      <p className="text-foreground mb-3">{tx("Tijd:")} {training.time}</p>
                       <p className="text-sm text-muted-foreground mb-4">{training.dates}</p>
                       <UrgencyBadge className="mb-4" />
                       <div className="pt-3 border-t border-warm-200 flex items-center justify-between">
