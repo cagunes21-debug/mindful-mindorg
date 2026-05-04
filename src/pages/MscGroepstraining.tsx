@@ -1271,7 +1271,7 @@ const MscGroepstraining = () => {
             </div>
             <div className="border-t border-warm-200 pt-8 text-center">
               <p className="text-sm text-muted-foreground">
-                © {new Date().getFullYear()} Mindful Mind. Alle rechten voorbehouden.
+                © {new Date().getFullYear()} Mindful Mind. {tx("Alle rechten voorbehouden.")}
               </p>
             </div>
           </div>
