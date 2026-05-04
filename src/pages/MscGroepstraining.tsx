@@ -295,7 +295,7 @@ const MscGroepstraining = () => {
                     {tx("Het Alternatief")}
                   </span>
                   <p className="text-xl lg:text-2xl font-light text-foreground leading-relaxed">
-                    Mindful Zelfcompassie leert je met <span className="underline decoration-terracotta-300 decoration-2 underline-offset-4">{tx("vriendelijkheid en begrip")}</span> op jezelf te reageren — <span className="font-medium text-terracotta-600">{tx("juist wanneer het moeilijk is.")}</span>
+                    {tx("Mindful Zelfcompassie leert je met")} <span className="underline decoration-terracotta-300 decoration-2 underline-offset-4">{tx("vriendelijkheid en begrip")}</span> {tx("op jezelf te reageren —")} <span className="font-medium text-terracotta-600">{tx("juist wanneer het moeilijk is.")}</span>
                   </p>
                 </div>
               </div>
