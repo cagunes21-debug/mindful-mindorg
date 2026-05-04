@@ -1287,7 +1287,7 @@ const MscGroepstraining = () => {
           </DialogHeader>
           {selectedTraining && (
             <RegistrationForm
-              trainingName={`8-weekse MSC Training (${selectedTraining.language})`}
+              trainingName={`${tx("8-weekse MSC Training")} (${selectedTraining.language})`}
               trainingDate={selectedTraining.startDate}
               trainingTime={selectedTraining.time}
               price={selectedTraining.price}
@@ -1309,7 +1309,7 @@ const MscGroepstraining = () => {
           </DialogHeader>
           {selectedWorkshop && (
             <RegistrationForm
-              trainingName={`Workshop Zelfcompassie (${selectedWorkshop.lang})`}
+              trainingName={`${tx("Workshop Zelfcompassie")} (${selectedWorkshop.lang})`}
               trainingDate={selectedWorkshop.date}
               trainingTime={selectedWorkshop.time}
               price={selectedWorkshop.price}
