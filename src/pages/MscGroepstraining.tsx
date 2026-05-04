@@ -65,7 +65,7 @@ const workshopDates = [
 
 
 const MscGroepstraining = () => {
-  const { t } = useLanguage();
+  const { t, tx } = useLanguage();
   const [isRegistrationOpen, setIsRegistrationOpen] = useState(false);
   const [selectedTraining, setSelectedTraining] = useState<typeof trainingDates[0] | null>(null);
   const [isWorkshopRegistrationOpen, setIsWorkshopRegistrationOpen] = useState(false);
