@@ -46,8 +46,16 @@ export const LanguageProvider = ({ children }: { children: ReactNode }) => {
     [language]
   );
 
+  const tx = useCallback(
+    (dutch: string): string => {
+      if (language === "nl") return dutch;
+      return groupTrainingPageDict[dutch] ?? dutch;
+    },
+    [language]
+  );
+
   return (
-    <LanguageContext.Provider value={{ language, setLanguage, t }}>
+    <LanguageContext.Provider value={{ language, setLanguage, t, tx }}>
       {children}
     </LanguageContext.Provider>
   );
@@ -66,6 +74,7 @@ const fallbackContext: LanguageContextType = {
   language: "nl",
   setLanguage: () => {},
   t: fallbackT,
+  tx: (dutch: string) => dutch,
 };
 
 export const useLanguage = () => {
