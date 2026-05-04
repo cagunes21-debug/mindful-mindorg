@@ -893,8 +893,7 @@ const MscGroepstraining = () => {
                 </div>
                 
                 <p className="text-muted-foreground mb-6 max-w-2xl">
-                  Wil je eerst kennismaken of een losse sessie boeken rond een specifiek thema? 
-                  Boek een sessie — of het nu je eerste is of een vervolg.
+                  {tx("Wil je eerst kennismaken of een losse sessie boeken rond een specifiek thema? Boek een sessie — of het nu je eerste is of een vervolg.")}
                 </p>
 
                 <Card className="border-warm-200 bg-white hover:shadow-lg transition-all duration-300 rounded-2xl max-w-md">
