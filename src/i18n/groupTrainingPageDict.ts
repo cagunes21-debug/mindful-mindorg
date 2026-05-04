@@ -240,4 +240,5 @@ export const groupTrainingPageDict: Record<string, string> = {
   "en op termijn": "and over time",
   "Mindful Zelfcompassie leert je met": "Mindful Self-Compassion teaches you to respond to yourself with",
   "op jezelf te reageren —": "—",
+  "Workshop Zelfcompassie": "Self-Compassion Workshop",
 };
