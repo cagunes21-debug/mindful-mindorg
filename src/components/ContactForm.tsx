@@ -110,19 +110,19 @@ export function ContactForm() {
         <div className="h-16 w-16 rounded-full bg-sage-100 flex items-center justify-center mx-auto mb-6">
           <Check className="h-8 w-8 text-sage-700" />
         </div>
-        <h3 className="text-2xl font-light text-foreground mb-4">Bedankt voor je bericht!</h3>
+        <h3 className="text-2xl font-light text-foreground mb-4">{tx("Bedankt voor je bericht!")}</h3>
         <p className="text-muted-foreground mb-2">
-          Bedankt voor je bericht. We nemen zo snel mogelijk contact met je op.
+          {tx("Bedankt voor je bericht. We nemen zo snel mogelijk contact met je op.")}
         </p>
         <p className="text-muted-foreground mb-6 text-sm">
-          Meestal reageren we binnen 1–2 werkdagen.
+          {tx("Meestal reageren we binnen 1–2 werkdagen.")}
         </p>
         <Button
           variant="outline"
           onClick={() => setIsSuccess(false)}
           className="border-terracotta-300 text-terracotta-600 hover:bg-terracotta-50 rounded-full"
         >
-          Nog een bericht sturen
+          {tx("Nog een bericht sturen")}
         </Button>
       </div>
     );
