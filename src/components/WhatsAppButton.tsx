@@ -1,8 +1,10 @@
 import { MessageCircle } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useState, useEffect } from "react";
+import { useLanguage } from "@/i18n/LanguageContext";
 
 const WhatsAppButton = () => {
+  const { tx } = useLanguage();
   const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
