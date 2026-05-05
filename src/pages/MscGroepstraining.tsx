@@ -339,7 +339,7 @@ const MscGroepstraining = () => {
                   {tx("Kennismaken")}
                 </span>
                 <h2 className="mb-6 text-3xl font-light text-foreground md:text-4xl lg:text-5xl leading-tight">
-                  Ontdek wat zelfcompassie <span className="font-serif italic text-terracotta-600">{tx("voor jou kan betekenen")}</span>
+                  {tx("Ontdek wat zelfcompassie")} <span className="font-serif italic text-terracotta-600">{tx("voor jou kan betekenen")}</span>
                 </h2>
                 <p className="text-muted-foreground text-lg max-w-2xl mx-auto leading-relaxed">
                   {tx("In deze korte video leg ik uit wat Mindful Zelfcompassie is en hoe de training je kan helpen om milder met jezelf om te gaan.")}
