@@ -8,6 +8,7 @@ import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 import { Loader2, Send, Check } from "lucide-react";
 import { z } from "zod";
+import { useLanguage } from "@/i18n/LanguageContext";
 
 const contactSchema = z.object({
   name: z.string().trim().min(1, "Naam is verplicht").max(100, "Naam mag maximaal 100 tekens zijn"),
