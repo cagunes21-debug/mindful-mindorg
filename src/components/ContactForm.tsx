@@ -229,12 +229,12 @@ export function ContactForm() {
         {isSubmitting ? (
           <>
             <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-            Verzenden...
+            {tx("Verzenden...")}
           </>
         ) : (
           <>
             <Send className="mr-2 h-4 w-4" />
-            Verstuur bericht
+            {tx("Verstuur bericht")}
           </>
         )}
       </Button>
