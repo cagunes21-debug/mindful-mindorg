@@ -1,6 +1,69 @@
 // English translations keyed by exact Dutch source string used on /msc-groepstraining page.
 // Used by the `tx()` helper from LanguageContext for inline translation without restructuring the JSX.
 export const groupTrainingPageDict: Record<string, string> = {
+  // Page-level extras
+  "Waarom": "Why",
+  "Mindful Zelfcompassie?": "Mindful Self-Compassion?",
+  "Ontdek wat zelfcompassie": "Discover what self-compassion",
+
+  // Cookie banner
+  "Deze website gebruikt cookies": "This website uses cookies",
+  "Wij gebruiken cookies om je ervaring te verbeteren en om te begrijpen hoe onze website wordt gebruikt. Je kunt je voorkeuren op elk moment aanpassen.":
+    "We use cookies to improve your experience and to understand how our website is used. You can adjust your preferences at any time.",
+  "Alleen noodzakelijk": "Essential only",
+  "Alles accepteren": "Accept all",
+  "Sluiten": "Close",
+
+  // WhatsApp button
+  "Stel een vraag": "Ask a question",
+
+  // Urgency badge
+  "Nog": "Only",
+  "plek": "spot",
+  "plekken": "spots",
+  "beschikbaar": "left",
+
+  // Training language label
+  "Nederlands": "Dutch",
+  "Engels": "English",
+
+  // Contact form
+  "Naam *": "Name *",
+  "Je naam": "Your name",
+  "E-mail *": "Email *",
+  "Telefoonnummer (optioneel)": "Phone (optional)",
+  "Interesse in": "Interested in",
+  "Waar heb je interesse in?": "What are you interested in?",
+  "Bericht *": "Message *",
+  "Hoe kunnen we je helpen?": "How can we help you?",
+  "Verstuur bericht": "Send message",
+  "Verzenden...": "Sending...",
+  "Bedankt voor je bericht!": "Thanks for your message!",
+  "Bedankt voor je bericht. We nemen zo snel mogelijk contact met je op.":
+    "Thanks for your message. We'll be in touch as soon as possible.",
+  "Meestal reageren we binnen 1–2 werkdagen.": "We usually reply within 1–2 business days.",
+  "Nog een bericht sturen": "Send another message",
+  "Algemene vraag": "General question",
+  "Individuele begeleiding": "Individual guidance",
+  "8-weekse MSC training": "8-week MSC training",
+  "Retreat": "Retreat",
+
+  // Registration form
+  "Je volledige naam": "Your full name",
+  "Telefoon (optioneel)": "Phone (optional)",
+  "Opmerkingen of vragen (optioneel)": "Remarks or questions (optional)",
+  "Heb je nog vragen of wil je iets delen?": "Any questions or anything to share?",
+  "Ik ga akkoord met de": "I agree to the",
+  "Algemene Voorwaarden": "Terms & Conditions",
+  "en": "and",
+  "Privacyverklaring": "Privacy Statement",
+  "Je moet akkoord gaan met de voorwaarden": "You must agree to the terms",
+  "Aanmelding verzenden...": "Submitting registration...",
+  "Verstuur aanmelding": "Submit registration",
+  "Na aanmelding nemen we zo snel mogelijk contact met je op.":
+    "After registering we'll be in touch as soon as possible.",
+  "Aanmelding ontvangen!": "Registration received!",
+  "We nemen zo snel mogelijk contact met je op.": "We'll be in touch as soon as possible.",
   // Social proof
   "deelnemers begeleid": "participants guided",
   "gemiddelde beoordeling": "average rating",
