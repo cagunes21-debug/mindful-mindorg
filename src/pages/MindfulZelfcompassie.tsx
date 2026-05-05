@@ -70,9 +70,9 @@ const MindfulZelfcompassie = () => {
               transition={{ duration: 0.6, delay: 0.05 }}
               className="mb-6 text-4xl font-light tracking-tight text-foreground md:text-5xl lg:text-6xl leading-[1.15]"
             >
-              Acht weken.
+              {tx("Acht weken.")}
               <span className="block font-serif italic text-terracotta-600 mt-2 text-[1.05em]">
-                Een nieuwe manier van naar jezelf kijken.
+                {tx("Een nieuwe manier van naar jezelf kijken.")}
               </span>
             </motion.h1>
 
@@ -82,7 +82,7 @@ const MindfulZelfcompassie = () => {
               transition={{ duration: 0.5, delay: 0.12 }}
               className="text-muted-foreground text-lg md:text-xl max-w-xl mx-auto leading-relaxed mb-10"
             >
-              Leer jezelf ondersteunen — juist wanneer het moeilijk is — samen met anderen in een veilige, kleine groep.
+              {tx("Leer jezelf ondersteunen — juist wanneer het moeilijk is — samen met anderen in een veilige, kleine groep.")}
             </motion.p>
 
             <motion.div
@@ -93,7 +93,7 @@ const MindfulZelfcompassie = () => {
             >
               <Button asChild size="lg" className="bg-terracotta-600 hover:bg-terracotta-700 text-white rounded-full px-10 py-7 text-lg shadow-lg">
                 <Link to="/agenda">
-                  Bekijk de startdata
+                  {tx("Bekijk de startdata")}
                   <ArrowRight className="ml-3 h-5 w-5" />
                 </Link>
               </Button>
