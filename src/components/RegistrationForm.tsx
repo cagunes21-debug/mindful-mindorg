@@ -154,9 +154,9 @@ export function RegistrationForm({
         <div className="h-16 w-16 rounded-full bg-sage-100 flex items-center justify-center mx-auto mb-6">
           <Check className="h-8 w-8 text-sage-700" />
         </div>
-        <h3 className="text-xl font-light text-foreground mb-2">Aanmelding ontvangen!</h3>
+        <h3 className="text-xl font-light text-foreground mb-2">{tx("Aanmelding ontvangen!")}</h3>
         <p className="text-muted-foreground mb-4">
-          We nemen zo snel mogelijk contact met je op.
+          {tx("We nemen zo snel mogelijk contact met je op.")}
         </p>
       </div>
     );
