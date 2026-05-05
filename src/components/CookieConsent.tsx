@@ -2,8 +2,10 @@ import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { X, Cookie } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
+import { useLanguage } from "@/i18n/LanguageContext";
 
 const CookieConsent = () => {
+  const { tx } = useLanguage();
   const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
