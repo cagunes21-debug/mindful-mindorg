@@ -212,10 +212,10 @@ const MindfulZelfcompassie = () => {
             <ScrollReveal>
               <div className="text-center mb-12">
                 <span className="inline-block rounded-full bg-terracotta-100 px-5 py-2 text-xs font-semibold tracking-wider text-terracotta-700 mb-6 uppercase">
-                  Het Programma
+                  {tx("Het Programma")}
                 </span>
                 <h2 className="mb-6 text-3xl font-light text-foreground md:text-4xl leading-tight">
-                  Wat je leert in <span className="font-serif italic text-terracotta-600">8 weken</span>
+                  {tx("Wat je leert in")} <span className="font-serif italic text-terracotta-600">{tx("8 weken")}</span>
                 </h2>
               </div>
             </ScrollReveal>
@@ -233,8 +233,8 @@ const MindfulZelfcompassie = () => {
                   <div className="flex items-start gap-3 bg-white rounded-xl px-5 py-4 border border-warm-100 shadow-sm">
                     <span className="text-xl flex-shrink-0 mt-0.5">{theme.emoji}</span>
                     <div>
-                      <span className="text-foreground text-sm font-medium block">{theme.title}</span>
-                      <span className="text-muted-foreground text-xs">{theme.desc}</span>
+                      <span className="text-foreground text-sm font-medium block">{tx(theme.title)}</span>
+                      <span className="text-muted-foreground text-xs">{tx(theme.desc)}</span>
                     </div>
                   </div>
                 </StaggerItem>
@@ -245,31 +245,10 @@ const MindfulZelfcompassie = () => {
               <div className="text-center">
               <Button asChild className="bg-terracotta-600 hover:bg-terracotta-700 text-white rounded-full px-8 py-6 text-base shadow-md">
                   <Link to="/agenda">
-                    Bekijk de startdata
+                    {tx("Bekijk de startdata")}
                     <ArrowRight className="ml-2 h-5 w-5" />
                   </Link>
                 </Button>
-              </div>
-            </ScrollReveal>
-          </div>
-        </div>
-      </section>
-
-      {/* Voor wie */}
-      <section className="py-20 lg:py-28 bg-white">
-        <div className="container mx-auto px-4">
-          <div className="mx-auto max-w-3xl">
-            <ScrollReveal>
-              <div className="text-center mb-10">
-                <span className="inline-block rounded-full bg-sage-100 px-5 py-2 text-xs font-semibold tracking-wider text-sage-700 mb-6 uppercase">
-                  Voor Jou
-                </span>
-                <h2 className="mb-4 text-3xl font-light text-foreground md:text-4xl leading-tight">
-                  Herken je jezelf <span className="font-serif italic text-terracotta-600">hierin?</span>
-                </h2>
-                <p className="text-muted-foreground text-lg max-w-xl mx-auto">
-                  Deze groepstraining is voor jou als je merkt dat je:
-                </p>
               </div>
             </ScrollReveal>
 
