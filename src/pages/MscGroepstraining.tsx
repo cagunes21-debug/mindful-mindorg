@@ -266,7 +266,7 @@ const MscGroepstraining = () => {
                   {tx("Ontdek")}
                 </span>
                 <h2 className="mb-10 text-3xl font-light text-foreground md:text-4xl lg:text-5xl leading-tight">
-                  Waarom <span className="font-serif italic text-terracotta-600">Mindful Zelfcompassie?</span>
+                  {tx("Waarom")} <span className="font-serif italic text-terracotta-600">{tx("Mindful Zelfcompassie?")}</span>
                 </h2>
               </div>
               
