@@ -132,10 +132,10 @@ export function ContactForm() {
     <form onSubmit={handleSubmit} className="space-y-6">
       <div className="grid gap-6 md:grid-cols-2">
         <div className="space-y-2">
-          <Label htmlFor="name">Naam *</Label>
+          <Label htmlFor="name">{tx("Naam *")}</Label>
           <Input
             id="name"
-            placeholder="Je naam"
+            placeholder={tx("Je naam")}
             value={formData.name}
             onChange={(e) => handleChange("name", e.target.value)}
             className={`rounded-xl ${errors.name ? "border-destructive" : ""}`}
@@ -145,7 +145,7 @@ export function ContactForm() {
         </div>
 
         <div className="space-y-2">
-          <Label htmlFor="email">E-mail *</Label>
+          <Label htmlFor="email">{tx("E-mail *")}</Label>
           <Input
             id="email"
             type="email"
@@ -161,7 +161,7 @@ export function ContactForm() {
 
       <div className="grid gap-6 md:grid-cols-2">
         <div className="space-y-2">
-          <Label htmlFor="phone">Telefoonnummer (optioneel)</Label>
+          <Label htmlFor="phone">{tx("Telefoonnummer (optioneel)")}</Label>
           <Input
             id="phone"
             type="tel"
@@ -174,19 +174,19 @@ export function ContactForm() {
         </div>
 
         <div className="space-y-2">
-          <Label htmlFor="training">Interesse in</Label>
+          <Label htmlFor="training">{tx("Interesse in")}</Label>
           <Select
             value={formData.training}
             onValueChange={(value) => handleChange("training", value)}
             disabled={isSubmitting}
           >
             <SelectTrigger className="rounded-xl">
-              <SelectValue placeholder="Waar heb je interesse in?" />
+              <SelectValue placeholder={tx("Waar heb je interesse in?")} />
             </SelectTrigger>
             <SelectContent>
               {trainings.map((training) => (
                 <SelectItem key={training.value} value={training.value}>
-                  {training.label}
+                  {tx(training.label)}
                 </SelectItem>
               ))}
             </SelectContent>
@@ -195,10 +195,10 @@ export function ContactForm() {
       </div>
 
       <div className="space-y-2">
-        <Label htmlFor="message">Bericht *</Label>
+        <Label htmlFor="message">{tx("Bericht *")}</Label>
         <Textarea
           id="message"
-          placeholder="Hoe kunnen we je helpen?"
+          placeholder={tx("Hoe kunnen we je helpen?")}
           value={formData.message}
           onChange={(e) => handleChange("message", e.target.value)}
           className={`min-h-[150px] rounded-xl ${errors.message ? "border-destructive" : ""}`}
