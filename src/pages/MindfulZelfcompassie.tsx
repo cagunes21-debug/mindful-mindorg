@@ -107,10 +107,10 @@ const MindfulZelfcompassie = () => {
               className="flex flex-wrap justify-center gap-3 mt-10"
             >
               {[
-                { icon: Clock, label: "8 weken · 2 uur/sessie" },
-                { icon: Globe, label: "100% live online" },
-                { icon: Users, label: "Max 12 deelnemers" },
-                { icon: Sparkles, label: "Vanaf €495 early bird" },
+                { icon: Clock, label: tx("8 weken · 2 uur/sessie") },
+                { icon: Globe, label: tx("100% live online") },
+                { icon: Users, label: tx("Max 12 deelnemers") },
+                { icon: Sparkles, label: tx("Vanaf €495 early bird") },
               ].map((item, i) => (
                 <div key={i} className="flex items-center gap-2 text-muted-foreground text-sm bg-white/80 backdrop-blur-sm rounded-full px-4 py-2 shadow-sm">
                   <item.icon className="h-4 w-4 text-terracotta-500" />
