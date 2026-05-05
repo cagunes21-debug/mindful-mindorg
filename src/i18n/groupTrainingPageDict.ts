@@ -513,6 +513,9 @@ export const groupTrainingPageDict: Record<string, string> = {
     "Schedule a free intro call and discover what individual guidance can mean for you.",
   "Plan kennismaking": "Schedule intro",
   "Acht weken.": "Eight weeks.",
-  "Een nieuwe manier van naar jezelf kijken.": "A new way of looking at yourself.",
-  "Leer jezelf ondersteunen — juist wanneer het moeilijk is — samen met anderen in een veilige, kleine groep.": "Learn to support yourself — especially when things get hard — together with others in a safe, small group.",
+  "Een nieuwe manier van naar jezelf kijken.": "A new way of relating to yourself.",
+  "Leer jezelf ondersteunen — juist wanneer het moeilijk is — samen met anderen in een veilige, kleine groep.": "Learn to support yourself — especially in difficult moments — together with others in a safe, small group.",
+  "8-weekse training in Mindful Self-Compassion": "8-week training in Mindful Self-Compassion",
+  "Liever één-op-één sessies? Bekijk het individuele programma": "Prefer one-on-one sessions? View the individual program",
+  "View upcoming start dates dummy": "View upcoming start dates",
 };
