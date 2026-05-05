@@ -317,10 +317,10 @@ export const groupTrainingPageDict: Record<string, string> = {
   "1 augustus 2026": "1 August 2026",
 
   // ============ /msc-training (MindfulZelfcompassie) ============
-  "8-weekse Groepstraining": "8-Week Group Training",
-  "Bekijk de startdata": "View start dates",
-  "8 weken · 2 uur/sessie": "8 weeks · 2h/session",
-  "Max 12 deelnemers": "Max 12 participants",
+  "8-weekse Groepstraining": "8-week group program",
+  "Bekijk de startdata": "View upcoming start dates",
+  "8 weken · 2 uur/sessie": "8 weeks · 2 hours per session",
+  "Max 12 deelnemers": "Max. 12 participants",
   "Vanaf €495 early bird": "From €495 early bird",
   "De Methode": "The Method",
   "Een wetenschappelijk onderbouwd 8-weeks programma, ontwikkeld door dr. Kristin Neff en dr. Christopher Germer. Je leert jezelf te behandelen zoals je een goede vriend(in) zou behandelen.":
@@ -513,6 +513,9 @@ export const groupTrainingPageDict: Record<string, string> = {
     "Schedule a free intro call and discover what individual guidance can mean for you.",
   "Plan kennismaking": "Schedule intro",
   "Acht weken.": "Eight weeks.",
-  "Een nieuwe manier van naar jezelf kijken.": "A new way of looking at yourself.",
-  "Leer jezelf ondersteunen — juist wanneer het moeilijk is — samen met anderen in een veilige, kleine groep.": "Learn to support yourself — especially when things get hard — together with others in a safe, small group.",
+  "Een nieuwe manier van naar jezelf kijken.": "A new way of relating to yourself.",
+  "Leer jezelf ondersteunen — juist wanneer het moeilijk is — samen met anderen in een veilige, kleine groep.": "Learn to support yourself — especially in difficult moments — together with others in a safe, small group.",
+  "8-weekse training in Mindful Self-Compassion": "8-week training in Mindful Self-Compassion",
+  "Liever één-op-één sessies? Bekijk het individuele programma": "Prefer one-on-one sessions? View the individual program",
+  
 };
