@@ -29,6 +29,7 @@ const trainings = [
 ];
 
 export function ContactForm() {
+  const { tx } = useLanguage();
   const { toast } = useToast();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
