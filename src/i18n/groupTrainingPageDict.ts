@@ -1,6 +1,11 @@
 // English translations keyed by exact Dutch source string used on /msc-groepstraining page.
 // Used by the `tx()` helper from LanguageContext for inline translation without restructuring the JSX.
 export const groupTrainingPageDict: Record<string, string> = {
+  // Sticky CTA
+  "Start met de 8-weekse Zelfcompassie Training": "Start the 8-week Self-Compassion Training",
+  "Nog enkele plekken beschikbaar · Kleine groepen · Gecertificeerde trainers":
+    "A few spots still available · Small groups · Certified trainers",
+  "Bekijk data": "View dates",
   // Page-level extras
   "Waarom": "Why",
   "Mindful Zelfcompassie?": "Mindful Self-Compassion?",
