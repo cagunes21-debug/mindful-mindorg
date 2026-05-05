@@ -300,10 +300,10 @@ const MindfulZelfcompassie = () => {
             <ScrollReveal>
               <div className="text-center mb-12">
                 <span className="inline-block rounded-full bg-sage-100 px-5 py-2 text-xs font-semibold tracking-wider text-sage-700 mb-6 uppercase">
-                  Praktisch
+                  {tx("Praktisch")}
                 </span>
                 <h2 className="mb-6 text-3xl font-light text-foreground md:text-4xl leading-tight">
-                  Wat je kunt <span className="font-serif italic text-terracotta-600">verwachten</span>
+                  {tx("Wat je kunt")} <span className="font-serif italic text-terracotta-600">{tx("verwachten")}</span>
                 </h2>
               </div>
             </ScrollReveal>
@@ -317,10 +317,31 @@ const MindfulZelfcompassie = () => {
                   { label: "Taal", value: "NL / EN" },
                 ].map((item, i) => (
                   <div key={i} className="text-center p-5 rounded-xl bg-white border border-sage-200 shadow-sm">
-                    <p className="text-xs text-muted-foreground mb-1 uppercase tracking-wider">{item.label}</p>
-                    <p className="font-medium text-foreground">{item.value}</p>
+                    <p className="text-xs text-muted-foreground mb-1 uppercase tracking-wider">{tx(item.label)}</p>
+                    <p className="font-medium text-foreground">{tx(item.value)}</p>
                   </div>
                 ))}
+              </div>
+            </ScrollReveal>
+
+            <ScrollReveal delay={0.15}>
+              <div className="bg-white rounded-2xl p-6 lg:p-8 shadow-sm border border-sage-200">
+                <h3 className="text-lg font-medium text-foreground mb-4">{tx("Elke sessie bevat:")}</h3>
+                <div className="grid sm:grid-cols-2 gap-3">
+                  {[
+                    "Korte theorie over het thema",
+                    "Geleide meditaties en oefeningen",
+                    "Uitwisseling in de groep",
+                    "Thuisopdrachten en audiomeditaties",
+                    "Halve-dagretraite (dag 5)",
+                    "Trauma-sensitieve begeleiding",
+                  ].map((item, i) => (
+                    <div key={i} className="flex items-center gap-3 text-sm text-foreground">
+                      <Check className="h-4 w-4 text-sage-500 flex-shrink-0" />
+                      {tx(item)}
+                    </div>
+                  ))}
+                </div>
               </div>
             </ScrollReveal>
 
