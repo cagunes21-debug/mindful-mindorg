@@ -179,10 +179,10 @@ export function RegistrationForm({
       </div>
 
       <div className="space-y-2">
-        <Label htmlFor="reg-name">Naam *</Label>
+        <Label htmlFor="reg-name">{tx("Naam *")}</Label>
         <Input
           id="reg-name"
-          placeholder="Je volledige naam"
+          placeholder={tx("Je volledige naam")}
           value={formData.name}
           onChange={(e) => handleChange("name", e.target.value)}
           className={`rounded-xl ${errors.name ? "border-destructive" : ""}`}
@@ -192,7 +192,7 @@ export function RegistrationForm({
       </div>
 
       <div className="space-y-2">
-        <Label htmlFor="reg-email">E-mail *</Label>
+        <Label htmlFor="reg-email">{tx("E-mail *")}</Label>
         <Input
           id="reg-email"
           type="email"
@@ -206,7 +206,7 @@ export function RegistrationForm({
       </div>
 
       <div className="space-y-2">
-        <Label htmlFor="reg-phone">Telefoon (optioneel)</Label>
+        <Label htmlFor="reg-phone">{tx("Telefoon (optioneel)")}</Label>
         <Input
           id="reg-phone"
           type="tel"
@@ -219,10 +219,10 @@ export function RegistrationForm({
       </div>
 
       <div className="space-y-2">
-        <Label htmlFor="reg-remarks">Opmerkingen of vragen (optioneel)</Label>
+        <Label htmlFor="reg-remarks">{tx("Opmerkingen of vragen (optioneel)")}</Label>
         <Textarea
           id="reg-remarks"
-          placeholder="Heb je nog vragen of wil je iets delen?"
+          placeholder={tx("Heb je nog vragen of wil je iets delen?")}
           value={formData.remarks}
           onChange={(e) => handleChange("remarks", e.target.value)}
           className="min-h-[80px] rounded-xl"
