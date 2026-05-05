@@ -252,6 +252,28 @@ const MindfulZelfcompassie = () => {
               </div>
             </ScrollReveal>
 
+          </div>
+        </div>
+      </section>
+
+      {/* Voor wie */}
+      <section className="py-20 lg:py-28 bg-white">
+        <div className="container mx-auto px-4">
+          <div className="mx-auto max-w-3xl">
+            <ScrollReveal>
+              <div className="text-center mb-10">
+                <span className="inline-block rounded-full bg-sage-100 px-5 py-2 text-xs font-semibold tracking-wider text-sage-700 mb-6 uppercase">
+                  {tx("Voor Jou")}
+                </span>
+                <h2 className="mb-4 text-3xl font-light text-foreground md:text-4xl leading-tight">
+                  {tx("Herken je jezelf")} <span className="font-serif italic text-terracotta-600">{tx("hierin?")}</span>
+                </h2>
+                <p className="text-muted-foreground text-lg max-w-xl mx-auto">
+                  {tx("Deze groepstraining is voor jou als je merkt dat je:")}
+                </p>
+              </div>
+            </ScrollReveal>
+
             <ScrollReveal delay={0.1}>
               <div className="grid grid-cols-2 gap-3 max-w-lg mx-auto mb-10">
                 {[
@@ -262,7 +284,7 @@ const MindfulZelfcompassie = () => {
                 ].map((item, index) => (
                   <div key={index} className="flex flex-col items-center gap-2 p-4 rounded-xl bg-warm-50 border border-warm-200 text-center">
                     <span className="text-xl">{item.icon}</span>
-                    <span className="text-foreground text-sm font-medium">{item.text}</span>
+                    <span className="text-foreground text-sm font-medium">{tx(item.text)}</span>
                   </div>
                 ))}
               </div>
