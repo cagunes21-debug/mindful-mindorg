@@ -568,5 +568,4 @@ export const groupTrainingPageDict: Record<string, string> = {
   "Plan een gratis telefonische kennismaking en ontdek wat individuele begeleiding voor jou kan betekenen.":
     "Schedule a free intro call and discover what individual guidance can mean for you.",
   "Plan kennismaking": "Schedule intro",
-  "Stel een vraag": "Ask a question",
 };
