@@ -512,4 +512,13 @@ export const groupTrainingPageDict: Record<string, string> = {
   "Plan een gratis telefonische kennismaking en ontdek wat individuele begeleiding voor jou kan betekenen.":
     "Schedule a free intro call and discover what individual guidance can mean for you.",
   "Plan kennismaking": "Schedule intro",
+  "8-weekse Groepstraining": "8-Week Group Training",
+  "Acht weken.": "Eight weeks.",
+  "Een nieuwe manier van naar jezelf kijken.": "A new way of looking at yourself.",
+  "Leer jezelf ondersteunen — juist wanneer het moeilijk is — samen met anderen in een veilige, kleine groep.": "Learn to support yourself — especially when things get hard — together with others in a safe, small group.",
+  "Bekijk de startdata": "View start dates",
+  "8 weken · 2 uur/sessie": "8 weeks · 2 hours/session",
+  "100% live online": "100% live online",
+  "Max 12 deelnemers": "Max 12 participants",
+  "Vanaf €495 early bird": "From €495 early bird",
 };
