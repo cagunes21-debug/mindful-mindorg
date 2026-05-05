@@ -34,6 +34,7 @@ export function RegistrationForm({
   price,
   onSuccess 
 }: RegistrationFormProps) {
+  const { tx } = useLanguage();
   const { toast } = useToast();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [honeypot, setHoneypot] = useState("");
