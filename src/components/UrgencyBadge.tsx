@@ -8,6 +8,7 @@ interface UrgencyBadgeProps {
 }
 
 const UrgencyBadge = ({ totalSpots = 12, className = "" }: UrgencyBadgeProps) => {
+  const { tx } = useLanguage();
   const [remaining, setRemaining] = useState<number | null>(null);
 
   useEffect(() => {
