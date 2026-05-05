@@ -61,7 +61,7 @@ const MindfulZelfcompassie = () => {
               className="inline-flex items-center gap-2 mb-6 rounded-full bg-sage-100 border border-sage-200 px-5 py-2 text-xs font-semibold text-sage-700 tracking-wider uppercase"
             >
               <Users className="h-3.5 w-3.5" />
-              8-weekse Groepstraining
+              {tx("8-weekse Groepstraining")}
             </motion.span>
 
             <motion.h1
@@ -70,9 +70,9 @@ const MindfulZelfcompassie = () => {
               transition={{ duration: 0.6, delay: 0.05 }}
               className="mb-6 text-4xl font-light tracking-tight text-foreground md:text-5xl lg:text-6xl leading-[1.15]"
             >
-              Acht weken.
+              {tx("Acht weken.")}
               <span className="block font-serif italic text-terracotta-600 mt-2 text-[1.05em]">
-                Een nieuwe manier van naar jezelf kijken.
+                {tx("Een nieuwe manier van naar jezelf kijken.")}
               </span>
             </motion.h1>
 
@@ -82,7 +82,7 @@ const MindfulZelfcompassie = () => {
               transition={{ duration: 0.5, delay: 0.12 }}
               className="text-muted-foreground text-lg md:text-xl max-w-xl mx-auto leading-relaxed mb-10"
             >
-              Leer jezelf ondersteunen — juist wanneer het moeilijk is — samen met anderen in een veilige, kleine groep.
+              {tx("Leer jezelf ondersteunen — juist wanneer het moeilijk is — samen met anderen in een veilige, kleine groep.")}
             </motion.p>
 
             <motion.div
@@ -93,7 +93,7 @@ const MindfulZelfcompassie = () => {
             >
               <Button asChild size="lg" className="bg-terracotta-600 hover:bg-terracotta-700 text-white rounded-full px-10 py-7 text-lg shadow-lg">
                 <Link to="/agenda">
-                  Bekijk de startdata
+                  {tx("Bekijk de startdata")}
                   <ArrowRight className="ml-3 h-5 w-5" />
                 </Link>
               </Button>
@@ -107,10 +107,10 @@ const MindfulZelfcompassie = () => {
               className="flex flex-wrap justify-center gap-3 mt-10"
             >
               {[
-                { icon: Clock, label: "8 weken · 2 uur/sessie" },
-                { icon: Globe, label: "100% live online" },
-                { icon: Users, label: "Max 12 deelnemers" },
-                { icon: Sparkles, label: "Vanaf €495 early bird" },
+                { icon: Clock, label: tx("8 weken · 2 uur/sessie") },
+                { icon: Globe, label: tx("100% live online") },
+                { icon: Users, label: tx("Max 12 deelnemers") },
+                { icon: Sparkles, label: tx("Vanaf €495 early bird") },
               ].map((item, i) => (
                 <div key={i} className="flex items-center gap-2 text-muted-foreground text-sm bg-white/80 backdrop-blur-sm rounded-full px-4 py-2 shadow-sm">
                   <item.icon className="h-4 w-4 text-terracotta-500" />
