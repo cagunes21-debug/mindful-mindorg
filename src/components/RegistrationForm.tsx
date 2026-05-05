@@ -279,18 +279,18 @@ export function RegistrationForm({
         {isSubmitting ? (
           <>
             <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-            Aanmelding verzenden...
+            {tx("Aanmelding verzenden...")}
           </>
         ) : (
           <>
             <Send className="mr-2 h-4 w-4" />
-            Verstuur aanmelding
+            {tx("Verstuur aanmelding")}
           </>
         )}
       </Button>
       
       <p className="text-xs text-center text-muted-foreground">
-        Na aanmelding nemen we zo snel mogelijk contact met je op.
+        {tx("Na aanmelding nemen we zo snel mogelijk contact met je op.")}
       </p>
     </form>
   );
