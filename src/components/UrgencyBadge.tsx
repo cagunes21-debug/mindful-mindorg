@@ -35,7 +35,7 @@ const UrgencyBadge = ({ totalSpots = 12, className = "" }: UrgencyBadgeProps) =>
     >
       <Users className="h-4 w-4" />
       <span>
-        Nog <strong>{remaining}</strong> {remaining === 1 ? "plek" : "plekken"} beschikbaar
+        {tx("Nog")} <strong>{remaining}</strong> {remaining === 1 ? tx("plek") : tx("plekken")} {tx("beschikbaar")}
       </span>
     </div>
   );
