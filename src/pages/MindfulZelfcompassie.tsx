@@ -345,26 +345,6 @@ const MindfulZelfcompassie = () => {
               </div>
             </ScrollReveal>
 
-            <ScrollReveal delay={0.15}>
-              <div className="bg-white rounded-2xl p-6 lg:p-8 shadow-sm border border-sage-200">
-                <h3 className="text-lg font-medium text-foreground mb-4">Elke sessie bevat:</h3>
-                <div className="grid sm:grid-cols-2 gap-3">
-                  {[
-                    "Korte theorie over het thema",
-                    "Geleide meditaties en oefeningen",
-                    "Uitwisseling in de groep",
-                    "Thuisopdrachten en audiomeditaties",
-                    "Halve-dagretraite (dag 5)",
-                    "Trauma-sensitieve begeleiding",
-                  ].map((item, i) => (
-                    <div key={i} className="flex items-center gap-3 text-sm text-foreground">
-                      <Check className="h-4 w-4 text-sage-500 flex-shrink-0" />
-                      {item}
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </ScrollReveal>
           </div>
         </div>
       </section>
