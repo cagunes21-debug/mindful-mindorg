@@ -315,4 +315,201 @@ export const groupTrainingPageDict: Record<string, string> = {
   "28 september 2026": "28 September 2026",
   "Vervolgdata: 5, 12, 26 okt, 2, 9, 16, 23, 30 nov": "Follow-up: 5, 12, 26 Oct, 2, 9, 16, 23, 30 Nov",
   "1 augustus 2026": "1 August 2026",
+
+  // ============ /msc-training (MindfulZelfcompassie) ============
+  "8-weekse Groepstraining": "8-Week Group Training",
+  "Bekijk de startdata": "View start dates",
+  "8 weken · 2 uur/sessie": "8 weeks · 2h/session",
+  "Max 12 deelnemers": "Max 12 participants",
+  "Vanaf €495 early bird": "From €495 early bird",
+  "De Methode": "The Method",
+  "Een wetenschappelijk onderbouwd 8-weeks programma, ontwikkeld door dr. Kristin Neff en dr. Christopher Germer. Je leert jezelf te behandelen zoals je een goede vriend(in) zou behandelen.":
+    "A scientifically-grounded 8-week program developed by Dr. Kristin Neff and Dr. Christopher Germer. You learn to treat yourself the way you would treat a good friend.",
+  "Met vriendelijkheid op jezelf reageren.": "Responding to yourself with kindness.",
+  "\"Met dezelfde vriendelijkheid naar jezelf kijken als naar een goede vriend — dat is de kern.\"":
+    "\"Looking at yourself with the same kindness as you would a good friend — that is the essence.\"",
+  "— Dr. Kristin Neff": "— Dr. Kristin Neff",
+  "Meer over de MSC-methodiek": "More about the MSC method",
+  "Wat je leert in": "What you learn in",
+  "8 weken": "8 weeks",
+  "Ontdek de drie kerncomponenten": "Discover the three core components",
+  "Leer je innerlijke criticus kalmeren": "Learn to calm your inner critic",
+  "Veerkracht opbouwen van binnenuit": "Building resilience from within",
+  "Keuzes maken die bij je passen": "Making choices that fit you",
+  "Het goede in jezelf erkennen": "Acknowledging the good in yourself",
+  "De kracht van de groep": "The power of the group",
+  "Leren van elkaars ervaringen": "Learning from each other's experiences",
+  "Herken je jezelf": "Do you recognize yourself",
+  "hierin?": "in this?",
+  "Deze groepstraining is voor jou als je merkt dat je:":
+    "This group training is for you if you notice that you:",
+  "Streng bent voor jezelf": "Are hard on yourself",
+  "Perfectionistisch bent": "Are a perfectionist",
+  "Moeite hebt met emoties": "Struggle with emotions",
+  "Meer balans zoekt": "Are seeking more balance",
+  "Praktisch": "Practical",
+  "Elke sessie bevat:": "Each session includes:",
+  "Korte theorie over het thema": "Short theory on the theme",
+  "Geleide meditaties en oefeningen": "Guided meditations and exercises",
+  "Uitwisseling in de groep": "Group sharing",
+  "Thuisopdrachten en audiomeditaties": "Home assignments and audio meditations",
+  "Halve-dagretraite (dag 5)": "Half-day retreat (day 5)",
+  "Trauma-sensitieve begeleiding": "Trauma-sensitive guidance",
+  "Wat MSC deelnemers": "What MSC participants",
+  "ervaren": "experience",
+  "Deze training heeft mijn relatie met mezelf volledig veranderd. Ik ben nu veel milder voor mezelf.":
+    "This training completely changed my relationship with myself. I'm now much gentler with myself.",
+  "Eindelijk begrijp ik dat zelfcompassie geen zwakte is, maar juist kracht geeft.":
+    "I finally understand that self-compassion is not a weakness — it gives strength.",
+  "De veilige sfeer in de groep maakte het mogelijk om echt open te zijn. Transformerend.":
+    "The safe atmosphere in the group made it possible to be truly open. Transformative.",
+  "De combinatie van theorie en oefening maakt het zo krachtig. Ik gebruik de meditaties nog dagelijks.":
+    "The combination of theory and practice makes it so powerful. I still use the meditations daily.",
+  "Klaar om te": "Ready to",
+  "beginnen?": "begin?",
+  "Bekijk de beschikbare startdata en meld je aan voor de groepstraining.":
+    "View the available start dates and register for the group training.",
+  "Bekijk startdata & aanmelden": "View dates & register",
+  "Liever individuele begeleiding?": "Prefer individual guidance?",
+  "Bekijk het individueel traject →": "View the individual track →",
+  "Nee, geen ervaring nodig. We beginnen bij de basis en bouwen stap voor stap op.":
+    "No, no experience needed. We start from the basics and build up step by step.",
+  "Alle sessies worden opgenomen en zijn beschikbaar in de online leeromgeving. Je kunt de inhoud op je eigen tempo terugkijken.":
+    "All sessions are recorded and available in the online learning environment. You can review the content at your own pace.",
+  "Is de training geschikt bij trauma?": "Is the training suitable for trauma?",
+  "De training heeft een trauma-sensitieve benadering. Bij ernstige trauma's adviseren we eerst individuele begeleiding. Neem gerust contact op om te bespreken wat het beste past.":
+    "The training has a trauma-sensitive approach. For severe trauma we recommend individual guidance first. Feel free to contact us to discuss what fits best.",
+  "Naast de wekelijkse sessie van 2 uur, is het aan te raden om dagelijks 20-30 minuten te oefenen. De oefeningen zijn ook in kortere versies beschikbaar.":
+    "Besides the weekly 2-hour session, we recommend practicing 20-30 minutes daily. Shorter versions of the exercises are also available.",
+  "Ja, betalen in termijnen is mogelijk. Neem contact op om de mogelijkheden te bespreken.":
+    "Yes, paying in installments is possible. Contact us to discuss the options.",
+  "Neem gerust contact op. We reageren meestal binnen 24 uur.":
+    "Feel free to get in touch. We usually respond within 24 hours.",
+  "WhatsApp": "WhatsApp",
+
+  // ============ /coaching (Individual guidance) ============
+  "Mindful Mind · Individuele begeleiding": "Mindful Mind · Individual guidance",
+  "Persoonlijke begeleiding,": "Personal guidance,",
+  "afgestemd op jou": "tailored to you",
+  "Werk in je eigen tempo aan zelfcompassie, met aandacht voor wat er bij jou speelt.":
+    "Work on self-compassion at your own pace, with attention for what's alive in you.",
+  "Geen groep, geen vast ritme — maar ruimte om echt stil te staan bij jouw proces.":
+    "No group, no fixed rhythm — just space to truly pause with your own process.",
+  "Bekijk pakketten": "View packages",
+  "Plan een kennismaking": "Schedule an intro call",
+  "Herkenning": "Recognition",
+  "Individuele begeleiding is voor jou": "Individual guidance is for you",
+  "als je:": "if you:",
+  "Vaak streng voor jezelf": "Are often hard on yourself",
+  "Je legt de lat hoog en bent kritisch als je daar niet aan voldoet — ook als anderen dat niet van je vragen.":
+    "You set the bar high and criticize yourself when you don't meet it — even when others don't ask it of you.",
+  "Moeite met grenzen stellen": "Difficulty setting boundaries",
+  "Je vindt het lastig om 'nee' te zeggen en gaat regelmatig over je eigen grenzen heen.":
+    "You find it hard to say 'no' and regularly cross your own boundaries.",
+  "Sterke innerlijke criticus": "Strong inner critic",
+  "Die stem die je bij fouten of tegenslagen direct beoordeelt — ook al weet je dat het niet helpt.":
+    "That voice that judges you instantly when you make a mistake — even though you know it doesn't help.",
+  "Anderen vaak voorop": "Others often first",
+  "Je zorgt goed voor anderen, maar je eigen behoeften raken naar de achtergrond.":
+    "You take good care of others, but your own needs fade into the background.",
+  "Verlangen naar rust": "Longing for calm",
+  "Je voelt dat je doorgaat terwijl het eigenlijk te veel is — en zoekt naar een manier om dit te doorbreken.":
+    "You feel yourself pushing on when it's actually too much — and look for a way to break the pattern.",
+  "Flexibiliteit nodig": "Need flexibility",
+  "Een groep past niet, of je wilt liever individueel en op jouw tempo werken.":
+    "A group doesn't fit, or you prefer to work one-on-one at your own pace.",
+  "Resultaat": "Result",
+  "Wat het je": "What it brings",
+  "oplevert": "you",
+  "Meer rust van binnen. Een zachtere stem. Meer vertrouwen in jezelf.":
+    "More inner calm. A softer voice. More trust in yourself.",
+  "Minder streng voor jezelf": "Less hard on yourself",
+  "Beter omgaan met emoties": "Handle emotions better",
+  "Meer rust en stabiliteit": "More calm and stability",
+  "Meer zelfvertrouwen": "More self-confidence",
+  "Onze benadering": "Our approach",
+  "Geworteld in wetenschap,": "Rooted in science,",
+  "Mindful Self-Compassion (MSC)": "Mindful Self-Compassion (MSC)",
+  "De begeleiding is gebaseerd op": "Guidance is based on",
+  "en aangevuld met inzichten uit ACT, somatische therapie en trauma-sensitieve mindfulness.":
+    "and complemented with insights from ACT, somatic therapy and trauma-sensitive mindfulness.",
+  "We werken vanuit het uitgangspunt dat je niet hoeft te veranderen om goed genoeg te zijn — maar dat je kunt leren om anders met jezelf om te gaan.":
+    "We work from the premise that you don't have to change to be good enough — but that you can learn to relate to yourself differently.",
+  "Wat je kunt verwachten": "What to expect",
+  "Een veilige, warme en trauma-sensitieve aanpak": "A safe, warm and trauma-sensitive approach",
+  "Praktische oefeningen voor het dagelijks leven": "Practical exercises for daily life",
+  "Begeleiding afgestemd op jouw tempo": "Guidance tuned to your pace",
+  "Meditaties en handvatten voor thuis": "Meditations and tools for home",
+  "Ondersteuning tussen sessies": "Support between sessions",
+  "Online via Zoom": "Online via Zoom",
+  "— vanuit je eigen omgeving": "— from your own space",
+  "De methodiek": "The method",
+  "Wat is Mindful": "What is Mindful",
+  "Self-Compassion?": "Self-Compassion?",
+  "We bieden geduld aan anderen, maar keren diezelfde warmte zelden naar binnen. MSC verandert die relatie — niet door te repareren, maar door tederheid toe te laten.":
+    "We offer patience to others, but rarely turn that same warmth inward. MSC changes that relationship — not by fixing, but by allowing tenderness.",
+  "Aanwezig zijn bij wat er is, zonder weg te duwen of te vereenzelvigen":
+    "Being present with what is, without pushing away or identifying",
+  "Gedeelde menselijkheid": "Common humanity",
+  "Erkennen dat lijden deel is van de menselijke ervaring": "Recognizing that suffering is part of being human",
+  "Zelfvriendelijkheid": "Self-kindness",
+  "Reageren met warmte en begrip, in plaats van oordeel": "Responding with warmth and understanding instead of judgment",
+  "Aanbod": "Offer",
+  "Kies je": "Choose your",
+  "pakket": "package",
+  "Flexibele opties die passen bij jouw behoeften": "Flexible options that fit your needs",
+  "Populair": "Popular",
+  "Losse sessie": "Single session",
+  "Eenmalige sessie voor een specifieke vraag of opfrismoment": "One-off session for a specific question or refresh",
+  "Direct inplanbaar": "Bookable right away",
+  "Geen verplichtingen": "No commitments",
+  "6-sessies pakket": "6-session package",
+  "Uitgebreid traject voor duurzame verandering en integratie": "In-depth track for lasting change and integration",
+  "6 sessies · incl. intake & reflectie": "6 sessions · incl. intake & reflection",
+  "Intensieve begeleiding": "Intensive guidance",
+  "Persoonlijk oefenprogramma": "Personal practice program",
+  "Ondersteuning per mail": "Email support",
+  "Start je traject": "Start your journey",
+  "Proces": "Process",
+  "Hoe het": "How it",
+  "werkt": "works",
+  "Neem contact op via e-mail of het contactformulier": "Get in touch via email or the contact form",
+  "Kennismaking": "Intro call",
+  "Gratis telefonisch gesprek om je vraag te bespreken": "Free phone call to discuss your question",
+  "Planning": "Scheduling",
+  "We plannen je eerste sessie op een moment dat past": "We schedule your first session at a time that fits",
+  "Start": "Start",
+  "Je begint aan je persoonlijke reis naar meer zelfcompassie": "You begin your personal journey toward more self-compassion",
+  "Wat cliënten": "What clients",
+  "De individuele sessies waren precies wat ik nodig had. In mijn eigen tempo, met volledige aandacht voor mijn persoonlijke thema's.":
+    "The individual sessions were exactly what I needed. At my own pace, with full attention for my personal themes.",
+  "Na jaren worstelen met perfectionisme heb ik eindelijk tools gevonden die echt werken. De persoonlijke aanpak maakte het verschil.":
+    "After years of struggling with perfectionism I finally found tools that really work. The personal approach made the difference.",
+  "Ik voelde me vanaf het begin veilig en gezien. De sessies online werkten verrassend goed en gaven me de flexibiliteit die ik nodig had.":
+    "I felt safe and seen from the start. The online sessions worked surprisingly well and gave me the flexibility I needed.",
+  "Deelnemer": "Client",
+  "Vragen": "Questions",
+  "Voor wie is individuele begeleiding geschikt?": "Who is individual guidance for?",
+  "Individuele begeleiding is geschikt voor iedereen die behoefte heeft aan persoonlijke begeleiding en aandacht. Het is ideaal als je liever niet in een groep werkt, specifieke thema's wilt aanpakken, of je eigen tempo wilt bepalen.":
+    "Individual guidance is suitable for anyone who needs personal attention and support. It's ideal if you'd rather not work in a group, want to address specific themes, or want to set your own pace.",
+  "Wat is het verschil met de groepstraining?": "What's the difference with the group training?",
+  "In de groepstraining volg je een vast curriculum samen met anderen. Bij individuele begeleiding stemmen we de inhoud volledig af op jouw persoonlijke situatie, thema's en tempo. Je krijgt onverdeelde aandacht en maatwerk.":
+    "In the group training you follow a fixed curriculum together with others. In individual guidance we tailor the content fully to your personal situation, themes and pace. You get undivided attention and a custom approach.",
+  "Hoe werken de online sessies?": "How do the online sessions work?",
+  "We werken via Zoom in een beveiligde omgeving. Je ontvangt een link per e-mail en logt in vanaf een rustige plek. De ervaring is persoonlijk en intiem, vergelijkbaar met een sessie op locatie.":
+    "We work via Zoom in a secure environment. You'll receive a link by email and log in from a quiet spot. The experience is personal and intimate, comparable to an in-person session.",
+  "Waar vinden de sessies plaats?": "Where do the sessions take place?",
+  "Alle sessies vinden online plaats via Zoom. Je ontvangt een link per e-mail en logt in vanaf een rustige plek. De ervaring is persoonlijk en intiem.":
+    "All sessions take place online via Zoom. You'll receive a link by email and log in from a quiet spot. The experience is personal and intimate.",
+  "Hoe lang duurt een traject?": "How long does a trajectory last?",
+  "Dat hangt af van jouw behoeften en doelen. Sommige mensen hebben genoeg aan 3 sessies, anderen kiezen voor een langer traject. We evalueren samen wat je nodig hebt.":
+    "It depends on your needs and goals. Some people only need 3 sessions, others choose a longer track. We evaluate together what you need.",
+  "Wordt begeleiding vergoed door de zorgverzekering?": "Is guidance reimbursed by health insurance?",
+  "Onze begeleiding valt niet onder de reguliere zorgverzekering. Sommige aanvullende verzekeringen vergoeden wel persoonlijke ontwikkeling. Check je polis of neem contact op met je verzekeraar.":
+    "Our guidance is not covered by standard health insurance. Some supplementary insurances do reimburse personal development. Check your policy or contact your insurer.",
+  "Klaar voor persoonlijke begeleiding?": "Ready for personal guidance?",
+  "Neem de eerste stap": "Take the first step",
+  "Plan een gratis telefonische kennismaking en ontdek wat individuele begeleiding voor jou kan betekenen.":
+    "Schedule a free intro call and discover what individual guidance can mean for you.",
+  "Plan kennismaking": "Schedule intro",
 };

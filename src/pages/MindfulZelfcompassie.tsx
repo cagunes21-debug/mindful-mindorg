@@ -23,8 +23,10 @@ import ScrollProgressBar from "@/components/ScrollProgressBar";
 import WhatsAppButton from "@/components/WhatsAppButton";
 import CookieConsent from "@/components/CookieConsent";
 import { ContactForm } from "@/components/ContactForm";
+import { useLanguage } from "@/i18n/LanguageContext";
 
 const MindfulZelfcompassie = () => {
+  const { tx } = useLanguage();
 
   return (
     <div className="min-h-screen bg-background">
@@ -129,21 +131,21 @@ const MindfulZelfcompassie = () => {
                 <Users className="h-4 w-4 text-terracotta-500" />
                 <span className="text-2xl lg:text-3xl font-light text-foreground">200+</span>
               </div>
-              <p className="text-xs text-muted-foreground">deelnemers begeleid</p>
+              <p className="text-xs text-muted-foreground">{tx("deelnemers begeleid")}</p>
             </div>
             <div>
               <div className="flex items-center justify-center gap-2 mb-1">
                 <Star className="h-4 w-4 text-terracotta-500 fill-terracotta-500" />
                 <span className="text-2xl lg:text-3xl font-light text-foreground">4.9/5</span>
               </div>
-              <p className="text-xs text-muted-foreground">gemiddelde beoordeling</p>
+              <p className="text-xs text-muted-foreground">{tx("gemiddelde beoordeling")}</p>
             </div>
             <div>
               <div className="flex items-center justify-center gap-2 mb-1">
                 <Award className="h-4 w-4 text-terracotta-500" />
                 <span className="text-2xl lg:text-3xl font-light text-foreground">MSC</span>
               </div>
-              <p className="text-xs text-muted-foreground">gecertificeerde trainer</p>
+              <p className="text-xs text-muted-foreground">{tx("gecertificeerde trainer")}</p>
             </div>
           </div>
         </div>
@@ -156,13 +158,13 @@ const MindfulZelfcompassie = () => {
             <ScrollReveal>
               <div className="text-center mb-10">
                 <span className="inline-block rounded-full bg-sage-100 px-5 py-2 text-xs font-semibold tracking-wider text-sage-700 mb-6 uppercase">
-                  De Methode
+                  {tx("De Methode")}
                 </span>
                 <h2 className="mb-4 text-3xl font-light text-foreground md:text-4xl leading-tight">
                   Mindful Self-Compassion <span className="font-serif italic text-terracotta-600">(MSC)</span>
                 </h2>
                 <p className="text-muted-foreground text-lg max-w-xl mx-auto leading-relaxed">
-                  Een wetenschappelijk onderbouwd 8-weeks programma, ontwikkeld door dr. Kristin Neff en dr. Christopher Germer. Je leert jezelf te behandelen zoals je een goede vriend(in) zou behandelen.
+                  {tx("Een wetenschappelijk onderbouwd 8-weeks programma, ontwikkeld door dr. Kristin Neff en dr. Christopher Germer. Je leert jezelf te behandelen zoals je een goede vriend(in) zou behandelen.")}
                 </p>
               </div>
             </ScrollReveal>
@@ -170,14 +172,14 @@ const MindfulZelfcompassie = () => {
             <ScrollReveal delay={0.1}>
               <div className="grid sm:grid-cols-2 gap-4 max-w-lg mx-auto mb-10">
                 <div className="text-center p-6 rounded-2xl bg-warm-50 border border-warm-200">
-                  <span className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">Pijler 1</span>
-                  <h3 className="text-lg font-medium text-foreground mt-2 mb-1">Mindfulness</h3>
-                  <p className="text-sm text-muted-foreground">Bewust aanwezig zijn bij wat je ervaart.</p>
+                  <span className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">{tx("Pijler 1")}</span>
+                  <h3 className="text-lg font-medium text-foreground mt-2 mb-1">{tx("Mindfulness")}</h3>
+                  <p className="text-sm text-muted-foreground">{tx("Bewust aanwezig zijn bij wat je ervaart.")}</p>
                 </div>
                 <div className="text-center p-6 rounded-2xl bg-warm-50 border border-warm-200">
-                  <span className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">Pijler 2</span>
-                  <h3 className="text-lg font-medium text-foreground mt-2 mb-1">Zelfcompassie</h3>
-                  <p className="text-sm text-muted-foreground">Met vriendelijkheid op jezelf reageren.</p>
+                  <span className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">{tx("Pijler 2")}</span>
+                  <h3 className="text-lg font-medium text-foreground mt-2 mb-1">{tx("Zelfcompassie")}</h3>
+                  <p className="text-sm text-muted-foreground">{tx("Met vriendelijkheid op jezelf reageren.")}</p>
                 </div>
               </div>
             </ScrollReveal>
@@ -185,16 +187,16 @@ const MindfulZelfcompassie = () => {
             <ScrollReveal delay={0.15}>
               <blockquote className="text-center max-w-lg mx-auto mb-8">
                 <p className="text-muted-foreground italic leading-relaxed">
-                  "Met dezelfde vriendelijkheid naar jezelf kijken als naar een goede vriend — dat is de kern."
+                  {tx("\"Met dezelfde vriendelijkheid naar jezelf kijken als naar een goede vriend — dat is de kern.\"")}
                 </p>
-                <footer className="mt-3 text-sm text-foreground font-medium">— Dr. Kristin Neff</footer>
+                <footer className="mt-3 text-sm text-foreground font-medium">{tx("— Dr. Kristin Neff")}</footer>
               </blockquote>
               <div className="text-center">
                 <Link
                   to="/mindful-self-compassion"
                   className="inline-flex items-center gap-2 text-sage-600 text-sm hover:text-sage-700 transition-colors"
                 >
-                  Meer over de MSC-methodiek
+                  {tx("Meer over de MSC-methodiek")}
                   <ArrowRight className="h-3.5 w-3.5" />
                 </Link>
               </div>
@@ -210,10 +212,10 @@ const MindfulZelfcompassie = () => {
             <ScrollReveal>
               <div className="text-center mb-12">
                 <span className="inline-block rounded-full bg-terracotta-100 px-5 py-2 text-xs font-semibold tracking-wider text-terracotta-700 mb-6 uppercase">
-                  Het Programma
+                  {tx("Het Programma")}
                 </span>
                 <h2 className="mb-6 text-3xl font-light text-foreground md:text-4xl leading-tight">
-                  Wat je leert in <span className="font-serif italic text-terracotta-600">8 weken</span>
+                  {tx("Wat je leert in")} <span className="font-serif italic text-terracotta-600">{tx("8 weken")}</span>
                 </h2>
               </div>
             </ScrollReveal>
@@ -231,8 +233,8 @@ const MindfulZelfcompassie = () => {
                   <div className="flex items-start gap-3 bg-white rounded-xl px-5 py-4 border border-warm-100 shadow-sm">
                     <span className="text-xl flex-shrink-0 mt-0.5">{theme.emoji}</span>
                     <div>
-                      <span className="text-foreground text-sm font-medium block">{theme.title}</span>
-                      <span className="text-muted-foreground text-xs">{theme.desc}</span>
+                      <span className="text-foreground text-sm font-medium block">{tx(theme.title)}</span>
+                      <span className="text-muted-foreground text-xs">{tx(theme.desc)}</span>
                     </div>
                   </div>
                 </StaggerItem>
@@ -243,12 +245,13 @@ const MindfulZelfcompassie = () => {
               <div className="text-center">
               <Button asChild className="bg-terracotta-600 hover:bg-terracotta-700 text-white rounded-full px-8 py-6 text-base shadow-md">
                   <Link to="/agenda">
-                    Bekijk de startdata
+                    {tx("Bekijk de startdata")}
                     <ArrowRight className="ml-2 h-5 w-5" />
                   </Link>
                 </Button>
               </div>
             </ScrollReveal>
+
           </div>
         </div>
       </section>
@@ -260,13 +263,13 @@ const MindfulZelfcompassie = () => {
             <ScrollReveal>
               <div className="text-center mb-10">
                 <span className="inline-block rounded-full bg-sage-100 px-5 py-2 text-xs font-semibold tracking-wider text-sage-700 mb-6 uppercase">
-                  Voor Jou
+                  {tx("Voor Jou")}
                 </span>
                 <h2 className="mb-4 text-3xl font-light text-foreground md:text-4xl leading-tight">
-                  Herken je jezelf <span className="font-serif italic text-terracotta-600">hierin?</span>
+                  {tx("Herken je jezelf")} <span className="font-serif italic text-terracotta-600">{tx("hierin?")}</span>
                 </h2>
                 <p className="text-muted-foreground text-lg max-w-xl mx-auto">
-                  Deze groepstraining is voor jou als je merkt dat je:
+                  {tx("Deze groepstraining is voor jou als je merkt dat je:")}
                 </p>
               </div>
             </ScrollReveal>
@@ -281,7 +284,7 @@ const MindfulZelfcompassie = () => {
                 ].map((item, index) => (
                   <div key={index} className="flex flex-col items-center gap-2 p-4 rounded-xl bg-warm-50 border border-warm-200 text-center">
                     <span className="text-xl">{item.icon}</span>
-                    <span className="text-foreground text-sm font-medium">{item.text}</span>
+                    <span className="text-foreground text-sm font-medium">{tx(item.text)}</span>
                   </div>
                 ))}
               </div>
@@ -297,10 +300,10 @@ const MindfulZelfcompassie = () => {
             <ScrollReveal>
               <div className="text-center mb-12">
                 <span className="inline-block rounded-full bg-sage-100 px-5 py-2 text-xs font-semibold tracking-wider text-sage-700 mb-6 uppercase">
-                  Praktisch
+                  {tx("Praktisch")}
                 </span>
                 <h2 className="mb-6 text-3xl font-light text-foreground md:text-4xl leading-tight">
-                  Wat je kunt <span className="font-serif italic text-terracotta-600">verwachten</span>
+                  {tx("Wat je kunt")} <span className="font-serif italic text-terracotta-600">{tx("verwachten")}</span>
                 </h2>
               </div>
             </ScrollReveal>
@@ -314,8 +317,8 @@ const MindfulZelfcompassie = () => {
                   { label: "Taal", value: "NL / EN" },
                 ].map((item, i) => (
                   <div key={i} className="text-center p-5 rounded-xl bg-white border border-sage-200 shadow-sm">
-                    <p className="text-xs text-muted-foreground mb-1 uppercase tracking-wider">{item.label}</p>
-                    <p className="font-medium text-foreground">{item.value}</p>
+                    <p className="text-xs text-muted-foreground mb-1 uppercase tracking-wider">{tx(item.label)}</p>
+                    <p className="font-medium text-foreground">{tx(item.value)}</p>
                   </div>
                 ))}
               </div>
@@ -323,7 +326,7 @@ const MindfulZelfcompassie = () => {
 
             <ScrollReveal delay={0.15}>
               <div className="bg-white rounded-2xl p-6 lg:p-8 shadow-sm border border-sage-200">
-                <h3 className="text-lg font-medium text-foreground mb-4">Elke sessie bevat:</h3>
+                <h3 className="text-lg font-medium text-foreground mb-4">{tx("Elke sessie bevat:")}</h3>
                 <div className="grid sm:grid-cols-2 gap-3">
                   {[
                     "Korte theorie over het thema",
@@ -335,12 +338,13 @@ const MindfulZelfcompassie = () => {
                   ].map((item, i) => (
                     <div key={i} className="flex items-center gap-3 text-sm text-foreground">
                       <Check className="h-4 w-4 text-sage-500 flex-shrink-0" />
-                      {item}
+                      {tx(item)}
                     </div>
                   ))}
                 </div>
               </div>
             </ScrollReveal>
+
           </div>
         </div>
       </section>
@@ -353,10 +357,10 @@ const MindfulZelfcompassie = () => {
               <div className="text-center mb-12">
                 <span className="inline-flex items-center gap-2 rounded-full bg-terracotta-100 border border-terracotta-200 px-5 py-2 text-xs font-semibold tracking-wider text-terracotta-700 mb-6 uppercase">
                   <FlaskConical className="h-3.5 w-3.5" />
-                  Wetenschappelijk bewezen
+                  {tx("Wetenschappelijk bewezen")}
                 </span>
                 <h2 className="mb-4 text-3xl font-light text-foreground md:text-4xl leading-tight">
-                  Wat MSC deelnemers <span className="font-serif italic text-terracotta-600">ervaren</span>
+                  {tx("Wat MSC deelnemers")} <span className="font-serif italic text-terracotta-600">{tx("ervaren")}</span>
                 </h2>
               </div>
             </ScrollReveal>
@@ -377,11 +381,11 @@ const MindfulZelfcompassie = () => {
                       <div className={`h-10 w-10 mx-auto rounded-xl ${item.color === 'terracotta' ? 'bg-terracotta-100' : 'bg-sage-100'} flex items-center justify-center mb-3`}>
                         <IconComponent className={`h-5 w-5 ${item.color === 'terracotta' ? 'text-terracotta-600' : 'text-sage-600'}`} />
                       </div>
-                      <h3 className="text-sm font-medium text-foreground mb-1">{item.text}</h3>
+                      <h3 className="text-sm font-medium text-foreground mb-1">{tx(item.text)}</h3>
                       <div className={`text-lg font-bold ${item.color === 'terracotta' ? 'text-terracotta-600' : 'text-sage-600'}`}>
                         {item.stat}
                       </div>
-                      <p className="text-[10px] text-muted-foreground">{item.statLabel}</p>
+                      <p className="text-[10px] text-muted-foreground">{tx(item.statLabel)}</p>
                     </div>
                   </StaggerItem>
                 );
@@ -399,10 +403,10 @@ const MindfulZelfcompassie = () => {
               <div className="text-center mb-12">
                 <span className="inline-flex items-center gap-2 rounded-full bg-terracotta-100 border border-terracotta-200 px-5 py-2 text-xs font-semibold tracking-wider text-terracotta-700 mb-6 uppercase">
                   <Heart className="h-3.5 w-3.5" />
-                  Ervaringen
+                  {tx("Ervaringen")}
                 </span>
                 <h2 className="mb-4 text-3xl font-light text-foreground md:text-4xl leading-tight">
-                  Wat deelnemers <span className="font-serif italic text-terracotta-600">zeggen</span>
+                  {tx("Wat deelnemers")} <span className="font-serif italic text-terracotta-600">{tx("zeggen")}</span>
                 </h2>
               </div>
             </ScrollReveal>
@@ -429,7 +433,7 @@ const MindfulZelfcompassie = () => {
                             ))}
                           </div>
                           <p className="text-muted-foreground leading-relaxed flex-grow mb-5 italic">
-                            "{testimonial.quote}"
+                            "{tx(testimonial.quote)}"
                           </p>
                           <div className="flex items-center gap-3 pt-4 border-t border-warm-200">
                             <div className="h-9 w-9 rounded-full bg-gradient-to-br from-terracotta-200 to-terracotta-300 flex items-center justify-center text-white font-semibold text-sm">
@@ -437,7 +441,7 @@ const MindfulZelfcompassie = () => {
                             </div>
                             <div>
                               <p className="font-medium text-foreground text-sm">{testimonial.name}</p>
-                              <p className="text-xs text-muted-foreground">{testimonial.role}</p>
+                              <p className="text-xs text-muted-foreground">{tx(testimonial.role)}</p>
                             </div>
                           </div>
                         </CardContent>
@@ -461,21 +465,21 @@ const MindfulZelfcompassie = () => {
           <div className="mx-auto max-w-2xl text-center">
             <ScrollReveal>
               <h2 className="text-2xl font-light text-foreground md:text-3xl leading-tight mb-4">
-                Klaar om te <span className="font-serif italic text-terracotta-600">beginnen?</span>
+                {tx("Klaar om te")} <span className="font-serif italic text-terracotta-600">{tx("beginnen?")}</span>
               </h2>
               <p className="text-muted-foreground mb-8 leading-relaxed">
-                Bekijk de beschikbare startdata en meld je aan voor de groepstraining.
+                {tx("Bekijk de beschikbare startdata en meld je aan voor de groepstraining.")}
               </p>
               <Button asChild size="lg" className="bg-terracotta-600 hover:bg-terracotta-700 text-white rounded-full px-10 py-7 text-lg shadow-lg">
                 <Link to="/agenda">
-                  Bekijk startdata & aanmelden
+                  {tx("Bekijk startdata & aanmelden")}
                   <ArrowRight className="ml-3 h-5 w-5" />
                 </Link>
               </Button>
               <p className="text-muted-foreground text-sm mt-6">
-                Liever individuele begeleiding?{" "}
+                {tx("Liever individuele begeleiding?")}{" "}
                 <Link to="/" className="text-terracotta-600 hover:text-terracotta-700 font-medium">
-                  Bekijk het individueel traject →
+                  {tx("Bekijk het individueel traject →")}
                 </Link>
               </p>
             </ScrollReveal>
@@ -491,10 +495,10 @@ const MindfulZelfcompassie = () => {
               <div className="text-center mb-12">
                 <span className="inline-flex items-center gap-2 rounded-full bg-sage-100 border border-sage-200 px-5 py-2 text-xs font-semibold tracking-wider text-sage-700 mb-6 uppercase">
                   <HelpCircle className="h-3.5 w-3.5" />
-                  FAQ
+                  {tx("FAQ")}
                 </span>
                 <h2 className="mb-4 text-3xl font-light text-foreground md:text-4xl leading-tight">
-                  Veelgestelde <span className="font-serif italic text-terracotta-600">vragen</span>
+                  {tx("Veelgestelde")} <span className="font-serif italic text-terracotta-600">{tx("vragen")}</span>
                 </h2>
               </div>
             </ScrollReveal>
@@ -514,10 +518,10 @@ const MindfulZelfcompassie = () => {
                     className="border border-warm-200 rounded-xl px-6 bg-white shadow-sm"
                   >
                     <AccordionTrigger className="text-left font-medium text-foreground hover:no-underline py-5">
-                      {item.q}
+                      {tx(item.q)}
                     </AccordionTrigger>
                     <AccordionContent className="text-muted-foreground pb-5 leading-relaxed">
-                      {item.a}
+                      {tx(item.a)}
                     </AccordionContent>
                   </AccordionItem>
                 ))}
@@ -536,13 +540,13 @@ const MindfulZelfcompassie = () => {
                 <ScrollReveal>
                   <span className="inline-flex items-center gap-2 rounded-full bg-terracotta-100 border border-terracotta-200 px-5 py-2 text-xs font-semibold tracking-wider text-terracotta-700 mb-6 uppercase">
                     <Mail className="h-3.5 w-3.5" />
-                    Contact
+                    {tx("Contact")}
                   </span>
                   <h2 className="text-3xl font-light text-foreground mb-4 md:text-4xl leading-tight">
-                    Heb je een <span className="font-serif italic text-terracotta-600">vraag?</span>
+                    {tx("Heb je een")} <span className="font-serif italic text-terracotta-600">{tx("vraag?")}</span>
                   </h2>
                   <p className="text-muted-foreground mb-8 leading-relaxed">
-                    Neem gerust contact op. We reageren meestal binnen 24 uur.
+                    {tx("Neem gerust contact op. We reageren meestal binnen 24 uur.")}
                   </p>
                   <div className="space-y-4">
                     <a href="mailto:mindful-mind@outlook.com" className="flex items-center gap-3 text-muted-foreground hover:text-terracotta-600 transition-colors">
@@ -555,7 +559,7 @@ const MindfulZelfcompassie = () => {
                     </a>
                     <a href="https://wa.me/31625633379" target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 text-muted-foreground hover:text-terracotta-600 transition-colors">
                       <MessageCircle className="h-5 w-5 text-terracotta-500" />
-                      WhatsApp
+                      {tx("WhatsApp")}
                     </a>
                   </div>
                 </ScrollReveal>
