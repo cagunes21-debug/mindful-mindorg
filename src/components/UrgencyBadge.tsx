@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { Users } from "lucide-react";
+import { useLanguage } from "@/i18n/LanguageContext";
 
 interface UrgencyBadgeProps {
   totalSpots?: number;
