@@ -1,8 +1,10 @@
 import { MessageCircle } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useState, useEffect } from "react";
+import { useLanguage } from "@/i18n/LanguageContext";
 
 const WhatsAppButton = () => {
+  const { tx } = useLanguage();
   const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
@@ -34,7 +36,7 @@ const WhatsAppButton = () => {
             transition={{ delay: 0.5 }}
             className="hidden md:block bg-white text-foreground text-sm font-medium px-4 py-2 rounded-full shadow-lg border border-warm-200"
           >
-            Stel een vraag
+            {tx("Stel een vraag")}
           </motion.span>
         </motion.a>
       )}

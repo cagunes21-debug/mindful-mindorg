@@ -2,8 +2,10 @@ import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { X, Cookie } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
+import { useLanguage } from "@/i18n/LanguageContext";
 
 const CookieConsent = () => {
+  const { tx } = useLanguage();
   const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
@@ -41,11 +43,10 @@ const CookieConsent = () => {
               </div>
               <div>
                 <h3 className="font-medium text-foreground mb-1">
-                  Deze website gebruikt cookies
+                  {tx("Deze website gebruikt cookies")}
                 </h3>
                 <p className="text-sm text-muted-foreground">
-                  Wij gebruiken cookies om je ervaring te verbeteren en om te begrijpen hoe onze website wordt gebruikt. 
-                  Je kunt je voorkeuren op elk moment aanpassen.
+                  {tx("Wij gebruiken cookies om je ervaring te verbeteren en om te begrijpen hoe onze website wordt gebruikt. Je kunt je voorkeuren op elk moment aanpassen.")}
                 </p>
               </div>
             </div>
@@ -55,19 +56,19 @@ const CookieConsent = () => {
                 onClick={declineCookies}
                 className="border-warm-300 text-muted-foreground hover:bg-warm-50 rounded-full"
               >
-                Alleen noodzakelijk
+                {tx("Alleen noodzakelijk")}
               </Button>
               <Button
                 onClick={acceptCookies}
                 className="bg-terracotta-600 hover:bg-terracotta-700 text-white rounded-full"
               >
-                Alles accepteren
+                {tx("Alles accepteren")}
               </Button>
             </div>
             <button
               onClick={declineCookies}
               className="absolute top-4 right-4 text-muted-foreground hover:text-foreground md:hidden"
-              aria-label="Sluiten"
+              aria-label={tx("Sluiten")}
             >
               <X className="h-5 w-5" />
             </button>

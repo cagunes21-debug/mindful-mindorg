@@ -8,6 +8,7 @@ import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 import { Loader2, Send, Check } from "lucide-react";
 import { z } from "zod";
+import { useLanguage } from "@/i18n/LanguageContext";
 
 const contactSchema = z.object({
   name: z.string().trim().min(1, "Naam is verplicht").max(100, "Naam mag maximaal 100 tekens zijn"),
@@ -28,6 +29,7 @@ const trainings = [
 ];
 
 export function ContactForm() {
+  const { tx } = useLanguage();
   const { toast } = useToast();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
@@ -108,19 +110,19 @@ export function ContactForm() {
         <div className="h-16 w-16 rounded-full bg-sage-100 flex items-center justify-center mx-auto mb-6">
           <Check className="h-8 w-8 text-sage-700" />
         </div>
-        <h3 className="text-2xl font-light text-foreground mb-4">Bedankt voor je bericht!</h3>
+        <h3 className="text-2xl font-light text-foreground mb-4">{tx("Bedankt voor je bericht!")}</h3>
         <p className="text-muted-foreground mb-2">
-          Bedankt voor je bericht. We nemen zo snel mogelijk contact met je op.
+          {tx("Bedankt voor je bericht. We nemen zo snel mogelijk contact met je op.")}
         </p>
         <p className="text-muted-foreground mb-6 text-sm">
-          Meestal reageren we binnen 1–2 werkdagen.
+          {tx("Meestal reageren we binnen 1–2 werkdagen.")}
         </p>
         <Button
           variant="outline"
           onClick={() => setIsSuccess(false)}
           className="border-terracotta-300 text-terracotta-600 hover:bg-terracotta-50 rounded-full"
         >
-          Nog een bericht sturen
+          {tx("Nog een bericht sturen")}
         </Button>
       </div>
     );
@@ -130,10 +132,10 @@ export function ContactForm() {
     <form onSubmit={handleSubmit} className="space-y-6">
       <div className="grid gap-6 md:grid-cols-2">
         <div className="space-y-2">
-          <Label htmlFor="name">Naam *</Label>
+          <Label htmlFor="name">{tx("Naam *")}</Label>
           <Input
             id="name"
-            placeholder="Je naam"
+            placeholder={tx("Je naam")}
             value={formData.name}
             onChange={(e) => handleChange("name", e.target.value)}
             className={`rounded-xl ${errors.name ? "border-destructive" : ""}`}
@@ -143,7 +145,7 @@ export function ContactForm() {
         </div>
 
         <div className="space-y-2">
-          <Label htmlFor="email">E-mail *</Label>
+          <Label htmlFor="email">{tx("E-mail *")}</Label>
           <Input
             id="email"
             type="email"
@@ -159,7 +161,7 @@ export function ContactForm() {
 
       <div className="grid gap-6 md:grid-cols-2">
         <div className="space-y-2">
-          <Label htmlFor="phone">Telefoonnummer (optioneel)</Label>
+          <Label htmlFor="phone">{tx("Telefoonnummer (optioneel)")}</Label>
           <Input
             id="phone"
             type="tel"
@@ -172,19 +174,19 @@ export function ContactForm() {
         </div>
 
         <div className="space-y-2">
-          <Label htmlFor="training">Interesse in</Label>
+          <Label htmlFor="training">{tx("Interesse in")}</Label>
           <Select
             value={formData.training}
             onValueChange={(value) => handleChange("training", value)}
             disabled={isSubmitting}
           >
             <SelectTrigger className="rounded-xl">
-              <SelectValue placeholder="Waar heb je interesse in?" />
+              <SelectValue placeholder={tx("Waar heb je interesse in?")} />
             </SelectTrigger>
             <SelectContent>
               {trainings.map((training) => (
                 <SelectItem key={training.value} value={training.value}>
-                  {training.label}
+                  {tx(training.label)}
                 </SelectItem>
               ))}
             </SelectContent>
@@ -193,10 +195,10 @@ export function ContactForm() {
       </div>
 
       <div className="space-y-2">
-        <Label htmlFor="message">Bericht *</Label>
+        <Label htmlFor="message">{tx("Bericht *")}</Label>
         <Textarea
           id="message"
-          placeholder="Hoe kunnen we je helpen?"
+          placeholder={tx("Hoe kunnen we je helpen?")}
           value={formData.message}
           onChange={(e) => handleChange("message", e.target.value)}
           className={`min-h-[150px] rounded-xl ${errors.message ? "border-destructive" : ""}`}
@@ -227,12 +229,12 @@ export function ContactForm() {
         {isSubmitting ? (
           <>
             <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-            Verzenden...
+            {tx("Verzenden...")}
           </>
         ) : (
           <>
             <Send className="mr-2 h-4 w-4" />
-            Verstuur bericht
+            {tx("Verstuur bericht")}
           </>
         )}
       </Button>

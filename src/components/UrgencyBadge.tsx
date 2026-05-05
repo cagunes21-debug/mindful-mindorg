@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { Users } from "lucide-react";
+import { useLanguage } from "@/i18n/LanguageContext";
 
 interface UrgencyBadgeProps {
   totalSpots?: number;
@@ -7,6 +8,7 @@ interface UrgencyBadgeProps {
 }
 
 const UrgencyBadge = ({ totalSpots = 12, className = "" }: UrgencyBadgeProps) => {
+  const { tx } = useLanguage();
   const [remaining, setRemaining] = useState<number | null>(null);
 
   useEffect(() => {
@@ -33,7 +35,7 @@ const UrgencyBadge = ({ totalSpots = 12, className = "" }: UrgencyBadgeProps) =>
     >
       <Users className="h-4 w-4" />
       <span>
-        Nog <strong>{remaining}</strong> {remaining === 1 ? "plek" : "plekken"} beschikbaar
+        {tx("Nog")} <strong>{remaining}</strong> {remaining === 1 ? tx("plek") : tx("plekken")} {tx("beschikbaar")}
       </span>
     </div>
   );

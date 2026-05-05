@@ -8,6 +8,7 @@ import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 import { Loader2, Send, Check, Calendar } from "lucide-react";
 import { z } from "zod";
+import { useLanguage } from "@/i18n/LanguageContext";
 
 const registrationSchema = z.object({
   name: z.string().trim().min(1, "Naam is verplicht").max(100, "Naam mag maximaal 100 tekens zijn"),
@@ -33,6 +34,7 @@ export function RegistrationForm({
   price,
   onSuccess 
 }: RegistrationFormProps) {
+  const { tx } = useLanguage();
   const { toast } = useToast();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [honeypot, setHoneypot] = useState("");
@@ -152,9 +154,9 @@ export function RegistrationForm({
         <div className="h-16 w-16 rounded-full bg-sage-100 flex items-center justify-center mx-auto mb-6">
           <Check className="h-8 w-8 text-sage-700" />
         </div>
-        <h3 className="text-xl font-light text-foreground mb-2">Aanmelding ontvangen!</h3>
+        <h3 className="text-xl font-light text-foreground mb-2">{tx("Aanmelding ontvangen!")}</h3>
         <p className="text-muted-foreground mb-4">
-          We nemen zo snel mogelijk contact met je op.
+          {tx("We nemen zo snel mogelijk contact met je op.")}
         </p>
       </div>
     );
@@ -177,10 +179,10 @@ export function RegistrationForm({
       </div>
 
       <div className="space-y-2">
-        <Label htmlFor="reg-name">Naam *</Label>
+        <Label htmlFor="reg-name">{tx("Naam *")}</Label>
         <Input
           id="reg-name"
-          placeholder="Je volledige naam"
+          placeholder={tx("Je volledige naam")}
           value={formData.name}
           onChange={(e) => handleChange("name", e.target.value)}
           className={`rounded-xl ${errors.name ? "border-destructive" : ""}`}
@@ -190,7 +192,7 @@ export function RegistrationForm({
       </div>
 
       <div className="space-y-2">
-        <Label htmlFor="reg-email">E-mail *</Label>
+        <Label htmlFor="reg-email">{tx("E-mail *")}</Label>
         <Input
           id="reg-email"
           type="email"
@@ -204,7 +206,7 @@ export function RegistrationForm({
       </div>
 
       <div className="space-y-2">
-        <Label htmlFor="reg-phone">Telefoon (optioneel)</Label>
+        <Label htmlFor="reg-phone">{tx("Telefoon (optioneel)")}</Label>
         <Input
           id="reg-phone"
           type="tel"
@@ -217,10 +219,10 @@ export function RegistrationForm({
       </div>
 
       <div className="space-y-2">
-        <Label htmlFor="reg-remarks">Opmerkingen of vragen (optioneel)</Label>
+        <Label htmlFor="reg-remarks">{tx("Opmerkingen of vragen (optioneel)")}</Label>
         <Textarea
           id="reg-remarks"
-          placeholder="Heb je nog vragen of wil je iets delen?"
+          placeholder={tx("Heb je nog vragen of wil je iets delen?")}
           value={formData.remarks}
           onChange={(e) => handleChange("remarks", e.target.value)}
           className="min-h-[80px] rounded-xl"
@@ -242,17 +244,17 @@ export function RegistrationForm({
             className="mt-0.5"
           />
           <Label htmlFor="reg-terms" className="text-sm font-normal text-muted-foreground leading-snug cursor-pointer">
-            Ik ga akkoord met de{" "}
+            {tx("Ik ga akkoord met de")}{" "}
             <a href="/algemene-voorwaarden" target="_blank" className="text-terracotta-600 hover:underline">
-              Algemene Voorwaarden
+              {tx("Algemene Voorwaarden")}
             </a>{" "}
-            en{" "}
+            {tx("en")}{" "}
             <a href="/privacy" target="_blank" className="text-terracotta-600 hover:underline">
-              Privacyverklaring
+              {tx("Privacyverklaring")}
             </a>{" "}*
           </Label>
         </div>
-        {termsError && <p className="text-sm text-destructive ml-7">Je moet akkoord gaan met de voorwaarden</p>}
+        {termsError && <p className="text-sm text-destructive ml-7">{tx("Je moet akkoord gaan met de voorwaarden")}</p>}
       </div>
 
       {/* Honeypot field - hidden from users, catches bots */}
@@ -277,18 +279,18 @@ export function RegistrationForm({
         {isSubmitting ? (
           <>
             <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-            Aanmelding verzenden...
+            {tx("Aanmelding verzenden...")}
           </>
         ) : (
           <>
             <Send className="mr-2 h-4 w-4" />
-            Verstuur aanmelding
+            {tx("Verstuur aanmelding")}
           </>
         )}
       </Button>
       
       <p className="text-xs text-center text-muted-foreground">
-        Na aanmelding nemen we zo snel mogelijk contact met je op.
+        {tx("Na aanmelding nemen we zo snel mogelijk contact met je op.")}
       </p>
     </form>
   );

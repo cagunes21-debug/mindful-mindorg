@@ -2,11 +2,13 @@ import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { ArrowRight, X } from "lucide-react";
+import { useLanguage } from "@/i18n/LanguageContext";
 
 const HIDDEN_ROUTES = ["/login", "/admin", "/mijn-trainingen", "/betaling-succes", "/betaling-geannuleerd"];
 const CTA_DISMISSED_KEY = "sticky_cta_dismissed";
 
 const StickyCTA = () => {
+  const { tx } = useLanguage();
   const [visible, setVisible] = useState(false);
   const [dismissed, setDismissed] = useState(false);
   const location = useLocation();
@@ -47,10 +49,10 @@ const StickyCTA = () => {
           <div className="container mx-auto px-4 py-3 flex items-center justify-between gap-4">
             <div className="flex-1 min-w-0">
               <p className="text-sm font-medium text-foreground truncate">
-                Start met de 8-weekse Zelfcompassie Training
+                {tx("Start met de 8-weekse Zelfcompassie Training")}
               </p>
               <p className="text-xs text-muted-foreground hidden sm:block">
-                Nog enkele plekken beschikbaar · Kleine groepen · Gecertificeerde trainers
+                {tx("Nog enkele plekken beschikbaar · Kleine groepen · Gecertificeerde trainers")}
               </p>
             </div>
             <div className="flex items-center gap-2">
@@ -58,12 +60,12 @@ const StickyCTA = () => {
                 to="/agenda"
                 className="inline-flex items-center gap-1.5 rounded-full bg-terracotta-600 hover:bg-terracotta-700 text-white text-sm font-medium px-5 py-2.5 transition-colors whitespace-nowrap"
               >
-                Bekijk data <ArrowRight className="h-3.5 w-3.5" />
+                {tx("Bekijk data")} <ArrowRight className="h-3.5 w-3.5" />
               </Link>
               <button
                 onClick={dismiss}
                 className="text-muted-foreground hover:text-foreground p-1.5 transition-colors"
-                aria-label="Sluiten"
+                aria-label={tx("Sluiten")}
               >
                 <X className="h-4 w-4" />
               </button>
