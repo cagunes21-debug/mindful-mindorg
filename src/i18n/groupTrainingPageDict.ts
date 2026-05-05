@@ -317,10 +317,10 @@ export const groupTrainingPageDict: Record<string, string> = {
   "1 augustus 2026": "1 August 2026",
 
   // ============ /msc-training (MindfulZelfcompassie) ============
-  "8-weekse Groepstraining": "8-Week Group Training",
-  "Bekijk de startdata": "View start dates",
-  "8 weken · 2 uur/sessie": "8 weeks · 2h/session",
-  "Max 12 deelnemers": "Max 12 participants",
+  "8-weekse Groepstraining": "8-week group program",
+  "Bekijk de startdata": "View upcoming start dates",
+  "8 weken · 2 uur/sessie": "8 weeks · 2 hours per session",
+  "Max 12 deelnemers": "Max. 12 participants",
   "Vanaf €495 early bird": "From €495 early bird",
   "De Methode": "The Method",
   "Een wetenschappelijk onderbouwd 8-weeks programma, ontwikkeld door dr. Kristin Neff en dr. Christopher Germer. Je leert jezelf te behandelen zoals je een goede vriend(in) zou behandelen.":
