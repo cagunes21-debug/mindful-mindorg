@@ -36,7 +36,7 @@ const WhatsAppButton = () => {
             transition={{ delay: 0.5 }}
             className="hidden md:block bg-white text-foreground text-sm font-medium px-4 py-2 rounded-full shadow-lg border border-warm-200"
           >
-            Stel een vraag
+            {tx("Stel een vraag")}
           </motion.span>
         </motion.a>
       )}
