@@ -79,6 +79,15 @@ const MindfulZelfcompassie = () => {
             <motion.p
               initial={{ opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.1 }}
+              className="text-sage-700 text-sm md:text-base font-semibold tracking-wide uppercase mb-5"
+            >
+              {tx("8-weekse training in Mindful Self-Compassion")}
+            </motion.p>
+
+            <motion.p
+              initial={{ opacity: 0, y: 16 }}
+              animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.12 }}
               className="text-muted-foreground text-lg md:text-xl max-w-xl mx-auto leading-relaxed mb-10"
             >
@@ -89,7 +98,7 @@ const MindfulZelfcompassie = () => {
               initial={{ opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.2 }}
-              className="flex flex-col sm:flex-row items-center justify-center gap-4"
+              className="flex flex-col items-center justify-center gap-4"
             >
               <Button asChild size="lg" className="bg-terracotta-600 hover:bg-terracotta-700 text-white rounded-full px-10 py-7 text-lg shadow-lg">
                 <Link to="/agenda">
@@ -97,6 +106,9 @@ const MindfulZelfcompassie = () => {
                   <ArrowRight className="ml-3 h-5 w-5" />
                 </Link>
               </Button>
+              <Link to="/coaching" className="text-sm text-muted-foreground hover:text-terracotta-600 transition-colors underline underline-offset-4">
+                {tx("Liever één-op-één sessies? Bekijk het individuele programma")}
+              </Link>
             </motion.div>
 
             {/* Quick specs */}
