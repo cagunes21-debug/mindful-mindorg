@@ -244,17 +244,17 @@ export function RegistrationForm({
             className="mt-0.5"
           />
           <Label htmlFor="reg-terms" className="text-sm font-normal text-muted-foreground leading-snug cursor-pointer">
-            Ik ga akkoord met de{" "}
+            {tx("Ik ga akkoord met de")}{" "}
             <a href="/algemene-voorwaarden" target="_blank" className="text-terracotta-600 hover:underline">
-              Algemene Voorwaarden
+              {tx("Algemene Voorwaarden")}
             </a>{" "}
-            en{" "}
+            {tx("en")}{" "}
             <a href="/privacy" target="_blank" className="text-terracotta-600 hover:underline">
-              Privacyverklaring
+              {tx("Privacyverklaring")}
             </a>{" "}*
           </Label>
         </div>
-        {termsError && <p className="text-sm text-destructive ml-7">Je moet akkoord gaan met de voorwaarden</p>}
+        {termsError && <p className="text-sm text-destructive ml-7">{tx("Je moet akkoord gaan met de voorwaarden")}</p>}
       </div>
 
       {/* Honeypot field - hidden from users, catches bots */}
