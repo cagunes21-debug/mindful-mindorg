@@ -61,7 +61,7 @@ const MindfulZelfcompassie = () => {
               className="inline-flex items-center gap-2 mb-6 rounded-full bg-sage-100 border border-sage-200 px-5 py-2 text-xs font-semibold text-sage-700 tracking-wider uppercase"
             >
               <Users className="h-3.5 w-3.5" />
-              8-weekse Groepstraining
+              {tx("8-weekse Groepstraining")}
             </motion.span>
 
             <motion.h1
