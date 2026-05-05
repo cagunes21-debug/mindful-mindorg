@@ -131,21 +131,21 @@ const MindfulZelfcompassie = () => {
                 <Users className="h-4 w-4 text-terracotta-500" />
                 <span className="text-2xl lg:text-3xl font-light text-foreground">200+</span>
               </div>
-              <p className="text-xs text-muted-foreground">deelnemers begeleid</p>
+              <p className="text-xs text-muted-foreground">{tx("deelnemers begeleid")}</p>
             </div>
             <div>
               <div className="flex items-center justify-center gap-2 mb-1">
                 <Star className="h-4 w-4 text-terracotta-500 fill-terracotta-500" />
                 <span className="text-2xl lg:text-3xl font-light text-foreground">4.9/5</span>
               </div>
-              <p className="text-xs text-muted-foreground">gemiddelde beoordeling</p>
+              <p className="text-xs text-muted-foreground">{tx("gemiddelde beoordeling")}</p>
             </div>
             <div>
               <div className="flex items-center justify-center gap-2 mb-1">
                 <Award className="h-4 w-4 text-terracotta-500" />
                 <span className="text-2xl lg:text-3xl font-light text-foreground">MSC</span>
               </div>
-              <p className="text-xs text-muted-foreground">gecertificeerde trainer</p>
+              <p className="text-xs text-muted-foreground">{tx("gecertificeerde trainer")}</p>
             </div>
           </div>
         </div>
