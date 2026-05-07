@@ -345,7 +345,7 @@ const MindfulZelfcompassie = () => {
                     "Geleide meditaties en oefeningen",
                     "Uitwisseling in de groep",
                     "Thuisopdrachten en audiomeditaties",
-                    "Halve-dagretraite (dag 5)",
+                    "Retraite sessie (dag 5)",
                     "Trauma-sensitieve begeleiding",
                   ].map((item, i) => (
                     <div key={i} className="flex items-center gap-3 text-sm text-foreground">
