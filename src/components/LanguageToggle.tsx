@@ -9,15 +9,6 @@ const LanguageToggle = () => {
   const handleToggle = () => {
     const nextLanguage = language === "nl" ? "en" : "nl";
     setLanguage(nextLanguage);
-
-    if (location.pathname === "/msc-training" && nextLanguage === "en") {
-      navigate("/msc-groepstraining");
-      return;
-    }
-
-    if (location.pathname === "/msc-groepstraining" && nextLanguage === "nl") {
-      navigate("/msc-training");
-    }
   };
 
   return (
