@@ -325,6 +325,7 @@ const Agenda = () => {
                           return (
                             <Card key={tr.id} className={`border-terracotta-200 rounded-3xl overflow-hidden transition-shadow ${tr.is_full ? "bg-warm-50 opacity-75" : "bg-white hover:shadow-md"}`}>
                               <CardContent className="p-6">
+                                <h4 className="text-base font-semibold text-foreground mb-1">{tr.short_name}</h4>
                                 <div className="flex items-center justify-between mb-4">
                                   <p className="font-semibold text-foreground">{tr.day_label}</p>
                                   {tr.is_full && <span className="inline-block rounded-full bg-terracotta-100 px-3 py-1 text-xs font-semibold text-terracotta-700">{t("agenda.full")}</span>}
@@ -381,6 +382,7 @@ const Agenda = () => {
                         {mscEN.map(tr => (
                           <Card key={tr.id} className={`border-sage-200 rounded-3xl overflow-hidden transition-shadow ${tr.is_full ? "bg-warm-50 opacity-75" : "bg-white hover:shadow-md"}`}>
                             <CardContent className="p-6">
+                              <h4 className="text-base font-semibold text-foreground mb-1">{tr.short_name}</h4>
                               <div className="flex items-center justify-between mb-4">
                                 <p className="font-semibold text-foreground">{tr.day_label}</p>
                                 {tr.is_full && <span className="inline-block rounded-full bg-sage-200 px-3 py-1 text-xs font-semibold text-sage-800">{t("agenda.fullEn")}</span>}
