@@ -1,26 +1,42 @@
 import { useLanguage } from "@/i18n/LanguageContext";
-import { useLocation, useNavigate } from "react-router-dom";
 
 const LanguageToggle = () => {
   const { language, setLanguage } = useLanguage();
-  const location = useLocation();
-  const navigate = useNavigate();
-
-  const handleToggle = () => {
-    const nextLanguage = language === "nl" ? "en" : "nl";
-    setLanguage(nextLanguage);
-  };
 
   return (
-    <button
-      onClick={handleToggle}
-      className="flex items-center gap-1 text-xs font-medium tracking-wide border border-border rounded-full px-3 py-1.5 text-muted-foreground hover:text-primary hover:border-primary transition-colors"
-      aria-label={language === "nl" ? "Switch to English" : "Schakel naar Nederlands"}
+    <div
+      className="flex items-center gap-1 text-xs font-medium tracking-wide border border-border rounded-full px-2 py-1 text-muted-foreground"
+      role="group"
+      aria-label="Language selector"
     >
-      <span className={language === "nl" ? "text-primary font-semibold" : ""}>NL</span>
-      <span className="text-border">|</span>
-      <span className={language === "en" ? "text-primary font-semibold" : ""}>EN</span>
-    </button>
+      <button
+        type="button"
+        onClick={() => setLanguage("nl")}
+        aria-pressed={language === "nl"}
+        aria-label="Schakel naar Nederlands"
+        className={`px-2 py-0.5 rounded-full transition-colors ${
+          language === "nl"
+            ? "text-primary font-semibold"
+            : "hover:text-primary"
+        }`}
+      >
+        NL
+      </button>
+      <span className="text-border" aria-hidden="true">|</span>
+      <button
+        type="button"
+        onClick={() => setLanguage("en")}
+        aria-pressed={language === "en"}
+        aria-label="Switch to English"
+        className={`px-2 py-0.5 rounded-full transition-colors ${
+          language === "en"
+            ? "text-primary font-semibold"
+            : "hover:text-primary"
+        }`}
+      >
+        EN
+      </button>
+    </div>
   );
 };
 
