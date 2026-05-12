@@ -185,13 +185,111 @@ const Agenda = () => {
         </div>
       </section>
 
+      {/* Sticky filter bar */}
+      {!loading && trainings.length > 0 && (
+        <div className="sticky top-16 z-30 bg-white/85 backdrop-blur-md border-y border-warm-200 shadow-sm">
+          <div className="container mx-auto px-4 py-3">
+            <div className="flex items-center gap-2 overflow-x-auto scrollbar-hide">
+              <div className="flex items-center gap-1.5 text-xs font-medium text-muted-foreground shrink-0 mr-1">
+                <Filter className="h-3.5 w-3.5" />
+                <span className="hidden sm:inline">{t("agenda.filterLabel") || "Filter"}:</span>
+              </div>
+
+              {/* Type */}
+              {([
+                { v: "all", l: t("agenda.filterAll") || "Alles" },
+                { v: "msc_8week", l: t("agenda.filter1") },
+                { v: "workshop", l: t("agenda.filter2") },
+              ] as const).map(opt => (
+                <button
+                  key={`type-${opt.v}`}
+                  onClick={() => setFilterType(opt.v as typeof filterType)}
+                  className={`shrink-0 rounded-full px-3 py-1.5 text-xs font-medium transition-colors border ${
+                    filterType === opt.v
+                      ? "bg-terracotta-600 text-white border-terracotta-600"
+                      : "bg-white text-foreground border-warm-200 hover:border-terracotta-300"
+                  }`}
+                >
+                  {opt.l}
+                </button>
+              ))}
+
+              <span className="h-5 w-px bg-warm-200 mx-1 shrink-0" />
+
+              {/* Language */}
+              {([
+                { v: "all", l: "🌍" },
+                { v: "nl", l: "🇳🇱 NL" },
+                { v: "en", l: "🇬🇧 EN" },
+              ] as const).map(opt => (
+                <button
+                  key={`lang-${opt.v}`}
+                  onClick={() => setFilterLang(opt.v as typeof filterLang)}
+                  className={`shrink-0 rounded-full px-3 py-1.5 text-xs font-medium transition-colors border ${
+                    filterLang === opt.v
+                      ? "bg-sage-600 text-white border-sage-600"
+                      : "bg-white text-foreground border-warm-200 hover:border-sage-300"
+                  }`}
+                >
+                  {opt.l}
+                </button>
+              ))}
+
+              <span className="h-5 w-px bg-warm-200 mx-1 shrink-0" />
+
+              {/* Location */}
+              {([
+                { v: "all", l: t("agenda.filterAll") || "Alles", icon: null },
+                { v: "online", l: "Online", icon: <Globe className="h-3 w-3" /> },
+                { v: "in_person", l: t("agenda.locationInPerson") || "Locatie", icon: <MapPin className="h-3 w-3" /> },
+              ] as const).map(opt => (
+                <button
+                  key={`loc-${opt.v}`}
+                  onClick={() => setFilterLocation(opt.v as typeof filterLocation)}
+                  className={`shrink-0 inline-flex items-center gap-1 rounded-full px-3 py-1.5 text-xs font-medium transition-colors border ${
+                    filterLocation === opt.v
+                      ? "bg-warm-600 text-white border-warm-600"
+                      : "bg-white text-foreground border-warm-200 hover:border-warm-400"
+                  }`}
+                >
+                  {opt.icon}
+                  {opt.l}
+                </button>
+              ))}
+
+              {filtersActive && (
+                <button
+                  onClick={() => { setFilterType("all"); setFilterLang("all"); setFilterLocation("all"); }}
+                  className="ml-auto shrink-0 text-xs text-terracotta-600 hover:text-terracotta-700 underline underline-offset-2"
+                >
+                  {t("agenda.filterReset") || "Reset"}
+                </button>
+              )}
+            </div>
+          </div>
+        </div>
+      )}
+
       {loading && (
         <div className="flex justify-center py-20">
           <Loader2 className="h-8 w-8 animate-spin text-terracotta-400" />
         </div>
       )}
 
-      {!loading && (
+      {!loading && !hasAnyResults && (
+        <div className="container mx-auto px-4 py-16 text-center">
+          <p className="text-muted-foreground mb-4">{t("agenda.noResults") || "Geen trainingen gevonden met deze filters."}</p>
+          <Button
+            variant="outline"
+            onClick={() => { setFilterType("all"); setFilterLang("all"); setFilterLocation("all"); }}
+            className="rounded-full border-terracotta-300 text-terracotta-600 hover:bg-terracotta-50"
+          >
+            {t("agenda.filterReset") || "Reset filters"}
+          </Button>
+        </div>
+      )}
+
+      {!loading && hasAnyResults && (
         <>
           {/* Featured training */}
           {featured.length > 0 && (
