@@ -376,7 +376,7 @@ const Agenda = () => {
                   </div>
                   <div className="grid gap-4 md:grid-cols-2">
                     {workshops.map(tr => (
-                      <Card key={tr.id} className="border-warm-200 bg-warm-50/50 rounded-2xl overflow-hidden">
+                      <Card key={tr.id} className="border-l-4 border-l-sage-500 border-y border-r border-warm-200 bg-warm-50/50 rounded-2xl overflow-hidden hover:shadow-md transition-all">
                         <CardContent className="p-5 flex items-center justify-between gap-4">
                           <div className="flex-1 min-w-0">
                             <div className="flex items-center gap-2 mb-1">
