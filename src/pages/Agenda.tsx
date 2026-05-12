@@ -23,6 +23,7 @@ import { useLanguage } from "@/i18n/LanguageContext";
 interface TrainingDate {
   id: string;
   name: string;
+  short_name: string | null;
   type: string;
   language: string;
   day_label: string | null;
