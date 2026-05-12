@@ -512,34 +512,47 @@ const Agenda = () => {
                       </div>
                       <div className="grid gap-6 md:grid-cols-2">
                         {mscEN.map(tr => (
-                          <Card key={tr.id} className={`border-sage-200 rounded-3xl overflow-hidden transition-shadow ${tr.is_full ? "bg-warm-50 opacity-75" : "bg-white hover:shadow-md"}`}>
+                          <Card key={tr.id} className={`relative border-l-4 border-l-sage-500 border-y border-r border-sage-200 rounded-2xl overflow-hidden transition-all ${tr.is_full ? "bg-warm-50 opacity-75" : "bg-white hover:shadow-lg hover:-translate-y-0.5"}`}>
                             <CardContent className="p-6">
-                              <h4 className="text-base font-semibold text-foreground mb-1">{tr.short_name}</h4>
-                              <div className="flex items-center justify-between mb-4">
-                                <p className="font-semibold text-foreground">{tr.day_label}</p>
-                                {tr.is_full && <span className="inline-block rounded-full bg-sage-200 px-3 py-1 text-xs font-semibold text-sage-800">{t("agenda.fullEn")}</span>}
+                              <div className="flex items-start justify-between gap-3 mb-3">
+                                <div className="min-w-0 flex-1">
+                                  {tr.short_name && (
+                                    <h4 className="font-serif text-xl text-sage-700 leading-tight mb-1">{tr.short_name}</h4>
+                                  )}
+                                  {tr.day_label && (
+                                    <p className="text-sm text-muted-foreground">{tr.day_label}</p>
+                                  )}
+                                </div>
+                                <div className="flex flex-col items-end gap-1.5 shrink-0">
+                                  {tr.is_full && <span className="inline-block rounded-full bg-sage-200 px-2.5 py-1 text-[11px] font-semibold text-sage-800">{t("agenda.fullEn")}</span>}
+                                  <span className="inline-flex items-center gap-1 rounded-full bg-warm-100 px-2 py-0.5 text-[10px] font-medium text-warm-700">
+                                    {(tr.location || "Online").toLowerCase().includes("online") ? <Globe className="h-2.5 w-2.5" /> : <MapPin className="h-2.5 w-2.5" />}
+                                    {tr.location || "Online"}
+                                  </span>
+                                </div>
                               </div>
-                              <div className="space-y-2 text-sm mb-4">
-                                <div className="flex items-start gap-2">
-                                  <Calendar className="h-4 w-4 text-sage-600 mt-0.5" />
+                              <div className="space-y-1.5 text-sm mb-3">
+                                <div className="flex items-center gap-2">
+                                  <Calendar className="h-4 w-4 text-sage-600 shrink-0" />
                                   <p className="font-medium text-foreground">{t("agenda.start")}: {format(parseISO(tr.start_date), "d MMMM yyyy", { locale: dateLocale })}</p>
                                 </div>
                                 {tr.time_start && (
                                   <div className="flex items-center gap-2">
-                                    <Clock className="h-4 w-4 text-sage-600" />
+                                    <Clock className="h-4 w-4 text-sage-600 shrink-0" />
                                     <p className="text-muted-foreground">{tr.time_start}{tr.time_end ? ` – ${tr.time_end}` : ""}</p>
                                   </div>
                                 )}
                               </div>
                               {tr.follow_up_dates && (
-                                <p className="text-xs text-muted-foreground mb-4">{t("agenda.msc.followUpEn")} {tr.follow_up_dates}</p>
+                                <p className="text-xs text-muted-foreground mb-3 line-clamp-2">{t("agenda.msc.followUpEn")} {tr.follow_up_dates}</p>
                               )}
-                              <div className="flex items-center justify-between pt-4 border-t border-warm-200">
+                              <div className="flex items-center justify-between pt-3 border-t border-sage-100">
                                 <p className="text-lg font-semibold text-sage-700">€{tr.price}</p>
                                 <Button size="sm" disabled={tr.is_full} onClick={() => openRegistration(tr)}
-                                  className="bg-sage-600 hover:bg-sage-700 text-white rounded-full disabled:opacity-50"
+                                  className="bg-sage-600 hover:bg-sage-700 text-white rounded-full disabled:opacity-50 shadow-sm"
                                 >
                                   {tr.is_full ? t("agenda.fullEn") : t("agenda.reserve")}
+                                  {!tr.is_full && <ArrowRight className="ml-1 h-3.5 w-3.5" />}
                                 </Button>
                               </div>
                             </CardContent>
