@@ -63,6 +63,11 @@ const Agenda = () => {
   const [selectedTraining, setSelectedTraining] = useState<SelectedTraining | null>(null);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
 
+  // Filters
+  const [filterType, setFilterType] = useState<"all" | "msc_8week" | "workshop">("all");
+  const [filterLang, setFilterLang] = useState<"all" | "nl" | "en">("all");
+  const [filterLocation, setFilterLocation] = useState<"all" | "online" | "in_person">("all");
+
   useEffect(() => {
     supabase
       .from("training_dates")
@@ -87,10 +92,25 @@ const Agenda = () => {
     setIsDialogOpen(true);
   };
 
-  const featured = trainings.filter(tr => tr.is_featured && !tr.is_full);
-  const mscNL = trainings.filter(tr => tr.type === "msc_8week" && tr.language === "nl");
-  const mscEN = trainings.filter(tr => tr.type === "msc_8week" && tr.language === "en");
-  const workshops = trainings.filter(tr => tr.type === "workshop");
+  // Apply filters
+  const matchesFilters = (tr: TrainingDate) => {
+    if (filterType !== "all" && tr.type !== filterType) return false;
+    if (filterLang !== "all" && tr.language !== filterLang) return false;
+    if (filterLocation !== "all") {
+      const isOnline = (tr.location || "Online").toLowerCase().includes("online");
+      if (filterLocation === "online" && !isOnline) return false;
+      if (filterLocation === "in_person" && isOnline) return false;
+    }
+    return true;
+  };
+
+  const filtered = trainings.filter(matchesFilters);
+  const featured = filtered.filter(tr => tr.is_featured && !tr.is_full);
+  const mscNL = filtered.filter(tr => tr.type === "msc_8week" && tr.language === "nl");
+  const mscEN = filtered.filter(tr => tr.type === "msc_8week" && tr.language === "en");
+  const workshops = filtered.filter(tr => tr.type === "workshop");
+  const hasAnyResults = featured.length + mscNL.length + mscEN.length + workshops.length > 0;
+  const filtersActive = filterType !== "all" || filterLang !== "all" || filterLocation !== "all";
 
   return (
     <div className="min-h-screen bg-background">
