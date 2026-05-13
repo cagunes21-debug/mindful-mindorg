@@ -44,8 +44,8 @@ const GroupCtaSection = () => {
                 </div>
                 <div className="hidden md:flex flex-col items-center justify-center w-40 h-40 rounded-2xl bg-gradient-to-br from-sage-50 to-warm-50 border border-sage-200/60">
                   <p className="text-xs text-muted-foreground mb-1 uppercase tracking-wider">{t("home.groupCta.from")}</p>
-                  <p className="text-3xl font-serif font-light text-terracotta-600">€495</p>
-                  <p className="text-xs text-muted-foreground mt-1">{t("home.groupCta.earlyBird")}</p>
+                  <p className="text-3xl font-serif font-light text-terracotta-600">€550</p>
+                  <p className="text-xs text-muted-foreground mt-1">incl. werkboek</p>
                 </div>
               </div>
             </div>

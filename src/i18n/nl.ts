@@ -233,10 +233,10 @@ export const nl = {
       title: "Liever samen groeien?",
       desc: "De 8-weekse MSC groepstraining biedt dezelfde wetenschappelijk onderbouwde basis — in de kracht van een groep.",
       meta1: "8 weken · september 2026",
-      meta2: "Early bird t/m 1 aug",
+      meta2: "Online · Maandagavond 19:00",
       cta: "Bekijk de groepstraining",
-      from: "Vanaf",
-      earlyBird: "early bird",
+      from: "Investering",
+      earlyBird: "incl. werkboek",
     },
     finalCta: {
       eyebrow: "Meld je nu aan",
