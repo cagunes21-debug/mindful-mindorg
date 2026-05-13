@@ -233,10 +233,10 @@ export const en = {
       title: "Prefer to grow together?",
       desc: "The 8-week MSC group program offers the same evidence-based foundation — supported by the power of a group process.",
       meta1: "8 weeks · September 2026",
-      meta2: "Early bird until August 1",
+      meta2: "Online · Monday evenings 19:00",
       cta: "View the group training",
-      from: "From",
-      earlyBird: "early bird rate",
+      from: "Investment",
+      earlyBird: "workbook included",
     },
     finalCta: {
       eyebrow: "Begin when you're ready",
