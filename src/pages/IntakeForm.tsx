@@ -198,8 +198,9 @@ export default function IntakeForm() {
             </CardHeader>
             <CardContent className="space-y-4">
               <div>
-                <Label>Waarom meld je je aan voor dit traject? *</Label>
+                <Label htmlFor="intake-reason">Waarom meld je je aan voor dit traject? *</Label>
                 <Textarea
+                  id="intake-reason"
                   value={form.reason}
                   onChange={e => handleChange("reason", e.target.value)}
                   placeholder="Wat is de aanleiding om dit traject te volgen?"
@@ -209,8 +210,9 @@ export default function IntakeForm() {
                 />
               </div>
               <div>
-                <Label>Wat is het belangrijkste thema voor jou? *</Label>
+                <Label htmlFor="intake-main-theme">Wat is het belangrijkste thema voor jou? *</Label>
                 <Input
+                  id="intake-main-theme"
                   value={form.main_theme}
                   onChange={e => handleChange("main_theme", e.target.value)}
                   placeholder="Bijv. stress, zelfkritiek, balans, rouw..."
@@ -220,8 +222,9 @@ export default function IntakeForm() {
                 />
               </div>
               <div>
-                <Label>Wat is je doel voor dit traject? *</Label>
+                <Label htmlFor="intake-goal">Wat is je doel voor dit traject? *</Label>
                 <Textarea
+                  id="intake-goal"
                   value={form.goal}
                   onChange={e => handleChange("goal", e.target.value)}
                   placeholder="Wat zou je graag willen bereiken of veranderen?"
@@ -231,8 +234,9 @@ export default function IntakeForm() {
                 />
               </div>
               <div>
-                <Label>Wat zijn je verwachtingen?</Label>
+                <Label htmlFor="intake-expectations">Wat zijn je verwachtingen?</Label>
                 <Textarea
+                  id="intake-expectations"
                   value={form.expectations}
                   onChange={e => handleChange("expectations", e.target.value)}
                   placeholder="Heb je specifieke verwachtingen van het traject of de begeleiding?"
@@ -251,8 +255,9 @@ export default function IntakeForm() {
             </CardHeader>
             <CardContent className="space-y-4">
               <div>
-                <Label>Eerdere ervaring met mindfulness of meditatie</Label>
+                <Label htmlFor="intake-mindfulness">Eerdere ervaring met mindfulness of meditatie</Label>
                 <Textarea
+                  id="intake-mindfulness"
                   value={form.mindfulness_experience}
                   onChange={e => handleChange("mindfulness_experience", e.target.value)}
                   placeholder="Heb je eerder een training, cursus of app gevolgd? Zo ja, wat was je ervaring?"
@@ -261,8 +266,9 @@ export default function IntakeForm() {
                 />
               </div>
               <div>
-                <Label>Gezondheidssituatie</Label>
+                <Label htmlFor="intake-health">Gezondheidssituatie</Label>
                 <Textarea
+                  id="intake-health"
                   value={form.health_situation}
                   onChange={e => handleChange("health_situation", e.target.value)}
                   placeholder="Is er iets dat wij moeten weten over je fysieke of mentale gezondheid? (bijv. blessures, medicatie, diagnoses)"
@@ -271,8 +277,9 @@ export default function IntakeForm() {
                 />
               </div>
               <div>
-                <Label>Beschikbaarheid</Label>
+                <Label htmlFor="intake-availability">Beschikbaarheid</Label>
                 <Input
+                  id="intake-availability"
                   value={form.availability}
                   onChange={e => handleChange("availability", e.target.value)}
                   placeholder="Welke dagen/tijden heb je voorkeur voor sessies?"
@@ -281,8 +288,9 @@ export default function IntakeForm() {
                 />
               </div>
               <div>
-                <Label>Noodcontact</Label>
+                <Label htmlFor="intake-emergency">Noodcontact</Label>
                 <Input
+                  id="intake-emergency"
                   value={form.emergency_contact}
                   onChange={e => handleChange("emergency_contact", e.target.value)}
                   placeholder="Naam en telefoonnummer van een noodcontact"
@@ -300,8 +308,9 @@ export default function IntakeForm() {
             </CardHeader>
             <CardContent>
               <div>
-                <Label>Is er nog iets dat je wilt delen?</Label>
+                <Label htmlFor="intake-notes">Is er nog iets dat je wilt delen?</Label>
                 <Textarea
+                  id="intake-notes"
                   value={form.additional_notes}
                   onChange={e => handleChange("additional_notes", e.target.value)}
                   placeholder="Alles wat je verder nog kwijt wilt..."
