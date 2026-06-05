@@ -106,7 +106,7 @@ const Navigation = () => {
           <div className="hidden md:flex items-center gap-5 lg:gap-8">
             <NavLink
               to="/"
-              className="text-sm font-medium text-muted-foreground transition-colors hover:text-primary"
+              className="text-base font-medium text-muted-foreground transition-colors hover:text-primary"
               activeClassName="text-primary"
             >
               {t("nav.home")}
@@ -114,7 +114,7 @@ const Navigation = () => {
 
             {/* Services Dropdown */}
             <DropdownMenu>
-              <DropdownMenuTrigger className={`flex items-center gap-1 text-sm font-medium transition-colors hover:text-primary ${isServicesActive ? 'text-primary' : 'text-muted-foreground'}`}>
+              <DropdownMenuTrigger className={`flex items-center gap-1 text-base font-medium transition-colors hover:text-primary ${isServicesActive ? 'text-primary' : 'text-muted-foreground'}`}>
                 {t("nav.services")}
                 <ChevronDown className="h-4 w-4" />
               </DropdownMenuTrigger>
@@ -145,7 +145,7 @@ const Navigation = () => {
 
             <NavLink
               to="/agenda"
-              className="text-sm font-medium text-muted-foreground transition-colors hover:text-primary"
+              className="text-base font-medium text-muted-foreground transition-colors hover:text-primary"
               activeClassName="text-primary"
             >
               {t("nav.agenda")}
@@ -153,7 +153,7 @@ const Navigation = () => {
 
             {/* About Dropdown */}
             <DropdownMenu>
-              <DropdownMenuTrigger className={`flex items-center gap-1 text-sm font-medium transition-colors hover:text-primary ${isAboutActive ? 'text-primary' : 'text-muted-foreground'}`}>
+              <DropdownMenuTrigger className={`flex items-center gap-1 text-base font-medium transition-colors hover:text-primary ${isAboutActive ? 'text-primary' : 'text-muted-foreground'}`}>
                 {t("nav.about")}
                 <ChevronDown className="h-4 w-4" />
               </DropdownMenuTrigger>
@@ -170,7 +170,7 @@ const Navigation = () => {
 
             {/* More Dropdown */}
             <DropdownMenu>
-              <DropdownMenuTrigger className={`flex items-center gap-1 text-sm font-medium transition-colors hover:text-primary ${isMoreActive ? 'text-primary' : 'text-muted-foreground'}`}>
+              <DropdownMenuTrigger className={`flex items-center gap-1 text-base font-medium transition-colors hover:text-primary ${isMoreActive ? 'text-primary' : 'text-muted-foreground'}`}>
                 {t("nav.more")}
                 <ChevronDown className="h-4 w-4" />
               </DropdownMenuTrigger>
@@ -255,7 +255,7 @@ const Navigation = () => {
             <div className="flex flex-col gap-4">
               <NavLink
                 to="/"
-                className="text-sm font-medium text-muted-foreground transition-colors hover:text-primary"
+                className="text-base font-medium text-muted-foreground transition-colors hover:text-primary"
                 activeClassName="text-primary"
                 onClick={() => setIsOpen(false)}
               >
@@ -266,7 +266,7 @@ const Navigation = () => {
               <div className="flex flex-col gap-2">
                 <button
                   onClick={() => setServicesOpen(!servicesOpen)}
-                  className={`flex items-center justify-between text-sm font-medium transition-colors hover:text-primary ${isServicesActive ? 'text-primary' : 'text-muted-foreground'}`}
+                  className={`flex items-center justify-between text-base font-medium transition-colors hover:text-primary ${isServicesActive ? 'text-primary' : 'text-muted-foreground'}`}
                 >
                   {t("nav.services")}
                   <ChevronDown className={`h-4 w-4 transition-transform ${servicesOpen ? 'rotate-180' : ''}`} />
@@ -275,20 +275,20 @@ const Navigation = () => {
                   <div className="flex flex-col gap-2 pl-4 border-l-2 border-terracotta-200">
                     <NavLink
                       to="/ons-aanbod"
-                      className="text-sm font-medium text-muted-foreground transition-colors hover:text-primary"
+                      className="text-base font-medium text-muted-foreground transition-colors hover:text-primary"
                       activeClassName="text-primary"
                       onClick={() => setIsOpen(false)}
                     >
                       {t("nav.servicesOverview")}
                     </NavLink>
                     {serviceLinks.slice(0, 2).map((link) => (
-                      <NavLink key={link.to} to={link.to} className="text-sm text-muted-foreground transition-colors hover:text-primary" activeClassName="text-primary font-medium" onClick={() => setIsOpen(false)}>
+                      <NavLink key={link.to} to={link.to} className="text-base text-muted-foreground transition-colors hover:text-primary" activeClassName="text-primary font-medium" onClick={() => setIsOpen(false)}>
                         {link.label}
                       </NavLink>
                     ))}
                     <div className="h-px bg-border my-1" />
                     {serviceLinks.slice(2).map((link) => (
-                      <NavLink key={link.to} to={link.to} className="text-sm text-muted-foreground transition-colors hover:text-primary" activeClassName="text-primary font-medium" onClick={() => setIsOpen(false)}>
+                      <NavLink key={link.to} to={link.to} className="text-base text-muted-foreground transition-colors hover:text-primary" activeClassName="text-primary font-medium" onClick={() => setIsOpen(false)}>
                         {link.label}
                       </NavLink>
                     ))}
@@ -298,7 +298,7 @@ const Navigation = () => {
 
               <NavLink
                 to="/agenda"
-                className="text-sm font-medium text-muted-foreground transition-colors hover:text-primary"
+                className="text-base font-medium text-muted-foreground transition-colors hover:text-primary"
                 activeClassName="text-primary"
                 onClick={() => setIsOpen(false)}
               >
@@ -309,7 +309,7 @@ const Navigation = () => {
               <div className="flex flex-col gap-2">
                 <button
                   onClick={() => setAboutOpen(!aboutOpen)}
-                  className={`flex items-center justify-between text-sm font-medium transition-colors hover:text-primary ${isAboutActive ? 'text-primary' : 'text-muted-foreground'}`}
+                  className={`flex items-center justify-between text-base font-medium transition-colors hover:text-primary ${isAboutActive ? 'text-primary' : 'text-muted-foreground'}`}
                 >
                   {t("nav.about")}
                   <ChevronDown className={`h-4 w-4 transition-transform ${aboutOpen ? 'rotate-180' : ''}`} />
@@ -317,7 +317,7 @@ const Navigation = () => {
                 {aboutOpen && (
                   <div className="flex flex-col gap-2 pl-4 border-l-2 border-terracotta-200">
                     {aboutLinks.map((link) => (
-                      <NavLink key={link.to} to={link.to} className="text-sm text-muted-foreground transition-colors hover:text-primary" activeClassName="text-primary font-medium" onClick={() => setIsOpen(false)}>
+                      <NavLink key={link.to} to={link.to} className="text-base text-muted-foreground transition-colors hover:text-primary" activeClassName="text-primary font-medium" onClick={() => setIsOpen(false)}>
                         {link.label}
                       </NavLink>
                     ))}
@@ -329,7 +329,7 @@ const Navigation = () => {
               <div className="flex flex-col gap-2">
                 <button
                   onClick={() => setMoreOpen(!moreOpen)}
-                  className={`flex items-center justify-between text-sm font-medium transition-colors hover:text-primary ${isMoreActive ? 'text-primary' : 'text-muted-foreground'}`}
+                  className={`flex items-center justify-between text-base font-medium transition-colors hover:text-primary ${isMoreActive ? 'text-primary' : 'text-muted-foreground'}`}
                 >
                   {t("nav.more")}
                   <ChevronDown className={`h-4 w-4 transition-transform ${moreOpen ? 'rotate-180' : ''}`} />
@@ -337,7 +337,7 @@ const Navigation = () => {
                 {moreOpen && (
                   <div className="flex flex-col gap-2 pl-4 border-l-2 border-terracotta-200">
                     {moreLinks.map((link) => (
-                      <NavLink key={link.to} to={link.to} className="text-sm text-muted-foreground transition-colors hover:text-primary" activeClassName="text-primary font-medium" onClick={() => setIsOpen(false)}>
+                      <NavLink key={link.to} to={link.to} className="text-base text-muted-foreground transition-colors hover:text-primary" activeClassName="text-primary font-medium" onClick={() => setIsOpen(false)}>
                         {link.label}
                       </NavLink>
                     ))}
