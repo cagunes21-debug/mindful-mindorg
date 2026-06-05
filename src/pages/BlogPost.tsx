@@ -65,6 +65,7 @@ const BlogPost = () => {
             <div className="h-64 bg-warm-100 rounded-3xl" />
           </div>
         </div>
+      </main>
       </div>
     );
   }
