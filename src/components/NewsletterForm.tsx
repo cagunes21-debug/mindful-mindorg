@@ -47,7 +47,7 @@ const NewsletterForm = ({ variant = "inline" }: NewsletterFormProps) => {
     return (
       <div className="flex items-center gap-2 text-sage-700">
         <CheckCircle className="h-5 w-5" />
-        <span className="text-sm font-medium">Je bent ingeschreven!</span>
+        <span className="text-base font-medium">Je bent ingeschreven!</span>
       </div>
     );
   }
@@ -59,7 +59,7 @@ const NewsletterForm = ({ variant = "inline" }: NewsletterFormProps) => {
           <Mail className="h-6 w-6 text-sage-700" />
         </div>
         <h3 className="text-xl font-semibold text-foreground mb-2">Blijf op de hoogte</h3>
-        <p className="text-sm text-muted-foreground mb-6 max-w-md mx-auto">
+        <p className="text-base text-muted-foreground mb-6 max-w-md mx-auto">
           Ontvang maandelijks tips over mindfulness, zelfcompassie en nieuwe artikelen direct in je inbox.
         </p>
         <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto">
@@ -79,7 +79,7 @@ const NewsletterForm = ({ variant = "inline" }: NewsletterFormProps) => {
             {isSubmitting ? <Loader2 className="h-4 w-4 animate-spin" /> : "Inschrijven"}
           </Button>
         </form>
-        <p className="text-xs text-muted-foreground mt-3">
+        <p className="text-sm text-muted-foreground mt-3">
           Geen spam, je kunt je altijd uitschrijven.
         </p>
       </div>
