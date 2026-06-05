@@ -41,6 +41,7 @@ const IndividueelHome = () => {
       />
       <OrganizationSchema />
       <Navigation />
+      <main id="main-content">
 
       {/* ════════════════════════════════════════════════════════════
           HERO
@@ -524,6 +525,7 @@ const IndividueelHome = () => {
         </div>
       </section>
 
+      </main>
       <Footer />
     </div>
   );

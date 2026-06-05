@@ -12,6 +12,7 @@ const Privacy = () => {
         description="Lees ons privacybeleid en onze algemene voorwaarden. Mindful Mind hecht veel waarde aan de bescherming van je persoonsgegevens."
       />
       <Navigation />
+      <main id="main-content">
 
       <section className="pt-24 pb-16 lg:pt-32 lg:pb-20">
         <div className="container mx-auto px-4">
@@ -139,6 +140,7 @@ const Privacy = () => {
         </div>
       </section>
 
+      </main>
       <Footer />
     </div>
   );

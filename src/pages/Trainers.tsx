@@ -68,6 +68,7 @@ const Trainers = () => {
         description="Maak kennis met onze ervaren en gecertificeerde MSC trainers. Psychologen en therapeuten die je met warmte begeleiden naar meer zelfcompassie."
       />
       <Navigation />
+      <main id="main-content">
       
       {/* Hero Section */}
       <section className="relative overflow-hidden pt-24 pb-16 lg:pt-32 lg:pb-20">
@@ -219,6 +220,7 @@ const Trainers = () => {
         </div>
       </section>
 
+      </main>
       <Footer />
     </div>
   );

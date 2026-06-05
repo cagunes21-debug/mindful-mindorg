@@ -57,6 +57,7 @@ const BlogPost = () => {
     return (
       <div className="min-h-screen bg-background">
         <Navigation />
+      <main id="main-content">
         <div className="pt-32 pb-20 container mx-auto px-4">
           <div className="max-w-3xl mx-auto space-y-6 animate-pulse">
             <div className="h-8 bg-warm-100 rounded w-1/3" />
@@ -234,6 +235,7 @@ const BlogPost = () => {
         </div>
       </article>
 
+      </main>
       <Footer />
     </div>
   );

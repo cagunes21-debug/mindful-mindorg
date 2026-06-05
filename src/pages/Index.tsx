@@ -30,6 +30,7 @@ const Index = () => {
       />
       <OrganizationSchema />
       <Navigation />
+      <main id="main-content">
 
       <HeroHome />
       <HerkenningSection />
@@ -42,6 +43,7 @@ const Index = () => {
       <GroupCtaSection />
       <FinalCtaSection />
 
+      </main>
       <Footer />
     </div>
   );

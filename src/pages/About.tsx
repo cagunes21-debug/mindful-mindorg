@@ -15,6 +15,7 @@ const About = () => {
         description="Leer meer over Mindful Mind en onze gecertificeerde trainers. Wij begeleiden je met warmte en expertise op je reis naar meer zelfcompassie."
       />
       <Navigation />
+      <main id="main-content">
       
       {/* Hero */}
       <section className="relative overflow-hidden pt-28 pb-20 lg:pt-36 lg:pb-28 bg-warm-50">
@@ -310,6 +311,7 @@ const About = () => {
         </div>
       </section>
 
+      </main>
       <Footer />
     </div>
   );

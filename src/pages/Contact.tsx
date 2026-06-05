@@ -14,6 +14,7 @@ const Contact = () => {
         description="Neem contact met ons op voor vragen over onze zelfcompassie trainingen. We helpen je graag bij het vinden van de juiste training."
       />
       <Navigation />
+      <main id="main-content">
       
       {/* Hero Section */}
       <section className="relative overflow-hidden pt-24 pb-16 lg:pt-32 lg:pb-20">
@@ -184,6 +185,7 @@ const Contact = () => {
         </div>
       </section>
 
+      </main>
       <Footer />
     </div>
   );

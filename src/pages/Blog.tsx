@@ -68,6 +68,7 @@ const Blog = () => {
         { name: "Blog", url: "/blog" },
       ]} />
       <Navigation />
+      <main id="main-content">
 
       {/* Hero */}
       <section className="relative overflow-hidden pt-24 pb-16 lg:pt-32 lg:pb-20">
@@ -229,6 +230,7 @@ const Blog = () => {
         </div>
       </section>
 
+      </main>
       <Footer />
     </div>
   );

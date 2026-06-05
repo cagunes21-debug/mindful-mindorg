@@ -25,6 +25,7 @@ const MindfulSelfCompassion = () => {
         canonical="https://mindfulmind.nl/mindful-self-compassion"
       />
       <Navigation />
+      <main id="main-content">
 
       {/* ═══════ HERO ═══════ */}
       <section className="relative min-h-screen flex flex-col justify-center items-center text-center px-6 pt-24 pb-16 overflow-hidden">
@@ -214,6 +215,7 @@ const MindfulSelfCompassion = () => {
         </div>
       </section>
 
+      </main>
       <Footer />
     </div>
   );

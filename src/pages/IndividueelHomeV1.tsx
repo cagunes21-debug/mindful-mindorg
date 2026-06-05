@@ -27,6 +27,7 @@ const IndividueelHome = () => {
       />
       <OrganizationSchema />
       <Navigation />
+      <main id="main-content">
       <HeroSectionV2 />
       <IntroSection />
       <WhatIsMscSection />
@@ -34,6 +35,7 @@ const IndividueelHome = () => {
       <GroupTrainingTeaser />
       <CTASection />
       <TrainersSection />
+      </main>
       <Footer />
     </div>
   );

@@ -82,6 +82,7 @@ const FAQ = () => {
         </script>
       </Helmet>
       <Navigation />
+      <main id="main-content">
 
       <section className="relative overflow-hidden pt-24 pb-16 lg:pt-32 lg:pb-20">
         <div className="absolute inset-0 bg-gradient-to-b from-terracotta-100/40 via-background to-background" />
@@ -162,6 +163,7 @@ const FAQ = () => {
         </div>
       </section>
 
+      </main>
       <Footer />
     </div>
   );

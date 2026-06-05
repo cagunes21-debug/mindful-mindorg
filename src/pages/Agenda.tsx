@@ -133,6 +133,7 @@ const Agenda = () => {
 
       <SEO title={t("agenda.seoTitle")} description={t("agenda.seoDesc")} />
       <Navigation />
+      <main id="main-content">
 
       {/* Hero */}
       <section className="relative overflow-hidden pt-24 pb-16 lg:pt-32 lg:pb-20">
@@ -607,6 +608,7 @@ const Agenda = () => {
         </div>
       </section>
 
+      </main>
       <Footer />
     </div>
   );
