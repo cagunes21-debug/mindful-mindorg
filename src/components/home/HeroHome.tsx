@@ -26,10 +26,16 @@ const HeroHome = () => {
             <p>{t("home.hero.line2")}</p>
             <p>{t("home.hero.line3")}</p>
           </div>
-          <h1 className="text-xl md:text-2xl lg:text-3xl font-light text-secondary/80 leading-relaxed mb-10 max-w-lg">
+          <h1 className="text-xl md:text-2xl lg:text-3xl font-light text-secondary/80 leading-relaxed mb-6 max-w-lg">
             {t("home.hero.headline")}
           </h1>
-          <div className="flex flex-col sm:flex-row gap-3">
+          <div className="inline-flex items-center gap-2 mb-8 px-4 py-1.5 rounded-full bg-primary-foreground/10 border border-primary-foreground/20 backdrop-blur-sm">
+            <span className="h-1.5 w-1.5 rounded-full bg-terracotta-300 animate-pulse" />
+            <span className="text-xs tracking-wide text-primary-foreground/90">
+              {t("home.hero.startBadge")}
+            </span>
+          </div>
+          <div className="flex flex-col sm:flex-row flex-wrap gap-3">
             <Link
               to="/contact"
               className="inline-flex items-center justify-center bg-primary text-primary-foreground h-12 px-8 rounded-full font-semibold text-sm tracking-wide uppercase hover:opacity-90 transition-opacity shadow-lg shadow-primary/20"
@@ -41,6 +47,12 @@ const HeroHome = () => {
               className="inline-flex items-center justify-center border border-primary-foreground/30 text-primary-foreground h-12 px-8 rounded-full font-semibold text-sm tracking-wide uppercase hover:bg-primary-foreground/10 transition-colors backdrop-blur-sm"
             >
               {t("home.hero.ctaSecondary")}
+            </Link>
+            <Link
+              to="/ons-aanbod"
+              className="inline-flex items-center justify-center text-primary-foreground/90 h-12 px-4 rounded-full text-sm tracking-wide hover:text-primary-foreground underline-offset-4 hover:underline transition-colors"
+            >
+              {t("home.hero.ctaTertiary")} →
             </Link>
           </div>
         </motion.div>

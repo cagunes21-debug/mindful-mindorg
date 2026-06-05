@@ -87,7 +87,7 @@ const NewsletterForm = ({ variant = "inline" }: NewsletterFormProps) => {
   }
 
   return (
-    <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-2 w-full">
+    <form onSubmit={handleSubmit} className="flex flex-col gap-2 w-full">
       <label htmlFor="newsletter-email" className="sr-only">E-mailadres voor nieuwsbrief</label>
       <Input
         id="newsletter-email"
