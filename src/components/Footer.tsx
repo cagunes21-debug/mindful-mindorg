@@ -33,7 +33,7 @@ const Footer = () => {
               <Link to="/" className="inline-block">
                 <p className="font-serif italic text-2xl text-terracotta-600 mb-3">Mindful Mind</p>
               </Link>
-              <p className="text-muted-foreground text-sm">
+              <p className="text-base text-muted-foreground">
                 {t("footer.tagline")}
               </p>
             </div>
@@ -46,7 +46,7 @@ const Footer = () => {
                   <li key={link.to + link.label}>
                     <Link 
                       to={link.to} 
-                      className="text-sm text-muted-foreground hover:text-terracotta-600 transition-colors"
+                      className="text-base text-muted-foreground hover:text-terracotta-600 transition-colors"
                     >
                       {link.label}
                     </Link>
@@ -63,7 +63,7 @@ const Footer = () => {
                   <li key={link.to + link.label}>
                     <Link 
                       to={link.to} 
-                      className="text-sm text-muted-foreground hover:text-terracotta-600 transition-colors"
+                      className="text-base text-muted-foreground hover:text-terracotta-600 transition-colors"
                     >
                       {link.label}
                     </Link>
@@ -78,7 +78,7 @@ const Footer = () => {
               <div className="space-y-3 mb-6">
                 <a 
                   href="mailto:mindful-mind@outlook.com" 
-                  className="flex items-center gap-3 text-sm text-muted-foreground hover:text-terracotta-600 transition-colors group"
+                  className="flex items-center gap-3 text-base text-muted-foreground hover:text-terracotta-600 transition-colors group"
                 >
                   <div className="h-8 w-8 rounded-full bg-white flex items-center justify-center group-hover:bg-terracotta-50 transition-colors">
                     <Mail className="h-4 w-4" />
@@ -87,7 +87,7 @@ const Footer = () => {
                 </a>
                 <a 
                   href="tel:+31625633379" 
-                  className="flex items-center gap-3 text-sm text-muted-foreground hover:text-terracotta-600 transition-colors group"
+                  className="flex items-center gap-3 text-base text-muted-foreground hover:text-terracotta-600 transition-colors group"
                 >
                   <div className="h-8 w-8 rounded-full bg-white flex items-center justify-center group-hover:bg-terracotta-50 transition-colors">
                     <Phone className="h-4 w-4" />
@@ -96,7 +96,7 @@ const Footer = () => {
                 </a>
                 <a 
                   href="https://wa.me/31625633379" 
-                  className="flex items-center gap-3 text-sm text-muted-foreground hover:text-terracotta-600 transition-colors group"
+                  className="flex items-center gap-3 text-base text-muted-foreground hover:text-terracotta-600 transition-colors group"
                 >
                   <div className="h-8 w-8 rounded-full bg-white flex items-center justify-center group-hover:bg-terracotta-50 transition-colors">
                     <MessageCircle className="h-4 w-4" />
@@ -107,7 +107,7 @@ const Footer = () => {
                   href="https://instagram.com/chala.gunes" 
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center gap-3 text-sm text-muted-foreground hover:text-terracotta-600 transition-colors group"
+                  className="flex items-center gap-3 text-base text-muted-foreground hover:text-terracotta-600 transition-colors group"
                 >
                   <div className="h-8 w-8 rounded-full bg-white flex items-center justify-center group-hover:bg-terracotta-50 transition-colors">
                     <Instagram className="h-4 w-4" />
@@ -115,21 +115,21 @@ const Footer = () => {
                   @chala.gunes
                 </a>
               </div>
-              <h3 className="text-sm font-semibold text-foreground mb-2">{t("footer.newsletter")}</h3>
+              <h3 className="text-base font-semibold text-foreground mb-2">{t("footer.newsletter")}</h3>
               <NewsletterForm variant="inline" />
             </div>
           </div>
 
           <div className="border-t border-warm-200 pt-8 flex flex-col sm:flex-row items-center justify-between gap-4">
-            <div className="text-sm text-muted-foreground">
+            <div className="text-base text-muted-foreground">
               <p>© {new Date().getFullYear()} Mindful Mind. {t("footer.rights")}</p>
               <p className="mt-1">KvK: 91593700</p>
             </div>
             <div className="flex gap-4">
-              <Link to="/privacy" className="text-sm text-muted-foreground hover:text-terracotta-600 transition-colors">
+              <Link to="/privacy" className="text-base text-muted-foreground hover:text-terracotta-600 transition-colors">
                 {t("footer.privacy")}
               </Link>
-              <Link to="/algemene-voorwaarden" className="text-sm text-muted-foreground hover:text-terracotta-600 transition-colors">
+              <Link to="/algemene-voorwaarden" className="text-base text-muted-foreground hover:text-terracotta-600 transition-colors">
                 {t("footer.terms")}
               </Link>
             </div>

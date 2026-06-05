@@ -87,22 +87,24 @@ const NewsletterForm = ({ variant = "inline" }: NewsletterFormProps) => {
   }
 
   return (
-    <form onSubmit={handleSubmit} className="flex gap-2">
+    <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-2 w-full">
+      <label htmlFor="newsletter-email" className="sr-only">E-mailadres voor nieuwsbrief</label>
       <Input
+        id="newsletter-email"
         type="email"
         placeholder="Je e-mailadres"
         value={email}
         onChange={(e) => setEmail(e.target.value)}
         required
-        className="rounded-full bg-white border-warm-200 text-sm h-9 flex-1"
+        className="rounded-full bg-white border-warm-200 flex-1 min-w-0"
       />
       <Button
         type="submit"
         disabled={isSubmitting}
-        size="sm"
-        className="rounded-full bg-terracotta-600 hover:bg-terracotta-700 text-white h-9 px-4"
+        aria-label="Inschrijven voor nieuwsbrief"
+        className="rounded-full bg-terracotta-600 hover:bg-terracotta-700 text-white shrink-0"
       >
-        {isSubmitting ? <Loader2 className="h-4 w-4 animate-spin" /> : <Mail className="h-4 w-4" />}
+        {isSubmitting ? <Loader2 className="h-4 w-4 animate-spin" /> : <><Mail className="h-4 w-4" /><span>Inschrijven</span></>}
       </Button>
     </form>
   );
