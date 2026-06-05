@@ -138,6 +138,7 @@ const Coaching = () => {
       />
       <FAQSchema items={faqItems} />
       <Navigation />
+      <main id="main-content">
       
       {/* ═══════ 1. HERO ═══════ */}
       <section className="relative overflow-hidden pt-28 pb-24 lg:pt-36 lg:pb-32">
@@ -593,6 +594,7 @@ const Coaching = () => {
         </div>
       </section>
 
+      </main>
       <Footer />
     </div>
   );

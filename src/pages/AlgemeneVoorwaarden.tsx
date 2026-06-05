@@ -11,6 +11,7 @@ const AlgemeneVoorwaarden = () => {
         description="Algemene voorwaarden van Mindful Mind voor trainingen, coaching en retreats op het gebied van mindfulness en zelfcompassie."
       />
       <Navigation />
+      <main id="main-content">
 
       <section className="pt-24 pb-16 lg:pt-32 lg:pb-20">
         <div className="container mx-auto px-4">
@@ -143,6 +144,7 @@ const AlgemeneVoorwaarden = () => {
         </div>
       </section>
 
+      </main>
       <Footer />
     </div>
   );

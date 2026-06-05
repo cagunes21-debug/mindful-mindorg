@@ -59,6 +59,7 @@ const OverCagla = () => {
         canonical="https://mindfulmind.nl/over-cagla"
       />
       <Navigation />
+      <main id="main-content">
 
       {/* ═══════ OPENING ═══════ */}
       <section className="relative min-h-screen flex flex-col justify-center items-center text-center px-6 pt-24 pb-16 overflow-hidden">
@@ -261,6 +262,7 @@ const OverCagla = () => {
         </div>
       </section>
 
+      </main>
       <Footer />
     </div>
   );

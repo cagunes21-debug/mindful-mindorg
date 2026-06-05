@@ -97,6 +97,7 @@ const FAQ = () => {
       />
       <FAQSchema items={faqCategories.flatMap(cat => cat.items)} />
       <Navigation />
+      <main id="main-content">
 
       <section className="pt-24 pb-16 lg:pt-32 lg:pb-20">
         <div className="container mx-auto px-4">
@@ -155,6 +156,7 @@ const FAQ = () => {
         </div>
       </section>
 
+      </main>
       <Footer />
     </div>
   );

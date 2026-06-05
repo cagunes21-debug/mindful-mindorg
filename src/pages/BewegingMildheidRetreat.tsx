@@ -167,6 +167,7 @@ const BewegingMildheidRetreat = () => {
       />
       <FAQSchema items={faqItems} />
       <Navigation />
+      <main id="main-content">
       
       {/* Hero Section */}
       <section className="relative overflow-hidden pt-24 pb-20 lg:pt-32 lg:pb-28">
@@ -765,6 +766,7 @@ const BewegingMildheidRetreat = () => {
         </div>
       </section>
 
+      </main>
       <Footer />
     </div>
   );

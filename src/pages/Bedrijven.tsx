@@ -80,6 +80,7 @@ const Bedrijven = () => {
   return (
     <div className="min-h-screen bg-background">
       <Navigation />
+      <main id="main-content">
       <SEO 
         title="Voor Bedrijven | Mindfulness & Welzijn op de Werkvloer"
         description="Investeer in het welzijn van uw medewerkers. Incompany mindfulness trainingen, workshops en lezingen voor meer veerkracht en minder stress."
@@ -307,6 +308,7 @@ const Bedrijven = () => {
         </div>
       </section>
 
+      </main>
       <Footer />
     </div>
   );

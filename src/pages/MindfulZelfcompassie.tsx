@@ -46,6 +46,7 @@ const MindfulZelfcompassie = () => {
         price="550"
       />
       <Navigation />
+      <main id="main-content">
 
       {/* Hero — compact, product-focused */}
       <section className="relative pt-28 pb-20 lg:pt-36 lg:pb-28 bg-warm-50 overflow-hidden">
@@ -588,6 +589,7 @@ const MindfulZelfcompassie = () => {
         </div>
       </section>
 
+      </main>
       <Footer />
 
     </div>

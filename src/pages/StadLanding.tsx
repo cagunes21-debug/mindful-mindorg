@@ -64,6 +64,7 @@ const StadLanding = () => {
         { name: `Training ${city.name}`, url: `/zelfcompassie-training/${city.slug}` },
       ]} />
       <Navigation />
+      <main id="main-content">
 
       {/* Hero */}
       <section className="relative overflow-hidden pt-24 pb-16 lg:pt-32 lg:pb-20">
@@ -383,6 +384,7 @@ const StadLanding = () => {
         </div>
       </section>
 
+      </main>
       <Footer />
     </div>
   );

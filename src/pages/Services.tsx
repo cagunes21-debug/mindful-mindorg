@@ -15,6 +15,7 @@ const Services = () => {
     <div className="min-h-screen bg-background">
       <SEO title={t("services.seoTitle")} description={t("services.seoDesc")} />
       <Navigation />
+      <main id="main-content">
 
       {/* Hero Section */}
       <section className="relative overflow-hidden pt-24 pb-20 lg:pt-32 lg:pb-28">
@@ -278,6 +279,7 @@ const Services = () => {
         </div>
       </section>
 
+      </main>
       <Footer />
     </div>
   );
