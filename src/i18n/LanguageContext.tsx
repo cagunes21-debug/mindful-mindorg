@@ -111,13 +111,10 @@ export const LanguageProvider = ({ children }: { children: ReactNode }) => {
     (dutch: string): string => {
       if (language === "nl") return dutch;
       const entry = groupTrainingPageDict[dutch];
-      if (!entry) return dutch;
-      if (typeof entry === "string") {
-        // legacy: string means EN only
-        return language === "en" ? entry : dutch;
-      }
-      // entry is per-language map
-      return entry[language] ?? entry.en ?? dutch;
+      // Dict currently only has EN translations; for ES/TR fall back to Dutch
+      // until the dict is expanded per-language.
+      if (language === "en" && entry) return entry;
+      return dutch;
     },
     [language],
   );
