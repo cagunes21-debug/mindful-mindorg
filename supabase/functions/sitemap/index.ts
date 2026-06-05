@@ -6,22 +6,27 @@ const corsHeaders = {
   "Content-Type": "application/xml; charset=utf-8",
 };
 
-const BASE_URL = "https://mindfulmind.nl";
+const BASE_URL = "https://mindful-mind.org";
 
 const staticPages = [
   { loc: "/", changefreq: "weekly", priority: "1.0" },
   { loc: "/ons-aanbod", changefreq: "monthly", priority: "0.9" },
+  { loc: "/msc-training", changefreq: "monthly", priority: "0.9" },
+  { loc: "/msc-groepstraining", changefreq: "monthly", priority: "0.9" },
+  { loc: "/mindful-self-compassion", changefreq: "monthly", priority: "0.8" },
   { loc: "/coaching", changefreq: "monthly", priority: "0.8" },
   { loc: "/bedrijven", changefreq: "monthly", priority: "0.8" },
   { loc: "/barcelona-retreat", changefreq: "monthly", priority: "0.8" },
   { loc: "/agenda", changefreq: "weekly", priority: "0.8" },
   { loc: "/blog", changefreq: "weekly", priority: "0.8" },
   { loc: "/over-ons", changefreq: "monthly", priority: "0.7" },
+  { loc: "/over-cagla", changefreq: "monthly", priority: "0.7" },
   { loc: "/trainers", changefreq: "monthly", priority: "0.7" },
   { loc: "/ervaringen", changefreq: "monthly", priority: "0.7" },
   { loc: "/contact", changefreq: "monthly", priority: "0.7" },
   { loc: "/faq", changefreq: "monthly", priority: "0.6" },
   { loc: "/privacy", changefreq: "yearly", priority: "0.3" },
+  { loc: "/algemene-voorwaarden", changefreq: "yearly", priority: "0.3" },
 ];
 
 const cities = [
