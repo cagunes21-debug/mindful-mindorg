@@ -40,7 +40,7 @@ const Footer = () => {
 
             {/* Ons Aanbod */}
             <div>
-              <h3 className="font-semibold text-foreground mb-4">{t("footer.ourServices")}</h3>
+              <h2 className="font-semibold text-foreground mb-4">{t("footer.ourServices")}</h2>
               <ul className="space-y-2">
                 {serviceLinks.map((link) => (
                   <li key={link.to + link.label}>
@@ -57,7 +57,7 @@ const Footer = () => {
 
             {/* Quick Links */}
             <div>
-              <h3 className="font-semibold text-foreground mb-4">{t("footer.quickLinks")}</h3>
+              <h2 className="font-semibold text-foreground mb-4">{t("footer.quickLinks")}</h2>
               <ul className="space-y-2">
                 {quickLinks.map((link) => (
                   <li key={link.to + link.label}>
@@ -74,7 +74,7 @@ const Footer = () => {
 
             {/* Contact & Newsletter */}
             <div>
-              <h3 className="font-semibold text-foreground mb-4">{t("footer.contactTitle")}</h3>
+              <h2 className="font-semibold text-foreground mb-4">{t("footer.contactTitle")}</h2>
               <div className="space-y-3 mb-6">
                 <a 
                   href="mailto:mindful-mind@outlook.com" 
@@ -115,7 +115,7 @@ const Footer = () => {
                   @chala.gunes
                 </a>
               </div>
-              <h4 className="text-sm font-semibold text-foreground mb-2">{t("footer.newsletter")}</h4>
+              <h3 className="text-sm font-semibold text-foreground mb-2">{t("footer.newsletter")}</h3>
               <NewsletterForm variant="inline" />
             </div>
           </div>
