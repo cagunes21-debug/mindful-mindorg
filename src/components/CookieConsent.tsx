@@ -35,17 +35,21 @@ const CookieConsent = () => {
           exit={{ opacity: 0, y: 100 }}
           transition={{ duration: 0.3 }}
           className="fixed bottom-0 left-0 right-0 z-50 p-4 md:p-6"
+          role="dialog"
+          aria-modal="false"
+          aria-labelledby="cookie-consent-title"
+          aria-describedby="cookie-consent-desc"
         >
-          <div className="max-w-4xl mx-auto bg-white rounded-2xl shadow-2xl border border-warm-200 p-6 md:flex md:items-center md:gap-6">
+          <div className="relative max-w-4xl mx-auto bg-white rounded-2xl shadow-2xl border border-warm-200 p-6 md:flex md:items-center md:gap-6">
             <div className="flex items-start gap-4 flex-1 mb-4 md:mb-0">
               <div className="h-10 w-10 rounded-full bg-terracotta-100 flex items-center justify-center flex-shrink-0">
-                <Cookie className="h-5 w-5 text-terracotta-600" />
+                <Cookie className="h-5 w-5 text-terracotta-600" aria-hidden="true" />
               </div>
               <div>
-                <h3 className="font-medium text-foreground mb-1">
+                <h3 id="cookie-consent-title" className="font-medium text-foreground mb-1">
                   {tx("Deze website gebruikt cookies")}
                 </h3>
-                <p className="text-sm text-muted-foreground">
+                <p id="cookie-consent-desc" className="text-sm text-muted-foreground">
                   {tx("Wij gebruiken cookies om je ervaring te verbeteren en om te begrijpen hoe onze website wordt gebruikt. Je kunt je voorkeuren op elk moment aanpassen.")}
                 </p>
               </div>
@@ -67,10 +71,10 @@ const CookieConsent = () => {
             </div>
             <button
               onClick={declineCookies}
-              className="absolute top-4 right-4 text-muted-foreground hover:text-foreground md:hidden"
+              className="absolute top-4 right-4 text-muted-foreground hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring rounded-full p-1"
               aria-label={tx("Sluiten")}
             >
-              <X className="h-5 w-5" />
+              <X className="h-5 w-5" aria-hidden="true" />
             </button>
           </div>
         </motion.div>

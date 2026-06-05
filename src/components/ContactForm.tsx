@@ -140,8 +140,11 @@ export function ContactForm() {
             onChange={(e) => handleChange("name", e.target.value)}
             className={`rounded-xl ${errors.name ? "border-destructive" : ""}`}
             disabled={isSubmitting}
+            aria-invalid={!!errors.name}
+            aria-describedby={errors.name ? "name-error" : undefined}
+            required
           />
-          {errors.name && <p className="text-sm text-destructive">{errors.name}</p>}
+          {errors.name && <p id="name-error" role="alert" className="text-sm text-destructive">{errors.name}</p>}
         </div>
 
         <div className="space-y-2">
@@ -154,8 +157,11 @@ export function ContactForm() {
             onChange={(e) => handleChange("email", e.target.value)}
             className={`rounded-xl ${errors.email ? "border-destructive" : ""}`}
             disabled={isSubmitting}
+            aria-invalid={!!errors.email}
+            aria-describedby={errors.email ? "email-error" : undefined}
+            required
           />
-          {errors.email && <p className="text-sm text-destructive">{errors.email}</p>}
+          {errors.email && <p id="email-error" role="alert" className="text-sm text-destructive">{errors.email}</p>}
         </div>
       </div>
 
@@ -203,8 +209,11 @@ export function ContactForm() {
           onChange={(e) => handleChange("message", e.target.value)}
           className={`min-h-[150px] rounded-xl ${errors.message ? "border-destructive" : ""}`}
           disabled={isSubmitting}
+          aria-invalid={!!errors.message}
+          aria-describedby={errors.message ? "message-error" : undefined}
+          required
         />
-        {errors.message && <p className="text-sm text-destructive">{errors.message}</p>}
+        {errors.message && <p id="message-error" role="alert" className="text-sm text-destructive">{errors.message}</p>}
       </div>
 
       {/* Honeypot field - hidden from users, catches bots */}

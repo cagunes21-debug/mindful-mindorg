@@ -187,8 +187,11 @@ export function RegistrationForm({
           onChange={(e) => handleChange("name", e.target.value)}
           className={`rounded-xl ${errors.name ? "border-destructive" : ""}`}
           disabled={isSubmitting}
+          aria-invalid={!!errors.name}
+          aria-describedby={errors.name ? "reg-name-error" : undefined}
+          required
         />
-        {errors.name && <p className="text-sm text-destructive">{errors.name}</p>}
+        {errors.name && <p id="reg-name-error" role="alert" className="text-sm text-destructive">{errors.name}</p>}
       </div>
 
       <div className="space-y-2">
@@ -201,8 +204,11 @@ export function RegistrationForm({
           onChange={(e) => handleChange("email", e.target.value)}
           className={`rounded-xl ${errors.email ? "border-destructive" : ""}`}
           disabled={isSubmitting}
+          aria-invalid={!!errors.email}
+          aria-describedby={errors.email ? "reg-email-error" : undefined}
+          required
         />
-        {errors.email && <p className="text-sm text-destructive">{errors.email}</p>}
+        {errors.email && <p id="reg-email-error" role="alert" className="text-sm text-destructive">{errors.email}</p>}
       </div>
 
       <div className="space-y-2">
@@ -227,7 +233,9 @@ export function RegistrationForm({
           onChange={(e) => handleChange("remarks", e.target.value)}
           className="min-h-[80px] rounded-xl"
           disabled={isSubmitting}
+          aria-describedby={errors.remarks ? "reg-remarks-error" : undefined}
         />
+        {errors.remarks && <p id="reg-remarks-error" role="alert" className="text-sm text-destructive">{errors.remarks}</p>}
       </div>
 
       {/* Terms and conditions */}
