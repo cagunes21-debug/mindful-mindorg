@@ -10,7 +10,7 @@ interface SEOProps {
   noindex?: boolean;
 }
 
-const BASE_URL = "https://mindfulmind.nl";
+const BASE_URL = "https://mindful-mind.org";
 
 const defaultMeta = {
   siteName: "Mindful Mind",

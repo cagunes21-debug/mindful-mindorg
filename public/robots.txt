@@ -14,9 +14,15 @@ User-agent: *
 Allow: /
 Disallow: /admin
 Disallow: /admin/
+Disallow: /admin-cms
 Disallow: /login
-Disallow: /mijn-training
+Disallow: /reset-password
+Disallow: /mijn-trainingen
+Disallow: /training/
+Disallow: /intake/
+Disallow: /vragenlijst/
 Disallow: /betaling-succes
 Disallow: /betaling-geannuleerd
+Disallow: /home-v1
 
-Sitemap: https://mindfulmind.nl/sitemap.xml
+Sitemap: https://mindful-mind.org/sitemap.xml
