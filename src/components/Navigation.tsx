@@ -236,14 +236,16 @@ const Navigation = () => {
             </a>
             <LanguageToggle />
             <button
-              className="p-2"
+              className="p-2 rounded-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
               onClick={() => setIsOpen(!isOpen)}
-              aria-label="Toggle menu"
+              aria-label={isOpen ? "Sluit menu" : "Open menu"}
+              aria-expanded={isOpen}
+              aria-controls="mobile-nav"
             >
               {isOpen ? (
-                <X className="h-6 w-6 text-foreground" />
+                <X className="h-6 w-6 text-foreground" aria-hidden="true" />
               ) : (
-                <Menu className="h-6 w-6 text-foreground" />
+                <Menu className="h-6 w-6 text-foreground" aria-hidden="true" />
               )}
             </button>
           </div>
@@ -251,7 +253,7 @@ const Navigation = () => {
 
         {/* Mobile Navigation */}
         {isOpen && (
-          <div className="md:hidden py-4 border-t border-border">
+          <div id="mobile-nav" className="md:hidden py-4 border-t border-border">
             <div className="flex flex-col gap-4">
               <NavLink
                 to="/"

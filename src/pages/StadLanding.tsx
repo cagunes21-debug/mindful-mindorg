@@ -285,7 +285,7 @@ const StadLanding = () => {
                     <p className="text-2xl font-semibold text-terracotta-600">€550</p>
                   </div>
                   <Button asChild variant="outline" className="rounded-full border-terracotta-200 text-terracotta-600 hover:bg-terracotta-50 w-full">
-                    <Link to="/coaching">Meer informatie</Link>
+                    <Link to="/coaching" aria-label="Meer informatie over individuele begeleiding">Meer informatie</Link>
                   </Button>
                 </div>
               </StaggerItem>
@@ -342,9 +342,9 @@ const StadLanding = () => {
             <ScrollReveal delay={0.2}>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
                 <Button asChild size="lg" className="bg-white text-terracotta-700 hover:bg-terracotta-50 px-10 py-7 text-base rounded-full shadow-lg">
-                  <Link to="/">
+                  <Link to="/" aria-label={`Meer informatie over MSC training in ${city.name}`}>
                     Meer informatie
-                    <ArrowRight className="ml-2 h-5 w-5" />
+                    <ArrowRight className="ml-2 h-5 w-5" aria-hidden="true" />
                   </Link>
                 </Button>
                 <Button asChild size="lg" variant="outline" className="border-white/50 text-white hover:bg-white/10 px-10 py-7 text-base rounded-full">

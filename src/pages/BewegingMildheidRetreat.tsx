@@ -757,7 +757,7 @@ const BewegingMildheidRetreat = () => {
                 </Link>
               </Button>
               <Button asChild size="lg" className="bg-white/20 border-2 border-white text-white hover:bg-white/30 rounded-full px-8">
-                <Link to="/contact">
+                <Link to="/contact" aria-label="Lees meer over het Beweging & Mildheid Retreat">
                   Lees meer
                 </Link>
               </Button>
