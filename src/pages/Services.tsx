@@ -83,7 +83,7 @@ const Services = () => {
                   <p className="text-terracotta-600 font-medium mb-6">{t("services.group.lead")}</p>
                   <p className="text-muted-foreground text-lg leading-relaxed mb-8">{t("services.group.desc")}</p>
 
-                  <h4 className="font-medium text-foreground mb-4">{t("services.group.whatYouGet")}</h4>
+                  <h3 className="font-medium text-foreground mb-4">{t("services.group.whatYouGet")}</h3>
                   <ul className="space-y-3 mb-8">
                     {[t("services.group.f1"), t("services.group.f2"), t("services.group.f3"), t("services.group.f4")].map((item, i) => (
                       <li key={i} className="flex items-center gap-3 text-foreground">
@@ -161,7 +161,7 @@ const Services = () => {
                   <p className="text-terracotta-600 font-medium mb-6">{t("services.individual.lead")}</p>
                   <p className="text-muted-foreground text-lg leading-relaxed mb-6">{t("services.individual.desc")}</p>
 
-                  <h4 className="font-medium text-foreground mb-4">{t("services.individual.whatYouGet")}</h4>
+                  <h3 className="font-medium text-foreground mb-4">{t("services.individual.whatYouGet")}</h3>
                   <ul className="space-y-3 mb-8">
                     {[t("services.individual.f1"), t("services.individual.f2"), t("services.individual.f3"), t("services.individual.f4"), t("services.individual.f5")].map((item, i) => (
                       <li key={i} className="flex items-center gap-3 text-foreground">
