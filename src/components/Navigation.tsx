@@ -95,7 +95,14 @@ const Navigation = () => {
   const isMoreActive = moreLinks.some(link => location.pathname === link.to);
 
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 bg-background/95 backdrop-blur-sm border-b border-border">
+    <>
+      <a
+        href="#main-content"
+        className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[60] focus:bg-background focus:text-foreground focus:px-5 focus:py-3 focus:rounded-xl focus:shadow-lg focus:ring-2 focus:ring-ring focus:font-medium focus:text-base"
+      >
+        Spring naar inhoud
+      </a>
+      <nav className="fixed top-0 left-0 right-0 z-50 bg-background/95 backdrop-blur-sm border-b border-border">
       <div className="container mx-auto px-4">
         <div className="flex h-16 items-center justify-between">
           <NavLink to="/" className="flex items-center gap-2">
@@ -376,6 +383,7 @@ const Navigation = () => {
         )}
       </div>
     </nav>
+    </>
   );
 };
 
