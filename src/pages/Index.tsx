@@ -7,7 +7,7 @@ import ScrollProgressBar from "@/components/ScrollProgressBar";
 import WhatsAppButton from "@/components/WhatsAppButton";
 import CookieConsent from "@/components/CookieConsent";
 import HeroHome from "@/components/home/HeroHome";
-import HerkenningSection from "@/components/home/HerkenningSection";
+
 import ProfilesSection from "@/components/home/ProfilesSection";
 import MisconceptsSection from "@/components/home/MisconceptsSection";
 import MscSection from "@/components/home/MscSection";
@@ -35,11 +35,10 @@ const Index = () => {
       <main id="main-content">
 
       <HeroHome />
-      <HerkenningSection />
       <ProfilesSection />
       <MisconceptsSection />
-      <MscSection />
       <ResultsHomeSection />
+      <MscSection />
       <PricingHomeSection />
       <StepsSection />
       <TestimonialsHomeSection />
