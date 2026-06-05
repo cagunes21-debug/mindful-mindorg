@@ -65,6 +65,7 @@ const BlogPost = () => {
             <div className="h-64 bg-warm-100 rounded-3xl" />
           </div>
         </div>
+      </main>
       </div>
     );
   }
@@ -109,6 +110,7 @@ const BlogPost = () => {
         { name: post.title, url: `/blog/${post.slug}` },
       ]} />
       <Navigation />
+      <main id="main-content">
 
       <article className="pt-24 pb-16 lg:pt-32 lg:pb-20">
         <div className="container mx-auto px-4">

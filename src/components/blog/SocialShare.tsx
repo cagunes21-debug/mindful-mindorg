@@ -42,8 +42,8 @@ const SocialShare = ({ url, title, description = "" }: SocialShareProps) => {
   };
 
   return (
-    <div className="flex items-center gap-2">
-      <span className="text-sm text-muted-foreground mr-1">Deel:</span>
+    <div className="flex items-center gap-2" role="group" aria-label="Deel dit artikel">
+      <span className="text-sm text-muted-foreground mr-1" aria-hidden="true">Deel:</span>
       {links.map((link) => (
         <a
           key={link.label}
@@ -51,17 +51,17 @@ const SocialShare = ({ url, title, description = "" }: SocialShareProps) => {
           target="_blank"
           rel="noopener noreferrer"
           aria-label={`Deel op ${link.label}`}
-          className="h-9 w-9 rounded-full border border-warm-200 bg-warm-50 flex items-center justify-center text-muted-foreground hover:text-terracotta-600 hover:border-terracotta-300 transition-colors"
+          className="h-11 w-11 rounded-full border border-warm-200 bg-warm-50 flex items-center justify-center text-muted-foreground hover:text-terracotta-600 hover:border-terracotta-300 transition-colors"
         >
-          <link.icon className="h-4 w-4" />
+          <link.icon className="h-4 w-4" aria-hidden="true" />
         </a>
       ))}
       <button
         onClick={copyLink}
-        aria-label="Kopieer link"
-        className="h-9 w-9 rounded-full border border-warm-200 bg-warm-50 flex items-center justify-center text-muted-foreground hover:text-terracotta-600 hover:border-terracotta-300 transition-colors"
+        aria-label={copied ? "Link gekopieerd" : "Kopieer link"}
+        className="h-11 w-11 rounded-full border border-warm-200 bg-warm-50 flex items-center justify-center text-muted-foreground hover:text-terracotta-600 hover:border-terracotta-300 transition-colors"
       >
-        {copied ? <Check className="h-4 w-4 text-sage-600" /> : <Link2 className="h-4 w-4" />}
+        {copied ? <Check className="h-4 w-4 text-sage-600" aria-hidden="true" /> : <Link2 className="h-4 w-4" aria-hidden="true" />}
       </button>
     </div>
   );

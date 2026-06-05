@@ -366,11 +366,12 @@ const Auth = () => {
       return (
         <form onSubmit={handleVerifyOtp} className="space-y-4">
           <div className="space-y-3 text-center">
-            <p className="text-sm text-muted-foreground">
+            <p id="otp-desc" className="text-sm text-muted-foreground">
               Voer de 6-cijferige code in die we naar <strong>{email}</strong> hebben gestuurd.
             </p>
-            <div className="flex justify-center">
-              <InputOTP maxLength={6} value={otpCode} onChange={setOtpCode}>
+            <div className="flex justify-center" role="group" aria-labelledby="otp-label" aria-describedby="otp-desc">
+              <span id="otp-label" className="sr-only">Verificatiecode (6 cijfers)</span>
+              <InputOTP maxLength={6} value={otpCode} onChange={setOtpCode} aria-label="Verificatiecode" aria-describedby={errors.otp ? "otp-error" : "otp-desc"} aria-invalid={!!errors.otp}>
                 <InputOTPGroup>
                   <InputOTPSlot index={0} />
                   <InputOTPSlot index={1} />
@@ -381,7 +382,7 @@ const Auth = () => {
                 </InputOTPGroup>
               </InputOTP>
             </div>
-            {errors.otp && <p className="text-sm text-destructive">{errors.otp}</p>}
+            {errors.otp && <p id="otp-error" role="alert" className="text-sm text-destructive">{errors.otp}</p>}
           </div>
           <Button type="submit" className="w-full bg-sage-600 hover:bg-sage-700 text-white" disabled={otpCode.length !== 6}>
             Code verifiëren

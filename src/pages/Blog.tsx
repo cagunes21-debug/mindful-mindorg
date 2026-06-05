@@ -113,9 +113,11 @@ const Blog = () => {
       <section className="py-4 border-b border-border bg-white sticky top-16 z-40">
         <div className="container mx-auto px-4">
           <div className="mx-auto max-w-2xl mb-3">
+            <label htmlFor="blog-search" className="sr-only">Zoek artikelen</label>
             <div className="relative">
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" aria-hidden="true" />
               <Input
+                id="blog-search"
                 type="search"
                 placeholder="Zoek artikelen..."
                 value={searchQuery}
@@ -124,11 +126,12 @@ const Blog = () => {
               />
             </div>
           </div>
-          <div className="flex flex-wrap justify-center gap-2">
+          <div className="flex flex-wrap justify-center gap-2" role="group" aria-label="Filter op categorie">
             {categories.map((cat) => (
               <button
                 key={cat.value}
                 onClick={() => setActiveCategory(cat.value)}
+                aria-pressed={activeCategory === cat.value}
                 className={`rounded-full px-4 py-2 text-sm font-medium transition-colors ${
                   activeCategory === cat.value
                     ? "bg-terracotta-600 text-white"
@@ -192,7 +195,7 @@ const Blog = () => {
                             {post.excerpt}
                           </p>
                         )}
-                        <span className="text-sm font-medium text-terracotta-600 flex items-center gap-1 group-hover:gap-2 transition-all">
+                        <span className="text-sm font-medium text-terracotta-600 flex items-center gap-1 group-hover:gap-2 transition-all" aria-hidden="true">
                           Lees meer <ArrowRight className="h-4 w-4" />
                         </span>
                       </div>

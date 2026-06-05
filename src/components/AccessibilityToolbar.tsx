@@ -71,11 +71,12 @@ const AccessibilityToolbar = () => {
                 size="sm"
                 onClick={handleDecrease}
                 disabled={fontSizeIndex === 0}
-                className="h-9 w-9 p-0 rounded-full"
+                aria-label="Tekst verkleinen"
+                className="h-11 w-11 p-0 rounded-full"
               >
-                <Minus className="h-4 w-4" />
+                <Minus className="h-4 w-4" aria-hidden="true" />
               </Button>
-              <span className="text-sm text-muted-foreground font-medium">
+              <span className="text-sm text-muted-foreground font-medium" aria-live="polite">
                 {FONT_SIZES[fontSizeIndex].label}
               </span>
               <Button
@@ -83,9 +84,10 @@ const AccessibilityToolbar = () => {
                 size="sm"
                 onClick={handleIncrease}
                 disabled={fontSizeIndex === FONT_SIZES.length - 1}
-                className="h-9 w-9 p-0 rounded-full"
+                aria-label="Tekst vergroten"
+                className="h-11 w-11 p-0 rounded-full"
               >
-                <Plus className="h-4 w-4" />
+                <Plus className="h-4 w-4" aria-hidden="true" />
               </Button>
             </div>
             <Button
@@ -109,8 +111,10 @@ const AccessibilityToolbar = () => {
             : "bg-white hover:bg-warm-50 text-foreground border border-warm-200"
         }`}
         aria-label="Toegankelijkheid opties"
+        aria-expanded={isOpen}
+        aria-controls="a11y-panel"
       >
-        <Type className={`h-5 w-5 ${isOpen ? "text-white" : ""}`} />
+        <Type className={`h-5 w-5 ${isOpen ? "text-white" : ""}`} aria-hidden="true" />
       </Button>
     </div>
   );
