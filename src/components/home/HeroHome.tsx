@@ -26,9 +26,9 @@ const HeroHome = () => {
             <p>{t("home.hero.line2")}</p>
             <p>{t("home.hero.line3")}</p>
           </div>
-          <h1 className="text-xl md:text-2xl lg:text-3xl font-light text-secondary/80 leading-relaxed mb-6 max-w-lg">
+          <p className="text-sm md:text-base font-normal text-secondary/70 leading-relaxed mb-6 max-w-md">
             {t("home.hero.headline")}
-          </h1>
+          </p>
           <div className="inline-flex items-center gap-2 mb-8 px-4 py-1.5 rounded-full bg-primary-foreground/10 border border-primary-foreground/20 backdrop-blur-sm">
             <span className="h-1.5 w-1.5 rounded-full bg-terracotta-300 animate-pulse" />
             <span className="text-xs tracking-wide text-primary-foreground/90">
