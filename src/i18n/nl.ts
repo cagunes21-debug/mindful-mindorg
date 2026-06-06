@@ -111,11 +111,11 @@ export const nl = {
   },
   home: {
     hero: {
-      eyebrow: "Mindful Mind · Individuele begeleiding",
+      eyebrow: "Mindful Mind · Zelfcompassie training",
       line1: "Meer rust.",
       line2: "Meer zachtheid.",
       line3: "Meer stevigheid in jezelf.",
-      headline: "Acht weken naar gemiddeld 36% minder stress en meer zelfvertrouwen — wetenschappelijk onderbouwd, zacht in de praktijk.",
+      headline: "Eindelijk ruimte voor jezelf — zonder dat je harder hoeft te werken. Deelnemers slapen beter, piekeren minder en voelen zich steviger in hun schoenen. Wetenschappelijk onderbouwd.",
       profiles: {
         eyebrow: "Voor wie",
         title: "Herken jij jezelf",
@@ -141,7 +141,7 @@ export const nl = {
         m3A: "Het programma vraagt ongeveer 2,5 uur per week (één avond plus dagelijkse korte oefeningen van 10-15 minuten). De meeste deelnemers ervaren dat ze juist tijd terugkrijgen — minder piekeren, beter slapen, helderder keuzes.",
       },
       startBadge: "Volgende start · september 2026 · nog enkele plekken",
-      ctaPrimary: "Gratis kennismaking",
+      ctaPrimary: "Individuele begeleiding",
       ctaSecondary: "Groepstraining",
       ctaTertiary: "Welk programma past bij mij?",
     },
