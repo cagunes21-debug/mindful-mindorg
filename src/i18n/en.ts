@@ -191,6 +191,13 @@ export const en = {
       selfcompassion: "self-compassion",
       anxiety: "anxiety",
       resilience: "resilience",
+      outcomesQuote: "What participants often notice after a program:",
+      outcomes1: "Less rumination",
+      outcomes2: "Better sleep",
+      outcomes3: "More calm in their mind",
+      outcomes4: "Less self-criticism",
+      outcomes5: "Setting boundaries without guilt",
+      outcomes6: "More confidence in themselves",
       source: "* Meta-analyses of MSC research (Neff & Germer, 2013–2023)",
     },
     offerings: {

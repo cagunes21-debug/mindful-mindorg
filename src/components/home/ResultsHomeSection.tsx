@@ -12,6 +12,14 @@ const ResultsHomeSection = () => {
     { from: t("home.results.shift4From"), to: t("home.results.shift4To") },
     { from: t("home.results.shift5From"), to: t("home.results.shift5To") },
   ];
+  const outcomes = [
+    t("home.results.outcomes1"),
+    t("home.results.outcomes2"),
+    t("home.results.outcomes3"),
+    t("home.results.outcomes4"),
+    t("home.results.outcomes5"),
+    t("home.results.outcomes6"),
+  ];
   const stats = [
     { dir: "down", label: t("home.results.stress"), num: "36%" },
     { dir: "up", label: t("home.results.selfcompassion"), num: "67%" },
@@ -44,6 +52,25 @@ const ResultsHomeSection = () => {
                     <span className="text-sm text-muted-foreground text-right">{s.from}</span>
                     <span className="text-primary text-center font-light">→</span>
                     <span className="text-sm text-foreground font-medium">{s.to}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </ScrollReveal>
+
+          <ScrollReveal>
+            <div className="text-center mb-10">
+              <p className="font-serif italic text-xl md:text-2xl text-foreground leading-relaxed mb-8">
+                {t("home.results.outcomesQuote")}
+              </p>
+              <div className="grid sm:grid-cols-2 gap-4 md:gap-5 max-w-4xl mx-auto">
+                {outcomes.map((item, i) => (
+                  <div
+                    key={i}
+                    className="flex items-start gap-4 bg-warm-100/60 border border-terracotta-100/40 rounded-2xl p-5 md:p-6"
+                  >
+                    <span className="mt-1.5 h-2.5 w-2.5 rounded-full bg-terracotta-400 flex-shrink-0" />
+                    <p className="text-foreground text-base leading-relaxed text-left">{item}</p>
                   </div>
                 ))}
               </div>
