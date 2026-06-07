@@ -21,10 +21,10 @@ const HeroHome = () => {
           <p className="text-secondary/70 text-xs tracking-[0.3em] uppercase mb-5 font-medium">
             {t("home.hero.eyebrow")}
           </p>
-          <div className="text-primary-foreground text-2xl md:text-3xl font-serif leading-[1.8] mb-6">
+          <div className="text-primary-foreground text-2xl md:text-4xl font-serif leading-[1.3] mb-6">
             <p>{t("home.hero.line1")}</p>
             <p>{t("home.hero.line2")}</p>
-            <p>{t("home.hero.line3")}</p>
+            {t("home.hero.line3") && <p>{t("home.hero.line3")}</p>}
           </div>
           <p className="text-sm md:text-base font-normal text-secondary/70 leading-relaxed mb-6 max-w-md">
             {t("home.hero.headline")}
