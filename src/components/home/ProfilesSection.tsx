@@ -53,6 +53,15 @@ const ProfilesSection = () => {
             </ScrollReveal>
           ))}
         </div>
+        {t("home.hero.profiles.profileNote") && (
+          <div className="max-w-3xl mx-auto text-center mt-12">
+            <ScrollReveal>
+              <p className="text-muted-foreground leading-[1.85] text-base italic">
+                {t("home.hero.profiles.profileNote")}
+              </p>
+            </ScrollReveal>
+          </div>
+        )}
       </div>
     </section>
   );
