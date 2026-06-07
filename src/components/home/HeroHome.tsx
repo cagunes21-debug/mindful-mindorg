@@ -26,6 +26,11 @@ const HeroHome = () => {
             <p>{t("home.hero.line2")}</p>
             {t("home.hero.line3") && <p>{t("home.hero.line3")}</p>}
           </div>
+          {t("home.hero.subline") && (
+            <p className="text-lg md:text-xl font-serif text-primary-foreground/80 leading-relaxed mb-4 max-w-md">
+              {t("home.hero.subline")}
+            </p>
+          )}
           <p className="text-sm md:text-base font-normal text-secondary/70 leading-relaxed mb-6 max-w-md">
             {t("home.hero.headline")}
           </p>
