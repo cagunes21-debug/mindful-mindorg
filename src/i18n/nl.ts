@@ -121,7 +121,7 @@ export const nl = {
         eyebrow: "Herkenning",
         title: "Misschien herken je",
         titleAccent: "jezelf hierin",
-        sub: "Drie patronen die we vaak horen. Misschien herken je iets — of een mix van alle drie.",
+        sub: "",
         introLine1: "Altijd maar doorgaan. Nooit genoeg.",
         introLine2: "Je doet veel voor anderen, maar bent vaak harder voor jezelf dan je ooit voor een vriend of vriendin zou zijn.",
         introLine3: "Misschien herken je jezelf in één van deze verhalen.",
