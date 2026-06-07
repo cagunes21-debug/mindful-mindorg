@@ -232,9 +232,9 @@ export const tr = {
     trainer: {
       eyebrow: "Rehberlik",
       title: "Eğitmenlerle tanışın",
-      role: "Beden Odaklı Psikoterapist · MSC Eğitmeni",
+      role: "Travma terapisti · MSC Eğitmeni · Öz-şefkat uzmanı",
       quote: "\"Gerçek değişim, kendinize nasıl davrandığınızla başlar.\"",
-      bio: "Hayata daha fazla şefkat, dayanıklılık ve öz-şefkatle yaklaşmanıza yardımcı oluyorum. Rehberliğimde MSC'yi beden odaklı terapi ve trauma-sensitieve mindfulness ile birleştiriyorum.",
+      bio: "Bana gelen pek çok kişi yıllardır devam etmeye alışmış. Güçlü olmaya. Bakım vermeye. Performans göstermeye. Dışarıdan her şey yolunda gibi görünür — içeride ise giderek daha fazla enerji ister. Çalışmamda sizi kendinizin daha iyi bir versiyonu olmaya değil, kendinizle farklı bir ilişki kurmaya yönlendiriyorum — birlikte, zor anlarda kendinizi baskı altına almak ya da eleştirmek yerine nasıl destekleyebileceğinizi keşfediyoruz.",
       tag1: "MSC sertifikalı",
       tag2: "Beden odaklı terapi",
       tag3: "Travma duyarlı",
