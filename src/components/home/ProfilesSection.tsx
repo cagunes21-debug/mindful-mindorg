@@ -42,12 +42,12 @@ const ProfilesSection = () => {
         <div className="max-w-6xl mx-auto grid md:grid-cols-3 gap-6 md:gap-8">
           {profiles.map((p, i) => (
             <ScrollReveal key={i} delay={i * 0.1}>
-              <div className="h-full bg-warm-50/70 backdrop-blur-sm border border-terracotta-100/60 rounded-3xl p-8 md:p-9 hover:border-terracotta-200 transition-colors">
-                <div className="h-10 w-10 rounded-full bg-terracotta-100 text-terracotta-600 flex items-center justify-center font-serif text-lg mb-5">
+              <div className="h-full bg-warm-100/80 backdrop-blur-sm border border-terracotta-200/70 rounded-3xl p-8 md:p-10 hover:border-terracotta-300 hover:shadow-lg hover:shadow-terracotta-900/5 transition-all duration-300">
+                <div className="h-11 w-11 rounded-full bg-terracotta-200 text-terracotta-700 flex items-center justify-center font-serif text-lg mb-6 shadow-sm">
                   {i + 1}
                 </div>
-                <h3 className="font-serif text-xl text-foreground mb-3 leading-tight">{p.title}</h3>
-                <p className="text-muted-foreground leading-[1.8] text-[0.95rem]">{p.desc}</p>
+                <h3 className="font-serif text-xl text-foreground mb-4 leading-snug">{p.title}</h3>
+                <p className="text-foreground/70 leading-relaxed text-[0.97rem]">{p.desc}</p>
               </div>
             </ScrollReveal>
           ))}
