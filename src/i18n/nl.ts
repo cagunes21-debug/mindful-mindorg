@@ -145,6 +145,7 @@ export const nl = {
         p2Desc: "Je voelt aan wat mensen nodig hebben. Je helpt. Je luistert. Je draagt. Maar ergens onderweg ben je jezelf kwijtgeraakt. Je weet precies hoe je liefdevol kunt zijn naar anderen — alleen niet naar jezelf.",
         p3Title: "Je hoofd staat nooit uit",
         p3Desc: "Je bent moe. Maar slapen helpt niet echt. Je blijft denken. Analyseren. Vooruit plannen. Zelfs op momenten waarop je eigenlijk wilt genieten.",
+        profileNote: "Je hoeft jezelf niet precies in één profiel te herkennen. Veel mensen herkennen een combinatie van meerdere.",
       },
       misconcepts: {
         eyebrow: "Eerlijk antwoord",
