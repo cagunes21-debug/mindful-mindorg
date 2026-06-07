@@ -31,7 +31,7 @@ const HerkenningSection = () => {
                   .split("\n\n")
                   .map((s) => s.trim())
                   .filter(Boolean);
-                const imagineItems = parts.filter((s) => s.startsWith("Dat") || s.startsWith("That") || s.startsWith("Que"));
+                const imagineItems = parts.filter((s) => (s.startsWith("Dat") || s.startsWith("That") || s.startsWith("Que")) && !/zelfcompassie|self-compassion|autocompasión|öz şefkat/i.test(s));
                 const closingShort = parts.filter(
                   (s) => !imagineItems.includes(s) && s.length < 25
                 );
