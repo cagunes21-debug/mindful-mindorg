@@ -53,12 +53,14 @@ const HeroHome = () => {
             >
               {t("home.hero.ctaSecondary")}
             </Link>
-            <Link
-              to="/ons-aanbod"
-              className="inline-flex items-center justify-center text-primary-foreground/90 h-12 px-4 rounded-full text-sm tracking-wide hover:text-primary-foreground underline-offset-4 hover:underline transition-colors"
-            >
-              {t("home.hero.ctaTertiary")} →
-            </Link>
+            {t("home.hero.ctaTertiary") && (
+              <Link
+                to="/ons-aanbod"
+                className="inline-flex items-center justify-center text-primary-foreground/90 h-12 px-4 rounded-full text-sm tracking-wide hover:text-primary-foreground underline-offset-4 hover:underline transition-colors"
+              >
+                {t("home.hero.ctaTertiary")} →
+              </Link>
+            )}
           </div>
         </motion.div>
       </div>
