@@ -44,8 +44,6 @@ const Index = () => {
       <TestimonialsHomeSection />
       <TrainerHomeSection />
       <MscSection />
-      <PricingHomeSection />
-      <GroupCtaSection />
       <FinalCtaSection />
 
 
