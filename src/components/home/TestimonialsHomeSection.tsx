@@ -20,12 +20,9 @@ const TestimonialsHomeSection = () => {
               <span className="inline-block text-xs tracking-[0.3em] uppercase text-terracotta-500 font-medium mb-4">
                 {t("home.testimonials.eyebrow")}
               </span>
-              <h2 className="text-3xl md:text-4xl font-serif text-foreground mb-4">
+              <h2 className="text-3xl md:text-4xl font-serif text-foreground">
                 {t("home.testimonials.titleA")} <em className="italic text-primary">{t("home.testimonials.titleB")}</em>
               </h2>
-              <p className="text-muted-foreground font-light max-w-md mx-auto">
-                {t("home.testimonials.sub")}
-              </p>
             </div>
           </ScrollReveal>
 
