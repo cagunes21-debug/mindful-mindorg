@@ -26,6 +26,11 @@ const HeroHome = () => {
             <p>{t("home.hero.line2")}</p>
             {t("home.hero.line3") && <p>{t("home.hero.line3")}</p>}
           </div>
+          {t("home.hero.subline") && (
+            <p className="text-lg md:text-xl font-serif text-primary-foreground/80 leading-relaxed mb-4 max-w-md">
+              {t("home.hero.subline")}
+            </p>
+          )}
           <p className="text-sm md:text-base font-normal text-secondary/70 leading-relaxed mb-6 max-w-md">
             {t("home.hero.headline")}
           </p>
@@ -48,12 +53,14 @@ const HeroHome = () => {
             >
               {t("home.hero.ctaSecondary")}
             </Link>
-            <Link
-              to="/ons-aanbod"
-              className="inline-flex items-center justify-center text-primary-foreground/90 h-12 px-4 rounded-full text-sm tracking-wide hover:text-primary-foreground underline-offset-4 hover:underline transition-colors"
-            >
-              {t("home.hero.ctaTertiary")} →
-            </Link>
+            {t("home.hero.ctaTertiary") && (
+              <Link
+                to="/ons-aanbod"
+                className="inline-flex items-center justify-center text-primary-foreground/90 h-12 px-4 rounded-full text-sm tracking-wide hover:text-primary-foreground underline-offset-4 hover:underline transition-colors"
+              >
+                {t("home.hero.ctaTertiary")} →
+              </Link>
+            )}
           </div>
         </motion.div>
       </div>
