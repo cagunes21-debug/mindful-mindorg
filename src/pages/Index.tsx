@@ -38,10 +38,10 @@ const Index = () => {
       <HeroHome />
       <ProfilesSection />
       <HerkenningSection />
+      <ResultsHomeSection />
       <TestimonialsHomeSection />
       <TrainerHomeSection />
       <MscSection />
-      <ResultsHomeSection />
       <PricingHomeSection />
       <GroupCtaSection />
       <FinalCtaSection />
