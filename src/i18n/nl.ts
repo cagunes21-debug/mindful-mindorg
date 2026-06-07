@@ -262,9 +262,9 @@ export const nl = {
     trainer: {
       eyebrow: "Over Çağla",
       title: "Hoi, ik ben Çağla.",
-      role: "Lichaamsgerichte Psychotherapeut · MSC Trainer",
-      quote: "\"Ik help mensen om een andere relatie met zichzelf op te bouwen.\"",
-      bio: "Veel mensen die bij mij komen zijn jarenlang gewend geweest om door te gaan. Sterk te zijn. Te zorgen. Te presteren. Van buiten lijkt het vaak alsof het goed gaat — van binnen kost het steeds meer energie. Ik help mensen niet door zichzelf te verbeteren, maar door zichzelf te leren ondersteunen.",
+      role: "Traumatherapeut · MSC Trainer · Specialist in Zelfcompassie",
+      quote: "\"Echte verandering begint bij hoe je met jezelf omgaat.\"",
+      bio: "Veel mensen die bij mij komen zijn jarenlang gewend geweest om door te gaan. Sterk te zijn. Te zorgen. Te presteren. Van buiten lijkt het vaak alsof het goed gaat — van binnen kost het steeds meer energie. In mijn begeleiding help ik je niet om een betere versie van jezelf te worden. Ik help je om een andere relatie met jezelf op te bouwen — samen onderzoeken we hoe je jezelf kunt ondersteunen op momenten waarop je het moeilijk hebt, in plaats van jezelf onder druk te zetten of te bekritiseren.",
       tag1: "MSC gecertificeerd",
       tag2: "Lichaamsgerichte therapie",
       tag3: "Trauma-sensitief",
