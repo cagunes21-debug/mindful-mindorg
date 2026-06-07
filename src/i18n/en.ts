@@ -61,6 +61,8 @@ export const en = {
     introP4: "I help people build a different relationship with themselves.",
     introP5: "Not by improving themselves.",
     introP6: "But by learning to support themselves.",
+    introOutsideLabel: "From the outside",
+    introInsideLabel: "On the inside",
     chapter1Label: "Chapter I",
     chapter1Title: "Where it",
     chapter1TitleAccent: "began",
