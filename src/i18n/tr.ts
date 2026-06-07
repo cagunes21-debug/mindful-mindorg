@@ -49,7 +49,7 @@ export const tr = {
     storyOf: "Hikayesi",
     subtitle: "Beden odaklı psikoterapist. Öz-şefkat eğitmeni. Kökleri meditasyonda, dünya tarafından şekillendirilmiş.",
     readMore: "Devamını oku",
-    introLabel: "ÇAĞLA HAKKINDA",
+    introLabel: "ÇAĞLA GÜNEŞ HAKKINDA",
     introSubtitle: "Rehberiniz bir insan, bir yöntem değil",
     introGreeting: "Merhaba, ben Çağla.",
     introP1: "Bana gelen birçok insan yıllarca sürekli ilerlemeye alışkın olmuştur.",

@@ -108,12 +108,6 @@ const OverCagla = () => {
             </ScrollReveal>
           </div>
 
-          {/* Greeting */}
-          <ScrollReveal delay={0.1}>
-            <p className="text-2xl md:text-3xl font-light text-foreground text-center mb-14">
-              {t("overCagla.introGreeting")}
-            </p>
-          </ScrollReveal>
 
           {/* Block 1 — the pattern */}
           <ScrollReveal delay={0.15}>

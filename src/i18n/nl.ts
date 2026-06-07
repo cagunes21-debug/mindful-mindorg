@@ -49,7 +49,7 @@ export const nl = {
     storyOf: "Het verhaal van",
     subtitle: "Lichaamsgerichte psychotherapeut. Zelfcompassie trainer. Geworteld in meditatie, gevormd door de wereld.",
     readMore: "Lees verder",
-    introLabel: "OVER ÇAĞLA",
+    introLabel: "OVER ÇAĞLA GÜNEŞ",
     introSubtitle: "Je begeleider is een mens, geen methode",
     introGreeting: "Hoi, ik ben Çağla.",
     introP1: "Veel mensen die bij mij komen zijn jarenlang gewend geweest om door te gaan.",
