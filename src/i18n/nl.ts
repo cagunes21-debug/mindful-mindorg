@@ -111,11 +111,12 @@ export const nl = {
   },
   home: {
     hero: {
-      eyebrow: "Mindful Mind · Zelfcompassie Training",
+      eyebrow: "MINDFUL MIND · ZELFCOMPASSIE TRAINING",
       line1: "Je hoeft niet harder",
       line2: "je best te doen.",
       line3: "",
-      headline: "Misschien ben je moe van altijd sterk zijn. Van zorgen voor iedereen behalve jezelf. Van die stem in je hoofd die zegt dat het beter moet, meer moet, sneller moet. Zelfcompassie helpt je om met meer rust, mildheid en veerkracht in het leven te staan — zonder jezelf te hoeven veranderen.",
+      subline: "Meer rust. Minder zelfkritiek. Meer ruimte voor jezelf.",
+      headline: "Leer anders omgaan met stress, perfectionisme en de druk die je jezelf oplegt.",
       profiles: {
         eyebrow: "Herkenning",
         title: "Misschien herken je",
@@ -143,7 +144,7 @@ export const nl = {
       startBadge: "Volgende start · september 2026 · nog enkele plekken",
       ctaPrimary: "Plan een gratis kennismaking",
       ctaSecondary: "Bekijk de groepstraining",
-      ctaTertiary: "Welk programma past bij mij?",
+      ctaTertiary: "",
     },
     herkenning: {
       eyebrow: "Verlangen",
