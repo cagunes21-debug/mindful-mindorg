@@ -47,8 +47,7 @@ const ProfilesSection = () => {
                   {i + 1}
                 </div>
 
-                <h3 className="font-serif text-xl text-foreground mb-4 leading-snug">{p.title}</h3>
-                <p className="text-foreground/70 leading-relaxed text-[0.97rem]">{p.desc}</p>
+                <h3 className="font-serif text-xl text-foreground leading-snug">{p.title}</h3>
               </div>
             </ScrollReveal>
           ))}
