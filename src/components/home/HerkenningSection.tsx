@@ -26,12 +26,14 @@ const HerkenningSection = () => {
                 {t("home.herkenning.titleA")}{" "}
                 <span className="text-primary italic font-light">{t("home.herkenning.titleB")}</span>
               </h2>
-              <p className="text-muted-foreground leading-[1.85] text-base md:text-lg">
+              <p className="text-muted-foreground leading-[1.85] text-base md:text-lg whitespace-pre-line">
                 {t("home.herkenning.p1")}
               </p>
-              <p className="text-foreground leading-[1.85] text-base md:text-lg mt-4 font-medium">
-                {t("home.herkenning.p2")}
-              </p>
+              {t("home.herkenning.p2") && (
+                <p className="text-foreground leading-[1.85] text-base md:text-lg mt-4 font-medium">
+                  {t("home.herkenning.p2")}
+                </p>
+              )}
             </ScrollReveal>
           </div>
         </div>
