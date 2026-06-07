@@ -129,7 +129,6 @@ export const nl = {
       line1: "Je hoeft niet harder",
       line2: "je best te doen.",
       line3: "",
-      subline: "Meer rust. Minder zelfkritiek. Meer ruimte voor jezelf.",
       headline: "Leer anders omgaan met stress, perfectionisme en de druk die je jezelf oplegt.",
       profiles: {
         eyebrow: "Herkenning",
