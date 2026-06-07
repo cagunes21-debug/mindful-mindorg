@@ -139,7 +139,7 @@ export const en = {
       titleB: "Never feeling like it's enough.",
       p1: "You're doing your best — at work, for your family, for the people around you. But inside, there's a voice saying it still isn't enough.",
       p2: "Not because something is wrong with you. But because no one ever taught you a different way to relate to yourself.",
-      cardsIntro: "You don't have to fit yourself into one single profile. Most people recognize a combination of several.",
+      
       quote: "What if you could offer yourself the same kindness you so easily give to others?",
       item1: "You are often hard or critical toward yourself",
       item2: "You feel responsible for everything",
