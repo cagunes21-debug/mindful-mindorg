@@ -194,6 +194,9 @@ const HerkenningSection = () => {
               </div>
             </ScrollReveal>
             <ScrollReveal delay={0.15}>
+              <p className="text-center text-foreground/80 text-base md:text-lg leading-[1.7] mb-8 md:mb-10 max-w-2xl mx-auto">
+                {t("home.herkenning.cardsIntro")}
+              </p>
               <div className="grid sm:grid-cols-2 gap-4 md:gap-5">
                 {recognitionItems.map((item, i) => (
                   <div

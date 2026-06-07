@@ -139,6 +139,7 @@ export const es = {
       titleB: "Nunca es suficiente.",
       p1: "Te esfuerzas al máximo — en tu trabajo, con tu familia, con las personas que te rodean. Pero esa vocecita interior no deja de decir que no es suficiente.",
       p2: "No porque haya algo malo en ti. Sino porque nunca aprendiste a relacionarte contigo misma de otra manera.",
+      cardsIntro: "No tienes que encajar exactamente en un solo perfil. La mayoría de las personas se reconocen en una combinación de varios.",
       quote: "¿Y si te dieras a ti misma la misma amabilidad que tan fácilmente das a los demás?",
       item1: "A menudo eres estricta o crítica contigo misma",
       item2: "Te sientes responsable de todo rápidamente",

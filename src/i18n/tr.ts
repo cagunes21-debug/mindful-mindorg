@@ -139,6 +139,7 @@ export const tr = {
       titleB: "Asla yeterli değil.",
       p1: "Elinden geleni yapıyorsun — işin, ailen, çevrendeki insanlar için. Ama içindeki o ses sürekli yeterince iyi olmadığını söylüyor.",
       p2: "Sende bir sorun olduğu için değil. Sadece kendine farklı davranmayı hiç öğrenmediğin için.",
+      cardsIntro: "Kendini tam olarak tek bir profile uydurmak zorunda değilsin. Çoğu insan kendini birkaçının kombinasyonunda tanır.",
       quote: "Ya başkalarına bu kadar kolayca gösterdiğin şefkati kendine de göstersen?",
       item1: "Kendine karşı sık sık sert veya eleştirelsin",
       item2: "Her şey için kendini çabucak sorumlu hissediyorsun",
