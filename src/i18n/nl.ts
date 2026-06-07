@@ -61,6 +61,8 @@ export const nl = {
     introP4: "Ik help mensen om een andere relatie met zichzelf op te bouwen.",
     introP5: "Niet door zichzelf te verbeteren.",
     introP6: "Maar door zichzelf te leren ondersteunen.",
+    introOutsideLabel: "Van buiten",
+    introInsideLabel: "Van binnen",
     chapter1Label: "Hoofdstuk I",
     chapter1Title: "Waar het",
     chapter1TitleAccent: "begon",

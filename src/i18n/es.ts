@@ -61,6 +61,8 @@ export const es = {
     introP4: "Ayudo a las personas a construir una relación diferente consigo mismas.",
     introP5: "No mejorándose a sí mismas.",
     introP6: "Sino aprendiendo a apoyarse a sí mismas.",
+    introOutsideLabel: "Desde fuera",
+    introInsideLabel: "Por dentro",
     chapter1Label: "Capítulo I",
     chapter1Title: "Donde todo",
     chapter1TitleAccent: "empezó",

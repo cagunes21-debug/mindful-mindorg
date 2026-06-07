@@ -61,6 +61,8 @@ export const tr = {
     introP4: "İnsanların kendileriyle farklı bir ilişki kurmalarına yardım ediyorum.",
     introP5: "Kendilerini geliştirerek değil.",
     introP6: "Kendilerini desteklemeyi öğrenerek.",
+    introOutsideLabel: "Dışarıdan",
+    introInsideLabel: "İçeride",
     chapter1Label: "Bölüm I",
     chapter1Title: "Her şeyin",
     chapter1TitleAccent: "başladığı yer",
