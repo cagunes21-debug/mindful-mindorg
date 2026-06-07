@@ -12,31 +12,6 @@ const MscSection = () => {
   ];
   return (
     <>
-      <section className="py-16 md:py-20 bg-background">
-        <div className="container mx-auto px-6 md:px-10">
-          <ScrollReveal>
-            <div className="max-w-3xl mx-auto bg-gradient-to-br from-sage-50 via-sage-50/50 to-warm-50 rounded-3xl border border-sage-200/50 p-8 md:p-12 text-center shadow-sm">
-              <div className="inline-flex items-center justify-center h-12 w-12 rounded-full bg-sage-100 mb-6">
-                <Leaf className="h-5 w-5 text-sage-600" />
-              </div>
-              <p className="text-xl md:text-2xl text-foreground leading-[1.6] font-serif mb-4">
-                {t("home.msc.statement")}
-              </p>
-              <p className="text-muted-foreground leading-relaxed max-w-md mx-auto mb-6">
-                {t("home.msc.sub")}
-              </p>
-              <Link
-                to="/msc-training#wat-is-msc"
-                className="inline-flex items-center gap-2 text-sm font-semibold text-primary hover:text-primary/80 transition-colors"
-              >
-                {t("home.msc.moreLink")}
-                <ArrowRight className="h-4 w-4" />
-              </Link>
-            </div>
-          </ScrollReveal>
-        </div>
-      </section>
-
       <section className="py-16 md:py-20 bg-[#F8F5EE]">
         <div className="container mx-auto px-6 md:px-10">
           <div className="max-w-3xl mx-auto">
