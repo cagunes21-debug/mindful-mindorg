@@ -232,9 +232,9 @@ export const es = {
     trainer: {
       eyebrow: "Acompañamiento",
       title: "Conoce a los formadores",
-      role: "Psicoterapeuta Corporal · Formadora MSC",
+      role: "Terapeuta de trauma · Formadora MSC · Especialista en autocompasión",
       quote: "\"El verdadero cambio empieza por cómo te tratas a ti misma.\"",
-      bio: "Te ayudo a vivir con más amabilidad, resiliencia y autocompasión. En mi acompañamiento, combino MSC con terapia corporal y mindfulness sensible al trauma.",
+      bio: "Muchas personas que vienen a mí llevan años acostumbradas a seguir adelante. A ser fuertes. A cuidar. A rendir. Desde fuera parece que todo va bien — por dentro cuesta cada vez más energía. En mi acompañamiento no te ayudo a ser una mejor versión de ti misma. Te ayudo a construir una relación distinta contigo misma — juntas exploramos cómo sostenerte en los momentos difíciles, en lugar de presionarte o criticarte.",
       tag1: "Certificada en MSC",
       tag2: "Terapia corporal",
       tag3: "Sensible al trauma",
