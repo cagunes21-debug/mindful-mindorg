@@ -234,7 +234,7 @@ export const en = {
       title: "Meet the facilitator",
       role: "Trauma therapist · MSC facilitator · Self-compassion specialist",
       quote: "\"Real change begins with how you relate to yourself.\"",
-      bio: "Many people who come to me have spent years pushing through. Being strong. Caring for others. Performing. From the outside it often looks like everything is fine — on the inside it takes more and more energy. In my work I don't help you become a better version of yourself. I help you build a different relationship with yourself — together we explore how to support yourself in difficult moments, instead of pressuring or criticising yourself.",
+      bio: "Many people who come to me are used to pushing through, being strong, and caring for others. From the outside, it often looks like everything is fine, while inside it costs more and more energy. Together, we explore how you can support yourself instead of pressuring or criticising yourself.",
       tag1: "MSC certified",
       tag2: "Body-oriented therapy",
       tag3: "Trauma-sensitive",

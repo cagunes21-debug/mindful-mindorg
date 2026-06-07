@@ -234,7 +234,7 @@ export const es = {
       title: "Conoce a los formadores",
       role: "Terapeuta de trauma · Formadora MSC · Especialista en autocompasión",
       quote: "\"El verdadero cambio empieza por cómo te tratas a ti misma.\"",
-      bio: "Muchas personas que vienen a mí llevan años acostumbradas a seguir adelante. A ser fuertes. A cuidar. A rendir. Desde fuera parece que todo va bien — por dentro cuesta cada vez más energía. En mi acompañamiento no te ayudo a ser una mejor versión de ti misma. Te ayudo a construir una relación distinta contigo misma — juntas exploramos cómo sostenerte en los momentos difíciles, en lugar de presionarte o criticarte.",
+      bio: "Muchas personas que vienen a mí están acostumbradas a seguir adelante, a ser fuertes y a cuidar de los demás. Desde fuera, a menudo parece que todo va bien, mientras que por dentro cuesta cada vez más energía. Juntas, exploramos cómo puedes apoyarte a ti misma en lugar de presionarte o criticarte.",
       tag1: "Certificada en MSC",
       tag2: "Terapia corporal",
       tag3: "Sensible al trauma",
