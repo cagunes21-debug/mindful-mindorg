@@ -176,7 +176,7 @@ export const nl = {
       worksEyebrow: "Ervaring",
       worksTitle: "Wat je gaat ervaren",
       worksP1: "Je leert om jezelf te ondersteunen op momenten waarop je het moeilijk hebt, in plaats van jezelf te bekritiseren of onder druk te zetten.\n\nDat betekent niet dat je opgeeft of genoegen neemt met minder.\n\nHet betekent dat je leert omgaan met jezelf op een manier die rust, veerkracht en groei mogelijk maakt.",
-      cardsIntro: "Je hoeft jezelf niet precies in één profiel te herkennen. Veel mensen herkennen een combinatie van meerdere.",
+      
       quote: "Wat deelnemers vaak merken na een traject:",
       item1: "Minder piekeren",
       item2: "Beter slapen",
