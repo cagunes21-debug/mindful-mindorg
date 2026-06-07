@@ -21,9 +21,11 @@ const ProfilesSection = () => {
               {t("home.hero.profiles.title")}{" "}
               <span className="text-primary italic font-light">{t("home.hero.profiles.titleAccent")}</span>
             </h2>
-            <p className="text-muted-foreground leading-[1.85] text-base">
-              {t("home.hero.profiles.sub")}
-            </p>
+            {t("home.hero.profiles.sub") && (
+              <p className="text-muted-foreground leading-[1.85] text-base">
+                {t("home.hero.profiles.sub")}
+              </p>
+            )}
             <div className="mt-8 max-w-xl mx-auto space-y-4">
               <p className="text-foreground font-medium leading-relaxed">
                 {t("home.hero.profiles.introLine1")}
