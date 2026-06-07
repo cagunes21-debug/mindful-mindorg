@@ -232,6 +232,7 @@ export const tr = {
     trainer: {
       eyebrow: "Rehberlik",
       title: "Eğitmenlerle tanışın",
+      sectionTitle: "Eğitmeniniz",
       role: "Travma terapisti · MSC Eğitmeni · Öz-şefkat uzmanı",
       quote: "\"Gerçek değişim, kendinize nasıl davrandığınızla başlar.\"",
       bio: "Bana gelen birçok insan, devam etmeye, güçlü olmaya ve başkalarına bakmaya alışkın. Dışarıdan her şey yolunda görünürken, içeriden giderek daha fazla enerji kaybederler. Birlikte, kendini baskı altına almak veya eleştirmek yerine nasıl destekleyebileceğini keşfediyoruz.",

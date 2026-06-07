@@ -232,6 +232,7 @@ export const es = {
     trainer: {
       eyebrow: "Acompañamiento",
       title: "Conoce a los formadores",
+      sectionTitle: "Tu formadora",
       role: "Terapeuta de trauma · Formadora MSC · Especialista en autocompasión",
       quote: "\"El verdadero cambio empieza por cómo te tratas a ti misma.\"",
       bio: "Muchas personas que vienen a mí están acostumbradas a seguir adelante, a ser fuertes y a cuidar de los demás. Desde fuera, a menudo parece que todo va bien, mientras que por dentro cuesta cada vez más energía. Juntas, exploramos cómo puedes apoyarte a ti misma en lugar de presionarte o criticarte.",
