@@ -11,6 +11,12 @@ const TrainerHomeSection = () => {
     <section className="py-20 md:py-28 bg-background">
       <div className="container mx-auto px-6 md:px-10">
         <div className="max-w-3xl mx-auto">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl md:text-4xl font-serif text-foreground mb-4">
+              {t("home.trainer.sectionTitle")}
+            </h2>
+            <div className="w-16 h-0.5 bg-primary mx-auto" />
+          </div>
 
           <ScrollReveal delay={0.1}>
             <div className="bg-white rounded-3xl border border-warm-200/50 p-8 md:p-10 shadow-sm max-w-lg mx-auto text-center">
