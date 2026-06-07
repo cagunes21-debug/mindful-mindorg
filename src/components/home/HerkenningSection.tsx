@@ -26,14 +26,53 @@ const HerkenningSection = () => {
                 {t("home.herkenning.titleA")}{" "}
                 <span className="text-primary italic font-light">{t("home.herkenning.titleB")}</span>
               </h2>
-              <p className="text-muted-foreground leading-[1.85] text-base md:text-lg whitespace-pre-line">
-                {t("home.herkenning.p1")}
-              </p>
-              {t("home.herkenning.p2") && (
-                <p className="text-foreground leading-[1.85] text-base md:text-lg mt-4 font-medium">
-                  {t("home.herkenning.p2")}
-                </p>
-              )}
+              {(() => {
+                const parts = t("home.herkenning.p1")
+                  .split("\n\n")
+                  .map((s) => s.trim())
+                  .filter(Boolean);
+                const imagineItems = parts.filter((s) => s.startsWith("Dat") || s.startsWith("That") || s.startsWith("Que"));
+                const closingShort = parts.filter(
+                  (s) => !imagineItems.includes(s) && s.length < 25
+                );
+                const finale = parts.find(
+                  (s) => !imagineItems.includes(s) && !closingShort.includes(s)
+                );
+                return (
+                  <div className="mt-2 text-left">
+                    <ul className="space-y-3 md:space-y-4">
+                      {imagineItems.map((line, i) => (
+                        <li
+                          key={i}
+                          className="flex items-start gap-3 text-foreground/90 text-base md:text-lg leading-[1.7]"
+                        >
+                          <span className="mt-2.5 h-1.5 w-1.5 rounded-full bg-terracotta-400 flex-shrink-0" />
+                          <span>{line}</span>
+                        </li>
+                      ))}
+                    </ul>
+
+                    {closingShort.length > 0 && (
+                      <div className="mt-8 flex items-center justify-center gap-3 font-serif italic text-xl md:text-2xl text-foreground">
+                        {closingShort.map((line, i) => (
+                          <span key={i} className="flex items-center gap-3">
+                            {i > 0 && (
+                              <span className="h-1 w-1 rounded-full bg-terracotta-400" />
+                            )}
+                            {line.replace(/\.$/, "")}
+                          </span>
+                        ))}
+                      </div>
+                    )}
+
+                    {finale && (
+                      <p className="mt-6 text-center font-serif text-xl md:text-2xl text-primary leading-[1.4]">
+                        {finale}
+                      </p>
+                    )}
+                  </div>
+                );
+              })()}
             </ScrollReveal>
           </div>
         </div>
