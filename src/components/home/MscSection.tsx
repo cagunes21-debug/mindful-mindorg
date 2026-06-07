@@ -1,6 +1,4 @@
-import { Link } from "react-router-dom";
 import { ScrollReveal } from "@/components/ScrollReveal";
-import { ArrowRight, Leaf } from "lucide-react";
 import { useLanguage } from "@/i18n/LanguageContext";
 
 const MscSection = () => {
