@@ -42,7 +42,7 @@ const ProfilesSection = () => {
         <div className="max-w-6xl mx-auto grid md:grid-cols-3 gap-6 md:gap-8">
           {profiles.map((p, i) => (
             <ScrollReveal key={i} delay={i * 0.1}>
-              <div className="h-full bg-warm-100/80 backdrop-blur-sm border border-terracotta-200/70 rounded-3xl p-8 md:p-10 hover:border-terracotta-300 hover:shadow-lg hover:shadow-terracotta-900/5 transition-all duration-300">
+              <div className="group h-full bg-warm-100/80 backdrop-blur-sm border border-terracotta-200/70 rounded-3xl p-8 md:p-10 transition-all duration-500 ease-out hover:-translate-y-1 hover:border-terracotta-300 hover:shadow-xl hover:shadow-terracotta-900/10 hover:bg-warm-100">
                 <div className="h-11 w-11 rounded-full bg-terracotta-200 text-terracotta-700 flex items-center justify-center font-serif text-lg mb-6 shadow-sm">
                   {i + 1}
                 </div>
