@@ -12,6 +12,14 @@ const ResultsHomeSection = () => {
     { from: t("home.results.shift4From"), to: t("home.results.shift4To") },
     { from: t("home.results.shift5From"), to: t("home.results.shift5To") },
   ];
+  const outcomes = [
+    t("home.results.outcomes1"),
+    t("home.results.outcomes2"),
+    t("home.results.outcomes3"),
+    t("home.results.outcomes4"),
+    t("home.results.outcomes5"),
+    t("home.results.outcomes6"),
+  ];
   const stats = [
     { dir: "down", label: t("home.results.stress"), num: "36%" },
     { dir: "up", label: t("home.results.selfcompassion"), num: "67%" },
