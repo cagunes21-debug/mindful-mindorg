@@ -10,6 +10,7 @@ import HeroHome from "@/components/home/HeroHome";
 
 import ProfilesSection from "@/components/home/ProfilesSection";
 import MisconceptsSection from "@/components/home/MisconceptsSection";
+import HerkenningSection from "@/components/home/HerkenningSection";
 import MscSection from "@/components/home/MscSection";
 import ResultsHomeSection from "@/components/home/ResultsHomeSection";
 import OfferingsSection from "@/components/home/OfferingsSection";
