@@ -173,6 +173,7 @@ export const nl = {
       whyTitleA: "Waarom werkt zelfcompassie",
       whyTitleB: "eigenlijk?",
       whyP1: "Veel mensen proberen moeilijke gevoelens op te lossen door harder hun best te doen.\n\nMeer discipline.\n\nMeer controle.\n\nMeer analyse.\n\nMaar juist daardoor raken ze vaak verder verwijderd van wat ze nodig hebben.\n\nZelfcompassie werkt anders.",
+      worksP1: "Je leert om jezelf te ondersteunen op momenten waarop je het moeilijk hebt, in plaats van jezelf te bekritiseren of onder druk te zetten.\n\nDat betekent niet dat je opgeeft of genoegen neemt met minder.\n\nHet betekent dat je leert omgaan met jezelf op een manier die rust, veerkracht en groei mogelijk maakt.",
       quote: "Wat deelnemers vaak merken na een traject:",
       item1: "Minder piekeren",
       item2: "Beter slapen",

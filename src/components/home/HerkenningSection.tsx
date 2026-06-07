@@ -142,6 +142,39 @@ const HerkenningSection = () => {
         </div>
       </section>
 
+      {/* Deel 2.5 — Zelfcompassie werkt anders (vervolg) */}
+      <section className="py-20 md:py-28 bg-warm-50 relative overflow-hidden">
+        <div className="absolute -bottom-20 -right-20 w-96 h-96 bg-sage-100/30 rounded-full blur-[100px]" />
+        <div className="container mx-auto px-6 md:px-10 relative">
+          <div className="max-w-3xl mx-auto text-center">
+            <ScrollReveal>
+              {(() => {
+                const parts = t("home.herkenning.worksP1")
+                  .split("\n\n")
+                  .map((s) => s.trim())
+                  .filter(Boolean);
+                return (
+                  <div className="space-y-6">
+                    {parts.map((part, i) => (
+                      <p
+                        key={i}
+                        className={`text-base md:text-lg leading-[1.7] ${
+                          i === parts.length - 1
+                            ? "font-serif text-xl md:text-2xl text-primary"
+                            : "text-foreground/90"
+                        }`}
+                      >
+                        {part}
+                      </p>
+                    ))}
+                  </div>
+                );
+              })()}
+            </ScrollReveal>
+          </div>
+        </div>
+      </section>
+
       {/* Deel 3 — Wat deelnemers merken */}
       <section className="py-20 md:py-28 bg-background relative overflow-hidden">
         <div className="absolute -bottom-20 -left-20 w-96 h-96 bg-sage-100/30 rounded-full blur-[100px]" />
