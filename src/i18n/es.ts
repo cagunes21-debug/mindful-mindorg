@@ -146,6 +146,9 @@ export const es = {
       item4: "Experimentas estrés, inquietud o agotamiento",
       item5: "Quieres aprender a cuidarte mejor",
       item6: "Siempre das prioridad a los demás sobre ti misma",
+      worksEyebrow: "Experiencia",
+      worksTitle: "Lo que vas a experimentar",
+      worksP1: "Aprendes a apoyarte a ti misma en momentos difíciles, en lugar de criticarte o presionarte.\n\nEso no significa rendirte o conformarte con menos.\n\nSignifica aprender a relacionarte contigo misma de una manera que permite la calma, la resiliencia y el crecimiento.",
     },
     msc: {
       statement: "Mindful Self-Compassion (MSC) es un método con base científica, desarrollado por la Dra. Kristin Neff y el Dr. Christopher Germer.",
