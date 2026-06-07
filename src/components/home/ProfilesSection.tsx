@@ -24,6 +24,17 @@ const ProfilesSection = () => {
             <p className="text-muted-foreground leading-[1.85] text-base">
               {t("home.hero.profiles.sub")}
             </p>
+            <div className="mt-8 max-w-xl mx-auto space-y-4">
+              <p className="text-foreground font-medium leading-relaxed">
+                {t("home.hero.profiles.introLine1")}
+              </p>
+              <p className="text-muted-foreground leading-[1.85] text-base">
+                {t("home.hero.profiles.introLine2")}
+              </p>
+              <p className="text-foreground font-medium leading-relaxed">
+                {t("home.hero.profiles.introLine3")}
+              </p>
+            </div>
           </ScrollReveal>
         </div>
         <div className="max-w-6xl mx-auto grid md:grid-cols-3 gap-6 md:gap-8">
