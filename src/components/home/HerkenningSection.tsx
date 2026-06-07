@@ -75,7 +75,74 @@ const HerkenningSection = () => {
         </div>
       </section>
 
-      {/* Deel 2 — Wat deelnemers merken */}
+      {/* Deel 2 — Waarom zelfcompassie */}
+      <section className="py-20 md:py-28 bg-background relative overflow-hidden">
+        <div className="absolute -top-20 -left-20 w-96 h-96 bg-sage-100/30 rounded-full blur-[100px]" />
+        <div className="container mx-auto px-6 md:px-10 relative">
+          <div className="max-w-3xl mx-auto text-center">
+            <ScrollReveal>
+              <span className="inline-block text-xs tracking-[0.3em] uppercase text-terracotta-500 font-medium mb-5">
+                {t("home.herkenning.whyEyebrow")}
+              </span>
+              <h2 className="text-3xl md:text-4xl font-serif text-foreground leading-[1.15] mb-6">
+                {t("home.herkenning.whyTitleA")}{" "}
+                <span className="text-primary italic font-light">{t("home.herkenning.whyTitleB")}</span>
+              </h2>
+              {(() => {
+                const parts = t("home.herkenning.whyP1")
+                  .split("\n\n")
+                  .map((s) => s.trim())
+                  .filter(Boolean);
+                const intro = parts[0];
+                const bulletItems = parts.filter((s, i) => i > 0 && i < parts.length - 2);
+                const closing = parts.slice(parts.length - 2);
+                return (
+                  <div className="mt-2">
+                    {intro && (
+                      <p className="text-foreground/90 text-base md:text-lg leading-[1.7] text-center">
+                        {intro}
+                      </p>
+                    )}
+
+                    {bulletItems.length > 0 && (
+                      <ul className="mt-6 space-y-3 md:space-y-4 flex flex-col items-center">
+                        {bulletItems.map((line, i) => (
+                          <li
+                            key={i}
+                            className="flex items-center gap-3 text-foreground font-serif italic text-lg md:text-xl"
+                          >
+                            <span className="h-1.5 w-1.5 rounded-full bg-terracotta-400 flex-shrink-0" />
+                            <span>{line.replace(/\.$/, "")}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    )}
+
+                    {closing.length > 0 && (
+                      <div className="mt-8 space-y-2">
+                        {closing.map((line, i) => (
+                          <p
+                            key={i}
+                            className={`text-center text-base md:text-lg leading-[1.7] ${
+                              i === closing.length - 1
+                                ? "font-serif text-xl md:text-2xl text-primary"
+                                : "text-foreground/80"
+                            }`}
+                          >
+                            {line}
+                          </p>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                );
+              })()}
+            </ScrollReveal>
+          </div>
+        </div>
+      </section>
+
+      {/* Deel 3 — Wat deelnemers merken */}
       <section className="py-20 md:py-28 bg-background relative overflow-hidden">
         <div className="absolute -bottom-20 -left-20 w-96 h-96 bg-sage-100/30 rounded-full blur-[100px]" />
         <div className="container mx-auto px-6 md:px-10 relative">
