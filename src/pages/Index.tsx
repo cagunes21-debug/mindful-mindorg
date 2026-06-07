@@ -13,6 +13,7 @@ import ProfilesSection from "@/components/home/ProfilesSection";
 import MisconceptsSection from "@/components/home/MisconceptsSection";
 import MscSection from "@/components/home/MscSection";
 import ResultsHomeSection from "@/components/home/ResultsHomeSection";
+import OfferingsSection from "@/components/home/OfferingsSection";
 import PricingHomeSection from "@/components/home/PricingHomeSection";
 import StepsSection from "@/components/home/StepsSection";
 import TestimonialsHomeSection from "@/components/home/TestimonialsHomeSection";
