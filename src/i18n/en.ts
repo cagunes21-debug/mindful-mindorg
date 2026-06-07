@@ -232,6 +232,7 @@ export const en = {
     trainer: {
       eyebrow: "Guidance",
       title: "Meet the facilitator",
+      sectionTitle: "Your facilitator",
       role: "Trauma therapist · MSC facilitator · Self-compassion specialist",
       quote: "\"Real change begins with how you relate to yourself.\"",
       bio: "Many people who come to me are used to pushing through, being strong, and caring for others. From the outside, it often looks like everything is fine, while inside it costs more and more energy. Together, we explore how you can support yourself instead of pressuring or criticising yourself.",

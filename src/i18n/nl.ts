@@ -262,6 +262,7 @@ export const nl = {
     trainer: {
       eyebrow: "Over Çağla",
       title: "Hoi, ik ben Çağla.",
+      sectionTitle: "Jouw trainer",
       role: "Traumatherapeut · MSC Trainer · Specialist in Zelfcompassie",
       quote: "\"Echte verandering begint bij hoe je met jezelf omgaat.\"",
       bio: "Veel mensen die bij mij komen zijn gewend om door te gaan, sterk te zijn en voor anderen te zorgen. Van buiten lijkt het vaak alsof het goed gaat, terwijl het van binnen steeds meer energie kost. Samen onderzoeken we hoe je jezelf kunt ondersteunen in plaats van jezelf onder druk te zetten of te bekritiseren.",
