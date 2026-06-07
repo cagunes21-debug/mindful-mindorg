@@ -92,63 +92,88 @@ const OverCagla = () => {
 
       {/* ═══════ INTRO ═══════ */}
       <section className="py-24 lg:py-32 px-6 bg-warm-50">
-        <div className="max-w-[640px] mx-auto text-center">
-          <ScrollReveal>
-            <p className="text-[0.65rem] font-medium tracking-[0.2em] uppercase text-sage-600 mb-4">
-              {t("overCagla.introLabel")}
-            </p>
-          </ScrollReveal>
-          <ScrollReveal delay={0.05}>
-            <p className="text-lg md:text-xl font-serif italic text-terracotta-600 mb-12 leading-relaxed">
-              {t("overCagla.introSubtitle")}
-            </p>
-          </ScrollReveal>
+        <div className="max-w-[680px] mx-auto">
+
+          {/* Header */}
+          <div className="text-center mb-16">
+            <ScrollReveal>
+              <p className="text-[0.65rem] font-medium tracking-[0.2em] uppercase text-sage-600 mb-5">
+                {t("overCagla.introLabel")}
+              </p>
+            </ScrollReveal>
+            <ScrollReveal delay={0.05}>
+              <h2 className="text-2xl md:text-3xl font-serif italic text-terracotta-600 leading-snug max-w-[520px] mx-auto">
+                {t("overCagla.introSubtitle")}
+              </h2>
+            </ScrollReveal>
+          </div>
+
+          {/* Greeting */}
           <ScrollReveal delay={0.1}>
-            <p className="text-xl md:text-2xl font-light text-foreground mb-10">
+            <p className="text-2xl md:text-3xl font-light text-foreground text-center mb-14">
               {t("overCagla.introGreeting")}
             </p>
           </ScrollReveal>
-          <div className="text-left space-y-6">
-            <ScrollReveal delay={0.15}>
-              <p className="text-lg font-light text-muted-foreground leading-[1.9]">
-                {t("overCagla.introP1")}
-              </p>
-            </ScrollReveal>
-            <ScrollReveal delay={0.2}>
-              <div className="space-y-2 py-2">
-                <p className="text-lg font-serif italic text-terracotta-600">{t("overCagla.introShort1")}</p>
-                <p className="text-lg font-serif italic text-terracotta-600">{t("overCagla.introShort2")}</p>
-                <p className="text-lg font-serif italic text-terracotta-600">{t("overCagla.introShort3")}</p>
+
+          {/* Block 1 — the pattern */}
+          <ScrollReveal delay={0.15}>
+            <p className="text-lg md:text-xl font-light text-muted-foreground leading-[1.9] text-center mb-8">
+              {t("overCagla.introP1")}
+            </p>
+          </ScrollReveal>
+
+          <ScrollReveal delay={0.2}>
+            <div className="flex flex-wrap items-center justify-center gap-x-6 gap-y-3 mb-20">
+              <span className="text-xl md:text-2xl font-serif italic text-terracotta-600">{t("overCagla.introShort1")}</span>
+              <span className="text-terracotta-300/60 text-sm">◆</span>
+              <span className="text-xl md:text-2xl font-serif italic text-terracotta-600">{t("overCagla.introShort2")}</span>
+              <span className="text-terracotta-300/60 text-sm">◆</span>
+              <span className="text-xl md:text-2xl font-serif italic text-terracotta-600">{t("overCagla.introShort3")}</span>
+            </div>
+          </ScrollReveal>
+
+          {/* Block 2 — the contrast (buiten / binnen) */}
+          <ScrollReveal delay={0.25}>
+            <div className="grid sm:grid-cols-2 gap-px bg-warm-200/50 rounded-2xl overflow-hidden mb-20 shadow-sm">
+              <div className="bg-warm-50 p-8 md:p-10">
+                <p className="text-[0.65rem] font-medium tracking-[0.2em] uppercase text-sage-600 mb-3">
+                  {t("overCagla.introOutsideLabel")}
+                </p>
+                <p className="text-lg font-light text-foreground leading-[1.7]">
+                  {t("overCagla.introP2")}
+                </p>
               </div>
-            </ScrollReveal>
-            <ScrollReveal delay={0.25}>
-              <p className="text-lg font-light text-muted-foreground leading-[1.9]">
-                {t("overCagla.introP2")}
-              </p>
-            </ScrollReveal>
-            <ScrollReveal delay={0.3}>
-              <p className="text-lg font-light text-muted-foreground leading-[1.9]">
-                {t("overCagla.introP3")}
-              </p>
-            </ScrollReveal>
-            <ScrollReveal delay={0.35}>
-              <p className="text-lg font-light text-foreground leading-[1.9] pt-2">
+              <div className="bg-warm-100/60 p-8 md:p-10">
+                <p className="text-[0.65rem] font-medium tracking-[0.2em] uppercase text-terracotta-600 mb-3">
+                  {t("overCagla.introInsideLabel")}
+                </p>
+                <p className="text-lg font-light text-foreground leading-[1.7]">
+                  {t("overCagla.introP3")}
+                </p>
+              </div>
+            </div>
+          </ScrollReveal>
+
+          {/* Block 3 — what I do */}
+          <ScrollReveal delay={0.3}>
+            <div className="text-center">
+              <p className="text-xl md:text-2xl font-light text-foreground leading-[1.6] mb-8 max-w-[540px] mx-auto">
                 {t("overCagla.introP4")}
               </p>
-            </ScrollReveal>
-            <ScrollReveal delay={0.4}>
-              <div className="space-y-1 pt-2">
-                <p className="text-lg font-light text-muted-foreground leading-[1.9]">
+              <div className="inline-flex flex-col gap-1.5">
+                <p className="text-base md:text-lg font-light text-muted-foreground italic">
                   {t("overCagla.introP5")}
                 </p>
-                <p className="text-lg font-medium text-foreground leading-[1.9]">
+                <p className="text-lg md:text-xl font-serif italic text-terracotta-600">
                   {t("overCagla.introP6")}
                 </p>
               </div>
-            </ScrollReveal>
-          </div>
+            </div>
+          </ScrollReveal>
+
         </div>
       </section>
+
 
       <Divider />
 
