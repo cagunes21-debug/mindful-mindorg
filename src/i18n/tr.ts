@@ -191,6 +191,13 @@ export const tr = {
       selfcompassion: "öz-şefkat",
       anxiety: "kaygı",
       resilience: "duygusal dayanıklılık",
+      outcomesQuote: "Katılımcılar program sonrası genellikle şunları fark eder:",
+      outcomes1: "Daha az kafa yorma",
+      outcomes2: "Daha iyi uyku",
+      outcomes3: "Zihinde daha fazla huzur",
+      outcomes4: "Daha az kendini eleştirme",
+      outcomes5: "Suçluluk hissetmeden sınır koyma",
+      outcomes6: "Kendine daha fazla güven",
       source: "* MSC araştırmaları meta-analizleri (Neff & Germer, 2013–2023)",
     },
     offerings: {

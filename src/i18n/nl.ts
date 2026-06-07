@@ -224,6 +224,13 @@ export const nl = {
       selfcompassion: "zelfcompassie",
       anxiety: "angst",
       resilience: "veerkracht",
+      outcomesQuote: "Wat deelnemers vaak merken na een traject:",
+      outcomes1: "Minder piekeren",
+      outcomes2: "Beter slapen",
+      outcomes3: "Meer rust in hun hoofd",
+      outcomes4: "Minder zelfkritiek",
+      outcomes5: "Grenzen aangeven zonder schuldgevoel",
+      outcomes6: "Meer vertrouwen in zichzelf",
       source: "* Meta-analyses MSC-onderzoek (Neff & Germer, 2013–2023)",
     },
     pricing: {

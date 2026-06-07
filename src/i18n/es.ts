@@ -191,6 +191,13 @@ export const es = {
       selfcompassion: "autocompasión",
       anxiety: "ansiedad",
       resilience: "resiliencia",
+      outcomesQuote: "Lo que los participantes suelen notar tras el programa:",
+      outcomes1: "Menos rumiar",
+      outcomes2: "Dormir mejor",
+      outcomes3: "Más calma en la cabeza",
+      outcomes4: "Menos autocrítica",
+      outcomes5: "Poner límites sin sentirse culpable",
+      outcomes6: "Más confianza en sí misma",
       source: "* Metaanálisis de la investigación sobre MSC (Neff & Germer, 2013-2023)",
     },
     offerings: {
