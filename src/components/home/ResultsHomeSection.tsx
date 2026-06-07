@@ -50,24 +50,6 @@ const ResultsHomeSection = () => {
             </div>
           </ScrollReveal>
 
-          <ScrollReveal>
-            <div className="text-center mb-10">
-              <p className="font-serif italic text-xl md:text-2xl text-foreground leading-relaxed mb-8">
-                {t("home.results.outcomesQuote")}
-              </p>
-              <div className="grid sm:grid-cols-2 gap-4 md:gap-5 max-w-4xl mx-auto">
-                {outcomes.map((item, i) => (
-                  <div
-                    key={i}
-                    className="flex items-start gap-4 bg-warm-100/60 border border-terracotta-100/40 rounded-2xl p-5 md:p-6"
-                  >
-                    <span className="mt-1.5 h-2.5 w-2.5 rounded-full bg-terracotta-400 flex-shrink-0" />
-                    <p className="text-foreground text-base leading-relaxed text-left">{item}</p>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </ScrollReveal>
 
           <div>
             <ScrollReveal>
