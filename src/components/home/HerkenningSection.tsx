@@ -31,7 +31,7 @@ const HerkenningSection = () => {
                   .split("\n\n")
                   .map((s) => s.trim())
                   .filter(Boolean);
-                const imagineItems = parts.filter((s) => s.startsWith("Dat") || s.startsWith("That") || s.startsWith("Que"));
+                const imagineItems = parts.filter((s) => (s.startsWith("Dat") || s.startsWith("That") || s.startsWith("Que")) && !/zelfcompassie|self-compassion|autocompasión|öz şefkat/i.test(s));
                 const closingShort = parts.filter(
                   (s) => !imagineItems.includes(s) && s.length < 25
                 );
@@ -53,12 +53,9 @@ const HerkenningSection = () => {
                     </ul>
 
                     {closingShort.length > 0 && (
-                      <div className="mt-8 flex items-center justify-center gap-3 font-serif italic text-xl md:text-2xl text-foreground">
+                      <div className="mt-8 flex flex-col items-center gap-2 font-serif italic text-xl md:text-2xl text-foreground">
                         {closingShort.map((line, i) => (
-                          <span key={i} className="flex items-center gap-3">
-                            {i > 0 && (
-                              <span className="h-1 w-1 rounded-full bg-terracotta-400" />
-                            )}
+                          <span key={i}>
                             {line.replace(/\.$/, "")}
                           </span>
                         ))}
