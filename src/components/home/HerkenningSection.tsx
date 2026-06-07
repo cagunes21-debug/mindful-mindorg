@@ -148,6 +148,12 @@ const HerkenningSection = () => {
         <div className="container mx-auto px-6 md:px-10 relative">
           <div className="max-w-3xl mx-auto text-center">
             <ScrollReveal>
+              <span className="inline-block text-xs tracking-[0.3em] uppercase text-terracotta-500 font-medium mb-5">
+                {t("home.herkenning.worksEyebrow")}
+              </span>
+              <h2 className="text-3xl md:text-4xl font-serif text-foreground leading-[1.15] mb-10">
+                {t("home.herkenning.worksTitle")}
+              </h2>
               {(() => {
                 const parts = t("home.herkenning.worksP1")
                   .split("\n\n")

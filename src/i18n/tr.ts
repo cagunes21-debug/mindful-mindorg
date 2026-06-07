@@ -146,6 +146,9 @@ export const tr = {
       item4: "Stres, huzursuzluk veya tükenmişlik yaşıyorsun",
       item5: "Kendine daha iyi bakmayı öğrenmek istiyorsun",
       item6: "Başkalarını her zaman kendinden önde tutuyorsun",
+      worksEyebrow: "Deneyim",
+      worksTitle: "Neler yaşayacaksın",
+      worksP1: "Zor anlarda kendine destek olmayı öğrenirsin, kendini eleştirmek veya baskı yapmak yerine.\n\nBu pes etmek veya daha azıyla yetinmek anlamına gelmez.\n\nKendinle huzur, dayanıklılık ve büyümeyi mümkün kılan bir şekilde ilişki kurmayı öğrenmek demektir.",
     },
     msc: {
       statement: "Mindful Self-Compassion (MSC), Dr. Kristin Neff ve Dr. Christopher Germer tarafından geliştirilmiş, bilimsel temellere dayalı bir yöntemdir.",
