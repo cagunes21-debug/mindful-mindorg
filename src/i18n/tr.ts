@@ -234,7 +234,7 @@ export const tr = {
       title: "Eğitmenlerle tanışın",
       role: "Travma terapisti · MSC Eğitmeni · Öz-şefkat uzmanı",
       quote: "\"Gerçek değişim, kendinize nasıl davrandığınızla başlar.\"",
-      bio: "Bana gelen pek çok kişi yıllardır devam etmeye alışmış. Güçlü olmaya. Bakım vermeye. Performans göstermeye. Dışarıdan her şey yolunda gibi görünür — içeride ise giderek daha fazla enerji ister. Çalışmamda sizi kendinizin daha iyi bir versiyonu olmaya değil, kendinizle farklı bir ilişki kurmaya yönlendiriyorum — birlikte, zor anlarda kendinizi baskı altına almak ya da eleştirmek yerine nasıl destekleyebileceğinizi keşfediyoruz.",
+      bio: "Bana gelen birçok insan, devam etmeye, güçlü olmaya ve başkalarına bakmaya alışkın. Dışarıdan her şey yolunda görünürken, içeriden giderek daha fazla enerji kaybederler. Birlikte, kendini baskı altına almak veya eleştirmek yerine nasıl destekleyebileceğini keşfediyoruz.",
       tag1: "MSC sertifikalı",
       tag2: "Beden odaklı terapi",
       tag3: "Travma duyarlı",
