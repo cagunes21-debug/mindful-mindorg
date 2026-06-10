@@ -172,37 +172,36 @@ const OverCagla = () => {
       </section>
 
 
-      <Divider />
-
       {/* ═══════ CHAPTER I — Wie is Çağla? ═══════ */}
-      <div className="py-28 lg:py-32 px-6 max-w-[720px] mx-auto">
-        <ScrollReveal>
-          <div className="flex items-center gap-2.5 mb-6">
-            <div className="w-5 h-px bg-sage-500" />
-            <span className="text-[0.65rem] font-medium tracking-[0.2em] uppercase text-sage-600">{t("overCagla.chapter1Label")}</span>
-          </div>
-        </ScrollReveal>
-        <ScrollReveal delay={0.05}>
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-light leading-[1.2] text-foreground mb-10">
-            {t("overCagla.chapter1Title")} <span className="font-serif italic text-terracotta-600">{t("overCagla.chapter1TitleAccent")}</span>
-          </h2>
-        </ScrollReveal>
-        <ScrollReveal delay={0.1}><HtmlText html={t("overCagla.chapter1P1")} className="text-xl font-light text-muted-foreground leading-[2] mb-7" /></ScrollReveal>
-        <ScrollReveal delay={0.15}><HtmlText html={t("overCagla.chapter1P2")} className="text-xl font-light text-muted-foreground leading-[2] mb-7" /></ScrollReveal>
-        <ScrollReveal delay={0.2}><p className="text-xl font-light text-muted-foreground leading-[2] mb-7">{t("overCagla.chapter1P3")}</p></ScrollReveal>
-        <ScrollReveal delay={0.25}><p className="text-xl font-light text-muted-foreground leading-[2] mb-7">{t("overCagla.chapter1P4")}</p></ScrollReveal>
-        {t("overCagla.chapter1P5") && (
-          <ScrollReveal delay={0.3}><p className="text-xl font-light text-muted-foreground leading-[2] mb-7">{t("overCagla.chapter1P5")}</p></ScrollReveal>
-        )}
-        {t("overCagla.chapter1P6") && (
-          <ScrollReveal delay={0.35}><p className="text-xl font-light text-muted-foreground leading-[2]">{t("overCagla.chapter1P6")}</p></ScrollReveal>
-        )}
-      </div>
-
-      <Divider />
+      <section className="py-20 md:py-28 px-6 bg-background relative overflow-hidden">
+        <div className="absolute -top-20 -right-20 w-96 h-96 bg-sage-100/30 rounded-full blur-[100px]" />
+        <div className="max-w-[720px] mx-auto relative z-10">
+          <ScrollReveal>
+            <div className="flex items-center gap-2.5 mb-6">
+              <div className="w-5 h-px bg-sage-500" />
+              <span className="text-[0.65rem] font-medium tracking-[0.2em] uppercase text-sage-600">{t("overCagla.chapter1Label")}</span>
+            </div>
+          </ScrollReveal>
+          <ScrollReveal delay={0.05}>
+            <h2 className="text-3xl md:text-4xl lg:text-5xl font-light leading-[1.2] text-foreground mb-10">
+              {t("overCagla.chapter1Title")} <span className="font-serif italic text-terracotta-600">{t("overCagla.chapter1TitleAccent")}</span>
+            </h2>
+          </ScrollReveal>
+          <ScrollReveal delay={0.1}><HtmlText html={t("overCagla.chapter1P1")} className="text-xl font-light text-muted-foreground leading-[2] mb-7" /></ScrollReveal>
+          <ScrollReveal delay={0.15}><HtmlText html={t("overCagla.chapter1P2")} className="text-xl font-light text-muted-foreground leading-[2] mb-7" /></ScrollReveal>
+          <ScrollReveal delay={0.2}><p className="text-xl font-light text-muted-foreground leading-[2] mb-7">{t("overCagla.chapter1P3")}</p></ScrollReveal>
+          <ScrollReveal delay={0.25}><p className="text-xl font-light text-muted-foreground leading-[2] mb-7">{t("overCagla.chapter1P4")}</p></ScrollReveal>
+          {t("overCagla.chapter1P5") && (
+            <ScrollReveal delay={0.3}><p className="text-xl font-light text-muted-foreground leading-[2] mb-7">{t("overCagla.chapter1P5")}</p></ScrollReveal>
+          )}
+          {t("overCagla.chapter1P6") && (
+            <ScrollReveal delay={0.35}><p className="text-xl font-light text-muted-foreground leading-[2]">{t("overCagla.chapter1P6")}</p></ScrollReveal>
+          )}
+        </div>
+      </section>
 
       {/* ═══════ CHAPTER II — Het werk ═══════ */}
-      <section className="py-28 lg:py-32 px-6 bg-foreground relative overflow-hidden">
+      <section className="py-20 md:py-28 px-6 bg-foreground relative overflow-hidden">
         <div className="absolute -top-1/2 -right-[20%] w-[80vw] h-[80vw] rounded-full pointer-events-none" style={{ background: "radial-gradient(ellipse at center, hsl(var(--terracotta-300) / 0.08) 0%, transparent 60%)" }} />
         <div className="max-w-[720px] mx-auto relative z-10">
           <ScrollReveal>
