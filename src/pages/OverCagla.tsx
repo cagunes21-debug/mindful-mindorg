@@ -91,7 +91,8 @@ const OverCagla = () => {
       </section>
 
       {/* ═══════ INTRO ═══════ */}
-      <section className="py-24 lg:py-32 px-6 bg-warm-50">
+      <section className="py-20 md:py-28 px-6 bg-warm-50 relative overflow-hidden">
+        <div className="absolute -top-20 -left-20 w-96 h-96 bg-sage-100/30 rounded-full blur-[100px]" />
         <div className="max-w-[680px] mx-auto">
 
           {/* Header */}
