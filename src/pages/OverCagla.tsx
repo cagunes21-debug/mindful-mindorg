@@ -39,12 +39,12 @@ const OverCagla = () => {
   ];
 
   const credentials = [
-    t("overCagla.chapter4Cred1"),
-    t("overCagla.chapter4Cred2"),
-    t("overCagla.chapter4Cred3"),
-    t("overCagla.chapter4Cred4"),
-    t("overCagla.chapter4Cred5"),
-    t("overCagla.chapter4Cred6"),
+    t("overCagla.chapter2Cred1"),
+    t("overCagla.chapter2Cred2"),
+    t("overCagla.chapter2Cred3"),
+    t("overCagla.chapter2Cred4"),
+    t("overCagla.chapter2Cred5"),
+    t("overCagla.chapter2Cred6"),
   ];
 
   return (
