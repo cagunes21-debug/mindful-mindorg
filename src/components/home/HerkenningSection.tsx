@@ -88,6 +88,35 @@ const HerkenningSection = () => {
                 {t("home.herkenning.whyTitleA")}{" "}
                 <span className="text-primary italic font-light">{t("home.herkenning.whyTitleB")}</span>
               </h2>
+
+              {/* Intro tekst */}
+              {t("home.herkenning.whyIntro") && (
+                <div className="mt-2 mb-8">
+                  {(() => {
+                    const introParts = t("home.herkenning.whyIntro")
+                      .split("\n\n")
+                      .map((s) => s.trim())
+                      .filter(Boolean);
+                    return (
+                      <div className="space-y-4">
+                        {introParts.map((part, i) => (
+                          <p
+                            key={i}
+                            className={`text-base md:text-lg leading-[1.7] ${
+                              i === introParts.length - 1
+                                ? "font-serif italic text-xl md:text-2xl text-foreground"
+                                : "text-foreground/90"
+                            }`}
+                          >
+                            {part}
+                          </p>
+                        ))}
+                      </div>
+                    );
+                  })()}
+                </div>
+              )}
+
               {(() => {
                 const parts = t("home.herkenning.whyP1")
                   .split("\n\n")
