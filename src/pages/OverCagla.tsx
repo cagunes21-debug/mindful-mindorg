@@ -48,7 +48,7 @@ const OverCagla = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-warm-50">
+    <div className="min-h-screen bg-background">
       <ScrollProgressBar />
       <ScrollToTop />
       <WhatsAppButton />
