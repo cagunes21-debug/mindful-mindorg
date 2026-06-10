@@ -50,7 +50,7 @@ export const nl = {
     subtitle: "Lichaamsgerichte psychotherapeut. Zelfcompassie trainer. Geworteld in meditatie, gevormd door de wereld.",
     readMore: "Lees verder",
     introLabel: "OVER ÇAĞLA GÜNEŞ",
-    introSubtitle: "Je begeleider is een mens, geen methode",
+    introSubtitle: "",
     introGreeting: "Hoi, ik ben Çağla.",
     introP1: "Veel mensen die bij mij komen zijn jarenlang gewend geweest om door te gaan.",
     introShort1: "Sterk te zijn.",
