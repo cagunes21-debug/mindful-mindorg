@@ -50,7 +50,7 @@ export const es = {
     subtitle: "Psicoterapeuta corporal. Formadora en autocompasión. Arraigada en la meditación, moldeada por el mundo.",
     readMore: "Leer más",
     introLabel: "SOBRE ÇAĞLA GÜNEŞ",
-    introSubtitle: "Tu guía es una persona, no un método",
+    introSubtitle: "",
     introGreeting: "Hola, soy Çağla.",
     introP1: "Muchas personas que vienen a mí han estado acostumbradas a seguir adelante durante años.",
     introShort1: "Ser fuerte.",

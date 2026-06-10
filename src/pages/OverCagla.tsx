@@ -101,11 +101,13 @@ const OverCagla = () => {
                 {t("overCagla.introLabel")}
               </p>
             </ScrollReveal>
-            <ScrollReveal delay={0.05}>
-              <h2 className="text-2xl md:text-3xl font-serif italic text-terracotta-600 leading-snug max-w-[520px] mx-auto">
-                {t("overCagla.introSubtitle")}
-              </h2>
-            </ScrollReveal>
+            {t("overCagla.introSubtitle") && (
+              <ScrollReveal delay={0.05}>
+                <h2 className="text-2xl md:text-3xl font-serif italic text-terracotta-600 leading-snug max-w-[520px] mx-auto">
+                  {t("overCagla.introSubtitle")}
+                </h2>
+              </ScrollReveal>
+            )}
           </div>
 
 
