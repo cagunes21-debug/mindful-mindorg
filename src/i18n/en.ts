@@ -50,7 +50,7 @@ export const en = {
     subtitle: "Body-oriented psychotherapist. Self-compassion trainer. Rooted in meditation, shaped by the world.",
     readMore: "Read more",
     introLabel: "ABOUT ÇAĞLA GÜNEŞ",
-    introSubtitle: "Your guide is a human being, not a method",
+    introSubtitle: "",
     introGreeting: "Hi, I'm Çağla.",
     introP1: "Many people who come to me have been used to pushing through for years.",
     introShort1: "Being strong.",
