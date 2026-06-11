@@ -417,9 +417,9 @@ const EditorialHome = () => {
                 className="aspect-[4/5] w-full object-cover"
               />
             </div>
-            <p className="mt-5 font-serif text-2xl italic">— Çağla</p>
+            <p className="mt-5 font-serif text-2xl italic">— Çağla Güneş</p>
             <p className="text-[11px] uppercase tracking-[0.28em] text-white/70">
-              Oprichter · Gecertificeerd MSC-trainer
+              Oprichter Mindful Mind &amp; In Harmonia
             </p>
           </motion.div>
 
