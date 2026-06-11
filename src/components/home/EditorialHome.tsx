@@ -138,7 +138,7 @@ const EditorialHome = () => {
       </section>
 
       {/* ── 02 Twee paden — Groep & Individueel ──────────── */}
-      <section className="bg-[#FDFBF7]">
+      <section className="bg-[#F7F3EE]">
         <div className="container mx-auto px-6 py-20 lg:px-12 lg:py-28">
           <motion.div
             variants={fadeUp as any}
@@ -149,8 +149,8 @@ const EditorialHome = () => {
           >
             <Chapter label="Twee paden" />
             <h2 className="mt-8 font-serif text-4xl leading-[1.1] text-[#1f1d1b] lg:text-[48px]">
-              Samen leren —{" "}
-              <em className="italic text-terracotta-600">of in jouw tempo.</em>
+              Kies het pad dat{" "}
+              <em className="italic text-terracotta-600">bij jou past.</em>
             </h2>
             <p className="mt-6 text-[15px] leading-[1.85] text-[#54514d]">
               Beide trajecten dragen dezelfde MSC-methode. Het verschil zit in het tempo,
@@ -161,22 +161,22 @@ const EditorialHome = () => {
           <div className="mt-14 grid gap-6 lg:grid-cols-2">
             {[
               {
+                Icon: Users,
                 tag: "Groepstraining",
-                title: "8 weken MSC in een kleine groep",
+                title: "8-weekse MSC traject",
                 body: "Wekelijks twee uur samenkomen met max. 12 deelnemers. Je leert van de oefeningen én van de herkenning bij anderen. Online of op locatie.",
-                meta: "8 weken · €550",
-                cta: "Bekijk de groepstraining",
+                price: "€550",
+                cta: "Ontdek meer",
                 to: "/msc-training",
-                accent: "terracotta",
               },
               {
-                tag: "Individuele begeleiding",
-                title: "6 sessies 1-op-1 met Çağla",
+                Icon: User,
+                tag: "1-op-1 Begeleiding",
+                title: "Individueel traject — 6 sessies",
                 body: "Persoonlijk traject via Zoom, helemaal afgestemd op jouw vraag en tempo. Geschikt als groep niet past of als je iets specifieks wilt onderzoeken.",
-                meta: "6 sessies · €550 · Gratis kennismaking",
-                cta: "Bekijk individueel traject",
+                price: "€550",
+                cta: "Ontdek meer",
                 to: "/coaching",
-                accent: "sage",
               },
             ].map((p) => (
               <motion.article
@@ -185,38 +185,25 @@ const EditorialHome = () => {
                 initial="hidden"
                 whileInView="show"
                 viewport={{ once: true, margin: "-60px" }}
-                className={`group relative flex flex-col justify-between border bg-white p-8 transition-colors lg:p-10 ${
-                  p.accent === "terracotta"
-                    ? "border-terracotta-600/40 hover:border-terracotta-600"
-                    : "border-sage-600/40 hover:border-sage-600"
-                }`}
+                className="group relative flex flex-col justify-between rounded-2xl border border-sage-600/15 bg-white p-8 shadow-sm transition-shadow hover:shadow-md lg:p-10"
               >
                 <div>
-                  <p
-                    className={`text-[10px] uppercase tracking-[0.28em] ${
-                      p.accent === "terracotta" ? "text-terracotta-700" : "text-sage-700"
-                    }`}
-                  >
+                  <p.Icon className="h-8 w-8 text-sage-700" strokeWidth={1.4} />
+                  <p className="mt-5 text-[10px] uppercase tracking-[0.28em] text-sage-700">
                     {p.tag}
                   </p>
-                  <h3 className="mt-5 font-serif text-2xl leading-snug text-[#1f1d1b] lg:text-[28px]">
+                  <h3 className="mt-3 font-serif text-2xl leading-snug text-[#1f1d1b] lg:text-[28px]">
                     {p.title}
                   </h3>
                   <p className="mt-4 text-[15px] leading-[1.8] text-[#54514d]">{p.body}</p>
                 </div>
-                <div className="mt-10 flex items-center justify-between border-t border-[#2C2A28]/10 pt-5">
-                  <span
-                    className={`font-serif text-base ${
-                      p.accent === "terracotta" ? "text-terracotta-700" : "text-sage-700"
-                    }`}
-                  >
-                    {p.meta}
-                  </span>
+                <div className="mt-8 flex items-center justify-between border-t border-[#2C2A28]/10 pt-5">
+                  <span className="font-serif text-base text-[#1f1d1b]">{p.price}</span>
                   <Link
                     to={p.to}
-                    className="inline-flex items-center gap-1 text-[11px] font-medium uppercase tracking-[0.22em] text-[#1f1d1b] group-hover:text-terracotta-700"
+                    className="inline-flex items-center gap-1.5 text-[11px] font-semibold uppercase tracking-[0.22em] text-terracotta-700 group-hover:gap-2.5 transition-all"
                   >
-                    {p.cta} <ArrowUpRight className="h-3.5 w-3.5" />
+                    {p.cta} <ArrowRight className="h-3.5 w-3.5" />
                   </Link>
                 </div>
               </motion.article>
@@ -232,6 +219,7 @@ const EditorialHome = () => {
           </p>
         </div>
       </section>
+
 
       {/* ── 03 Voor wie — Çağla's eigen woorden ──────────── */}
       <section className="bg-[#F6F1E8]">
