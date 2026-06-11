@@ -6,8 +6,15 @@ import ScrollToTop from "@/components/ScrollToTop";
 import ScrollProgressBar from "@/components/ScrollProgressBar";
 import WhatsAppButton from "@/components/WhatsAppButton";
 import CookieConsent from "@/components/CookieConsent";
-import JourneyHome from "@/components/home/JourneyHome";
+import HeroHome from "@/components/home/HeroHome";
+import ProfilesSection from "@/components/home/ProfilesSection";
+import HerkenningSection from "@/components/home/HerkenningSection";
+import OfferingsSection from "@/components/home/OfferingsSection";
+import ResultsHomeSection from "@/components/home/ResultsHomeSection";
+import TestimonialsHomeSection from "@/components/home/TestimonialsHomeSection";
+import MscSection from "@/components/home/MscSection";
 import TrainerHomeSection from "@/components/home/TrainerHomeSection";
+import FinalCtaSection from "@/components/home/FinalCtaSection";
 
 const Index = () => {
   return (
@@ -23,8 +30,15 @@ const Index = () => {
       <OrganizationSchema />
       <Navigation />
       <main id="main-content">
-        <JourneyHome />
+        <HeroHome />
+        <ProfilesSection />
+        <HerkenningSection />
+        <OfferingsSection />
+        <ResultsHomeSection />
+        <TestimonialsHomeSection />
+        <MscSection />
         <TrainerHomeSection />
+        <FinalCtaSection />
       </main>
       <Footer />
     </div>
