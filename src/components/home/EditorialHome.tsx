@@ -221,7 +221,7 @@ const EditorialHome = () => {
         </div>
       </section>
 
-      {/* ── 03 Herkenning — korter ───────────────────────── */}
+      {/* ── 03 Voor wie — Çağla's eigen woorden ──────────── */}
       <section className="bg-[#F6F1E8]">
         <div className="container mx-auto px-6 py-20 lg:px-12 lg:py-28">
           <div className="grid gap-14 lg:grid-cols-12">
@@ -230,33 +230,49 @@ const EditorialHome = () => {
               initial="hidden"
               whileInView="show"
               viewport={{ once: true, margin: "-80px" }}
-              className="lg:col-span-4"
+              className="lg:col-span-5"
             >
               <Chapter label="Voor wie" />
               <h2 className="mt-8 font-serif text-4xl leading-[1.1] text-[#1f1d1b] lg:text-[44px]">
-                Misschien
-                <br />
-                <em className="italic text-terracotta-600">herken</em> je dit.
+                Veel mensen die bij mij komen zijn jarenlang gewend{" "}
+                <em className="italic text-terracotta-600">door te gaan.</em>
               </h2>
+              <div className="mt-8 flex flex-wrap items-center gap-x-5 gap-y-2 font-serif text-2xl italic text-terracotta-600">
+                <span>Sterk te zijn.</span>
+                <span className="text-terracotta-300">◆</span>
+                <span>Te zorgen.</span>
+                <span className="text-terracotta-300">◆</span>
+                <span>Te presteren.</span>
+              </div>
             </motion.div>
 
-            <motion.ol
+            <motion.div
               variants={fadeUp as any}
               initial="hidden"
               whileInView="show"
               viewport={{ once: true, margin: "-80px" }}
-              className="space-y-10 lg:col-span-7 lg:col-start-6"
+              className="lg:col-span-6 lg:col-start-7 lg:pt-4"
             >
-              {[
-                "Je bent streng voor jezelf",
-                "Je zorgt eerst voor anderen",
-                "Rust nemen voelt als falen",
-              ].map((item) => (
-                <li key={item} className="border-t border-[#2C2A28]/10 pt-6 font-serif text-xl leading-snug text-[#1f1d1b]">
-                  {item}
-                </li>
-              ))}
-            </motion.ol>
+              <div className="grid grid-cols-1 gap-px overflow-hidden rounded-sm bg-[#2C2A28]/10 sm:grid-cols-2">
+                <div className="bg-[#FDFBF7] p-7">
+                  <p className="text-[10px] uppercase tracking-[0.24em] text-sage-700">Van buiten</p>
+                  <p className="mt-3 font-serif text-xl leading-snug text-[#1f1d1b]">
+                    Lijkt het vaak alsof het goed gaat.
+                  </p>
+                </div>
+                <div className="bg-[#F6F1E8] p-7">
+                  <p className="text-[10px] uppercase tracking-[0.24em] text-terracotta-700">Van binnen</p>
+                  <p className="mt-3 font-serif text-xl leading-snug text-[#1f1d1b]">
+                    Kost het steeds meer energie.
+                  </p>
+                </div>
+              </div>
+              <p className="mt-8 text-[15px] leading-[1.8] text-[#54514d]">
+                Herken je dat? Dan is MSC een plek waar je niet harder hoeft te werken aan
+                jezelf — maar leert hoe je jezelf kunt steunen, juist op de momenten dat
+                het tegenzit.
+              </p>
+            </motion.div>
           </div>
         </div>
       </section>
