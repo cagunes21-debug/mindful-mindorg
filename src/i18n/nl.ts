@@ -255,6 +255,7 @@ export const nl = {
         f4: "Ondersteuning per mail tussen sessies",
         priceNote: "6 sessies · online via Zoom",
         cta: "Plan een gratis kennismaking",
+        ctaLearnMore: "meer over individuele sessies",
       },
       group: {
         badge: "Groep",
