@@ -43,31 +43,34 @@ const EditorialHome = () => {
               animate="show"
               className="lg:col-span-7 lg:pt-10"
             >
-              <Chapter n="i." label="Mindful Mind · Editie 2026" />
-              <h1 className="mt-10 font-serif text-[44px] leading-[1.02] tracking-tight text-[#1f1d1b] sm:text-[60px] lg:text-[78px]">
-                Van zelfkritiek
+              <div className="inline-flex items-center gap-2 rounded-full border border-terracotta-600/25 bg-terracotta-50 px-4 py-1.5 text-[11px] font-medium uppercase tracking-[0.22em] text-terracotta-700">
+                <span className="h-1.5 w-1.5 rounded-full bg-terracotta-600" />
+                Volgende start · September 2026 · Nog enkele plekken
+              </div>
+              <h1 className="mt-8 font-serif text-[40px] leading-[1.05] tracking-tight text-[#1f1d1b] sm:text-[56px] lg:text-[72px]">
+                Mindful Zelfcompassie Training —
                 <br />
-                naar <em className="italic text-terracotta-600">zelfvertrouwen</em>.
+                behandel jezelf zoals je een{" "}
+                <em className="italic text-terracotta-600">goede vriend</em> behandelt.
               </h1>
               <p className="mt-8 max-w-xl text-lg leading-[1.75] text-[#54514d]">
-                Acht weken. Een nieuwe manier van naar jezelf kijken. De{" "}
-                <span className="text-[#2C2A28]">Mindful Zelfcompassie Training</span> leert je hoe je
-                jezelf kunt ondersteunen — juist op de momenten dat het moeilijk is.
+                In de Mindful Zelfcompassie Training ontwikkel je meer veerkracht, innerlijke rust
+                en zelfcompassie — juist op momenten dat je het moeilijk hebt.
               </p>
 
               <div className="mt-10 flex flex-col gap-3 sm:flex-row sm:items-center sm:gap-6">
                 <Link
-                  to="/contact"
+                  to="/coaching"
                   className="group inline-flex items-center justify-center gap-3 bg-terracotta-600 px-7 py-4 text-[12px] font-medium uppercase tracking-[0.22em] text-white transition-colors hover:bg-terracotta-700"
                 >
-                  Plan een gratis kennismaking
+                  Meer over individuele sessies
                   <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
                 </Link>
                 <Link
-                  to="/msc-groepstraining"
+                  to="/msc-training"
                   className="inline-flex items-center gap-2 text-[12px] font-medium uppercase tracking-[0.22em] text-[#2C2A28] underline-offset-8 hover:underline"
                 >
-                  Bekijk de training
+                  Bekijk de groepstraining <ArrowRight className="h-3.5 w-3.5" />
                 </Link>
               </div>
 
