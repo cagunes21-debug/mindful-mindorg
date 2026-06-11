@@ -118,12 +118,12 @@ export const es = {
   home: {
     hero: {
       eyebrow: "Mindful Mind · Acompañamiento individual",
-      line1: "Más calma.",
-      line2: "Más amabilidad.",
-      line3: "Más solidez en ti.",
-      headline: "Aprende a apoyarte a ti misma como lo harías con una buena amiga — especialmente cuando es difícil",
-      ctaPrimary: "Más sobre sesiones individuales",
-      ctaSecondary: "Formación grupal",
+      line1: "¿Y si te trataras a ti misma como tratas a un buen amigo?",
+      line2: "",
+      line3: "",
+      headline: "Desarrolla más resiliencia, paz interior y autocompasión — justo cuando las cosas son difíciles.",
+      ctaPrimary: "MÁS SOBRE SESIONES INDIVIDUALES",
+      ctaSecondary: "VER LA FORMACIÓN GRUPAL",
     },
     herkenning: {
       eyebrow: "¿Te reconoces en esto?",
