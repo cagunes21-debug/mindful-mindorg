@@ -39,15 +39,16 @@ const EditorialHome = () => {
                 Volgende start · September 2026 · Nog enkele plekken
               </div>
               <h1 className="mt-8 font-serif text-[40px] leading-[1.05] tracking-tight text-[#1f1d1b] sm:text-[56px] lg:text-[72px]">
-                Mindful Zelfcompassie Training —
+                Mindful Zelfcompassie —
                 <br />
-                behandel jezelf zoals je een{" "}
-                <em className="italic text-terracotta-600">goede vriend</em> behandelt.
+                een andere manier om{" "}
+                <em className="italic text-terracotta-600">sterk</em> te zijn.
               </h1>
               <p className="mt-8 max-w-xl text-lg leading-[1.75] text-[#54514d]">
-                Een 8-weeks programma (MSC) waarin je leert milder met jezelf om te gaan —
-                ook op de momenten dat het tegenzit. Wetenschappelijk onderbouwd, in een
-                kleine groep, begeleid door een gecertificeerd trainer.
+                Ik ben Çağla Güneş — lichaamsgericht psychotherapeut en gecertificeerd MSC-trainer.
+                In acht weken leer je hoe je jezelf kunt steunen in plaats van afkeuren. Geen quick
+                fix, wel een vaardigheid die blijft. In een kleine groep, in het Nederlands,
+                Engels of Turks.
               </p>
 
               <div className="mt-10 flex flex-col gap-3 sm:flex-row sm:items-center sm:gap-6">
@@ -97,10 +98,11 @@ const EditorialHome = () => {
                   />
                 </div>
                 {/* Sage citaatkaart */}
-                <div className="absolute -bottom-6 -left-4 max-w-[220px] bg-sage-600 p-5 text-[#FDFBF7] shadow-lg sm:-left-8">
+                <div className="absolute -bottom-6 -left-4 max-w-[240px] bg-sage-600 p-5 text-[#FDFBF7] shadow-lg sm:-left-8">
                   <p className="font-serif text-lg italic leading-snug">
-                    "Zelfzorg is een vaardigheid."
+                    "Niet zichzelf verbeteren — zichzelf leren ondersteunen."
                   </p>
+                  <p className="mt-2 text-[10px] uppercase tracking-[0.24em] text-white/80">— Çağla</p>
                 </div>
               </div>
             </motion.div>
@@ -114,14 +116,14 @@ const EditorialHome = () => {
       <section className="bg-[#FDFBF7]">
         <div className="container mx-auto px-6 py-10 lg:px-12 lg:py-14">
           <p className="text-center text-[10px] uppercase tracking-[0.32em] text-[#7a7670]">
-            Erkend · Wetenschappelijk onderbouwd · Sinds 2016
+            Lichaamsgericht psychotherapeut · Gecertificeerd MSC-trainer · Sessies in NL · EN · TR
           </p>
           <div className="mx-auto mt-8 grid max-w-5xl grid-cols-2 gap-x-6 gap-y-8 border-y border-[#2C2A28]/10 py-8 sm:grid-cols-4">
             {[
-              { Icon: GraduationCap, t: "Center for MSC", s: "UC San Diego" },
-              { Icon: ShieldCheck, t: "Gecertificeerd", s: "MSC Teacher Trained" },
-              { Icon: BookOpen, t: "Evidence-based", s: "Neff & Germer methode" },
-              { Icon: Award, t: "10+ jaar", s: "praktijkervaring" },
+              { Icon: GraduationCap, t: "Psychologie & Psychotherapie", s: "Integratief opgeleid" },
+              { Icon: ShieldCheck, t: "Somatic Experiencing®", s: "Trauma & zenuwstelsel" },
+              { Icon: BookOpen, t: "Mindful Self-Compassion", s: "Center for MSC — Neff & Germer" },
+              { Icon: Award, t: "20+ jaar meditatie", s: "Vipassana-retraites sinds haar 13e" },
             ].map(({ Icon, t, s }) => (
               <div key={t} className="flex items-start gap-3">
                 <Icon className="mt-0.5 h-5 w-5 flex-none text-sage-700" strokeWidth={1.4} />
@@ -219,7 +221,7 @@ const EditorialHome = () => {
         </div>
       </section>
 
-      {/* ── 03 Herkenning — korter ───────────────────────── */}
+      {/* ── 03 Voor wie — Çağla's eigen woorden ──────────── */}
       <section className="bg-[#F6F1E8]">
         <div className="container mx-auto px-6 py-20 lg:px-12 lg:py-28">
           <div className="grid gap-14 lg:grid-cols-12">
@@ -228,33 +230,49 @@ const EditorialHome = () => {
               initial="hidden"
               whileInView="show"
               viewport={{ once: true, margin: "-80px" }}
-              className="lg:col-span-4"
+              className="lg:col-span-5"
             >
               <Chapter label="Voor wie" />
               <h2 className="mt-8 font-serif text-4xl leading-[1.1] text-[#1f1d1b] lg:text-[44px]">
-                Misschien
-                <br />
-                <em className="italic text-terracotta-600">herken</em> je dit.
+                Veel mensen die bij mij komen zijn jarenlang gewend{" "}
+                <em className="italic text-terracotta-600">door te gaan.</em>
               </h2>
+              <div className="mt-8 flex flex-wrap items-center gap-x-5 gap-y-2 font-serif text-2xl italic text-terracotta-600">
+                <span>Sterk te zijn.</span>
+                <span className="text-terracotta-300">◆</span>
+                <span>Te zorgen.</span>
+                <span className="text-terracotta-300">◆</span>
+                <span>Te presteren.</span>
+              </div>
             </motion.div>
 
-            <motion.ol
+            <motion.div
               variants={fadeUp as any}
               initial="hidden"
               whileInView="show"
               viewport={{ once: true, margin: "-80px" }}
-              className="space-y-10 lg:col-span-7 lg:col-start-6"
+              className="lg:col-span-6 lg:col-start-7 lg:pt-4"
             >
-              {[
-                "Je bent streng voor jezelf",
-                "Je zorgt eerst voor anderen",
-                "Rust nemen voelt als falen",
-              ].map((item) => (
-                <li key={item} className="border-t border-[#2C2A28]/10 pt-6 font-serif text-xl leading-snug text-[#1f1d1b]">
-                  {item}
-                </li>
-              ))}
-            </motion.ol>
+              <div className="grid grid-cols-1 gap-px overflow-hidden rounded-sm bg-[#2C2A28]/10 sm:grid-cols-2">
+                <div className="bg-[#FDFBF7] p-7">
+                  <p className="text-[10px] uppercase tracking-[0.24em] text-sage-700">Van buiten</p>
+                  <p className="mt-3 font-serif text-xl leading-snug text-[#1f1d1b]">
+                    Lijkt het vaak alsof het goed gaat.
+                  </p>
+                </div>
+                <div className="bg-[#F6F1E8] p-7">
+                  <p className="text-[10px] uppercase tracking-[0.24em] text-terracotta-700">Van binnen</p>
+                  <p className="mt-3 font-serif text-xl leading-snug text-[#1f1d1b]">
+                    Kost het steeds meer energie.
+                  </p>
+                </div>
+              </div>
+              <p className="mt-8 text-[15px] leading-[1.8] text-[#54514d]">
+                Herken je dat? Dan is MSC een plek waar je niet harder hoeft te werken aan
+                jezelf — maar leert hoe je jezelf kunt steunen, juist op de momenten dat
+                het tegenzit.
+              </p>
+            </motion.div>
           </div>
         </div>
       </section>
@@ -399,9 +417,9 @@ const EditorialHome = () => {
                 className="aspect-[4/5] w-full object-cover"
               />
             </div>
-            <p className="mt-5 font-serif text-2xl italic">— Çağla</p>
+            <p className="mt-5 font-serif text-2xl italic">— Çağla Güneş</p>
             <p className="text-[11px] uppercase tracking-[0.28em] text-white/70">
-              Oprichter · Gecertificeerd MSC-trainer
+              Oprichter Mindful Mind &amp; In Harmonia
             </p>
           </motion.div>
 
@@ -414,18 +432,21 @@ const EditorialHome = () => {
           >
             <Chapter label="De begeleiding" tone="ivory" />
             <p className="mt-8 font-serif text-3xl leading-[1.3] lg:text-[38px]">
-              "Ik help je de weg te vinden van je <em className="italic">hoofd</em> naar je{" "}
-              <em className="italic">hart</em>."
+              "Ik help je een andere relatie met jezelf op te bouwen —
+              niet door jezelf te <em className="italic">verbeteren</em>,
+              maar door jezelf te leren <em className="italic">ondersteunen</em>."
             </p>
             <p className="mt-6 max-w-xl text-[15px] leading-[1.85] text-white/85">
-              Tien jaar ervaring in mindfulness en zelfcompassie. Geen masterclasses voor honderden
-              — wel echte aandacht, in een kleine, veilige setting.
+              Opgegroeid tussen twee culturen, geworteld in meditatie sinds haar dertiende.
+              Çağla combineert lichaamsgerichte psychotherapie, Somatic Experiencing® en
+              jarenlange MSC-praktijk. Ze begeleidt in het Nederlands, Engels en Turks —
+              altijd in een kleine, veilige setting.
             </p>
             <Link
-              to="/trainers"
+              to="/over-cagla"
               className="mt-8 inline-flex items-center gap-2 border-b border-white pb-1 text-[12px] font-medium uppercase tracking-[0.22em] hover:opacity-80"
             >
-              Maak kennis met het team <ArrowUpRight className="h-3.5 w-3.5" />
+              Lees haar verhaal <ArrowUpRight className="h-3.5 w-3.5" />
             </Link>
           </motion.div>
         </div>
@@ -467,10 +488,11 @@ const EditorialHome = () => {
             <h2 className="mt-8 font-serif text-4xl leading-[1.15] text-[#1f1d1b] lg:text-[48px]">
               Twijfel je nog?
               <br />
-              <em className="italic text-terracotta-600">Laten we even praten.</em>
+              <em className="italic text-terracotta-600">Plan een gesprek met Çağla.</em>
             </h2>
             <p className="mx-auto mt-6 max-w-md text-[15px] leading-[1.8] text-[#54514d]">
-              Twintig minuten, vrijblijvend. Geen verkoopgesprek — gewoon luisteren wat er speelt.
+              Twintig minuten, vrijblijvend. Geen verkoopgesprek — gewoon ruimte om te
+              luisteren wat er speelt en samen kijken wat past.
             </p>
             <div className="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row sm:gap-6">
               <Link
