@@ -14,7 +14,7 @@ const HerkenningSection = () => {
   return (
     <>
       {/* Deel 1 — Verlangen */}
-      <section className="py-24 md:py-32 bg-warm-50 border-t border-foreground/10">
+      <section className="py-24 md:py-32 bg-warm-50">
         <div className="container mx-auto px-6 md:px-12 max-w-7xl">
           <div className="grid md:grid-cols-12 gap-10 md:gap-16">
             <div className="md:col-span-5">

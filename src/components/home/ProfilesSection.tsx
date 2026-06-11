@@ -9,7 +9,7 @@ const ProfilesSection = () => {
     { title: t("home.hero.profiles.p3Title"), desc: t("home.hero.profiles.p3Desc") },
   ];
   return (
-    <section className="py-24 md:py-32 bg-background border-t border-foreground/10">
+    <section className="py-24 md:py-32 bg-background">
       <div className="container mx-auto px-6 md:px-12 max-w-7xl">
         {/* Asymmetric editorial header */}
         <div className="grid md:grid-cols-12 gap-10 md:gap-16 mb-16 md:mb-20">
