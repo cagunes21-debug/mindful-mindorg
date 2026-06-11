@@ -118,55 +118,6 @@ const HerkenningSection = () => {
                 </div>
               )}
 
-              {(() => {
-                const parts = t("home.herkenning.whyP1")
-                  .split("\n\n")
-                  .map((s) => s.trim())
-                  .filter(Boolean);
-                const intro = parts[0];
-                const bulletItems = parts.filter((s, i) => i > 0 && i < parts.length - 2);
-                const closing = parts.slice(parts.length - 2);
-                return (
-                  <div className="max-w-[58ch] mx-auto">
-                    {intro && (
-                      <p className="text-foreground/80 text-[15px] leading-[1.8] font-light">
-                        {intro}
-                      </p>
-                    )}
-
-                    {bulletItems.length > 0 && (
-                      <ul className="mt-8 space-y-3 flex flex-col items-center">
-                        {bulletItems.map((line, i) => (
-                          <li
-                            key={i}
-                            className="flex items-center gap-4 text-foreground font-serif italic text-lg md:text-xl"
-                          >
-                            <span className="h-px w-5 bg-terracotta-500 flex-shrink-0" />
-                            <span>{line.replace(/\.$/, "")}</span>
-                          </li>
-                        ))}
-                      </ul>
-                    )}
-
-                    {closing.length > 0 && (
-                      <div className="mt-10 space-y-3">
-                        {closing.map((line, i) => (
-                          <p
-                            key={i}
-                            className={`leading-[1.7] ${
-                              i === closing.length - 1
-                                ? "font-serif text-xl md:text-2xl text-primary italic"
-                                : "text-foreground/80 text-[15px] font-light"
-                            }`}
-                          >
-                            {line}
-                          </p>
-                        ))}
-                      </div>
-                    )}
-                  </div>
-                );
-              })()}
             </ScrollReveal>
           </div>
         </div>
