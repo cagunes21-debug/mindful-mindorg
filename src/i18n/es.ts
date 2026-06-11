@@ -122,7 +122,7 @@ export const es = {
       line2: "Más amabilidad.",
       line3: "Más solidez en ti.",
       headline: "Aprende a apoyarte a ti misma como lo harías con una buena amiga — especialmente cuando es difícil",
-      ctaPrimary: "Sesión de descubrimiento gratuita",
+      ctaPrimary: "Más sobre sesiones individuales",
       ctaSecondary: "Formación grupal",
     },
     herkenning: {

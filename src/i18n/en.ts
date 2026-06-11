@@ -122,7 +122,7 @@ export const en = {
       line2: "More gentleness.",
       line3: "More inner strength.",
       headline: "Learn to support yourself the way you would support a good friend — especially when things feel difficult.",
-      ctaPrimary: "Free introductory session",
+      ctaPrimary: "More about individual sessions",
       ctaSecondary: "Group training available",
     },
     herkenning: {

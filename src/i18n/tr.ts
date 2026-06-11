@@ -122,7 +122,7 @@ export const tr = {
       line2: "Daha fazla şefkat.",
       line3: "Daha fazla içsel güç.",
       headline: "Zor zamanlarda kendine, iyi bir arkadaşına destek olduğun gibi destek olmayı öğren",
-      ctaPrimary: "Ücretsiz tanışma görüşmesi",
+      ctaPrimary: "Bireysel seanslar hakkında daha fazla",
       ctaSecondary: "Grup eğitimi",
     },
     herkenning: {
