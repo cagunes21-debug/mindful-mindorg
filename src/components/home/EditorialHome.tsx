@@ -15,8 +15,8 @@ import natureCalm from "@/assets/nature-calm.jpg";
 
 const fadeUp = {
   hidden: { opacity: 0, y: 24 },
-  show: { opacity: 1, y: 0, transition: { duration: 0.8, ease: [0.22, 1, 0.36, 1] } },
-};
+  show: { opacity: 1, y: 0, transition: { duration: 0.8, ease: [0.22, 1, 0.36, 1] as [number, number, number, number] } },
+} as const;
 
 const Chapter = ({ n, label }: { n: string; label: string }) => (
   <div className="flex items-center gap-3 text-[11px] uppercase tracking-[0.28em] text-terracotta-600/80">
