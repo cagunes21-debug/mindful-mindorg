@@ -45,10 +45,11 @@ const EditorialHome = () => {
                 <em className="italic text-terracotta-600">sterk</em> te zijn.
               </h1>
               <p className="mt-8 max-w-xl text-lg leading-[1.75] text-[#54514d]">
-                Ik ben Çağla Güneş — lichaamsgericht psychotherapeut en gecertificeerd MSC-trainer.
-                In acht weken leer je hoe je jezelf kunt steunen in plaats van afkeuren. Geen quick
-                fix, wel een vaardigheid die blijft. In een kleine groep, in het Nederlands,
-                Engels of Turks.
+                Mindful Self-Compassion (MSC) is een 8-weeks programma ontwikkeld door
+                Dr. Kristin Neff en Dr. Christopher Germer. Je leert via meditatie,
+                oefeningen en uitwisseling in een kleine groep hoe je jezelf kunt
+                steunen — vooral wanneer het moeilijk is. Geen quick fix, wel een
+                vaardigheid die blijft.
               </p>
 
               <div className="mt-10 flex flex-col gap-3 sm:flex-row sm:items-center sm:gap-6">
