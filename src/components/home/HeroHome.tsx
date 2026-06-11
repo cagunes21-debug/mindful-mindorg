@@ -1,63 +1,81 @@
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
+import { ArrowRight } from "lucide-react";
 import heroImage from "@/assets/hero-mindful.jpg";
 import { useLanguage } from "@/i18n/LanguageContext";
 
 const HeroHome = () => {
   const { t } = useLanguage();
   return (
-    <section className="relative min-h-[75vh] flex items-center overflow-hidden">
-      <div className="absolute inset-0">
-        <img src={heroImage} alt="Vrouw mediteert in de natuur" className="w-full h-full object-cover" />
-        <div className="absolute inset-0 bg-gradient-to-r from-foreground/85 via-foreground/50 to-transparent" />
-      </div>
-      <div className="relative z-10 container mx-auto px-6 md:px-10 py-20 md:py-28">
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-          className="max-w-lg"
-        >
-          <p className="text-secondary/70 text-xs tracking-[0.3em] uppercase mb-5 font-medium">
-            {t("home.hero.eyebrow")}
-          </p>
-          <div className="text-primary-foreground text-2xl md:text-4xl font-serif leading-[1.3] mb-6">
-            <p>{t("home.hero.line1")}</p>
-            <p>{t("home.hero.line2")}</p>
-            {t("home.hero.line3") && <p>{t("home.hero.line3")}</p>}
-          </div>
-          <p className="text-sm md:text-base font-normal text-secondary/70 leading-relaxed mb-6 max-w-md">
-            {t("home.hero.headline")}
-          </p>
-          <div className="inline-flex items-center gap-2 mb-8 px-4 py-1.5 rounded-full bg-primary-foreground/10 border border-primary-foreground/20 backdrop-blur-sm">
-            <span className="h-1.5 w-1.5 rounded-full bg-terracotta-300 animate-pulse" />
-            <span className="text-xs tracking-wide text-primary-foreground/90">
+    <section className="relative w-full bg-[hsl(var(--warm-50))] overflow-hidden">
+      <div className="container mx-auto px-6 md:px-10 py-16 md:py-24 lg:py-28">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
+          {/* Content column */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            className="lg:col-span-7 z-10"
+          >
+            <div className="inline-flex items-center gap-3 px-4 py-1.5 rounded-full border border-sage-600/30 bg-sage-600/5 text-sage-700 text-xs font-medium uppercase tracking-widest mb-8">
+              <span className="w-1.5 h-1.5 rounded-full bg-sage-600 animate-pulse" />
               {t("home.hero.startBadge")}
-            </span>
-          </div>
-          <div className="flex flex-col sm:flex-row flex-wrap gap-3">
-            <Link
-              to="/coaching"
-              className="inline-flex items-center justify-center bg-primary text-primary-foreground h-12 px-8 rounded-full font-semibold text-sm tracking-wide uppercase hover:opacity-90 transition-opacity shadow-lg shadow-primary/20"
-            >
-              {t("home.hero.ctaPrimary")}
-            </Link>
-            <Link
-              to="/msc-training"
-              className="inline-flex items-center justify-center border border-primary-foreground/30 text-primary-foreground h-12 px-8 rounded-full font-semibold text-sm tracking-wide uppercase hover:bg-primary-foreground/10 transition-colors backdrop-blur-sm"
-            >
-              {t("home.hero.ctaSecondary")}
-            </Link>
-            {t("home.hero.ctaTertiary") && (
+            </div>
+
+            <h1 className="font-serif text-foreground text-4xl sm:text-5xl md:text-6xl lg:text-7xl leading-[1.05] tracking-tight mb-8">
+              {t("home.hero.line1")}
+            </h1>
+
+            <p className="text-muted-foreground text-lg md:text-xl max-w-xl leading-[1.7] mb-10 border-l border-sage-600/30 pl-6">
+              {t("home.hero.headline")}
+            </p>
+
+            <div className="flex flex-col sm:flex-row gap-6 items-start sm:items-center">
               <Link
-                to="/ons-aanbod"
-                className="inline-flex items-center justify-center text-primary-foreground/90 h-12 px-4 rounded-full text-sm tracking-wide hover:text-primary-foreground underline-offset-4 hover:underline transition-colors"
+                to="/coaching"
+                className="bg-primary hover:bg-primary/90 text-primary-foreground px-8 py-4 rounded-sm transition-all duration-300 shadow-sm hover:shadow-md text-sm font-medium tracking-wide uppercase"
               >
-                {t("home.hero.ctaTertiary")} →
+                {t("home.hero.ctaPrimary")}
               </Link>
-            )}
-          </div>
-        </motion.div>
+              <Link
+                to="/msc-training"
+                className="group flex items-center gap-2 text-sage-700 text-sm font-medium tracking-wide uppercase border-b border-transparent hover:border-sage-600 transition-all py-1"
+              >
+                {t("home.hero.ctaSecondary")}
+                <ArrowRight className="w-[18px] h-[18px] group-hover:translate-x-1 transition-transform" />
+              </Link>
+            </div>
+          </motion.div>
+
+          {/* Image column */}
+          <motion.div
+            initial={{ opacity: 0, scale: 0.96 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 1, delay: 0.2 }}
+            className="lg:col-span-5 relative"
+          >
+            <div className="relative aspect-[4/5] w-full max-w-md mx-auto">
+              {/* Decorative corner */}
+              <div className="absolute -top-6 -right-6 w-32 h-32 border-t border-r border-terracotta-300/50 hidden md:block" />
+
+              {/* Framed image */}
+              <div className="w-full h-full overflow-hidden rounded-t-[14rem] rounded-b-lg shadow-2xl">
+                <img
+                  src={heroImage}
+                  alt="Vrouw mediteert in de natuur"
+                  className="w-full h-full object-cover"
+                />
+              </div>
+
+              {/* Floating sage accent */}
+              <div className="absolute -bottom-8 -left-6 md:-left-10 bg-sage-600 text-white p-6 md:p-8 hidden md:block shadow-xl">
+                <p className="font-serif text-2xl md:text-3xl italic leading-tight">
+                  Zelfzorg is een<br />vaardigheid.
+                </p>
+              </div>
+            </div>
+          </motion.div>
+        </div>
       </div>
     </section>
   );
