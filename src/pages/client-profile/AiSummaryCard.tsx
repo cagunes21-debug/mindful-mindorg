@@ -2,7 +2,7 @@ import { useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { Sparkles, Loader2, RefreshCw } from "lucide-react";
+import { FileText, Loader2, RefreshCw } from "lucide-react";
 import { toast } from "sonner";
 
 export default function AiSummaryCard({ email }: { email: string }) {
