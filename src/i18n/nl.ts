@@ -148,7 +148,7 @@ export const nl = {
         m2Q: "\"Zelfcompassie klinkt als excuses zoeken voor jezelf\"",
         m2A: "Onderzoek laat het tegenovergestelde zien: mensen met meer zelfcompassie nemen méér verantwoordelijkheid voor fouten en zijn juist gemotiveerder om te groeien. Mild zijn voor jezelf is geen zwakte — het is wat veerkracht mogelijk maakt.",
         m3Q: "\"Ik heb geen tijd voor acht weken training\"",
-        m3A: "Het programma vraagt ongeveer 2,5 uur per week (één avond plus dagelijkse korte oefeningen van 10-15 minuten). De meeste deelnemers ervaren dat ze juist tijd terugkrijgen — minder piekeren, beter slapen, helderder keuzes.",
+        m3A: "De Mindful Zelfcompassie Training vraagt ongeveer 2,5 uur per week (één avond plus dagelijkse korte oefeningen van 10-15 minuten). De meeste deelnemers ervaren dat ze juist tijd terugkrijgen — minder piekeren, beter slapen, helderder keuzes.",
       },
       startBadge: "Volgende start · september 2026 · nog enkele plekken",
       ctaPrimary: "MEER OVER INDIVIDUELE SESSIES",
