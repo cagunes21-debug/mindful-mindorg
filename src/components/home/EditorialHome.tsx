@@ -45,23 +45,24 @@ const EditorialHome = () => {
                 <em className="italic text-terracotta-600">goede vriend</em> behandelt.
               </h1>
               <p className="mt-8 max-w-xl text-lg leading-[1.75] text-[#54514d]">
-                In de Mindful Zelfcompassie Training ontwikkel je meer veerkracht, innerlijke rust
-                en zelfcompassie — juist op momenten dat je het moeilijk hebt.
+                Een 8-weeks programma (MSC) waarin je leert milder met jezelf om te gaan —
+                ook op de momenten dat het tegenzit. Wetenschappelijk onderbouwd, in een
+                kleine groep, begeleid door een gecertificeerd trainer.
               </p>
 
               <div className="mt-10 flex flex-col gap-3 sm:flex-row sm:items-center sm:gap-6">
                 <Link
-                  to="/coaching"
+                  to="/msc-training"
                   className="group inline-flex items-center justify-center gap-3 bg-terracotta-600 px-7 py-4 text-[12px] font-medium uppercase tracking-[0.22em] text-white transition-colors hover:bg-terracotta-700"
                 >
-                  Meer over individuele sessies
+                  Bekijk de MSC training
                   <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
                 </Link>
                 <Link
-                  to="/msc-training"
+                  to="/coaching"
                   className="inline-flex items-center gap-2 text-[12px] font-medium uppercase tracking-[0.22em] text-[#2C2A28] underline-offset-8 hover:underline"
                 >
-                  Bekijk de groepstraining <ArrowRight className="h-3.5 w-3.5" />
+                  Individuele begeleiding <ArrowRight className="h-3.5 w-3.5" />
                 </Link>
               </div>
 
@@ -69,6 +70,7 @@ const EditorialHome = () => {
                 {[
                   { k: "8 weken", v: "begeleid programma" },
                   { k: "max 12", v: "deelnemers per groep" },
+                  { k: "2,5 uur", v: "per sessie" },
                 ].map((s) => (
                   <div key={s.k}>
                     <dt className="font-serif text-2xl text-terracotta-700">{s.k}</dt>
@@ -84,27 +86,21 @@ const EditorialHome = () => {
               animate="show"
               className="relative lg:col-span-5"
             >
-              {/* Editorial typographic composition — geen foto */}
               <div className="relative mx-auto w-full max-w-md">
-                {/* Hoofdkaart: ivoor met serif-citaat */}
-                <div className="relative aspect-[4/5] overflow-hidden border border-[#2C2A28]/10 bg-[#F6F1E8]">
-                  {/* sage hoekband */}
-                  <div className="absolute inset-x-0 top-0 h-2 bg-sage-600" />
-                  <div className="relative flex h-full flex-col justify-between p-8 lg:p-10">
-                    <div>
-                      <div className="h-px w-12 bg-terracotta-600" />
-                      <p className="mt-6 font-serif text-[28px] leading-[1.25] text-[#1f1d1b] lg:text-[32px]">
-                        "Zelfzorg is geen <em className="italic text-terracotta-700">luxe</em> —
-                        het is een vaardigheid."
-                      </p>
-                    </div>
-                    <div>
-                      <p className="font-serif text-base italic text-[#1f1d1b]">— Çağla</p>
-                      <p className="mt-1 text-[10px] uppercase tracking-[0.28em] text-[#7a7670]">
-                        Oprichter Mindful Mind
-                      </p>
-                    </div>
-                  </div>
+                {/* Foto in zachte boog */}
+                <div className="relative aspect-[4/5] overflow-hidden rounded-t-[180px] border border-[#2C2A28]/10 bg-[#F6F1E8]">
+                  <img
+                    src={heroImage}
+                    alt="Vrouw in meditatie — Mindful Zelfcompassie"
+                    className="h-full w-full object-cover"
+                    loading="eager"
+                  />
+                </div>
+                {/* Sage citaatkaart */}
+                <div className="absolute -bottom-6 -left-4 max-w-[220px] bg-sage-600 p-5 text-[#FDFBF7] shadow-lg sm:-left-8">
+                  <p className="font-serif text-lg italic leading-snug">
+                    "Zelfzorg is een vaardigheid."
+                  </p>
                 </div>
               </div>
             </motion.div>
