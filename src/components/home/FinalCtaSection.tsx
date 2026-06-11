@@ -10,11 +10,13 @@ const FinalCtaSection = () => {
       <div className="container mx-auto px-6 md:px-10 relative">
         <div className="max-w-2xl mx-auto text-center">
           <ScrollReveal>
-            <span className="inline-block text-xs tracking-[0.3em] uppercase text-primary-foreground/50 font-medium mb-4">{t("home.finalCta.eyebrow")}</span>
-            <h2 className="text-3xl md:text-4xl font-serif mb-3 leading-tight">
+            <h2 className="text-3xl md:text-4xl font-serif mb-4 leading-tight">
               {t("home.finalCta.title")}
             </h2>
-            <p className="text-primary-foreground/75 text-lg mb-10 leading-relaxed max-w-md mx-auto">
+            <p className="text-xl font-serif italic mb-2 opacity-90">
+              {t("home.finalCta.subtitle")}
+            </p>
+            <p className="text-sm uppercase tracking-[0.2em] mb-10 opacity-70">
               {t("home.finalCta.sub")}
             </p>
             <div className="flex flex-col sm:flex-row gap-3 justify-center">

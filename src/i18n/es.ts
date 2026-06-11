@@ -287,8 +287,9 @@ export const es = {
       earlyBird: "incl. manual de trabajo",
     },
     finalCta: {
-      eyebrow: "Inscríbete ahora",
-      title: "Eres bienvenida tal como eres",
+      eyebrow: "",
+      title: "INSCRÍBETE AHORA",
+      subtitle: "Eres bienvenida tal como eres",
       sub: "Comienza hoy tu viaje personal. La sesión de descubrimiento es siempre gratuita y sin compromiso.",
       cta1: "Agenda una sesión",
       cta2: "Descubre la formación grupal",

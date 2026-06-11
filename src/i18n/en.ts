@@ -287,9 +287,10 @@ export const en = {
       earlyBird: "workbook included",
     },
     finalCta: {
-      eyebrow: "Begin when you're ready",
-      title: "You are welcome as you are",
-      sub: "Begin your journey whenever you feel ready. The introductory session is always free and without obligation.",
+      eyebrow: "",
+      title: "SIGN UP NOW",
+      subtitle: "You are welcome as you are",
+      sub: "Start your personal journey today. The introductory session is always free and without obligation.",
       cta1: "Book an introduction",
       cta2: "Discover the group training",
     },
