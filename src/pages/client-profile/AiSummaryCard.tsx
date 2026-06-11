@@ -37,7 +37,7 @@ export default function AiSummaryCard({ email }: { email: string }) {
             <span className="text-xs font-semibold">Samenvatting</span>
           </div>
           <Button size="sm" variant="ghost" onClick={generateSummary} disabled={loading} className="gap-1.5 text-xs h-7">
-            {loading ? <Loader2 className="h-3 w-3 animate-spin" /> : hasGenerated ? <RefreshCw className="h-3 w-3" /> : <Sparkles className="h-3 w-3" />}
+            {loading ? <Loader2 className="h-3 w-3 animate-spin" /> : hasGenerated ? <RefreshCw className="h-3 w-3" /> : <FileText className="h-3 w-3" />}
             {loading ? "Genereren..." : hasGenerated ? "Vernieuwen" : "Genereer"}
           </Button>
         </div>
