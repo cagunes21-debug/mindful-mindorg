@@ -2,7 +2,7 @@ import { useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { Sparkles, Loader2, RefreshCw } from "lucide-react";
+import { FileText, Loader2, RefreshCw } from "lucide-react";
 import { toast } from "sonner";
 
 export default function AiSummaryCard({ email }: { email: string }) {
@@ -32,19 +32,19 @@ export default function AiSummaryCard({ email }: { email: string }) {
         <div className="flex items-center justify-between mb-2">
           <div className="flex items-center gap-2">
             <div className="h-6 w-6 rounded-lg bg-primary/10 flex items-center justify-center">
-              <Sparkles className="h-3 w-3 text-primary" />
+              <FileText className="h-3 w-3 text-primary" />
             </div>
-            <span className="text-xs font-semibold">AI Samenvatting</span>
+            <span className="text-xs font-semibold">Samenvatting</span>
           </div>
           <Button size="sm" variant="ghost" onClick={generateSummary} disabled={loading} className="gap-1.5 text-xs h-7">
-            {loading ? <Loader2 className="h-3 w-3 animate-spin" /> : hasGenerated ? <RefreshCw className="h-3 w-3" /> : <Sparkles className="h-3 w-3" />}
+            {loading ? <Loader2 className="h-3 w-3 animate-spin" /> : hasGenerated ? <RefreshCw className="h-3 w-3" /> : <FileText className="h-3 w-3" />}
             {loading ? "Genereren..." : hasGenerated ? "Vernieuwen" : "Genereer"}
           </Button>
         </div>
         {summary ? (
           <div className="text-sm text-foreground/85 leading-relaxed whitespace-pre-wrap">{summary}</div>
         ) : (
-          <p className="text-xs text-muted-foreground">Klik op "Genereer" voor een AI-samenvatting van dit dossier.</p>
+          <p className="text-xs text-muted-foreground">Klik op "Genereer" voor een samenvatting van dit dossier.</p>
         )}
       </CardContent>
     </Card>

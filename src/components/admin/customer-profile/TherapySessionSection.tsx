@@ -10,7 +10,7 @@ import {
   Collapsible, CollapsibleContent, CollapsibleTrigger,
 } from "@/components/ui/collapsible";
 import {
-  Brain, Save, Loader2, Plus, ChevronDown, FileText, Calendar, Trash2, Download, Pencil, X,
+  Save, Loader2, Plus, ChevronDown, FileText, Calendar, Trash2, Download, Pencil, X,
 } from "lucide-react";
 import { exportSessionPdf } from "./exportSessionPdf";
 import { toast } from "sonner";
@@ -181,7 +181,7 @@ export default function TherapySessionSection({ enrollmentId, clientName }: Prop
     <div className="space-y-3">
       <div className="flex items-center justify-between">
         <p className="text-xs text-muted-foreground flex items-center gap-1 font-medium">
-          <Brain className="h-3 w-3" /> AI Sessienotities
+          <FileText className="h-3 w-3" /> Sessienotities
         </p>
         {!showNew && (
           <Button size="sm" variant="outline" onClick={() => setShowNew(true)} className="gap-1.5 h-7 text-xs">
@@ -219,7 +219,7 @@ export default function TherapySessionSection({ enrollmentId, clientName }: Prop
               disabled={analyzing || transcript.trim().length < 50}
               className="gap-2"
             >
-              {analyzing ? <Loader2 className="h-4 w-4 animate-spin" /> : <Brain className="h-4 w-4" />}
+              {analyzing ? <Loader2 className="h-4 w-4 animate-spin" /> : <FileText className="h-4 w-4" />}
               {analyzing ? "Analyseren..." : "Genereer sessienotities"}
             </Button>
 
