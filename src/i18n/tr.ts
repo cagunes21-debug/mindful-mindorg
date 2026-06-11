@@ -118,12 +118,12 @@ export const tr = {
   home: {
     hero: {
       eyebrow: "Mindful Mind · Bireysel Danışmanlık",
-      line1: "Daha fazla huzur.",
-      line2: "Daha fazla şefkat.",
-      line3: "Daha fazla içsel güç.",
-      headline: "Zor zamanlarda kendine, iyi bir arkadaşına destek olduğun gibi destek olmayı öğren",
-      ctaPrimary: "Bireysel seanslar hakkında daha fazla",
-      ctaSecondary: "Grup eğitimi",
+      line1: "Ya kendine iyi bir arkadaşına davrandığın gibi davransan?",
+      line2: "",
+      line3: "",
+      headline: "Daha fazla dayanıklılık, içsel huzur ve öz-şefkat geliştir — özellikle zor zamanlarda.",
+      ctaPrimary: "BİREYSEL SEANSLAR HAKKINDA DAHA FAZLA",
+      ctaSecondary: "GRUP EĞİTİMİNİ İNCELE",
     },
     herkenning: {
       eyebrow: "Bunlar sana tanıdık geliyor mu?",

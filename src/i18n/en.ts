@@ -118,12 +118,12 @@ export const en = {
   home: {
     hero: {
       eyebrow: "Mindful Mind · One-on-one sessions",
-      line1: "More calm.",
-      line2: "More gentleness.",
-      line3: "More inner strength.",
-      headline: "Learn to support yourself the way you would support a good friend — especially when things feel difficult.",
-      ctaPrimary: "More about individual sessions",
-      ctaSecondary: "Group training available",
+      line1: "What if you treated yourself the way you treat a good friend?",
+      line2: "",
+      line3: "",
+      headline: "Develop more resilience, inner peace, and self-compassion — especially when things are difficult.",
+      ctaPrimary: "MORE ABOUT INDIVIDUAL SESSIONS",
+      ctaSecondary: "VIEW GROUP TRAINING",
     },
     herkenning: {
       eyebrow: "Does this sound familiar?",

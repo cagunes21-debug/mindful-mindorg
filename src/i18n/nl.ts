@@ -118,10 +118,10 @@ export const nl = {
   home: {
     hero: {
       eyebrow: "MINDFUL MIND · ZELFCOMPASSIE TRAINING",
-      line1: "Je hoeft niet harder",
-      line2: "je best te doen.",
+      line1: "Wat als je jezelf zou behandelen zoals je een goede vriend behandelt?",
+      line2: "",
       line3: "",
-      headline: "Leer anders omgaan met stress, perfectionisme en de druk die je jezelf oplegt.",
+      headline: "Ontwikkel meer veerkracht, innerlijke rust en zelfcompassie, juist op momenten dat je het moeilijk hebt.",
       profiles: {
         eyebrow: "Herkenning",
         title: "Misschien herken je",
@@ -151,8 +151,8 @@ export const nl = {
         m3A: "Het programma vraagt ongeveer 2,5 uur per week (één avond plus dagelijkse korte oefeningen van 10-15 minuten). De meeste deelnemers ervaren dat ze juist tijd terugkrijgen — minder piekeren, beter slapen, helderder keuzes.",
       },
       startBadge: "Volgende start · september 2026 · nog enkele plekken",
-      ctaPrimary: "meer over individuele sessies",
-      ctaSecondary: "Bekijk de groepstraining",
+      ctaPrimary: "MEER OVER INDIVIDUELE SESSIES",
+      ctaSecondary: "BEKIJK DE GROEPSTRAINING",
       ctaTertiary: "",
     },
     herkenning: {
