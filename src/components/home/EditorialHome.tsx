@@ -137,7 +137,7 @@ const EditorialHome = () => {
         </div>
       </section>
 
-      {/* ── 02 Twee paden — Groep & Individueel ──────────── */}
+      {/* ── 02 Kies wat het beste bij je past — Groep & Individueel ──────────── */}
       <section className="bg-[#F7F3EE]">
         <div className="container mx-auto px-6 py-20 lg:px-12 lg:py-28">
           <motion.div
@@ -147,10 +147,10 @@ const EditorialHome = () => {
             viewport={{ once: true, margin: "-80px" }}
             className="mx-auto max-w-2xl text-center"
           >
-            <Chapter label="Twee paden" />
+            <Chapter label="Kies wat het beste bij je past" />
             <h2 className="mt-8 font-serif text-4xl leading-[1.1] text-[#1f1d1b] lg:text-[48px]">
-              Kies het pad dat{" "}
-              <em className="italic text-terracotta-600">bij jou past.</em>
+              Groep of individueel —{" "}
+              <em className="italic text-terracotta-600">jij kiest.</em>
             </h2>
             <p className="mt-6 text-[15px] leading-[1.85] text-[#54514d]">
               Beide trajecten dragen dezelfde MSC-methode. Het verschil zit in het tempo,
