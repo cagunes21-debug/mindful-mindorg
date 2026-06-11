@@ -14,7 +14,6 @@ const OfferingsSection = () => {
   ];
 
   const groupFeatures = [
-    t("home.offerings.group.f1"),
     t("home.offerings.group.f2"),
     t("home.offerings.group.f3"),
     t("home.offerings.group.f4"),
