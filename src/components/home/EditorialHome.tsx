@@ -1,11 +1,7 @@
 import { Link } from "react-router-dom";
-import { motion, useScroll, useTransform } from "framer-motion";
-import { useRef } from "react";
-import { ArrowRight, ArrowUpRight } from "lucide-react";
-import heroImage from "@/assets/hero-mindful.jpg";
+import { motion } from "framer-motion";
+import { ArrowRight, ArrowUpRight, Award, BookOpen, GraduationCap, ShieldCheck } from "lucide-react";
 import caglaBio from "@/assets/cagla-bio.png";
-import meditationPractice from "@/assets/meditation-practice.jpg";
-import natureCalm from "@/assets/nature-calm.jpg";
 
 /* -----------------------------------------------------------
    Editorial homepage — written like a printed magazine spread.
@@ -27,14 +23,10 @@ const Chapter = ({ n, label, tone }: { n: string; label: string; tone?: "ivory" 
 );
 
 const EditorialHome = () => {
-  const heroRef = useRef<HTMLElement | null>(null);
-  const { scrollYProgress } = useScroll({ target: heroRef, offset: ["start start", "end start"] });
-  const y = useTransform(scrollYProgress, [0, 1], [0, 80]);
-
   return (
     <div className="bg-[#FDFBF7] text-[#2C2A28]">
       {/* ── 01 Arrival ─────────────────────────────────────── */}
-      <section ref={heroRef} className="relative overflow-hidden pt-16 lg:pt-24">
+      <section className="relative overflow-hidden pt-16 lg:pt-24">
         <div className="container mx-auto px-6 lg:px-12">
           <div className="grid gap-14 lg:grid-cols-12 lg:gap-16">
             <motion.div
@@ -89,27 +81,90 @@ const EditorialHome = () => {
             </motion.div>
 
             <motion.div
-              style={{ y }}
+              variants={fadeUp as any}
+              initial="hidden"
+              animate="show"
               className="relative lg:col-span-5"
             >
-              <div className="relative mx-auto aspect-[4/5] w-full max-w-md overflow-hidden rounded-t-[220px] shadow-[0_30px_80px_-40px_rgba(60,40,30,0.45)]">
-                <img
-                  src={heroImage}
-                  alt="Stille meditatie bij zonsondergang"
-                  className="h-full w-full object-cover"
-                />
+              {/* Editorial typographic composition — geen foto */}
+              <div className="relative mx-auto w-full max-w-md">
+                {/* Hoofdkaart: ivoor met serif-citaat */}
+                <div className="relative aspect-[4/5] overflow-hidden border border-[#2C2A28]/10 bg-[#F6F1E8]">
+                  {/* sage hoekband */}
+                  <div className="absolute inset-x-0 top-0 h-2 bg-sage-600" />
+                  {/* groot serif-cijfer als watermerk */}
+                  <span className="pointer-events-none absolute -right-4 -bottom-10 select-none font-serif text-[260px] leading-none text-terracotta-600/10">
+                    01
+                  </span>
+                  <div className="relative flex h-full flex-col justify-between p-8 lg:p-10">
+                    <div>
+                      <p className="text-[10px] uppercase tracking-[0.32em] text-terracotta-700">
+                        Editie · MMXXVI
+                      </p>
+                      <div className="mt-6 h-px w-12 bg-terracotta-600" />
+                      <p className="mt-6 font-serif text-[28px] leading-[1.25] text-[#1f1d1b] lg:text-[32px]">
+                        "Zelfzorg is geen <em className="italic text-terracotta-700">luxe</em> —
+                        het is een vaardigheid."
+                      </p>
+                    </div>
+                    <div className="flex items-end justify-between">
+                      <div>
+                        <p className="font-serif text-base italic text-[#1f1d1b]">— Çağla</p>
+                        <p className="mt-1 text-[10px] uppercase tracking-[0.28em] text-[#7a7670]">
+                          Oprichter Mindful Mind
+                        </p>
+                      </div>
+                      <div className="text-right">
+                        <p className="font-serif text-3xl text-sage-700">N°01</p>
+                        <p className="mt-1 text-[10px] uppercase tracking-[0.24em] text-[#7a7670]">
+                          Hoofdstuk
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Klein sage label, overlappend */}
+                <div className="absolute -bottom-6 left-4 max-w-[240px] bg-sage-600 px-6 py-5 text-white shadow-xl">
+                  <p className="text-[10px] uppercase tracking-[0.28em] text-white/80">
+                    Gecertificeerd
+                  </p>
+                  <p className="mt-1 font-serif text-lg italic leading-snug">
+                    Center for MSC · UC San Diego
+                  </p>
+                </div>
+                <div className="absolute -right-2 -top-4 hidden h-24 w-px bg-terracotta-600/40 lg:block" />
               </div>
-              <div className="absolute -bottom-6 left-0 max-w-[220px] bg-sage-600 px-6 py-5 text-white shadow-xl sm:left-2">
-                <p className="font-serif text-lg italic leading-snug">
-                  Zelfzorg is geen luxe — het is een vaardigheid.
-                </p>
-              </div>
-              <div className="absolute -right-2 -top-4 hidden h-24 w-px bg-terracotta-600/40 lg:block" />
             </motion.div>
           </div>
         </div>
 
         <div className="mt-24 border-t border-[#2C2A28]/10" />
+      </section>
+
+      {/* ── Credibility band — professionele credentials ───── */}
+      <section className="bg-[#FDFBF7]">
+        <div className="container mx-auto px-6 py-10 lg:px-12 lg:py-14">
+          <p className="text-center text-[10px] uppercase tracking-[0.32em] text-[#7a7670]">
+            Erkend · Wetenschappelijk onderbouwd · Sinds 2016
+          </p>
+          <div className="mx-auto mt-8 grid max-w-5xl grid-cols-2 gap-x-6 gap-y-8 border-y border-[#2C2A28]/10 py-8 sm:grid-cols-4">
+            {[
+              { Icon: GraduationCap, t: "Center for MSC", s: "UC San Diego" },
+              { Icon: ShieldCheck, t: "Gecertificeerd", s: "MSC Teacher Trained" },
+              { Icon: BookOpen, t: "Evidence-based", s: "Neff & Germer methode" },
+              { Icon: Award, t: "10+ jaar", s: "praktijkervaring" },
+            ].map(({ Icon, t, s }) => (
+              <div key={t} className="flex items-start gap-3">
+                <Icon className="mt-0.5 h-5 w-5 flex-none text-sage-700" strokeWidth={1.4} />
+                <div>
+                  <p className="font-serif text-[15px] text-[#1f1d1b]">{t}</p>
+                  <p className="mt-0.5 text-[11px] uppercase tracking-[0.18em] text-[#7a7670]">{s}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
       </section>
 
       {/* ── 02 Wat we bieden — meteen helder ─────────────── */}
@@ -250,11 +305,40 @@ const EditorialHome = () => {
             viewport={{ once: true, margin: "-80px" }}
             className="lg:col-span-5"
           >
-            <img
-              src={meditationPractice}
-              alt="Een groep oefent samen zelfcompassie"
-              className="aspect-[4/5] w-full object-cover"
-            />
+            {/* Editorial methodenpaneel — typografisch, geen foto */}
+            <div className="relative aspect-[4/5] w-full overflow-hidden border border-[#2C2A28]/10 bg-white">
+              <span className="pointer-events-none absolute -left-6 -top-12 select-none font-serif text-[260px] leading-none text-sage-700/10">
+                IV
+              </span>
+              <div className="absolute inset-x-0 bottom-0 h-2 bg-terracotta-600" />
+              <div className="relative flex h-full flex-col justify-between p-8 lg:p-10">
+                <div>
+                  <p className="text-[10px] uppercase tracking-[0.32em] text-sage-700">
+                    De methode
+                  </p>
+                  <div className="mt-6 h-px w-12 bg-sage-600" />
+                  <p className="mt-8 font-serif text-[26px] leading-[1.3] text-[#1f1d1b]">
+                    Acht weken.<br />
+                    Een nieuwe manier van<br />
+                    <em className="italic text-terracotta-700">naar jezelf kijken.</em>
+                  </p>
+                </div>
+                <div className="grid grid-cols-3 gap-4 border-t border-[#2C2A28]/10 pt-5">
+                  {[
+                    { k: "08", v: "weken" },
+                    { k: "12", v: "deelnemers" },
+                    { k: "20+", v: "oefeningen" },
+                  ].map((s) => (
+                    <div key={s.k}>
+                      <p className="font-serif text-2xl text-terracotta-700">{s.k}</p>
+                      <p className="mt-1 text-[10px] uppercase tracking-[0.22em] text-[#7a7670]">
+                        {s.v}
+                      </p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
           </motion.div>
 
           <motion.div
