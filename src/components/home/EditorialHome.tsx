@@ -142,6 +142,31 @@ const EditorialHome = () => {
         <div className="mt-24 border-t border-[#2C2A28]/10" />
       </section>
 
+      {/* ── Credibility band — professionele credentials ───── */}
+      <section className="bg-[#FDFBF7]">
+        <div className="container mx-auto px-6 py-10 lg:px-12 lg:py-14">
+          <p className="text-center text-[10px] uppercase tracking-[0.32em] text-[#7a7670]">
+            Erkend · Wetenschappelijk onderbouwd · Sinds 2016
+          </p>
+          <div className="mx-auto mt-8 grid max-w-5xl grid-cols-2 gap-x-6 gap-y-8 border-y border-[#2C2A28]/10 py-8 sm:grid-cols-4">
+            {[
+              { Icon: GraduationCap, t: "Center for MSC", s: "UC San Diego" },
+              { Icon: ShieldCheck, t: "Gecertificeerd", s: "MSC Teacher Trained" },
+              { Icon: BookOpen, t: "Evidence-based", s: "Neff & Germer methode" },
+              { Icon: Award, t: "10+ jaar", s: "praktijkervaring" },
+            ].map(({ Icon, t, s }) => (
+              <div key={t} className="flex items-start gap-3">
+                <Icon className="mt-0.5 h-5 w-5 flex-none text-sage-700" strokeWidth={1.4} />
+                <div>
+                  <p className="font-serif text-[15px] text-[#1f1d1b]">{t}</p>
+                  <p className="mt-0.5 text-[11px] uppercase tracking-[0.18em] text-[#7a7670]">{s}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* ── 02 Wat we bieden — meteen helder ─────────────── */}
       <section className="bg-[#FDFBF7]">
         <div className="container mx-auto px-6 py-20 lg:px-12 lg:py-28">
