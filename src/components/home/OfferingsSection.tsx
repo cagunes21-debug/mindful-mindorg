@@ -21,19 +21,21 @@ const OfferingsSection = () => {
   ];
 
   return (
-    <section className="py-20 md:py-28 bg-background">
+    <section className="py-24 md:py-36 bg-background">
       <div className="container mx-auto px-6 md:px-10">
         <div className="max-w-5xl mx-auto">
           <ScrollReveal>
-            <div className="text-center mb-12">
-              <span className="inline-block text-[0.65rem] tracking-widest uppercase font-semibold text-muted-foreground mb-3">
+            <div className="text-center mb-20 max-w-[56ch] mx-auto">
+              <span className="inline-flex items-center gap-3 text-[0.7rem] tracking-[0.32em] uppercase font-medium text-terracotta-500 mb-8">
+                <span className="h-px w-8 bg-terracotta-400/50" />
                 {t("home.offerings.eyebrow")}
+                <span className="h-px w-8 bg-terracotta-400/50" />
               </span>
-              <h2 className="text-3xl md:text-4xl font-serif text-foreground mb-4">
+              <h2 className="text-4xl md:text-5xl lg:text-6xl font-serif text-foreground leading-[1.05] tracking-tight mb-8">
                 {t("home.offerings.titleA")}{" "}
-                <span className="text-primary">{t("home.offerings.titleB")}</span>
+                <span className="text-primary italic font-light">{t("home.offerings.titleB")}</span>
               </h2>
-              <p className="text-muted-foreground max-w-lg mx-auto">
+              <p className="text-muted-foreground text-lg leading-[1.8] max-w-[48ch] mx-auto">
                 {t("home.offerings.sub")}
               </p>
             </div>

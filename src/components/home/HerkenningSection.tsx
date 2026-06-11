@@ -14,15 +14,17 @@ const HerkenningSection = () => {
   return (
     <>
       {/* Deel 1 — Verlangen */}
-      <section className="py-20 md:py-28 bg-warm-50 relative overflow-hidden">
+      <section className="py-24 md:py-36 bg-warm-50 relative overflow-hidden">
         <div className="absolute -top-20 -right-20 w-96 h-96 bg-terracotta-100/30 rounded-full blur-[100px]" />
         <div className="container mx-auto px-6 md:px-10 relative">
-          <div className="max-w-3xl mx-auto text-center">
+          <div className="max-w-[60ch] mx-auto text-center">
             <ScrollReveal>
-              <span className="inline-block text-xs tracking-[0.3em] uppercase text-terracotta-500 font-medium mb-5">
+              <span className="inline-flex items-center gap-3 text-[0.7rem] tracking-[0.32em] uppercase text-terracotta-500 font-medium mb-8">
+                <span className="h-px w-8 bg-terracotta-400/50" />
                 {t("home.herkenning.eyebrow")}
+                <span className="h-px w-8 bg-terracotta-400/50" />
               </span>
-              <h2 className="text-3xl md:text-4xl font-serif text-foreground leading-[1.15] mb-6">
+              <h2 className="text-4xl md:text-5xl lg:text-6xl font-serif text-foreground leading-[1.05] tracking-tight mb-10">
                 {t("home.herkenning.titleA")}{" "}
                 <span className="text-primary italic font-light">{t("home.herkenning.titleB")}</span>
               </h2>
@@ -76,15 +78,17 @@ const HerkenningSection = () => {
       </section>
 
       {/* Deel 2 — Waarom zelfcompassie */}
-      <section className="py-20 md:py-28 bg-background relative overflow-hidden">
+      <section className="py-24 md:py-36 bg-background relative overflow-hidden">
         <div className="absolute -top-20 -left-20 w-96 h-96 bg-sage-100/30 rounded-full blur-[100px]" />
         <div className="container mx-auto px-6 md:px-10 relative">
-          <div className="max-w-3xl mx-auto text-center">
+          <div className="max-w-[60ch] mx-auto text-center">
             <ScrollReveal>
-              <span className="inline-block text-xs tracking-[0.3em] uppercase text-terracotta-500 font-medium mb-5">
+              <span className="inline-flex items-center gap-3 text-[0.7rem] tracking-[0.32em] uppercase text-terracotta-500 font-medium mb-8">
+                <span className="h-px w-8 bg-terracotta-400/50" />
                 {t("home.herkenning.whyEyebrow")}
+                <span className="h-px w-8 bg-terracotta-400/50" />
               </span>
-              <h2 className="text-3xl md:text-4xl font-serif text-foreground leading-[1.15] mb-6">
+              <h2 className="text-4xl md:text-5xl lg:text-6xl font-serif text-foreground leading-[1.05] tracking-tight mb-10">
                 {t("home.herkenning.whyTitleA")}{" "}
                 <span className="text-primary italic font-light">{t("home.herkenning.whyTitleB")}</span>
               </h2>
@@ -172,15 +176,17 @@ const HerkenningSection = () => {
       </section>
 
       {/* Deel 2.5 — Zelfcompassie werkt anders (vervolg) */}
-      <section className="py-20 md:py-28 bg-warm-50 relative overflow-hidden">
+      <section className="py-24 md:py-36 bg-warm-50 relative overflow-hidden">
         <div className="absolute -bottom-20 -right-20 w-96 h-96 bg-sage-100/30 rounded-full blur-[100px]" />
         <div className="container mx-auto px-6 md:px-10 relative">
-          <div className="max-w-3xl mx-auto text-center">
+          <div className="max-w-[60ch] mx-auto text-center">
             <ScrollReveal>
-              <span className="inline-block text-xs tracking-[0.3em] uppercase text-terracotta-500 font-medium mb-5">
+              <span className="inline-flex items-center gap-3 text-[0.7rem] tracking-[0.32em] uppercase text-terracotta-500 font-medium mb-8">
+                <span className="h-px w-8 bg-terracotta-400/50" />
                 {t("home.herkenning.worksEyebrow")}
+                <span className="h-px w-8 bg-terracotta-400/50" />
               </span>
-              <h2 className="text-3xl md:text-4xl font-serif text-foreground leading-[1.15] mb-10">
+              <h2 className="text-4xl md:text-5xl lg:text-6xl font-serif text-foreground leading-[1.05] tracking-tight mb-12">
                 {t("home.herkenning.worksTitle")}
               </h2>
               {(() => {
@@ -211,13 +217,14 @@ const HerkenningSection = () => {
       </section>
 
       {/* Deel 3 — Wat deelnemers merken */}
-      <section className="py-20 md:py-28 bg-background relative overflow-hidden">
+      <section className="py-24 md:py-36 bg-background relative overflow-hidden">
         <div className="absolute -bottom-20 -left-20 w-96 h-96 bg-sage-100/30 rounded-full blur-[100px]" />
         <div className="container mx-auto px-6 md:px-10 relative">
           <div className="max-w-4xl mx-auto">
             <ScrollReveal>
-              <div className="text-center mb-12 md:mb-14">
-                <p className="font-serif italic text-xl md:text-2xl text-foreground leading-relaxed">
+              <div className="text-center mb-16 md:mb-20 max-w-[52ch] mx-auto">
+                <div className="font-serif text-terracotta-400/60 text-6xl leading-none mb-4 select-none">“</div>
+                <p className="font-serif italic text-2xl md:text-3xl text-foreground leading-[1.4] tracking-tight">
                   {t("home.herkenning.quote")}
                 </p>
               </div>
