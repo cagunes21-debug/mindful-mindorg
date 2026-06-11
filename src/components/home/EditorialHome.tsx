@@ -39,16 +39,16 @@ const EditorialHome = () => {
                 Volgende start · September 2026 · Nog enkele plekken
               </div>
               <h1 className="mt-8 font-serif text-[40px] leading-[1.05] tracking-tight text-[#1f1d1b] sm:text-[56px] lg:text-[72px]">
-                Mindful Zelfcompassie —
-                <br />
-                een andere manier om{" "}
-                <em className="italic text-terracotta-600">sterk</em> te zijn.
+                Een andere manier om{" "}
+                <em className="italic text-terracotta-600">sterk</em> te zijn —
+                samen of één-op-één.
               </h1>
               <p className="mt-8 max-w-xl text-lg leading-[1.75] text-[#54514d]">
-                Ik ben Çağla Güneş — lichaamsgericht psychotherapeut en gecertificeerd MSC-trainer.
-                In acht weken leer je hoe je jezelf kunt steunen in plaats van afkeuren. Geen quick
-                fix, wel een vaardigheid die blijft. In een kleine groep, in het Nederlands,
-                Engels of Turks.
+                Ik ben Çağla Güneş, lichaamsgericht psychotherapeut en gecertificeerd
+                MSC-trainer. Ik begeleid mensen die leren zichzelf te steunen in plaats
+                van afkeuren — via de <strong className="font-medium text-[#1f1d1b]">8-weekse
+                groepstraining</strong> of een <strong className="font-medium text-[#1f1d1b]">individueel
+                traject</strong>. In het Nederlands, Engels of Turks.
               </p>
 
               <div className="mt-10 flex flex-col gap-3 sm:flex-row sm:items-center sm:gap-6">
@@ -56,14 +56,15 @@ const EditorialHome = () => {
                   to="/msc-training"
                   className="group inline-flex items-center justify-center gap-3 bg-terracotta-600 px-7 py-4 text-[12px] font-medium uppercase tracking-[0.22em] text-white transition-colors hover:bg-terracotta-700"
                 >
-                  Bekijk de MSC training
+                  8-weekse groepstraining
                   <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
                 </Link>
                 <Link
                   to="/coaching"
-                  className="inline-flex items-center gap-2 text-[12px] font-medium uppercase tracking-[0.22em] text-[#2C2A28] underline-offset-8 hover:underline"
+                  className="group inline-flex items-center justify-center gap-3 border border-[#1f1d1b] px-7 py-4 text-[12px] font-medium uppercase tracking-[0.22em] text-[#1f1d1b] transition-colors hover:bg-[#1f1d1b] hover:text-white"
                 >
-                  Individuele begeleiding <ArrowRight className="h-3.5 w-3.5" />
+                  Individuele begeleiding
+                  <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
                 </Link>
               </div>
 
@@ -137,87 +138,99 @@ const EditorialHome = () => {
         </div>
       </section>
 
-      {/* ── 02 Wat we bieden — meteen helder ─────────────── */}
+      {/* ── 02 Twee paden — Groep & Individueel ──────────── */}
       <section className="bg-[#FDFBF7]">
         <div className="container mx-auto px-6 py-20 lg:px-12 lg:py-28">
-          <div className="grid gap-12 lg:grid-cols-12">
-            <motion.div
-              variants={fadeUp as any}
-              initial="hidden"
-              whileInView="show"
-              viewport={{ once: true, margin: "-80px" }}
-              className="lg:col-span-4"
-            >
-              <Chapter label="Wat we bieden" />
-              <h2 className="mt-8 font-serif text-4xl leading-[1.1] text-[#1f1d1b] lg:text-[44px]">
-                Drie manieren
-                <br />
-                <em className="italic text-terracotta-600">om te beginnen.</em>
-              </h2>
-              <p className="mt-6 max-w-sm text-[15px] leading-[1.8] text-[#54514d]">
-                Niet zeker? Een kort kennismakingsgesprek geeft duidelijkheid — vrijblijvend.
-              </p>
-            </motion.div>
+          <motion.div
+            variants={fadeUp as any}
+            initial="hidden"
+            whileInView="show"
+            viewport={{ once: true, margin: "-80px" }}
+            className="mx-auto max-w-2xl text-center"
+          >
+            <Chapter label="Twee paden" />
+            <h2 className="mt-8 font-serif text-4xl leading-[1.1] text-[#1f1d1b] lg:text-[48px]">
+              Samen leren —{" "}
+              <em className="italic text-terracotta-600">of in jouw tempo.</em>
+            </h2>
+            <p className="mt-6 text-[15px] leading-[1.85] text-[#54514d]">
+              Beide trajecten dragen dezelfde MSC-methode. Het verschil zit in het tempo,
+              de context en de mate van persoonlijke verdieping.
+            </p>
+          </motion.div>
 
-            <div className="grid gap-5 lg:col-span-8 lg:grid-cols-3">
-              {[
-                {
-                  tag: "Groep",
-                  title: "8-weekse training",
-                  body: "Kleine groep (max. 12). Wekelijks samenkomen, online of op locatie.",
-                  meta: "€550",
-                  to: "/msc-training",
-                  highlight: true,
-                },
-                {
-                  tag: "Individueel",
-                  title: "6 sessies 1-op-1",
-                  body: "Persoonlijke begeleiding via Zoom. In jouw tempo, op maat.",
-                  meta: "€550",
-                  to: "/coaching",
-                },
-                {
-                  tag: "Workshop",
-                  title: "Introductie­workshop",
-                  body: "Kennismaken met zelfcompassie in één dagdeel. Geen verplichtingen.",
-                  meta: "1 dagdeel",
-                  to: "/agenda",
-                },
-              ].map((p) => (
-                <motion.article
-                  key={p.title}
-                  variants={fadeUp as any}
-                  initial="hidden"
-                  whileInView="show"
-                  viewport={{ once: true, margin: "-60px" }}
-                  className={`group relative flex flex-col justify-between border bg-white p-7 transition-colors ${
-                    p.highlight
-                      ? "border-terracotta-600"
-                      : "border-[#2C2A28]/10 hover:border-terracotta-600/50"
-                  }`}
-                >
-                  <div>
-                    <p className="text-[10px] uppercase tracking-[0.28em] text-terracotta-700">
-                      {p.tag}
-                    </p>
-                    <h3 className="mt-5 font-serif text-2xl leading-snug text-[#1f1d1b]">
-                      {p.title}
-                    </h3>
-                    <p className="mt-3 text-[14px] leading-[1.75] text-[#54514d]">{p.body}</p>
-                  </div>
-                  <div className="mt-8 flex items-center justify-between border-t border-[#2C2A28]/10 pt-5">
-                    <span className="font-serif text-lg text-terracotta-700">{p.meta}</span>
-                    <Link
-                      to={p.to}
-                      className="inline-flex items-center gap-1 text-[11px] font-medium uppercase tracking-[0.22em] text-[#1f1d1b] group-hover:text-terracotta-700"
-                    >
-                      Bekijk <ArrowUpRight className="h-3.5 w-3.5" />
-                    </Link>
-                  </div>
-                </motion.article>
-              ))}
-            </div>
+          <div className="mt-14 grid gap-6 lg:grid-cols-2">
+            {[
+              {
+                tag: "Groepstraining",
+                title: "8 weken MSC in een kleine groep",
+                body: "Wekelijks twee uur samenkomen met max. 12 deelnemers. Je leert van de oefeningen én van de herkenning bij anderen. Online of op locatie.",
+                meta: "8 weken · €550",
+                cta: "Bekijk de groepstraining",
+                to: "/msc-training",
+                accent: "terracotta",
+              },
+              {
+                tag: "Individuele begeleiding",
+                title: "6 sessies 1-op-1 met Çağla",
+                body: "Persoonlijk traject via Zoom, helemaal afgestemd op jouw vraag en tempo. Geschikt als groep niet past of als je iets specifieks wilt onderzoeken.",
+                meta: "6 sessies · €550 · Gratis kennismaking",
+                cta: "Bekijk individueel traject",
+                to: "/coaching",
+                accent: "sage",
+              },
+            ].map((p) => (
+              <motion.article
+                key={p.title}
+                variants={fadeUp as any}
+                initial="hidden"
+                whileInView="show"
+                viewport={{ once: true, margin: "-60px" }}
+                className={`group relative flex flex-col justify-between border bg-white p-8 transition-colors lg:p-10 ${
+                  p.accent === "terracotta"
+                    ? "border-terracotta-600/40 hover:border-terracotta-600"
+                    : "border-sage-600/40 hover:border-sage-600"
+                }`}
+              >
+                <div>
+                  <p
+                    className={`text-[10px] uppercase tracking-[0.28em] ${
+                      p.accent === "terracotta" ? "text-terracotta-700" : "text-sage-700"
+                    }`}
+                  >
+                    {p.tag}
+                  </p>
+                  <h3 className="mt-5 font-serif text-2xl leading-snug text-[#1f1d1b] lg:text-[28px]">
+                    {p.title}
+                  </h3>
+                  <p className="mt-4 text-[15px] leading-[1.8] text-[#54514d]">{p.body}</p>
+                </div>
+                <div className="mt-10 flex items-center justify-between border-t border-[#2C2A28]/10 pt-5">
+                  <span
+                    className={`font-serif text-base ${
+                      p.accent === "terracotta" ? "text-terracotta-700" : "text-sage-700"
+                    }`}
+                  >
+                    {p.meta}
+                  </span>
+                  <Link
+                    to={p.to}
+                    className="inline-flex items-center gap-1 text-[11px] font-medium uppercase tracking-[0.22em] text-[#1f1d1b] group-hover:text-terracotta-700"
+                  >
+                    {p.cta} <ArrowUpRight className="h-3.5 w-3.5" />
+                  </Link>
+                </div>
+              </motion.article>
+            ))}
           </div>
+
+          <p className="mt-10 text-center text-[13px] text-[#7a7670]">
+            Liever eerst proeven?{" "}
+            <Link to="/agenda" className="underline underline-offset-4 hover:text-terracotta-700">
+              Bekijk de gratis introductieworkshops
+            </Link>
+            .
+          </p>
         </div>
       </section>
 
