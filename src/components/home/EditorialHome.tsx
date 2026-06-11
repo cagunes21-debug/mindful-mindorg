@@ -39,9 +39,9 @@ const EditorialHome = () => {
                 Volgende start · September 2026 · Nog enkele plekken
               </div>
               <h1 className="mt-8 font-serif text-[40px] leading-[1.05] tracking-tight text-[#1f1d1b] sm:text-[56px] lg:text-[72px]">
-                Mindful Zelfcompassie —
+                Mindful Zelfcompassie
                 <br />
-                een andere manier om{" "}
+                Training — een andere manier om{" "}
                 <em className="italic text-terracotta-600">sterk</em> te zijn.
               </h1>
               <p className="mt-8 max-w-xl text-lg leading-[1.75] text-[#54514d]">
