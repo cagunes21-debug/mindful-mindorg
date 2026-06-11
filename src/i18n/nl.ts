@@ -144,7 +144,7 @@ export const nl = {
         titleAccent: "iets voor mij?",
         sub: "De drie twijfels die we het vaakst horen — en wat er werkelijk waar van is.",
         m1Q: "\"Ik ben niet zweverig genoeg voor mindfulness\"",
-        m1A: "MSC is geen new-age. Het is een wetenschappelijk onderbouwde methode, ontwikkeld door psychologen aan Harvard en UT Austin. Geen wierook, geen mantra's — wel concrete oefeningen die je in je gewone dag kunt gebruiken.",
+        m1A: "De Mindful Zelfcompassie Training is geen new-age. Het is een wetenschappelijk onderbouwde methode, ontwikkeld door psychologen aan Harvard en UT Austin. Geen wierook, geen mantra's — wel concrete oefeningen die je in je gewone dag kunt gebruiken.",
         m2Q: "\"Zelfcompassie klinkt als excuses zoeken voor jezelf\"",
         m2A: "Onderzoek laat het tegenovergestelde zien: mensen met meer zelfcompassie nemen méér verantwoordelijkheid voor fouten en zijn juist gemotiveerder om te groeien. Mild zijn voor jezelf is geen zwakte — het is wat veerkracht mogelijk maakt.",
         m3Q: "\"Ik heb geen tijd voor acht weken training\"",
