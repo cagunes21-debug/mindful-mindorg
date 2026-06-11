@@ -66,8 +66,7 @@ const EditorialHome = () => {
 
               <dl className="mt-16 grid max-w-md grid-cols-3 gap-6 border-t border-[#2C2A28]/10 pt-8 text-left">
                 {[
-                  { k: "−36%", v: "ervaren stress" },
-                  { k: "8 wkn", v: "begeleid programma" },
+                  { k: "8 weken", v: "begeleid programma" },
                   { k: "max 12", v: "deelnemers per groep" },
                 ].map((s) => (
                   <div key={s.k}>
