@@ -38,7 +38,7 @@ const EditorialHome = () => {
         <div className="container mx-auto px-6 lg:px-12">
           <div className="grid gap-14 lg:grid-cols-12 lg:gap-16">
             <motion.div
-              variants={fadeUp}
+              variants={fadeUp as any}
               initial="hidden"
               animate="show"
               className="lg:col-span-7 lg:pt-10"
@@ -114,7 +114,7 @@ const EditorialHome = () => {
         <div className="container mx-auto px-6 py-24 lg:px-12 lg:py-32">
           <div className="grid gap-16 lg:grid-cols-12">
             <motion.div
-              variants={fadeUp}
+              variants={fadeUp as any}
               initial="hidden"
               whileInView="show"
               viewport={{ once: true, margin: "-80px" }}
@@ -133,7 +133,7 @@ const EditorialHome = () => {
             </motion.div>
 
             <motion.ol
-              variants={fadeUp}
+              variants={fadeUp as any}
               initial="hidden"
               whileInView="show"
               viewport={{ once: true, margin: "-80px" }}
@@ -178,7 +178,7 @@ const EditorialHome = () => {
       <section className="bg-[#FDFBF7]">
         <div className="container mx-auto grid gap-16 px-6 py-28 lg:grid-cols-12 lg:gap-20 lg:px-12 lg:py-36">
           <motion.div
-            variants={fadeUp}
+            variants={fadeUp as any}
             initial="hidden"
             whileInView="show"
             viewport={{ once: true, margin: "-80px" }}
@@ -199,7 +199,7 @@ const EditorialHome = () => {
           </motion.div>
 
           <motion.div
-            variants={fadeUp}
+            variants={fadeUp as any}
             initial="hidden"
             whileInView="show"
             viewport={{ once: true, margin: "-80px" }}
@@ -243,7 +243,7 @@ const EditorialHome = () => {
       <section className="bg-sage-600 text-[#FDFBF7]">
         <div className="container mx-auto grid gap-16 px-6 py-28 lg:grid-cols-12 lg:gap-20 lg:px-12 lg:py-36">
           <motion.div
-            variants={fadeUp}
+            variants={fadeUp as any}
             initial="hidden"
             whileInView="show"
             viewport={{ once: true, margin: "-80px" }}
@@ -265,7 +265,7 @@ const EditorialHome = () => {
           </motion.div>
 
           <motion.div
-            variants={fadeUp}
+            variants={fadeUp as any}
             initial="hidden"
             whileInView="show"
             viewport={{ once: true, margin: "-80px" }}
@@ -300,7 +300,7 @@ const EditorialHome = () => {
 
           <div className="mt-16 grid gap-12 lg:grid-cols-12">
             <motion.figure
-              variants={fadeUp}
+              variants={fadeUp as any}
               initial="hidden"
               whileInView="show"
               viewport={{ once: true, margin: "-80px" }}
@@ -391,7 +391,7 @@ const EditorialHome = () => {
               ].map((p) => (
                 <motion.article
                   key={p.title}
-                  variants={fadeUp}
+                  variants={fadeUp as any}
                   initial="hidden"
                   whileInView="show"
                   viewport={{ once: true, margin: "-60px" }}
