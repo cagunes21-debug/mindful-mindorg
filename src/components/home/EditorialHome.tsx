@@ -39,15 +39,16 @@ const EditorialHome = () => {
                 Volgende start · September 2026 · Nog enkele plekken
               </div>
               <h1 className="mt-8 font-serif text-[40px] leading-[1.05] tracking-tight text-[#1f1d1b] sm:text-[56px] lg:text-[72px]">
-                Mindful Zelfcompassie Training —
+                Mindful Zelfcompassie —
                 <br />
-                behandel jezelf zoals je een{" "}
-                <em className="italic text-terracotta-600">goede vriend</em> behandelt.
+                een andere manier om{" "}
+                <em className="italic text-terracotta-600">sterk</em> te zijn.
               </h1>
               <p className="mt-8 max-w-xl text-lg leading-[1.75] text-[#54514d]">
-                Een 8-weeks programma (MSC) waarin je leert milder met jezelf om te gaan —
-                ook op de momenten dat het tegenzit. Wetenschappelijk onderbouwd, in een
-                kleine groep, begeleid door een gecertificeerd trainer.
+                Ik ben Çağla Güneş — lichaamsgericht psychotherapeut en gecertificeerd MSC-trainer.
+                In acht weken leer je hoe je jezelf kunt steunen in plaats van afkeuren. Geen quick
+                fix, wel een vaardigheid die blijft. In een kleine groep, in het Nederlands,
+                Engels of Turks.
               </p>
 
               <div className="mt-10 flex flex-col gap-3 sm:flex-row sm:items-center sm:gap-6">
