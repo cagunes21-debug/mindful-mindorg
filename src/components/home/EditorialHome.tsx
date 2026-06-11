@@ -14,12 +14,10 @@ const fadeUp = {
   show: { opacity: 1, y: 0, transition: { duration: 0.8, ease: [0.22, 1, 0.36, 1] as [number, number, number, number] } },
 } as const;
 
-const Chapter = ({ n, label, tone }: { n: string; label: string; tone?: "ivory" }) => (
-  <div className={`flex items-center gap-3 text-[11px] uppercase tracking-[0.28em] ${tone === "ivory" ? "text-white/80" : "text-terracotta-600/80"}`}>
-    <span className={`font-serif italic text-base normal-case tracking-normal ${tone === "ivory" ? "text-white" : "text-terracotta-600"}`}>{n}</span>
-    <span className={`h-px w-8 ${tone === "ivory" ? "bg-white/40" : "bg-terracotta-600/30"}`} />
-    <span>{label}</span>
-  </div>
+const Chapter = ({ label, tone }: { label: string; tone?: "ivory" }) => (
+  <span className={`text-[11px] uppercase tracking-[0.28em] ${tone === "ivory" ? "text-white/80" : "text-terracotta-600/80"}`}>
+    {label}
+  </span>
 );
 
 const EditorialHome = () => {
@@ -68,8 +66,7 @@ const EditorialHome = () => {
 
               <dl className="mt-16 grid max-w-md grid-cols-3 gap-6 border-t border-[#2C2A28]/10 pt-8 text-left">
                 {[
-                  { k: "−36%", v: "ervaren stress" },
-                  { k: "8 wkn", v: "begeleid programma" },
+                  { k: "8 weken", v: "begeleid programma" },
                   { k: "max 12", v: "deelnemers per groep" },
                 ].map((s) => (
                   <div key={s.k}>
@@ -92,48 +89,22 @@ const EditorialHome = () => {
                 <div className="relative aspect-[4/5] overflow-hidden border border-[#2C2A28]/10 bg-[#F6F1E8]">
                   {/* sage hoekband */}
                   <div className="absolute inset-x-0 top-0 h-2 bg-sage-600" />
-                  {/* groot serif-cijfer als watermerk */}
-                  <span className="pointer-events-none absolute -right-4 -bottom-10 select-none font-serif text-[260px] leading-none text-terracotta-600/10">
-                    01
-                  </span>
                   <div className="relative flex h-full flex-col justify-between p-8 lg:p-10">
                     <div>
-                      <p className="text-[10px] uppercase tracking-[0.32em] text-terracotta-700">
-                        Editie · MMXXVI
-                      </p>
-                      <div className="mt-6 h-px w-12 bg-terracotta-600" />
+                      <div className="h-px w-12 bg-terracotta-600" />
                       <p className="mt-6 font-serif text-[28px] leading-[1.25] text-[#1f1d1b] lg:text-[32px]">
                         "Zelfzorg is geen <em className="italic text-terracotta-700">luxe</em> —
                         het is een vaardigheid."
                       </p>
                     </div>
-                    <div className="flex items-end justify-between">
-                      <div>
-                        <p className="font-serif text-base italic text-[#1f1d1b]">— Çağla</p>
-                        <p className="mt-1 text-[10px] uppercase tracking-[0.28em] text-[#7a7670]">
-                          Oprichter Mindful Mind
-                        </p>
-                      </div>
-                      <div className="text-right">
-                        <p className="font-serif text-3xl text-sage-700">N°01</p>
-                        <p className="mt-1 text-[10px] uppercase tracking-[0.24em] text-[#7a7670]">
-                          Hoofdstuk
-                        </p>
-                      </div>
+                    <div>
+                      <p className="font-serif text-base italic text-[#1f1d1b]">— Çağla</p>
+                      <p className="mt-1 text-[10px] uppercase tracking-[0.28em] text-[#7a7670]">
+                        Oprichter Mindful Mind
+                      </p>
                     </div>
                   </div>
                 </div>
-
-                {/* Klein sage label, overlappend */}
-                <div className="absolute -bottom-6 left-4 max-w-[240px] bg-sage-600 px-6 py-5 text-white shadow-xl">
-                  <p className="text-[10px] uppercase tracking-[0.28em] text-white/80">
-                    Gecertificeerd
-                  </p>
-                  <p className="mt-1 font-serif text-lg italic leading-snug">
-                    Center for MSC · UC San Diego
-                  </p>
-                </div>
-                <div className="absolute -right-2 -top-4 hidden h-24 w-px bg-terracotta-600/40 lg:block" />
               </div>
             </motion.div>
           </div>
@@ -178,7 +149,7 @@ const EditorialHome = () => {
               viewport={{ once: true, margin: "-80px" }}
               className="lg:col-span-4"
             >
-              <Chapter n="ii." label="Wat we bieden" />
+              <Chapter label="Wat we bieden" />
               <h2 className="mt-8 font-serif text-4xl leading-[1.1] text-[#1f1d1b] lg:text-[44px]">
                 Drie manieren
                 <br />
@@ -262,7 +233,7 @@ const EditorialHome = () => {
               viewport={{ once: true, margin: "-80px" }}
               className="lg:col-span-4"
             >
-              <Chapter n="iii." label="Voor wie" />
+              <Chapter label="Voor wie" />
               <h2 className="mt-8 font-serif text-4xl leading-[1.1] text-[#1f1d1b] lg:text-[44px]">
                 Misschien
                 <br />
@@ -278,16 +249,12 @@ const EditorialHome = () => {
               className="space-y-10 lg:col-span-7 lg:col-start-6"
             >
               {[
-                { n: "01", t: "Je bent streng voor jezelf", d: "De lat ligt hoog. Goed is bijna nooit goed genoeg." },
-                { n: "02", t: "Je zorgt eerst voor anderen", d: "Je eigen behoeften komen ergens onderaan de lijst." },
-                { n: "03", t: "Rust nemen voelt als falen", d: "Doorgaan voelt veiliger — tot je lichaam ingrijpt." },
-              ].map((r) => (
-                <li key={r.n} className="grid grid-cols-[auto_1fr] gap-6 border-t border-[#2C2A28]/10 pt-6">
-                  <span className="font-serif text-xl italic text-terracotta-600">{r.n}</span>
-                  <div>
-                    <h3 className="font-serif text-xl leading-snug text-[#1f1d1b]">{r.t}</h3>
-                    <p className="mt-2 text-[15px] leading-[1.8] text-[#54514d]">{r.d}</p>
-                  </div>
+                "Je bent streng voor jezelf",
+                "Je zorgt eerst voor anderen",
+                "Rust nemen voelt als falen",
+              ].map((item) => (
+                <li key={item} className="border-t border-[#2C2A28]/10 pt-6 font-serif text-xl leading-snug text-[#1f1d1b]">
+                  {item}
                 </li>
               ))}
             </motion.ol>
@@ -307,35 +274,15 @@ const EditorialHome = () => {
           >
             {/* Editorial methodenpaneel — typografisch, geen foto */}
             <div className="relative aspect-[4/5] w-full overflow-hidden border border-[#2C2A28]/10 bg-white">
-              <span className="pointer-events-none absolute -left-6 -top-12 select-none font-serif text-[260px] leading-none text-sage-700/10">
-                IV
-              </span>
               <div className="absolute inset-x-0 bottom-0 h-2 bg-terracotta-600" />
               <div className="relative flex h-full flex-col justify-between p-8 lg:p-10">
                 <div>
-                  <p className="text-[10px] uppercase tracking-[0.32em] text-sage-700">
-                    De methode
-                  </p>
-                  <div className="mt-6 h-px w-12 bg-sage-600" />
+                  <div className="h-px w-12 bg-sage-600" />
                   <p className="mt-8 font-serif text-[26px] leading-[1.3] text-[#1f1d1b]">
                     Acht weken.<br />
                     Een nieuwe manier van<br />
                     <em className="italic text-terracotta-700">naar jezelf kijken.</em>
                   </p>
-                </div>
-                <div className="grid grid-cols-3 gap-4 border-t border-[#2C2A28]/10 pt-5">
-                  {[
-                    { k: "08", v: "weken" },
-                    { k: "12", v: "deelnemers" },
-                    { k: "20+", v: "oefeningen" },
-                  ].map((s) => (
-                    <div key={s.k}>
-                      <p className="font-serif text-2xl text-terracotta-700">{s.k}</p>
-                      <p className="mt-1 text-[10px] uppercase tracking-[0.22em] text-[#7a7670]">
-                        {s.v}
-                      </p>
-                    </div>
-                  ))}
                 </div>
               </div>
             </div>
@@ -348,7 +295,7 @@ const EditorialHome = () => {
             viewport={{ once: true, margin: "-80px" }}
             className="lg:col-span-6 lg:col-start-7 lg:pt-6"
           >
-            <Chapter n="iv." label="De methode" />
+            <Chapter label="De methode" />
             <h2 className="mt-8 font-serif text-4xl leading-[1.1] text-[#1f1d1b] lg:text-[44px]">
               Zelfcompassie is een{" "}
               <em className="italic text-terracotta-600">vaardigheid</em>.
@@ -405,7 +352,7 @@ const EditorialHome = () => {
             viewport={{ once: true, margin: "-80px" }}
             className="lg:col-span-6 lg:col-start-7 lg:pt-8"
           >
-            <Chapter n="v." label="De begeleiding" tone="ivory" />
+            <Chapter label="De begeleiding" tone="ivory" />
             <p className="mt-8 font-serif text-3xl leading-[1.3] lg:text-[38px]">
               "Ik help je de weg te vinden van je <em className="italic">hoofd</em> naar je{" "}
               <em className="italic">hart</em>."
@@ -428,7 +375,7 @@ const EditorialHome = () => {
       <section className="bg-[#FDFBF7]">
         <div className="container mx-auto px-6 py-20 lg:px-12 lg:py-28">
           <div className="mx-auto max-w-3xl">
-            <Chapter n="vi." label="Ervaringen" />
+            <Chapter label="Ervaringen" />
             <motion.blockquote
               variants={fadeUp as any}
               initial="hidden"
@@ -456,7 +403,7 @@ const EditorialHome = () => {
       <section className="bg-[#F6F1E8]">
         <div className="container mx-auto px-6 py-20 lg:px-12 lg:py-28">
           <div className="mx-auto max-w-2xl text-center">
-            <Chapter n="vii." label="De eerste stap" />
+            <Chapter label="De eerste stap" />
             <h2 className="mt-8 font-serif text-4xl leading-[1.15] text-[#1f1d1b] lg:text-[48px]">
               Twijfel je nog?
               <br />
