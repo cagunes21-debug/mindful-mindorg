@@ -213,7 +213,7 @@ export const es = {
         badge: "Grupo",
         title: "Formación grupal de 8 semanas",
         desc: "La fuerza de un grupo, la estructura de 8 semanas. Aprender juntas, crecer juntas.",
-        f1: "8 sesiones semanales de 2,5 horas",
+        f1: "8 sesiones semanales",
         f2: "Ejercicios cortos diarios (10–15 min.)",
         f3: "Cuaderno de trabajo y meditaciones incluidos",
         f4: "Entorno seguro con máx. 12 participantes",

@@ -14,6 +14,7 @@ const OfferingsSection = () => {
   ];
 
   const groupFeatures = [
+    t("home.offerings.group.f1"),
     t("home.offerings.group.f2"),
     t("home.offerings.group.f3"),
     t("home.offerings.group.f4"),
@@ -69,10 +70,6 @@ const OfferingsSection = () => {
                   ))}
                 </ul>
 
-                <div className="flex flex-col items-center gap-1 mb-6">
-                  <p className="text-3xl font-light text-terracotta-600">€550</p>
-                  <p className="text-xs text-muted-foreground">{t("home.offerings.individual.priceNote")}</p>
-                </div>
 
                 <Link
                   to="/contact"

@@ -213,7 +213,7 @@ export const tr = {
         badge: "Grup",
         title: "8 Haftalık Grup Eğitimi",
         desc: "Bir grubun gücü, 8 haftanın yapısı. Birlikte öğrenmek, birlikte büyümek.",
-        f1: "Haftalık 2,5 saatlik 8 seans",
+        f1: "Haftalık 8 seans",
         f2: "Günlük kısa egzersizler (10–15 dk.)",
         f3: "Çalışma kitabı ve meditasyonlar dahil",
         f4: "En fazla 12 katılımcı ile güvenli ortam",
