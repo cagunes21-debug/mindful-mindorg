@@ -260,7 +260,7 @@ export const nl = {
         badge: "Groep",
         title: "8-weekse groepstraining",
         desc: "De kracht van een groep, de structuur van 8 weken. Samen leren, samen groeien.",
-        f1: "8 wekelijkse sessies van 2,5 uur",
+        f1: "8 wekelijkse sessies",
         f2: "Dagelijkse korte oefeningen (10–15 min.)",
         f3: "Werkboek en meditaties inbegrepen",
         f4: "Veilige setting met max. 12 deelnemers",

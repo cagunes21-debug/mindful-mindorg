@@ -213,7 +213,7 @@ export const en = {
         badge: "Group",
         title: "8-week group training",
         desc: "The power of a group, the structure of 8 weeks. Learning together, growing together.",
-        f1: "8 weekly sessions of 2.5 hours",
+        f1: "8 weekly sessions",
         f2: "Daily short exercises (10–15 min.)",
         f3: "Workbook and meditations included",
         f4: "Safe setting with max. 12 participants",

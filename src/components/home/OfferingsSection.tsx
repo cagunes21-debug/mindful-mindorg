@@ -70,11 +70,6 @@ const OfferingsSection = () => {
                   ))}
                 </ul>
 
-                <div className="flex flex-col items-center gap-1 mb-6">
-                  <p className="text-3xl font-light text-terracotta-600">€550</p>
-                  <p className="text-xs text-muted-foreground">{t("home.offerings.individual.priceNote")}</p>
-                </div>
-
                 <Link
                   to="/contact"
                   className="inline-flex items-center justify-center gap-2 bg-primary text-primary-foreground h-12 px-8 rounded-full font-semibold text-sm tracking-wide uppercase hover:opacity-90 transition-opacity shadow-lg shadow-primary/20"
@@ -114,11 +109,6 @@ const OfferingsSection = () => {
                     </li>
                   ))}
                 </ul>
-
-                <div className="flex flex-col items-center gap-1 mb-6">
-                  <p className="text-3xl font-light text-terracotta-600">€550</p>
-                  <p className="text-xs text-muted-foreground">{t("home.offerings.group.priceNote")}</p>
-                </div>
 
                 <Link
                   to="/msc-training"
