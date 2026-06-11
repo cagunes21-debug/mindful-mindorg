@@ -98,10 +98,11 @@ const EditorialHome = () => {
                   />
                 </div>
                 {/* Sage citaatkaart */}
-                <div className="absolute -bottom-6 -left-4 max-w-[220px] bg-sage-600 p-5 text-[#FDFBF7] shadow-lg sm:-left-8">
+                <div className="absolute -bottom-6 -left-4 max-w-[240px] bg-sage-600 p-5 text-[#FDFBF7] shadow-lg sm:-left-8">
                   <p className="font-serif text-lg italic leading-snug">
-                    "Zelfzorg is een vaardigheid."
+                    "Niet zichzelf verbeteren — zichzelf leren ondersteunen."
                   </p>
+                  <p className="mt-2 text-[10px] uppercase tracking-[0.24em] text-white/80">— Çağla</p>
                 </div>
               </div>
             </motion.div>
