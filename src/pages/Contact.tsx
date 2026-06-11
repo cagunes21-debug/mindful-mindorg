@@ -1,190 +1,149 @@
-import { Mail, Phone, MessageCircle, MapPin, Instagram } from "lucide-react";
+import { Mail, Phone, MessageCircle, MapPin, Instagram, ArrowUpRight } from "lucide-react";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import { ContactForm } from "@/components/ContactForm";
-import { ScrollReveal, StaggerContainer, StaggerItem } from "@/components/ScrollReveal";
-import { motion } from "framer-motion";
 import SEO from "@/components/SEO";
+import { Chapter, Reveal, PageShell, SectionBand } from "@/components/editorial/Editorial";
+import { motion } from "framer-motion";
+
+/* Editorial Contact page. */
+
+const channels = [
+  { icon: Mail, label: "E-mail", value: "mindful-mind@outlook.com", href: "mailto:mindful-mind@outlook.com" },
+  { icon: Phone, label: "Telefoon", value: "+31 6 25633379", href: "tel:+31625633379" },
+  { icon: MessageCircle, label: "WhatsApp", value: "Stuur een bericht", href: "https://wa.me/31625633379" },
+  { icon: Instagram, label: "Instagram", value: "@chala.gunes", href: "https://instagram.com/chala.gunes" },
+];
 
 const Contact = () => {
   return (
-    <div className="min-h-screen bg-background">
-      <SEO 
-        title="Contact"
-        description="Neem contact met ons op voor vragen over onze zelfcompassie trainingen. We helpen je graag bij het vinden van de juiste training."
+    <div className="min-h-screen bg-[#FDFBF7]">
+      <SEO
+        title="Contact · Mindful Mind"
+        description="Neem contact op met Mindful Mind voor vragen over de Mindful Zelfcompassie Training of individuele begeleiding."
       />
       <Navigation />
+
       <main id="main-content">
-      
-      {/* Hero Section */}
-      <section className="relative overflow-hidden pt-24 pb-16 lg:pt-32 lg:pb-20">
-        <div className="absolute inset-0 bg-gradient-to-b from-warm-100/60 via-background to-background" />
-        <div className="absolute top-20 right-1/4 w-80 h-80 bg-sage-200/30 rounded-full blur-3xl" />
-        <div className="absolute bottom-10 left-1/4 w-72 h-72 bg-terracotta-200/20 rounded-full blur-3xl" />
-        
-        <div className="container relative mx-auto px-4">
-          <div className="mx-auto max-w-3xl text-center">
-            <motion.span 
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6 }}
-              className="inline-flex items-center gap-2 mb-8 rounded-full bg-terracotta-100 border border-terracotta-200 px-5 py-2.5 text-sm font-medium text-terracotta-700"
-            >
-              <Mail className="h-4 w-4" />
-              Contact
-            </motion.span>
-            
-            <motion.h1 
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.7, delay: 0.1 }}
-              className="mb-8 text-4xl font-light tracking-tight text-foreground md:text-5xl lg:text-6xl leading-[1.1]"
-            >
-              Neem contact
-              <span className="block font-serif italic text-terracotta-600 mt-2">met ons op</span>
-            </motion.h1>
-            
-            <motion.p 
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.2 }}
-              className="text-muted-foreground text-lg max-w-2xl mx-auto leading-relaxed"
-            >
-              Heb je een vraag of wil je meer informatie over begeleiding, trainingen of retreats?
-              <br />
-              Stuur gerust een bericht — we nemen zo snel mogelijk contact met je op.
-            </motion.p>
-          </div>
-        </div>
-      </section>
+        <PageShell>
+          {/* 01 Arrival */}
+          <section className="relative overflow-hidden pt-20 lg:pt-28">
+            <div className="container mx-auto px-6 lg:px-12">
+              <motion.div
+                initial={{ opacity: 0, y: 24 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+                className="mx-auto max-w-3xl text-center"
+              >
+                <Chapter n="i." label="Contact" />
+                <h1 className="mt-10 font-serif text-[44px] leading-[1.02] tracking-tight text-[#1f1d1b] sm:text-[60px] lg:text-[72px]">
+                  Schrijf ons.
+                  <br />
+                  We <em className="italic text-terracotta-600">lezen</em> alles.
+                </h1>
+                <p className="mt-8 text-lg leading-[1.75] text-[#54514d]">
+                  Een vraag over de training, of gewoon even kennismaken? Stuur een bericht — we
+                  reageren persoonlijk, meestal binnen 1–2 werkdagen.
+                </p>
+              </motion.div>
+            </div>
+            <div className="mt-24 border-t border-[#2C2A28]/10" />
+          </section>
 
-      {/* Contact Section */}
-      <section className="py-16 lg:py-20 bg-white">
-        <div className="container mx-auto px-4">
-          <div className="mx-auto max-w-5xl">
-            <div className="grid gap-12 lg:grid-cols-5">
-              {/* Contact Info */}
-              <div className="lg:col-span-2">
-                <ScrollReveal animation="fade-right">
-                  <h2 className="text-2xl font-light text-foreground mb-6">
-                    Direct <span className="font-serif italic text-terracotta-600">contact</span>
+          {/* 02 Channels + Form */}
+          <SectionBand tone="cream">
+            <div className="container mx-auto px-6 py-24 lg:px-12 lg:py-32">
+              <div className="grid gap-16 lg:grid-cols-12">
+                {/* Direct channels */}
+                <Reveal className="lg:col-span-5">
+                  <Chapter n="ii." label="Direct contact" />
+                  <h2 className="mt-8 font-serif text-4xl leading-[1.1] text-[#1f1d1b] lg:text-5xl">
+                    Vier manieren
+                    <br />
+                    <em className="italic text-terracotta-600">om te beginnen.</em>
                   </h2>
-                  
-                  <p className="text-muted-foreground mb-8 leading-relaxed">
-                    Je kunt ons ook direct bereiken via e-mail, telefoon of WhatsApp. We reageren meestal binnen 24 uur.
+                  <p className="mt-6 max-w-sm text-[15px] leading-[1.8] text-[#54514d]">
+                    Liever direct bellen, appen of mailen? Dat kan. We reageren meestal binnen
+                    24 uur.
                   </p>
-                </ScrollReveal>
-                
-                <StaggerContainer className="space-y-6">
-                  <StaggerItem>
-                    <a 
-                      href="mailto:mindful-mind@outlook.com" 
-                      className="flex items-start gap-4 group"
-                    >
-                      <div className="h-12 w-12 rounded-2xl bg-terracotta-100 flex items-center justify-center group-hover:bg-terracotta-200 transition-colors">
-                        <Mail className="h-5 w-5 text-terracotta-600" />
-                      </div>
-                      <div>
-                        <p className="font-medium text-foreground">E-mail</p>
-                        <p className="text-muted-foreground group-hover:text-terracotta-600 transition-colors">
-                          mindful-mind@outlook.com
-                        </p>
-                      </div>
-                    </a>
-                  </StaggerItem>
-                  
-                  <StaggerItem>
-                    <a 
-                      href="tel:+31625633379" 
-                      className="flex items-start gap-4 group"
-                    >
-                      <div className="h-12 w-12 rounded-2xl bg-sage-100 flex items-center justify-center group-hover:bg-sage-200 transition-colors">
-                        <Phone className="h-5 w-5 text-sage-700" />
-                      </div>
-                      <div>
-                        <p className="font-medium text-foreground">Telefoon</p>
-                        <p className="text-muted-foreground group-hover:text-sage-700 transition-colors">
-                          +31 6 25633379
-                        </p>
-                      </div>
-                    </a>
-                  </StaggerItem>
-                  
-                  <StaggerItem>
-                    <a 
-                      href="https://wa.me/31625633379" 
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="flex items-start gap-4 group"
-                    >
-                      <div className="h-12 w-12 rounded-2xl bg-warm-100 flex items-center justify-center group-hover:bg-warm-200 transition-colors">
-                        <MessageCircle className="h-5 w-5 text-warm-600" />
-                      </div>
-                      <div>
-                        <p className="font-medium text-foreground">WhatsApp</p>
-                        <p className="text-muted-foreground group-hover:text-warm-600 transition-colors">
-                          Stuur een bericht
-                        </p>
-                      </div>
-                    </a>
-                  </StaggerItem>
-                  
-                  <StaggerItem>
-                    <a 
-                      href="https://instagram.com/chala.gunes" 
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="flex items-start gap-4 group"
-                    >
-                      <div className="h-12 w-12 rounded-2xl bg-terracotta-50 flex items-center justify-center group-hover:bg-terracotta-100 transition-colors">
-                        <Instagram className="h-5 w-5 text-terracotta-600" />
-                      </div>
-                      <div>
-                        <p className="font-medium text-foreground">Instagram</p>
-                        <p className="text-muted-foreground group-hover:text-terracotta-600 transition-colors">
-                          @chala.gunes
-                        </p>
-                      </div>
-                    </a>
-                  </StaggerItem>
 
-                  <StaggerItem>
-                    <div className="flex items-start gap-4">
-                      <div className="h-12 w-12 rounded-2xl bg-terracotta-50 flex items-center justify-center">
-                        <MapPin className="h-5 w-5 text-terracotta-500" />
+                  <ul className="mt-12 space-y-6">
+                    {channels.map((c) => (
+                      <li key={c.label}>
+                        <a
+                          href={c.href}
+                          target={c.href.startsWith("http") ? "_blank" : undefined}
+                          rel={c.href.startsWith("http") ? "noopener noreferrer" : undefined}
+                          className="group flex items-start gap-5 border-t border-[#2C2A28]/10 pt-5"
+                        >
+                          <c.icon className="mt-1 h-5 w-5 text-terracotta-600" />
+                          <div className="flex-1">
+                            <p className="text-[11px] uppercase tracking-[0.28em] text-[#7a7670]">
+                              {c.label}
+                            </p>
+                            <p className="mt-1 font-serif text-xl text-[#1f1d1b] group-hover:text-terracotta-700">
+                              {c.value}
+                            </p>
+                          </div>
+                          <ArrowUpRight className="mt-2 h-4 w-4 text-[#7a7670] transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                        </a>
+                      </li>
+                    ))}
+
+                    <li className="border-t border-[#2C2A28]/10 pt-5">
+                      <div className="flex items-start gap-5">
+                        <MapPin className="mt-1 h-5 w-5 text-sage-700" />
+                        <div>
+                          <p className="text-[11px] uppercase tracking-[0.28em] text-[#7a7670]">
+                            Locatie
+                          </p>
+                          <p className="mt-1 font-serif text-xl text-[#1f1d1b]">
+                            Online via Zoom
+                          </p>
+                          <p className="mt-1 text-[14px] text-[#54514d]">
+                            Intensieve trajecten op locatie · Amersfoort
+                          </p>
+                        </div>
                       </div>
-                      <div>
-                        <p className="font-medium text-foreground">Locatie</p>
-                        <p className="text-muted-foreground">
-                          Online trainingen via Zoom<br />
-                          Intensieve trajecten: Amersfoort
-                        </p>
-                      </div>
-                    </div>
-                  </StaggerItem>
-                </StaggerContainer>
-              </div>
-              
-              {/* Contact Form */}
-              <div className="lg:col-span-3">
-                <ScrollReveal animation="fade-left" delay={0.2}>
-                  <div className="bg-warm-50 rounded-3xl p-8 md:p-10 border border-warm-200">
-                    <h2 className="text-2xl font-light text-foreground mb-2">
-                      Stuur een <span className="font-serif italic text-terracotta-600">bericht</span>
-                    </h2>
-                    <p className="text-muted-foreground mb-8">
-                      Vul het formulier in en we nemen zo snel mogelijk contact met je op.
-                    </p>
-                    
+                    </li>
+                  </ul>
+                </Reveal>
+
+                {/* Form */}
+                <Reveal className="lg:col-span-6 lg:col-start-7">
+                  <Chapter n="iii." label="Stuur een bericht" />
+                  <h2 className="mt-8 font-serif text-4xl leading-[1.1] text-[#1f1d1b] lg:text-5xl">
+                    Vertel ons
+                    <br />
+                    <em className="italic text-terracotta-600">wat er speelt.</em>
+                  </h2>
+                  <p className="mt-6 text-[15px] leading-[1.8] text-[#54514d]">
+                    Geen formulier-formaliteit. Schrijf zoals je zou schrijven aan een vriend.
+                  </p>
+
+                  <div className="mt-10 border border-[#2C2A28]/10 bg-white p-8 md:p-10">
                     <ContactForm />
                   </div>
-                </ScrollReveal>
+                </Reveal>
               </div>
             </div>
-          </div>
-        </div>
-      </section>
+          </SectionBand>
 
+          {/* 03 Closing note */}
+          <SectionBand tone="deep">
+            <div className="container mx-auto px-6 py-20 lg:px-12 lg:py-24">
+              <Reveal className="mx-auto max-w-2xl text-center">
+                <p className="font-serif text-2xl italic leading-[1.5] text-white/90 lg:text-3xl">
+                  "Geen automatische bevestigingsmail. Geen funnel. Alleen een mens die antwoordt —
+                  als er ruimte is om te lezen wat je schreef."
+                </p>
+                <p className="mt-6 text-[11px] uppercase tracking-[0.28em] text-white/60">
+                  — Çağla
+                </p>
+              </Reveal>
+            </div>
+          </SectionBand>
+        </PageShell>
       </main>
       <Footer />
     </div>
