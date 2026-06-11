@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import { ArrowRight, ArrowUpRight, Award, BookOpen, GraduationCap, ShieldCheck } from "lucide-react";
+import { ArrowRight, ArrowUpRight, Award, BookOpen, GraduationCap, ShieldCheck, Users, User } from "lucide-react";
 import caglaBio from "@/assets/cagla-bio.png";
 import heroImage from "@/assets/hero-mindful.jpg";
 
@@ -138,7 +138,7 @@ const EditorialHome = () => {
       </section>
 
       {/* ── 02 Twee paden — Groep & Individueel ──────────── */}
-      <section className="bg-[#FDFBF7]">
+      <section className="bg-[#F7F3EE]">
         <div className="container mx-auto px-6 py-20 lg:px-12 lg:py-28">
           <motion.div
             variants={fadeUp as any}
@@ -149,8 +149,8 @@ const EditorialHome = () => {
           >
             <Chapter label="Twee paden" />
             <h2 className="mt-8 font-serif text-4xl leading-[1.1] text-[#1f1d1b] lg:text-[48px]">
-              Samen leren —{" "}
-              <em className="italic text-terracotta-600">of in jouw tempo.</em>
+              Kies het pad dat{" "}
+              <em className="italic text-terracotta-600">bij jou past.</em>
             </h2>
             <p className="mt-6 text-[15px] leading-[1.85] text-[#54514d]">
               Beide trajecten dragen dezelfde MSC-methode. Het verschil zit in het tempo,
@@ -161,22 +161,22 @@ const EditorialHome = () => {
           <div className="mt-14 grid gap-6 lg:grid-cols-2">
             {[
               {
+                Icon: Users,
                 tag: "Groepstraining",
-                title: "8 weken MSC in een kleine groep",
+                title: "8-weekse MSC traject",
                 body: "Wekelijks twee uur samenkomen met max. 12 deelnemers. Je leert van de oefeningen én van de herkenning bij anderen. Online of op locatie.",
-                meta: "8 weken · €550",
-                cta: "Bekijk de groepstraining",
+                price: "€550",
+                cta: "Ontdek meer",
                 to: "/msc-training",
-                accent: "terracotta",
               },
               {
-                tag: "Individuele begeleiding",
-                title: "6 sessies 1-op-1 met Çağla",
+                Icon: User,
+                tag: "1-op-1 Begeleiding",
+                title: "Individueel traject — 6 sessies",
                 body: "Persoonlijk traject via Zoom, helemaal afgestemd op jouw vraag en tempo. Geschikt als groep niet past of als je iets specifieks wilt onderzoeken.",
-                meta: "6 sessies · €550 · Gratis kennismaking",
-                cta: "Bekijk individueel traject",
+                price: "€550",
+                cta: "Ontdek meer",
                 to: "/coaching",
-                accent: "sage",
               },
             ].map((p) => (
               <motion.article
@@ -185,38 +185,25 @@ const EditorialHome = () => {
                 initial="hidden"
                 whileInView="show"
                 viewport={{ once: true, margin: "-60px" }}
-                className={`group relative flex flex-col justify-between border bg-white p-8 transition-colors lg:p-10 ${
-                  p.accent === "terracotta"
-                    ? "border-terracotta-600/40 hover:border-terracotta-600"
-                    : "border-sage-600/40 hover:border-sage-600"
-                }`}
+                className="group relative flex flex-col justify-between rounded-2xl border border-sage-600/15 bg-white p-8 shadow-sm transition-shadow hover:shadow-md lg:p-10"
               >
                 <div>
-                  <p
-                    className={`text-[10px] uppercase tracking-[0.28em] ${
-                      p.accent === "terracotta" ? "text-terracotta-700" : "text-sage-700"
-                    }`}
-                  >
+                  <p.Icon className="h-8 w-8 text-sage-700" strokeWidth={1.4} />
+                  <p className="mt-5 text-[10px] uppercase tracking-[0.28em] text-sage-700">
                     {p.tag}
                   </p>
-                  <h3 className="mt-5 font-serif text-2xl leading-snug text-[#1f1d1b] lg:text-[28px]">
+                  <h3 className="mt-3 font-serif text-2xl leading-snug text-[#1f1d1b] lg:text-[28px]">
                     {p.title}
                   </h3>
                   <p className="mt-4 text-[15px] leading-[1.8] text-[#54514d]">{p.body}</p>
                 </div>
-                <div className="mt-10 flex items-center justify-between border-t border-[#2C2A28]/10 pt-5">
-                  <span
-                    className={`font-serif text-base ${
-                      p.accent === "terracotta" ? "text-terracotta-700" : "text-sage-700"
-                    }`}
-                  >
-                    {p.meta}
-                  </span>
+                <div className="mt-8 flex items-center justify-between border-t border-[#2C2A28]/10 pt-5">
+                  <span className="font-serif text-base text-[#1f1d1b]">{p.price}</span>
                   <Link
                     to={p.to}
-                    className="inline-flex items-center gap-1 text-[11px] font-medium uppercase tracking-[0.22em] text-[#1f1d1b] group-hover:text-terracotta-700"
+                    className="inline-flex items-center gap-1.5 text-[11px] font-semibold uppercase tracking-[0.22em] text-terracotta-700 group-hover:gap-2.5 transition-all"
                   >
-                    {p.cta} <ArrowUpRight className="h-3.5 w-3.5" />
+                    {p.cta} <ArrowRight className="h-3.5 w-3.5" />
                   </Link>
                 </div>
               </motion.article>
@@ -232,6 +219,7 @@ const EditorialHome = () => {
           </p>
         </div>
       </section>
+
 
       {/* ── 03 Voor wie — Çağla's eigen woorden ──────────── */}
       <section className="bg-[#F6F1E8]">
@@ -413,7 +401,7 @@ const EditorialHome = () => {
       </section>
 
       {/* ── 05 Trainer ───────────────────────────────────── */}
-      <section className="bg-sage-600 text-[#FDFBF7]">
+      <section className="bg-[#FDFBF7]">
         <div className="container mx-auto grid gap-16 px-6 py-20 lg:grid-cols-12 lg:gap-20 lg:px-12 lg:py-28">
           <motion.div
             variants={fadeUp as any}
@@ -422,17 +410,20 @@ const EditorialHome = () => {
             viewport={{ once: true, margin: "-80px" }}
             className="lg:col-span-5"
           >
-            <div className="overflow-hidden rounded-t-[180px] bg-sage-700/40">
-              <img
-                src={caglaBio}
-                alt="Çağla — gecertificeerd MSC-trainer"
-                className="aspect-[4/5] w-full object-cover"
-              />
+            <div className="relative">
+              <div className="aspect-[3/4] overflow-hidden rounded-2xl bg-sage-100">
+                <img
+                  src={caglaBio}
+                  alt="Çağla Güneş — gecertificeerd MSC-trainer"
+                  className="h-full w-full object-cover"
+                />
+              </div>
+              <div className="absolute -bottom-6 -right-4 max-w-[260px] rounded-xl bg-terracotta-600 p-6 text-[#FDFBF7] shadow-lg sm:-right-6">
+                <p className="font-serif text-lg italic leading-snug">
+                  "Zelfcompassie is<br />een moedige daad."
+                </p>
+              </div>
             </div>
-            <p className="mt-5 font-serif text-2xl italic">— Çağla Güneş</p>
-            <p className="text-[11px] uppercase tracking-[0.28em] text-white/70">
-              Oprichter Mindful Mind &amp; In Harmonia
-            </p>
           </motion.div>
 
           <motion.div
@@ -442,21 +433,28 @@ const EditorialHome = () => {
             viewport={{ once: true, margin: "-80px" }}
             className="lg:col-span-6 lg:col-start-7 lg:pt-8"
           >
-            <Chapter label="De begeleiding" tone="ivory" />
-            <p className="mt-8 font-serif text-3xl leading-[1.3] lg:text-[38px]">
-              "Ik help je een andere relatie met jezelf op te bouwen —
-              niet door jezelf te <em className="italic">verbeteren</em>,
-              maar door jezelf te leren <em className="italic">ondersteunen</em>."
+            <p className="text-[11px] font-bold uppercase tracking-[0.28em] text-sage-700">Je trainer</p>
+            <h2 className="mt-3 font-serif text-4xl leading-[1.1] text-[#1f1d1b] lg:text-[44px]">
+              Çağla Güneş
+            </h2>
+            <p className="mt-2 text-[11px] uppercase tracking-[0.22em] text-[#7a7670]">
+              Oprichter Mindful Mind &amp; In Harmonia
             </p>
-            <p className="mt-6 max-w-xl text-[15px] leading-[1.85] text-white/85">
+            <p className="mt-8 font-serif text-2xl leading-[1.4] text-[#1f1d1b] lg:text-[28px]">
+              "Ik help je een andere relatie met jezelf op te bouwen —
+              niet door jezelf te <em className="italic text-terracotta-600">verbeteren</em>,
+              maar door jezelf te leren <em className="italic text-terracotta-600">ondersteunen</em>."
+            </p>
+            <p className="mt-6 max-w-xl text-[15px] leading-[1.85] text-[#54514d]">
               Opgegroeid tussen twee culturen, geworteld in meditatie sinds haar dertiende.
               Çağla combineert lichaamsgerichte psychotherapie, Somatic Experiencing® en
               jarenlange MSC-praktijk. Ze begeleidt in het Nederlands, Engels en Turks —
               altijd in een kleine, veilige setting.
             </p>
+
             <Link
               to="/over-cagla"
-              className="mt-8 inline-flex items-center gap-2 border-b border-white pb-1 text-[12px] font-medium uppercase tracking-[0.22em] hover:opacity-80"
+              className="mt-8 inline-flex items-center gap-2 border-b border-[#1f1d1b] pb-1 text-[12px] font-medium uppercase tracking-[0.22em] text-[#1f1d1b] hover:text-terracotta-700 hover:border-terracotta-700"
             >
               Lees haar verhaal <ArrowUpRight className="h-3.5 w-3.5" />
             </Link>
