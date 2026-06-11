@@ -454,7 +454,7 @@ const EditorialHome = () => {
 
             <Link
               to="/over-cagla"
-              className="mt-8 inline-flex items-center gap-2 border-b border-white pb-1 text-[12px] font-medium uppercase tracking-[0.22em] hover:opacity-80"
+              className="mt-8 inline-flex items-center gap-2 border-b border-[#1f1d1b] pb-1 text-[12px] font-medium uppercase tracking-[0.22em] text-[#1f1d1b] hover:text-terracotta-700 hover:border-terracotta-700"
             >
               Lees haar verhaal <ArrowUpRight className="h-3.5 w-3.5" />
             </Link>
