@@ -39,9 +39,6 @@ const detectInitialLanguage = (): Language => {
       const val = cookie.split("=")[1];
       if (["nl", "en", "es", "tr"].includes(val)) return val as Language;
     }
-    // Browser preference
-    const browser = navigator.language?.slice(0, 2).toLowerCase();
-    if (browser && ["nl", "en", "es", "tr"].includes(browser)) return browser as Language;
   } catch {
     // ignore
   }
