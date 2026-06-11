@@ -39,16 +39,16 @@ const EditorialHome = () => {
                 Volgende start · September 2026 · Nog enkele plekken
               </div>
               <h1 className="mt-8 font-serif text-[40px] leading-[1.05] tracking-tight text-[#1f1d1b] sm:text-[56px] lg:text-[72px]">
-                Een andere manier om{" "}
-                <em className="italic text-terracotta-600">sterk</em> te zijn —
-                samen of één-op-één.
+                Mindful Zelfcompassie —
+                <br />
+                een andere manier om{" "}
+                <em className="italic text-terracotta-600">sterk</em> te zijn.
               </h1>
               <p className="mt-8 max-w-xl text-lg leading-[1.75] text-[#54514d]">
-                Ik ben Çağla Güneş, lichaamsgericht psychotherapeut en gecertificeerd
-                MSC-trainer. Ik begeleid mensen die leren zichzelf te steunen in plaats
-                van afkeuren — via de <strong className="font-medium text-[#1f1d1b]">8-weekse
-                groepstraining</strong> of een <strong className="font-medium text-[#1f1d1b]">individueel
-                traject</strong>. In het Nederlands, Engels of Turks.
+                Ik ben Çağla Güneş — lichaamsgericht psychotherapeut en gecertificeerd MSC-trainer.
+                In acht weken leer je hoe je jezelf kunt steunen in plaats van afkeuren. Geen quick
+                fix, wel een vaardigheid die blijft. In een kleine groep, in het Nederlands,
+                Engels of Turks.
               </p>
 
               <div className="mt-10 flex flex-col gap-3 sm:flex-row sm:items-center sm:gap-6">
@@ -56,15 +56,14 @@ const EditorialHome = () => {
                   to="/msc-training"
                   className="group inline-flex items-center justify-center gap-3 bg-terracotta-600 px-7 py-4 text-[12px] font-medium uppercase tracking-[0.22em] text-white transition-colors hover:bg-terracotta-700"
                 >
-                  8-weekse groepstraining
+                  Bekijk de MSC training
                   <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
                 </Link>
                 <Link
                   to="/coaching"
-                  className="group inline-flex items-center justify-center gap-3 border border-[#1f1d1b] px-7 py-4 text-[12px] font-medium uppercase tracking-[0.22em] text-[#1f1d1b] transition-colors hover:bg-[#1f1d1b] hover:text-white"
+                  className="inline-flex items-center gap-2 text-[12px] font-medium uppercase tracking-[0.22em] text-[#2C2A28] underline-offset-8 hover:underline"
                 >
-                  Individuele begeleiding
-                  <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
+                  Individuele begeleiding <ArrowRight className="h-3.5 w-3.5" />
                 </Link>
               </div>
 
