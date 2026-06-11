@@ -32,9 +32,9 @@ export default function AiSummaryCard({ email }: { email: string }) {
         <div className="flex items-center justify-between mb-2">
           <div className="flex items-center gap-2">
             <div className="h-6 w-6 rounded-lg bg-primary/10 flex items-center justify-center">
-              <Sparkles className="h-3 w-3 text-primary" />
+              <FileText className="h-3 w-3 text-primary" />
             </div>
-            <span className="text-xs font-semibold">AI Samenvatting</span>
+            <span className="text-xs font-semibold">Samenvatting</span>
           </div>
           <Button size="sm" variant="ghost" onClick={generateSummary} disabled={loading} className="gap-1.5 text-xs h-7">
             {loading ? <Loader2 className="h-3 w-3 animate-spin" /> : hasGenerated ? <RefreshCw className="h-3 w-3" /> : <Sparkles className="h-3 w-3" />}
