@@ -118,7 +118,7 @@ export const es = {
   home: {
     hero: {
       eyebrow: "Mindful Mind · Acompañamiento individual",
-      line1: "¿Y si te trataras a ti misma como tratas a un buen amigo?",
+      line1: "Trátate a ti misma como tratas a un buen amigo.",
       line2: "",
       line3: "",
       headline: "Desarrolla más resiliencia, paz interior y autocompasión — justo cuando las cosas son difíciles.",
@@ -164,7 +164,7 @@ export const es = {
       eyebrow: "Resultados",
       titleA: "De sobrevivir a",
       titleB: "apoyarse",
-      sub: "Aprendes a relacionarte de manera diferente con lo que sientes, sin presionarte.",
+      sub: "Aprendes a escuchar lo que sientes — y apoyarte a ti misma en lugar de forzarte.",
       shift1From: "Exigente contigo misma",
       shift1To: "Amable y comprensiva",
       shift2From: "Seguir a pesar de las señales",
@@ -290,7 +290,7 @@ export const es = {
       eyebrow: "",
       title: "INSCRÍBETE AHORA",
       subtitle: "Eres bienvenida tal como eres",
-      sub: "Comienza hoy tu viaje personal. La sesión de descubrimiento es siempre gratuita y sin compromiso.",
+      sub: "La sesión de descubrimiento es siempre gratuita — sin compromisos, solo espacio para ver si encaja.",
       cta1: "Agenda una sesión",
       cta2: "Descubre la formación grupal",
     },

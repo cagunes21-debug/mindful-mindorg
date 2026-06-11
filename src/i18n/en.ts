@@ -118,7 +118,7 @@ export const en = {
   home: {
     hero: {
       eyebrow: "Mindful Mind · One-on-one sessions",
-      line1: "What if you treated yourself the way you treat a good friend?",
+      line1: "Treat yourself the way you treat a good friend.",
       line2: "",
       line3: "",
       headline: "Develop more resilience, inner peace, and self-compassion — especially when things are difficult.",
@@ -164,7 +164,7 @@ export const en = {
       eyebrow: "What changes",
       titleA: "From surviving to",
       titleB: "supporting yourself",
-      sub: "You learn a new way of relating to what you feel — without putting yourself under pressure.",
+      sub: "You learn to listen to what you feel — and support yourself instead of forcing.",
       shift1From: "Harsh self-criticism",
       shift1To: "Gentle self-support",
       shift2From: "Pushing through",
@@ -290,7 +290,7 @@ export const en = {
       eyebrow: "",
       title: "SIGN UP NOW",
       subtitle: "You are welcome as you are",
-      sub: "Start your personal journey today. The introductory session is always free and without obligation.",
+      sub: "The introductory session is always free — no obligations, just space to see if it clicks.",
       cta1: "Book an introduction",
       cta2: "Discover the group training",
     },

@@ -118,7 +118,7 @@ export const tr = {
   home: {
     hero: {
       eyebrow: "Mindful Mind · Bireysel Danışmanlık",
-      line1: "Ya kendine iyi bir arkadaşına davrandığın gibi davransan?",
+      line1: "Kendine iyi bir arkadaşına davrandığın gibi davran.",
       line2: "",
       line3: "",
       headline: "Daha fazla dayanıklılık, içsel huzur ve öz-şefkat geliştir — özellikle zor zamanlarda.",
@@ -164,7 +164,7 @@ export const tr = {
       eyebrow: "Sonuçlar",
       titleA: "Hayatta kalmaktan",
       titleB: "desteklemeye",
-      sub: "Hissettiklerinle farklı bir şekilde başa çıkmayı öğrenirsin — kendine baskı yapmadan.",
+      sub: "Hissettiklerini dinlemeyi öğrenirsin — ve kendini zorlamak yerine desteklersin.",
       shift1From: "Kendine karşı sert",
       shift1To: "Nazik ve destekleyici",
       shift2From: "Sinyallere rağmen devam etmek",
@@ -290,7 +290,7 @@ export const tr = {
       eyebrow: "",
       title: "ŞİMDİ KAYDOL",
       subtitle: "Olduğun gibi hoş geldin",
-      sub: "Kişisel yolculuğunuza bugün başlayın. Tanışma görüşmesi her zaman ücretsiz ve bağlayıcı değildir.",
+      sub: "Tanışma görüşmesi her zaman ücretsiz — hiçbir zorunluluk yok, sadece uyum olup olmadığını görmek için bir alan.",
       cta1: "Tanışma görüşmesi planla",
       cta2: "Grup eğitimini keşfet",
     },
