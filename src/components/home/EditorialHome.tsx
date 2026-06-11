@@ -23,14 +23,10 @@ const Chapter = ({ n, label, tone }: { n: string; label: string; tone?: "ivory" 
 );
 
 const EditorialHome = () => {
-  const heroRef = useRef<HTMLElement | null>(null);
-  const { scrollYProgress } = useScroll({ target: heroRef, offset: ["start start", "end start"] });
-  const y = useTransform(scrollYProgress, [0, 1], [0, 80]);
-
   return (
     <div className="bg-[#FDFBF7] text-[#2C2A28]">
       {/* ── 01 Arrival ─────────────────────────────────────── */}
-      <section ref={heroRef} className="relative overflow-hidden pt-16 lg:pt-24">
+      <section className="relative overflow-hidden pt-16 lg:pt-24">
         <div className="container mx-auto px-6 lg:px-12">
           <div className="grid gap-14 lg:grid-cols-12 lg:gap-16">
             <motion.div
