@@ -81,22 +81,60 @@ const EditorialHome = () => {
             </motion.div>
 
             <motion.div
-              style={{ y }}
+              variants={fadeUp as any}
+              initial="hidden"
+              animate="show"
               className="relative lg:col-span-5"
             >
-              <div className="relative mx-auto aspect-[4/5] w-full max-w-md overflow-hidden rounded-t-[220px] shadow-[0_30px_80px_-40px_rgba(60,40,30,0.45)]">
-                <img
-                  src={heroImage}
-                  alt="Stille meditatie bij zonsondergang"
-                  className="h-full w-full object-cover"
-                />
+              {/* Editorial typographic composition — geen foto */}
+              <div className="relative mx-auto w-full max-w-md">
+                {/* Hoofdkaart: ivoor met serif-citaat */}
+                <div className="relative aspect-[4/5] overflow-hidden border border-[#2C2A28]/10 bg-[#F6F1E8]">
+                  {/* sage hoekband */}
+                  <div className="absolute inset-x-0 top-0 h-2 bg-sage-600" />
+                  {/* groot serif-cijfer als watermerk */}
+                  <span className="pointer-events-none absolute -right-4 -bottom-10 select-none font-serif text-[260px] leading-none text-terracotta-600/10">
+                    01
+                  </span>
+                  <div className="relative flex h-full flex-col justify-between p-8 lg:p-10">
+                    <div>
+                      <p className="text-[10px] uppercase tracking-[0.32em] text-terracotta-700">
+                        Editie · MMXXVI
+                      </p>
+                      <div className="mt-6 h-px w-12 bg-terracotta-600" />
+                      <p className="mt-6 font-serif text-[28px] leading-[1.25] text-[#1f1d1b] lg:text-[32px]">
+                        "Zelfzorg is geen <em className="italic text-terracotta-700">luxe</em> —
+                        het is een vaardigheid."
+                      </p>
+                    </div>
+                    <div className="flex items-end justify-between">
+                      <div>
+                        <p className="font-serif text-base italic text-[#1f1d1b]">— Çağla</p>
+                        <p className="mt-1 text-[10px] uppercase tracking-[0.28em] text-[#7a7670]">
+                          Oprichter Mindful Mind
+                        </p>
+                      </div>
+                      <div className="text-right">
+                        <p className="font-serif text-3xl text-sage-700">N°01</p>
+                        <p className="mt-1 text-[10px] uppercase tracking-[0.24em] text-[#7a7670]">
+                          Hoofdstuk
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Klein sage label, overlappend */}
+                <div className="absolute -bottom-6 left-4 max-w-[240px] bg-sage-600 px-6 py-5 text-white shadow-xl">
+                  <p className="text-[10px] uppercase tracking-[0.28em] text-white/80">
+                    Gecertificeerd
+                  </p>
+                  <p className="mt-1 font-serif text-lg italic leading-snug">
+                    Center for MSC · UC San Diego
+                  </p>
+                </div>
+                <div className="absolute -right-2 -top-4 hidden h-24 w-px bg-terracotta-600/40 lg:block" />
               </div>
-              <div className="absolute -bottom-6 left-0 max-w-[220px] bg-sage-600 px-6 py-5 text-white shadow-xl sm:left-2">
-                <p className="font-serif text-lg italic leading-snug">
-                  Zelfzorg is geen luxe — het is een vaardigheid.
-                </p>
-              </div>
-              <div className="absolute -right-2 -top-4 hidden h-24 w-px bg-terracotta-600/40 lg:block" />
             </motion.div>
           </div>
         </div>
