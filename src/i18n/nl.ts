@@ -17,7 +17,7 @@ export const nl = {
     admin: "Admin",
     login: "Inloggen",
     logout: "Uitloggen",
-    msc: "Mindful Self-Compassion",
+    msc: "Mindful Zelfcompassie Training",
     groupTraining: "Groepstraject",
     coaching: "Individuele Begeleiding",
     retreat: "Retreat",
