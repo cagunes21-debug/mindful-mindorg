@@ -33,8 +33,8 @@ const Index = () => {
       <WhatsAppButton />
       <CookieConsent />
       <SEO
-        title="Mindful Mind · Zelfcompassie & Welzijn"
-        description="Leer jezelf ondersteunen met Mindful Self-Compassion. Individuele begeleiding en groepstrainingen voor meer rust, veerkracht en zelfvertrouwen."
+        title="Mindful Zelfcompassie Training · Mindful Mind"
+        description="De Mindful Zelfcompassie Training helpt je jezelf te ondersteunen. Individuele begeleiding en groepstrainingen voor meer rust, veerkracht en zelfvertrouwen."
       />
       <OrganizationSchema />
       <Navigation />
