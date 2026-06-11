@@ -128,7 +128,7 @@ const JourneyHome = () => {
               Jouw pad
             </span>
             <h2 className="font-serif text-foreground text-[2rem] md:text-[2.5rem] leading-[1.2] mb-8">
-              Twee paden, <span className="italic">één bestemming.</span>
+              Kies wat het beste <span className="italic">bij je past.</span>
             </h2>
             <div className="space-y-3">
               <Link
