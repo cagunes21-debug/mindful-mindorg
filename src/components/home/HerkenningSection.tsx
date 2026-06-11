@@ -14,102 +14,99 @@ const HerkenningSection = () => {
   return (
     <>
       {/* Deel 1 — Verlangen */}
-      <section className="py-24 md:py-36 bg-warm-50 relative overflow-hidden">
-        <div className="absolute -top-20 -right-20 w-96 h-96 bg-terracotta-100/30 rounded-full blur-[100px]" />
-        <div className="container mx-auto px-6 md:px-10 relative">
-          <div className="max-w-[60ch] mx-auto text-center">
-            <ScrollReveal>
-              <span className="inline-flex items-center gap-3 text-[0.7rem] tracking-[0.32em] uppercase text-terracotta-500 font-medium mb-8">
-                <span className="h-px w-8 bg-terracotta-400/50" />
-                {t("home.herkenning.eyebrow")}
-                <span className="h-px w-8 bg-terracotta-400/50" />
-              </span>
-              <h2 className="text-4xl md:text-5xl lg:text-6xl font-serif text-foreground leading-[1.05] tracking-tight mb-10">
-                {t("home.herkenning.titleA")}{" "}
-                <span className="text-primary italic font-light">{t("home.herkenning.titleB")}</span>
-              </h2>
-              {(() => {
-                const parts = t("home.herkenning.p1")
-                  .split("\n\n")
-                  .map((s) => s.trim())
-                  .filter(Boolean);
-                const imagineItems = parts.filter((s) => (s.startsWith("Dat") || s.startsWith("That") || s.startsWith("Que")) && !/zelfcompassie|self-compassion|autocompasión|öz şefkat/i.test(s));
-                const closingShort = parts.filter(
-                  (s) => !imagineItems.includes(s) && s.length < 25
-                );
-                const finale = parts.find(
-                  (s) => !imagineItems.includes(s) && !closingShort.includes(s)
-                );
-                return (
-                  <div className="mt-2 text-left">
-                    <ul className="space-y-3 md:space-y-4">
-                      {imagineItems.map((line, i) => (
-                        <li
-                          key={i}
-                          className="flex items-start gap-3 text-foreground/90 text-base md:text-lg leading-[1.7]"
-                        >
-                          <span className="mt-2.5 h-1.5 w-1.5 rounded-full bg-terracotta-400 flex-shrink-0" />
-                          <span>{line}</span>
-                        </li>
-                      ))}
-                    </ul>
-
-                    {closingShort.length > 0 && (
-                      <div className="mt-8 flex flex-col items-center gap-2 font-serif italic text-xl md:text-2xl text-foreground">
-                        {closingShort.map((line, i) => (
-                          <span key={i}>
-                            {line.replace(/\.$/, "")}
-                          </span>
+      <section className="py-24 md:py-32 bg-warm-50 border-t border-foreground/10">
+        <div className="container mx-auto px-6 md:px-12 max-w-7xl">
+          <div className="grid md:grid-cols-12 gap-10 md:gap-16">
+            <div className="md:col-span-5">
+              <ScrollReveal>
+                <span className="block uppercase tracking-[0.2em] text-[10px] font-medium text-terracotta-500 mb-5">
+                  {t("home.herkenning.eyebrow")}
+                </span>
+                <h2 className="font-serif text-4xl md:text-5xl lg:text-6xl leading-[1.05] tracking-tight text-foreground max-w-[14ch]">
+                  {t("home.herkenning.titleA")}{" "}
+                  <span className="italic font-light text-primary">{t("home.herkenning.titleB")}</span>
+                </h2>
+              </ScrollReveal>
+            </div>
+            <div className="md:col-span-7 md:pt-3">
+              <ScrollReveal delay={0.1}>
+                {(() => {
+                  const parts = t("home.herkenning.p1")
+                    .split("\n\n")
+                    .map((s) => s.trim())
+                    .filter(Boolean);
+                  const imagineItems = parts.filter((s) => (s.startsWith("Dat") || s.startsWith("That") || s.startsWith("Que")) && !/zelfcompassie|self-compassion|autocompasión|öz şefkat/i.test(s));
+                  const closingShort = parts.filter(
+                    (s) => !imagineItems.includes(s) && s.length < 25
+                  );
+                  const finale = parts.find(
+                    (s) => !imagineItems.includes(s) && !closingShort.includes(s)
+                  );
+                  return (
+                    <div>
+                      <ul className="space-y-4">
+                        {imagineItems.map((line, i) => (
+                          <li
+                            key={i}
+                            className="flex items-start gap-4 text-foreground/85 text-[15px] md:text-base leading-[1.75]"
+                          >
+                            <span className="mt-3 h-px w-5 bg-terracotta-500 flex-shrink-0" />
+                            <span>{line}</span>
+                          </li>
                         ))}
-                      </div>
-                    )}
+                      </ul>
 
-                    {finale && (
-                      <p className="mt-6 text-center font-serif text-xl md:text-2xl text-primary leading-[1.4]">
-                        {finale}
-                      </p>
-                    )}
-                  </div>
-                );
-              })()}
-            </ScrollReveal>
+                      {closingShort.length > 0 && (
+                        <div className="mt-10 flex flex-col gap-1 font-serif italic text-xl md:text-2xl text-foreground">
+                          {closingShort.map((line, i) => (
+                            <span key={i}>{line.replace(/\.$/, "")}</span>
+                          ))}
+                        </div>
+                      )}
+
+                      {finale && (
+                        <p className="mt-6 font-serif text-xl md:text-2xl text-primary leading-[1.4] italic">
+                          {finale}
+                        </p>
+                      )}
+                    </div>
+                  );
+                })()}
+              </ScrollReveal>
+            </div>
           </div>
         </div>
       </section>
 
-      {/* Deel 2 — Waarom zelfcompassie */}
-      <section className="py-24 md:py-36 bg-background relative overflow-hidden">
-        <div className="absolute -top-20 -left-20 w-96 h-96 bg-sage-100/30 rounded-full blur-[100px]" />
-        <div className="container mx-auto px-6 md:px-10 relative">
-          <div className="max-w-[60ch] mx-auto text-center">
+      {/* Deel 2 — Waarom zelfcompassie (sage tonal band, centered editorial) */}
+      <section className="py-28 md:py-40 bg-sage-50/40 border-y border-foreground/5">
+        <div className="container mx-auto px-6 md:px-12 max-w-4xl">
+          <div className="text-center">
             <ScrollReveal>
-              <span className="inline-flex items-center gap-3 text-[0.7rem] tracking-[0.32em] uppercase text-terracotta-500 font-medium mb-8">
-                <span className="h-px w-8 bg-terracotta-400/50" />
+              <span className="block uppercase tracking-[0.2em] text-[10px] font-medium text-terracotta-500 mb-6">
                 {t("home.herkenning.whyEyebrow")}
-                <span className="h-px w-8 bg-terracotta-400/50" />
               </span>
-              <h2 className="text-4xl md:text-5xl lg:text-6xl font-serif text-foreground leading-[1.05] tracking-tight mb-10">
+              <h2 className="font-serif text-4xl md:text-5xl lg:text-6xl italic leading-[1.1] tracking-tight text-foreground mb-12 max-w-[20ch] mx-auto">
                 {t("home.herkenning.whyTitleA")}{" "}
-                <span className="text-primary italic font-light">{t("home.herkenning.whyTitleB")}</span>
+                <span className="text-primary not-italic font-light">{t("home.herkenning.whyTitleB")}</span>
               </h2>
 
-              {/* Intro tekst */}
               {t("home.herkenning.whyIntro") && (
-                <div className="mt-2 mb-8">
+                <div className="mb-10 max-w-[58ch] mx-auto">
                   {(() => {
                     const introParts = t("home.herkenning.whyIntro")
                       .split("\n\n")
                       .map((s) => s.trim())
                       .filter(Boolean);
                     return (
-                      <div className="space-y-4">
+                      <div className="space-y-5">
                         {introParts.map((part, i) => (
                           <p
                             key={i}
-                            className={`text-base md:text-lg leading-[1.7] ${
+                            className={`leading-[1.8] ${
                               i === introParts.length - 1
                                 ? "font-serif italic text-xl md:text-2xl text-foreground"
-                                : "text-foreground/90"
+                                : "text-foreground/80 text-[15px] font-light"
                             }`}
                           >
                             {part}
@@ -130,21 +127,21 @@ const HerkenningSection = () => {
                 const bulletItems = parts.filter((s, i) => i > 0 && i < parts.length - 2);
                 const closing = parts.slice(parts.length - 2);
                 return (
-                  <div className="mt-2">
+                  <div className="max-w-[58ch] mx-auto">
                     {intro && (
-                      <p className="text-foreground/90 text-base md:text-lg leading-[1.7] text-center">
+                      <p className="text-foreground/80 text-[15px] leading-[1.8] font-light">
                         {intro}
                       </p>
                     )}
 
                     {bulletItems.length > 0 && (
-                      <ul className="mt-6 space-y-3 md:space-y-4 flex flex-col items-center">
+                      <ul className="mt-8 space-y-3 flex flex-col items-center">
                         {bulletItems.map((line, i) => (
                           <li
                             key={i}
-                            className="flex items-center gap-3 text-foreground font-serif italic text-lg md:text-xl"
+                            className="flex items-center gap-4 text-foreground font-serif italic text-lg md:text-xl"
                           >
-                            <span className="h-1.5 w-1.5 rounded-full bg-terracotta-400 flex-shrink-0" />
+                            <span className="h-px w-5 bg-terracotta-500 flex-shrink-0" />
                             <span>{line.replace(/\.$/, "")}</span>
                           </li>
                         ))}
@@ -152,14 +149,14 @@ const HerkenningSection = () => {
                     )}
 
                     {closing.length > 0 && (
-                      <div className="mt-8 space-y-2">
+                      <div className="mt-10 space-y-3">
                         {closing.map((line, i) => (
                           <p
                             key={i}
-                            className={`text-center text-base md:text-lg leading-[1.7] ${
+                            className={`leading-[1.7] ${
                               i === closing.length - 1
-                                ? "font-serif text-xl md:text-2xl text-primary"
-                                : "text-foreground/80"
+                                ? "font-serif text-xl md:text-2xl text-primary italic"
+                                : "text-foreground/80 text-[15px] font-light"
                             }`}
                           >
                             {line}
@@ -175,74 +172,74 @@ const HerkenningSection = () => {
         </div>
       </section>
 
-      {/* Deel 2.5 — Zelfcompassie werkt anders (vervolg) */}
-      <section className="py-24 md:py-36 bg-warm-50 relative overflow-hidden">
-        <div className="absolute -bottom-20 -right-20 w-96 h-96 bg-sage-100/30 rounded-full blur-[100px]" />
-        <div className="container mx-auto px-6 md:px-10 relative">
-          <div className="max-w-[60ch] mx-auto text-center">
-            <ScrollReveal>
-              <span className="inline-flex items-center gap-3 text-[0.7rem] tracking-[0.32em] uppercase text-terracotta-500 font-medium mb-8">
-                <span className="h-px w-8 bg-terracotta-400/50" />
-                {t("home.herkenning.worksEyebrow")}
-                <span className="h-px w-8 bg-terracotta-400/50" />
-              </span>
-              <h2 className="text-4xl md:text-5xl lg:text-6xl font-serif text-foreground leading-[1.05] tracking-tight mb-12">
-                {t("home.herkenning.worksTitle")}
-              </h2>
-              {(() => {
-                const parts = t("home.herkenning.worksP1")
-                  .split("\n\n")
-                  .map((s) => s.trim())
-                  .filter(Boolean);
-                return (
-                  <div className="space-y-6">
-                    {parts.map((part, i) => (
-                      <p
-                        key={i}
-                        className={`text-base md:text-lg leading-[1.7] ${
-                          i === parts.length - 1
-                            ? "font-serif text-xl md:text-2xl text-primary"
-                            : "text-foreground/90"
-                        }`}
-                      >
-                        {part}
-                      </p>
-                    ))}
-                  </div>
-                );
-              })()}
-            </ScrollReveal>
+      {/* Deel 2.5 — Zelfcompassie werkt anders */}
+      <section className="py-24 md:py-32 bg-background border-t border-foreground/10">
+        <div className="container mx-auto px-6 md:px-12 max-w-7xl">
+          <div className="grid md:grid-cols-12 gap-10 md:gap-16">
+            <div className="md:col-span-5">
+              <ScrollReveal>
+                <span className="block uppercase tracking-[0.2em] text-[10px] font-medium text-terracotta-500 mb-5">
+                  {t("home.herkenning.worksEyebrow")}
+                </span>
+                <h2 className="font-serif text-4xl md:text-5xl lg:text-6xl leading-[1.05] tracking-tight text-foreground">
+                  {t("home.herkenning.worksTitle")}
+                </h2>
+              </ScrollReveal>
+            </div>
+            <div className="md:col-span-7 md:pt-3">
+              <ScrollReveal delay={0.1}>
+                {(() => {
+                  const parts = t("home.herkenning.worksP1")
+                    .split("\n\n")
+                    .map((s) => s.trim())
+                    .filter(Boolean);
+                  return (
+                    <div className="space-y-6 max-w-[58ch]">
+                      {parts.map((part, i) => (
+                        <p
+                          key={i}
+                          className={`leading-[1.8] ${
+                            i === parts.length - 1
+                              ? "font-serif italic text-xl md:text-2xl text-primary"
+                              : "text-foreground/85 text-[15px] md:text-base font-light"
+                          }`}
+                        >
+                          {part}
+                        </p>
+                      ))}
+                    </div>
+                  );
+                })()}
+              </ScrollReveal>
+            </div>
           </div>
         </div>
       </section>
 
       {/* Deel 3 — Wat deelnemers merken */}
-      <section className="py-24 md:py-36 bg-background relative overflow-hidden">
-        <div className="absolute -bottom-20 -left-20 w-96 h-96 bg-sage-100/30 rounded-full blur-[100px]" />
-        <div className="container mx-auto px-6 md:px-10 relative">
-          <div className="max-w-4xl mx-auto">
-            <ScrollReveal>
-              <div className="text-center mb-16 md:mb-20 max-w-[52ch] mx-auto">
-                <div className="font-serif text-terracotta-400/60 text-6xl leading-none mb-4 select-none">“</div>
-                <p className="font-serif italic text-2xl md:text-3xl text-foreground leading-[1.4] tracking-tight">
-                  {t("home.herkenning.quote")}
-                </p>
-              </div>
-            </ScrollReveal>
-            <ScrollReveal delay={0.15}>
-              <div className="grid sm:grid-cols-2 gap-4 md:gap-5">
-                {recognitionItems.map((item, i) => (
-                  <div
-                    key={i}
-                    className="flex items-start gap-4 bg-warm-50/70 border border-terracotta-100/60 rounded-2xl p-5 md:p-6 transition-all duration-300 hover:bg-warm-100 hover:shadow-md hover:shadow-terracotta-900/5"
-                  >
-                    <span className="mt-1.5 h-2.5 w-2.5 rounded-full bg-terracotta-400 flex-shrink-0" />
-                    <p className="text-foreground text-base leading-relaxed">{item}</p>
-                  </div>
-                ))}
-              </div>
-            </ScrollReveal>
-          </div>
+      <section className="py-24 md:py-32 bg-warm-50 border-t border-foreground/10">
+        <div className="container mx-auto px-6 md:px-12 max-w-5xl">
+          <ScrollReveal>
+            <div className="text-center mb-20 max-w-[56ch] mx-auto">
+              <div className="font-serif text-terracotta-400/50 text-7xl leading-none mb-2 select-none">“</div>
+              <p className="font-serif italic text-2xl md:text-3xl lg:text-4xl text-foreground leading-[1.35] tracking-tight">
+                {t("home.herkenning.quote")}
+              </p>
+            </div>
+          </ScrollReveal>
+          <ScrollReveal delay={0.15}>
+            <div className="grid sm:grid-cols-2 gap-x-10 gap-y-8 border-t border-foreground/10 pt-12">
+              {recognitionItems.map((item, i) => (
+                <div
+                  key={i}
+                  className="flex items-start gap-4 group"
+                >
+                  <span className="mt-2 h-px w-5 bg-terracotta-500 flex-shrink-0 group-hover:w-8 transition-all duration-500" />
+                  <p className="text-foreground/85 text-[15px] leading-[1.75] font-light">{item}</p>
+                </div>
+              ))}
+            </div>
+          </ScrollReveal>
         </div>
       </section>
     </>
