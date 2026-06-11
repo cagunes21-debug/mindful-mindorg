@@ -118,7 +118,7 @@ export const nl = {
   home: {
     hero: {
       eyebrow: "MINDFUL MIND · ZELFCOMPASSIE TRAINING",
-      line1: "Wat als je jezelf zou behandelen zoals je een goede vriend behandelt?",
+      line1: "Behandel jezelf zoals je een goede vriend behandelt.",
       line2: "",
       line3: "",
       headline: "Ontwikkel meer veerkracht, innerlijke rust en zelfcompassie, juist op momenten dat je het moeilijk hebt.",

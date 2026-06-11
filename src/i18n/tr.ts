@@ -118,7 +118,7 @@ export const tr = {
   home: {
     hero: {
       eyebrow: "Mindful Mind · Bireysel Danışmanlık",
-      line1: "Ya kendine iyi bir arkadaşına davrandığın gibi davransan?",
+      line1: "Kendine iyi bir arkadaşına davrandığın gibi davran.",
       line2: "",
       line3: "",
       headline: "Daha fazla dayanıklılık, içsel huzur ve öz-şefkat geliştir — özellikle zor zamanlarda.",

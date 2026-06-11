@@ -118,7 +118,7 @@ export const en = {
   home: {
     hero: {
       eyebrow: "Mindful Mind · One-on-one sessions",
-      line1: "What if you treated yourself the way you treat a good friend?",
+      line1: "Treat yourself the way you treat a good friend.",
       line2: "",
       line3: "",
       headline: "Develop more resilience, inner peace, and self-compassion — especially when things are difficult.",

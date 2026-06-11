@@ -118,7 +118,7 @@ export const es = {
   home: {
     hero: {
       eyebrow: "Mindful Mind · Acompañamiento individual",
-      line1: "¿Y si te trataras a ti misma como tratas a un buen amigo?",
+      line1: "Trátate a ti misma como tratas a un buen amigo.",
       line2: "",
       line3: "",
       headline: "Desarrolla más resiliencia, paz interior y autocompasión — justo cuando las cosas son difíciles.",
