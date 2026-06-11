@@ -219,7 +219,7 @@ export default function TherapySessionSection({ enrollmentId, clientName }: Prop
               disabled={analyzing || transcript.trim().length < 50}
               className="gap-2"
             >
-              {analyzing ? <Loader2 className="h-4 w-4 animate-spin" /> : <Brain className="h-4 w-4" />}
+              {analyzing ? <Loader2 className="h-4 w-4 animate-spin" /> : <FileText className="h-4 w-4" />}
               {analyzing ? "Analyseren..." : "Genereer sessienotities"}
             </Button>
 
