@@ -181,7 +181,7 @@ export default function TherapySessionSection({ enrollmentId, clientName }: Prop
     <div className="space-y-3">
       <div className="flex items-center justify-between">
         <p className="text-xs text-muted-foreground flex items-center gap-1 font-medium">
-          <Brain className="h-3 w-3" /> AI Sessienotities
+          <FileText className="h-3 w-3" /> Sessienotities
         </p>
         {!showNew && (
           <Button size="sm" variant="outline" onClick={() => setShowNew(true)} className="gap-1.5 h-7 text-xs">
