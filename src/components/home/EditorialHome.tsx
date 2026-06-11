@@ -1,11 +1,7 @@
 import { Link } from "react-router-dom";
-import { motion, useScroll, useTransform } from "framer-motion";
-import { useRef } from "react";
-import { ArrowRight, ArrowUpRight } from "lucide-react";
-import heroImage from "@/assets/hero-mindful.jpg";
+import { motion } from "framer-motion";
+import { ArrowRight, ArrowUpRight, Award, BookOpen, GraduationCap, ShieldCheck } from "lucide-react";
 import caglaBio from "@/assets/cagla-bio.png";
-import meditationPractice from "@/assets/meditation-practice.jpg";
-import natureCalm from "@/assets/nature-calm.jpg";
 
 /* -----------------------------------------------------------
    Editorial homepage — written like a printed magazine spread.
