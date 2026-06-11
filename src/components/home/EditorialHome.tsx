@@ -401,7 +401,7 @@ const EditorialHome = () => {
       </section>
 
       {/* ── 05 Trainer ───────────────────────────────────── */}
-      <section className="bg-sage-600 text-[#FDFBF7]">
+      <section className="bg-[#FDFBF7]">
         <div className="container mx-auto grid gap-16 px-6 py-20 lg:grid-cols-12 lg:gap-20 lg:px-12 lg:py-28">
           <motion.div
             variants={fadeUp as any}
@@ -410,17 +410,20 @@ const EditorialHome = () => {
             viewport={{ once: true, margin: "-80px" }}
             className="lg:col-span-5"
           >
-            <div className="overflow-hidden rounded-t-[180px] bg-sage-700/40">
-              <img
-                src={caglaBio}
-                alt="Çağla — gecertificeerd MSC-trainer"
-                className="aspect-[4/5] w-full object-cover"
-              />
+            <div className="relative">
+              <div className="aspect-[3/4] overflow-hidden rounded-2xl bg-sage-100">
+                <img
+                  src={caglaBio}
+                  alt="Çağla Güneş — gecertificeerd MSC-trainer"
+                  className="h-full w-full object-cover"
+                />
+              </div>
+              <div className="absolute -bottom-6 -right-4 max-w-[260px] rounded-xl bg-terracotta-600 p-6 text-[#FDFBF7] shadow-lg sm:-right-6">
+                <p className="font-serif text-lg italic leading-snug">
+                  "Zelfcompassie is<br />een moedige daad."
+                </p>
+              </div>
             </div>
-            <p className="mt-5 font-serif text-2xl italic">— Çağla Güneş</p>
-            <p className="text-[11px] uppercase tracking-[0.28em] text-white/70">
-              Oprichter Mindful Mind &amp; In Harmonia
-            </p>
           </motion.div>
 
           <motion.div
@@ -430,18 +433,25 @@ const EditorialHome = () => {
             viewport={{ once: true, margin: "-80px" }}
             className="lg:col-span-6 lg:col-start-7 lg:pt-8"
           >
-            <Chapter label="De begeleiding" tone="ivory" />
-            <p className="mt-8 font-serif text-3xl leading-[1.3] lg:text-[38px]">
-              "Ik help je een andere relatie met jezelf op te bouwen —
-              niet door jezelf te <em className="italic">verbeteren</em>,
-              maar door jezelf te leren <em className="italic">ondersteunen</em>."
+            <p className="text-[11px] font-bold uppercase tracking-[0.28em] text-sage-700">Je trainer</p>
+            <h2 className="mt-3 font-serif text-4xl leading-[1.1] text-[#1f1d1b] lg:text-[44px]">
+              Çağla Güneş
+            </h2>
+            <p className="mt-2 text-[11px] uppercase tracking-[0.22em] text-[#7a7670]">
+              Oprichter Mindful Mind &amp; In Harmonia
             </p>
-            <p className="mt-6 max-w-xl text-[15px] leading-[1.85] text-white/85">
+            <p className="mt-8 font-serif text-2xl leading-[1.4] text-[#1f1d1b] lg:text-[28px]">
+              "Ik help je een andere relatie met jezelf op te bouwen —
+              niet door jezelf te <em className="italic text-terracotta-600">verbeteren</em>,
+              maar door jezelf te leren <em className="italic text-terracotta-600">ondersteunen</em>."
+            </p>
+            <p className="mt-6 max-w-xl text-[15px] leading-[1.85] text-[#54514d]">
               Opgegroeid tussen twee culturen, geworteld in meditatie sinds haar dertiende.
               Çağla combineert lichaamsgerichte psychotherapie, Somatic Experiencing® en
               jarenlange MSC-praktijk. Ze begeleidt in het Nederlands, Engels en Turks —
               altijd in een kleine, veilige setting.
             </p>
+
             <Link
               to="/over-cagla"
               className="mt-8 inline-flex items-center gap-2 border-b border-white pb-1 text-[12px] font-medium uppercase tracking-[0.22em] hover:opacity-80"
