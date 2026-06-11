@@ -176,7 +176,7 @@ const EditorialHome = () => {
               viewport={{ once: true, margin: "-80px" }}
               className="lg:col-span-4"
             >
-              <Chapter n="ii." label="Wat we bieden" />
+              <Chapter label="Wat we bieden" />
               <h2 className="mt-8 font-serif text-4xl leading-[1.1] text-[#1f1d1b] lg:text-[44px]">
                 Drie manieren
                 <br />
@@ -260,7 +260,7 @@ const EditorialHome = () => {
               viewport={{ once: true, margin: "-80px" }}
               className="lg:col-span-4"
             >
-              <Chapter n="iii." label="Voor wie" />
+              <Chapter label="Voor wie" />
               <h2 className="mt-8 font-serif text-4xl leading-[1.1] text-[#1f1d1b] lg:text-[44px]">
                 Misschien
                 <br />
@@ -346,7 +346,7 @@ const EditorialHome = () => {
             viewport={{ once: true, margin: "-80px" }}
             className="lg:col-span-6 lg:col-start-7 lg:pt-6"
           >
-            <Chapter n="iv." label="De methode" />
+            <Chapter label="De methode" />
             <h2 className="mt-8 font-serif text-4xl leading-[1.1] text-[#1f1d1b] lg:text-[44px]">
               Zelfcompassie is een{" "}
               <em className="italic text-terracotta-600">vaardigheid</em>.
@@ -403,7 +403,7 @@ const EditorialHome = () => {
             viewport={{ once: true, margin: "-80px" }}
             className="lg:col-span-6 lg:col-start-7 lg:pt-8"
           >
-            <Chapter n="v." label="De begeleiding" tone="ivory" />
+            <Chapter label="De begeleiding" tone="ivory" />
             <p className="mt-8 font-serif text-3xl leading-[1.3] lg:text-[38px]">
               "Ik help je de weg te vinden van je <em className="italic">hoofd</em> naar je{" "}
               <em className="italic">hart</em>."
@@ -426,7 +426,7 @@ const EditorialHome = () => {
       <section className="bg-[#FDFBF7]">
         <div className="container mx-auto px-6 py-20 lg:px-12 lg:py-28">
           <div className="mx-auto max-w-3xl">
-            <Chapter n="vi." label="Ervaringen" />
+            <Chapter label="Ervaringen" />
             <motion.blockquote
               variants={fadeUp as any}
               initial="hidden"
@@ -454,7 +454,7 @@ const EditorialHome = () => {
       <section className="bg-[#F6F1E8]">
         <div className="container mx-auto px-6 py-20 lg:px-12 lg:py-28">
           <div className="mx-auto max-w-2xl text-center">
-            <Chapter n="vii." label="De eerste stap" />
+            <Chapter label="De eerste stap" />
             <h2 className="mt-8 font-serif text-4xl leading-[1.15] text-[#1f1d1b] lg:text-[48px]">
               Twijfel je nog?
               <br />
