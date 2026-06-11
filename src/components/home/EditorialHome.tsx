@@ -45,26 +45,25 @@ const EditorialHome = () => {
                 <em className="italic text-terracotta-600">sterk</em> te zijn.
               </h1>
               <p className="mt-8 max-w-xl text-lg leading-[1.75] text-[#54514d]">
-                Mindful Self-Compassion (MSC) is een 8-weeks programma ontwikkeld door
-                Dr. Kristin Neff en Dr. Christopher Germer. Je leert via meditatie,
-                oefeningen en uitwisseling in een kleine groep hoe je jezelf kunt
-                steunen — vooral wanneer het moeilijk is. Geen quick fix, wel een
-                vaardigheid die blijft.
+                Mindful Zelfcompassie Training — behandel jezelf zoals je een goede vriend
+                behandelt. In de Mindful Zelfcompassie Training ontwikkel je meer
+                veerkracht, innerlijke rust en zelfcompassie — juist op momenten dat je
+                het moeilijk hebt.
               </p>
 
               <div className="mt-10 flex flex-col gap-3 sm:flex-row sm:items-center sm:gap-6">
                 <Link
-                  to="/msc-training"
+                  to="/coaching"
                   className="group inline-flex items-center justify-center gap-3 bg-terracotta-600 px-7 py-4 text-[12px] font-medium uppercase tracking-[0.22em] text-white transition-colors hover:bg-terracotta-700"
                 >
-                  Bekijk de MSC training
+                  Meer over individuele sessies
                   <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
                 </Link>
                 <Link
-                  to="/coaching"
+                  to="/msc-training"
                   className="inline-flex items-center gap-2 text-[12px] font-medium uppercase tracking-[0.22em] text-[#2C2A28] underline-offset-8 hover:underline"
                 >
-                  Individuele begeleiding <ArrowRight className="h-3.5 w-3.5" />
+                  Bekijk data <ArrowRight className="h-3.5 w-3.5" />
                 </Link>
               </div>
 
