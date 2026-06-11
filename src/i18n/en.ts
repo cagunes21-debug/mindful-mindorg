@@ -208,6 +208,7 @@ export const en = {
         f4: "Email support between sessions",
         priceNote: "6 sessions · online via Zoom",
         cta: "Book a free introduction",
+        ctaLearnMore: "More about individual sessions",
       },
       group: {
         badge: "Group",

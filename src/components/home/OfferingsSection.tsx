@@ -77,6 +77,14 @@ const OfferingsSection = () => {
                   {t("home.offerings.individual.cta")}
                   <ArrowRight className="h-4 w-4" />
                 </Link>
+
+                <Link
+                  to="/coaching"
+                  className="inline-flex items-center justify-center gap-2 text-sm text-terracotta-600 font-medium hover:text-terracotta-700 transition-colors mt-4"
+                >
+                  {t("home.offerings.individual.ctaLearnMore")}
+                  <ArrowRight className="h-4 w-4" />
+                </Link>
               </div>
             </ScrollReveal>
 
