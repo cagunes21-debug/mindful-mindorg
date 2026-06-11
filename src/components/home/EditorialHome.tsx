@@ -432,18 +432,21 @@ const EditorialHome = () => {
           >
             <Chapter label="De begeleiding" tone="ivory" />
             <p className="mt-8 font-serif text-3xl leading-[1.3] lg:text-[38px]">
-              "Ik help je de weg te vinden van je <em className="italic">hoofd</em> naar je{" "}
-              <em className="italic">hart</em>."
+              "Ik help je een andere relatie met jezelf op te bouwen —
+              niet door jezelf te <em className="italic">verbeteren</em>,
+              maar door jezelf te leren <em className="italic">ondersteunen</em>."
             </p>
             <p className="mt-6 max-w-xl text-[15px] leading-[1.85] text-white/85">
-              Tien jaar ervaring in mindfulness en zelfcompassie. Geen masterclasses voor honderden
-              — wel echte aandacht, in een kleine, veilige setting.
+              Opgegroeid tussen twee culturen, geworteld in meditatie sinds haar dertiende.
+              Çağla combineert lichaamsgerichte psychotherapie, Somatic Experiencing® en
+              jarenlange MSC-praktijk. Ze begeleidt in het Nederlands, Engels en Turks —
+              altijd in een kleine, veilige setting.
             </p>
             <Link
-              to="/trainers"
+              to="/over-cagla"
               className="mt-8 inline-flex items-center gap-2 border-b border-white pb-1 text-[12px] font-medium uppercase tracking-[0.22em] hover:opacity-80"
             >
-              Maak kennis met het team <ArrowUpRight className="h-3.5 w-3.5" />
+              Lees haar verhaal <ArrowUpRight className="h-3.5 w-3.5" />
             </Link>
           </motion.div>
         </div>
