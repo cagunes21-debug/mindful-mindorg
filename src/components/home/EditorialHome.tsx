@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { ArrowRight, ArrowUpRight, Award, BookOpen, GraduationCap, ShieldCheck } from "lucide-react";
 import caglaBio from "@/assets/cagla-bio.png";
+import heroImage from "@/assets/hero-mindful.jpg";
 
 /* -----------------------------------------------------------
    Editorial homepage — written like a printed magazine spread.
