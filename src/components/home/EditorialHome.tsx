@@ -250,16 +250,12 @@ const EditorialHome = () => {
               className="space-y-10 lg:col-span-7 lg:col-start-6"
             >
               {[
-                { n: "01", t: "Je bent streng voor jezelf", d: "De lat ligt hoog. Goed is bijna nooit goed genoeg." },
-                { n: "02", t: "Je zorgt eerst voor anderen", d: "Je eigen behoeften komen ergens onderaan de lijst." },
-                { n: "03", t: "Rust nemen voelt als falen", d: "Doorgaan voelt veiliger — tot je lichaam ingrijpt." },
-              ].map((r) => (
-                <li key={r.n} className="grid grid-cols-[auto_1fr] gap-6 border-t border-[#2C2A28]/10 pt-6">
-                  <span className="font-serif text-xl italic text-terracotta-600">{r.n}</span>
-                  <div>
-                    <h3 className="font-serif text-xl leading-snug text-[#1f1d1b]">{r.t}</h3>
-                    <p className="mt-2 text-[15px] leading-[1.8] text-[#54514d]">{r.d}</p>
-                  </div>
+                "Je bent streng voor jezelf",
+                "Je zorgt eerst voor anderen",
+                "Rust nemen voelt als falen",
+              ].map((item) => (
+                <li key={item} className="border-t border-[#2C2A28]/10 pt-6 font-serif text-xl leading-snug text-[#1f1d1b]">
+                  {item}
                 </li>
               ))}
             </motion.ol>
