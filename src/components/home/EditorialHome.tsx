@@ -280,11 +280,40 @@ const EditorialHome = () => {
             viewport={{ once: true, margin: "-80px" }}
             className="lg:col-span-5"
           >
-            <img
-              src={meditationPractice}
-              alt="Een groep oefent samen zelfcompassie"
-              className="aspect-[4/5] w-full object-cover"
-            />
+            {/* Editorial methodenpaneel — typografisch, geen foto */}
+            <div className="relative aspect-[4/5] w-full overflow-hidden border border-[#2C2A28]/10 bg-white">
+              <span className="pointer-events-none absolute -left-6 -top-12 select-none font-serif text-[260px] leading-none text-sage-700/10">
+                IV
+              </span>
+              <div className="absolute inset-x-0 bottom-0 h-2 bg-terracotta-600" />
+              <div className="relative flex h-full flex-col justify-between p-8 lg:p-10">
+                <div>
+                  <p className="text-[10px] uppercase tracking-[0.32em] text-sage-700">
+                    De methode
+                  </p>
+                  <div className="mt-6 h-px w-12 bg-sage-600" />
+                  <p className="mt-8 font-serif text-[26px] leading-[1.3] text-[#1f1d1b]">
+                    Acht weken.<br />
+                    Een nieuwe manier van<br />
+                    <em className="italic text-terracotta-700">naar jezelf kijken.</em>
+                  </p>
+                </div>
+                <div className="grid grid-cols-3 gap-4 border-t border-[#2C2A28]/10 pt-5">
+                  {[
+                    { k: "08", v: "weken" },
+                    { k: "12", v: "deelnemers" },
+                    { k: "20+", v: "oefeningen" },
+                  ].map((s) => (
+                    <div key={s.k}>
+                      <p className="font-serif text-2xl text-terracotta-700">{s.k}</p>
+                      <p className="mt-1 text-[10px] uppercase tracking-[0.22em] text-[#7a7670]">
+                        {s.v}
+                      </p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
           </motion.div>
 
           <motion.div
