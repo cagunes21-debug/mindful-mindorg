@@ -14,12 +14,10 @@ const fadeUp = {
   show: { opacity: 1, y: 0, transition: { duration: 0.8, ease: [0.22, 1, 0.36, 1] as [number, number, number, number] } },
 } as const;
 
-const Chapter = ({ n, label, tone }: { n: string; label: string; tone?: "ivory" }) => (
-  <div className={`flex items-center gap-3 text-[11px] uppercase tracking-[0.28em] ${tone === "ivory" ? "text-white/80" : "text-terracotta-600/80"}`}>
-    <span className={`font-serif italic text-base normal-case tracking-normal ${tone === "ivory" ? "text-white" : "text-terracotta-600"}`}>{n}</span>
-    <span className={`h-px w-8 ${tone === "ivory" ? "bg-white/40" : "bg-terracotta-600/30"}`} />
-    <span>{label}</span>
-  </div>
+const Chapter = ({ label, tone }: { label: string; tone?: "ivory" }) => (
+  <span className={`text-[11px] uppercase tracking-[0.28em] ${tone === "ivory" ? "text-white/80" : "text-terracotta-600/80"}`}>
+    {label}
+  </span>
 );
 
 const EditorialHome = () => {
