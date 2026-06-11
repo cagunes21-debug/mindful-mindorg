@@ -320,9 +320,10 @@ export const nl = {
       earlyBird: "incl. werkboek",
     },
     finalCta: {
-      eyebrow: "Tot slot",
-      title: "Je hoeft het niet alleen te doen.",
-      sub: "Een kennismakingsgesprek is gratis. Geen verplichtingen. Geen verkoopgesprek. Gewoon kijken of dit bij je past.",
+      eyebrow: "",
+      title: "MELD JE NU AAN",
+      subtitle: "Je bent welkom zoals je bent",
+      sub: "Begin vandaag met jouw persoonlijke traject. Het kennismakingsgesprek is altijd gratis en vrijblijvend.",
       cta1: "Plan een kennismaking",
       cta2: "Bekijk de groepstraining",
     },

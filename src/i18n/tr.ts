@@ -287,8 +287,9 @@ export const tr = {
       earlyBird: "çalışma kitabı dahil",
     },
     finalCta: {
-      eyebrow: "Şimdi kaydolun",
-      title: "Olduğun gibi hoş geldin",
+      eyebrow: "",
+      title: "ŞİMDİ KAYDOL",
+      subtitle: "Olduğun gibi hoş geldin",
       sub: "Kişisel yolculuğunuza bugün başlayın. Tanışma görüşmesi her zaman ücretsiz ve bağlayıcı değildir.",
       cta1: "Tanışma görüşmesi planla",
       cta2: "Grup eğitimini keşfet",
