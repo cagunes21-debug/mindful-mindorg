@@ -37,7 +37,7 @@ const HeroHome = () => {
           </div>
           <div className="flex flex-col sm:flex-row flex-wrap gap-3">
             <Link
-              to="/contact"
+              to="/coaching"
               className="inline-flex items-center justify-center bg-primary text-primary-foreground h-12 px-8 rounded-full font-semibold text-sm tracking-wide uppercase hover:opacity-90 transition-opacity shadow-lg shadow-primary/20"
             >
               {t("home.hero.ctaPrimary")}
