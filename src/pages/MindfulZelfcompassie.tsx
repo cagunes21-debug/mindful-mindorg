@@ -284,7 +284,7 @@ const MindfulZelfcompassie = () => {
           </SectionBand>
 
           {/* 06 Practical / Dates */}
-          <SectionBand id-anchor="data">
+          <SectionBand>
             <div id="data" className="container mx-auto px-6 py-28 lg:px-12 lg:py-32">
               <div className="grid gap-16 lg:grid-cols-12">
                 <Reveal className="lg:col-span-4">
@@ -351,7 +351,10 @@ const MindfulZelfcompassie = () => {
 
                 <Reveal className="lg:col-span-7">
                   <div className="border border-[#2C2A28]/10 bg-white p-8 md:p-10">
-                    <RegistrationForm />
+                    <RegistrationForm
+                      trainingName="8-weekse Mindful Zelfcompassie Training"
+                      trainingDate="14 september 2026"
+                    />
                   </div>
                 </Reveal>
               </div>
