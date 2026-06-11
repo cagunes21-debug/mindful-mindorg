@@ -44,7 +44,7 @@ export default function AiSummaryCard({ email }: { email: string }) {
         {summary ? (
           <div className="text-sm text-foreground/85 leading-relaxed whitespace-pre-wrap">{summary}</div>
         ) : (
-          <p className="text-xs text-muted-foreground">Klik op "Genereer" voor een AI-samenvatting van dit dossier.</p>
+          <p className="text-xs text-muted-foreground">Klik op "Genereer" voor een samenvatting van dit dossier.</p>
         )}
       </CardContent>
     </Card>
