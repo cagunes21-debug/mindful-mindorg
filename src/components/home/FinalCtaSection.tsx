@@ -5,7 +5,7 @@ import { useLanguage } from "@/i18n/LanguageContext";
 const FinalCtaSection = () => {
   const { t } = useLanguage();
   return (
-    <section className="py-28 md:py-40 bg-primary text-primary-foreground relative overflow-hidden border-t border-foreground/10">
+    <section className="py-28 md:py-40 bg-primary text-primary-foreground relative overflow-hidden">
       <div className="container mx-auto px-6 md:px-12 max-w-5xl relative">
         <div className="text-center">
           <ScrollReveal>

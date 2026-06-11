@@ -21,7 +21,7 @@ const OfferingsSection = () => {
   ];
 
   return (
-    <section className="py-24 md:py-32 bg-background border-t border-foreground/10">
+    <section className="py-24 md:py-32 bg-background">
       <div className="container mx-auto px-6 md:px-12 max-w-7xl">
         {/* Asymmetric header with hairline rule */}
         <ScrollReveal>
