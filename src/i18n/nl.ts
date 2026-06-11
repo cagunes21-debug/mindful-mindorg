@@ -151,7 +151,7 @@ export const nl = {
         m3A: "Het programma vraagt ongeveer 2,5 uur per week (één avond plus dagelijkse korte oefeningen van 10-15 minuten). De meeste deelnemers ervaren dat ze juist tijd terugkrijgen — minder piekeren, beter slapen, helderder keuzes.",
       },
       startBadge: "Volgende start · september 2026 · nog enkele plekken",
-      ctaPrimary: "Plan een gratis kennismaking",
+      ctaPrimary: "meer over individuele sessies",
       ctaSecondary: "Bekijk de groepstraining",
       ctaTertiary: "",
     },
