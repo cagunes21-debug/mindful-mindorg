@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { ScrollReveal } from "@/components/ScrollReveal";
-import { ArrowRight, Check, Users, User } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import { useLanguage } from "@/i18n/LanguageContext";
 
 const OfferingsSection = () => {
@@ -21,115 +21,97 @@ const OfferingsSection = () => {
   ];
 
   return (
-    <section className="py-24 md:py-36 bg-background">
-      <div className="container mx-auto px-6 md:px-10">
-        <div className="max-w-5xl mx-auto">
-          <ScrollReveal>
-            <div className="text-center mb-20 max-w-[56ch] mx-auto">
-              <span className="inline-flex items-center gap-3 text-[0.7rem] tracking-[0.32em] uppercase font-medium text-terracotta-500 mb-8">
-                <span className="h-px w-8 bg-terracotta-400/50" />
+    <section className="py-24 md:py-32 bg-background border-t border-foreground/10">
+      <div className="container mx-auto px-6 md:px-12 max-w-7xl">
+        {/* Asymmetric header with hairline rule */}
+        <ScrollReveal>
+          <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-16 md:mb-20">
+            <div className="max-w-2xl">
+              <span className="block uppercase tracking-[0.2em] text-[10px] font-medium text-terracotta-500 mb-5">
                 {t("home.offerings.eyebrow")}
-                <span className="h-px w-8 bg-terracotta-400/50" />
               </span>
-              <h2 className="text-4xl md:text-5xl lg:text-6xl font-serif text-foreground leading-[1.05] tracking-tight mb-8">
+              <h2 className="font-serif text-4xl md:text-5xl lg:text-6xl leading-[1.05] tracking-tight text-foreground">
                 {t("home.offerings.titleA")}{" "}
-                <span className="text-primary italic font-light">{t("home.offerings.titleB")}</span>
+                <span className="italic font-light text-primary">{t("home.offerings.titleB")}</span>
               </h2>
-              <p className="text-muted-foreground text-lg leading-[1.8] max-w-[48ch] mx-auto">
-                {t("home.offerings.sub")}
+            </div>
+            <div className="h-px flex-grow bg-foreground/10 mx-0 md:mx-8 hidden md:block" />
+            <p className="text-muted-foreground text-[15px] leading-[1.8] max-w-xs">
+              {t("home.offerings.sub")}
+            </p>
+          </div>
+        </ScrollReveal>
+
+        {/* Flush gallery — two print-style modules */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-1">
+          {/* Individual */}
+          <ScrollReveal delay={0.1}>
+            <div className="bg-white p-10 md:p-14 border border-foreground/5 hover:border-terracotta-500/30 transition-colors duration-500 h-full flex flex-col">
+              <p className="text-terracotta-500 uppercase tracking-[0.22em] text-[10px] mb-6 font-medium">
+                {t("home.offerings.individual.badge")}
               </p>
+              <h3 className="font-serif text-3xl md:text-4xl text-foreground leading-tight tracking-tight mb-4">
+                {t("home.offerings.individual.title")}
+              </h3>
+              <p className="text-[14px] leading-[1.8] text-muted-foreground font-light max-w-md mb-10">
+                {t("home.offerings.individual.desc")}
+              </p>
+              <ul className="space-y-3 mb-12 flex-1">
+                {individualFeatures.map((item, i) => (
+                  <li key={i} className="flex items-start gap-4 text-[14px] text-foreground/85 leading-[1.7]">
+                    <span className="mt-2 h-px w-4 bg-terracotta-500 flex-shrink-0" />
+                    <span>{item}</span>
+                  </li>
+                ))}
+              </ul>
+              <div className="flex flex-col gap-4">
+                <Link
+                  to="/contact"
+                  className="group/btn flex items-center text-[11px] uppercase tracking-[0.22em] font-medium text-foreground"
+                >
+                  {t("home.offerings.individual.cta")}
+                  <ArrowRight className="ml-3 w-4 h-4 transition-transform group-hover/btn:translate-x-1" />
+                </Link>
+                <Link
+                  to="/coaching"
+                  className="group/btn2 flex items-center text-[11px] uppercase tracking-[0.22em] font-medium text-terracotta-500/80 hover:text-terracotta-500 transition-colors"
+                >
+                  {t("home.offerings.individual.ctaLearnMore")}
+                  <ArrowRight className="ml-3 w-4 h-4 transition-transform group-hover/btn2:translate-x-1" />
+                </Link>
+              </div>
             </div>
           </ScrollReveal>
 
-          <div className="grid md:grid-cols-2 gap-6 md:gap-8">
-            {/* Individual Coaching */}
-            <ScrollReveal delay={0.1}>
-              <div className="bg-white rounded-3xl border border-terracotta-200/40 p-8 md:p-10 shadow-sm h-full flex flex-col">
-                <div className="flex items-center gap-3 mb-5">
-                  <div className="h-10 w-10 rounded-full bg-terracotta-100 flex items-center justify-center">
-                    <User className="h-5 w-5 text-terracotta-600" />
-                  </div>
-                  <span className="inline-block bg-terracotta-100 text-terracotta-600 text-[0.65rem] tracking-widest uppercase font-semibold px-3 py-1 rounded-full">
-                    {t("home.offerings.individual.badge")}
-                  </span>
-                </div>
-
-                <h3 className="text-xl md:text-2xl font-serif text-foreground mb-2">
-                  {t("home.offerings.individual.title")}
-                </h3>
-                <p className="text-muted-foreground text-sm mb-6">
-                  {t("home.offerings.individual.desc")}
-                </p>
-
-                <ul className="space-y-3 mb-8 flex-1">
-                  {individualFeatures.map((item, i) => (
-                    <li key={i} className="flex items-start gap-3 text-sm text-foreground">
-                      <div className="h-5 w-5 rounded-full bg-terracotta-100 flex items-center justify-center flex-shrink-0 mt-0.5">
-                        <Check className="h-3 w-3 text-terracotta-600" />
-                      </div>
-                      {item}
-                    </li>
-                  ))}
-                </ul>
-
-                <Link
-                  to="/contact"
-                  className="inline-flex items-center justify-center gap-2 bg-primary text-primary-foreground h-12 px-8 rounded-full font-semibold text-sm tracking-wide uppercase hover:opacity-90 transition-opacity shadow-lg shadow-primary/20"
-                >
-                  {t("home.offerings.individual.cta")}
-                  <ArrowRight className="h-4 w-4" />
-                </Link>
-
-                <Link
-                  to="/coaching"
-                  className="inline-flex items-center justify-center gap-2 text-sm text-terracotta-600 font-medium hover:text-terracotta-700 transition-colors mt-4"
-                >
-                  {t("home.offerings.individual.ctaLearnMore")}
-                  <ArrowRight className="h-4 w-4" />
-                </Link>
-              </div>
-            </ScrollReveal>
-
-            {/* Group Training */}
-            <ScrollReveal delay={0.2}>
-              <div className="bg-white rounded-3xl border border-sage-200/50 p-8 md:p-10 shadow-sm h-full flex flex-col">
-                <div className="flex items-center gap-3 mb-5">
-                  <div className="h-10 w-10 rounded-full bg-sage-100 flex items-center justify-center">
-                    <Users className="h-5 w-5 text-sage-600" />
-                  </div>
-                  <span className="inline-block bg-sage-100 text-sage-700 text-[0.65rem] tracking-widest uppercase font-semibold px-3 py-1 rounded-full">
-                    {t("home.offerings.group.badge")}
-                  </span>
-                </div>
-
-                <h3 className="text-xl md:text-2xl font-serif text-foreground mb-2">
-                  {t("home.offerings.group.title")}
-                </h3>
-                <p className="text-muted-foreground text-sm mb-6">
-                  {t("home.offerings.group.desc")}
-                </p>
-
-                <ul className="space-y-3 mb-8 flex-1">
-                  {groupFeatures.map((item, i) => (
-                    <li key={i} className="flex items-start gap-3 text-sm text-foreground">
-                      <div className="h-5 w-5 rounded-full bg-sage-100 flex items-center justify-center flex-shrink-0 mt-0.5">
-                        <Check className="h-3 w-3 text-sage-600" />
-                      </div>
-                      {item}
-                    </li>
-                  ))}
-                </ul>
-
-                <Link
-                  to="/msc-training"
-                  className="inline-flex items-center justify-center gap-2 bg-sage-600 text-white h-12 px-8 rounded-full font-semibold text-sm tracking-wide uppercase hover:bg-sage-700 transition-colors shadow-lg shadow-sage-600/20"
-                >
-                  {t("home.offerings.group.cta")}
-                  <ArrowRight className="h-4 w-4" />
-                </Link>
-              </div>
-            </ScrollReveal>
-          </div>
+          {/* Group */}
+          <ScrollReveal delay={0.2}>
+            <div className="bg-sage-50 p-10 md:p-14 border border-foreground/5 hover:border-sage-600/30 transition-colors duration-500 h-full flex flex-col">
+              <p className="text-sage-700 uppercase tracking-[0.22em] text-[10px] mb-6 font-medium">
+                {t("home.offerings.group.badge")}
+              </p>
+              <h3 className="font-serif text-3xl md:text-4xl text-foreground leading-tight tracking-tight mb-4">
+                {t("home.offerings.group.title")}
+              </h3>
+              <p className="text-[14px] leading-[1.8] text-muted-foreground font-light max-w-md mb-10">
+                {t("home.offerings.group.desc")}
+              </p>
+              <ul className="space-y-3 mb-12 flex-1">
+                {groupFeatures.map((item, i) => (
+                  <li key={i} className="flex items-start gap-4 text-[14px] text-foreground/85 leading-[1.7]">
+                    <span className="mt-2 h-px w-4 bg-sage-600 flex-shrink-0" />
+                    <span>{item}</span>
+                  </li>
+                ))}
+              </ul>
+              <Link
+                to="/msc-training"
+                className="group/btn3 flex items-center text-[11px] uppercase tracking-[0.22em] font-medium text-foreground"
+              >
+                {t("home.offerings.group.cta")}
+                <ArrowRight className="ml-3 w-4 h-4 transition-transform group-hover/btn3:translate-x-1" />
+              </Link>
+            </div>
+          </ScrollReveal>
         </div>
       </div>
     </section>
