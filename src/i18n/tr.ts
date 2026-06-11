@@ -208,6 +208,7 @@ export const tr = {
         f4: "Seanslar arası e-posta desteği",
         priceNote: "6 seans · Zoom üzerinden online",
         cta: "Ücretsiz tanışma planla",
+        ctaLearnMore: "Bireysel seanslar hakkında daha fazla",
       },
       group: {
         badge: "Grup",
