@@ -22,7 +22,7 @@ const packages = [
     tag: "Traject",
     title: "6 sessies persoonlijke begeleiding",
     body: "Een afgerond traject voor duurzame verandering. Inclusief intake, oefenprogramma en reflectiemoment.",
-    meta: "6 sessies · €550 (i.p.v. €650)",
+    meta: "6 sessies · €650",
     highlight: true,
   },
 ];

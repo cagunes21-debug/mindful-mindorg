@@ -368,7 +368,7 @@ export const nl = {
       cta: "Neem contact op",
       cardTitle: "Individueel Traject",
       cardSub: "6 sessies · incl. intake & reflectie",
-      cardBadge: "✨ Tijdelijke aanbieding",
+      cardBadge: "Persoonlijk traject",
     },
     single: {
       tag: "Losse sessies",

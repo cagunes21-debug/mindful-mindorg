@@ -335,7 +335,7 @@ export const tr = {
       cta: "İletişime geç",
       cardTitle: "Bireysel Program",
       cardSub: "6 seans · ön görüşme ve yansıtma dahil",
-      cardBadge: "✨ Sınırlı süreli teklif",
+      cardBadge: "Kişisel program",
     },
     single: {
       tag: "Tek Seanslar",
