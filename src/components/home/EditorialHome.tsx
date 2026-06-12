@@ -97,32 +97,7 @@ const EditorialHome = () => {
             initial="hidden"
             whileInView="show"
             viewport={{ once: true, margin: "-80px" }}
-            className="lg:col-span-5"
-          >
-            <div className="relative aspect-[4/5] w-full overflow-hidden border border-[#2C2A28]/10 bg-white">
-              <div className="absolute inset-x-0 bottom-0 h-2 bg-terracotta-600" />
-              <div className="relative flex h-full flex-col justify-between p-8 lg:p-10">
-                <div>
-                  <div className="h-px w-12 bg-sage-600" />
-                  <p className="mt-8 font-serif text-[26px] leading-[1.3] text-[#1f1d1b]">
-                    Acht weken.<br />
-                    Een nieuwe manier van<br />
-                    <em className="italic text-terracotta-700">naar jezelf kijken.</em>
-                  </p>
-                </div>
-                <p className="text-[11px] uppercase tracking-[0.22em] text-[#7a7670]">
-                  Mindful Self-Compassion · Neff &amp; Germer
-                </p>
-              </div>
-            </div>
-          </motion.div>
-
-          <motion.div
-            variants={fadeUp as any}
-            initial="hidden"
-            whileInView="show"
-            viewport={{ once: true, margin: "-80px" }}
-            className="lg:col-span-6 lg:col-start-7 lg:pt-6"
+            className="lg:col-span-10 lg:col-start-2"
           >
             <Chapter label="Wat is MSC" />
             <h2 className="mt-8 font-serif text-4xl leading-[1.1] text-[#1f1d1b] lg:text-[44px]">
