@@ -127,6 +127,45 @@ const EditorialHome = () => {
         </div>
       </section>
 
+      {/* ── 03 Wat het je brengt ────────────────────────── */}
+      <section className="bg-[#F6F1E8]">
+        <div className="container mx-auto px-6 py-20 lg:px-12 lg:py-28">
+          <div className="grid gap-12 lg:grid-cols-12">
+            <motion.div
+              variants={fadeUp as any}
+              initial="hidden"
+              whileInView="show"
+              viewport={{ once: true, margin: "-80px" }}
+              className="lg:col-span-4"
+            >
+              <Chapter label="Wat het je brengt" />
+              <h2 className="mt-8 font-serif text-4xl leading-[1.1] text-[#1f1d1b] lg:text-[44px]">
+                Concreet —<br />
+                <em className="italic text-terracotta-600">na acht weken.</em>
+              </h2>
+              <p className="mt-6 max-w-sm text-[15px] leading-[1.8] text-[#54514d]">
+                Geen quick fix, wel een fundament dat blijft. Onderzoek toont
+                gemiddeld 36% minder stress en meer emotionele veerkracht.
+              </p>
+            </motion.div>
+
+            <div className="grid gap-5 lg:col-span-8 lg:grid-cols-2">
+              {[
+                { t: "Minder zelfkritiek", d: "Je herkent de innerlijke criticus eerder en kunt er anders mee omgaan." },
+                { t: "Meer rust", d: "Stress en piekeren nemen af. Je herstelt sneller na een moeilijke dag." },
+                { t: "Stevigere grenzen", d: "Je leert zorgen voor jezelf zonder schuldgevoel — ook richting anderen." },
+                { t: "Een vaardigheid voor altijd", d: "Concrete oefeningen die je de rest van je leven kunt blijven gebruiken." },
+              ].map((b) => (
+                <div key={b.t} className="border-t border-[#2C2A28]/15 pt-5">
+                  <p className="font-serif text-xl text-[#1f1d1b]">{b.t}</p>
+                  <p className="mt-2 text-[14px] leading-[1.75] text-[#54514d]">{b.d}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* ── Credibility band — professionele credentials ───── */}
       <section className="bg-[#FDFBF7]">
         <div className="container mx-auto px-6 py-10 lg:px-12 lg:py-14">
