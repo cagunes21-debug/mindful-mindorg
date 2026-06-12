@@ -381,10 +381,11 @@ const EditorialHome = () => {
               maar door jezelf te leren <em className="italic text-terracotta-600">ondersteunen</em>."
             </p>
             <p className="mx-auto mt-6 max-w-xl text-[15px] leading-[1.85] text-[#54514d]">
-              Opgegroeid tussen twee culturen, geworteld in meditatie sinds haar dertiende.
-              Çağla combineert lichaamsgerichte psychotherapie, Somatic Experiencing® en
-              jarenlange MSC-praktijk. Ze begeleidt in het Nederlands, Engels en Turks —
-              altijd in een kleine, veilige setting.
+              Opgegroeid tussen twee culturen, raakte Çağla vroeg vertrouwd met meditatie en
+              zelfcompassie — eerst als persoonlijke praktijk, later als professionele verdieping.
+              Na jarenlange Vipassana-beoefening en MSC-training is ze gecertificeerd MSC-trainer.
+              Ze begeleidt in kleine groepen, vanuit eigen ervaring — met aandacht voor jou.
+              Ze begeleidt in het Nederlands, Engels en Turks.
             </p>
 
             <Link
