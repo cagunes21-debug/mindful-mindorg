@@ -80,7 +80,7 @@ const EditorialHome = () => {
               variants={fadeUp as any}
               initial="hidden"
               animate="show"
-              className="relative lg:col-span-5"
+              className="relative md:col-span-5"
             >
               <div className="relative mx-auto w-full max-w-md">
                 {/* Foto in zachte boog */}
