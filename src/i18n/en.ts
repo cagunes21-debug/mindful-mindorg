@@ -335,7 +335,7 @@ export const en = {
       cta: "Get in touch",
       cardTitle: "Individual Track",
       cardSub: "6 sessions · incl. intake & reflection",
-      cardBadge: "✨ Current offer",
+      cardBadge: "Personal track",
     },
     single: {
       tag: "Single sessions",

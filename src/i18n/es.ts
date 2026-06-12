@@ -335,7 +335,7 @@ export const es = {
       cta: "Contacta",
       cardTitle: "Programa Individual",
       cardSub: "6 sesiones · incl. sesión inicial y reflexión",
-      cardBadge: "✨ Oferta por tiempo limitado",
+      cardBadge: "Programa personal",
     },
     single: {
       tag: "Sesiones Sueltas",

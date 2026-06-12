@@ -208,7 +208,7 @@ const EditorialHome = () => {
                 tag: "1-op-1 Begeleiding",
                 title: "Individueel traject — 6 sessies",
                 body: "Persoonlijk traject via Zoom, helemaal afgestemd op jouw vraag en tempo. Geschikt als groep niet past of als je iets specifieks wilt onderzoeken.",
-                price: "€550",
+                price: "€650",
                 cta: "Ontdek meer",
                 to: "/coaching",
               },

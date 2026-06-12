@@ -189,7 +189,7 @@ const FLOW_OUTCOMES = [
 const PRICE_MAP_DISPLAY = [
   { training: "Workshop Zelfcompassie", price: "€55" },
   { training: "8-weekse MSC Training", price: "€550" },
-  { training: "Individueel Traject (6 sessies)", price: "€550" },
+  { training: "Individueel Traject (6 sessies)", price: "€650" },
   { training: "MBSR – 4-daags intensief", price: "Op aanvraag" },
   { training: "MSC – 4-daags intensief", price: "Op aanvraag" },
 ];
