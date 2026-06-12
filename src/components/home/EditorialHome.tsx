@@ -27,12 +27,12 @@ const EditorialHome = () => {
       {/* ── 01 Arrival ─────────────────────────────────────── */}
       <section className="relative overflow-hidden pt-16 lg:pt-24">
         <div className="container mx-auto px-6 lg:px-12">
-          <div className="grid gap-14 lg:grid-cols-12 lg:gap-16">
+          <div className="grid gap-14 md:grid-cols-12 md:gap-16">
             <motion.div
               variants={fadeUp as any}
               initial="hidden"
               animate="show"
-              className="lg:col-span-7 lg:pt-10"
+              className="md:col-span-7 lg:pt-10"
             >
               <h1 className="mt-8 font-serif text-[40px] leading-[1.05] tracking-tight text-[#1f1d1b] sm:text-[56px] lg:text-[72px]">
                 Mindful Zelfcompassie
@@ -80,7 +80,7 @@ const EditorialHome = () => {
               variants={fadeUp as any}
               initial="hidden"
               animate="show"
-              className="relative lg:col-span-5"
+              className="relative md:col-span-5"
             >
               <div className="relative mx-auto w-full max-w-md">
                 {/* Foto in zachte boog */}
