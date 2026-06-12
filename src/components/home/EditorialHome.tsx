@@ -144,8 +144,7 @@ const EditorialHome = () => {
                 <em className="italic text-terracotta-600">na acht weken.</em>
               </h2>
               <p className="mt-6 max-w-sm text-[15px] leading-[1.8] text-[#54514d]">
-                Geen quick fix, wel een fundament dat blijft. Onderzoek toont
-                gemiddeld 36% minder stress en meer emotionele veerkracht.
+                Onderzoek toont consistent minder stress en meer emotionele veerkracht. Geen quick fix — wel een fundament dat blijft.
               </p>
             </motion.div>
 
@@ -153,7 +152,7 @@ const EditorialHome = () => {
               {[
                 { t: "Minder zelfkritiek", d: "Je herkent de innerlijke criticus eerder en kunt er anders mee omgaan." },
                 { t: "Meer rust", d: "Stress en piekeren nemen af. Je herstelt sneller na een moeilijke dag." },
-                { t: "Stevigere grenzen", d: "Je leert zorgen voor jezelf zonder schuldgevoel — ook richting anderen." },
+                { t: "Beter voor jezelf zorgen", d: "Je leert zorgen voor jezelf zonder schuldgevoel — ook richting anderen." },
                 { t: "Een vaardigheid voor altijd", d: "Concrete oefeningen die je de rest van je leven kunt blijven gebruiken." },
               ].map((b) => (
                 <div key={b.t} className="border-t border-[#2C2A28]/15 pt-5">
