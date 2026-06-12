@@ -89,6 +89,69 @@ const EditorialHome = () => {
         <div className="mt-24 border-t border-[#2C2A28]/10" />
       </section>
 
+      {/* ── 02 Wat is MSC ────────────────────────────────── */}
+      <section className="bg-[#FDFBF7]">
+        <div className="container mx-auto grid gap-16 px-6 py-20 lg:grid-cols-12 lg:gap-20 lg:px-12 lg:py-28">
+          <motion.div
+            variants={fadeUp as any}
+            initial="hidden"
+            whileInView="show"
+            viewport={{ once: true, margin: "-80px" }}
+            className="lg:col-span-5"
+          >
+            <div className="relative aspect-[4/5] w-full overflow-hidden border border-[#2C2A28]/10 bg-white">
+              <div className="absolute inset-x-0 bottom-0 h-2 bg-terracotta-600" />
+              <div className="relative flex h-full flex-col justify-between p-8 lg:p-10">
+                <div>
+                  <div className="h-px w-12 bg-sage-600" />
+                  <p className="mt-8 font-serif text-[26px] leading-[1.3] text-[#1f1d1b]">
+                    Acht weken.<br />
+                    Een nieuwe manier van<br />
+                    <em className="italic text-terracotta-700">naar jezelf kijken.</em>
+                  </p>
+                </div>
+                <p className="text-[11px] uppercase tracking-[0.22em] text-[#7a7670]">
+                  Mindful Self-Compassion · Neff &amp; Germer
+                </p>
+              </div>
+            </div>
+          </motion.div>
+
+          <motion.div
+            variants={fadeUp as any}
+            initial="hidden"
+            whileInView="show"
+            viewport={{ once: true, margin: "-80px" }}
+            className="lg:col-span-6 lg:col-start-7 lg:pt-6"
+          >
+            <Chapter label="Wat is MSC" />
+            <h2 className="mt-8 font-serif text-4xl leading-[1.1] text-[#1f1d1b] lg:text-[44px]">
+              Een training in{" "}
+              <em className="italic text-terracotta-600">zelfcompassie</em>.
+            </h2>
+            <p className="mt-6 max-w-xl text-[16px] leading-[1.85] text-[#54514d]">
+              MSC (Mindful Self-Compassion) is een 8-weeks programma, ontwikkeld door
+              Dr. Kristin Neff en Dr. Christopher Germer. Je leert via meditatie,
+              oefeningen en uitwisseling in een kleine groep hoe je jezelf kunt
+              steunen — vooral wanneer het moeilijk is.
+            </p>
+
+            <div className="mt-10 grid gap-8 sm:grid-cols-3">
+              {[
+                { t: "Mindfulness", d: "Aanwezig zijn bij wat er is, zonder oordeel." },
+                { t: "Zelfvriendelijkheid", d: "Reageren op jezelf zoals op een goede vriend." },
+                { t: "Verbondenheid", d: "Beseffen dat je niet de enige bent." },
+              ].map((p) => (
+                <div key={p.t} className="border-t border-terracotta-600/30 pt-3">
+                  <p className="font-serif text-lg italic text-terracotta-700">{p.t}</p>
+                  <p className="mt-1 text-[13px] leading-[1.7] text-[#54514d]">{p.d}</p>
+                </div>
+              ))}
+            </div>
+          </motion.div>
+        </div>
+      </section>
+
       {/* ── Credibility band — professionele credentials ───── */}
       <section className="bg-[#FDFBF7]">
         <div className="container mx-auto px-6 py-10 lg:px-12 lg:py-14">
