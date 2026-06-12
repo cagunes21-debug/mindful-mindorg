@@ -171,31 +171,6 @@ const EditorialHome = () => {
         </div>
       </section>
 
-      {/* ── Credibility band — professionele credentials ───── */}
-      <section className="bg-[#FDFBF7]">
-        <div className="container mx-auto px-6 py-10 lg:px-12 lg:py-14">
-          <p className="text-center text-[10px] uppercase tracking-[0.32em] text-[#7a7670]">
-            Lichaamsgericht psychotherapeut · Gecertificeerd MSC-trainer · Sessies in NL · EN · TR
-          </p>
-          <div className="mx-auto mt-8 grid max-w-5xl grid-cols-2 gap-x-6 gap-y-8 border-y border-[#2C2A28]/10 py-8 sm:grid-cols-4">
-            {[
-              { Icon: GraduationCap, t: "Psychologie & Psychotherapie", s: "Integratief opgeleid" },
-              { Icon: ShieldCheck, t: "Somatic Experiencing®", s: "Trauma & zenuwstelsel" },
-              { Icon: BookOpen, t: "Mindful Self-Compassion", s: "Center for MSC — Neff & Germer" },
-              { Icon: Award, t: "20+ jaar meditatie", s: "Vipassana-retraites sinds haar 13e" },
-            ].map(({ Icon, t, s }) => (
-              <div key={t} className="flex items-start gap-3">
-                <Icon className="mt-0.5 h-5 w-5 flex-none text-sage-700" strokeWidth={1.4} />
-                <div>
-                  <p className="font-serif text-[15px] text-[#1f1d1b]">{t}</p>
-                  <p className="mt-0.5 text-[11px] uppercase tracking-[0.18em] text-[#7a7670]">{s}</p>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
       {/* ── 02 Kies wat het beste bij je past — Groep & Individueel ──────────── */}
       <section className="bg-[#F7F3EE]">
         <div className="container mx-auto px-6 py-20 lg:px-12 lg:py-28">
