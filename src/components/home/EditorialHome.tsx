@@ -34,15 +34,17 @@ const EditorialHome = () => {
               animate="show"
               className="md:col-span-7 lg:pt-10"
             >
-              <h1 className="mt-8 font-serif text-[40px] leading-[1.05] tracking-tight text-[#1f1d1b] sm:text-[56px] lg:text-[72px]">
-                Mindful Zelfcompassie
-                <br />
-                Training — een andere manier om{" "}
+              <span className="inline-block bg-sage-700 px-4 py-2 text-[11px] font-medium uppercase tracking-[0.28em] text-[#FDFBF7]">
+                Mindful Zelfcompassie Training
+              </span>
+              <h1 className="mt-6 font-serif text-[36px] leading-[1.1] tracking-tight text-[#1f1d1b] sm:text-[48px] lg:text-[60px]">
+                Een andere manier om{" "}
                 <em className="italic text-terracotta-600">sterk</em> te zijn.
               </h1>
-              <p className="mt-8 max-w-xl text-lg leading-[1.75] text-[#54514d]">
+              <p className="mt-6 max-w-xl font-sans text-base leading-[1.75] text-[#54514d]">
                 Leer vriendelijker omgaan met jezelf in tijden van stress, onzekerheid en zelfkritiek. Ontwikkel vaardigheden die je helpen meer rust, balans en vertrouwen te ervaren in het dagelijks leven.
               </p>
+
 
               <div className="mt-10 flex flex-col gap-3 sm:flex-row sm:items-center sm:gap-6">
                 <Link
