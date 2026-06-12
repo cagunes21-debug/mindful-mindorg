@@ -322,7 +322,7 @@ const EditorialHome = () => {
             <h2 className="mt-8 font-serif text-3xl leading-[1.25] text-[#1f1d1b] lg:text-[40px]">
               Omdat strenger zijn voor jezelf{" "}
               <em className="italic text-terracotta-600">niet werkt</em> —
-              en je dat ergens al weet.
+              en je dat misschien al voelt.
             </h2>
             <p className="mt-6 text-[16px] leading-[1.85] text-[#54514d]">
               Veel mensen denken dat zelfkritiek hen scherp houdt. Onderzoek laat
