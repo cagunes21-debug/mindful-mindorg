@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import { ArrowRight, ArrowUpRight, Award, BookOpen, GraduationCap, ShieldCheck, Users, User } from "lucide-react";
+import { ArrowRight, ArrowUpRight, Users, User } from "lucide-react";
 import caglaBio from "@/assets/cagla-bio.png";
 import heroImage from "@/assets/hero-mindful.jpg";
 
