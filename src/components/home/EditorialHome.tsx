@@ -46,19 +46,20 @@ const EditorialHome = () => {
               </p>
 
 
-              <div className="mt-10 flex flex-col gap-3 sm:flex-row sm:items-center sm:gap-6">
+              <div className="mt-10 flex flex-col gap-3 sm:flex-row sm:items-center sm:gap-4">
+                <Link
+                  to="/msc-training"
+                  className="group inline-flex items-center justify-center gap-3 bg-sage-700 px-7 py-4 text-[12px] font-medium uppercase tracking-[0.22em] text-white transition-colors hover:bg-sage-800"
+                >
+                  Groepstraining — start september
+                  <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
+                </Link>
                 <Link
                   to="/coaching"
                   className="group inline-flex items-center justify-center gap-3 bg-terracotta-600 px-7 py-4 text-[12px] font-medium uppercase tracking-[0.22em] text-white transition-colors hover:bg-terracotta-700"
                 >
-                  Meer over individuele sessies
+                  Individuele sessies
                   <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
-                </Link>
-                <Link
-                  to="/msc-training"
-                  className="inline-flex items-center gap-2 text-[12px] font-medium uppercase tracking-[0.22em] text-[#2C2A28] underline-offset-8 hover:underline"
-                >
-                  Bekijk data <ArrowRight className="h-3.5 w-3.5" />
                 </Link>
               </div>
 
