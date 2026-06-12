@@ -41,10 +41,9 @@ const EditorialHome = () => {
                 <em className="italic text-terracotta-600">sterk</em> te zijn.
               </h1>
               <p className="mt-8 max-w-xl text-lg leading-[1.75] text-[#54514d]">
-                Mindful Zelfcompassie Training — behandel jezelf zoals je een goede vriend
-                behandelt. In de Mindful Zelfcompassie Training ontwikkel je meer
-                veerkracht, innerlijke rust en zelfcompassie — juist op momenten dat je
-                het moeilijk hebt.
+                Behandel jezelf zoals je een goede vriend behandelt. In de Mindful
+                Zelfcompassie Training ontwikkel je meer veerkracht, innerlijke rust en
+                zelfcompassie — juist op momenten dat je het moeilijk hebt.
               </p>
 
               <div className="mt-10 flex flex-col gap-3 sm:flex-row sm:items-center sm:gap-6">
