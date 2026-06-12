@@ -130,34 +130,40 @@ const EditorialHome = () => {
       {/* ── 03 Wat het je brengt ────────────────────────── */}
       <section className="bg-[#F6F1E8]">
         <div className="container mx-auto px-6 py-20 lg:px-12 lg:py-28">
-          <div className="grid gap-12 lg:grid-cols-12">
+          <div className="grid gap-12 lg:grid-cols-12 lg:gap-24">
             <motion.div
               variants={fadeUp as any}
               initial="hidden"
               whileInView="show"
               viewport={{ once: true, margin: "-80px" }}
-              className="lg:col-span-4"
+              className="lg:col-span-5"
             >
               <Chapter label="Wat het je brengt" />
               <h2 className="mt-8 font-serif text-4xl leading-[1.1] text-[#1f1d1b] lg:text-[44px]">
                 Concreet —<br />
                 <em className="italic text-terracotta-600">na acht weken.</em>
               </h2>
-              <p className="mt-6 max-w-sm text-[15px] leading-[1.8] text-[#54514d]">
+              <p className="mt-6 max-w-md text-[15px] leading-[1.8] text-[#54514d]">
                 Onderzoek toont consistent minder stress en meer emotionele veerkracht. Geen quick fix — wel een fundament dat blijft.
               </p>
             </motion.div>
 
-            <div className="grid gap-5 lg:col-span-8 lg:grid-cols-2">
+            <div className="grid gap-4 sm:grid-cols-2 lg:col-span-7 lg:gap-6">
               {[
-                { t: "Minder zelfkritiek", d: "Je herkent de innerlijke criticus eerder en kunt er anders mee omgaan." },
-                { t: "Meer rust", d: "Stress en piekeren nemen af. Je herstelt sneller na een moeilijke dag." },
-                { t: "Beter voor jezelf zorgen", d: "Je leert zorgen voor jezelf zonder schuldgevoel — ook richting anderen." },
-                { t: "Een vaardigheid voor altijd", d: "Concrete oefeningen die je de rest van je leven kunt blijven gebruiken." },
+                { num: "01", t: "Minder zelfkritiek", d: "Je herkent de innerlijke criticus eerder en kunt er anders mee omgaan." },
+                { num: "02", t: "Meer rust", d: "Stress en piekeren nemen af. Je herstelt sneller na een moeilijke dag." },
+                { num: "03", t: "Beter voor jezelf zorgen", d: "Je leert zorgen voor jezelf zonder schuldgevoel — ook richting anderen." },
+                { num: "04", t: "Een vaardigheid voor altijd", d: "Concrete oefeningen die je de rest van je leven kunt blijven gebruiken." },
               ].map((b) => (
-                <div key={b.t} className="border-t border-[#2C2A28]/15 pt-5">
-                  <p className="font-serif text-xl text-[#1f1d1b]">{b.t}</p>
-                  <p className="mt-2 text-[14px] leading-[1.75] text-[#54514d]">{b.d}</p>
+                <div
+                  key={b.t}
+                  className="group bg-white/40 backdrop-blur-md border border-white/60 p-8 rounded-3xl transition-all duration-300 hover:bg-white/60 hover:-translate-y-1"
+                >
+                  <div className="w-10 h-10 flex items-center justify-center rounded-full bg-sage-700/10 text-sage-700 mb-6 text-xs font-bold transition-colors group-hover:bg-sage-700 group-hover:text-white">
+                    {b.num}
+                  </div>
+                  <h3 className="font-serif text-2xl text-[#1f1d1b] mb-4">{b.t}</h3>
+                  <p className="text-sm leading-relaxed text-[#54514d]">{b.d}</p>
                 </div>
               ))}
             </div>
