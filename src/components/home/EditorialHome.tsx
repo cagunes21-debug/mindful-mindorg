@@ -337,24 +337,24 @@ const EditorialHome = () => {
 
       {/* ── 05 Trainer ───────────────────────────────────── */}
       <section className="bg-[#FDFBF7]">
-        <div className="container mx-auto grid gap-16 px-6 py-20 lg:grid-cols-12 lg:gap-20 lg:px-12 lg:py-28">
+        <div className="container mx-auto px-6 py-20 lg:px-12 lg:py-28">
           <motion.div
             variants={fadeUp as any}
             initial="hidden"
             whileInView="show"
             viewport={{ once: true, margin: "-80px" }}
-            className="lg:col-span-5"
+            className="mx-auto max-w-sm"
           >
             <div className="relative">
-              <div className="aspect-[3/4] overflow-hidden rounded-2xl bg-sage-100">
+              <div className="aspect-[4/5] overflow-hidden rounded-2xl bg-sage-100">
                 <img
                   src={caglaBio}
                   alt="Çağla Güneş — gecertificeerd MSC-trainer"
                   className="h-full w-full object-cover"
                 />
               </div>
-              <div className="absolute -bottom-6 -right-4 max-w-[260px] rounded-xl bg-terracotta-600 p-6 text-[#FDFBF7] shadow-lg sm:-right-6">
-                <p className="font-serif text-lg italic leading-snug">
+              <div className="absolute -bottom-4 -right-3 max-w-[220px] rounded-xl bg-terracotta-600 p-5 text-[#FDFBF7] shadow-lg sm:-right-4">
+                <p className="font-serif text-base italic leading-snug">
                   "Zelfcompassie is<br />een moedige daad."
                 </p>
               </div>
@@ -366,7 +366,7 @@ const EditorialHome = () => {
             initial="hidden"
             whileInView="show"
             viewport={{ once: true, margin: "-80px" }}
-            className="lg:col-span-6 lg:col-start-7 lg:pt-8"
+            className="mx-auto mt-20 max-w-2xl text-center"
           >
             <p className="text-[11px] font-bold uppercase tracking-[0.28em] text-sage-700">Je trainer</p>
             <h2 className="mt-3 font-serif text-4xl leading-[1.1] text-[#1f1d1b] lg:text-[44px]">
@@ -375,12 +375,12 @@ const EditorialHome = () => {
             <p className="mt-2 text-[11px] uppercase tracking-[0.22em] text-[#7a7670]">
               Oprichter Mindful Mind &amp; In Harmonia
             </p>
-            <p className="mt-8 font-serif text-2xl leading-[1.4] text-[#1f1d1b] lg:text-[28px]">
+            <p className="mx-auto mt-8 max-w-xl font-serif text-2xl leading-[1.4] text-[#1f1d1b] lg:text-[28px]">
               "Ik help je een andere relatie met jezelf op te bouwen —
               niet door jezelf te <em className="italic text-terracotta-600">verbeteren</em>,
               maar door jezelf te leren <em className="italic text-terracotta-600">ondersteunen</em>."
             </p>
-            <p className="mt-6 max-w-xl text-[15px] leading-[1.85] text-[#54514d]">
+            <p className="mx-auto mt-6 max-w-xl text-[15px] leading-[1.85] text-[#54514d]">
               Opgegroeid tussen twee culturen, geworteld in meditatie sinds haar dertiende.
               Çağla combineert lichaamsgerichte psychotherapie, Somatic Experiencing® en
               jarenlange MSC-praktijk. Ze begeleidt in het Nederlands, Engels en Turks —
