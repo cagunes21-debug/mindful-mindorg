@@ -105,6 +105,13 @@ const EditorialHome = () => {
           </div>
         </div>
 
+        <div className="container mx-auto px-6 lg:px-12 pb-10">
+          <div className="inline-flex items-center gap-2 rounded-full border border-terracotta-600/25 bg-terracotta-50 px-4 py-1.5 text-[11px] font-medium uppercase tracking-[0.22em] text-terracotta-700">
+            <span className="h-1.5 w-1.5 rounded-full bg-terracotta-600" />
+            Volgende start · September 2026 · Nog enkele plekken
+          </div>
+        </div>
+
         <div className="mt-24 border-t border-[#2C2A28]/10" />
       </section>
 
