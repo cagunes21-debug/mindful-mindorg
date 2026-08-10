@@ -430,15 +430,14 @@ const EditorialHome = () => {
       <section className="bg-[#F6F1E8]">
         <div className="container mx-auto px-6 py-20 lg:px-12 lg:py-28">
           <div className="mx-auto max-w-2xl text-center">
-            <Chapter label="De eerste stap" />
+            <Chapter label="DE EERSTE STAP" />
             <h2 className="mt-8 font-serif text-4xl leading-[1.15] text-[#1f1d1b] lg:text-[48px]">
               Twijfel je nog?
               <br />
-              <em className="italic text-terracotta-600">Plan een gesprek met Çağla.</em>
+              Plan een gesprek met Çağla.
             </h2>
             <p className="mx-auto mt-6 max-w-md text-[15px] leading-[1.8] text-[#54514d]">
-              Twintig minuten, vrijblijvend. Geen verkoopgesprek — gewoon ruimte om te
-              luisteren wat er speelt en samen kijken wat past.
+              15 minuten, vrijblijvend. Ruimte om te luisteren wat er speelt en samen kijken wat past.
             </p>
             <div className="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row sm:gap-6">
               <Link
