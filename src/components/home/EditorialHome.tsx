@@ -368,24 +368,18 @@ const EditorialHome = () => {
             viewport={{ once: true, margin: "-80px" }}
             className="mx-auto mt-20 max-w-2xl text-center"
           >
-            <p className="text-[11px] font-bold uppercase tracking-[0.28em] text-sage-700">Je trainer</p>
+            <p className="text-[11px] font-bold uppercase tracking-[0.28em] text-sage-700">JE TRAINER</p>
             <h2 className="mt-3 font-serif text-4xl leading-[1.1] text-[#1f1d1b] lg:text-[44px]">
               Çağla Güneş
             </h2>
             <p className="mt-2 text-[11px] uppercase tracking-[0.22em] text-[#7a7670]">
-              Oprichter Mindful Mind &amp; In Harmonia
+              ZELFCOMPASSIE- EN MINDFULNESS TRAINER
             </p>
             <p className="mx-auto mt-8 max-w-xl font-serif text-2xl leading-[1.4] text-[#1f1d1b] lg:text-[28px]">
-              "Ik help je een andere relatie met jezelf op te bouwen —
-              niet door jezelf te <em className="italic text-terracotta-600">verbeteren</em>,
-              maar door jezelf te leren <em className="italic text-terracotta-600">ondersteunen</em>."
+              "Ik help je een andere relatie met jezelf op te bouwen — niet door jezelf te verbeteren, maar door jezelf te leren ondersteunen."
             </p>
             <p className="mx-auto mt-6 max-w-xl text-[15px] leading-[1.85] text-[#54514d]">
-              Opgegroeid tussen twee culturen, raakte Çağla vroeg vertrouwd met meditatie en
-              zelfcompassie — eerst als persoonlijke praktijk, later als professionele verdieping.
-              Na jarenlange Vipassana-beoefening en MSC-training is ze gecertificeerd MSC-trainer.
-              Ze begeleidt in kleine groepen, vanuit eigen ervaring — met aandacht voor jou.
-              Ze begeleidt in het Nederlands, Engels en Turks.
+              Na jarenlange meditatiebeoefening volgde Çağla de officiële MSC-opleiding, ontwikkeld door Dr. Kristin Neff en Dr. Christopher Germer. Met jarenlange praktijkervaring begeleidt ze mensen die gewend zijn geraakt aan sterk zijn, zorgen en presteren — en hen helpt dat los te laten. Ze begeleidt in het Nederlands, Engels en Turks, online en op locatie.
             </p>
 
             <Link
