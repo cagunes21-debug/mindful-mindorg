@@ -11,10 +11,6 @@ import heroImage from "@/assets/hero-mindful.jpg";
 /* Editorial About / Over Ons. */
 
 const About = () => {
-  const heroRef = useRef<HTMLElement | null>(null);
-  const { scrollYProgress } = useScroll({ target: heroRef, offset: ["start start", "end start"] });
-  const y = useTransform(scrollYProgress, [0, 1], [0, 80]);
-
   return (
     <div className="min-h-screen bg-[#FDFBF7]">
       <SEO
@@ -25,57 +21,67 @@ const About = () => {
 
       <main id="main-content">
         <PageShell>
-          {/* 01 Arrival */}
-          <section ref={heroRef} className="relative overflow-hidden pt-20 lg:pt-28">
+          {/* 01 Arrival — matches homepage layout */}
+          <section className="relative overflow-hidden pt-16 lg:pt-24">
             <div className="container mx-auto px-6 lg:px-12">
-              <div className="grid gap-14 lg:grid-cols-12 lg:gap-16">
+              <div className="grid gap-14 md:grid-cols-12 md:gap-16">
                 <motion.div
                   initial={{ opacity: 0, y: 24 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-                  className="lg:col-span-7 lg:pt-10"
+                  className="md:col-span-7 lg:pt-10"
                 >
-                  <Chapter label="Over Mindful Mind" />
-                  <h1 className="mt-10 font-serif text-[44px] leading-[1.02] tracking-tight text-[#1f1d1b] sm:text-[60px] lg:text-[74px]">
-                    Ruimte om te
-                    <br />
+                  <span className="inline-block bg-sage-700 px-4 py-2 text-[11px] font-medium uppercase tracking-[0.28em] text-[#FDFBF7]">
+                    Over Mindful Mind
+                  </span>
+                  <h1 className="mt-6 font-serif text-[36px] leading-[1.1] tracking-tight text-[#1f1d1b] sm:text-[48px] lg:text-[60px]">
+                    Ruimte om te{" "}
                     <em className="italic text-terracotta-600">vertragen</em> en te voelen.
                   </h1>
-                  <p className="mt-8 max-w-xl text-lg leading-[1.75] text-[#54514d]">
+                  <p className="mt-6 max-w-xl font-sans text-base leading-[1.75] text-[#54514d]">
                     In een wereld die altijd door wil, maken wij ruimte voor stilte. Mindful Mind
                     is een klein, betrokken huis voor mindful zelfcompassie — voor wie thuis wil
                     komen bij zichzelf.
                   </p>
 
-                  <div className="mt-10 flex flex-col gap-3 sm:flex-row sm:items-center sm:gap-6">
+                  <div className="mt-10 flex flex-col gap-3 sm:flex-row sm:items-center sm:gap-4">
                     <Link
                       to="/msc-training"
-                      className="group inline-flex items-center justify-center gap-3 bg-terracotta-600 px-7 py-4 text-[12px] font-medium uppercase tracking-[0.22em] text-white transition-colors hover:bg-terracotta-700"
+                      className="group inline-flex items-center justify-center gap-3 bg-sage-700 px-7 py-4 text-[12px] font-medium uppercase tracking-[0.22em] text-white transition-colors hover:bg-sage-800"
                     >
                       Bekijk de training
                       <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
                     </Link>
                     <Link
                       to="/contact"
-                      className="inline-flex items-center gap-2 text-[12px] font-medium uppercase tracking-[0.22em] text-[#2C2A28] underline-offset-8 hover:underline"
+                      className="group inline-flex items-center justify-center gap-3 bg-terracotta-600 px-7 py-4 text-[12px] font-medium uppercase tracking-[0.22em] text-white transition-colors hover:bg-terracotta-700"
                     >
                       Stel een vraag
+                      <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
                     </Link>
                   </div>
                 </motion.div>
 
-                <motion.div style={{ y }} className="relative lg:col-span-5">
-                  <div className="relative mx-auto aspect-[4/5] w-full max-w-md overflow-hidden rounded-t-[220px] shadow-[0_30px_80px_-40px_rgba(60,40,30,0.45)]">
-                    <img src={natureCalm} alt="Stilte en natuur" className="h-full w-full object-cover" />
-                  </div>
-                  <div className="absolute -bottom-6 left-0 max-w-[240px] bg-sage-600 px-6 py-5 text-white shadow-xl sm:left-2">
-                    <p className="font-serif text-lg italic leading-snug">
-                      Je hoeft niet perfect te zijn. Je mag er gewoon zijn.
-                    </p>
+                <motion.div
+                  initial={{ opacity: 0, y: 24 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1], delay: 0.1 }}
+                  className="relative md:col-span-5"
+                >
+                  <div className="relative mx-auto w-full max-w-md">
+                    <div className="relative aspect-[4/5] overflow-hidden rounded-t-[180px] border border-[#2C2A28]/10 bg-[#F6F1E8]">
+                      <img
+                        src={heroImage}
+                        alt="Vrouw in meditatie — Mindful Zelfcompassie"
+                        className="h-full w-full object-cover"
+                        loading="eager"
+                      />
+                    </div>
                   </div>
                 </motion.div>
               </div>
             </div>
+
             <div className="mt-24 border-t border-[#2C2A28]/10" />
           </section>
 
