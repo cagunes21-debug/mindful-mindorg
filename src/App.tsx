@@ -53,6 +53,7 @@ const TrainingPage = lazy(() => import("./pages/TrainingPage"));
 const ClientProfilePage = lazy(() => import("./pages/ClientProfilePage"));
 const MindfulSelfCompassion = lazy(() => import("./pages/MindfulSelfCompassion"));
 const OverCagla = lazy(() => import("./pages/OverCagla"));
+const OverCagla2 = lazy(() => import("./pages/OverCagla2"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 
 const queryClient = new QueryClient();
@@ -87,6 +88,7 @@ const App = () => (
                 <Route path="/ons-aanbod" element={<Services />} />
                 <Route path="/over-ons" element={<About />} />
                 <Route path="/over-cagla" element={<OverCagla />} />
+                <Route path="/over-cagla-2" element={<OverCagla2 />} />
                 <Route path="/trainers" element={<Trainers />} />
                 <Route path="/agenda" element={<Agenda />} />
                 <Route path="/contact" element={<Contact />} />
