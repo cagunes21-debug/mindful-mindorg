@@ -36,7 +36,7 @@ const About = () => {
                   transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
                   className="lg:col-span-7 lg:pt-10"
                 >
-                  <Chapter n="i." label="Over Mindful Mind" />
+                  <Chapter label="Over Mindful Mind" />
                   <h1 className="mt-10 font-serif text-[44px] leading-[1.02] tracking-tight text-[#1f1d1b] sm:text-[60px] lg:text-[74px]">
                     Ruimte om te
                     <br />
@@ -84,7 +84,7 @@ const About = () => {
           <SectionBand tone="cream">
             <div className="container mx-auto px-6 py-24 lg:px-12 lg:py-32">
               <Reveal className="mx-auto max-w-3xl text-center">
-                <Chapter n="ii." label="De belofte" />
+                <Chapter label="De belofte" />
                 <p className="mt-10 font-serif text-3xl leading-[1.35] text-[#1f1d1b] lg:text-[44px]">
                   "Een veilige plek waar <em className="italic text-terracotta-600">alle</em> aspecten
                   van jezelf welkom zijn. Geen prestaties, geen verwachtingen — alleen ruimte om te
@@ -99,7 +99,7 @@ const About = () => {
             <div className="container mx-auto px-6 py-28 lg:px-12 lg:py-36">
               <div className="grid gap-16 lg:grid-cols-12">
                 <Reveal className="lg:col-span-4">
-                  <Chapter n="iii." label="Onze aanpak" />
+                  <Chapter label="Onze aanpak" />
                   <h2 className="mt-8 font-serif text-4xl leading-[1.1] text-[#1f1d1b] lg:text-5xl">
                     Meer dan
                     <br />
@@ -147,7 +147,7 @@ const About = () => {
               </Reveal>
 
               <Reveal className="lg:col-span-6 lg:col-start-7 lg:pt-12">
-                <Chapter n="iv." label="De oprichter" tone="ivory" />
+                <Chapter label="De oprichter" tone="ivory" />
                 <p className="mt-10 font-serif text-3xl leading-[1.3] lg:text-4xl">
                   "Mijn pad is er een van geleefde ervaring — jaren van reizen, beoefening en
                   onderzoek naar <em className="italic">identiteit</em> en{" "}
@@ -181,7 +181,7 @@ const About = () => {
             <div className="container mx-auto px-6 py-28 lg:px-12 lg:py-36">
               <div className="grid gap-16 lg:grid-cols-12">
                 <Reveal className="lg:col-span-4">
-                  <Chapter n="v." label="Wat ons drijft" />
+                  <Chapter label="Wat ons drijft" />
                   <h2 className="mt-8 font-serif text-4xl leading-[1.1] text-[#1f1d1b] lg:text-5xl">
                     Visie
                     <br />
@@ -225,7 +225,7 @@ const About = () => {
           <SectionBand tone="deep">
             <div className="container mx-auto px-6 py-24 lg:px-12 lg:py-28">
               <Reveal className="mx-auto max-w-2xl text-center">
-                <Chapter n="vi." label="Begin je reis" tone="ivory" />
+                <Chapter label="Begin je reis" tone="ivory" />
                 <h2 className="mt-8 font-serif text-4xl leading-[1.15] lg:text-5xl">
                   Klaar om thuis te komen
                   <br />

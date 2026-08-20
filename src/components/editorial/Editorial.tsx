@@ -18,7 +18,7 @@ export const Chapter = ({
   label,
   tone = "terracotta",
 }: {
-  n: string;
+  n?: string;
   label: string;
   tone?: "terracotta" | "sage" | "ivory";
 }) => {
@@ -42,9 +42,11 @@ export const Chapter = ({
       : "bg-terracotta-600/30";
   return (
     <div className={`flex items-center gap-3 text-[11px] uppercase tracking-[0.28em] ${toneClass}`}>
-      <span className={`font-serif italic text-base normal-case tracking-normal ${numClass}`}>
-        {n}
-      </span>
+      {n && (
+        <span className={`font-serif italic text-base normal-case tracking-normal ${numClass}`}>
+          {n}
+        </span>
+      )}
       <span className={`h-px w-8 ${lineClass}`} />
       <span>{label}</span>
     </div>
