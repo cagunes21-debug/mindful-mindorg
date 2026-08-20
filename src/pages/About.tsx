@@ -133,48 +133,6 @@ const About = () => {
             </div>
           </SectionBand>
 
-          {/* 04 Trainer */}
-          <SectionBand tone="sage">
-            <div className="container mx-auto grid gap-16 px-6 py-28 lg:grid-cols-12 lg:gap-20 lg:px-12 lg:py-36">
-              <Reveal className="lg:col-span-5">
-                <div className="overflow-hidden rounded-t-[180px] bg-sage-700/40">
-                  <img src={caglaBio} alt="Çağla Güneş, oprichter Mindful Mind" className="aspect-[4/5] w-full object-cover" />
-                </div>
-                <p className="mt-6 font-serif text-2xl italic">— Çağla Güneş</p>
-                <p className="text-[11px] uppercase tracking-[0.28em] text-white/70">
-                  Oprichter · Gecertificeerd MSC-trainer
-                </p>
-              </Reveal>
-
-              <Reveal className="lg:col-span-6 lg:col-start-7 lg:pt-12">
-                <Chapter label="De oprichter" tone="ivory" />
-                <p className="mt-10 font-serif text-3xl leading-[1.3] lg:text-4xl">
-                  "Mijn pad is er een van geleefde ervaring — jaren van reizen, beoefening en
-                  onderzoek naar <em className="italic">identiteit</em> en{" "}
-                  <em className="italic">verbinding</em>."
-                </p>
-                <p className="mt-8 max-w-xl text-[15px] leading-[1.85] text-white/85">
-                  Çağla wordt al lang geleid door een diepe oriëntatie op innerlijke verbinding en
-                  bewustzijn. Meditatie werd al op jonge leeftijd onderdeel van haar leven, en
-                  verdiepte zich door jarenlange beoefening en langere Vipassana-retraites.
-                </p>
-                <div className="mt-10 flex flex-wrap gap-6">
-                  <Link
-                    to="/over-cagla"
-                    className="inline-flex items-center gap-2 border-b border-white pb-1 text-[12px] font-medium uppercase tracking-[0.22em] hover:opacity-80"
-                  >
-                    Lees meer over Çağla <ArrowUpRight className="h-3.5 w-3.5" />
-                  </Link>
-                  <Link
-                    to="/trainers"
-                    className="inline-flex items-center gap-2 border-b border-white/60 pb-1 text-[12px] font-medium uppercase tracking-[0.22em] hover:opacity-80"
-                  >
-                    Ontmoet het team <ArrowUpRight className="h-3.5 w-3.5" />
-                  </Link>
-                </div>
-              </Reveal>
-            </div>
-          </SectionBand>
 
           {/* 05 Visie & Missie */}
           <SectionBand tone="cream">
