@@ -21,13 +21,6 @@ const HtmlTextLight = ({ html, className }: { html: string; className?: string }
 const OverCagla = () => {
   const { t } = useLanguage();
 
-  const places = [
-    { name: t("overCagla.places.netherlands"), label: t("overCagla.places.netherlandsLabel") },
-    { name: t("overCagla.places.germany"), label: t("overCagla.places.germanyLabel") },
-    { name: t("overCagla.places.turkey"), label: t("overCagla.places.turkeyLabel") },
-    { name: t("overCagla.places.mexico"), label: t("overCagla.places.mexicoLabel") },
-    { name: t("overCagla.places.spain"), label: t("overCagla.places.spainLabel") },
-  ];
 
   const credentials = [
     t("overCagla.chapter2Cred1"),
