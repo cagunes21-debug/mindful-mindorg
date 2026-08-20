@@ -6,7 +6,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { useToast } from "@/hooks/use-toast";
-import { Heart, Mail, Lock, ArrowLeft, Check, Clock, Users, Globe, Calendar, ShieldCheck } from "lucide-react";
+import { Heart, Mail, Lock, ArrowLeft, Check, Clock, Users, Globe, Calendar, ShieldCheck, Info } from "lucide-react";
 import { Link } from "react-router-dom";
 import { z } from "zod";
 import { InputOTP, InputOTPGroup, InputOTPSlot } from "@/components/ui/input-otp";
@@ -498,6 +498,12 @@ const Auth = () => {
             </CardHeader>
             
             <CardContent className="pt-4">
+              {isLogin && !isForgotPassword && (
+                <div className="mb-4 flex items-start gap-2.5 rounded-lg bg-sage-50/80 border border-sage-100 p-3 text-sm text-sage-800">
+                  <Info className="h-4 w-4 text-sage-600 mt-0.5 flex-shrink-0" />
+                  <p>Admin login: gebruik <strong>mindful-mind@outlook.com</strong> om in te loggen als beheerder.</p>
+                </div>
+              )}
               {isForgotPassword ? renderForgotPassword() : (
                 <>
                   <form onSubmit={handleSubmit} className="space-y-4">
