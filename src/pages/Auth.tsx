@@ -6,7 +6,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { useToast } from "@/hooks/use-toast";
-import { Heart, Mail, Lock, ArrowLeft, Check, Clock, Users, Globe, Calendar, ShieldCheck } from "lucide-react";
+import { Heart, Mail, Lock, ArrowLeft, Check, Clock, Users, Globe, Calendar, ShieldCheck, Info } from "lucide-react";
 import { Link } from "react-router-dom";
 import { z } from "zod";
 import { InputOTP, InputOTPGroup, InputOTPSlot } from "@/components/ui/input-otp";
