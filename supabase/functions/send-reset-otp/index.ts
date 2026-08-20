@@ -98,11 +98,16 @@ serve(async (req) => {
 
       if (emailError) {
         console.error("Email send error:", emailError);
-        return new Response(JSON.stringify({ error: "Kon e-mail niet versturen" }), {
-          status: 500,
-          headers: { ...corsHeaders, "Content-Type": "application/json" },
-        });
+        const detail = (emailError as { message?: string })?.message ?? String(emailError);
+        return new Response(
+          JSON.stringify({ error: "Kon e-mail niet versturen", detail }),
+          {
+            status: 500,
+            headers: { ...corsHeaders, "Content-Type": "application/json" },
+          },
+        );
       }
+
 
       return new Response(JSON.stringify({ success: true }), {
         headers: { ...corsHeaders, "Content-Type": "application/json" },
