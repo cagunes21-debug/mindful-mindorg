@@ -248,6 +248,31 @@ const OverCagla = () => {
       </section>
 
 
+      {/* ═══════ CLOSING CTA ═══════ */}
+      <section className="py-20 md:py-28 px-6 text-center bg-warm-50">
+        <div className="max-w-[600px] mx-auto">
+          <ScrollReveal>
+            <p className="text-lg font-light text-muted-foreground leading-relaxed mb-10">
+              {t("overCagla.closingP")}
+            </p>
+          </ScrollReveal>
+          <ScrollReveal delay={0.05}>
+            <Link
+              to="/contact"
+              className="inline-flex items-center gap-2.5 px-9 py-4 rounded-full border border-warm-300 text-sm tracking-wide text-foreground hover:bg-foreground hover:text-warm-50 hover:border-foreground hover:-translate-y-0.5 transition-all"
+            >
+              {t("overCagla.contactCta")}
+              <ArrowRight className="h-4 w-4" />
+            </Link>
+          </ScrollReveal>
+          <ScrollReveal delay={0.1}>
+            <p className="mt-8 text-sm tracking-[0.1em] text-warm-400">
+              {t("overCagla.closingLocation")}
+            </p>
+          </ScrollReveal>
+        </div>
+      </section>
+
       </main>
       <Footer />
     </div>
