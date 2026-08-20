@@ -1,12 +1,11 @@
 import { Link } from "react-router-dom";
-import { ArrowRight, ArrowUpRight } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import SEO from "@/components/SEO";
 import { Chapter, Reveal, PageShell, SectionBand } from "@/components/editorial/Editorial";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useRef } from "react";
-import caglaBio from "@/assets/cagla-bio.png";
 import natureCalm from "@/assets/nature-calm.jpg";
 
 /* Editorial About / Over Ons. */
