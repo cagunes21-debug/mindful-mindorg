@@ -9,13 +9,6 @@ import WhatsAppButton from "@/components/WhatsAppButton";
 import CookieConsent from "@/components/CookieConsent";
 import { useLanguage } from "@/i18n/LanguageContext";
 
-const Divider = () => (
-  <div className="flex items-center justify-center gap-5 py-4 max-w-[720px] mx-auto px-6">
-    <div className="flex-1 max-w-[80px] h-px bg-warm-300/30" />
-    <span className="text-warm-400/50 text-lg">◆</span>
-    <div className="flex-1 max-w-[80px] h-px bg-warm-300/30" />
-  </div>
-);
 
 const HtmlText = ({ html, className }: { html: string; className?: string }) => (
   <p className={className} dangerouslySetInnerHTML={{ __html: html.replace(/<strong>/g, '<strong class="text-foreground font-medium">') }} />
