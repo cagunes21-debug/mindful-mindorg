@@ -4,9 +4,9 @@ import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import SEO from "@/components/SEO";
 import { Chapter, Reveal, PageShell, SectionBand } from "@/components/editorial/Editorial";
-import { motion, useScroll, useTransform } from "framer-motion";
-import { useRef } from "react";
-import natureCalm from "@/assets/nature-calm.jpg";
+import { motion } from "framer-motion";
+import heroImage from "@/assets/hero-mindful.jpg";
+
 
 /* Editorial About / Over Ons. */
 
