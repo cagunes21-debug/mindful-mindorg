@@ -176,10 +176,13 @@ const Auth = () => {
       });
       setResetStep("otp");
     } catch {
+      // The reset code is created before the email provider is called. Keep the
+      // flow accessible when email delivery is temporarily unavailable.
+      setResetStep("otp");
       toast({
         variant: "destructive",
-        title: "Fout",
-        description: "Er is iets misgegaan. Probeer het later opnieuw.",
+        title: "E-mail kon niet worden verstuurd",
+        description: "Je kunt hieronder een eerder ontvangen of verstrekte resetcode invoeren.",
       });
     } finally {
       setLoading(false);
